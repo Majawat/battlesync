@@ -69,8 +69,12 @@ export class BattleService {
       include: {
         campaign: {
           include: {
-            memberships: {
-              where: { userId: creatorId }
+            group: {
+              include: {
+                memberships: {
+                  where: { userId: creatorId }
+                }
+              }
             }
           }
         }
@@ -81,8 +85,8 @@ export class BattleService {
       throw ValidationUtils.createError('Mission not found', 404);
     }
 
-    if (mission.campaign.memberships.length === 0) {
-      throw ValidationUtils.createError('You are not a member of this campaign', 403);
+    if (mission.campaign.group.memberships.length === 0) {
+      throw ValidationUtils.createError('You are not a member of this group', 403);
     }
 
     // Validate all participants have armies in the campaign
@@ -103,10 +107,12 @@ export class BattleService {
     // Create battle
     const battle = await prisma.battle.create({
       data: {
+        groupId: mission.campaign.group.id,
         campaignId: mission.campaignId,
         missionId: data.missionId,
         status: 'SETUP',
         currentState: this.createInitialBattleState(data.participants) as any,
+        createdBy: creatorId,
         participants: {
           create: await Promise.all(data.participants.map(async (p) => {
             const army = await prisma.army.findUnique({ 
@@ -352,12 +358,22 @@ export class BattleService {
    * Get campaign battles
    */
   static async getCampaignBattles(campaignId: string, userId: string) {
-    // Verify user is campaign member
-    const membership = await prisma.campaignMembership.findFirst({
-      where: { campaignId, userId }
+    // Verify user has access to campaign through group membership
+    const campaign = await prisma.campaign.findFirst({
+      where: {
+        id: campaignId,
+        group: {
+          memberships: {
+            some: {
+              userId,
+              status: { in: ['ACTIVE', 'INACTIVE'] }
+            }
+          }
+        }
+      }
     });
 
-    if (!membership) {
+    if (!campaign) {
       throw ValidationUtils.createError('Access denied to campaign', 403);
     }
 

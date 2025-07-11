@@ -80,15 +80,22 @@ class ArmyService {
 
       // Verify campaign access if specified
       if (request.campaignId) {
-        const campaignMember = await prisma.campaignMembership.findFirst({
+        const campaign = await prisma.campaign.findFirst({
           where: {
-            userId,
-            campaignId: request.campaignId,
-          },
+            id: request.campaignId,
+            group: {
+              memberships: {
+                some: {
+                  userId,
+                  status: { in: ['ACTIVE', 'INACTIVE'] }
+                }
+              }
+            }
+          }
         });
 
-        if (!campaignMember) {
-          throw new ApiError(403, 'You are not a member of this campaign');
+        if (!campaign) {
+          throw new ApiError(403, 'You are not a member of this campaign or group');
         }
       }
 

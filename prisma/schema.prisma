@@ -23,12 +23,13 @@ model User {
   lastLogin       DateTime?
 
   // Relationships
-  ownedGroups      GamingGroup[]
-  groupMemberships GroupMembership[]
-  campaignMemberships CampaignMembership[]
-  armies           Army[]
-  battleEvents     BattleEvent[]
-  createdCampaigns Campaign[]
+  ownedGroups         GamingGroup[]
+  groupMemberships    GroupMembership[]
+  // campaignMemberships removed - using GroupMembership + CampaignParticipation
+  armies              Army[]
+  battleEvents        BattleEvent[]
+  createdCampaigns    Campaign[]
+  createdBattles      Battle[]
 
   @@map("users")
 }
@@ -47,24 +48,12 @@ model GamingGroup {
   owner       User               @relation(fields: [ownerId], references: [id])
   memberships GroupMembership[]
   campaigns   Campaign[]
+  battles     Battle[]
 
   @@map("gaming_groups")
 }
 
-model GroupMembership {
-  id       String    @id @default(uuid())
-  userId   String
-  groupId  String
-  role     GroupRole @default(MEMBER)
-  joinedAt DateTime  @default(now())
-
-  // Relationships
-  user  User        @relation(fields: [userId], references: [id])
-  group GamingGroup @relation(fields: [groupId], references: [id])
-
-  @@unique([userId, groupId])
-  @@map("group_memberships")
-}
+// Removed - replaced by enhanced GroupMembership model below
 
 model Campaign {
   id          String         @id @default(uuid())
@@ -79,36 +68,56 @@ model Campaign {
   updatedAt   DateTime       @updatedAt
 
   // Relationships
-  group       GamingGroup          @relation(fields: [groupId], references: [id])
-  creator     User                 @relation(fields: [createdBy], references: [id])
-  memberships CampaignMembership[]
+  group           GamingGroup             @relation(fields: [groupId], references: [id])
+  creator         User                    @relation(fields: [createdBy], references: [id])
+  participations  CampaignParticipation[] // Group-based participation
   battles     Battle[]
   missions    Mission[]
 
   @@map("campaigns")
 }
 
-model CampaignMembership {
-  id               String          @id @default(uuid())
-  userId           String
-  campaignId       String
-  primaryArmyId    String?
-  role             CampaignRole    @default(MEMBER)
-  status           MembershipStatus @default(ACTIVE)
-  totalExperience  Int             @default(0)
-  battlesWon       Int             @default(0)
-  battlesLost      Int             @default(0)
-  joinedAt         DateTime        @default(now())
-  invitedBy        String?         // userId who sent invitation
-  invitedAt        DateTime?       // when invitation was sent
-
+// Group-level membership - the primary membership model
+model GroupMembership {
+  id              String           @id @default(uuid())
+  userId          String
+  groupId         String
+  role            GroupMemberRole  @default(MEMBER)
+  status          MembershipStatus @default(ACTIVE)
+  joinedAt        DateTime         @default(now())
+  invitedBy       String?          // userId who sent invitation
+  invitedAt       DateTime?        // when invitation was sent
+  
   // Relationships
-  user     User     @relation(fields: [userId], references: [id])
-  campaign Campaign @relation(fields: [campaignId], references: [id])
+  user            User             @relation(fields: [userId], references: [id])
+  group           GamingGroup      @relation(fields: [groupId], references: [id])
+  campaignParticipations CampaignParticipation[]
 
-  @@unique([userId, campaignId])
-  @@map("campaign_memberships")
+  @@unique([userId, groupId])
+  @@map("group_memberships")
 }
+
+// Campaign participation - links group members to specific campaigns
+model CampaignParticipation {
+  id                String            @id @default(uuid())
+  groupMembershipId String
+  campaignId        String
+  primaryArmyId     String?
+  campaignRole      CampaignRole      @default(PARTICIPANT)
+  totalExperience   Int               @default(0)
+  battlesWon        Int               @default(0)
+  battlesLost       Int               @default(0)
+  joinedCampaignAt  DateTime          @default(now())
+  
+  // Relationships
+  groupMembership   GroupMembership   @relation(fields: [groupMembershipId], references: [id])
+  campaign          Campaign          @relation(fields: [campaignId], references: [id])
+  
+  @@unique([groupMembershipId, campaignId])
+  @@map("campaign_participations")
+}
+
+// Removed - replaced by GroupMembership + CampaignParticipation
 
 model Army {
   id             String   @id @default(uuid())
@@ -133,18 +142,24 @@ model Army {
 
 model Battle {
   id           String        @id @default(uuid())
-  campaignId   String
-  missionId    String
+  groupId      String        // Always associated with a group
+  campaignId   String?       // Optional - null for standalone battles
+  missionId    String?       // Optional - null for custom battles
+  title        String?       // For standalone battles
+  description  String?       // For standalone battles
   status       BattleStatus  @default(SETUP)
   currentState Json          // BattleState
   startedAt    DateTime?
   completedAt  DateTime?
+  createdBy    String        // User who created the battle
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
 
   // Relationships
-  campaign     Campaign            @relation(fields: [campaignId], references: [id])
-  mission      Mission             @relation(fields: [missionId], references: [id])
+  group        GamingGroup         @relation(fields: [groupId], references: [id])
+  campaign     Campaign?           @relation(fields: [campaignId], references: [id])
+  mission      Mission?            @relation(fields: [missionId], references: [id])
+  creator      User                @relation(fields: [createdBy], references: [id])
   participants BattleParticipant[]
   events       BattleEvent[]
 
@@ -214,10 +229,7 @@ enum UserRole {
   USER
 }
 
-enum GroupRole {
-  ADMIN
-  MEMBER
-}
+// Removed - replaced by GroupMemberRole enum
 
 enum CampaignStatus {
   PLANNING
@@ -252,10 +264,16 @@ enum MissionStatus {
   COMPLETED
 }
 
+enum GroupMemberRole {
+  OWNER      // Group owner (same as creator)
+  ADMIN      // Group admin/organizer
+  MEMBER     // Regular group member
+}
+
 enum CampaignRole {
-  CREATOR
-  ADMIN
-  MEMBER
+  CREATOR      // Campaign creator
+  ORGANIZER    // Campaign organizer/admin
+  PARTICIPANT  // Campaign participant
 }
 
 enum MembershipStatus {

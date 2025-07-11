@@ -61,18 +61,30 @@ async function main() {
 
   console.log('✅ Created demo campaign:', demoCampaign.name);
 
-  // Add the admin user as a member of the demo campaign
-  const campaignMembership = await prisma.campaignMembership.create({
+  // Add the admin user as a member of the demo group
+  const groupMembership = await prisma.groupMembership.create({
     data: {
       userId: serverOwner.id,
-      campaignId: demoCampaign.id,
-      role: 'CREATOR',
+      groupId: demoGroup.id,
+      role: 'OWNER',
       status: 'ACTIVE',
       joinedAt: new Date(),
     },
   });
 
-  console.log('✅ Added admin to demo campaign:', campaignMembership.userId);
+  console.log('✅ Added admin to demo group:', groupMembership.userId);
+
+  // Add the admin user as a participant in the demo campaign
+  const campaignParticipation = await prisma.campaignParticipation.create({
+    data: {
+      groupMembershipId: groupMembership.id,
+      campaignId: demoCampaign.id,
+      campaignRole: 'CREATOR',
+      joinedCampaignAt: new Date(),
+    },
+  });
+
+  console.log('✅ Added admin to demo campaign:', campaignParticipation.groupMembershipId);
 
   console.log('🎉 Database seeding completed!');
   console.log('📝 Server owner credentials:');
