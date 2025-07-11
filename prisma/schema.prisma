@@ -1,0 +1,249 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String   @id @default(uuid())
+  username        String   @unique
+  email           String?  @unique
+  passwordHash    String
+  role            UserRole @default(USER)
+  armyForgeToken  String?  // Encrypted
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  lastLogin       DateTime?
+
+  // Relationships
+  ownedGroups      GamingGroup[]
+  groupMemberships GroupMembership[]
+  campaignMemberships CampaignMembership[]
+  armies           Army[]
+  battleEvents     BattleEvent[]
+  createdCampaigns Campaign[]
+
+  @@map("users")
+}
+
+model GamingGroup {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  ownerId     String
+  inviteCode  String   @unique
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relationships
+  owner       User               @relation(fields: [ownerId], references: [id])
+  memberships GroupMembership[]
+  campaigns   Campaign[]
+
+  @@map("gaming_groups")
+}
+
+model GroupMembership {
+  id       String    @id @default(uuid())
+  userId   String
+  groupId  String
+  role     GroupRole @default(MEMBER)
+  joinedAt DateTime  @default(now())
+
+  // Relationships
+  user  User        @relation(fields: [userId], references: [id])
+  group GamingGroup @relation(fields: [groupId], references: [id])
+
+  @@unique([userId, groupId])
+  @@map("group_memberships")
+}
+
+model Campaign {
+  id          String         @id @default(uuid())
+  groupId     String
+  name        String
+  description String?
+  narrative   String?
+  status      CampaignStatus @default(PLANNING)
+  settings    Json           // CampaignSettings
+  createdBy   String
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  // Relationships
+  group       GamingGroup          @relation(fields: [groupId], references: [id])
+  creator     User                 @relation(fields: [createdBy], references: [id])
+  memberships CampaignMembership[]
+  battles     Battle[]
+  missions    Mission[]
+
+  @@map("campaigns")
+}
+
+model CampaignMembership {
+  id               String  @id @default(uuid())
+  userId           String
+  campaignId       String
+  primaryArmyId    String?
+  totalExperience  Int     @default(0)
+  battlesWon       Int     @default(0)
+  battlesLost      Int     @default(0)
+  joinedAt         DateTime @default(now())
+
+  // Relationships
+  user     User     @relation(fields: [userId], references: [id])
+  campaign Campaign @relation(fields: [campaignId], references: [id])
+
+  @@unique([userId, campaignId])
+  @@map("campaign_memberships")
+}
+
+model Army {
+  id             String   @id @default(uuid())
+  userId         String
+  campaignId     String?
+  armyForgeId    String
+  name           String
+  faction        String
+  points         Int
+  armyData       Json     // ArmyForge data
+  customizations Json?    // ArmyCustomizations
+  lastSyncedAt   DateTime @default(now())
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  // Relationships
+  user                 User                @relation(fields: [userId], references: [id])
+  battleParticipations BattleParticipant[]
+
+  @@map("armies")
+}
+
+model Battle {
+  id           String        @id @default(uuid())
+  campaignId   String
+  missionId    String
+  status       BattleStatus  @default(SETUP)
+  currentState Json          // BattleState
+  startedAt    DateTime?
+  completedAt  DateTime?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  // Relationships
+  campaign     Campaign            @relation(fields: [campaignId], references: [id])
+  mission      Mission             @relation(fields: [missionId], references: [id])
+  participants BattleParticipant[]
+  events       BattleEvent[]
+
+  @@map("battles")
+}
+
+model BattleParticipant {
+  id              String  @id @default(uuid())
+  battleId        String
+  userId          String
+  armyId          String
+  faction         String
+  startingPoints  Int
+  finalExperience Int     @default(0)
+  kills           Int     @default(0)
+  unitsLost       Int     @default(0)
+  isWinner        Boolean @default(false)
+
+  // Relationships
+  battle Battle @relation(fields: [battleId], references: [id])
+  army   Army   @relation(fields: [armyId], references: [id])
+
+  @@map("battle_participants")
+}
+
+model BattleEvent {
+  id        String          @id @default(uuid())
+  battleId  String
+  userId    String
+  eventType BattleEventType
+  timestamp DateTime        @default(now())
+  data      Json
+
+  // Relationships
+  battle Battle @relation(fields: [battleId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@map("battle_events")
+}
+
+model Mission {
+  id                  String           @id @default(uuid())
+  campaignId          String
+  number              Int
+  title               String
+  description         String
+  points              Int
+  status              MissionStatus    @default(UPCOMING)
+  scheduledDate       DateTime?
+  objectives          Json             // MissionObjective[]
+  specialRules        Json             // MissionRule[]
+  terrainSuggestions  Json             // TerrainFeature[]
+  battleReportFile    String?
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @updatedAt
+
+  // Relationships
+  campaign Campaign @relation(fields: [campaignId], references: [id])
+  battles  Battle[]
+
+  @@map("missions")
+}
+
+// Enums
+enum UserRole {
+  SERVER_OWNER
+  USER
+}
+
+enum GroupRole {
+  ADMIN
+  MEMBER
+}
+
+enum CampaignStatus {
+  PLANNING
+  ACTIVE
+  COMPLETED
+  PAUSED
+}
+
+enum BattleStatus {
+  SETUP
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
+
+enum BattleEventType {
+  BATTLE_STARTED
+  BATTLE_ENDED
+  PLAYER_JOINED
+  PLAYER_LEFT
+  UNIT_DAMAGED
+  UNIT_KILLED
+  UNIT_STATUS_CHANGED
+  SPELL_CAST
+  COMMAND_USED
+  ADMIN_OVERRIDE
+}
+
+enum MissionStatus {
+  UPCOMING
+  ACTIVE
+  COMPLETED
+}
