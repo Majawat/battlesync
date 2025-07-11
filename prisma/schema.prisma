@@ -89,14 +89,18 @@ model Campaign {
 }
 
 model CampaignMembership {
-  id               String  @id @default(uuid())
+  id               String          @id @default(uuid())
   userId           String
   campaignId       String
   primaryArmyId    String?
-  totalExperience  Int     @default(0)
-  battlesWon       Int     @default(0)
-  battlesLost      Int     @default(0)
-  joinedAt         DateTime @default(now())
+  role             CampaignRole    @default(MEMBER)
+  status           MembershipStatus @default(ACTIVE)
+  totalExperience  Int             @default(0)
+  battlesWon       Int             @default(0)
+  battlesLost      Int             @default(0)
+  joinedAt         DateTime        @default(now())
+  invitedBy        String?         // userId who sent invitation
+  invitedAt        DateTime?       // when invitation was sent
 
   // Relationships
   user     User     @relation(fields: [userId], references: [id])
@@ -246,4 +250,17 @@ enum MissionStatus {
   UPCOMING
   ACTIVE
   COMPLETED
+}
+
+enum CampaignRole {
+  CREATOR
+  ADMIN
+  MEMBER
+}
+
+enum MembershipStatus {
+  PENDING    // Invited but not yet accepted
+  ACTIVE     // Active member
+  INACTIVE   // Temporarily inactive
+  REMOVED    // Removed from campaign
 }

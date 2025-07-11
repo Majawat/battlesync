@@ -2,9 +2,94 @@ import { PrismaClient } from '@prisma/client';
 import { ValidationUtils } from '../utils/validation';
 import { CampaignData, CreateCampaignRequest, UpdateCampaignRequest, JoinCampaignRequest, CampaignSummary } from '../types/campaign';
 
+export interface InviteMemberRequest {
+  username: string;
+  role?: 'ADMIN' | 'MEMBER';
+}
+
+export interface UpdateMemberRequest {
+  role?: 'ADMIN' | 'MEMBER';
+  status?: 'ACTIVE' | 'INACTIVE';
+}
+
+export interface CampaignMemberDetailed {
+  id: string;
+  userId: string;
+  username: string;
+  email: string | null;
+  role: 'CREATOR' | 'ADMIN' | 'MEMBER';
+  status: 'PENDING' | 'ACTIVE' | 'INACTIVE' | 'REMOVED';
+  totalExperience: number;
+  battlesWon: number;
+  battlesLost: number;
+  joinedAt: Date;
+  invitedBy?: string;
+  invitedAt?: Date;
+  primaryArmyId?: string;
+  primaryArmyName?: string;
+}
+
 const prisma = new PrismaClient();
 
 export class CampaignService {
+  static async getUserCampaigns(userId: string): Promise<CampaignSummary[]> {
+    const campaigns = await prisma.campaign.findMany({
+      where: {
+        memberships: {
+          some: { 
+            userId,
+            status: { in: ['ACTIVE', 'INACTIVE'] }
+          }
+        }
+      },
+      include: {
+        group: {
+          select: {
+            id: true,
+            name: true
+          }
+        },
+        creator: {
+          select: {
+            id: true,
+            username: true
+          }
+        },
+        memberships: {
+          where: { userId },
+          select: {
+            role: true
+          }
+        },
+        _count: {
+          select: {
+            memberships: true,
+            battles: true
+          }
+        },
+        battles: {
+          where: {
+            status: 'COMPLETED'
+          },
+          select: {
+            id: true
+          }
+        }
+      },
+      orderBy: { updatedAt: 'desc' }
+    });
+
+    return campaigns.map(campaign => ({
+      id: campaign.id,
+      name: campaign.name,
+      status: campaign.status,
+      memberCount: campaign._count.memberships,
+      battleCount: campaign._count.battles,
+      completedBattles: campaign.battles.length,
+      createdAt: campaign.createdAt,
+      userRole: campaign.memberships[0]?.role || 'MEMBER'
+    }));
+  }
   static async createCampaign(groupId: string, userId: string, data: CreateCampaignRequest): Promise<CampaignData> {
     // Validate user is a member of the group
     await this.validateGroupMembership(groupId, userId);
@@ -87,6 +172,17 @@ export class CampaignService {
               battles: true,
             },
           },
+        },
+      });
+
+      // Automatically add the creator as a member with CREATOR role
+      await prisma.campaignMembership.create({
+        data: {
+          userId,
+          campaignId: campaign.id,
+          role: 'CREATOR',
+          status: 'ACTIVE',
+          joinedAt: new Date(),
         },
       });
 
@@ -478,5 +574,284 @@ export class CampaignService {
       createdAt: campaign.createdAt,
       updatedAt: campaign.updatedAt,
     };
+  }
+
+  // ============= MEMBERSHIP MANAGEMENT =============
+
+  /**
+   * Get detailed campaign members list
+   */
+  static async getCampaignMembers(campaignId: string, requesterId: string): Promise<CampaignMemberDetailed[]> {
+    // Verify requester has access to campaign
+    await this.validateCampaignAccess(campaignId, requesterId);
+
+    const memberships = await prisma.campaignMembership.findMany({
+      where: { 
+        campaignId,
+        status: { in: ['PENDING', 'ACTIVE', 'INACTIVE'] }
+      },
+      include: {
+        user: {
+          select: {
+            id: true,
+            username: true,
+            email: true
+          }
+        },
+      },
+      orderBy: [
+        { role: 'asc' }, // CREATOR first, then ADMIN, then MEMBER
+        { joinedAt: 'asc' }
+      ]
+    });
+
+    return memberships.map(membership => {
+      return {
+        id: membership.id,
+        userId: membership.userId,
+        username: membership.user.username,
+        email: membership.user.email,
+        role: membership.role as 'CREATOR' | 'ADMIN' | 'MEMBER',
+        status: membership.status as 'PENDING' | 'ACTIVE' | 'INACTIVE' | 'REMOVED',
+        totalExperience: membership.totalExperience,
+        battlesWon: membership.battlesWon,
+        battlesLost: membership.battlesLost,
+        joinedAt: membership.joinedAt,
+        invitedBy: membership.invitedBy || undefined,
+        invitedAt: membership.invitedAt || undefined,
+        primaryArmyId: membership.primaryArmyId || undefined,
+        primaryArmyName: undefined // TODO: Fetch from armies table if needed
+      };
+    });
+  }
+
+  /**
+   * Invite a user to campaign by username
+   */
+  static async inviteMemberToCampaign(
+    campaignId: string, 
+    requesterId: string, 
+    data: InviteMemberRequest
+  ): Promise<CampaignMemberDetailed> {
+    // Verify requester can manage campaign
+    await this.validateCampaignManageAccess(campaignId, requesterId);
+
+    // Find user to invite
+    const userToInvite = await prisma.user.findUnique({
+      where: { username: data.username },
+      select: {
+        id: true,
+        username: true,
+        email: true,
+        isActive: true
+      }
+    });
+
+    if (!userToInvite) {
+      throw ValidationUtils.createError(`User '${data.username}' not found`, 404);
+    }
+
+    if (!userToInvite.isActive) {
+      throw ValidationUtils.createError('Cannot invite inactive user', 400);
+    }
+
+    // Check if user is already a member
+    const existingMembership = await prisma.campaignMembership.findFirst({
+      where: {
+        campaignId,
+        userId: userToInvite.id,
+        status: { in: ['PENDING', 'ACTIVE', 'INACTIVE'] }
+      }
+    });
+
+    if (existingMembership) {
+      throw ValidationUtils.createError('User is already a member or has a pending invitation', 409);
+    }
+
+    // Create membership with PENDING status
+    const membership = await prisma.campaignMembership.create({
+      data: {
+        userId: userToInvite.id,
+        campaignId,
+        role: data.role || 'MEMBER',
+        status: 'PENDING',
+        invitedBy: requesterId,
+        invitedAt: new Date()
+      }
+    });
+
+    return {
+      id: membership.id,
+      userId: userToInvite.id,
+      username: userToInvite.username,
+      email: userToInvite.email,
+      role: membership.role as 'CREATOR' | 'ADMIN' | 'MEMBER',
+      status: 'PENDING',
+      totalExperience: 0,
+      battlesWon: 0,
+      battlesLost: 0,
+      joinedAt: membership.joinedAt,
+      invitedBy: requesterId,
+      invitedAt: membership.invitedAt || undefined
+    };
+  }
+
+  /**
+   * Accept campaign invitation
+   */
+  static async acceptCampaignInvitation(campaignId: string, userId: string): Promise<void> {
+    const membership = await prisma.campaignMembership.findFirst({
+      where: {
+        campaignId,
+        userId,
+        status: 'PENDING'
+      }
+    });
+
+    if (!membership) {
+      throw ValidationUtils.createError('No pending invitation found', 404);
+    }
+
+    await prisma.campaignMembership.update({
+      where: { id: membership.id },
+      data: {
+        status: 'ACTIVE',
+        joinedAt: new Date() // Update join date to acceptance time
+      }
+    });
+  }
+
+  /**
+   * Update member role or status
+   */
+  static async updateCampaignMember(
+    campaignId: string,
+    membershipId: string,
+    requesterId: string,
+    data: UpdateMemberRequest
+  ): Promise<CampaignMemberDetailed> {
+    // Verify requester can manage campaign
+    await this.validateCampaignManageAccess(campaignId, requesterId);
+
+    const membership = await prisma.campaignMembership.findFirst({
+      where: {
+        id: membershipId,
+        campaignId
+      },
+      include: {
+        user: {
+          select: {
+            id: true,
+            username: true,
+            email: true
+          }
+        }
+      }
+    });
+
+    if (!membership) {
+      throw ValidationUtils.createError('Member not found', 404);
+    }
+
+    // Cannot change creator role
+    if (membership.role === 'CREATOR') {
+      throw ValidationUtils.createError('Cannot modify campaign creator', 403);
+    }
+
+    // Update membership
+    const updatedMembership = await prisma.campaignMembership.update({
+      where: { id: membershipId },
+      data: {
+        ...(data.role && { role: data.role }),
+        ...(data.status && { status: data.status })
+      }
+    });
+
+    return {
+      id: updatedMembership.id,
+      userId: membership.user.id,
+      username: membership.user.username,
+      email: membership.user.email,
+      role: updatedMembership.role as 'CREATOR' | 'ADMIN' | 'MEMBER',
+      status: updatedMembership.status as 'PENDING' | 'ACTIVE' | 'INACTIVE' | 'REMOVED',
+      totalExperience: updatedMembership.totalExperience,
+      battlesWon: updatedMembership.battlesWon,
+      battlesLost: updatedMembership.battlesLost,
+      joinedAt: updatedMembership.joinedAt,
+      invitedBy: updatedMembership.invitedBy || undefined,
+      invitedAt: updatedMembership.invitedAt || undefined,
+      primaryArmyId: updatedMembership.primaryArmyId || undefined
+    };
+  }
+
+  /**
+   * Remove member from campaign
+   */
+  static async removeCampaignMember(
+    campaignId: string,
+    membershipId: string,
+    requesterId: string
+  ): Promise<void> {
+    // Verify requester can manage campaign
+    await this.validateCampaignManageAccess(campaignId, requesterId);
+
+    const membership = await prisma.campaignMembership.findFirst({
+      where: {
+        id: membershipId,
+        campaignId
+      }
+    });
+
+    if (!membership) {
+      throw ValidationUtils.createError('Member not found', 404);
+    }
+
+    // Cannot remove creator
+    if (membership.role === 'CREATOR') {
+      throw ValidationUtils.createError('Cannot remove campaign creator', 403);
+    }
+
+    // Mark as removed instead of deleting to preserve history
+    await prisma.campaignMembership.update({
+      where: { id: membershipId },
+      data: { status: 'REMOVED' }
+    });
+  }
+
+  // ============= HELPER METHODS =============
+
+  /**
+   * Validate user has access to campaign (is a member)
+   */
+  private static async validateCampaignAccess(campaignId: string, userId: string): Promise<void> {
+    const membership = await prisma.campaignMembership.findFirst({
+      where: {
+        campaignId,
+        userId,
+        status: { in: ['ACTIVE', 'INACTIVE'] }
+      }
+    });
+
+    if (!membership) {
+      throw ValidationUtils.createError('Access denied to campaign', 403);
+    }
+  }
+
+  /**
+   * Validate user can manage campaign (is creator or admin)
+   */
+  private static async validateCampaignManageAccess(campaignId: string, userId: string): Promise<void> {
+    const membership = await prisma.campaignMembership.findFirst({
+      where: {
+        campaignId,
+        userId,
+        role: { in: ['CREATOR', 'ADMIN'] },
+        status: 'ACTIVE'
+      }
+    });
+
+    if (!membership) {
+      throw ValidationUtils.createError('Insufficient permissions to manage campaign', 403);
+    }
   }
 }

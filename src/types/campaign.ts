@@ -102,4 +102,5 @@ export interface CampaignSummary {
   battleCount: number;
   completedBattles: number;
   createdAt: Date;
+  userRole?: 'CREATOR' | 'ADMIN' | 'MEMBER';
 }
