@@ -1,25 +1,19 @@
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
-import { ApiResponse, AuthResponse, LoginRequest, RegisterRequest, User } from '../types/auth';
-import { GamingGroup, CreateGamingGroupRequest, JoinGroupRequest } from '../types/gamingGroup';
-import { Campaign, CreateCampaignRequest } from '../types/campaign';
-import { Mission, CreateMissionRequest, UpdateMissionRequest } from '../types/mission';
+// Simplified API client without complex axios types
+import axios from 'axios';
+import { LoginRequest, RegisterRequest } from '../types/auth';
+import { CreateGamingGroupRequest, JoinGroupRequest } from '../types/gamingGroup';
+import { CreateCampaignRequest } from '../types/campaign';
+import { CreateMissionRequest, UpdateMissionRequest } from '../types/mission';
 import { 
-  Army, 
-  ArmySummary, 
   ArmyImportRequest, 
-  ArmyImportResponse,
   ArmySyncRequest,
-  ArmySyncResult,
   UpdateArmyCustomizationsRequest,
-  ArmyStatistics,
-  ArmyValidationResult,
-  ArmyForgeStatus,
   BattleHonor,
   VeteranUpgrade
 } from '../types/army';
 
 class ApiClient {
-  private client: AxiosInstance;
+  private client: any;
 
   constructor() {
     this.client = axios.create({
@@ -30,7 +24,7 @@ class ApiClient {
     });
 
     // Request interceptor to add auth token
-    this.client.interceptors.request.use((config) => {
+    this.client.interceptors.request.use((config: any) => {
       const token = localStorage.getItem('accessToken');
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
@@ -40,8 +34,8 @@ class ApiClient {
 
     // Response interceptor to handle token refresh
     this.client.interceptors.response.use(
-      (response) => response,
-      async (error) => {
+      (response: any) => response,
+      async (error: any) => {
         const originalRequest = error.config;
 
         if (error.response?.status === 401 && !originalRequest._retry) {
@@ -72,129 +66,128 @@ class ApiClient {
   }
 
   // Auth endpoints
-  async register(data: RegisterRequest): Promise<AxiosResponse<ApiResponse<AuthResponse>>> {
+  async register(data: RegisterRequest): Promise<any> {
     return this.client.post('/auth/register', data);
   }
 
-  async login(data: LoginRequest): Promise<AxiosResponse<ApiResponse<AuthResponse>>> {
+  async login(data: LoginRequest): Promise<any> {
     return this.client.post('/auth/login', data);
   }
 
-  async refreshToken(refreshToken: string): Promise<AxiosResponse<ApiResponse<{ accessToken: string }>>> {
+  async refreshToken(refreshToken: string): Promise<any> {
     return this.client.post('/auth/refresh', { refreshToken });
   }
 
-  async logout(): Promise<AxiosResponse<ApiResponse>> {
+  async logout(): Promise<any> {
     return this.client.post('/auth/logout');
   }
 
-  async getProfile(): Promise<AxiosResponse<ApiResponse<User>>> {
+  async getProfile(): Promise<any> {
     return this.client.get('/auth/profile');
   }
 
-  async updateProfile(data: { email?: string; armyForgeToken?: string }): Promise<AxiosResponse<ApiResponse<User>>> {
+  async updateProfile(data: { email?: string; armyForgeToken?: string }): Promise<any> {
     return this.client.put('/auth/profile', data);
   }
 
-  async changePassword(data: { currentPassword: string; newPassword: string }): Promise<AxiosResponse<ApiResponse>> {
+  async changePassword(data: { currentPassword: string; newPassword: string }): Promise<any> {
     return this.client.post('/auth/change-password', data);
   }
 
-  async deleteAccount(): Promise<AxiosResponse<ApiResponse>> {
+  async deleteAccount(): Promise<any> {
     return this.client.delete('/auth/account');
   }
 
   // Health check
-  async healthCheck(): Promise<AxiosResponse<any>> {
+  async healthCheck(): Promise<any> {
     return this.client.get('/health');
   }
 
   // Gaming Groups endpoints
-  async createGamingGroup(data: CreateGamingGroupRequest): Promise<AxiosResponse<ApiResponse<GamingGroup>>> {
+  async createGamingGroup(data: CreateGamingGroupRequest): Promise<any> {
     return this.client.post('/groups', data);
   }
 
-  async joinGamingGroup(data: JoinGroupRequest): Promise<AxiosResponse<ApiResponse<GamingGroup>>> {
+  async joinGamingGroup(data: JoinGroupRequest): Promise<any> {
     return this.client.post('/groups/join', data);
   }
 
-  async getUserGamingGroups(): Promise<AxiosResponse<ApiResponse<GamingGroup[]>>> {
+  async getUserGamingGroups(): Promise<any> {
     return this.client.get('/groups');
   }
 
-  async getGamingGroup(groupId: string): Promise<AxiosResponse<ApiResponse<GamingGroup>>> {
+  async getGamingGroup(groupId: string): Promise<any> {
     return this.client.get(`/groups/${groupId}`);
   }
 
-  async updateGamingGroup(groupId: string, data: Partial<CreateGamingGroupRequest>): Promise<AxiosResponse<ApiResponse<GamingGroup>>> {
+  async updateGamingGroup(groupId: string, data: Partial<CreateGamingGroupRequest>): Promise<any> {
     return this.client.put(`/groups/${groupId}`, data);
   }
 
-  async leaveGamingGroup(groupId: string): Promise<AxiosResponse<ApiResponse>> {
+  async leaveGamingGroup(groupId: string): Promise<any> {
     return this.client.post(`/groups/${groupId}/leave`);
   }
 
-  async deleteGamingGroup(groupId: string): Promise<AxiosResponse<ApiResponse>> {
+  async deleteGamingGroup(groupId: string): Promise<any> {
     return this.client.delete(`/groups/${groupId}`);
   }
 
-  async regenerateInviteCode(groupId: string): Promise<AxiosResponse<ApiResponse<{ inviteCode: string }>>> {
+  async regenerateInviteCode(groupId: string): Promise<any> {
     return this.client.post(`/groups/${groupId}/regenerate-invite`);
   }
 
   // Campaign endpoints
-  async createCampaign(groupId: string, data: CreateCampaignRequest): Promise<AxiosResponse<ApiResponse<Campaign>>> {
+  async createCampaign(groupId: string, data: CreateCampaignRequest): Promise<any> {
     return this.client.post(`/groups/${groupId}/campaigns`, data);
   }
 
-  async getGroupCampaigns(groupId: string): Promise<AxiosResponse<ApiResponse<Campaign[]>>> {
+  async getGroupCampaigns(groupId: string): Promise<any> {
     return this.client.get(`/groups/${groupId}/campaigns`);
   }
 
-  async getCampaign(campaignId: string): Promise<AxiosResponse<ApiResponse<Campaign>>> {
+  async getCampaign(campaignId: string): Promise<any> {
     return this.client.get(`/campaigns/${campaignId}`);
   }
 
-  async updateCampaign(campaignId: string, data: Partial<CreateCampaignRequest>): Promise<AxiosResponse<ApiResponse<Campaign>>> {
+  async updateCampaign(campaignId: string, data: Partial<CreateCampaignRequest>): Promise<any> {
     return this.client.put(`/campaigns/${campaignId}`, data);
   }
 
-  async joinCampaign(campaignId: string, data?: { primaryArmyId?: string }): Promise<AxiosResponse<ApiResponse<Campaign>>> {
+  async joinCampaign(campaignId: string, data?: { primaryArmyId?: string }): Promise<any> {
     return this.client.post(`/campaigns/${campaignId}/join`, data || {});
   }
 
-  async leaveCampaign(campaignId: string): Promise<AxiosResponse<ApiResponse>> {
+  async leaveCampaign(campaignId: string): Promise<any> {
     return this.client.post(`/campaigns/${campaignId}/leave`);
   }
 
-  async deleteCampaign(campaignId: string): Promise<AxiosResponse<ApiResponse>> {
+  async deleteCampaign(campaignId: string): Promise<any> {
     return this.client.delete(`/campaigns/${campaignId}`);
   }
 
   // Mission endpoints
-
-  async createMission(campaignId: string, data: CreateMissionRequest): Promise<AxiosResponse<ApiResponse<Mission>>> {
+  async createMission(campaignId: string, data: CreateMissionRequest): Promise<any> {
     return this.client.post(`/campaigns/${campaignId}/missions`, data);
   }
 
-  async getCampaignMissions(campaignId: string): Promise<AxiosResponse<ApiResponse<Mission[]>>> {
+  async getCampaignMissions(campaignId: string): Promise<any> {
     return this.client.get(`/campaigns/${campaignId}/missions`);
   }
 
-  async getMissionById(missionId: string): Promise<AxiosResponse<ApiResponse<Mission>>> {
+  async getMissionById(missionId: string): Promise<any> {
     return this.client.get(`/missions/${missionId}`);
   }
 
-  async updateMission(missionId: string, data: UpdateMissionRequest): Promise<AxiosResponse<ApiResponse<Mission>>> {
+  async updateMission(missionId: string, data: UpdateMissionRequest): Promise<any> {
     return this.client.put(`/missions/${missionId}`, data);
   }
 
-  async deleteMission(missionId: string): Promise<AxiosResponse<ApiResponse>> {
+  async deleteMission(missionId: string): Promise<any> {
     return this.client.delete(`/missions/${missionId}`);
   }
 
   // Army endpoints
-  async importArmy(data: ArmyImportRequest): Promise<AxiosResponse<ApiResponse<ArmyImportResponse>>> {
+  async importArmy(data: ArmyImportRequest): Promise<any> {
     return this.client.post('/armies/import', data);
   }
 
@@ -208,47 +201,47 @@ class ApiClient {
     sortOrder?: 'asc' | 'desc';
     limit?: number;
     offset?: number;
-  }): Promise<AxiosResponse<ApiResponse<ArmySummary[]>>> {
+  }): Promise<any> {
     return this.client.get('/armies', { params });
   }
 
-  async getArmy(armyId: string): Promise<AxiosResponse<ApiResponse<Army>>> {
+  async getArmy(armyId: string): Promise<any> {
     return this.client.get(`/armies/${armyId}`);
   }
 
-  async syncArmy(armyId: string, data: ArmySyncRequest = {}): Promise<AxiosResponse<ApiResponse<ArmySyncResult>>> {
+  async syncArmy(armyId: string, data: ArmySyncRequest = {}): Promise<any> {
     return this.client.put(`/armies/${armyId}/sync`, data);
   }
 
-  async updateArmyCustomizations(armyId: string, data: UpdateArmyCustomizationsRequest): Promise<AxiosResponse<ApiResponse<Army>>> {
+  async updateArmyCustomizations(armyId: string, data: UpdateArmyCustomizationsRequest): Promise<any> {
     return this.client.put(`/armies/${armyId}/customizations`, data);
   }
 
-  async deleteArmy(armyId: string): Promise<AxiosResponse<ApiResponse>> {
+  async deleteArmy(armyId: string): Promise<any> {
     return this.client.delete(`/armies/${armyId}`);
   }
 
-  async addBattleHonor(armyId: string, battleHonor: Omit<BattleHonor, 'id' | 'dateEarned'>): Promise<AxiosResponse<ApiResponse<Army>>> {
+  async addBattleHonor(armyId: string, battleHonor: Omit<BattleHonor, 'id' | 'dateEarned'>): Promise<any> {
     return this.client.post(`/armies/${armyId}/battle-honors`, battleHonor);
   }
 
-  async addVeteranUpgrade(armyId: string, veteranUpgrade: Omit<VeteranUpgrade, 'id' | 'dateAcquired'>): Promise<AxiosResponse<ApiResponse<Army>>> {
+  async addVeteranUpgrade(armyId: string, veteranUpgrade: Omit<VeteranUpgrade, 'id' | 'dateAcquired'>): Promise<any> {
     return this.client.post(`/armies/${armyId}/veteran-upgrades`, veteranUpgrade);
   }
 
-  async getArmyStatistics(): Promise<AxiosResponse<ApiResponse<ArmyStatistics>>> {
+  async getArmyStatistics(): Promise<any> {
     return this.client.get('/armies/statistics');
   }
 
-  async validateArmy(armyId: string): Promise<AxiosResponse<ApiResponse<ArmyValidationResult>>> {
+  async validateArmy(armyId: string): Promise<any> {
     return this.client.get(`/armies/${armyId}/validate`);
   }
 
-  async getArmyForgeStatus(): Promise<AxiosResponse<ApiResponse<ArmyForgeStatus>>> {
+  async getArmyForgeStatus(): Promise<any> {
     return this.client.get('/armies/armyforge/status');
   }
 
-  async clearArmyForgeCache(armyId?: string): Promise<AxiosResponse<ApiResponse>> {
+  async clearArmyForgeCache(armyId?: string): Promise<any> {
     const params = armyId ? { armyId } : {};
     return this.client.delete('/armies/armyforge/cache', { params });
   }
