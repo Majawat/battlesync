@@ -1,13 +1,12 @@
 import { PrismaClient } from '@prisma/client';
-import bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
 
 async function main() {
   console.log('🌱 Seeding database...');
 
-  // Create a server owner user
-  const hashedPassword = await bcrypt.hash('admin123', 10);
+  // Create a server owner user (using same hashing as CryptoUtils)
+  const hashedPassword = Buffer.from('admin123' + 'salt').toString('base64');
   
   const serverOwner = await prisma.user.upsert({
     where: { username: 'admin' },
@@ -47,15 +46,14 @@ async function main() {
       narrative: 'The eternal struggle between good and evil continues...',
       status: 'PLANNING',
       settings: {
-        pointLimit: 1000,
-        underdogBonus: true,
-        commandPointsRule: 'standard',
-        allowArmyModifications: true,
-        experienceMultiplier: 1.0,
-        battleRounds: {
-          minimum: 4,
-          recommended: 6
-        }
+        pointsLimit: 1000,
+        gameSystem: 'grimdark-future',
+        experiencePerWin: 10,
+        experiencePerLoss: 5,
+        experiencePerKill: 1,
+        allowMultipleArmies: false,
+        requireArmyForgeIntegration: true,
+        customRules: []
       },
       createdBy: serverOwner.id,
     },
