@@ -1,28 +1,31 @@
 # BattleSync
 
-A self-hosted web application for managing One Page Rules (OPR) tabletop gaming campaigns with real-time battle tracking.
+A self-hosted web application for managing One Page Rules (OPR) tabletop gaming campaigns with comprehensive army management and ArmyForge integration.
 
 ## Current Status
 
-🟢 **IMPLEMENTED**
+🟢 **IMPLEMENTED & TESTED**
 - ✅ JWT Authentication system with role-based access control
 - ✅ Gaming Groups management with invite codes
 - ✅ Campaign management with configurable settings
-- ✅ Mission system with templates and auto-numbering
+- ✅ Mission system with objectives, special rules, and terrain
+- ✅ Complete Army management system with ArmyForge integration
+- ✅ Real ArmyForge API integration with intelligent faction mapping
 - ✅ WebSocket real-time communication infrastructure
-- ✅ React frontend with dark mode UI
+- ✅ React frontend with dark mode UI and responsive design
 - ✅ PostgreSQL database with Prisma ORM
 - ✅ Docker development environment
 - ✅ RESTful API with comprehensive CRUD operations
+- ✅ End-to-end army import and campaign association workflow
 
 🟡 **IN PROGRESS**
-- ⚠️ Army management system (90% complete, fixing TypeScript compilation errors)
-- ⚠️ ArmyForge integration (implemented but disabled due to compilation issues)
+- ⚠️ Battle tracking system (infrastructure complete, UI in development)
+- ⚠️ Army validation middleware (basic validation implemented)
 
-🔴 **PENDING**
-- ❌ Battle tracking system (complex real-time implementation)
-- ❌ Army validation middleware
-- ❌ Production deployment configuration
+🔴 **PLANNED**
+- ❌ Advanced battle analytics and reporting
+- ❌ Mobile-optimized battle interface
+- ❌ Production deployment configuration with SSL
 
 ## Quick Start
 
@@ -148,69 +151,96 @@ docker/
 - `POST /api/auth/register` - User registration  
 - `POST /api/auth/refresh` - Refresh access token
 - `POST /api/auth/logout` - User logout
+- `GET /api/auth/profile` - Get user profile
+- `PUT /api/auth/profile` - Update user profile
 
 ### Gaming Groups
 - `GET /api/groups` - Get user's gaming groups
 - `POST /api/groups` - Create gaming group
 - `GET /api/groups/:id` - Get specific group
 - `POST /api/groups/join` - Join group with invite code
+- `POST /api/groups/:id/leave` - Leave gaming group
+- `POST /api/groups/:id/regenerate-invite` - Regenerate invite code
 
 ### Campaigns
 - `GET /api/groups/:groupId/campaigns` - Get group's campaigns
 - `POST /api/groups/:groupId/campaigns` - Create campaign
 - `GET /api/campaigns/:id` - Get specific campaign
 - `PUT /api/campaigns/:id` - Update campaign
+- `POST /api/campaigns/:id/join` - Join campaign
+- `POST /api/campaigns/:id/leave` - Leave campaign
 
 ### Missions
 - `GET /api/campaigns/:campaignId/missions` - Get campaign missions
 - `POST /api/campaigns/:campaignId/missions` - Create mission
 - `GET /api/missions/:id` - Get specific mission
+- `PUT /api/missions/:id` - Update mission
+- `DELETE /api/missions/:id` - Delete mission
+
+### Army Management
+- `POST /api/armies/import` - Import army from ArmyForge
+- `GET /api/armies` - Get user's armies (with campaign filtering)
+- `GET /api/armies/:id` - Get specific army details
+- `PUT /api/armies/:id/sync` - Sync army with ArmyForge
+- `PUT /api/armies/:id/customizations` - Update army customizations
+- `DELETE /api/armies/:id` - Delete army
+- `GET /api/armies/armyforge/status` - Check ArmyForge API status
 
 ### WebSocket Events
 - `connection` - Client connects to real-time system
 - `join-room` - Join specific room (group/campaign/battle)
 - `leave-room` - Leave room
 - `notification` - Real-time notifications
+- `battle-update` - Live battle state updates
 
-## Known Issues
+## Key Features
 
-### Army Management System
-The army management system is implemented but currently disabled due to TypeScript compilation errors:
-- Express router type compatibility issues with `AuthenticatedRequest`
-- Missing axios dependency in Docker environment
-- Service export/import inconsistencies
+### ✅ Complete Army Management
+- **ArmyForge Integration**: Import armies directly from ArmyForge using army IDs
+- **Intelligent Faction Mapping**: Automatically resolves game system codes to meaningful faction names
+- **Campaign Association**: Link armies to specific campaigns with validation
+- **Real-time Sync**: Keep armies updated with ArmyForge changes
+- **Detailed Army Views**: View units, weapons, special rules, and army statistics
 
-**Temporary workaround**: Army routes are disabled in `/src/routes/index.ts`
+### ✅ Advanced Campaign System
+- **Flexible Settings**: Configure points limits, experience systems, and game rules
+- **Mission Management**: Create detailed missions with objectives, special rules, and terrain
+- **Member Management**: Invite players and track campaign participation
+- **Experience Tracking**: Built-in system for tracking army experience and progression
+
+### ✅ Real-time Features
+- **WebSocket Communication**: Live updates for battle tracking and notifications
+- **Responsive UI**: Modern React interface optimized for desktop and mobile
+- **Dark Mode**: Full dark theme support with system preference detection
 
 ## Next Steps
 
 ### High Priority
-1. **Fix Army Management Compilation Errors**
-   - Resolve TypeScript router compatibility 
-   - Add missing dependencies to Docker
-   - Test complete army workflow
+1. **Battle Tracking System**
+   - Real-time battle rooms with turn tracking
+   - Mobile-optimized battle interface
+   - Battle result recording and experience updates
 
-2. **Battle Tracking System**
-   - Real-time WebSocket battle rooms
-   - Turn-based state management
-   - Mobile-optimized battle UI
+2. **Enhanced Army Features**
+   - Battle honors and veteran upgrades
+   - Army customization tracking
+   - Comprehensive army validation
 
 ### Medium Priority  
-3. **Army Validation Middleware**
-   - Joi schema validation for army endpoints
-   - One Page Rules validation logic
-   - Points limit enforcement
+3. **Advanced Analytics**
+   - Campaign statistics and reporting
+   - Player performance tracking
+   - Army usage analytics
 
 4. **Production Features**
    - SSL/HTTPS configuration
-   - Environment-based configuration
-   - Backup and monitoring setup
+   - Automated backup systems
+   - Performance monitoring
 
 ### Low Priority
-5. **Enhanced Features**
-   - Campaign statistics and reporting
-   - Advanced mission templates
-   - User profile management
+5. **Extended Integrations**
+   - Additional army list providers
+   - Discord bot integration
    - Mobile app (React Native)
 
 ## Contributing

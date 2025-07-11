@@ -1,20 +1,29 @@
-# Data Models
+# Data Models ✅ IMPLEMENTED
 
-## User Management
+## User Management ✅
 
-### User
+### User ✅ IMPLEMENTED
 ```typescript
 interface User {
-  id: string;
-  username: string;
-  email?: string;
-  passwordHash: string;
-  role: 'server_owner' | 'user';
-  armyForgeToken?: string;
-  createdAt: Date;
-  updatedAt: Date;
-  lastLogin?: Date;
-  isActive: boolean;
+  id: string;              // ✅ UUID primary key
+  username: string;        // ✅ Unique username
+  email: string;           // ✅ User email address
+  passwordHash: string;    // ✅ bcrypt hashed password
+  role: UserRole;          // ✅ SERVER_OWNER | USER
+  isActive: boolean;       // ✅ Account status
+  createdAt: Date;         // ✅ Account creation timestamp
+  updatedAt: Date;         // ✅ Last update timestamp
+  
+  // Relationships ✅
+  groupMemberships: GroupMembership[];  // ✅ Gaming groups user belongs to
+  campaignMemberships: CampaignMembership[]; // ✅ Campaigns user joined
+  armies: Army[];                       // ✅ User's imported armies
+  createdGroups: GamingGroup[];         // ✅ Groups owned by user
+}
+
+enum UserRole {
+  SERVER_OWNER = 'SERVER_OWNER',  // ✅ Full system access
+  USER = 'USER'                   // ✅ Standard user access
 }
 ```
 

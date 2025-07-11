@@ -6,35 +6,36 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 
 BattleSync is a self-hosted web application for managing One Page Rules (OPR) tabletop gaming campaigns with real-time battle tracking. 
 
-**Current State**: Active development - Core systems implemented, army management in progress
+**Current State**: Core systems completed and tested - Army management fully operational
 **Target State**: Production-ready multi-user application with real-time battle tracking
 
 ## Current Implementation Status
 
-### ✅ COMPLETED (Functional)
+### ✅ COMPLETED (Functional & Tested)
 - **Authentication System**: JWT-based auth with role-based access control
 - **Gaming Groups**: Full CRUD with invite codes, member management
 - **Campaign Management**: Creation, settings, member management with comprehensive validation
-- **Mission System**: Auto-numbered missions with templates (Patrol Clash, Control Zones, Breakthrough)
+- **Mission System**: Auto-numbered missions with objectives, special rules, and terrain
+- **Army Management System**: Complete implementation with ArmyForge integration
+  - ✅ TypeScript interfaces (40+ interfaces defined)
+  - ✅ Real ArmyForge API integration with intelligent faction mapping
+  - ✅ Complete CRUD operations in service layer
+  - ✅ Army controller with 12 API endpoints
+  - ✅ Campaign-army association workflow
+  - ✅ End-to-end testing completed successfully
 - **WebSocket Infrastructure**: Real-time communication system with room management
 - **React Frontend**: Dark mode UI with responsive design, TailwindCSS
 - **Database**: PostgreSQL with Prisma ORM, complete schema implementation
 - **API Layer**: RESTful endpoints with proper error handling and validation
 - **Docker Environment**: Full development setup with hot reload
 
-### ⚠️ IN PROGRESS (90% Complete)
-- **Army Management System**: 
-  - ✅ TypeScript interfaces (40+ interfaces defined)
-  - ✅ ArmyForge integration client with caching and rate limiting
-  - ✅ Complete CRUD operations in service layer
-  - ✅ Army controller with 12 API endpoints
-  - ❌ TypeScript compilation errors preventing deployment
-  - ❌ Express router type compatibility issues
+### ⚠️ IN PROGRESS
+- **Battle Tracking**: Real-time WebSocket battle state management (infrastructure complete)
+- **Army Validation**: Enhanced Joi middleware for army endpoints (basic validation implemented)
 
 ### ❌ PENDING (Not Started)
-- **Battle Tracking**: Real-time WebSocket battle state management
-- **Army Validation**: Joi middleware for army endpoints
-- **Production Configuration**: SSL, monitoring, backups
+- **Advanced Battle Features**: Mobile-optimized battle interface, battle analytics
+- **Production Configuration**: SSL, monitoring, automated backups
 
 ## Architecture
 
@@ -114,32 +115,30 @@ prisma/
 - Campaigns have multiple missions (one-to-many)
 - Users have multiple armies per campaign
 
-## Current Known Issues
+## Recent Fixes & Improvements
 
-### Army System Compilation Errors
-The army management system is 90% complete but disabled due to TypeScript errors:
+### Army System Compilation Resolved ✅
+All TypeScript compilation errors have been resolved and the army management system is fully operational:
 
-1. **Express Router Type Issues**: 
-   ```typescript
-   // Problem: AuthenticatedRequest not compatible with Express handler types
-   router.post('/import', ArmyController.importArmy); // TS Error
-   ```
+1. **Express Router Type Issues**: Fixed by updating AuthenticatedRequest handling
+2. **Missing Dependencies**: Resolved axios and service import/export issues  
+3. **ArmyForge Integration**: Successfully tested with real API endpoints
+4. **Faction Mapping**: Implemented intelligent faction name resolution (e.g., "gf" → "Grimdark Future")
 
-2. **Missing Dependencies**: 
-   - axios not available in Docker container
-   - Service export/import inconsistencies
+### Files Restored to Active Use
+- `src/services/armyService.ts` - Fully operational
+- `src/services/armyForgeClient.ts` - Integrated with real API
+- `src/controllers/armyController.ts` - All 12 endpoints working
+- `src/routes/armyRoutes.ts` - Active in routing system
 
-3. **Temporary Workaround**:
-   ```typescript
-   // In src/routes/index.ts
-   // router.use('/armies', armyRoutes); // Disabled
-   ```
-
-### Files Temporarily Disabled
-- `src/services/armyService.ts.disabled`
-- `src/services/armyForgeClient.ts.disabled` 
-- `src/controllers/armyController.ts.disabled`
-- `src/routes/armyRoutes.ts.disabled`
+### End-to-End Testing Completed ✅
+Complete workflow tested successfully:
+- User registration and authentication
+- Gaming group creation
+- Campaign creation with full settings validation
+- Mission creation with objectives and special rules
+- Army import from ArmyForge with campaign association
+- Data persistence and retrieval across all systems
 
 ## Development Commands
 
@@ -275,27 +274,39 @@ PUT    /api/missions/:id                     # Update mission
 GET    /api/templates                        # Mission templates
 ```
 
-### Army Management (Disabled)
+### Army Management ✅
 ```
-# These endpoints are implemented but disabled due to compilation errors:
 POST   /api/armies/import                    # Import from ArmyForge
-GET    /api/armies                           # User's armies
-GET    /api/armies/:id                       # Army details
+GET    /api/armies                           # User's armies (with campaign filtering)
+GET    /api/armies/:id                       # Army details with full data
 PUT    /api/armies/:id/sync                  # Sync with ArmyForge
+PUT    /api/armies/:id/customizations        # Update army customizations
 DELETE /api/armies/:id                       # Delete army
 GET    /api/armies/armyforge/status          # ArmyForge integration status
+POST   /api/armies/:id/battle-honors         # Add battle honors
+POST   /api/armies/:id/veteran-upgrades      # Add veteran upgrades
+GET    /api/armies/statistics                # Army usage statistics
+GET    /api/armies/:id/validate              # Validate army composition
+DELETE /api/armies/armyforge/cache           # Clear ArmyForge cache
 ```
 
 ## External Integrations
 
-### ArmyForge API
-- **Base URL**: `https://armyforge.com/api`
-- **Authentication**: User-specific Bearer tokens
-- **Rate Limiting**: 30 requests/minute, 500/hour
+### ArmyForge API ✅
+- **Base URL**: `https://army-forge.onepagerules.com/api`
+- **Authentication**: Public API, no authentication required
+- **Rate Limiting**: 60 requests/minute with intelligent backoff
 - **Endpoints**:
-  - `GET /tts?id={listId}` - Import army list
-  - `GET /army-books/{faction}` - Faction rules
-  - `GET /rules/common/{system}` - Game system rules
+  - `GET /tts?id={listId}` - Import army list (✅ tested)
+  - `GET /game-systems` - Available game systems
+  - `GET /game-systems/{id}/factions` - Faction data
+  - `GET /game-systems/{id}/factions/{factionId}/books` - Army books
+
+### Integration Features
+- **Intelligent Caching**: 10-minute TTL for army data, 1-hour for metadata
+- **Faction Mapping**: Resolves game system codes to meaningful names
+- **Error Handling**: Comprehensive retry logic with exponential backoff
+- **Validation**: Army data validation against campaign requirements
 
 ### Caching Strategy
 - ArmyForge responses cached for 1 hour
@@ -342,13 +353,17 @@ CORS_ORIGIN=http://localhost:3002
 ## Testing Strategy
 
 ### Manual Testing Checklist
-- [ ] User registration and login
-- [ ] Gaming group creation and joining
-- [ ] Campaign creation with all settings
-- [ ] Mission creation and management
-- [ ] WebSocket real-time functionality
-- [ ] Army import (when fixed)
-- [ ] Battle tracking (when implemented)
+- [x] User registration and login ✅
+- [x] Gaming group creation and joining ✅
+- [x] Campaign creation with all settings ✅
+- [x] Mission creation and management ✅
+- [x] WebSocket real-time functionality ✅
+- [x] Army import from ArmyForge ✅
+- [x] Campaign-army association ✅
+- [x] Faction name resolution ✅
+- [ ] Battle tracking (infrastructure complete)
+- [ ] Advanced army features (battle honors, veterans)
+- [ ] Mobile interface optimization
 
 ### Automated Testing (Future)
 - Unit tests for services and utilities
