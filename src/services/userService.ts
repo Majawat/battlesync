@@ -235,3 +235,5 @@ export class UserService {
     return users.map(toUserPublic);
   }
 }
+
+export const userService = new UserService();

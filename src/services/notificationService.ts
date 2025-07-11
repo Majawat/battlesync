@@ -142,3 +142,5 @@ export class NotificationService {
     return wsManager ? wsManager.getRoomParticipants(roomId) : [];
   }
 }
+
+export const notificationService = new NotificationService();

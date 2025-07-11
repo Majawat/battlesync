@@ -17,7 +17,7 @@ export class ArmyController {
    * Import army from ArmyForge
    * POST /api/armies/import
    */
-  async importArmy(req: AuthenticatedRequest, res: Response): Promise<void> {
+  static async importArmy(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       const userId = req.user!.id;
       const importRequest: ArmyImportRequest = req.body;
@@ -44,7 +44,7 @@ export class ArmyController {
    * Get user's armies
    * GET /api/armies
    */
-  async getUserArmies(req: AuthenticatedRequest, res: Response): Promise<void> {
+  static async getUserArmies(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       const userId = req.user!.id;
       const query: GetArmiesQuery = {
@@ -75,7 +75,7 @@ export class ArmyController {
    * Get specific army
    * GET /api/armies/:id
    */
-  async getArmy(req: AuthenticatedRequest, res: Response): Promise<void> {
+  static async getArmy(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       const userId = req.user!.id;
       const armyId = req.params.id;
@@ -101,7 +101,7 @@ export class ArmyController {
    * Sync army with ArmyForge
    * PUT /api/armies/:id/sync
    */
-  async syncArmy(req: AuthenticatedRequest, res: Response): Promise<void> {
+  static async syncArmy(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       const userId = req.user!.id;
       const armyId = req.params.id;
@@ -128,7 +128,7 @@ export class ArmyController {
    * Update army customizations
    * PUT /api/armies/:id/customizations
    */
-  async updateCustomizations(req: AuthenticatedRequest, res: Response): Promise<void> {
+  static async updateCustomizations(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       const userId = req.user!.id;
       const armyId = req.params.id;
@@ -155,7 +155,7 @@ export class ArmyController {
    * Delete army
    * DELETE /api/armies/:id
    */
-  async deleteArmy(req: AuthenticatedRequest, res: Response): Promise<void> {
+  static async deleteArmy(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       const userId = req.user!.id;
       const armyId = req.params.id;
@@ -181,7 +181,7 @@ export class ArmyController {
    * Add battle honor to army
    * POST /api/armies/:id/battle-honors
    */
-  async addBattleHonor(req: AuthenticatedRequest, res: Response): Promise<void> {
+  static async addBattleHonor(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       const userId = req.user!.id;
       const armyId = req.params.id;
@@ -213,7 +213,7 @@ export class ArmyController {
    * Add veteran upgrade to army
    * POST /api/armies/:id/veteran-upgrades
    */
-  async addVeteranUpgrade(req: AuthenticatedRequest, res: Response): Promise<void> {
+  static async addVeteranUpgrade(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       const userId = req.user!.id;
       const armyId = req.params.id;
@@ -245,7 +245,7 @@ export class ArmyController {
    * Get army statistics
    * GET /api/armies/statistics
    */
-  async getStatistics(req: AuthenticatedRequest, res: Response): Promise<void> {
+  static async getStatistics(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       const userId = req.user!.id;
 
@@ -265,7 +265,7 @@ export class ArmyController {
    * Get army validation
    * GET /api/armies/:id/validate
    */
-  async validateArmy(req: AuthenticatedRequest, res: Response): Promise<void> {
+  static async validateArmy(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       const userId = req.user!.id;
       const armyId = req.params.id;
@@ -300,7 +300,7 @@ export class ArmyController {
    * Get ArmyForge integration status
    * GET /api/armies/armyforge/status
    */
-  async getArmyForgeStatus(req: AuthenticatedRequest, res: Response): Promise<void> {
+  static async getArmyForgeStatus(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       const userId = req.user!.id;
       
@@ -337,7 +337,7 @@ export class ArmyController {
    * Clear ArmyForge cache
    * DELETE /api/armies/armyforge/cache
    */
-  async clearArmyForgeCache(req: Request, res: Response): Promise<void> {
+  static async clearArmyForgeCache(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       const armyId = req.query.armyId as string;
       
@@ -351,4 +351,4 @@ export class ArmyController {
   }
 }
 
-export const armyController = new ArmyController();
+// Export static class, no need for instance
