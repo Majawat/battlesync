@@ -197,11 +197,34 @@ class ArmyForgeClient {
       throw new Error(`Army not found or invalid response for ID: ${armyId}`);
     }
 
+    // Helper function to determine faction from army data
+    const inferFactionFromArmy = (armyData: any): string => {
+      // If there's a description, use it as faction info
+      if (armyData.description) {
+        return armyData.description;
+      }
+      
+      // Fallback: Try to infer from unit names or use army name
+      if (armyData.name && armyData.name !== 'Untitled Army') {
+        return armyData.name;
+      }
+      
+      // Last resort: Use game system with friendly name
+      const gameSystemNames: Record<string, string> = {
+        'gf': 'Grimdark Future',
+        'aof': 'Age of Fantasy', 
+        'ff': 'Firefight',
+        'wftl': 'Warfleets FTL'
+      };
+      
+      return gameSystemNames[armyData.gameSystem] || armyData.gameSystem;
+    };
+
     // Transform the ArmyForge data to our expected format
     const result: ArmyForgeData = {
       id: armyData.id,
       name: armyData.name,
-      faction: armyData.gameSystem, // Map gameSystem to faction for now
+      faction: inferFactionFromArmy(armyData), // Use smarter faction detection
       gameSystem: armyData.gameSystem,
       points: armyData.listPoints || armyData.pointsLimit || 0,
       units: armyData.units || [],
