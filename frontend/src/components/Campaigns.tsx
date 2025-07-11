@@ -176,6 +176,7 @@ export const Campaigns: React.FC = () => {
                   key={campaign.id}
                   campaign={campaign}
                   currentUserId={user?.id || ''}
+                  userRole={campaign.userRole || 'MEMBER'}
                   onDelete={() => handleDeleteCampaign(campaign.id)}
                 />
               ))}

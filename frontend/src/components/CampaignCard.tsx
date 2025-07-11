@@ -1,20 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Campaign } from '../types/campaign';
+import { CampaignMembersModal } from './CampaignMembersModal';
 
 interface CampaignCardProps {
   campaign: Campaign;
   currentUserId: string;
+  userRole?: 'CREATOR' | 'ADMIN' | 'MEMBER';
   onDelete: () => void;
 }
 
 export const CampaignCard: React.FC<CampaignCardProps> = ({
   campaign,
   currentUserId,
+  userRole = 'MEMBER',
   onDelete,
 }) => {
   const navigate = useNavigate();
   const isOwner = campaign.createdBy === currentUserId;
+  const [showMembersModal, setShowMembersModal] = useState(false);
+  const canManageMembers = userRole === 'CREATOR' || userRole === 'ADMIN';
 
   const getStatusColor = () => {
     switch (campaign.status) {
@@ -91,14 +96,31 @@ export const CampaignCard: React.FC<CampaignCardProps> = ({
       {/* Card Footer */}
       <div className="px-6 py-4 bg-gray-900 border-t border-gray-700">
         <div className="flex justify-between items-center">
-          <button
-            onClick={() => navigate(`/campaigns/${campaign.id}/missions`)}
-            className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 px-4 rounded"
-          >
-            View Missions
-          </button>
+          <div className="flex space-x-3">
+            <button
+              onClick={() => navigate(`/campaigns/${campaign.id}/missions`)}
+              className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 px-4 rounded"
+            >
+              View Missions
+            </button>
+            
+            <button
+              onClick={() => setShowMembersModal(true)}
+              className="bg-gray-600 hover:bg-gray-700 text-white text-sm font-medium py-2 px-4 rounded"
+            >
+              Members ({campaign.participantCount})
+            </button>
+          </div>
           
           <div className="flex space-x-2">
+            {canManageMembers && (
+              <button
+                onClick={() => setShowMembersModal(true)}
+                className="text-blue-400 hover:text-blue-300 text-sm"
+              >
+                Manage
+              </button>
+            )}
             {isOwner && (
               <>
                 <button
@@ -118,6 +140,16 @@ export const CampaignCard: React.FC<CampaignCardProps> = ({
           </div>
         </div>
       </div>
+      
+      {/* Members Management Modal */}
+      {showMembersModal && (
+        <CampaignMembersModal
+          campaignId={campaign.id}
+          campaignName={campaign.name}
+          userRole={userRole}
+          onClose={() => setShowMembersModal(false)}
+        />
+      )}
     </div>
   );
 };

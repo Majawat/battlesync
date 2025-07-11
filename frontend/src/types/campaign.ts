@@ -11,6 +11,7 @@ export interface Campaign {
   participantCount: number;
   createdAt: string;
   updatedAt: string;
+  userRole?: 'CREATOR' | 'ADMIN' | 'MEMBER';
 }
 
 export interface CampaignMember {

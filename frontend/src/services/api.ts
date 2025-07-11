@@ -249,6 +249,28 @@ class ApiClient {
     const params = armyId ? { armyId } : {};
     return this.client.delete('/armies/armyforge/cache', { params });
   }
+
+  // ============= CAMPAIGN MEMBERSHIP =============
+
+  async getCampaignMembers(campaignId: string): Promise<any> {
+    return this.client.get(`/campaigns/${campaignId}/members`);
+  }
+
+  async inviteMemberToCampaign(campaignId: string, data: { username: string; role?: 'ADMIN' | 'MEMBER' }): Promise<any> {
+    return this.client.post(`/campaigns/${campaignId}/members/invite`, data);
+  }
+
+  async acceptCampaignInvitation(campaignId: string): Promise<any> {
+    return this.client.post(`/campaigns/${campaignId}/accept-invitation`);
+  }
+
+  async updateCampaignMember(campaignId: string, membershipId: string, data: { role?: 'ADMIN' | 'MEMBER'; status?: 'ACTIVE' | 'INACTIVE' }): Promise<any> {
+    return this.client.put(`/campaigns/${campaignId}/members/${membershipId}`, data);
+  }
+
+  async removeCampaignMember(campaignId: string, membershipId: string): Promise<any> {
+    return this.client.delete(`/campaigns/${campaignId}/members/${membershipId}`);
+  }
 }
 
 export const apiClient = new ApiClient();
