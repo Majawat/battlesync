@@ -1,51 +1,32 @@
 import React, { useState } from 'react';
-import { CreateMissionRequest } from '../types/mission';
+import { CreateMissionRequest, MissionObjective, MissionRule, TerrainFeature } from '../types/mission';
 
 interface CreateMissionModalProps {
   onClose: () => void;
   onSubmit: (data: CreateMissionRequest) => Promise<void>;
 }
 
-const MISSION_TEMPLATES = [
-  {
-    name: 'Patrol Clash',
-    type: 'PATROL_CLASH',
-    objectives: ['Eliminate enemy forces', 'Control center objective'],
-    specialRules: ['6-turn limit', 'First blood bonus'],
-    terrainSuggestions: ['Central hill or building', 'Scattered cover'],
-  },
-  {
-    name: 'Control Zones',
-    type: 'CONTROL_ZONES',
-    objectives: ['Control 3 of 5 objectives', 'Prevent enemy from scoring'],
-    specialRules: ['Objectives score at end of turn', 'Move through cover'],
-    terrainSuggestions: ['5 objective markers', 'Buildings for cover', 'Open firing lanes'],
-  },
-  {
-    name: 'Breakthrough',
-    type: 'BREAKTHROUGH',
-    objectives: ['Get units to enemy deployment zone', 'Eliminate enemy commander'],
-    specialRules: ['Deployment zone scoring', 'Reserves available'],
-    terrainSuggestions: ['Narrow corridor', 'Defensive positions', 'Multiple approach routes'],
-  },
-];
-
 export const CreateMissionModal: React.FC<CreateMissionModalProps> = ({
   onClose,
   onSubmit,
 }) => {
   const [formData, setFormData] = useState<CreateMissionRequest>({
-    name: '',
+    title: '',
     description: '',
-    missionType: 'CUSTOM',
-    objectives: [],
+    points: 1000,
+    objectives: [{
+      title: 'Primary Objective',
+      description: 'Complete the primary mission objective',
+      points: 3,
+      type: 'CAPTURE_POINT',
+      isRequired: true
+    }],
     specialRules: [],
     terrainSuggestions: [],
     scheduledDate: undefined,
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,41 +43,97 @@ export const CreateMissionModal: React.FC<CreateMissionModalProps> = ({
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    const { name, value, type } = e.target;
+    setFormData(prev => ({ 
+      ...prev, 
+      [name]: type === 'number' ? (value ? parseInt(value) : 0) : value 
+    }));
   };
 
-  const handleArrayChange = (field: 'objectives' | 'specialRules' | 'terrainSuggestions', value: string) => {
-    const items = value.split('\n').filter(item => item.trim());
-    setFormData(prev => ({ ...prev, [field]: items }));
+  const addObjective = () => {
+    setFormData(prev => ({
+      ...prev,
+      objectives: [...prev.objectives, {
+        title: '',
+        description: '',
+        points: 1,
+        type: 'CAPTURE_POINT',
+        isRequired: false
+      }]
+    }));
   };
 
-  const handleTemplateSelect = (templateName: string) => {
-    const template = MISSION_TEMPLATES.find(t => t.name === templateName);
-    if (template) {
-      setFormData(prev => ({
-        ...prev,
-        name: template.name,
-        missionType: template.type as any,
-        objectives: template.objectives,
-        specialRules: template.specialRules,
-        terrainSuggestions: template.terrainSuggestions,
-      }));
-      setSelectedTemplate(templateName);
-    }
+  const updateObjective = (index: number, field: keyof Omit<MissionObjective, 'id'>, value: any) => {
+    setFormData(prev => ({
+      ...prev,
+      objectives: prev.objectives.map((obj, i) => 
+        i === index ? { ...obj, [field]: value } : obj
+      )
+    }));
   };
 
-  const clearTemplate = () => {
-    setFormData({
-      name: '',
-      description: '',
-      missionType: 'CUSTOM',
-      objectives: [],
-      specialRules: [],
-      terrainSuggestions: [],
-      scheduledDate: undefined,
-    });
-    setSelectedTemplate(null);
+  const removeObjective = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      objectives: prev.objectives.filter((_, i) => i !== index)
+    }));
+  };
+
+  const addSpecialRule = () => {
+    setFormData(prev => ({
+      ...prev,
+      specialRules: [...prev.specialRules, {
+        title: '',
+        description: '',
+        phase: 'DEPLOYMENT',
+        isActive: true
+      }]
+    }));
+  };
+
+  const updateSpecialRule = (index: number, field: keyof Omit<MissionRule, 'id'>, value: any) => {
+    setFormData(prev => ({
+      ...prev,
+      specialRules: prev.specialRules.map((rule, i) => 
+        i === index ? { ...rule, [field]: value } : rule
+      )
+    }));
+  };
+
+  const removeSpecialRule = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      specialRules: prev.specialRules.filter((_, i) => i !== index)
+    }));
+  };
+
+  const addTerrainFeature = () => {
+    setFormData(prev => ({
+      ...prev,
+      terrainSuggestions: [...prev.terrainSuggestions, {
+        name: '',
+        description: '',
+        size: 'MEDIUM',
+        category: 'BUILDING',
+        isRequired: false
+      }]
+    }));
+  };
+
+  const updateTerrainFeature = (index: number, field: keyof Omit<TerrainFeature, 'id'>, value: any) => {
+    setFormData(prev => ({
+      ...prev,
+      terrainSuggestions: prev.terrainSuggestions.map((terrain, i) => 
+        i === index ? { ...terrain, [field]: value } : terrain
+      )
+    }));
+  };
+
+  const removeTerrainFeature = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      terrainSuggestions: prev.terrainSuggestions.filter((_, i) => i !== index)
+    }));
   };
 
   return (
@@ -119,167 +156,275 @@ export const CreateMissionModal: React.FC<CreateMissionModalProps> = ({
         )}
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Template Selection */}
-          <div>
-            <h3 className="text-lg font-medium text-gray-300 mb-3">Quick Start Templates</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
-              {MISSION_TEMPLATES.map((template) => (
-                <button
-                  key={template.name}
-                  type="button"
-                  onClick={() => handleTemplateSelect(template.name)}
-                  className={`p-3 border rounded text-left transition-colors ${
-                    selectedTemplate === template.name
-                      ? 'border-blue-500 bg-blue-900 text-blue-200'
-                      : 'border-gray-600 bg-gray-700 text-gray-300 hover:border-gray-500'
-                  }`}
-                >
-                  <div className="font-medium">{template.name}</div>
-                  <div className="text-xs text-gray-400 mt-1">
-                    {template.objectives.length} objectives, {template.specialRules.length} rules
-                  </div>
-                </button>
-              ))}
+          {/* Basic Information */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-gray-300 text-sm font-bold mb-2" htmlFor="title">
+                Mission Title *
+              </label>
+              <input
+                id="title"
+                name="title"
+                type="text"
+                value={formData.title}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-gray-600 rounded bg-gray-700 text-white focus:outline-none focus:border-blue-500"
+                placeholder="Enter mission title"
+                required
+              />
             </div>
-            {selectedTemplate && (
+
+            <div>
+              <label className="block text-gray-300 text-sm font-bold mb-2" htmlFor="points">
+                Points Limit *
+              </label>
+              <input
+                id="points"
+                name="points"
+                type="number"
+                value={formData.points}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-gray-600 rounded bg-gray-700 text-white focus:outline-none focus:border-blue-500"
+                placeholder="1000"
+                min="100"
+                max="10000"
+                required
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-gray-300 text-sm font-bold mb-2" htmlFor="description">
+              Description *
+            </label>
+            <textarea
+              id="description"
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              rows={3}
+              className="w-full px-3 py-2 border border-gray-600 rounded bg-gray-700 text-white focus:outline-none focus:border-blue-500"
+              placeholder="Describe the mission scenario"
+              required
+            />
+          </div>
+
+          {/* Objectives */}
+          <div>
+            <div className="flex justify-between items-center mb-3">
+              <h3 className="text-lg font-medium text-gray-300">Objectives</h3>
               <button
                 type="button"
-                onClick={clearTemplate}
-                className="text-sm text-blue-400 hover:text-blue-300"
+                onClick={addObjective}
+                className="bg-blue-600 hover:bg-blue-700 text-white text-sm px-3 py-1 rounded"
               >
-                Clear template and start custom
+                Add Objective
               </button>
-            )}
+            </div>
+            {formData.objectives.map((objective, index) => (
+              <div key={index} className="bg-gray-700 p-4 rounded mb-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+                  <input
+                    type="text"
+                    placeholder="Objective title"
+                    value={objective.title}
+                    onChange={(e) => updateObjective(index, 'title', e.target.value)}
+                    className="px-3 py-2 border border-gray-600 rounded bg-gray-600 text-white focus:outline-none focus:border-blue-500"
+                  />
+                  <div className="flex gap-2">
+                    <select
+                      value={objective.type}
+                      onChange={(e) => updateObjective(index, 'type', e.target.value)}
+                      className="px-3 py-2 border border-gray-600 rounded bg-gray-600 text-white focus:outline-none focus:border-blue-500"
+                    >
+                      <option value="CAPTURE_POINT">Capture Point</option>
+                      <option value="DESTROY_UNIT">Destroy Unit</option>
+                      <option value="HOLD_POSITION">Hold Position</option>
+                      <option value="ELIMINATE_ENEMY">Eliminate Enemy</option>
+                      <option value="CUSTOM">Custom</option>
+                    </select>
+                    <input
+                      type="number"
+                      placeholder="Points"
+                      value={objective.points}
+                      onChange={(e) => updateObjective(index, 'points', parseInt(e.target.value) || 0)}
+                      className="w-20 px-3 py-2 border border-gray-600 rounded bg-gray-600 text-white focus:outline-none focus:border-blue-500"
+                      min="0"
+                      max="10"
+                    />
+                  </div>
+                </div>
+                <textarea
+                  placeholder="Objective description"
+                  value={objective.description}
+                  onChange={(e) => updateObjective(index, 'description', e.target.value)}
+                  rows={2}
+                  className="w-full px-3 py-2 border border-gray-600 rounded bg-gray-600 text-white focus:outline-none focus:border-blue-500 mb-3"
+                />
+                <div className="flex justify-between items-center">
+                  <label className="flex items-center text-sm text-gray-300">
+                    <input
+                      type="checkbox"
+                      checked={objective.isRequired}
+                      onChange={(e) => updateObjective(index, 'isRequired', e.target.checked)}
+                      className="mr-2 rounded border-gray-600 bg-gray-600 text-blue-600 focus:ring-blue-500"
+                    />
+                    Required objective
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => removeObjective(index)}
+                    className="text-red-400 hover:text-red-300 text-sm"
+                  >
+                    Remove
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Left Column */}
-            <div className="space-y-4">
-              <div>
-                <label className="block text-gray-300 text-sm font-bold mb-2" htmlFor="name">
-                  Mission Name *
-                </label>
-                <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  value={formData.name}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-600 rounded bg-gray-700 text-white focus:outline-none focus:border-blue-500"
-                  placeholder="Enter mission name"
-                  required
-                  minLength={3}
-                  maxLength={100}
-                />
-              </div>
-
-              <div>
-                <label className="block text-gray-300 text-sm font-bold mb-2" htmlFor="missionType">
-                  Mission Type
-                </label>
-                <select
-                  id="missionType"
-                  name="missionType"
-                  value={formData.missionType}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-600 rounded bg-gray-700 text-white focus:outline-none focus:border-blue-500"
-                >
-                  <option value="CUSTOM">Custom</option>
-                  <option value="PATROL_CLASH">Patrol Clash</option>
-                  <option value="CONTROL_ZONES">Control Zones</option>
-                  <option value="BREAKTHROUGH">Breakthrough</option>
-                  <option value="ASSASSINATION">Assassination</option>
-                  <option value="ESCORT">Escort</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-gray-300 text-sm font-bold mb-2" htmlFor="description">
-                  Description
-                </label>
-                <textarea
-                  id="description"
-                  name="description"
-                  value={formData.description}
-                  onChange={handleChange}
-                  rows={3}
-                  className="w-full px-3 py-2 border border-gray-600 rounded bg-gray-700 text-white focus:outline-none focus:border-blue-500"
-                  placeholder="Describe the mission background and story (optional)"
-                  maxLength={500}
-                />
-              </div>
-
-              <div>
-                <label className="block text-gray-300 text-sm font-bold mb-2" htmlFor="scheduledDate">
-                  Scheduled Date (Optional)
-                </label>
-                <input
-                  id="scheduledDate"
-                  name="scheduledDate"
-                  type="datetime-local"
-                  value={formData.scheduledDate || ''}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-600 rounded bg-gray-700 text-white focus:outline-none focus:border-blue-500"
-                />
-              </div>
+          {/* Special Rules */}
+          <div>
+            <div className="flex justify-between items-center mb-3">
+              <h3 className="text-lg font-medium text-gray-300">Special Rules</h3>
+              <button
+                type="button"
+                onClick={addSpecialRule}
+                className="bg-blue-600 hover:bg-blue-700 text-white text-sm px-3 py-1 rounded"
+              >
+                Add Rule
+              </button>
             </div>
-
-            {/* Right Column */}
-            <div className="space-y-4">
-              <div>
-                <label className="block text-gray-300 text-sm font-bold mb-2" htmlFor="objectives">
-                  Objectives
-                </label>
+            {formData.specialRules.map((rule, index) => (
+              <div key={index} className="bg-gray-700 p-4 rounded mb-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+                  <input
+                    type="text"
+                    placeholder="Rule title"
+                    value={rule.title}
+                    onChange={(e) => updateSpecialRule(index, 'title', e.target.value)}
+                    className="px-3 py-2 border border-gray-600 rounded bg-gray-600 text-white focus:outline-none focus:border-blue-500"
+                  />
+                  <select
+                    value={rule.phase}
+                    onChange={(e) => updateSpecialRule(index, 'phase', e.target.value)}
+                    className="px-3 py-2 border border-gray-600 rounded bg-gray-600 text-white focus:outline-none focus:border-blue-500"
+                  >
+                    <option value="DEPLOYMENT">Deployment</option>
+                    <option value="MOVEMENT">Movement</option>
+                    <option value="SHOOTING">Shooting</option>
+                    <option value="COMBAT">Combat</option>
+                    <option value="MORALE">Morale</option>
+                    <option value="END_TURN">End Turn</option>
+                    <option value="GAME_END">Game End</option>
+                  </select>
+                </div>
                 <textarea
-                  id="objectives"
-                  value={formData.objectives.join('\n')}
-                  onChange={(e) => handleArrayChange('objectives', e.target.value)}
-                  rows={4}
-                  className="w-full px-3 py-2 border border-gray-600 rounded bg-gray-700 text-white focus:outline-none focus:border-blue-500"
-                  placeholder="Enter each objective on a new line&#10;Example:&#10;Control the center objective&#10;Eliminate enemy commander&#10;Prevent enemy from scoring"
+                  placeholder="Rule description"
+                  value={rule.description}
+                  onChange={(e) => updateSpecialRule(index, 'description', e.target.value)}
+                  rows={2}
+                  className="w-full px-3 py-2 border border-gray-600 rounded bg-gray-600 text-white focus:outline-none focus:border-blue-500 mb-3"
                 />
-                <div className="text-xs text-gray-400 mt-1">
-                  One objective per line
+                <div className="flex justify-between items-center">
+                  <label className="flex items-center text-sm text-gray-300">
+                    <input
+                      type="checkbox"
+                      checked={rule.isActive}
+                      onChange={(e) => updateSpecialRule(index, 'isActive', e.target.checked)}
+                      className="mr-2 rounded border-gray-600 bg-gray-600 text-blue-600 focus:ring-blue-500"
+                    />
+                    Active rule
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => removeSpecialRule(index)}
+                    className="text-red-400 hover:text-red-300 text-sm"
+                  >
+                    Remove
+                  </button>
                 </div>
               </div>
-
-              <div>
-                <label className="block text-gray-300 text-sm font-bold mb-2" htmlFor="specialRules">
-                  Special Rules
-                </label>
-                <textarea
-                  id="specialRules"
-                  value={formData.specialRules.join('\n')}
-                  onChange={(e) => handleArrayChange('specialRules', e.target.value)}
-                  rows={3}
-                  className="w-full px-3 py-2 border border-gray-600 rounded bg-gray-700 text-white focus:outline-none focus:border-blue-500"
-                  placeholder="Enter each special rule on a new line&#10;Example:&#10;Night fighting rules apply&#10;Reserves enter from turn 2&#10;First blood gives extra VP"
-                />
-                <div className="text-xs text-gray-400 mt-1">
-                  One rule per line
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-gray-300 text-sm font-bold mb-2" htmlFor="terrainSuggestions">
-                  Terrain Suggestions
-                </label>
-                <textarea
-                  id="terrainSuggestions"
-                  value={formData.terrainSuggestions.join('\n')}
-                  onChange={(e) => handleArrayChange('terrainSuggestions', e.target.value)}
-                  rows={3}
-                  className="w-full px-3 py-2 border border-gray-600 rounded bg-gray-700 text-white focus:outline-none focus:border-blue-500"
-                  placeholder="Enter terrain setup suggestions&#10;Example:&#10;Central hill with cover&#10;Buildings on flanks&#10;Open ground in middle"
-                />
-                <div className="text-xs text-gray-400 mt-1">
-                  One suggestion per line
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
 
-          <div className="flex justify-end space-x-4 pt-6 border-t border-gray-700">
+          {/* Terrain Suggestions */}
+          <div>
+            <div className="flex justify-between items-center mb-3">
+              <h3 className="text-lg font-medium text-gray-300">Terrain Suggestions</h3>
+              <button
+                type="button"
+                onClick={addTerrainFeature}
+                className="bg-blue-600 hover:bg-blue-700 text-white text-sm px-3 py-1 rounded"
+              >
+                Add Terrain
+              </button>
+            </div>
+            {formData.terrainSuggestions.map((terrain, index) => (
+              <div key={index} className="bg-gray-700 p-4 rounded mb-3">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">
+                  <input
+                    type="text"
+                    placeholder="Terrain name"
+                    value={terrain.name}
+                    onChange={(e) => updateTerrainFeature(index, 'name', e.target.value)}
+                    className="px-3 py-2 border border-gray-600 rounded bg-gray-600 text-white focus:outline-none focus:border-blue-500"
+                  />
+                  <select
+                    value={terrain.size}
+                    onChange={(e) => updateTerrainFeature(index, 'size', e.target.value)}
+                    className="px-3 py-2 border border-gray-600 rounded bg-gray-600 text-white focus:outline-none focus:border-blue-500"
+                  >
+                    <option value="SMALL">Small</option>
+                    <option value="MEDIUM">Medium</option>
+                    <option value="LARGE">Large</option>
+                    <option value="MASSIVE">Massive</option>
+                  </select>
+                  <select
+                    value={terrain.category}
+                    onChange={(e) => updateTerrainFeature(index, 'category', e.target.value)}
+                    className="px-3 py-2 border border-gray-600 rounded bg-gray-600 text-white focus:outline-none focus:border-blue-500"
+                  >
+                    <option value="BUILDING">Building</option>
+                    <option value="FOREST">Forest</option>
+                    <option value="HILL">Hill</option>
+                    <option value="RUINS">Ruins</option>
+                    <option value="WATER">Water</option>
+                    <option value="INDUSTRIAL">Industrial</option>
+                    <option value="OBSTACLE">Obstacle</option>
+                    <option value="DECORATION">Decoration</option>
+                  </select>
+                </div>
+                <textarea
+                  placeholder="Terrain description"
+                  value={terrain.description}
+                  onChange={(e) => updateTerrainFeature(index, 'description', e.target.value)}
+                  rows={2}
+                  className="w-full px-3 py-2 border border-gray-600 rounded bg-gray-600 text-white focus:outline-none focus:border-blue-500 mb-3"
+                />
+                <div className="flex justify-between items-center">
+                  <label className="flex items-center text-sm text-gray-300">
+                    <input
+                      type="checkbox"
+                      checked={terrain.isRequired}
+                      onChange={(e) => updateTerrainFeature(index, 'isRequired', e.target.checked)}
+                      className="mr-2 rounded border-gray-600 bg-gray-600 text-blue-600 focus:ring-blue-500"
+                    />
+                    Required terrain
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => removeTerrainFeature(index)}
+                    className="text-red-400 hover:text-red-300 text-sm"
+                  >
+                    Remove
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="flex justify-end space-x-4 pt-6">
             <button
               type="button"
               onClick={onClose}
@@ -291,7 +436,7 @@ export const CreateMissionModal: React.FC<CreateMissionModalProps> = ({
             <button
               type="submit"
               className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
-              disabled={loading || !formData.name.trim()}
+              disabled={loading || !formData.title.trim() || !formData.description.trim()}
             >
               {loading ? 'Creating...' : 'Create Mission'}
             </button>

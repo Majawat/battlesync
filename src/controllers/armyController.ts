@@ -1,4 +1,4 @@
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { AuthenticatedRequest } from '../middleware/auth';
 import { armyService } from '../services/armyService';
 import { ApiError } from '../utils/apiError';
@@ -17,9 +17,9 @@ export class ArmyController {
    * Import army from ArmyForge
    * POST /api/armies/import
    */
-  static async importArmy(req: AuthenticatedRequest, res: Response): Promise<void> {
+  static async importArmy(req: Request, res: Response): Promise<void> {
     try {
-      const userId = req.user!.id;
+      const userId = (req as AuthenticatedRequest).user!.id;
       const importRequest: ArmyImportRequest = req.body;
 
       // Validate request
@@ -44,9 +44,9 @@ export class ArmyController {
    * Get user's armies
    * GET /api/armies
    */
-  static async getUserArmies(req: AuthenticatedRequest, res: Response): Promise<void> {
+  static async getUserArmies(req: Request, res: Response): Promise<void> {
     try {
-      const userId = req.user!.id;
+      const userId = (req as AuthenticatedRequest).user!.id;
       const query: GetArmiesQuery = {
         campaignId: req.query.campaignId as string,
         faction: req.query.faction as string,
@@ -75,9 +75,9 @@ export class ArmyController {
    * Get specific army
    * GET /api/armies/:id
    */
-  static async getArmy(req: AuthenticatedRequest, res: Response): Promise<void> {
+  static async getArmy(req: Request, res: Response): Promise<void> {
     try {
-      const userId = req.user!.id;
+      const userId = (req as AuthenticatedRequest).user!.id;
       const armyId = req.params.id;
 
       if (!armyId) {
@@ -101,9 +101,9 @@ export class ArmyController {
    * Sync army with ArmyForge
    * PUT /api/armies/:id/sync
    */
-  static async syncArmy(req: AuthenticatedRequest, res: Response): Promise<void> {
+  static async syncArmy(req: Request, res: Response): Promise<void> {
     try {
-      const userId = req.user!.id;
+      const userId = (req as AuthenticatedRequest).user!.id;
       const armyId = req.params.id;
       const syncRequest: ArmySyncRequest = req.body;
 
@@ -128,9 +128,9 @@ export class ArmyController {
    * Update army customizations
    * PUT /api/armies/:id/customizations
    */
-  static async updateCustomizations(req: AuthenticatedRequest, res: Response): Promise<void> {
+  static async updateCustomizations(req: Request, res: Response): Promise<void> {
     try {
-      const userId = req.user!.id;
+      const userId = (req as AuthenticatedRequest).user!.id;
       const armyId = req.params.id;
       const updateRequest: UpdateArmyCustomizationsRequest = req.body;
 
@@ -155,9 +155,9 @@ export class ArmyController {
    * Delete army
    * DELETE /api/armies/:id
    */
-  static async deleteArmy(req: AuthenticatedRequest, res: Response): Promise<void> {
+  static async deleteArmy(req: Request, res: Response): Promise<void> {
     try {
-      const userId = req.user!.id;
+      const userId = (req as AuthenticatedRequest).user!.id;
       const armyId = req.params.id;
 
       if (!armyId) {
@@ -181,9 +181,9 @@ export class ArmyController {
    * Add battle honor to army
    * POST /api/armies/:id/battle-honors
    */
-  static async addBattleHonor(req: AuthenticatedRequest, res: Response): Promise<void> {
+  static async addBattleHonor(req: Request, res: Response): Promise<void> {
     try {
-      const userId = req.user!.id;
+      const userId = (req as AuthenticatedRequest).user!.id;
       const armyId = req.params.id;
       const battleHonor: Omit<BattleHonor, 'id' | 'dateEarned'> = req.body;
 
@@ -213,9 +213,9 @@ export class ArmyController {
    * Add veteran upgrade to army
    * POST /api/armies/:id/veteran-upgrades
    */
-  static async addVeteranUpgrade(req: AuthenticatedRequest, res: Response): Promise<void> {
+  static async addVeteranUpgrade(req: Request, res: Response): Promise<void> {
     try {
-      const userId = req.user!.id;
+      const userId = (req as AuthenticatedRequest).user!.id;
       const armyId = req.params.id;
       const veteranUpgrade: Omit<VeteranUpgrade, 'id' | 'dateAcquired'> = req.body;
 
@@ -245,9 +245,9 @@ export class ArmyController {
    * Get army statistics
    * GET /api/armies/statistics
    */
-  static async getStatistics(req: AuthenticatedRequest, res: Response): Promise<void> {
+  static async getStatistics(req: Request, res: Response): Promise<void> {
     try {
-      const userId = req.user!.id;
+      const userId = (req as AuthenticatedRequest).user!.id;
 
       const statistics = await armyService.getArmyStatistics(userId);
       
@@ -265,9 +265,9 @@ export class ArmyController {
    * Get army validation
    * GET /api/armies/:id/validate
    */
-  static async validateArmy(req: AuthenticatedRequest, res: Response): Promise<void> {
+  static async validateArmy(req: Request, res: Response): Promise<void> {
     try {
-      const userId = req.user!.id;
+      const userId = (req as AuthenticatedRequest).user!.id;
       const armyId = req.params.id;
 
       if (!armyId) {
@@ -300,15 +300,15 @@ export class ArmyController {
    * Get ArmyForge integration status
    * GET /api/armies/armyforge/status
    */
-  static async getArmyForgeStatus(req: AuthenticatedRequest, res: Response): Promise<void> {
+  static async getArmyForgeStatus(req: Request, res: Response): Promise<void> {
     try {
-      const userId = req.user!.id;
+      const userId = (req as AuthenticatedRequest).user!.id;
       
       // Import userService
-      const { userService } = await import('../services/userService');
+      const { UserService } = await import('../services/userService');
       const { armyForgeClient } = await import('../services/armyForgeClient');
       
-      const token = await userService.getUserArmyForgeToken(userId);
+      const token = await UserService.getUserArmyForgeToken(userId);
       
       if (!token) {
         res.json(successResponse({
@@ -337,7 +337,7 @@ export class ArmyController {
    * Clear ArmyForge cache
    * DELETE /api/armies/armyforge/cache
    */
-  static async clearArmyForgeCache(req: AuthenticatedRequest, res: Response): Promise<void> {
+  static async clearArmyForgeCache(req: Request, res: Response): Promise<void> {
     try {
       const armyId = req.query.armyId as string;
       

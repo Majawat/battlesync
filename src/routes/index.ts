@@ -3,7 +3,7 @@ import authRoutes from './auth';
 import { gamingGroupRoutes } from './gamingGroupRoutes';
 import { campaignRoutes } from './campaignRoutes';
 import { missionRoutes } from './missionRoutes';
-// import armyRoutes from './armyRoutes'; // Temporarily disabled
+import armyRoutes from './armyRoutes';
 
 const router = Router();
 
@@ -12,7 +12,7 @@ router.use('/auth', authRoutes);
 router.use('/groups', gamingGroupRoutes);
 router.use('/', campaignRoutes);
 router.use('/', missionRoutes);
-// router.use('/armies', armyRoutes); // Temporarily disabled due to compilation errors
+router.use('/armies', armyRoutes);
 
 // Health check for API
 router.get('/health', (req, res) => {

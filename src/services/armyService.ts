@@ -18,8 +18,8 @@ import {
   VeteranUpgrade
 } from '../types/army';
 import { armyForgeClient } from './armyForgeClient';
-import { userService } from './userService';
-import { notificationService } from './notificationService';
+import { UserService } from './userService';
+import { NotificationService } from './notificationService';
 import { ApiError } from '../utils/apiError';
 import { validateArmyData } from '../utils/armyValidation';
 
@@ -34,16 +34,19 @@ class ArmyService {
     request: ArmyImportRequest
   ): Promise<ArmyImportResponse> {
     try {
-      // Get user's ArmyForge token
-      const armyForgeToken = await userService.getUserArmyForgeToken(userId);
+      // For now, we'll allow public army imports without token requirement
+      // In the future, this can be enhanced to use user-specific ArmyForge tokens
+      let armyForgeToken = await UserService.getUserArmyForgeToken(userId);
+      
+      // If no token is configured, we'll try to import as a public army
       if (!armyForgeToken) {
-        throw new ApiError(400, 'ArmyForge token not configured. Please link your ArmyForge account.');
+        armyForgeToken = 'public'; // Placeholder for public access
       }
 
-      // Validate token
+      // Validate connection to ArmyForge
       const tokenValidation = await armyForgeClient.validateToken(armyForgeToken);
       if (!tokenValidation.valid) {
-        throw new ApiError(401, 'ArmyForge token is invalid or expired. Please re-link your account.');
+        throw new ApiError(503, 'Unable to connect to ArmyForge API. Please try again later.');
       }
 
       // Fetch army data from ArmyForge
@@ -118,11 +121,10 @@ class ArmyService {
       });
 
       // Send notification
-      await notificationService.sendNotification(userId, {
-        type: 'ARMY_IMPORTED',
+      await NotificationService.sendToUser(userId, {
+        type: 'success',
         title: 'Army Imported',
-        message: `Successfully imported "${army.name}" from ArmyForge`,
-        data: { armyId: army.id },
+        message: `Successfully imported "${army.name}" from ArmyForge`
       });
 
       return {
@@ -135,7 +137,7 @@ class ArmyService {
       if (error instanceof ApiError) {
         throw error;
       }
-      throw new ApiError(500, `Failed to import army: ${error.message}`);
+      throw new ApiError(500, `Failed to import army: ${(error as Error).message}`);
     }
   }
 
@@ -154,10 +156,10 @@ class ArmyService {
         throw new ApiError(400, 'Army is not linked to ArmyForge');
       }
 
-      // Get user's ArmyForge token
-      const armyForgeToken = await userService.getUserArmyForgeToken(userId);
+      // Get user's ArmyForge token or use public access
+      let armyForgeToken = await UserService.getUserArmyForgeToken(userId);
       if (!armyForgeToken) {
-        throw new ApiError(400, 'ArmyForge token not configured');
+        armyForgeToken = 'public'; // Placeholder for public access
       }
 
       // Check if army has been updated on ArmyForge
@@ -201,11 +203,10 @@ class ArmyService {
 
       // Send notification if there were significant changes
       if (changes.length > 0) {
-        await notificationService.sendNotification(userId, {
-          type: 'ARMY_SYNCED',
+        await NotificationService.sendToUser(userId, {
+          type: 'info',
           title: 'Army Synced',
-          message: `"${army.name}" has been updated with ${changes.length} changes from ArmyForge`,
-          data: { armyId: army.id, changeCount: changes.length },
+          message: `"${army.name}" has been updated with ${changes.length} changes from ArmyForge`
         });
       }
 
@@ -220,7 +221,7 @@ class ArmyService {
       if (error instanceof ApiError) {
         throw error;
       }
-      throw new ApiError(500, `Failed to sync army: ${error.message}`);
+      throw new ApiError(500, `Failed to sync army: ${(error as Error).message}`);
     }
   }
 
@@ -272,7 +273,7 @@ class ArmyService {
       }));
 
     } catch (error) {
-      throw new ApiError(500, `Failed to get armies: ${error.message}`);
+      throw new ApiError(500, `Failed to get armies: ${(error as Error).message}`);
     }
   }
 
@@ -298,7 +299,7 @@ class ArmyService {
       if (error instanceof ApiError) {
         throw error;
       }
-      throw new ApiError(500, `Failed to get army: ${error.message}`);
+      throw new ApiError(500, `Failed to get army: ${(error as Error).message}`);
     }
   }
 
@@ -332,7 +333,7 @@ class ArmyService {
       if (error instanceof ApiError) {
         throw error;
       }
-      throw new ApiError(500, `Failed to update army customizations: ${error.message}`);
+      throw new ApiError(500, `Failed to update army customizations: ${(error as Error).message}`);
     }
   }
 
@@ -357,18 +358,17 @@ class ArmyService {
       });
 
       // Send notification
-      await notificationService.sendNotification(userId, {
-        type: 'ARMY_DELETED',
+      await NotificationService.sendToUser(userId, {
+        type: 'info',
         title: 'Army Deleted',
-        message: `"${army.name}" has been deleted`,
-        data: { armyName: army.name },
+        message: `"${army.name}" has been deleted`
       });
 
     } catch (error) {
       if (error instanceof ApiError) {
         throw error;
       }
-      throw new ApiError(500, `Failed to delete army: ${error.message}`);
+      throw new ApiError(500, `Failed to delete army: ${(error as Error).message}`);
     }
   }
 
@@ -407,7 +407,7 @@ class ArmyService {
       if (error instanceof ApiError) {
         throw error;
       }
-      throw new ApiError(500, `Failed to add battle honor: ${error.message}`);
+      throw new ApiError(500, `Failed to add battle honor: ${(error as Error).message}`);
     }
   }
 
@@ -449,7 +449,7 @@ class ArmyService {
       if (error instanceof ApiError) {
         throw error;
       }
-      throw new ApiError(500, `Failed to add veteran upgrade: ${error.message}`);
+      throw new ApiError(500, `Failed to add veteran upgrade: ${(error as Error).message}`);
     }
   }
 
@@ -516,7 +516,7 @@ class ArmyService {
       return stats;
 
     } catch (error) {
-      throw new ApiError(500, `Failed to get army statistics: ${error.message}`);
+      throw new ApiError(500, `Failed to get army statistics: ${(error as Error).message}`);
     }
   }
 

@@ -31,11 +31,23 @@ export interface ArmyForgeData {
 export interface ArmyForgeUnit {
   id: string;
   name: string;
-  type: 'HERO' | 'UNIT' | 'VEHICLE' | 'SUPPORT';
-  models: ArmyForgeModel[];
-  weapons: ArmyForgeWeapon[];
-  specialRules: string[];
+  size: number;
   cost: number;
+  quality?: number;
+  defense?: number;
+  weapons?: ArmyForgeWeapon[];
+  rules?: ArmyForgeRule[];
+  items?: any[];
+  valid?: boolean;
+  customName?: string;
+  xp?: number;
+  notes?: string | null;
+  traits?: string[];
+  combined?: boolean;
+  // Legacy fields for compatibility
+  type?: 'HERO' | 'UNIT' | 'VEHICLE' | 'SUPPORT';
+  models?: ArmyForgeModel[];
+  specialRules?: string[];
   maxCount?: number;
   minCount?: number;
 }
@@ -60,17 +72,27 @@ export interface ModelStats {
 export interface ArmyForgeWeapon {
   id: string;
   name: string;
-  range: number | string;
-  attacks: number | string;
-  special: string[];
-  cost: number;
+  range?: number | string;
+  attacks?: number | string;
+  count?: number;
+  type?: string;
+  weaponId?: string;
+  specialRules?: ArmyForgeRule[];
+  label?: string;
+  // Legacy fields for compatibility
+  special?: string[];
+  cost?: number;
 }
 
 export interface ArmyForgeRule {
   id: string;
   name: string;
-  description: string;
-  type: 'ARMY' | 'UNIT' | 'MODEL' | 'WEAPON';
+  label?: string;
+  rating?: number;
+  additional?: boolean;
+  description?: string;
+  // Legacy fields for compatibility
+  type?: 'ARMY' | 'UNIT' | 'MODEL' | 'WEAPON';
 }
 
 export interface ArmyCustomizations {

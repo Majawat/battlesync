@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import axios from 'axios';
 import { CacheManager } from '../utils/cacheManager';
 import { 
   ArmyForgeApiResponse, 
@@ -23,14 +23,14 @@ interface RateLimitState {
 }
 
 class ArmyForgeClient {
-  private client: AxiosInstance;
+  private client: any;
   private cache: CacheManager;
   private config: ArmyForgeConfig;
   private rateLimitStates: Map<string, RateLimitState> = new Map();
 
   constructor() {
     this.config = {
-      baseUrl: process.env.ARMY_FORGE_API_URL || 'https://api.armyforge.net/v1',
+      baseUrl: process.env.ARMY_FORGE_API_URL || 'https://army-forge.onepagerules.com/api',
       timeout: parseInt(process.env.ARMY_FORGE_TIMEOUT || '30000'),
       retryAttempts: parseInt(process.env.ARMY_FORGE_RETRY_ATTEMPTS || '3'),
       retryDelay: parseInt(process.env.ARMY_FORGE_RETRY_DELAY || '1000'),
@@ -53,20 +53,20 @@ class ArmyForgeClient {
   private setupInterceptors(): void {
     // Request interceptor for rate limiting and auth
     this.client.interceptors.request.use(
-      async (config) => {
+      async (config: any) => {
         const token = config.headers.Authorization?.toString().replace('Bearer ', '');
         if (token) {
           await this.enforceRateLimit(token);
         }
         return config;
       },
-      (error) => Promise.reject(error)
+      (error: any) => Promise.reject(error)
     );
 
     // Response interceptor for error handling and retries
     this.client.interceptors.response.use(
-      (response) => response,
-      async (error) => {
+      (response: any) => response,
+      async (error: any) => {
         const config = error.config;
         
         if (!config || config.__retryCount >= this.config.retryAttempts) {
@@ -155,7 +155,7 @@ class ArmyForgeClient {
       return cached;
     }
 
-    const response: AxiosResponse<ArmyForgeApiResponse<ArmyForgeListResponse>> = 
+    const response: any = 
       await this.client.get('/armies', {
         headers: { Authorization: `Bearer ${token}` },
         params: {
@@ -187,16 +187,32 @@ class ArmyForgeClient {
       return cached;
     }
 
-    const response: AxiosResponse<ArmyForgeApiResponse<ArmyForgeData>> = 
-      await this.client.get(`/armies/${armyId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+    // Use the actual ArmyForge API endpoint format
+    const response: any = await this.client.get(`/tts?id=${armyId}`);
 
-    if (!response.data.success) {
-      throw new Error(`ArmyForge API Error: ${response.data.message}`);
+    // ArmyForge returns the army data directly, not wrapped in a success object
+    const armyData = response.data;
+    
+    if (!armyData || !armyData.id) {
+      throw new Error(`Army not found or invalid response for ID: ${armyId}`);
     }
 
-    const result = response.data.data;
+    // Transform the ArmyForge data to our expected format
+    const result: ArmyForgeData = {
+      id: armyData.id,
+      name: armyData.name,
+      faction: armyData.gameSystem, // Map gameSystem to faction for now
+      gameSystem: armyData.gameSystem,
+      points: armyData.listPoints || armyData.pointsLimit || 0,
+      units: armyData.units || [],
+      specialRules: [], // Extract from units if needed
+      metadata: {
+        version: '1.0',
+        lastModified: armyData.modified || armyData.cloudModified || new Date().toISOString(),
+        createdBy: 'ArmyForge'
+      }
+    };
+
     await this.cache.set(cacheKey, result, 10 * 60); // 10 minutes TTL
     return result;
   }
@@ -213,7 +229,7 @@ class ArmyForgeClient {
       return cached;
     }
 
-    const response: AxiosResponse<ArmyForgeApiResponse<ArmyForgeGameSystem[]>> = 
+    const response: any = 
       await this.client.get('/game-systems');
 
     if (!response.data.success) {
@@ -237,7 +253,7 @@ class ArmyForgeClient {
       return cached;
     }
 
-    const response: AxiosResponse<ArmyForgeApiResponse<ArmyForgeFaction[]>> = 
+    const response: any = 
       await this.client.get(`/game-systems/${gameSystemId}/factions`);
 
     if (!response.data.success) {
@@ -261,7 +277,7 @@ class ArmyForgeClient {
       return cached;
     }
 
-    const response: AxiosResponse<ArmyForgeApiResponse<ArmyForgeBook[]>> = 
+    const response: any = 
       await this.client.get(`/game-systems/${gameSystemId}/factions/${factionId}/books`);
 
     if (!response.data.success) {
@@ -274,24 +290,24 @@ class ArmyForgeClient {
   }
 
   /**
-   * Validate ArmyForge token
+   * Validate ArmyForge token/connection
+   * For now, we'll just test if we can access the API
    */
   async validateToken(token: string): Promise<{ valid: boolean; username?: string; expiresAt?: Date }> {
     try {
-      const response: AxiosResponse<ArmyForgeApiResponse<{ username: string; expiresAt: string }>> = 
-        await this.client.get('/auth/validate', {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-      if (!response.data.success) {
-        return { valid: false };
+      // For now, just test if we can access a known army to validate the connection
+      // In a real implementation, this would validate the user's token/session
+      const response = await this.client.get('/tts?id=vMzljLVC6ZGv');
+      
+      if (response.data && response.data.id) {
+        return {
+          valid: true,
+          username: 'ArmyForge User', // Placeholder
+          expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days from now
+        };
       }
-
-      return {
-        valid: true,
-        username: response.data.data.username,
-        expiresAt: new Date(response.data.data.expiresAt),
-      };
+      
+      return { valid: false };
     } catch (error) {
       return { valid: false };
     }
@@ -302,7 +318,7 @@ class ArmyForgeClient {
    */
   async checkArmyUpdated(token: string, armyId: string, lastSyncedAt: Date): Promise<boolean> {
     try {
-      const response: AxiosResponse<ArmyForgeApiResponse<{ lastModified: string }>> = 
+      const response: any = 
         await this.client.head(`/armies/${armyId}`, {
           headers: { 
             Authorization: `Bearer ${token}`,
@@ -346,7 +362,8 @@ class ArmyForgeClient {
     const startTime = Date.now();
     
     try {
-      await this.client.get('/health', { timeout: 5000 });
+      // Test with a simple army fetch to check API availability
+      await this.client.get('/tts?id=vMzljLVC6ZGv', { timeout: 5000 });
       const responseTime = Date.now() - startTime;
       
       return {

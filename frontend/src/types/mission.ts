@@ -1,15 +1,17 @@
 export interface Mission {
   id: string;
   campaignId: string;
-  missionNumber: number;
-  name: string;
-  description?: string;
-  missionType: string;
+  number: number;
+  title: string;
+  description: string;
+  points: number;
   status: MissionStatus;
-  scheduledDate?: string;
-  objectives: string[];
-  specialRules: string[];
-  terrainSuggestions: string[];
+  scheduledDate: string | null;
+  objectives: MissionObjective[];
+  specialRules: MissionRule[];
+  terrainSuggestions: TerrainFeature[];
+  battleReportFile: string | null;
+  battles: BattleSummary[];
   createdAt: string;
   updatedAt: string;
 }
@@ -50,13 +52,13 @@ export interface BattleSummary {
 }
 
 export interface CreateMissionRequest {
-  name: string;
-  description?: string;
-  missionType: string;
+  title: string;
+  description: string;
+  points: number;
   scheduledDate?: string;
-  objectives: string[];
-  specialRules: string[];
-  terrainSuggestions: string[];
+  objectives: Omit<MissionObjective, 'id'>[];
+  specialRules: Omit<MissionRule, 'id'>[];
+  terrainSuggestions: Omit<TerrainFeature, 'id'>[];
 }
 
 export interface UpdateMissionRequest {
@@ -70,7 +72,7 @@ export interface UpdateMissionRequest {
   terrainSuggestions?: string[];
 }
 
-export type MissionStatus = 'PENDING' | 'ACTIVE' | 'COMPLETED' | 'CANCELLED';
+export type MissionStatus = 'UPCOMING' | 'ACTIVE' | 'COMPLETED';
 export type BattleStatus = 'SETUP' | 'ACTIVE' | 'COMPLETED' | 'CANCELLED';
 
 export type ObjectiveType = 

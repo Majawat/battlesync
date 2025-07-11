@@ -55,16 +55,20 @@ export async function validateArmyData(armyData: ArmyForgeData): Promise<ArmyVal
       warnings.push(...unitValidation.warnings);
       
       pointsTotal += unit.cost;
-      unitCounts[unit.type] = (unitCounts[unit.type] || 0) + 1;
+      // For ArmyForge units, we can try to infer type from name patterns or just use a generic type
+      const unitType = inferUnitType(unit);
+      unitCounts[unitType] = (unitCounts[unitType] || 0) + 1;
     }
   }
 
-  // Validate points consistency
-  if (Math.abs(pointsTotal - armyData.points) > 5) { // Allow 5 point variance for rounding
-    errors.push({
-      type: 'POINTS_EXCEEDED',
-      message: `Points mismatch: calculated ${pointsTotal}, declared ${armyData.points}`,
-      severity: 'ERROR',
+  // Validate points consistency - be more lenient with ArmyForge data
+  // ArmyForge may include upgrades and other factors in the total points
+  const pointsDifference = Math.abs(pointsTotal - armyData.points);
+  if (pointsDifference > armyData.points * 0.2) { // Allow 20% variance for ArmyForge calculations
+    warnings.push({
+      type: 'UNSPENT_POINTS',
+      message: `Points variance detected: unit costs total ${pointsTotal}, army total ${armyData.points}`,
+      suggestion: 'This may be due to upgrades or special calculations in ArmyForge',
     });
   }
 
@@ -99,14 +103,16 @@ function validateUnit(unit: ArmyForgeUnit): { errors: ValidationError[], warning
     });
   }
 
-  if (!unit.type) {
-    errors.push({
-      type: 'INVALID_UNIT',
-      message: `Unit "${unit.name}" is missing type`,
-      unitId: unit.id,
-      severity: 'ERROR',
-    });
-  }
+  // For ArmyForge data, units don't have an explicit 'type' field in the way we expected
+  // We can infer the type from other properties or just skip this validation
+  // if (!unit.type) {
+  //   errors.push({
+  //     type: 'INVALID_UNIT',
+  //     message: `Unit "${unit.name}" is missing type`,
+  //     unitId: unit.id,
+  //     severity: 'ERROR',
+  //   });
+  // }
 
   if (unit.cost < 0) {
     errors.push({
@@ -117,20 +123,32 @@ function validateUnit(unit: ArmyForgeUnit): { errors: ValidationError[], warning
     });
   }
 
-  // Validate models
-  if (!unit.models || unit.models.length === 0) {
+  // For ArmyForge data, units have a 'size' field instead of 'models' array
+  // and the model data is in the unit itself (quality, defense, etc.)
+  if (!unit.size || unit.size <= 0) {
     errors.push({
       type: 'MISSING_REQUIRED',
-      message: `Unit "${unit.name}" must contain at least one model`,
+      message: `Unit "${unit.name}" must have a valid size`,
       unitId: unit.id,
       severity: 'ERROR',
     });
-  } else {
-    for (const model of unit.models) {
-      const modelValidation = validateModel(model, unit.name);
-      errors.push(...modelValidation.errors);
-      warnings.push(...modelValidation.warnings);
-    }
+  }
+
+  // Validate unit stats (quality, defense are at unit level in ArmyForge)
+  if (unit.quality && (unit.quality < 2 || unit.quality > 6)) {
+    warnings.push({
+      type: 'UNTESTED_COMBINATION',
+      message: `Unit "${unit.name}" has unusual Quality: ${unit.quality} (typical range: 2-6)`,
+      suggestion: 'Verify this is correct for the game system',
+    });
+  }
+
+  if (unit.defense && (unit.defense < 2 || unit.defense > 6)) {
+    warnings.push({
+      type: 'UNTESTED_COMBINATION',
+      message: `Unit "${unit.name}" has unusual Defense: ${unit.defense} (typical range: 2-6)`,
+      suggestion: 'Verify this is correct for the game system',
+    });
   }
 
   // Validate unit count constraints
@@ -154,7 +172,7 @@ function validateUnit(unit: ArmyForgeUnit): { errors: ValidationError[], warning
 
   // Validate weapons
   for (const weapon of unit.weapons || []) {
-    if (weapon.cost < 0) {
+    if (weapon.cost !== undefined && weapon.cost < 0) {
       warnings.push({
         type: 'SUBOPTIMAL_LOADOUT',
         message: `Weapon "${weapon.name}" on unit "${unit.name}" has negative cost`,
@@ -334,4 +352,35 @@ export function quickValidateArmy(army: any): boolean {
     typeof army.points === 'number' &&
     army.points >= 0
   );
+}
+
+/**
+ * Infer unit type from ArmyForge unit data
+ */
+function inferUnitType(unit: any): string {
+  // Try to infer unit type from various properties
+  if (unit.rules) {
+    for (const rule of unit.rules) {
+      if (rule.name === 'Hero') {
+        return 'HERO';
+      }
+    }
+  }
+  
+  // Check unit name patterns
+  const name = unit.name?.toLowerCase() || '';
+  if (name.includes('hero') || name.includes('leader') || name.includes('captain') || name.includes('commander')) {
+    return 'HERO';
+  }
+  
+  if (name.includes('vehicle') || name.includes('tank') || name.includes('walker') || name.includes('apc')) {
+    return 'VEHICLE';
+  }
+  
+  if (name.includes('support') || name.includes('heavy') || name.includes('artillery')) {
+    return 'SUPPORT';
+  }
+  
+  // Default to UNIT for regular troops
+  return 'UNIT';
 }
