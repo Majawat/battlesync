@@ -75,7 +75,7 @@ export interface UpdateMissionRequest {
   terrainSuggestions?: string[];
 }
 
-export type MissionStatus = 'UPCOMING' | 'ACTIVE' | 'COMPLETED' | 'CANCELLED';
+export type MissionStatus = 'UPCOMING' | 'PENDING' | 'ACTIVE' | 'COMPLETED' | 'CANCELLED';
 export type BattleStatus = 'SETUP' | 'ACTIVE' | 'COMPLETED' | 'CANCELLED';
 
 export type ObjectiveType = 

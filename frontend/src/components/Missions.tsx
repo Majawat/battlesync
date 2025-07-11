@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { apiClient } from '../services/api';
-import { Mission, CreateMissionRequest, UpdateMissionRequest } from '../types/mission';
+import { Mission, CreateMissionRequest, UpdateMissionRequest, MissionStatus } from '../types/mission';
 import { CreateMissionModal } from './CreateMissionModal';
 import { MissionCard } from './MissionCard';
 
@@ -85,7 +85,7 @@ export const Missions: React.FC = () => {
     }
   };
 
-  const handleUpdateMissionStatus = async (missionId: string, status: 'ACTIVE' | 'COMPLETED' | 'CANCELLED') => {
+  const handleUpdateMissionStatus = async (missionId: string, status: MissionStatus) => {
     try {
       const statusUpdate: UpdateMissionRequest = { status };
       const response = await apiClient.updateMission(missionId, statusUpdate);

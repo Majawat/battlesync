@@ -105,7 +105,7 @@ export const MissionCard: React.FC<MissionCardProps> = ({
               <div className="space-y-1">
                 {mission.objectives.slice(0, 3).map((objective, index) => (
                   <div key={index} className="text-sm text-gray-400 truncate">
-                    • {objective}
+                    • {objective.title}: {objective.description}
                   </div>
                 ))}
                 {mission.objectives.length > 3 && (
@@ -124,7 +124,7 @@ export const MissionCard: React.FC<MissionCardProps> = ({
               <div className="space-y-1">
                 {mission.specialRules.slice(0, 3).map((rule, index) => (
                   <div key={index} className="text-sm text-gray-400 truncate">
-                    • {rule}
+                    • {rule.title}: {rule.description}
                   </div>
                 ))}
                 {mission.specialRules.length > 3 && (
@@ -143,7 +143,7 @@ export const MissionCard: React.FC<MissionCardProps> = ({
               <div className="space-y-1">
                 {mission.terrainSuggestions.slice(0, 3).map((terrain, index) => (
                   <div key={index} className="text-sm text-gray-400 truncate">
-                    • {terrain}
+                    • {terrain.name}: {terrain.description}
                   </div>
                 ))}
                 {mission.terrainSuggestions.length > 3 && (
