@@ -2,10 +2,13 @@ export interface Mission {
   id: string;
   campaignId: string;
   number: number;
+  missionNumber: number; // Alias for number - some components expect this
   title: string;
+  name: string; // Alias for title - some components expect this  
   description: string;
   points: number;
   status: MissionStatus;
+  missionType?: string; // Added for component compatibility
   scheduledDate: string | null;
   objectives: MissionObjective[];
   specialRules: MissionRule[];
@@ -72,7 +75,7 @@ export interface UpdateMissionRequest {
   terrainSuggestions?: string[];
 }
 
-export type MissionStatus = 'UPCOMING' | 'ACTIVE' | 'COMPLETED';
+export type MissionStatus = 'UPCOMING' | 'ACTIVE' | 'COMPLETED' | 'CANCELLED';
 export type BattleStatus = 'SETUP' | 'ACTIVE' | 'COMPLETED' | 'CANCELLED';
 
 export type ObjectiveType = 
