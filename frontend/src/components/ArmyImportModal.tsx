@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArmyImportRequest } from '../types/army';
 import { apiClient } from '../services/api';
 
@@ -11,6 +11,21 @@ export const ArmyImportModal: React.FC<ArmyImportModalProps> = ({
   onClose,
   onImport,
 }) => {
+  useEffect(() => {
+    const loadCampaigns = async () => {
+      try {
+        const response = await apiClient.getUserCampaigns();
+        if (response.data.status === 'success') {
+          setCampaigns(response.data.data || []);
+        }
+      } catch (error) {
+        console.error('Failed to load campaigns:', error);
+      } finally {
+        setLoadingCampaigns(false);
+      }
+    };
+    loadCampaigns();
+  }, []);
   const [formData, setFormData] = useState<ArmyImportRequest>({
     armyForgeId: '',
     campaignId: undefined,
@@ -19,6 +34,8 @@ export const ArmyImportModal: React.FC<ArmyImportModalProps> = ({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [warnings, setWarnings] = useState<string[]>([]);
+  const [campaigns, setCampaigns] = useState<any[]>([]);
+  const [loadingCampaigns, setLoadingCampaigns] = useState(true);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,8 +77,8 @@ export const ArmyImportModal: React.FC<ArmyImportModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-gray-800 rounded-lg p-6 w-full max-w-md">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 overflow-y-auto">
+      <div className="bg-gray-800 rounded-lg p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto my-8">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-bold text-white">Import Army from ArmyForge</h2>
           <button
@@ -145,30 +162,32 @@ export const ArmyImportModal: React.FC<ArmyImportModalProps> = ({
               value={formData.campaignId || ''}
               onChange={handleChange}
               className="w-full px-3 py-2 border border-gray-600 rounded bg-gray-700 text-white focus:outline-none focus:border-blue-500"
-              disabled={loading}
+              disabled={loading || loadingCampaigns}
             >
               <option value="">No Campaign (Personal Army)</option>
-              {/* TODO: Load user's campaigns */}
-              <option value="campaign-1">Campaign 1</option>
-              <option value="campaign-2">Campaign 2</option>
+              {loadingCampaigns ? (
+                <option disabled>Loading campaigns...</option>
+              ) : (
+                campaigns.map(campaign => (
+                  <option key={campaign.id} value={campaign.id}>
+                    {campaign.name}
+                  </option>
+                ))
+              )}
             </select>
             <div className="text-xs text-gray-400 mt-1">
               Assign this army to a specific campaign
             </div>
           </div>
 
-          <div className="bg-gray-700 p-4 rounded mb-6">
+          <div className="bg-gray-700 p-3 rounded mb-4">
             <h3 className="text-sm font-medium text-gray-300 mb-2">Import Process:</h3>
             <ul className="text-xs text-gray-400 space-y-1">
               <li>• Fetches army data directly from ArmyForge API</li>
               <li>• Validates units, weapons, and special rules</li>
               <li>• Creates a local copy with full army details</li>
               <li>• Enables battle tracking and customizations</li>
-              <li>• Supports future sync with ArmyForge updates</li>
             </ul>
-            <div className="mt-3 p-2 bg-blue-900 rounded text-xs text-blue-200">
-              <strong>Note:</strong> Currently supports public armies. Future updates will support private army imports.
-            </div>
           </div>
 
           <div className="flex justify-end space-x-4">

@@ -137,6 +137,10 @@ class ApiClient {
   }
 
   // Campaign endpoints
+  async getUserCampaigns(): Promise<any> {
+    return this.client.get('/campaigns');
+  }
+
   async createCampaign(groupId: string, data: CreateCampaignRequest): Promise<any> {
     return this.client.post(`/groups/${groupId}/campaigns`, data);
   }
