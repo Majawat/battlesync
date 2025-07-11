@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { GamingGroupController } from '../controllers/gamingGroupController';
+import { GroupController } from '../controllers/groupController';
 import { authenticate } from '../middleware/auth';
 import { validateCreateGamingGroup, validateJoinGroup } from '../middleware/validation';
 
@@ -31,5 +32,28 @@ router.delete('/:id', GamingGroupController.deleteGroup);
 
 // Regenerate invite code (owner only)
 router.post('/:id/regenerate-invite', GamingGroupController.regenerateInviteCode);
+
+// ============= GROUP MEMBERSHIP MANAGEMENT =============
+
+// Get all members of a group
+router.get('/:groupId/members', GroupController.getGroupMembers);
+
+// Invite a user to the group by username
+router.post('/:groupId/members/invite', GroupController.inviteUserToGroup);
+
+// Accept a group invitation
+router.post('/:groupId/accept-invitation', GroupController.acceptGroupInvitation);
+
+// Decline a group invitation  
+router.post('/:groupId/decline-invitation', GroupController.declineGroupInvitation);
+
+// Update a group member's role or status
+router.put('/:groupId/members/:membershipId', GroupController.updateGroupMember);
+
+// Remove a member from the group
+router.delete('/:groupId/members/:membershipId', GroupController.removeGroupMember);
+
+// Get pending group invitations for current user
+router.get('/invitations/pending', GroupController.getPendingInvitations);
 
 export { router as gamingGroupRoutes };

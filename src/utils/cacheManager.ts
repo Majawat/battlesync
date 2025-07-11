@@ -15,7 +15,7 @@ export class CacheManager {
   private cache: Map<string, CacheEntry<any>> = new Map();
   private stats: CacheStats = { size: 0, hitRate: 0, hits: 0, misses: 0 };
   private maxSize: number;
-  private cleanupInterval: NodeJS.Timeout;
+  private cleanupInterval: NodeJS.Timeout | undefined;
 
   constructor(maxSize: number = 1000, cleanupIntervalMs: number = 5 * 60 * 1000) {
     this.maxSize = maxSize;

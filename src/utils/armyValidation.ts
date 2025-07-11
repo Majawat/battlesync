@@ -97,7 +97,7 @@ function validateUnit(unit: ArmyForgeUnit): { errors: ValidationError[], warning
   if (!unit.name || unit.name.trim().length === 0) {
     errors.push({
       type: 'MISSING_REQUIRED',
-      message: `Unit is missing name`,
+      message: 'Unit is missing name',
       unitId: unit.id,
       severity: 'ERROR',
     });
@@ -186,45 +186,45 @@ function validateUnit(unit: ArmyForgeUnit): { errors: ValidationError[], warning
 }
 
 /**
- * Validate individual model
+ * Validate individual model (currently unused but kept for future expansion)
  */
-function validateModel(model: any, unitName: string): { errors: ValidationError[], warnings: ValidationWarning[] } {
-  const errors: ValidationError[] = [];
-  const warnings: ValidationWarning[] = [];
-
-  if (!model.name || model.name.trim().length === 0) {
-    errors.push({
-      type: 'MISSING_REQUIRED',
-      message: `Model in unit "${unitName}" is missing name`,
-      severity: 'ERROR',
-    });
-  }
-
-  if (model.count <= 0) {
-    errors.push({
-      type: 'INVALID_UNIT',
-      message: `Model "${model.name}" in unit "${unitName}" has invalid count: ${model.count}`,
-      severity: 'ERROR',
-    });
-  }
-
-  if (model.cost < 0) {
-    errors.push({
-      type: 'INVALID_UNIT',
-      message: `Model "${model.name}" in unit "${unitName}" has negative cost`,
-      severity: 'ERROR',
-    });
-  }
-
-  // Validate stats
-  if (model.stats) {
-    const statsValidation = validateModelStats(model.stats, model.name, unitName);
-    errors.push(...statsValidation.errors);
-    warnings.push(...statsValidation.warnings);
-  }
-
-  return { errors, warnings };
-}
+// function validateModel(model: any, unitName: string): { errors: ValidationError[], warnings: ValidationWarning[] } {
+//   const errors: ValidationError[] = [];
+//   const warnings: ValidationWarning[] = [];
+//
+//   if (!model.name || model.name.trim().length === 0) {
+//     errors.push({
+//       type: 'MISSING_REQUIRED',
+//       message: `Model in unit "${unitName}" is missing name`,
+//       severity: 'ERROR',
+//     });
+//   }
+//
+//   if (model.count <= 0) {
+//     errors.push({
+//       type: 'INVALID_UNIT',
+//       message: `Model "${model.name}" in unit "${unitName}" has invalid count: ${model.count}`,
+//       severity: 'ERROR',
+//     });
+//   }
+//
+//   if (model.cost < 0) {
+//     errors.push({
+//       type: 'INVALID_UNIT',
+//       message: `Model "${model.name}" in unit "${unitName}" has negative cost`,
+//       severity: 'ERROR',
+//     });
+//   }
+//
+//   // Validate stats
+//   if (model.stats) {
+//     const statsValidation = validateModelStats(model.stats, model.name, unitName);
+//     errors.push(...statsValidation.errors);
+//     warnings.push(...statsValidation.warnings);
+//   }
+//
+//   return { errors, warnings };
+// }
 
 /**
  * Validate model statistics
@@ -330,7 +330,7 @@ function validateArmyComposition(
  */
 export function validateArmyForCampaign(
   armyData: ArmyForgeData, 
-  campaignSettings: any
+  _campaignSettings: any
 ): Promise<ArmyValidationResult> {
   // This can be extended to validate campaign-specific rules
   // For now, just use the basic validation

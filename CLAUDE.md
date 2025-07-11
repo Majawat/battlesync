@@ -183,11 +183,11 @@ curl -X POST http://localhost:3001/api/groups/{groupId}/campaigns \
 ## Implementation Priorities
 
 ### High Priority (Current Focus)
-1. **Fix Army System Compilation**
-   - Resolve Express router type compatibility 
-   - Add axios dependency to Docker
-   - Test army import/export workflow
-   - Re-enable army routes
+1. **Group Membership Management** (In Progress)
+   - GroupMembersModal component implementation
+   - Enhanced group controller with membership endpoints  
+   - Role-based member management features
+   - Member invitation and removal workflows
 
 2. **Battle Tracking System**
    - WebSocket battle rooms

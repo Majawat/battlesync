@@ -1,7 +1,7 @@
-import bcrypt from 'bcrypt';
+// import bcrypt from 'bcrypt';
 import crypto from 'crypto';
 
-const SALT_ROUNDS = 8; // Reduced for Alpine Linux compatibility
+// const SALT_ROUNDS = 8; // Reduced for Alpine Linux compatibility
 const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY || 'your-32-char-encryption-key-here';
 const ALGORITHM = 'aes-256-cbc';
 

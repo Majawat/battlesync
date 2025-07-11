@@ -205,7 +205,7 @@ export class CampaignController {
       const campaignId = req.params.campaignId;
       
       // Verify user has access to campaign
-      const campaign = await CampaignService.getCampaignById(campaignId, userId);
+      await CampaignService.getCampaignById(campaignId, userId);
       
       // Get all participants with their group membership info
       const participants = await prisma.campaignParticipation.findMany({

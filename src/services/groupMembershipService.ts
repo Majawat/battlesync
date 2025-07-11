@@ -339,6 +339,70 @@ export class GroupMembershipService {
   /**
    * Validate user can manage group (is owner or admin)
    */
+  /**
+   * Get pending group invitations for a user
+   */
+  static async getPendingInvitations(userId: string): Promise<Array<{
+    id: string;
+    groupId: string;
+    groupName: string;
+    invitedBy: string;
+    invitedByUsername: string;
+    invitedAt: Date;
+  }>> {
+    const invitations = await prisma.groupMembership.findMany({
+      where: {
+        userId,
+        status: 'PENDING'
+      },
+      include: {
+        group: {
+          select: {
+            id: true,
+            name: true
+          }
+        },
+        user: {
+          select: {
+            id: true,
+            username: true
+          }
+        }
+      }
+    });
+
+    return invitations.map(invitation => ({
+      id: invitation.id,
+      groupId: invitation.groupId,
+      groupName: invitation.group.name,
+      invitedBy: invitation.invitedBy || '',
+      invitedByUsername: '', // We'll need to fetch this separately if needed
+      invitedAt: invitation.invitedAt || invitation.joinedAt
+    }));
+  }
+
+  /**
+   * Decline a group invitation
+   */
+  static async declineGroupInvitation(groupId: string, userId: string): Promise<void> {
+    const membership = await prisma.groupMembership.findFirst({
+      where: {
+        groupId,
+        userId,
+        status: 'PENDING'
+      }
+    });
+
+    if (!membership) {
+      throw ValidationUtils.createError('No pending invitation found', 404);
+    }
+
+    await prisma.groupMembership.update({
+      where: { id: membership.id },
+      data: { status: 'REMOVED' }
+    });
+  }
+
   private static async validateGroupManageAccess(groupId: string, userId: string): Promise<void> {
     const membership = await prisma.groupMembership.findFirst({
       where: {
