@@ -271,6 +271,36 @@ class ApiClient {
   async removeCampaignMember(campaignId: string, membershipId: string): Promise<any> {
     return this.client.delete(`/campaigns/${campaignId}/members/${membershipId}`);
   }
+
+  // ============= GROUP MEMBERSHIP =============
+
+  async getGroupMembers(groupId: string): Promise<any> {
+    return this.client.get(`/groups/${groupId}/members`);
+  }
+
+  async inviteMemberToGroup(groupId: string, data: { username: string; role?: 'ADMIN' | 'MEMBER' }): Promise<any> {
+    return this.client.post(`/groups/${groupId}/members/invite`, data);
+  }
+
+  async acceptGroupInvitation(groupId: string): Promise<any> {
+    return this.client.post(`/groups/${groupId}/accept-invitation`);
+  }
+
+  async declineGroupInvitation(groupId: string): Promise<any> {
+    return this.client.post(`/groups/${groupId}/decline-invitation`);
+  }
+
+  async updateGroupMember(groupId: string, membershipId: string, data: { role?: 'ADMIN' | 'MEMBER'; status?: 'ACTIVE' | 'INACTIVE' }): Promise<any> {
+    return this.client.put(`/groups/${groupId}/members/${membershipId}`, data);
+  }
+
+  async removeGroupMember(groupId: string, membershipId: string): Promise<any> {
+    return this.client.delete(`/groups/${groupId}/members/${membershipId}`);
+  }
+
+  async getPendingGroupInvitations(): Promise<any> {
+    return this.client.get('/groups/invitations/pending');
+  }
 }
 
 export const apiClient = new ApiClient();

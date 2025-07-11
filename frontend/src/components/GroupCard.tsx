@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GamingGroup } from '../types/gamingGroup';
+import { GroupMembersModal } from './GroupMembersModal';
 
 interface GroupCardProps {
   group: GamingGroup;
@@ -17,6 +18,11 @@ export const GroupCard: React.FC<GroupCardProps> = ({
 }) => {
   const navigate = useNavigate();
   const isOwner = group.owner.id === currentUserId;
+  const [showMembersModal, setShowMembersModal] = useState(false);
+
+  // Determine user's role in the group
+  const currentUserMember = group.members.find(m => m.id === currentUserId);
+  const userRole = isOwner ? 'OWNER' : (currentUserMember?.role || 'MEMBER');
 
   const getStatusColor = () => {
     if (group.campaignCount > 0) {
@@ -116,7 +122,10 @@ export const GroupCard: React.FC<GroupCardProps> = ({
           <div className="flex space-x-2">
             {isOwner ? (
               <>
-                <button className="text-gray-400 hover:text-white text-sm">
+                <button 
+                  onClick={() => setShowMembersModal(true)}
+                  className="text-gray-400 hover:text-white text-sm"
+                >
                   Settings
                 </button>
                 <button
@@ -127,16 +136,34 @@ export const GroupCard: React.FC<GroupCardProps> = ({
                 </button>
               </>
             ) : (
-              <button
-                onClick={onLeave}
-                className="text-red-400 hover:text-red-300 text-sm"
-              >
-                Leave
-              </button>
+              <>
+                <button 
+                  onClick={() => setShowMembersModal(true)}
+                  className="text-gray-400 hover:text-white text-sm"
+                >
+                  Members
+                </button>
+                <button
+                  onClick={onLeave}
+                  className="text-red-400 hover:text-red-300 text-sm"
+                >
+                  Leave
+                </button>
+              </>
             )}
           </div>
         </div>
       </div>
+
+      {/* Group Members Modal */}
+      {showMembersModal && (
+        <GroupMembersModal
+          groupId={group.id}
+          groupName={group.name}
+          userRole={userRole as 'OWNER' | 'ADMIN' | 'MEMBER'}
+          onClose={() => setShowMembersModal(false)}
+        />
+      )}
     </div>
   );
 };
