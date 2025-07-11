@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { CampaignController } from '../controllers/campaignController';
+import { BattleController } from '../controllers/battleController';
 import { authenticate } from '../middleware/auth';
 import { validateCreateCampaign, validateJoinCampaign, validateUpdateCampaign } from '../middleware/validation';
 
@@ -28,5 +29,8 @@ router.post('/campaigns/:campaignId/leave', CampaignController.leaveCampaign);
 
 // Delete a campaign
 router.delete('/campaigns/:campaignId', CampaignController.deleteCampaign);
+
+// Get battles for a campaign
+router.get('/campaigns/:campaignId/battles', BattleController.getCampaignBattles);
 
 export { router as campaignRoutes };

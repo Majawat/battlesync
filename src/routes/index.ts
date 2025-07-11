@@ -4,6 +4,7 @@ import { gamingGroupRoutes } from './gamingGroupRoutes';
 import { campaignRoutes } from './campaignRoutes';
 import { missionRoutes } from './missionRoutes';
 import armyRoutes from './armyRoutes';
+import battleRoutes from './battleRoutes';
 
 const router = Router();
 
@@ -13,6 +14,7 @@ router.use('/groups', gamingGroupRoutes);
 router.use('/', campaignRoutes);
 router.use('/', missionRoutes);
 router.use('/armies', armyRoutes);
+router.use('/battles', battleRoutes);
 
 // Health check for API
 router.get('/health', (req, res) => {
@@ -35,6 +37,7 @@ router.use('*', (req, res) => {
       campaigns: '/api/groups/:groupId/campaigns, /api/campaigns/*',
       missions: '/api/campaigns/:campaignId/missions, /api/missions/*, /api/templates',
       armies: '/api/armies/*',
+      battles: '/api/battles/*, /api/campaigns/:campaignId/battles',
       health: '/api/health'
     }
   });

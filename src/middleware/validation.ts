@@ -231,3 +231,50 @@ const updateMissionSchema = Joi.object({
 
 export const validateCreateMission = validateSchema(createMissionSchema);
 export const validateUpdateMission = validateSchema(updateMissionSchema);
+
+// Battle validation schemas
+const participantSchema = Joi.object({
+  userId: Joi.string().required().messages({
+    'string.empty': 'User ID is required',
+    'any.required': 'User ID is required'
+  }),
+  armyId: Joi.string().required().messages({
+    'string.empty': 'Army ID is required',
+    'any.required': 'Army ID is required'
+  })
+});
+
+const createBattleSchema = Joi.object({
+  missionId: Joi.string().required().messages({
+    'string.empty': 'Mission ID is required',
+    'any.required': 'Mission ID is required'
+  }),
+  participants: Joi.array().items(participantSchema).min(2).max(8).required().messages({
+    'array.min': 'At least 2 participants are required',
+    'array.max': 'Maximum 8 participants allowed',
+    'any.required': 'Participants list is required'
+  })
+});
+
+const applyDamageSchema = Joi.object({
+  targetUnitId: Joi.string().required().messages({
+    'string.empty': 'Target unit ID is required',
+    'any.required': 'Target unit ID is required'
+  }),
+  damage: Joi.number().min(1).max(100).required().messages({
+    'number.min': 'Damage must be at least 1',
+    'number.max': 'Damage cannot exceed 100',
+    'any.required': 'Damage amount is required'
+  }),
+  sourceDescription: Joi.string().max(200).optional().messages({
+    'string.max': 'Source description cannot exceed 200 characters'
+  })
+});
+
+const completeBattleSchema = Joi.object({
+  winnerId: Joi.string().optional()
+});
+
+export const validateCreateBattle = validateSchema(createBattleSchema);
+export const validateApplyDamage = validateSchema(applyDamageSchema);
+export const validateCompleteBattle = validateSchema(completeBattleSchema);
