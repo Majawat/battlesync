@@ -36,7 +36,19 @@ router.delete('/campaigns/:campaignId', CampaignController.deleteCampaign);
 // Get battles for a campaign
 router.get('/campaigns/:campaignId/battles', BattleController.getCampaignBattles);
 
-// Note: Campaign membership is now managed at the Group level
-// Use Group membership management endpoints instead
+// ============= CAMPAIGN MEMBERSHIP COMPATIBILITY LAYER =============
+// These endpoints provide frontend compatibility while using group-based architecture
+
+// Get campaign members
+router.get('/campaigns/:campaignId/members', CampaignController.getCampaignMembers);
+
+// Invite member to campaign
+router.post('/campaigns/:campaignId/members/invite', CampaignController.inviteMemberToCampaign);
+
+// Update member role/status
+router.put('/campaigns/:campaignId/members/:membershipId', CampaignController.updateCampaignMember);
+
+// Remove member from campaign
+router.delete('/campaigns/:campaignId/members/:membershipId', CampaignController.removeCampaignMember);
 
 export { router as campaignRoutes };
