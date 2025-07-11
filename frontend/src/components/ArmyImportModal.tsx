@@ -105,12 +105,13 @@ export const ArmyImportModal: React.FC<ArmyImportModalProps> = ({
               value={formData.armyForgeId}
               onChange={handleChange}
               className="w-full px-3 py-2 border border-gray-600 rounded bg-gray-700 text-white focus:outline-none focus:border-blue-500"
-              placeholder="Enter ArmyForge army ID"
+              placeholder="e.g., vMzljLVC6ZGv"
               required
               disabled={loading}
             />
-            <div className="text-xs text-gray-400 mt-1">
-              You can find this in the URL of your army on ArmyForge
+            <div className="text-xs text-gray-400 mt-1 space-y-1">
+              <div>Find this in your ArmyForge army URL: army-forge.onepagerules.com/tts?id=<strong>vMzljLVC6ZGv</strong></div>
+              <div>Try the example: <button type="button" onClick={() => setFormData(prev => ({...prev, armyForgeId: 'vMzljLVC6ZGv'}))} className="text-blue-400 hover:text-blue-300 underline">vMzljLVC6ZGv</button> (The Ashen Pact)</div>
             </div>
           </div>
 
@@ -159,11 +160,15 @@ export const ArmyImportModal: React.FC<ArmyImportModalProps> = ({
           <div className="bg-gray-700 p-4 rounded mb-6">
             <h3 className="text-sm font-medium text-gray-300 mb-2">Import Process:</h3>
             <ul className="text-xs text-gray-400 space-y-1">
-              <li>• Fetches army data from your ArmyForge account</li>
-              <li>• Validates army composition and rules</li>
-              <li>• Creates a local copy with sync capabilities</li>
-              <li>• Preserves your customizations during future syncs</li>
+              <li>• Fetches army data directly from ArmyForge API</li>
+              <li>• Validates units, weapons, and special rules</li>
+              <li>• Creates a local copy with full army details</li>
+              <li>• Enables battle tracking and customizations</li>
+              <li>• Supports future sync with ArmyForge updates</li>
             </ul>
+            <div className="mt-3 p-2 bg-blue-900 rounded text-xs text-blue-200">
+              <strong>Note:</strong> Currently supports public armies. Future updates will support private army imports.
+            </div>
           </div>
 
           <div className="flex justify-end space-x-4">

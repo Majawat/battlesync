@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { apiClient } from '../services/api';
 import { ArmySummary, ArmyForgeStatus } from '../types/army';
@@ -7,6 +8,7 @@ import { ArmyImportModal } from './ArmyImportModal';
 import { ArmyForgeConnection } from './ArmyForgeConnection';
 
 export const ArmyManagement: React.FC = () => {
+  const navigate = useNavigate();
   const { user, logout } = useAuth();
   const [armies, setArmies] = useState<ArmySummary[]>([]);
   const [armyForgeStatus, setArmyForgeStatus] = useState<ArmyForgeStatus | null>(null);
@@ -80,6 +82,12 @@ export const ArmyManagement: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex items-center space-x-4">
+              <button
+                onClick={() => navigate('/groups')}
+                className="text-gray-400 hover:text-white"
+              >
+                ← Back to Groups
+              </button>
               <h1 className="text-xl font-semibold text-white">BattleSync</h1>
               <span className="text-gray-400">•</span>
               <span className="text-gray-300">Army Management</span>
@@ -112,18 +120,13 @@ export const ArmyManagement: React.FC = () => {
               <div className="flex space-x-4">
                 <button
                   onClick={() => setShowConnectionModal(true)}
-                  className={`px-4 py-2 rounded font-medium ${
-                    armyForgeStatus?.connected
-                      ? 'bg-green-600 hover:bg-green-700 text-white'
-                      : 'bg-yellow-600 hover:bg-yellow-700 text-white'
-                  }`}
+                  className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded font-medium"
                 >
-                  {armyForgeStatus?.connected ? 'ArmyForge Connected' : 'Connect ArmyForge'}
+                  ArmyForge Integration
                 </button>
                 <button
                   onClick={() => setShowImportModal(true)}
                   className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                  disabled={!armyForgeStatus?.connected}
                 >
                   Import Army
                 </button>
@@ -132,44 +135,31 @@ export const ArmyManagement: React.FC = () => {
           </div>
 
           {/* ArmyForge Status */}
-          {armyForgeStatus && (
-            <div className="mb-6">
-              <div className={`p-4 rounded-lg ${
-                armyForgeStatus.connected
-                  ? 'bg-green-900 border border-green-600'
-                  : 'bg-yellow-900 border border-yellow-600'
-              }`}>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className={`font-medium ${
-                      armyForgeStatus.connected ? 'text-green-200' : 'text-yellow-200'
-                    }`}>
-                      ArmyForge Integration
-                    </h3>
-                    <p className={`text-sm mt-1 ${
-                      armyForgeStatus.connected ? 'text-green-300' : 'text-yellow-300'
-                    }`}>
-                      {armyForgeStatus.connected
-                        ? `Connected as ${armyForgeStatus.username}`
-                        : armyForgeStatus.message || 'Not connected'
-                      }
-                    </p>
-                  </div>
-                  {armyForgeStatus.apiStatus && (
-                    <div className="flex items-center space-x-2">
-                      <div className={`w-2 h-2 rounded-full ${
-                        armyForgeStatus.apiStatus === 'healthy' ? 'bg-green-400' :
-                        armyForgeStatus.apiStatus === 'degraded' ? 'bg-yellow-400' : 'bg-red-400'
-                      }`}></div>
-                      <span className="text-xs text-gray-400">
-                        API: {armyForgeStatus.apiStatus}
-                      </span>
-                    </div>
-                  )}
+          <div className="mb-6">
+            <div className="bg-blue-900 border border-blue-600 p-4 rounded-lg">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="font-medium text-blue-200">
+                    🔗 ArmyForge Integration
+                  </h3>
+                  <p className="text-sm mt-1 text-blue-300">
+                    Connected to ArmyForge public API - Ready to import armies
+                  </p>
                 </div>
+                {armyForgeStatus?.apiStatus && (
+                  <div className="flex items-center space-x-2">
+                    <div className={`w-2 h-2 rounded-full ${
+                      armyForgeStatus.apiStatus === 'healthy' ? 'bg-green-400' :
+                      armyForgeStatus.apiStatus === 'degraded' ? 'bg-yellow-400' : 'bg-red-400'
+                    }`}></div>
+                    <span className="text-xs text-blue-400">
+                      API: {armyForgeStatus.apiStatus}
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
-          )}
+          </div>
 
           {/* Error Display */}
           {error && (

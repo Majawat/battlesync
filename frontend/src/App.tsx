@@ -6,6 +6,7 @@ import { GamingGroups } from './components/GamingGroups';
 import { Campaigns } from './components/Campaigns';
 import { Missions } from './components/Missions';
 import { ArmyManagement } from './components/ArmyManagement';
+import { ArmyDetailView } from './components/ArmyDetailView';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isAuthenticated, isLoading } = useAuth();
@@ -67,6 +68,11 @@ const AppRoutes: React.FC = () => {
       <Route path="/armies" element={
         <ProtectedRoute>
           <ArmyManagement />
+        </ProtectedRoute>
+      } />
+      <Route path="/armies/:armyId" element={
+        <ProtectedRoute>
+          <ArmyDetailView />
         </ProtectedRoute>
       } />
       <Route path="/" element={<Navigate to="/groups" replace />} />

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { apiClient } from '../services/api';
 import { GamingGroup, CreateGamingGroupRequest, JoinGroupRequest } from '../types/gamingGroup';
@@ -7,6 +8,7 @@ import { JoinGroupModal } from './JoinGroupModal';
 import { GroupCard } from './GroupCard';
 
 export const GamingGroups: React.FC = () => {
+  const navigate = useNavigate();
   const { user, logout } = useAuth();
   const [groups, setGroups] = useState<GamingGroup[]>([]);
   const [loading, setLoading] = useState(true);
@@ -109,6 +111,12 @@ export const GamingGroups: React.FC = () => {
               <h1 className="text-xl font-semibold text-white">BattleSync</h1>
             </div>
             <div className="flex items-center space-x-4">
+              <button
+                onClick={() => navigate('/armies')}
+                className="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded"
+              >
+                My Armies
+              </button>
               <span className="text-gray-300">Welcome, {user?.username}!</span>
               <button
                 onClick={logout}

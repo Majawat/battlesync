@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { ArmySummary } from '../types/army';
 import { ArmyCard } from './ArmyCard';
 
@@ -14,7 +13,6 @@ export const ArmyList: React.FC<ArmyListProps> = ({
   onArmyDeleted,
   onRefresh,
 }) => {
-  const navigate = useNavigate();
   const [filter, setFilter] = useState<{
     faction?: string;
     campaign?: string;
@@ -41,9 +39,6 @@ export const ArmyList: React.FC<ArmyListProps> = ({
     return true;
   });
 
-  const handleViewArmy = (armyId: string) => {
-    navigate(`/armies/${armyId}`);
-  };
 
   if (armies.length === 0) {
     return (
@@ -154,7 +149,6 @@ export const ArmyList: React.FC<ArmyListProps> = ({
             <ArmyCard
               key={army.id}
               army={army}
-              onView={() => handleViewArmy(army.id)}
               onDelete={() => onArmyDeleted(army.id)}
               onRefresh={onRefresh}
             />

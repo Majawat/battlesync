@@ -11,78 +11,9 @@ interface ArmyForgeConnectionProps {
 export const ArmyForgeConnection: React.FC<ArmyForgeConnectionProps> = ({
   currentStatus,
   onClose,
-  onUpdate,
 }) => {
-  const [token, setToken] = useState('');
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [testing, setTesting] = useState(false);
 
-  const handleSaveToken = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setError(null);
-
-    try {
-      // Update user profile with new ArmyForge token
-      const response = await apiClient.updateProfile({ armyForgeToken: token });
-      
-      if (response.data.status === 'success') {
-        onUpdate();
-      } else {
-        throw new Error(response.data.message || 'Failed to save token');
-      }
-    } catch (error: any) {
-      setError(error.response?.data?.message || error.message || 'Failed to save token');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleTestConnection = async () => {
-    if (!token.trim()) {
-      setError('Please enter a token first');
-      return;
-    }
-
-    setTesting(true);
-    setError(null);
-
-    try {
-      // Save token temporarily and test
-      await apiClient.updateProfile({ armyForgeToken: token });
-      const response = await apiClient.getArmyForgeStatus();
-      
-      if (response.data.status === 'success' && response.data.data?.connected) {
-        setError(null);
-        // Show success message or automatically save
-      } else {
-        throw new Error('Token is invalid or expired');
-      }
-    } catch (error: any) {
-      setError(error.response?.data?.message || error.message || 'Connection test failed');
-    } finally {
-      setTesting(false);
-    }
-  };
-
-  const handleDisconnect = async () => {
-    if (!confirm('Are you sure you want to disconnect from ArmyForge? You will lose sync capabilities.')) {
-      return;
-    }
-
-    setLoading(true);
-    setError(null);
-
-    try {
-      await apiClient.updateProfile({ armyForgeToken: '' });
-      onUpdate();
-    } catch (error: any) {
-      setError(error.response?.data?.message || error.message || 'Failed to disconnect');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const clearCache = async () => {
     try {
@@ -102,7 +33,6 @@ export const ArmyForgeConnection: React.FC<ArmyForgeConnectionProps> = ({
           <button
             onClick={onClose}
             className="text-gray-400 hover:text-white"
-            disabled={loading}
           >
             ×
           </button>
@@ -155,86 +85,66 @@ export const ArmyForgeConnection: React.FC<ArmyForgeConnectionProps> = ({
           </div>
         )}
 
-        {!currentStatus?.connected && (
-          <form onSubmit={handleSaveToken}>
-            <div className="mb-4">
-              <label className="block text-gray-300 text-sm font-bold mb-2" htmlFor="token">
-                ArmyForge API Token *
-              </label>
-              <input
-                id="token"
-                type="password"
-                value={token}
-                onChange={(e) => setToken(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-600 rounded bg-gray-700 text-white focus:outline-none focus:border-blue-500"
-                placeholder="Enter your ArmyForge API token"
-                required
-                disabled={loading || testing}
-              />
-              <div className="text-xs text-gray-400 mt-1">
-                Get your API token from your ArmyForge account settings
-              </div>
-            </div>
-
-            <div className="flex justify-end space-x-4 mb-4">
-              <button
-                type="button"
-                onClick={handleTestConnection}
-                className="px-4 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700 disabled:opacity-50"
-                disabled={loading || testing || !token.trim()}
-              >
-                {testing ? 'Testing...' : 'Test Connection'}
-              </button>
-              <button
-                type="submit"
-                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
-                disabled={loading || testing || !token.trim()}
-              >
-                {loading ? 'Saving...' : 'Save & Connect'}
-              </button>
-            </div>
-          </form>
-        )}
-
-        {currentStatus?.connected && (
-          <div className="space-y-4">
-            <div className="flex justify-between">
-              <button
-                onClick={clearCache}
-                className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700"
-              >
-                Clear Cache
-              </button>
-              <button
-                onClick={handleDisconnect}
-                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 disabled:opacity-50"
-                disabled={loading}
-              >
-                {loading ? 'Disconnecting...' : 'Disconnect'}
-              </button>
-            </div>
+        {/* Current Integration Status */}
+        <div className="mb-6 bg-blue-900 border border-blue-600 p-4 rounded">
+          <h3 className="text-blue-200 font-medium mb-2">🔗 ArmyForge Integration Active</h3>
+          <div className="text-blue-300 text-sm space-y-1">
+            <div>✅ Connected to ArmyForge public API</div>
+            <div>✅ Can import public armies using Army IDs</div>
+            <div>✅ Real-time army data synchronization</div>
+            <div>✅ Full unit and weapon details</div>
           </div>
-        )}
+        </div>
+
+        <div className="mb-6 bg-gray-700 p-4 rounded">
+          <h3 className="text-gray-300 font-medium mb-2">How to Import Armies:</h3>
+          <ol className="text-sm text-gray-400 space-y-2 list-decimal list-inside">
+            <li>Find any public army on ArmyForge (army-forge.onepagerules.com)</li>
+            <li>Copy the Army ID from the URL (e.g., vMzljLVC6ZGv)</li>
+            <li>Use the "Import Army" button on the main page</li>
+            <li>Paste the Army ID and customize the name if desired</li>
+          </ol>
+        </div>
+
+        <div className="mb-6 bg-yellow-900 border border-yellow-600 p-4 rounded">
+          <h3 className="text-yellow-200 font-medium mb-2">🚧 Coming Soon: Private Army Support</h3>
+          <div className="text-yellow-300 text-sm space-y-1">
+            <div>🔐 Personal ArmyForge account integration</div>
+            <div>📂 Access to your private armies</div>
+            <div>🔄 Automatic sync with your army updates</div>
+            <div>👤 Personalized army management</div>
+          </div>
+        </div>
+
+        {/* Advanced Options */}
+        <div className="mb-6">
+          <button
+            onClick={clearCache}
+            className="w-full px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700"
+          >
+            Clear ArmyForge Cache
+          </button>
+          <div className="text-xs text-gray-400 mt-1 text-center">
+            Clear cached army data to force fresh downloads
+          </div>
+        </div>
 
         {/* Help Section */}
-        <div className="mt-6 bg-gray-700 p-4 rounded">
-          <h3 className="text-sm font-medium text-gray-300 mb-2">How to get your ArmyForge token:</h3>
-          <ol className="text-xs text-gray-400 space-y-1 list-decimal list-inside">
-            <li>Log in to your ArmyForge account</li>
-            <li>Go to Account Settings → API Access</li>
-            <li>Generate a new API token</li>
-            <li>Copy the token and paste it above</li>
-          </ol>
-          <div className="mt-2 text-xs text-gray-500">
-            Your token is stored securely and encrypted in our database.
-          </div>
+        <div className="bg-gray-700 p-4 rounded">
+          <h3 className="text-sm font-medium text-gray-300 mb-2">Tips for Army Import:</h3>
+          <ul className="text-xs text-gray-400 space-y-1">
+            <li>• Works with any public army from ArmyForge</li>
+            <li>• Army ID is the random string in the URL</li>
+            <li>• Imported armies include full unit details and weapons</li>
+            <li>• You can customize names and add battle experience</li>
+            <li>• Sync feature keeps your armies up to date</li>
+          </ul>
         </div>
 
         <div className="flex justify-end mt-6">
           <button
             onClick={onClose}
             className="px-4 py-2 border border-gray-600 text-gray-300 rounded hover:bg-gray-700"
-            disabled={loading}
           >
             Close
           </button>

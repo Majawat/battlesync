@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ArmySummary } from '../types/army';
 import { apiClient } from '../services/api';
 
 interface ArmyCardProps {
   army: ArmySummary;
-  onView: () => void;
   onDelete: () => void;
   onRefresh: () => void;
 }
 
 export const ArmyCard: React.FC<ArmyCardProps> = ({
   army,
-  onView,
   onDelete,
   onRefresh,
 }) => {
+  const navigate = useNavigate();
   const [syncing, setSyncing] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
@@ -143,7 +143,7 @@ export const ArmyCard: React.FC<ArmyCardProps> = ({
       <div className="px-6 py-4 bg-gray-900 border-t border-gray-700">
         <div className="flex justify-between items-center">
           <button
-            onClick={onView}
+            onClick={() => navigate(`/armies/${army.id}`)}
             className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 px-4 rounded"
           >
             View Details

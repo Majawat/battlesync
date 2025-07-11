@@ -31,10 +31,15 @@ export interface ArmyForgeData {
 export interface ArmyForgeUnit {
   id: string;
   name: string;
-  type: 'HERO' | 'UNIT' | 'VEHICLE' | 'SUPPORT';
-  models: ArmyForgeModel[];
-  weapons: ArmyForgeWeapon[];
-  specialRules: string[];
+  customName?: string;
+  type?: 'HERO' | 'UNIT' | 'VEHICLE' | 'SUPPORT';
+  size: number;
+  quality?: number;
+  defense?: number;
+  models?: ArmyForgeModel[];
+  weapons?: ArmyForgeWeapon[];
+  rules?: ArmyForgeRule[];
+  specialRules?: string[];
   cost: number;
   maxCount?: number;
   minCount?: number;
@@ -60,17 +65,19 @@ export interface ModelStats {
 export interface ArmyForgeWeapon {
   id: string;
   name: string;
-  range: number | string;
-  attacks: number | string;
-  special: string[];
-  cost: number;
+  label?: string;
+  range?: number | string;
+  attacks?: number | string;
+  special?: string[];
+  cost?: number;
 }
 
 export interface ArmyForgeRule {
   id: string;
   name: string;
-  description: string;
-  type: 'ARMY' | 'UNIT' | 'MODEL' | 'WEAPON';
+  label?: string;
+  description?: string;
+  type?: 'ARMY' | 'UNIT' | 'MODEL' | 'WEAPON';
 }
 
 export interface ArmyCustomizations {
