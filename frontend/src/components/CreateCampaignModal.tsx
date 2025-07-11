@@ -13,12 +13,16 @@ export const CreateCampaignModal: React.FC<CreateCampaignModalProps> = ({
   const [formData, setFormData] = useState<CreateCampaignRequest>({
     name: '',
     description: '',
-    gameSystem: '',
+    narrative: '',
     settings: {
-      maxMissions: undefined,
-      experienceSystem: 'NONE',
-      allowSpectators: true,
-      autoAdvanceMissions: false,
+      pointsLimit: 1000,
+      gameSystem: 'grimdark-future',
+      experiencePerWin: 5,
+      experiencePerLoss: 2,
+      experiencePerKill: 1,
+      allowMultipleArmies: false,
+      requireArmyForgeIntegration: false,
+      customRules: [],
     },
   });
   const [loading, setLoading] = useState(false);
@@ -116,19 +120,22 @@ export const CreateCampaignModal: React.FC<CreateCampaignModalProps> = ({
           </div>
 
           <div>
-            <label className="block text-gray-300 text-sm font-bold mb-2" htmlFor="gameSystem">
-              Game System
+            <label className="block text-gray-300 text-sm font-bold mb-2" htmlFor="narrative">
+              Narrative
             </label>
-            <input
-              id="gameSystem"
-              name="gameSystem"
-              type="text"
-              value={formData.gameSystem}
+            <textarea
+              id="narrative"
+              name="narrative"
+              value={formData.narrative}
               onChange={handleChange}
+              rows={4}
               className="w-full px-3 py-2 border border-gray-600 rounded bg-gray-700 text-white focus:outline-none focus:border-blue-500"
-              placeholder="e.g., One Page Rules, Warhammer 40k, etc."
-              maxLength={50}
+              placeholder="Campaign background story (optional)"
+              maxLength={5000}
             />
+            <div className="text-xs text-gray-400 mt-1">
+              {formData.narrative?.length || 0}/5000 characters
+            </div>
           </div>
 
           {/* Campaign Settings */}
@@ -137,66 +144,128 @@ export const CreateCampaignModal: React.FC<CreateCampaignModalProps> = ({
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-gray-300 text-sm font-bold mb-2" htmlFor="maxMissions">
-                  Max Missions
+                <label className="block text-gray-300 text-sm font-bold mb-2" htmlFor="pointsLimit">
+                  Points Limit *
                 </label>
                 <input
-                  id="maxMissions"
-                  name="settings.maxMissions"
+                  id="pointsLimit"
+                  name="settings.pointsLimit"
                   type="number"
-                  value={formData.settings?.maxMissions || ''}
+                  value={formData.settings?.pointsLimit || ''}
                   onChange={handleChange}
                   className="w-full px-3 py-2 border border-gray-600 rounded bg-gray-700 text-white focus:outline-none focus:border-blue-500"
-                  placeholder="Leave empty for unlimited"
-                  min="1"
-                  max="100"
+                  placeholder="1000"
+                  min="100"
+                  max="10000"
+                  required
                 />
               </div>
 
               <div>
-                <label className="block text-gray-300 text-sm font-bold mb-2" htmlFor="experienceSystem">
-                  Experience System
+                <label className="block text-gray-300 text-sm font-bold mb-2" htmlFor="gameSystem">
+                  Game System *
                 </label>
                 <select
-                  id="experienceSystem"
-                  name="settings.experienceSystem"
-                  value={formData.settings?.experienceSystem || 'NONE'}
+                  id="gameSystem"
+                  name="settings.gameSystem"
+                  value={formData.settings?.gameSystem || 'grimdark-future'}
                   onChange={handleChange}
                   className="w-full px-3 py-2 border border-gray-600 rounded bg-gray-700 text-white focus:outline-none focus:border-blue-500"
+                  required
                 >
-                  <option value="NONE">None</option>
-                  <option value="SIMPLE">Simple (+1 per mission)</option>
-                  <option value="ADVANCED">Advanced (victory points)</option>
+                  <option value="grimdark-future">Grimdark Future</option>
+                  <option value="age-of-fantasy">Age of Fantasy</option>
+                  <option value="firefight">Firefight</option>
+                  <option value="warfleets-ftl">Warfleets FTL</option>
                 </select>
+              </div>
+            </div>
+
+            <div className="mt-4">
+              <h4 className="text-md font-medium text-gray-300 mb-3">Experience Settings</h4>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-gray-300 text-sm font-bold mb-2" htmlFor="experiencePerWin">
+                    Experience per Win *
+                  </label>
+                  <input
+                    id="experiencePerWin"
+                    name="settings.experiencePerWin"
+                    type="number"
+                    value={formData.settings?.experiencePerWin || ''}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 border border-gray-600 rounded bg-gray-700 text-white focus:outline-none focus:border-blue-500"
+                    placeholder="5"
+                    min="0"
+                    max="100"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-gray-300 text-sm font-bold mb-2" htmlFor="experiencePerLoss">
+                    Experience per Loss *
+                  </label>
+                  <input
+                    id="experiencePerLoss"
+                    name="settings.experiencePerLoss"
+                    type="number"
+                    value={formData.settings?.experiencePerLoss || ''}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 border border-gray-600 rounded bg-gray-700 text-white focus:outline-none focus:border-blue-500"
+                    placeholder="2"
+                    min="0"
+                    max="100"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-gray-300 text-sm font-bold mb-2" htmlFor="experiencePerKill">
+                    Experience per Kill *
+                  </label>
+                  <input
+                    id="experiencePerKill"
+                    name="settings.experiencePerKill"
+                    type="number"
+                    value={formData.settings?.experiencePerKill || ''}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 border border-gray-600 rounded bg-gray-700 text-white focus:outline-none focus:border-blue-500"
+                    placeholder="1"
+                    min="0"
+                    max="10"
+                    required
+                  />
+                </div>
               </div>
             </div>
 
             <div className="mt-4 space-y-3">
               <div className="flex items-center">
                 <input
-                  id="allowSpectators"
-                  name="settings.allowSpectators"
+                  id="allowMultipleArmies"
+                  name="settings.allowMultipleArmies"
                   type="checkbox"
-                  checked={formData.settings?.allowSpectators || false}
+                  checked={formData.settings?.allowMultipleArmies || false}
                   onChange={handleChange}
                   className="mr-2 rounded border-gray-600 bg-gray-700 text-blue-600 focus:ring-blue-500"
                 />
-                <label htmlFor="allowSpectators" className="text-gray-300 text-sm">
-                  Allow spectators to watch battles
+                <label htmlFor="allowMultipleArmies" className="text-gray-300 text-sm">
+                  Allow players to have multiple armies
                 </label>
               </div>
 
               <div className="flex items-center">
                 <input
-                  id="autoAdvanceMissions"
-                  name="settings.autoAdvanceMissions"
+                  id="requireArmyForgeIntegration"
+                  name="settings.requireArmyForgeIntegration"
                   type="checkbox"
-                  checked={formData.settings?.autoAdvanceMissions || false}
+                  checked={formData.settings?.requireArmyForgeIntegration || false}
                   onChange={handleChange}
                   className="mr-2 rounded border-gray-600 bg-gray-700 text-blue-600 focus:ring-blue-500"
                 />
-                <label htmlFor="autoAdvanceMissions" className="text-gray-300 text-sm">
-                  Auto-advance to next mission when current completes
+                <label htmlFor="requireArmyForgeIntegration" className="text-gray-300 text-sm">
+                  Require ArmyForge integration for army management
                 </label>
               </div>
             </div>
@@ -214,7 +283,12 @@ export const CreateCampaignModal: React.FC<CreateCampaignModalProps> = ({
             <button
               type="submit"
               className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
-              disabled={loading || !formData.name.trim()}
+              disabled={loading || !formData.name.trim() || 
+                       !formData.settings?.pointsLimit ||
+                       !formData.settings?.gameSystem ||
+                       formData.settings?.experiencePerWin === undefined ||
+                       formData.settings?.experiencePerLoss === undefined ||
+                       formData.settings?.experiencePerKill === undefined}
             >
               {loading ? 'Creating...' : 'Create Campaign'}
             </button>

@@ -3,7 +3,7 @@ export interface Campaign {
   groupId: string;
   name: string;
   description?: string;
-  gameSystem?: string;
+  narrative?: string;
   status: CampaignStatus;
   settings?: CampaignSettings;
   createdBy: string;
@@ -49,15 +49,19 @@ export interface MissionSummary {
 export interface CreateCampaignRequest {
   name: string;
   description?: string;
-  gameSystem?: string;
-  settings?: Partial<CampaignSettings>;
+  narrative?: string;
+  settings: CampaignSettings;
 }
 
 export interface CampaignSettings {
-  maxMissions?: number;
-  experienceSystem: 'NONE' | 'SIMPLE' | 'ADVANCED';
-  allowSpectators: boolean;
-  autoAdvanceMissions: boolean;
+  pointsLimit: number;
+  gameSystem: string; // 'grimdark-future', 'age-of-fantasy', 'firefight', 'warfleets-ftl'
+  experiencePerWin: number;
+  experiencePerLoss: number;
+  experiencePerKill: number;
+  allowMultipleArmies: boolean;
+  requireArmyForgeIntegration: boolean;
+  customRules: CustomRule[];
 }
 
 export interface CustomRule {

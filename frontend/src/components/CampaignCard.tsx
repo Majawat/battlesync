@@ -63,41 +63,29 @@ export const CampaignCard: React.FC<CampaignCardProps> = ({
 
         {/* Campaign Details */}
         <div className="space-y-2 mb-4">
-          {campaign.gameSystem && (
+          {campaign.settings?.gameSystem && (
             <div className="flex justify-between">
               <span className="text-sm text-gray-400">Game System:</span>
-              <span className="text-sm text-white">{campaign.gameSystem}</span>
+              <span className="text-sm text-white capitalize">{campaign.settings.gameSystem.replace('-', ' ')}</span>
             </div>
           )}
           <div className="flex justify-between">
             <span className="text-sm text-gray-400">Created:</span>
             <span className="text-sm text-white">{formatDate(campaign.createdAt)}</span>
           </div>
-          {campaign.settings?.experienceSystem && (
+          {campaign.settings?.pointsLimit && (
             <div className="flex justify-between">
-              <span className="text-sm text-gray-400">Experience:</span>
-              <span className="text-sm text-white capitalize">{campaign.settings.experienceSystem}</span>
+              <span className="text-sm text-gray-400">Points Limit:</span>
+              <span className="text-sm text-white">{campaign.settings.pointsLimit}</span>
+            </div>
+          )}
+          {campaign.settings?.experiencePerWin !== undefined && (
+            <div className="flex justify-between">
+              <span className="text-sm text-gray-400">Experience Per Win:</span>
+              <span className="text-sm text-white">{campaign.settings.experiencePerWin}</span>
             </div>
           )}
         </div>
-
-        {/* Progress Indicators */}
-        {campaign.settings?.maxMissions && (
-          <div className="mb-4">
-            <div className="flex justify-between text-sm text-gray-400 mb-1">
-              <span>Progress</span>
-              <span>{campaign.missionCount}/{campaign.settings.maxMissions}</span>
-            </div>
-            <div className="w-full bg-gray-700 rounded-full h-2">
-              <div
-                className="bg-blue-600 h-2 rounded-full"
-                style={{
-                  width: `${Math.min((campaign.missionCount / campaign.settings.maxMissions) * 100, 100)}%`
-                }}
-              ></div>
-            </div>
-          </div>
-        )}
       </div>
 
       {/* Card Footer */}
