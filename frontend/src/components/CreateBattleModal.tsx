@@ -85,8 +85,8 @@ export const CreateBattleModal: React.FC<CreateBattleModalProps> = ({
   };
 
   const createBattle = async () => {
-    if (participants.length < 2) {
-      setError('At least 2 armies are required for a battle');
+    if (participants.length < 1) {
+      setError('At least 1 army is required for a battle');
       return;
     }
 
@@ -191,7 +191,7 @@ export const CreateBattleModal: React.FC<CreateBattleModalProps> = ({
             Battle Participants ({participants.length})
           </h3>
           {participants.length === 0 ? (
-            <p className="text-gray-400 text-sm">No armies added yet. Add at least 2 armies to start a battle.</p>
+            <p className="text-gray-400 text-sm">No armies added yet. Add at least 1 army to start a battle.</p>
           ) : (
             <div className="space-y-2">
               {participants.map((participant, index) => (
@@ -233,10 +233,10 @@ export const CreateBattleModal: React.FC<CreateBattleModalProps> = ({
           </button>
           <button
             onClick={createBattle}
-            disabled={loading || participants.length < 2}
+            disabled={loading || participants.length < 1}
             className="px-4 py-2 bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white rounded"
           >
-            {loading ? 'Creating...' : `Create Battle (${participants.length} armies)`}
+            {loading ? 'Creating...' : `Create Battle (${participants.length} ${participants.length === 1 ? 'army' : 'armies'})`}
           </button>
         </div>
       </div>

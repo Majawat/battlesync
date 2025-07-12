@@ -54,12 +54,12 @@ export const MissionCard: React.FC<MissionCardProps> = ({
           
           {/* Action Buttons */}
           <div className="flex space-x-2 ml-4">
-            {mission.status === 'PENDING' && (
+            {(mission.status === 'PENDING' || mission.status === 'UPCOMING') && (
               <button
                 onClick={() => onUpdateStatus('ACTIVE')}
                 className="bg-green-600 hover:bg-green-700 text-white text-sm px-3 py-1 rounded"
               >
-                Start
+                Start Mission
               </button>
             )}
             {mission.status === 'ACTIVE' && (
@@ -165,7 +165,7 @@ export const MissionCard: React.FC<MissionCardProps> = ({
           <div className="text-sm text-gray-400">
             {mission.status === 'ACTIVE' && 'Mission in progress'}
             {mission.status === 'COMPLETED' && 'Mission completed'}
-            {mission.status === 'PENDING' && 'Ready to start'}
+            {(mission.status === 'PENDING' || mission.status === 'UPCOMING') && 'Ready to start'}
             {mission.status === 'CANCELLED' && 'Mission cancelled'}
           </div>
           

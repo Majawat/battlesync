@@ -14,7 +14,7 @@ const createBattleSchema = Joi.object({
       userId: Joi.string().required(),
       armyId: Joi.string().required()
     })
-  ).min(2).max(8).required()
+  ).min(1).max(8).required()
 });
 
 const phaseTransitionSchema = Joi.object({

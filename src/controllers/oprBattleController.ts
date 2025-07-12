@@ -27,10 +27,10 @@ export class OPRBattleController {
         return;
       }
 
-      if (participants.length < 2 || participants.length > 8) {
+      if (participants.length < 1 || participants.length > 8) {
         res.status(400).json({
           success: false,
-          error: 'Battle must have 2-8 participants'
+          error: 'Battle must have 1-8 participants'
         });
         return;
       }
