@@ -33,7 +33,7 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
     try {
       const response = await fetch(`/api/opr/battles/${battleId}`, {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
         }
       });
 
@@ -42,7 +42,7 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
       }
 
       const data = await response.json();
-      setBattleState(data.battle);
+      setBattleState(data.data);
       setLoading(false);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error');
@@ -52,7 +52,7 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
 
   // WebSocket connection for real-time updates
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('accessToken');
     if (!token) return;
 
     const ws = new WebSocket(`ws://localhost:3001?token=${token}`);
@@ -116,7 +116,7 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
         },
         body: JSON.stringify({ phase: newPhase })
       });
@@ -138,7 +138,7 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
         },
         body: JSON.stringify({
           unitId,

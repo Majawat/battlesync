@@ -498,8 +498,50 @@ export class CampaignService {
       throw ValidationUtils.createError('Only the campaign creator can delete the campaign', 403);
     }
 
-    await prisma.campaign.delete({
-      where: { id: campaignId },
+    // Delete campaign and all related data in a transaction
+    await prisma.$transaction(async (tx) => {
+      // Delete battle events for battles in this campaign
+      await tx.battleEvent.deleteMany({
+        where: {
+          battle: {
+            campaignId: campaignId
+          }
+        }
+      });
+
+      // Delete battle participants for battles in this campaign
+      await tx.battleParticipant.deleteMany({
+        where: {
+          battle: {
+            campaignId: campaignId
+          }
+        }
+      });
+
+      // Delete battles in this campaign
+      await tx.battle.deleteMany({
+        where: { campaignId: campaignId }
+      });
+
+      // Delete missions in this campaign
+      await tx.mission.deleteMany({
+        where: { campaignId: campaignId }
+      });
+
+      // Delete armies in this campaign  
+      await tx.army.deleteMany({
+        where: { campaignId: campaignId }
+      });
+
+      // Delete campaign participations
+      await tx.campaignParticipation.deleteMany({
+        where: { campaignId: campaignId }
+      });
+
+      // Finally, delete the campaign itself
+      await tx.campaign.delete({
+        where: { id: campaignId }
+      });
     });
   }
 

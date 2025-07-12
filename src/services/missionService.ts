@@ -88,6 +88,7 @@ export class MissionService {
 
     return missions.map(mission => ({
       id: mission.id,
+      campaignId: mission.campaignId,
       number: mission.number,
       title: mission.title,
       points: mission.points,

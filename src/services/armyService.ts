@@ -254,19 +254,25 @@ class ArmyService {
         },
         take: query.limit,
         skip: query.offset,
-        select: {
-          id: true,
-          name: true,
-          faction: true,
-          points: true,
-          lastSyncedAt: true,
-          campaignId: true,
-          customizations: true,
-          createdAt: true,
+        include: {
+          campaign: {
+            select: {
+              id: true,
+              name: true
+            }
+          }
         },
       });
 
-      return armies.map(army => ({
+      // Filter out armies with deleted campaigns (where campaign is null and campaignId is not null)
+      const validArmies = armies.filter(army => {
+        // Keep armies that are not assigned to campaigns (campaignId is null)
+        if (army.campaignId === null) return true;
+        // Keep armies that are assigned to campaigns and the campaign exists
+        return army.campaign !== null;
+      });
+
+      return validArmies.map(army => ({
         id: army.id,
         name: army.name,
         faction: army.faction,

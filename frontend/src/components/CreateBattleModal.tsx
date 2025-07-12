@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { Mission } from '../types/mission';
 import { Army } from '../types/army';
+import { apiClient } from '../services/api';
 
 interface CreateBattleModalProps {
   isOpen: boolean;
   onClose: () => void;
-  mission: Mission;
+  mission: Mission | { id: string; campaignId: string; name?: string; title?: string; missionNumber?: number; number?: number; points?: number; description?: string; };
   onBattleCreated: (battleId: string) => void;
 }
 
@@ -41,7 +42,7 @@ export const CreateBattleModal: React.FC<CreateBattleModalProps> = ({
     try {
       const response = await fetch(`/api/armies?campaignId=${mission.campaignId}`, {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
         }
       });
 
@@ -98,7 +99,7 @@ export const CreateBattleModal: React.FC<CreateBattleModalProps> = ({
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
         },
         body: JSON.stringify({
           missionId: mission.id,
@@ -130,7 +131,7 @@ export const CreateBattleModal: React.FC<CreateBattleModalProps> = ({
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-gray-800 rounded-lg p-6 w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto">
         <h2 className="text-xl font-bold text-white mb-4">
-          Create Battle for {mission.name}
+          Create Battle for {mission.name || mission.title}
         </h2>
 
         {error && (
@@ -145,7 +146,7 @@ export const CreateBattleModal: React.FC<CreateBattleModalProps> = ({
           <div className="grid grid-cols-2 gap-4 text-sm">
             <div>
               <span className="text-gray-400">Mission:</span>
-              <span className="text-white ml-2">#{mission.missionNumber} {mission.name}</span>
+              <span className="text-white ml-2">#{mission.missionNumber || mission.number} {mission.name || mission.title}</span>
             </div>
             <div>
               <span className="text-gray-400">Points:</span>

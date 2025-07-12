@@ -71,8 +71,9 @@ model Campaign {
   group           GamingGroup             @relation(fields: [groupId], references: [id])
   creator         User                    @relation(fields: [createdBy], references: [id])
   participations  CampaignParticipation[] // Group-based participation
-  battles     Battle[]
-  missions    Mission[]
+  armies          Army[]                  // Armies in this campaign
+  battles         Battle[]
+  missions        Mission[]
 
   @@map("campaigns")
 }
@@ -135,6 +136,7 @@ model Army {
 
   // Relationships
   user                 User                @relation(fields: [userId], references: [id])
+  campaign             Campaign?           @relation(fields: [campaignId], references: [id])
   battleParticipations BattleParticipant[]
 
   @@map("armies")

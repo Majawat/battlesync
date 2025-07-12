@@ -105,6 +105,7 @@ export type TerrainCategory =
 
 export interface MissionSummary {
   id: string;
+  campaignId: string;
   number: number;
   title: string;
   points: number;
