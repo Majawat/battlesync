@@ -24,13 +24,32 @@ export class GamingGroupService {
     const inviteCode = CryptoUtils.generateInviteCode();
 
     try {
-      const group = await prisma.gamingGroup.create({
-        data: {
-          name: data.name,
-          description: data.description,
-          ownerId,
-          inviteCode,
-        },
+      // Create group and owner membership in a transaction
+      const { group } = await prisma.$transaction(async (tx) => {
+        const group = await tx.gamingGroup.create({
+          data: {
+            name: data.name,
+            description: data.description,
+            ownerId,
+            inviteCode,
+          },
+        });
+
+        // Automatically add owner as a member with OWNER role
+        await tx.groupMembership.create({
+          data: {
+            userId: ownerId,
+            groupId: group.id,
+            role: 'OWNER',
+            status: 'ACTIVE'
+          }
+        });
+
+        return { group };
+      });
+
+      const groupWithMemberships = await prisma.gamingGroup.findUnique({
+        where: { id: group.id },
         include: {
           owner: {
             select: {
@@ -59,7 +78,7 @@ export class GamingGroupService {
         },
       });
 
-      const groupData = this.toGamingGroupData(group);
+      const groupData = this.toGamingGroupData(groupWithMemberships!);
       
       // Send notification about new group creation (optional, as it's only one user initially)
       await NotificationService.notifySuccess(ownerId, 'Group Created', `Gaming group "${groupData.name}" created successfully`);

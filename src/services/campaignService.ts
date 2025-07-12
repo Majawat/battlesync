@@ -93,16 +93,48 @@ export class CampaignService {
     this.validateCampaignSettings(data.settings);
 
     try {
-      const campaign = await prisma.campaign.create({
-        data: {
-          groupId,
-          name: data.name,
-          description: data.description,
-          narrative: data.narrative,
-          settings: data.settings as any,
-          createdBy: userId,
-          status: 'PLANNING',
-        },
+      // Create campaign and creator participation in a transaction
+      const { campaign } = await prisma.$transaction(async (tx) => {
+        const campaign = await tx.campaign.create({
+          data: {
+            groupId,
+            name: data.name,
+            description: data.description,
+            narrative: data.narrative,
+            settings: data.settings as any,
+            createdBy: userId,
+            status: 'PLANNING',
+          },
+        });
+
+        // Find the creator's group membership
+        const groupMembership = await tx.groupMembership.findFirst({
+          where: {
+            userId,
+            groupId,
+            status: 'ACTIVE'
+          }
+        });
+
+        if (!groupMembership) {
+          throw new Error('User is not a member of this group');
+        }
+
+        // Automatically add creator as campaign participant with CREATOR role
+        await tx.campaignParticipation.create({
+          data: {
+            groupMembershipId: groupMembership.id,
+            campaignId: campaign.id,
+            campaignRole: 'CREATOR'
+          }
+        });
+
+        return { campaign };
+      });
+
+      // Fetch the complete campaign data with participations
+      const campaignWithData = await prisma.campaign.findUnique({
+        where: { id: campaign.id },
         include: {
           creator: {
             select: {
@@ -158,10 +190,7 @@ export class CampaignService {
         },
       });
 
-      // Campaign creator will be handled through group membership
-      // No direct campaign membership needed - handled via CampaignParticipation
-
-      return this.toCampaignData(campaign);
+      return this.toCampaignData(campaignWithData!);
     } catch (error: any) {
       if (error.code === 'P2002') {
         throw ValidationUtils.createError('A campaign with this name already exists in the group', 409);
