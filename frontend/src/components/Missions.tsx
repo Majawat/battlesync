@@ -191,6 +191,7 @@ export const Missions: React.FC = () => {
                   mission={mission}
                   onDelete={() => handleDeleteMission(mission.id)}
                   onUpdateStatus={(status) => handleUpdateMissionStatus(mission.id, status)}
+                  onBattleCreated={(battleId) => navigate(`/battles/${battleId}`)}
                 />
               ))}
             </div>
