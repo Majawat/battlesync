@@ -22,27 +22,49 @@
 - **Member Management**: Join/leave campaigns with primary army assignments
 
 ## Army Management ✅ FULLY OPERATIONAL
-  - View all gaming groups and their activity
-  - Monitor campaign progress across groups
-  - Access system-wide statistics and reports
-  - Delete inactive or problematic groups
 
-- **System Configuration**
-  - Update server settings and defaults
-  - Manage system-wide announcements
-  - Configure backup and export schedules
-  - Monitor server performance and health
+### ✅ ArmyForge Integration
+- **Army Import from ArmyForge**: Direct integration with ArmyForge API for importing army lists
+- **Intelligent Faction Mapping**: Automatic resolution of game system codes to meaningful faction names  
+- **Real-time Sync**: Keep armies updated with ArmyForge changes
+- **Campaign Association**: Link armies to specific campaigns with validation
+- **Army Filtering**: Proper handling of armies from deleted campaigns
 
-#### Server Statistics Dashboard
+### ✅ Army Management Features
+- **Complete CRUD Operations**: Create, read, update, delete army data
+- **Army Customization**: Add battle honors, veteran upgrades, and campaign notes
+- **Army Validation**: Ensure armies meet campaign requirements
+- **Statistics Tracking**: Army usage and performance analytics
+
+## Battle System ✅ OPERATIONAL
+
+### ✅ Real-time Battle Tracking
+- **Battle Creation**: Create battles directly from missions with participant selection
+- **WebSocket Battle Rooms**: Real-time communication during battles
+- **Live State Management**: Battle state updates synchronized across all participants
+- **Tablet-optimized Interface**: Mobile-first design for tableside use
+
+### ✅ Battle Dashboard Features
+- **Real-time Updates**: Live battle state changes via WebSocket
+- **Participant Management**: Join battles as participants
+- **Battle State Persistence**: Save and restore battle progress
+- **Authentication Integration**: Secure access to battle rooms
+
+### ⚠️ Enhanced Battle Features (In Development)
+- **Individual Unit Tracking**: Track wounds and status for each unit/model
+- **Damage Application System**: Apply wounds with real-time visual feedback
+- **Turn Management**: Turn-based action tracking and progression
+- **Command Point System**: Track and manage command points during battles
+- **Status Effects**: Handle unit status effects (Shaken, Routed, etc.)
+
 ```typescript
-interface ServerStats {
-  totalUsers: number;
-  activeUsers: number; // last 30 days
-  totalGroups: number;
-  activeCampaigns: number;
-  totalBattles: number;
-  systemUptime: string;
-  databaseSize: string;
+interface BattleState {
+  id: string;
+  missionId: string;
+  participants: BattleParticipant[];
+  status: 'setup' | 'active' | 'paused' | 'completed';
+  currentTurn: number;
+  gameState: any; // Battle-specific state data
 }
 ```
 
@@ -157,62 +179,60 @@ interface ServerStats {
   - Check army composition and rules
   - Coordinate with other players
 
-## Real-time Battle Features
+## System Administration ✅
 
-### Battle Session Management
-- **Session Creation**
-  - Automatic session creation from scheduled missions
-  - Manual battle session setup
-  - Player invitation and confirmation
-  - Army validation and setup
+### Server Owner Features
+- **Gaming Group Oversight**
+  - View all gaming groups and their activity
+  - Monitor campaign progress across groups
+  - Access system-wide statistics and reports
+  - Delete inactive or problematic groups
 
-- **Session States**
+- **System Configuration**
+  - Update server settings and defaults
+  - Manage system-wide announcements
+  - Configure backup and export schedules
+  - Monitor server performance and health
+
+### Real-time Battle Features (Planned)
+
+#### Enhanced Wound Management
+- **Individual Model Tracking**
+  - Track wounds for each model in a unit
+  - Handle Tough values and save rolls
+  - Visual health indicators for models
+  - Automatic model removal when destroyed
+
+- **Advanced Damage System**
   ```typescript
-  type BattleSessionState = 
-    | 'waiting_for_players'
-    | 'deployment'
-    | 'active_battle'
-    | 'paused'
-    | 'completing'
-    | 'completed';
-  ```
-
-### Real-time Battle Tracking
-
-#### Wound Management
-- **Damage Application**
-  - Select target unit from opponent armies
-  - Apply wounds with visual feedback
-  - Automatic wound distribution to models
-  - Real-time updates to all participants
-
-- **Wound Tracking Interface**
-  ```typescript
-  interface WoundTrackingUI {
-    unitSelector: 'grid' | 'list' | 'search';
-    damageInput: 'tap' | 'slider' | 'numeric';
-    confirmationRequired: boolean;
-    undoTimeWindow: number; // seconds
+  interface UnitState {
+    id: string;
+    name: string;
+    models: ModelState[];
+    statusEffects: StatusEffect[];
+    actionsRemaining: number;
+  }
+  
+  interface ModelState {
+    id: string;
+    wounds: number;
+    maxWounds: number;
+    isDestroyed: boolean;
+    equipment: Equipment[];
   }
   ```
 
-- **Model Status Management**
-  - Track individual model wounds
-  - Mark models as dead/removed
-  - Handle tough saves and special rules
-  - Visual indicators for model status
-
-#### Unit Status Tracking
-- **Status Effects**
+#### Advanced Unit Management
+- **Status Effects System**
   - Shaken, Routed, Destroyed states
-  - Temporary effects and conditions
-  - Spell effects and duration tracking
-  - Equipment usage and ammunition
+  - Temporary effects and spell conditions
+  - Duration tracking for timed effects
+  - Visual status indicators
 
-- **Command Resources**
+- **Resource Management**
   - Command point tracking per player
-  - Spell token management
   - Underdog point allocation
+  - Action point management
   - Resource spending confirmation
 
 #### Kill Recording
@@ -369,19 +389,19 @@ interface ServerStats {
 
 ## Feature Prioritization
 
-### Phase 1 (MVP)
-1. User authentication and gaming groups
-2. Basic campaign creation and management
-3. Army import from ArmyForge
-4. Real-time battle tracking
-5. Mobile-responsive interface
+### Phase 1 (MVP) ✅ COMPLETE
+1. User authentication and gaming groups ✅
+2. Basic campaign creation and management ✅
+3. Army import from ArmyForge ✅
+4. Real-time battle tracking ✅
+5. Mobile-responsive interface ✅
 
-### Phase 2 (Enhanced)
-1. Custom mission designer
-2. Advanced analytics and reporting
-3. Export/import functionality
-4. Webhook integrations
-5. Offline capabilities
+### Phase 2 (Enhanced) ⚠️ IN PROGRESS
+1. Enhanced battle features (unit tracking, damage system) ⚠️
+2. Advanced analytics and reporting ❌
+3. Export/import functionality ❌
+4. Webhook integrations ❌
+5. Offline capabilities ❌
 
 ### Phase 3 (Advanced)
 1. Community features (sharing, templates)

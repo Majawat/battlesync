@@ -6,8 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 
 BattleSync is a self-hosted web application for managing One Page Rules (OPR) tabletop gaming campaigns with real-time battle tracking. 
 
-**Current State**: Core systems completed and tested - Army management fully operational
-**Target State**: Production-ready multi-user application with real-time battle tracking
+**Current State**: Core systems completed and tested - Army management and battle tracking fully operational
+**Target State**: Production-ready multi-user application with enhanced battle features
 
 ## Current Implementation Status
 
@@ -23,6 +23,12 @@ BattleSync is a self-hosted web application for managing One Page Rules (OPR) ta
   - ✅ Army controller with 12 API endpoints
   - ✅ Campaign-army association workflow
   - ✅ End-to-end testing completed successfully
+- **Battle System**: Real-time battle tracking infrastructure
+  - ✅ Battle creation workflow from missions
+  - ✅ Real-time WebSocket battle rooms
+  - ✅ Battle dashboard with live state updates
+  - ✅ Tablet-optimized interface for tableside use
+  - ✅ Authentication token management fixes
 - **WebSocket Infrastructure**: Real-time communication system with room management
 - **React Frontend**: Dark mode UI with responsive design, TailwindCSS
 - **Database**: PostgreSQL with Prisma ORM, complete schema implementation
@@ -30,11 +36,13 @@ BattleSync is a self-hosted web application for managing One Page Rules (OPR) ta
 - **Docker Environment**: Full development setup with hot reload
 
 ### ⚠️ IN PROGRESS
-- **Battle Tracking**: Real-time WebSocket battle state management (infrastructure complete)
+- **Enhanced Battle Features**: Individual unit tracking, damage system, turn management
 - **Army Validation**: Enhanced Joi middleware for army endpoints (basic validation implemented)
+- **Unit Conversion**: Converting ArmyForge armies to trackable battle units
 
 ### ❌ PENDING (Not Started)
-- **Advanced Battle Features**: Mobile-optimized battle interface, battle analytics
+- **Advanced Battle Analytics**: Battle statistics, performance tracking
+- **Unit Status System**: Damage tracking, status effects, command points
 - **Production Configuration**: SSL, monitoring, automated backups
 
 ## Architecture
@@ -263,6 +271,8 @@ POST   /api/groups/:groupId/campaigns        # Create campaign
 GET    /api/campaigns/:id                    # Campaign details
 PUT    /api/campaigns/:id                    # Update campaign
 DELETE /api/campaigns/:id                    # Delete campaign
+POST   /api/campaigns/:id/join               # Join campaign
+POST   /api/campaigns/:id/leave              # Leave campaign
 ```
 
 ### Missions
@@ -288,6 +298,16 @@ POST   /api/armies/:id/veteran-upgrades      # Add veteran upgrades
 GET    /api/armies/statistics                # Army usage statistics
 GET    /api/armies/:id/validate              # Validate army composition
 DELETE /api/armies/armyforge/cache           # Clear ArmyForge cache
+```
+
+### Battle Management ✅
+```
+GET    /api/missions/:missionId/battles      # Mission's battles
+POST   /api/missions/:missionId/battles      # Create battle from mission
+GET    /api/battles/:id                      # Battle details and state
+PUT    /api/battles/:id                      # Update battle state
+POST   /api/battles/:id/join                 # Join battle as participant
+DELETE /api/battles/:id                      # Delete battle (admin only)
 ```
 
 ## External Integrations
@@ -361,7 +381,10 @@ CORS_ORIGIN=http://localhost:3002
 - [x] Army import from ArmyForge ✅
 - [x] Campaign-army association ✅
 - [x] Faction name resolution ✅
-- [ ] Battle tracking (infrastructure complete)
+- [x] Battle creation from missions ✅
+- [x] Real-time battle dashboard ✅
+- [x] Battle state WebSocket updates ✅
+- [ ] Enhanced battle features (unit tracking, damage system)
 - [ ] Advanced army features (battle honors, veterans)
 - [ ] Mobile interface optimization
 

@@ -18,13 +18,18 @@ A self-hosted web application for managing One Page Rules (OPR) tabletop gaming 
 - ✅ RESTful API with comprehensive CRUD operations
 - ✅ End-to-end army import and campaign association workflow
 
+🟢 **BATTLE SYSTEM OPERATIONAL**
+- ✅ Battle creation workflow with mission integration
+- ✅ Real-time battle dashboard with WebSocket communication
+- ✅ Battle state management and live updates
+- ✅ Tablet-optimized battle interface
+
 🟡 **IN PROGRESS**
-- ⚠️ Battle tracking system (infrastructure complete, UI in development)
-- ⚠️ Army validation middleware (basic validation implemented)
+- ⚠️ Advanced battle tracking features (unit cards, damage system)
+- ⚠️ Army validation middleware enhancements
 
 🔴 **PLANNED**
 - ❌ Advanced battle analytics and reporting
-- ❌ Mobile-optimized battle interface
 - ❌ Production deployment configuration with SSL
 
 ## Quick Start
@@ -186,12 +191,21 @@ docker/
 - `DELETE /api/armies/:id` - Delete army
 - `GET /api/armies/armyforge/status` - Check ArmyForge API status
 
+### Battle Management
+- `GET /api/missions/:missionId/battles` - Get mission battles
+- `POST /api/missions/:missionId/battles` - Create battle from mission
+- `GET /api/battles/:id` - Get battle details and state
+- `PUT /api/battles/:id` - Update battle state
+- `POST /api/battles/:id/join` - Join battle as participant
+- `DELETE /api/battles/:id` - Delete battle (admin only)
+
 ### WebSocket Events
 - `connection` - Client connects to real-time system
 - `join-room` - Join specific room (group/campaign/battle)
 - `leave-room` - Leave room
 - `notification` - Real-time notifications
 - `battle-update` - Live battle state updates
+- `heartbeat` - Connection health monitoring
 
 ## Key Features
 
@@ -216,15 +230,17 @@ docker/
 ## Next Steps
 
 ### High Priority
-1. **Battle Tracking System**
-   - Real-time battle rooms with turn tracking
-   - Mobile-optimized battle interface
+1. **Enhanced Battle Features**
+   - Individual unit tracking and damage system
+   - Turn-based action management
    - Battle result recording and experience updates
+   - Unit status effects and modifiers
 
 2. **Enhanced Army Features**
    - Battle honors and veteran upgrades
    - Army customization tracking
    - Comprehensive army validation
+   - Unit conversion from ArmyForge format
 
 ### Medium Priority  
 3. **Advanced Analytics**

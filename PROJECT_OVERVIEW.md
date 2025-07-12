@@ -3,7 +3,7 @@
 ## Vision
 A self-hosted web application for managing One Page Rules (OPR) tabletop gaming campaigns with real-time battle tracking and multi-user support.
 
-## Current State (January 2025)
+## Current State (July 2025)
 🟢 **OPERATIONAL FEATURES**
 - ✅ Multi-user web application with JWT authentication
 - ✅ Real-time WebSocket communication infrastructure  
@@ -14,19 +14,23 @@ A self-hosted web application for managing One Page Rules (OPR) tabletop gaming 
 - ✅ Campaign management with comprehensive settings
 - ✅ Mission system with auto-numbering and templates
 - ✅ RESTful API with role-based access control
+- ✅ Army management system with ArmyForge integration
+- ✅ Battle creation and tracking system
+- ✅ Real-time battle dashboard with WebSocket updates
 
-🟡 **PARTIALLY IMPLEMENTED**
-- ⚠️ Army management system (90% complete, compilation errors blocking deployment)
-- ⚠️ ArmyForge integration (implemented but disabled due to technical issues)
+🟡 **IN PROGRESS**
+- ⚠️ Enhanced battle features (unit tracking, damage system)
+- ⚠️ Army validation and rules enforcement
+- ⚠️ Unit conversion from ArmyForge format
 
 🔴 **PLANNED FEATURES**
-- ❌ Real-time battle tracking during games
-- ❌ Army validation and rules enforcement  
-- ❌ Production deployment configuration
+- ❌ Advanced battle analytics and reporting
+- ❌ Production deployment configuration with SSL
+- ❌ Mobile app development
 
 ## Target State
 - ✅ Multi-user web application with authentication *(COMPLETE)*
-- ❌ Real-time battle tracking during games *(IN DEVELOPMENT)*
+- ✅ Real-time battle tracking during games *(COMPLETE)*
 - ✅ Persistent database storage *(COMPLETE)*
 - ✅ Docker Compose deployment for home servers *(COMPLETE)*
 - ✅ Mobile-first responsive design *(COMPLETE)*
@@ -81,7 +85,7 @@ A self-hosted web application for managing One Page Rules (OPR) tabletop gaming 
 - View all campaign and mission data within their gaming groups
 - Participate in campaign activities
 - **Implementation Status**: Basic functionality complete
-- **Pending**: Army import from ArmyForge, battle participation
+- **Pending**: Enhanced battle participation features
 
 ## Key Features
 
@@ -115,19 +119,19 @@ A self-hosted web application for managing One Page Rules (OPR) tabletop gaming 
 - Mission scheduling and status management
 - **Status**: Production ready
 
-### Army Management ⚠️
+### Army Management ✅
 - ArmyForge integration for army import
 - Army customization and battle honors
 - Veteran upgrades and experience tracking
 - Army validation for One Page Rules
-- **Status**: 90% complete, blocked by compilation errors
+- **Status**: Complete and operational
 
-### Real-time Battle Tracking ❌
+### Real-time Battle Tracking ✅
 - WebSocket-based battle rooms
-- Live unit status tracking (wounds, kills, status effects)
-- Turn progression and phase management
+- Live battle state management
+- Battle creation from missions
 - Mobile-optimized battle interface
-- **Status**: Infrastructure ready, implementation pending
+- **Status**: Core features operational, enhanced features in development
 
 ### Frontend Application ✅
 - React 18+ with TypeScript
