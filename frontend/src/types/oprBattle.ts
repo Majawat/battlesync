@@ -1,0 +1,167 @@
+// Frontend OPR Battle Types (mirrors backend types)
+
+export type OPRBattlePhase = 'GAME_SETUP' | 'DEPLOYMENT' | 'BATTLE_ROUNDS' | 'GAME_END';
+export type OPRUnitType = 'STANDARD' | 'JOINED' | 'COMBINED';
+export type BattleStatus = 'SETUP' | 'ACTIVE' | 'COMPLETED' | 'CANCELLED';
+
+export interface OPRBattleState {
+  battleId: string;
+  status: BattleStatus;
+  phase: OPRBattlePhase;
+  currentRound: number;
+  currentPlayer?: string;
+  armies: OPRBattleArmy[];
+  events: OPRBattleEvent[];
+  gameSettings: OPRGameSettings;
+}
+
+export interface OPRGameSettings {
+  gameSystem: string;
+  pointsLimit: number;
+  timeLimit?: number;
+  allowUnderdog: boolean;
+  customRules: string[];
+}
+
+export interface OPRBattleArmy {
+  userId: string;
+  armyId: string;
+  armyName: string;
+  faction: string;
+  totalPoints: number;
+  maxCommandPoints: number;
+  currentCommandPoints: number;
+  maxUnderdogPoints: number;
+  currentUnderdogPoints: number;
+  selectedDoctrine?: string;
+  units: OPRBattleUnit[];
+  killCount: number;
+}
+
+export interface OPRBattleUnit {
+  unitId: string;
+  name: string;
+  customName?: string;
+  type: OPRUnitType;
+  originalSize: number;
+  currentSize: number;
+  
+  // Unit state
+  action: 'hold' | 'advance' | 'rush' | 'charge' | null;
+  fatigued: boolean;
+  shaken: boolean;
+  routed: boolean;
+  
+  // Combat tracking
+  kills: number;
+  killedBy?: string;
+  
+  // Model composition
+  models: OPRBattleModel[];
+  joinedHero?: OPRBattleModel;
+  
+  // Combined unit tracking
+  isCombined: boolean;
+  combinedFrom?: string[];
+  
+  // Source data
+  sourceUnit: any; // ArmyForge unit data
+}
+
+export interface OPRBattleModel {
+  modelId: string;
+  name: string;
+  customName?: string;
+  isHero: boolean;
+  
+  // Health tracking
+  maxTough: number;
+  currentTough: number;
+  
+  // Stats
+  quality: number;
+  defense: number;
+  
+  // Model state
+  casterTokens: number;
+  isDestroyed: boolean;
+  
+  // Equipment
+  weapons: string[];
+  specialRules: string[];
+}
+
+export interface OPRBattleEvent {
+  id: string;
+  timestamp: Date;
+  round: number;
+  phase: OPRBattlePhase;
+  userId: string;
+  eventType: string;
+  data: {
+    description: string;
+    [key: string]: any;
+  };
+}
+
+// API Request/Response Types
+export interface CreateBattleRequest {
+  missionId: string;
+  participants: Array<{
+    userId: string;
+    armyId: string;
+  }>;
+}
+
+export interface CreateBattleResponse {
+  success: boolean;
+  data?: {
+    battleId: string;
+    battle: OPRBattleState;
+  };
+  error?: string;
+}
+
+export interface ApplyDamageRequest {
+  unitId: string;
+  modelId?: string;
+  quickDamage?: 1 | 2 | 3 | 4 | 5;
+  customDamage?: number;
+}
+
+export interface DamageResult {
+  success: boolean;
+  modelsDestroyed: number;
+  unitDestroyed: boolean;
+  unitShaken: boolean;
+  unitRouted: boolean;
+  moraleTestRequired: boolean;
+  experienceGained: number;
+}
+
+export interface PhaseTransitionRequest {
+  phase: OPRBattlePhase;
+}
+
+// UI-specific types
+export interface BattleUIState {
+  selectedUnit?: string;
+  selectedModel?: string;
+  damageMode: boolean;
+  showDetails: boolean;
+  compactMode: boolean;
+}
+
+export interface TouchDamageProps {
+  unitId: string;
+  modelId?: string;
+  onDamageApplied: (result: DamageResult) => void;
+  disabled?: boolean;
+}
+
+// WebSocket message types
+export interface BattleWebSocketMessage {
+  type: 'battle_created' | 'phase_changed' | 'damage_applied' | 'hero_joined' | 'battle_completed';
+  data: any;
+  timestamp: string;
+}

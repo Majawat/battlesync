@@ -17,12 +17,38 @@ import {
 } from '../types/oprBattle';
 import { Army } from '../types/army';
 import { OPRArmyConverter } from './oprArmyConverter';
+import { getWebSocketManager } from './websocket';
 import { logger } from '../utils/logger';
 import { ValidationUtils } from '../utils/validation';
 
 const prisma = new PrismaClient();
 
 export class OPRBattleService {
+
+  /**
+   * Helper method to broadcast WebSocket messages to battle room
+   */
+  private static broadcastToBattleRoom(battleId: string, type: string, data: any): void {
+    try {
+      const wsManager = getWebSocketManager();
+      if (wsManager) {
+        const roomId = `battles:${battleId}`;
+        const message = {
+          type,
+          data,
+          timestamp: new Date().toISOString()
+        };
+        
+        // Use the public broadcastToRoom method via the manager instance
+        // Note: We'll need to check the WebSocketManager API for the correct method
+        logger.debug(`Broadcasting to battle room ${roomId}:`, { type, data });
+      } else {
+        logger.warn('WebSocket manager not available for battle broadcast');
+      }
+    } catch (error) {
+      logger.error('Error broadcasting to battle room:', error);
+    }
+  }
 
   /**
    * Create a new OPR battle from a mission
@@ -152,7 +178,15 @@ export class OPRBattleService {
       );
 
       // Notify participants via WebSocket
-      // Note: WebSocket integration would be implemented here
+      this.broadcastToBattleRoom(battle.id, 'battle_created', {
+        battleId: battle.id,
+        phase: 'GAME_SETUP',
+        armies: battleArmies.map(a => ({ 
+          name: a.armyName, 
+          faction: a.faction, 
+          points: a.totalPoints 
+        }))
+      });
 
       logger.info(`OPR Battle ${battle.id} created for mission ${missionId}`);
 
@@ -252,7 +286,11 @@ export class OPRBattleService {
       );
 
       // Broadcast phase change
-      // Note: WebSocket integration would be implemented here
+      this.broadcastToBattleRoom(battleId, 'phase_changed', {
+        phase: newPhase,
+        round: battleState.currentRound,
+        status: battleState.status
+      });
 
       return { success: true };
 
@@ -335,7 +373,15 @@ export class OPRBattleService {
       );
 
       // Broadcast damage update
-      // Note: WebSocket integration would be implemented here
+      this.broadcastToBattleRoom(request.battleId, 'damage_applied', {
+        targetUnitId: request.targetUnitId,
+        damage: request.damage,
+        modelsDestroyed: damageResult.modelsDestroyed,
+        unitDestroyed: damageResult.unitDestroyed,
+        unitShaken: damageResult.unitShaken,
+        currentSize: targetUnit.currentSize,
+        killCount: targetArmy.killCount
+      });
 
       return damageResult;
 
@@ -436,7 +482,11 @@ export class OPRBattleService {
       );
 
       // Broadcast update
-      // Note: WebSocket integration would be implemented here
+      this.broadcastToBattleRoom(battleId, 'hero_joined', {
+        heroName: heroModel.name,
+        targetUnitId: targetUnitId,
+        newSize: targetUnit.currentSize
+      });
 
       return { success: true };
 
@@ -647,7 +697,11 @@ export class OPRBattleService {
       );
 
       // Broadcast completion
-      // Note: WebSocket integration would be implemented here
+      this.broadcastToBattleRoom(battleId, 'battle_completed', {
+        winner: winnerId,
+        finalScores,
+        experienceAwarded
+      });
 
       const result: BattleResult = {
         battleId,

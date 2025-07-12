@@ -1,10 +1,10 @@
 import { Router } from 'express';
 import authRoutes from './auth';
 import { gamingGroupRoutes } from './gamingGroupRoutes';
-// import { campaignRoutes } from './campaignRoutes';
-// import { missionRoutes } from './missionRoutes';
-// import armyRoutes from './armyRoutes';
-// import battleRoutes from './battleRoutes';
+import { campaignRoutes } from './campaignRoutes';
+import { missionRoutes } from './missionRoutes';
+import armyRoutes from './armyRoutes';
+import battleRoutes from './battleRoutes';
 import oprBattleRoutes from './oprBattleRoutes';
 
 const router = Router();
@@ -12,10 +12,10 @@ const router = Router();
 // Mount route modules
 router.use('/auth', authRoutes);
 router.use('/groups', gamingGroupRoutes);
-// router.use('/', campaignRoutes);
-// router.use('/', missionRoutes);
-// router.use('/armies', armyRoutes);
-// router.use('/battles', battleRoutes);
+router.use('/', campaignRoutes);
+router.use('/', missionRoutes);
+router.use('/armies', armyRoutes);
+router.use('/battles', battleRoutes);
 router.use('/opr/battles', oprBattleRoutes);
 
 // Health check for API
