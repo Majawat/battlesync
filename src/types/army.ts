@@ -44,6 +44,12 @@ export interface ArmyForgeUnit {
   notes?: string | null;
   traits?: string[];
   combined?: boolean;
+  // Hero joining fields
+  joinToUnit?: string | null; // selectionId of target unit to join
+  selectionId?: string; // unique ID for this unit selection
+  // Upgrade fields
+  loadout?: ArmyForgeLoadoutItem[]; // Final equipment after upgrades
+  selectedUpgrades?: ArmyForgeSelectedUpgrade[]; // Chosen upgrades
   // Legacy fields for compatibility
   type?: 'HERO' | 'UNIT' | 'VEHICLE' | 'SUPPORT';
   models?: ArmyForgeModel[];
@@ -91,8 +97,49 @@ export interface ArmyForgeRule {
   rating?: number;
   additional?: boolean;
   description?: string;
+  count?: number; // For rules that appear multiple times
   // Legacy fields for compatibility
   type?: 'ARMY' | 'UNIT' | 'MODEL' | 'WEAPON';
+}
+
+export interface ArmyForgeLoadoutItem {
+  id?: string;
+  name: string;
+  type: 'ArmyBookWeapon' | 'ArmyBookItem' | 'ArmyBookRule';
+  count?: number;
+  label?: string;
+  range?: number;
+  attacks?: number;
+  weaponId?: string;
+  specialRules?: any[];
+  originalCount?: number;
+  content?: ArmyForgeLoadoutContent[];
+  dependencies?: ArmyForgeLoadoutDependency[];
+}
+
+export interface ArmyForgeLoadoutContent {
+  id: string;
+  name: string;
+  type: 'ArmyBookRule' | 'ArmyBookWeapon' | 'ArmyBookItem';
+  rating?: number | string;
+  label?: string;
+  count?: number;
+  range?: number;
+  attacks?: number;
+  specialRules?: any[];
+  dependencies?: any[];
+}
+
+export interface ArmyForgeLoadoutDependency {
+  count: number;
+  variant: 'replace' | 'add';
+  upgradeInstanceId: string;
+}
+
+export interface ArmyForgeSelectedUpgrade {
+  option: any;
+  upgrade: any;
+  instanceId: string;
 }
 
 export interface ArmyCustomizations {

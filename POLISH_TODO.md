@@ -60,8 +60,8 @@ Default Special Objectives (Roll 1D6):
 ## API References
 
 - **Faction List API**: `https://army-forge.onepagerules.com/api/army-books?filters=official&gameSystemSlug=grimdark-future&searchText=&page=1&unitCount=0&balanceValid=false&customRules=true&fans=false&sortBy=null`
-- **Share Link Format**: `https://army-forge.onepagerules.com/share?id=vMzljLVC6ZGv&name=The_Ashen%20Pact`
-- **TTS API Format**: `https://army-forge.onepagerules.com/api/tts?id=vMzljLVC6ZGv`
+- **Share Link Format**: `https://army-forge.onepagerules.com/share?id=IJ1JM_m-jmka&name=The_Ashen%20Pact`
+- **TTS API Format**: `https://army-forge.onepagerules.com/api/tts?id=IJ1JM_m-jmka`
 
 ## Campaign Membership Management (New)
 

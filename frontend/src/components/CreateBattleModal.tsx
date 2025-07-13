@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { Mission } from '../types/mission';
 import { Army } from '../types/army';
-import { apiClient } from '../services/api';
 
 interface CreateBattleModalProps {
   isOpen: boolean;

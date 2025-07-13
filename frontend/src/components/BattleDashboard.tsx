@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../hooks/useAuth';
+import { BattleUnitCard } from './BattleUnitCard';
 import { 
   OPRBattleState, 
-  OPRBattleUnit,
   OPRBattlePhase,
   BattleUIState,
   DamageResult,
@@ -285,7 +285,7 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
             
             <div className="space-y-3 max-h-[calc(100vh-12rem)] overflow-y-auto">
               {userArmy.units.map(unit => (
-                <UnitCard
+                <BattleUnitCard
                   key={unit.unitId}
                   unit={unit}
                   isOwned={true}
@@ -316,7 +316,7 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
               
               <div className="space-y-3">
                 {army.units.map(unit => (
-                  <UnitCard
+                  <BattleUnitCard
                     key={unit.unitId}
                     unit={unit}
                     isOwned={false}
@@ -335,120 +335,6 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
           ))}
         </div>
       </div>
-    </div>
-  );
-};
-
-// Unit Card Component
-interface UnitCardProps {
-  unit: OPRBattleUnit;
-  isOwned: boolean;
-  isSelected: boolean;
-  damageMode: boolean;
-  compactMode: boolean;
-  onSelect: () => void;
-  onQuickDamage: (damage: number, modelId?: string) => void;
-}
-
-const UnitCard: React.FC<UnitCardProps> = ({
-  unit,
-  isOwned,
-  isSelected,
-  damageMode,
-  compactMode,
-  onSelect,
-  onQuickDamage
-}) => {
-  const isDestroyed = unit.currentSize === 0;
-  const isShaken = unit.shaken;
-  const isRouted = unit.routed;
-  
-  const statusColor = isDestroyed ? 'border-red-600' : 
-                     isRouted ? 'border-red-400' :
-                     isShaken ? 'border-yellow-400' : 
-                     'border-gray-600';
-
-  const bgColor = isOwned ? 'bg-gray-800' : 'bg-gray-750';
-
-  return (
-    <div 
-      className={`border-2 ${statusColor} ${bgColor} rounded-lg p-3 cursor-pointer transition-all ${
-        isSelected ? 'ring-2 ring-blue-500' : ''
-      } ${isDestroyed ? 'opacity-60' : ''}`}
-      onClick={onSelect}
-    >
-      <div className="flex items-center justify-between mb-2">
-        <div>
-          <h3 className="font-medium text-sm">
-            {unit.customName || unit.name}
-          </h3>
-          <div className="text-xs text-gray-400">
-            {unit.type} • {unit.currentSize}/{unit.originalSize} models
-            {unit.kills > 0 && ` • ${unit.kills} kills`}
-          </div>
-        </div>
-        
-        {/* Quick Damage Buttons (Touch Optimized) */}
-        {damageMode && !isDestroyed && (
-          <div className="flex space-x-1">
-            {[1, 2, 3, 5].map(damage => (
-              <button
-                key={damage}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onQuickDamage(damage);
-                }}
-                className="w-8 h-8 bg-red-600 hover:bg-red-700 rounded text-xs font-bold touch-manipulation"
-              >
-                {damage}
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Unit Status Indicators */}
-      <div className="flex items-center space-x-2 text-xs">
-        {isRouted && <span className="px-2 py-1 bg-red-600 rounded">ROUTED</span>}
-        {isShaken && !isRouted && <span className="px-2 py-1 bg-yellow-600 rounded">SHAKEN</span>}
-        {unit.fatigued && <span className="px-2 py-1 bg-orange-600 rounded">FATIGUED</span>}
-        {unit.action && <span className="px-2 py-1 bg-blue-600 rounded">{unit.action.toUpperCase()}</span>}
-      </div>
-
-      {/* Model Details (Expanded) */}
-      {isSelected && !compactMode && (
-        <div className="mt-3 pt-3 border-t border-gray-600">
-          <div className="text-xs space-y-1">
-            {unit.models.filter(m => !m.isDestroyed).map(model => (
-              <div key={model.modelId} className="flex items-center justify-between">
-                <span className={model.isHero ? 'text-yellow-400 font-medium' : ''}>
-                  {model.customName || model.name}
-                  {model.isHero && ' (Hero)'}
-                </span>
-                <span className="text-gray-400">
-                  {model.currentTough}/{model.maxTough} Tough
-                </span>
-                {damageMode && (
-                  <div className="flex space-x-1">
-                    {[1, 2, 3].map(damage => (
-                      <button
-                        key={damage}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onQuickDamage(damage, model.modelId);
-                        }}
-                        className="w-6 h-6 bg-red-600 hover:bg-red-700 rounded text-xs touch-manipulation"
-                      >
-                        {damage}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   );
 };

@@ -4,6 +4,7 @@ import {
   OPRBattleUnit, 
   OPRBattleModel, 
   OPRUnitType,
+  OPRWeaponSummary,
   ArmyConversionResult,
   UnitConversionOptions 
 } from '../types/oprBattle';
@@ -118,6 +119,9 @@ export class OPRArmyConverter {
       }
     }
 
+    // Create weapon summary
+    const weaponSummary = this.createWeaponSummary(armyUnit);
+
     // Create battle unit
     const battleUnit: OPRBattleUnit = {
       unitId: armyUnit.id,
@@ -135,6 +139,7 @@ export class OPRArmyConverter {
       
       kills: 0,
       models,
+      weaponSummary,
       
       isCombined: armyUnit.combined || false,
       sourceUnit: armyUnit
@@ -153,6 +158,11 @@ export class OPRArmyConverter {
     
     const isHero = this.isHeroModel(armyModel, parentUnit);
     const toughValue = this.extractToughValue(armyModel.stats);
+    
+    // For individual models, also check parent unit upgrades that might affect them
+    const effectiveRules = this.getEffectiveRules(parentUnit);
+    const modelRules = armyModel.stats.special || [];
+    const combinedRules = [...modelRules, ...effectiveRules.map(r => r.label || r.name)];
 
     return {
       modelId: armyModel.id,
@@ -165,16 +175,142 @@ export class OPRArmyConverter {
       casterTokens: 0,
       isDestroyed: false,
       weapons: armyModel.equipment || [],
-      specialRules: armyModel.stats.special || []
+      specialRules: [...new Set(combinedRules)] // Remove duplicates
     };
+  }
+
+  /**
+   * Create weapon summary for a unit using final loadout (after upgrades)
+   */
+  private static createWeaponSummary(armyUnit: ArmyForgeUnit): OPRWeaponSummary[] {
+    // Use loadout as authoritative source for final weapons
+    const finalWeapons = this.getEffectiveWeapons(armyUnit);
+    
+    if (finalWeapons.length === 0) {
+      return [];
+    }
+
+    return finalWeapons.map(weapon => {
+      // Extract count from label if present, otherwise use weapon.count
+      let count = weapon.count || 1;
+      let label = weapon.label || weapon.name;
+      
+      // Check if label already includes count (e.g., "8x Rifle (24", A1)")
+      const countMatch = label.match(/^(\d+)x\s/);
+      if (countMatch) {
+        count = parseInt(countMatch[1], 10);
+        // Label already formatted correctly, don't duplicate count
+      } else if (count > 1) {
+        // Add count prefix if not already present
+        label = `${count}x ${label}`;
+      }
+      
+      
+      return {
+        name: weapon.name,
+        count: count,
+        range: weapon.range,
+        attacks: weapon.attacks,
+        specialRules: weapon.specialRules?.map((rule: any) => 
+          rule.rating ? `${rule.name}(${rule.rating})` : rule.name
+        ) || [],
+        label: label
+      };
+    });
+  }
+
+  /**
+   * Get effective weapons from loadout (final weapons after all upgrades)
+   */
+  private static getEffectiveWeapons(armyUnit: ArmyForgeUnit): any[] {
+    if (!armyUnit.loadout) {
+      // Fallback to original weapons if no loadout
+      return armyUnit.weapons || [];
+    }
+
+    // Extract weapons from loadout
+    const weapons = armyUnit.loadout.filter((item: any) => item.type === 'ArmyBookWeapon');
+    
+    // Also check for weapons inside item content (like from upgrades)
+    const weaponsFromItems: any[] = [];
+    armyUnit.loadout.forEach((item: any) => {
+      if (item.type === 'ArmyBookItem' && item.content) {
+        item.content.forEach((content: any) => {
+          if (content.type === 'ArmyBookWeapon') {
+            weaponsFromItems.push(content);
+          }
+        });
+      }
+    });
+
+    return [...weapons, ...weaponsFromItems];
+  }
+
+  /**
+   * Get effective special rules from base rules plus upgrades
+   */
+  private static getEffectiveRules(armyUnit: ArmyForgeUnit): any[] {
+    const baseRules = armyUnit.rules || [];
+    const upgradeRules: any[] = [];
+
+    if (armyUnit.loadout) {
+      armyUnit.loadout.forEach((item: any) => {
+        if (item.type === 'ArmyBookItem' && item.content) {
+          item.content.forEach((content: any) => {
+            if (content.type === 'ArmyBookRule') {
+              upgradeRules.push({
+                id: content.id,
+                name: content.name,
+                rating: content.rating,
+                label: content.label || `${content.name}${content.rating ? `(${content.rating})` : ''}`,
+                count: content.count || 1
+              });
+            }
+          });
+        }
+      });
+    }
+
+    return [...baseRules, ...upgradeRules];
+  }
+
+  /**
+   * Get effective Tough value from base rules plus upgrades (cumulative)
+   */
+  private static getEffectiveToughValue(armyUnit: ArmyForgeUnit): number {
+    let toughValue = 1; // Default
+
+    // Check base rules first
+    const baseRule = armyUnit.rules?.find(rule => rule.name.toLowerCase() === 'tough');
+    if (baseRule?.rating) {
+      toughValue = Number(baseRule.rating);
+    }
+
+    // Add cumulative Tough values from loadout items
+    if (armyUnit.loadout) {
+      armyUnit.loadout.forEach((item: any) => {
+        if (item.type === 'ArmyBookItem' && item.content) {
+          item.content.forEach((content: any) => {
+            if (content.name.toLowerCase() === 'tough' && content.rating) {
+              // Tough values are cumulative for single model units
+              // TODO: Handle multi-model units where upgrades might apply to individual models
+              toughValue += Number(content.rating);
+            }
+          });
+        }
+      });
+    }
+
+    return toughValue;
   }
 
   /**
    * Create battle model from unit data (when detailed models not available)
    */
   private static createModelFromUnit(armyUnit: ArmyForgeUnit, index: number): OPRBattleModel {
-    const isHero = armyUnit.type === 'HERO';
-    const toughValue = this.extractToughFromUnit(armyUnit);
+    const isHero = this.isHeroUnit(armyUnit);
+    const toughValue = this.getEffectiveToughValue(armyUnit);
+    const effectiveRules = this.getEffectiveRules(armyUnit);
 
     return {
       modelId: `${armyUnit.id}_model_${index}`,
@@ -186,8 +322,8 @@ export class OPRArmyConverter {
       defense: armyUnit.defense || 4,
       casterTokens: 0,
       isDestroyed: false,
-      weapons: armyUnit.weapons?.map(w => w.name) || [],
-      specialRules: armyUnit.rules?.map(r => r.name) || []
+      weapons: [], // Weapons now tracked at unit level in weaponSummary
+      specialRules: effectiveRules.map(r => r.label || r.name)
     };
   }
 
@@ -240,6 +376,7 @@ export class OPRArmyConverter {
 
   /**
    * Process joined units (Heroes joining regular units)
+   * Reads joinToUnit field from Army Forge data to determine which heroes join which units
    */
   private static processJoinedUnits(units: OPRBattleUnit[]): {
     units: OPRBattleUnit[];
@@ -247,19 +384,150 @@ export class OPRArmyConverter {
   } {
     const warnings: string[] = [];
     const processedUnits: OPRBattleUnit[] = [];
-    const heroes = units.filter(u => u.models.some(m => m.isHero));
-    const regularUnits = units.filter(u => !u.models.some(m => m.isHero));
-
-    // For now, keep all units separate - joining logic would be implemented in UI
-    // This allows players to manually join heroes to units during deployment
-    processedUnits.push(...regularUnits);
-    processedUnits.push(...heroes);
-
-    if (heroes.length > 0) {
-      warnings.push(`${heroes.length} Hero unit(s) can be joined to regular units during deployment`);
-    }
-
+    const unitsToJoin = new Map<string, OPRBattleUnit>(); // selectionId -> unit
+    const heroesToJoin: OPRBattleUnit[] = [];
+    
+    // Build map of units by their selectionId for joining lookup
+    units.forEach(unit => {
+      if (unit.sourceUnit.selectionId) {
+        unitsToJoin.set(unit.sourceUnit.selectionId, unit);
+      }
+    });
+    
+    // Process each unit to determine joining
+    units.forEach(unit => {
+      const joinToUnit = unit.sourceUnit.joinToUnit;
+      
+      if (joinToUnit) {
+        // This unit wants to join another unit
+        const targetUnit = unitsToJoin.get(joinToUnit);
+        
+        if (targetUnit) {
+          // Check if this is a valid hero join (Tough ≤ 6 and has Hero rule)
+          const isValidHeroJoin = this.canHeroJoinUnit(unit, targetUnit);
+          
+          if (isValidHeroJoin) {
+            heroesToJoin.push(unit);
+            warnings.push(`Hero ${unit.customName || unit.name} joined unit ${targetUnit.customName || targetUnit.name}`);
+          } else {
+            // Can't join - keep as separate unit
+            processedUnits.push(unit);
+            warnings.push(`Hero ${unit.customName || unit.name} cannot join ${targetUnit.customName || targetUnit.name} (invalid join conditions)`);
+          }
+        } else {
+          // Target unit not found
+          processedUnits.push(unit);
+          warnings.push(`Hero ${unit.customName || unit.name} could not find target unit ${joinToUnit}`);
+        }
+      } else {
+        // Regular unit or hero not joining anyone
+        processedUnits.push(unit);
+      }
+    });
+    
+    // Now process the actual joining
+    heroesToJoin.forEach(hero => {
+      const targetSelectionId = hero.sourceUnit.joinToUnit!;
+      const targetUnitIndex = processedUnits.findIndex(unit => 
+        unit.sourceUnit.selectionId === targetSelectionId
+      );
+      
+      if (targetUnitIndex >= 0) {
+        const targetUnit = processedUnits[targetUnitIndex];
+        const joinedUnit = this.joinHeroToUnit(hero, targetUnit);
+        processedUnits[targetUnitIndex] = joinedUnit;
+      }
+    });
+    
     return { units: processedUnits, warnings };
+  }
+  
+  /**
+   * Check if a hero can join a unit according to OPR rules
+   */
+  private static canHeroJoinUnit(hero: OPRBattleUnit, targetUnit: OPRBattleUnit): boolean {
+    // Must be a hero
+    const isHero = hero.models.some(m => m.isHero) || 
+                   hero.sourceUnit.rules?.some(r => r.name.toLowerCase() === 'hero');
+    
+    if (!isHero) {
+      return false;
+    }
+    
+    // Hero must have Tough ≤ 6
+    const heroTough = this.getUnitToughValue(hero);
+    if (heroTough > 6) {
+      return false;
+    }
+    
+    // Target unit must be multi-model unit without another hero
+    if (targetUnit.originalSize <= 1) {
+      return false;
+    }
+    
+    const targetHasHero = targetUnit.models.some(m => m.isHero) || 
+                         targetUnit.joinedHero !== undefined;
+    
+    if (targetHasHero) {
+      return false;
+    }
+    
+    return true;
+  }
+  
+  /**
+   * Join a hero to a unit, creating a new joined unit
+   */
+  private static joinHeroToUnit(hero: OPRBattleUnit, targetUnit: OPRBattleUnit): OPRBattleUnit {
+    // Create hero model from the hero unit
+    const heroModel: any = {
+      modelId: hero.models[0].modelId,
+      name: hero.customName || hero.name,
+      customName: hero.customName,
+      isHero: true,
+      maxTough: hero.models[0].maxTough,
+      currentTough: hero.models[0].currentTough,
+      quality: hero.models[0].quality,
+      defense: hero.models[0].defense,
+      casterTokens: hero.models[0].casterTokens,
+      isDestroyed: false,
+      weapons: hero.weaponSummary.map(w => w.label),
+      specialRules: hero.models[0].specialRules
+    };
+    
+    // Combine weapon summaries (target unit + hero weapons)
+    const combinedWeaponSummary = [
+      ...targetUnit.weaponSummary,
+      ...hero.weaponSummary
+    ];
+    
+    // Create joined unit based on target unit
+    const joinedUnit: OPRBattleUnit = {
+      ...targetUnit,
+      type: 'JOINED',
+      originalSize: targetUnit.originalSize + 1, // Add hero to size
+      currentSize: targetUnit.currentSize + 1,
+      weaponSummary: combinedWeaponSummary,
+      joinedHero: heroModel,
+      // Note: models array stays the same (regular models only)
+      // Hero is tracked separately in joinedHero field
+    };
+    
+    return joinedUnit;
+  }
+  
+  /**
+   * Get the Tough value for a unit (looks at first model or unit rules)
+   */
+  private static getUnitToughValue(unit: OPRBattleUnit): number {
+    // Check first model's tough value
+    if (unit.models.length > 0) {
+      return unit.models[0].maxTough;
+    }
+    
+    // Fallback to unit rules
+    const toughRule = unit.sourceUnit.rules?.find(r => r.name.toLowerCase() === 'tough');
+    return toughRule?.rating || 1;
   }
 
   /**
@@ -268,6 +536,12 @@ export class OPRArmyConverter {
   private static mergeCombinedUnits(unit1: OPRBattleUnit, unit2: OPRBattleUnit): OPRBattleUnit {
     const mergedModels = [...unit1.models, ...unit2.models];
     
+    // Combine weapon summaries by doubling the counts (since we're combining identical units)
+    const combinedWeaponSummary = unit1.weaponSummary.map(weapon => ({
+      ...weapon,
+      count: weapon.count * 2
+    }));
+    
     return {
       ...unit1,
       unitId: `combined_${unit1.unitId}_${unit2.unitId}`,
@@ -275,6 +549,7 @@ export class OPRArmyConverter {
       originalSize: mergedModels.length,
       currentSize: mergedModels.length,
       models: mergedModels,
+      weaponSummary: combinedWeaponSummary,
       combinedFrom: [unit1.unitId, unit2.unitId]
     };
   }
@@ -289,6 +564,17 @@ export class OPRArmyConverter {
     // Check for Hero special rule
     const heroRules = ['Hero', 'HERO', 'hero'];
     return model.stats.special?.some(rule => heroRules.includes(rule)) || false;
+  }
+  
+  /**
+   * Check if a unit is a Hero unit
+   */
+  private static isHeroUnit(unit: ArmyForgeUnit): boolean {
+    // Check unit type
+    if (unit.type === 'HERO') return true;
+    
+    // Check for Hero rule in unit rules
+    return unit.rules?.some(rule => rule.name.toLowerCase() === 'hero') || false;
   }
 
   /**

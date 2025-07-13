@@ -93,4 +93,11 @@ router.post('/:id/veteran-upgrades', ArmyController.addVeteranUpgrade);
  */
 router.get('/:id/validate', ArmyController.validateArmy);
 
+/**
+ * @route GET /api/armies/:id/convert
+ * @desc Convert army to battle format
+ * @access Private
+ */
+router.get('/:id/convert', ArmyController.convertToBattleFormat);
+
 export default router;

@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { apiClient } from '../services/api';
 import { Army, ArmyForgeUnit } from '../types/army';
+import { OPRBattleUnit } from '../types/oprBattle';
+import { BattleUnitCard } from './BattleUnitCard';
 
 export const ArmyDetailView: React.FC = () => {
   const { armyId } = useParams<{ armyId: string }>();
@@ -12,6 +14,9 @@ export const ArmyDetailView: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [syncing, setSyncing] = useState(false);
+  const [showBattleView, setShowBattleView] = useState(false);
+  const [battleUnits, setBattleUnits] = useState<OPRBattleUnit[]>([]);
+  const [converting, setConverting] = useState(false);
 
   useEffect(() => {
     if (!armyId) {
@@ -29,6 +34,10 @@ export const ArmyDetailView: React.FC = () => {
       const response = await apiClient.getArmy(armyId);
       if (response.data.status === 'success' && response.data.data) {
         setArmy(response.data.data);
+        // Convert to battle units if needed
+        if (showBattleView) {
+          await convertArmyToBattleUnits(response.data.data);
+        }
       } else {
         setError('Failed to load army details');
       }
@@ -38,6 +47,34 @@ export const ArmyDetailView: React.FC = () => {
       setLoading(false);
     }
   };
+
+  const convertArmyToBattleUnits = async (armyData: Army) => {
+    try {
+      setConverting(true);
+      const response = await fetch(`/api/armies/${armyData.id}/convert`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        }
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        if (result.status === 'success' && result.data?.units) {
+          setBattleUnits(result.data.units);
+        } else {
+          setBattleUnits([]);
+        }
+      } else {
+        setBattleUnits([]);
+      }
+    } catch (error) {
+      console.error('Could not convert army to battle format:', error);
+      setBattleUnits([]);
+    } finally {
+      setConverting(false);
+    }
+  };
+
 
   const handleSync = async () => {
     if (!army || !army.armyForgeId) return;
@@ -145,6 +182,21 @@ export const ArmyDetailView: React.FC = () => {
                     {syncing ? 'Syncing...' : 'Sync with ArmyForge'}
                   </button>
                 )}
+                <button
+                  onClick={async () => {
+                    const newShowBattleView = !showBattleView;
+                    setShowBattleView(newShowBattleView);
+                    if (newShowBattleView && army) {
+                      await convertArmyToBattleUnits(army);
+                    }
+                  }}
+                  className={`px-4 py-2 rounded ${showBattleView 
+                    ? 'bg-blue-600 hover:bg-blue-700 text-white' 
+                    : 'bg-gray-600 hover:bg-gray-700 text-white'
+                  }`}
+                >
+                  {showBattleView ? 'Show Raw Data' : 'Show Battle View'}
+                </button>
               </div>
             </div>
           </div>
@@ -174,11 +226,36 @@ export const ArmyDetailView: React.FC = () => {
             {/* Units List */}
             <div className="lg:col-span-2">
               <div className="bg-gray-800 rounded-lg p-6">
-                <h3 className="text-xl font-bold text-white mb-6">Army Units</h3>
+                <div className="flex justify-between items-center mb-6">
+                  <h3 className="text-xl font-bold text-white">Army Units</h3>
+                  {showBattleView}
+                </div>
                 {army.armyData?.units && army.armyData.units.length > 0 ? (
                   <div className="space-y-4">
-                    {army.armyData.units.map((unit: ArmyForgeUnit, index: number) => (
-                      <div key={unit.id || index} className="bg-gray-700 p-4 rounded border-l-4 border-blue-500">
+                    {showBattleView ? (
+                      battleUnits.length > 0 ? (
+                        <div className="space-y-3">
+                          {battleUnits.map((unit: OPRBattleUnit, index: number) => (
+                            <BattleUnitCard 
+                              key={`battle-unit-${unit.unitId}-${index}`} 
+                              unit={unit}
+                              isOwned={true}
+                            />
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="text-center py-8">
+                          <div className="text-gray-400 mb-4">
+                            {converting ? 'Converting army to battle format...' : 'No battle units available'}
+                          </div>
+                          <div className="text-gray-300">
+                            This army may not have valid units for battle conversion.
+                          </div>
+                        </div>
+                      )
+                    ) : (
+                      army.armyData.units.map((unit: ArmyForgeUnit, index: number) => (
+                      <div key={`raw-unit-${unit.id}-${index}`} className="bg-gray-700 p-4 rounded border-l-4 border-blue-500">
                         <div className="flex justify-between items-start mb-2">
                           <h4 className="text-lg font-semibold text-white">
                             {unit.customName || unit.name}
@@ -209,7 +286,7 @@ export const ArmyDetailView: React.FC = () => {
                             <h5 className="text-sm font-medium text-gray-300 mb-1">Weapons:</h5>
                             <div className="space-y-1">
                               {unit.weapons.map((weapon, weaponIndex) => (
-                                <div key={weapon.id || weaponIndex} className="text-sm text-gray-400">
+                                <div key={`weapon-${unit.id}-${weapon.id || weaponIndex}`} className="text-sm text-gray-400">
                                   <span className="text-white">{weapon.name}</span>
                                   {weapon.label && <span className="ml-2">({weapon.label})</span>}
                                 </div>
@@ -225,7 +302,7 @@ export const ArmyDetailView: React.FC = () => {
                             <div className="flex flex-wrap gap-1">
                               {unit.rules.map((rule, ruleIndex) => (
                                 <span 
-                                  key={rule.id || ruleIndex}
+                                  key={`rule-${unit.id}-${rule.id || ruleIndex}`}
                                   className="inline-block bg-blue-900 text-blue-200 text-xs px-2 py-1 rounded"
                                 >
                                   {rule.label || rule.name}
@@ -235,7 +312,8 @@ export const ArmyDetailView: React.FC = () => {
                           </div>
                         )}
                       </div>
-                    ))}
+                    ))
+                    )}
                   </div>
                 ) : (
                   <div className="text-center py-8 text-gray-400">

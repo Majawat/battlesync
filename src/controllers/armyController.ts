@@ -349,6 +349,56 @@ export class ArmyController {
       res.status(500).json(errorResponse('Failed to clear ArmyForge cache'));
     }
   }
+
+  /**
+   * Convert army to battle format
+   * GET /api/armies/:id/convert
+   */
+  static async convertToBattleFormat(req: Request, res: Response): Promise<void> {
+    try {
+      const userId = (req as AuthenticatedRequest).user!.id;
+      const armyId = req.params.id;
+
+      // Get the army first
+      const army = await armyService.getArmyById(armyId, userId);
+      
+      if (!army || !army.armyData) {
+        res.status(404).json(errorResponse('Army not found or has no data'));
+        return;
+      }
+
+      // Import the OPR converter
+      const { OPRArmyConverter } = await import('../services/oprArmyConverter');
+      
+      // Convert to battle format
+      const conversionResult = await OPRArmyConverter.convertArmyToBattle(
+        userId,
+        armyId,
+        army.armyData
+      );
+
+      if (!conversionResult.success) {
+        res.status(400).json(errorResponse(
+          `Failed to convert army to battle format: ${conversionResult.errors.join(', ')}`
+        ));
+        return;
+      }
+
+      res.json(successResponse(
+        { 
+          units: conversionResult.army.units,
+          warnings: conversionResult.warnings 
+        },
+        'Army converted to battle format successfully'
+      ));
+    } catch (error) {
+      if (error instanceof ApiError) {
+        res.status(error.statusCode).json(errorResponse(error.message));
+      } else {
+        res.status(500).json(errorResponse('Failed to convert army to battle format'));
+      }
+    }
+  }
 }
 
 // Export static class, no need for instance

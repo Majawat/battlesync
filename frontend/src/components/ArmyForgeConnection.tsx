@@ -100,7 +100,7 @@ export const ArmyForgeConnection: React.FC<ArmyForgeConnectionProps> = ({
           <h3 className="text-gray-300 font-medium mb-2">How to Import Armies:</h3>
           <ol className="text-sm text-gray-400 space-y-2 list-decimal list-inside">
             <li>Find any public army on ArmyForge (army-forge.onepagerules.com)</li>
-            <li>Copy the Army ID from the URL (e.g., vMzljLVC6ZGv)</li>
+            <li>Copy the Army ID from the URL (e.g., IJ1JM_m-jmka)</li>
             <li>Use the "Import Army" button on the main page</li>
             <li>Paste the Army ID and customize the name if desired</li>
           </ol>

@@ -62,6 +62,9 @@ export interface OPRBattleUnit {
   // Model composition
   models: OPRBattleModel[];
   
+  // Weapon summary for unit
+  weaponSummary: OPRWeaponSummary[];
+  
   // Hero joining logic
   joinedHero?: OPRBattleModel; // If this is a JOINED unit
   
@@ -71,6 +74,15 @@ export interface OPRBattleUnit {
   
   // Original ArmyForge data reference
   sourceUnit: ArmyForgeUnit;
+}
+
+export interface OPRWeaponSummary {
+  name: string;
+  count: number;
+  range?: number | string;
+  attacks?: number | string;
+  specialRules: string[];
+  label: string;
 }
 
 export interface OPRBattleModel {

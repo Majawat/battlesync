@@ -122,13 +122,13 @@ export const ArmyImportModal: React.FC<ArmyImportModalProps> = ({
               value={formData.armyForgeId}
               onChange={handleChange}
               className="w-full px-3 py-2 border border-gray-600 rounded bg-gray-700 text-white focus:outline-none focus:border-blue-500"
-              placeholder="e.g., vMzljLVC6ZGv"
+              placeholder="e.g., IJ1JM_m-jmka"
               required
               disabled={loading}
             />
             <div className="text-xs text-gray-400 mt-1 space-y-1">
-              <div>Find this in your ArmyForge army URL: army-forge.onepagerules.com/tts?id=<strong>vMzljLVC6ZGv</strong></div>
-              <div>Try the example: <button type="button" onClick={() => setFormData(prev => ({...prev, armyForgeId: 'vMzljLVC6ZGv'}))} className="text-blue-400 hover:text-blue-300 underline">vMzljLVC6ZGv</button> (The Ashen Pact)</div>
+              <div>Find this in your ArmyForge army URL: army-forge.onepagerules.com/tts?id=<strong>IJ1JM_m-jmka</strong></div>
+              <div>Try the example: <button type="button" onClick={() => setFormData(prev => ({...prev, armyForgeId: 'IJ1JM_m-jmka'}))} className="text-blue-400 hover:text-blue-300 underline">IJ1JM_m-jmka</button> (The Ashen Pact)</div>
             </div>
           </div>
 

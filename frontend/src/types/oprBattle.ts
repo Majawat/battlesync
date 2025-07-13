@@ -58,6 +58,10 @@ export interface OPRBattleUnit {
   
   // Model composition
   models: OPRBattleModel[];
+  
+  // Weapon summary for unit
+  weaponSummary: OPRWeaponSummary[];
+  
   joinedHero?: OPRBattleModel;
   
   // Combined unit tracking
@@ -66,6 +70,15 @@ export interface OPRBattleUnit {
   
   // Source data
   sourceUnit: any; // ArmyForge unit data
+}
+
+export interface OPRWeaponSummary {
+  name: string;
+  count: number;
+  range?: number | string;
+  attacks?: number | string;
+  specialRules: string[];
+  label: string;
 }
 
 export interface OPRBattleModel {

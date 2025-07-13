@@ -320,7 +320,7 @@ class ArmyForgeClient {
     try {
       // For now, just test if we can access a known army to validate the connection
       // In a real implementation, this would validate the user's token/session
-      const response = await this.client.get('/tts?id=vMzljLVC6ZGv');
+      const response = await this.client.get('/tts?id=IJ1JM_m-jmka');
       
       if (response.data && response.data.id) {
         return {
@@ -386,7 +386,7 @@ class ArmyForgeClient {
     
     try {
       // Test with a simple army fetch to check API availability
-      await this.client.get('/tts?id=vMzljLVC6ZGv', { timeout: 5000 });
+      await this.client.get('/tts?id=IJ1JM_m-jmka', { timeout: 5000 });
       const responseTime = Date.now() - startTime;
       
       return {

@@ -215,7 +215,7 @@ interface ArmyForgeData {
 6. ✅ Campaign association validation
 
 #### Real-World Testing ✅
-Successfully tested with ArmyForge army ID `vMzljLVC6ZGv`:
+Successfully tested with ArmyForge army ID `IJ1JM_m-jmka`:
 - **Army Name**: "The Ashen Pact"
 - **Faction**: "An Uneasy Alliance Against the Iron Tide" (resolved from description)
 - **Points**: 2605
