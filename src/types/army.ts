@@ -6,7 +6,7 @@ export interface Army {
   name: string;
   faction: string;
   points: number;
-  armyData: ArmyForgeData | null;
+  armyData: any | null; // Now stores converted OPRBattleArmy data
   customizations: ArmyCustomizations;
   lastSyncedAt: Date | null;
   createdAt: Date;

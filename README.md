@@ -24,7 +24,8 @@ A self-hosted web application for managing One Page Rules (OPR) tabletop gaming 
 - ✅ Battle state management and live updates
 - ✅ Tablet-optimized battle interface
 
-🟡 **IN PROGRESS**
+🟡 **IN PROGRESS** 
+- ⚠️ OPR Army Conversion System fixes (unit combining, weapon merging)
 - ⚠️ Advanced battle tracking features (unit cards, damage system)
 - ⚠️ Army validation middleware enhancements
 
@@ -259,13 +260,29 @@ docker/
    - Discord bot integration
    - Mobile app (React Native)
 
+## Documentation
+
+### Development Guides
+- **[CLAUDE.md](./CLAUDE.md)** - Main development guide and project overview
+- **[OPR Army Conversion](./docs/OPR_ARMY_CONVERSION.md)** - Army conversion system documentation
+- **[Architecture](./ARCHITECTURE.md)** - Technical architecture overview
+- **[Features](./FEATURES.md)** - Feature specifications and status
+- **[API Integrations](./API_INTEGRATIONS.md)** - External API documentation
+
+### Project Files
+- **[Project Overview](./PROJECT_OVERVIEW.md)** - High-level project description
+- **[User Workflows](./USER_WORKFLOWS.md)** - User interaction flows
+- **[Data Models](./DATA_MODELS.md)** - Database schema and types
+
 ## Contributing
 
-1. Read the architecture documentation in `CLAUDE.md`
-2. Check current todos in the codebase
-3. Follow TypeScript best practices
-4. Ensure all tests pass before submitting
-5. Update documentation for new features
+1. Read the development documentation in `CLAUDE.md`
+2. Check current todos and in-progress work
+3. Follow TypeScript best practices and ESLint configuration
+4. Follow commit standards (conventional commits + AI attribution)
+5. Update version numbers appropriately (patch/minor/major)
+6. Push all commits and tags to origin
+7. Update documentation for new features
 
 ## Deployment
 

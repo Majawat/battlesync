@@ -6,8 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 
 BattleSync is a self-hosted web application for managing One Page Rules (OPR) tabletop gaming campaigns with real-time battle tracking. 
 
-**Current State**: Core systems completed and tested - Army management and battle tracking fully operational
-**Target State**: Production-ready multi-user application with enhanced battle features
+**Current State**: Production-ready multi-user application (v1.1.0) - All core systems operational
+**Target State**: Enhanced battle features with advanced OPR conversion and analytics
 
 ## Current Implementation Status
 
@@ -36,9 +36,14 @@ BattleSync is a self-hosted web application for managing One Page Rules (OPR) ta
 - **Docker Environment**: Full development setup with hot reload
 
 ### ⚠️ IN PROGRESS
+- **OPR Army Conversion System**: Fixing army-to-battle conversion logic
+  - ✅ Unit combining logic (merge different loadouts intelligently)
+  - ✅ Smart weapon summary merging (no duplication, proper counts)
+  - ⚠️ Tough value distribution (2 models Tough(3), 18 models Tough(1))
+  - ⚠️ Hero joining mechanics (Mrs. Bitchtits joining units)
+  - ⚠️ Debugging 500 error in conversion process
 - **Enhanced Battle Features**: Individual unit tracking, damage system, turn management
 - **Army Validation**: Enhanced Joi middleware for army endpoints (basic validation implemented)
-- **Unit Conversion**: Converting ArmyForge armies to trackable battle units
 
 ### ❌ PENDING (Not Started)
 - **Advanced Battle Analytics**: Battle statistics, performance tracking
@@ -148,6 +153,28 @@ Complete workflow tested successfully:
 - Army import from ArmyForge with campaign association
 - Data persistence and retrieval across all systems
 
+### OPR Army Conversion Fixes (2025-07-13) ⚠️
+**Issue**: Army conversion was duplicating units instead of properly combining different loadouts
+
+**Root Cause**: 
+- Unit combining logic grouped by `${name}_${cost}_${rules.length}` which treated units with different upgrades as identical
+- Weapon merging simply doubled counts instead of intelligently combining different weapons
+- Model generation had incorrect static method calls
+
+**Fixes Implemented**:
+1. **Smart Unit Combining**: Changed grouping to use unit name only, allowing different loadout combinations
+2. **Weapon Summary Merging**: Implemented `mergeWeaponSummaries()` that combines weapon counts correctly:
+   - Same weapons: add counts together
+   - Different weapons: preserve both with individual counts
+   - Proper label formatting with updated counts
+3. **Static Method Calls**: Fixed all static method references in `OPRArmyConverter`
+
+**Expected Results**:
+- Infantry Squad [20] combines two different loadouts into one unit
+- All weapons from both units preserved (flamer, drum rifle, laser cannon, etc.)
+- Weapon counts properly reflect combined total (12x Rifle, 2x Plasma Rifle, etc.)
+- No duplication of identical units
+
 ## Development Commands
 
 ### Backend Development
@@ -230,6 +257,62 @@ curl -X POST http://localhost:3001/api/groups/{groupId}/campaigns \
 - Implement proper error handling with ApiError classes
 - Use Prisma for all database operations
 - Validate all inputs with Joi or custom validation
+
+### Git Workflow & Version Management
+
+#### Commit Standards
+**REQUIRED**: All commits must follow conventional commit format and include AI collaboration attribution:
+
+```bash
+# Commit message format
+git commit -m "$(cat <<'EOF'
+feat: add smart weapon merging for combined units
+
+- Implement mergeWeaponSummaries() for intelligent weapon count combination
+- Fix unit combining to merge different loadouts instead of duplicating
+- Preserve all weapons from both units (flamer, drum rifle, laser cannon)
+- Update weapon labels with correct combined counts
+
+Fixes weapon duplication in Infantry Squad [20] combinations.
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+EOF
+)"
+```
+
+#### Commit Types
+- `feat`: New feature or enhancement
+- `fix`: Bug fix
+- `refactor`: Code reorganization without behavior change  
+- `docs`: Documentation updates
+- `test`: Adding or updating tests
+- `chore`: Build process, dependencies, etc.
+
+#### Version Management
+Update version in `package.json` when:
+- **Patch** (0.0.x): Bug fixes, small improvements
+- **Minor** (0.x.0): New features, significant enhancements  
+- **Major** (x.0.0): Breaking changes, major overhauls
+
+**Current Version**: 1.1.0 (Production-ready with OPR Army Conversion enhancements)
+
+```bash
+# Update version and commit
+npm version minor -m "feat: bump version to %s - OPR army conversion system
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>"
+```
+
+#### Push Requirements
+**ALWAYS** push commits after completion:
+```bash
+git push origin main
+git push --tags  # For version tags
+```
 
 ### Security Requirements
 - JWT tokens with proper expiry

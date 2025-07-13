@@ -13,6 +13,9 @@ This document tracks identified polish items and UI/UX improvements needed acros
 
 ### Army Management
 - **ArmyForge modal UX** - Modal doesn't fit screen properly, no close/scroll functionality
+- **Army Conversion Issues** - 500 error during import, unit combining not working properly
+- **Unit Display** - Combined units showing duplicates instead of merged data
+- **Weapon Summary** - Missing weapons from second unit in combinations
 
 ## Medium Priority Issues
 
@@ -27,10 +30,12 @@ This document tracks identified polish items and UI/UX improvements needed acros
 - **Mission editing** - Add ability to edit missions after creation
 
 ### Army System
-- **Import method** - Change to use Share Link format instead of TTS API directly
-- **Unit count display** - Currently always shows 0 on armies page
-- **Faction detection** - Use ArmyIds from JSON with official faction list API
-- **Points calculation** - Use listPoints or pointsLimit from JSON
+- [x] ✅ **Import method** - Successfully using TTS API format
+- [ ] **Unit count display** - Currently always shows 0 on armies page  
+- [x] ✅ **Faction detection** - Intelligent faction mapping implemented
+- [x] ✅ **Points calculation** - Using correct points from ArmyForge data
+- [ ] **Unit Conversion** - OPR army-to-battle conversion fixes in progress
+- [ ] **Combined Units** - Smart unit combining implementation ongoing
 
 ## Low Priority Issues
 

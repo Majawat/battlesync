@@ -22,6 +22,7 @@ import { UserService } from './userService';
 import { NotificationService } from './notificationService';
 import { ApiError } from '../utils/apiError';
 import { validateArmyData } from '../utils/armyValidation';
+import { OPRArmyConverter } from './oprArmyConverter';
 
 const prisma = new PrismaClient();
 
@@ -99,7 +100,26 @@ class ArmyService {
         }
       }
 
-      // Create army record
+      // Convert ArmyForge data to battle format
+      const conversionResult = await OPRArmyConverter.convertArmyToBattle(
+        userId,
+        request.armyForgeId,
+        armyForgeData,
+        { 
+          allowJoined: true, 
+          allowCombined: true, 
+          preserveCustomNames: true 
+        }
+      );
+
+      if (!conversionResult.success) {
+        throw new ApiError(400, `Army conversion failed: ${conversionResult.errors.join(', ')}`);
+      }
+
+      // Add conversion warnings to our warnings array
+      warnings.push(...conversionResult.warnings);
+
+      // Create army record with converted battle data
       const army = await prisma.army.create({
         data: {
           userId,
@@ -108,7 +128,7 @@ class ArmyService {
           name: request.customName || armyForgeData.name,
           faction: armyForgeData.faction,
           points: armyForgeData.points,
-          armyData: armyForgeData as any,
+          armyData: conversionResult.army as any, // Store converted battle data
           customizations: {
             name: request.customName,
             notes: '',
@@ -544,7 +564,7 @@ class ArmyService {
       name: prismaArmy.name,
       faction: prismaArmy.faction,
       points: prismaArmy.points,
-      armyData: prismaArmy.armyData as ArmyForgeData | null,
+      armyData: prismaArmy.armyData, // Now contains converted OPRBattleArmy data
       customizations: prismaArmy.customizations as any,
       lastSyncedAt: prismaArmy.lastSyncedAt,
       createdAt: prismaArmy.createdAt,

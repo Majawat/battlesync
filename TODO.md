@@ -4,34 +4,37 @@ This file tracks current and future development tasks for the BattleSync project
 
 ## Current Sprint (High Priority)
 
-### 🔴 CRITICAL - Army System Compilation Errors
+### 🟡 OPR Army Conversion System Fixes
 **Status**: In Progress  
 **Assigned**: Current focus  
-**Due**: ASAP
+**Due**: Active debugging
 
-#### Issues to Fix:
-- [ ] **Express Router Type Compatibility**
-  - Issue: `AuthenticatedRequest` not compatible with Express handler types
-  - Files: `src/controllers/armyController.ts.disabled`, `src/routes/armyRoutes.ts.disabled`
-  - Solution: Fix TypeScript types for Express handlers with custom request interface
+#### Issues Being Fixed:
+- [x] ✅ **Smart Unit Combining**: Fixed unit grouping to merge different loadouts
+- [x] ✅ **Weapon Summary Merging**: Implemented intelligent weapon count combination
+- [x] ✅ **Static Method Calls**: Fixed TypeScript compilation errors
+- [ ] **500 Error in Import Process**: Debug silent failure after token validation
+- [ ] **Tough Value Distribution**: Implement 2 models Tough(3), 18 models Tough(1)
+- [ ] **Hero Joining Data**: Preserve Mrs. Bitchtits data in joined Minions unit
 
-- [ ] **Missing Dependencies in Docker**
-  - Issue: `axios` dependency not available in Docker container
-  - Files: `src/services/armyForgeClient.ts.disabled`
-  - Solution: Add axios to package.json dependencies and rebuild containers
+#### Expected Results:
+- Infantry Squad [20] properly combines two different loadouts
+- All weapons preserved (flamer, drum rifle, laser cannon, etc.)
+- Weapon counts reflect combined totals (12x Rifle, 2x Plasma Rifle)
+- No duplication of identical units
 
-- [ ] **Service Export/Import Issues**
-  - Issue: Inconsistent service exports (class vs instance)
-  - Files: `src/services/armyService.ts.disabled`, related imports
-  - Solution: Standardize service export pattern across codebase
+### 🟢 COMPLETED - Army System Integration
+**Status**: ✅ COMPLETE  
+**Completed**: 2025-07-13
 
-#### Tasks:
-- [ ] Re-enable army system files (remove `.disabled` extensions)
-- [ ] Fix TypeScript compilation errors
-- [ ] Add missing dependencies to package.json
-- [ ] Rebuild Docker containers
-- [ ] Test army import/export workflow
-- [ ] Re-enable army routes in `src/routes/index.ts`
+#### Resolved Issues:
+- [x] ✅ **Express Router Type Compatibility**: Fixed AuthenticatedRequest handling
+- [x] ✅ **Missing Dependencies**: Added axios and resolved Docker issues  
+- [x] ✅ **Service Export/Import**: Standardized service patterns
+- [x] ✅ **Army System Files**: All army files restored and operational
+- [x] ✅ **TypeScript Compilation**: Zero compilation errors
+- [x] ✅ **ArmyForge Integration**: Real API integration tested successfully
+- [x] ✅ **End-to-End Workflow**: Complete army import/campaign association working
 
 ### 🟡 UI Enhancements
 **Status**: In Progress  

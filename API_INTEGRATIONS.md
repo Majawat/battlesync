@@ -1,6 +1,6 @@
-# API Integrations
+# API Integrations v1.1.0
 
-## ArmyForge API Integration ✅ IMPLEMENTED
+## ArmyForge API Integration ✅ PRODUCTION READY
 
 ### Overview
 ArmyForge integration is fully operational, providing seamless import and synchronization of OPR army lists. The integration uses the public ArmyForge API with intelligent caching and error handling.

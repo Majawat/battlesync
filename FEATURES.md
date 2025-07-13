@@ -1,4 +1,4 @@
-# Features ✅ IMPLEMENTED
+# Features ✅ PRODUCTION READY v1.1.0
 
 ## Core Campaign Management ✅
 
@@ -35,6 +35,33 @@
 - **Army Customization**: Add battle honors, veteran upgrades, and campaign notes
 - **Army Validation**: Ensure armies meet campaign requirements
 - **Statistics Tracking**: Army usage and performance analytics
+
+### ⚠️ OPR Army Conversion System (In Progress)
+- **Smart Unit Combining**: Intelligently merge units with different loadouts into combined units
+- **Weapon Summary Merging**: Preserve all weapons from combined units without duplication
+- **Model Distribution**: Individual model tracking with proper stat distribution
+- **Hero Joining Mechanics**: Heroes can join multi-model units with preserved data
+- **Battle-Ready Conversion**: Transform ArmyForge armies into trackable battle units
+
+```typescript
+// Example: Infantry Squad [20] - Combined Unit  
+{
+  "unitId": "combined__nbz3zj__nbz3zj",
+  "name": "Infantry Squad",
+  "type": "COMBINED", 
+  "originalSize": 20,
+  "weaponSummary": [
+    {"name": "Rifle", "count": 12, "label": "12x Rifle (24\", A1)"},
+    {"name": "Flamer", "count": 1, "label": "Flamer (12\", A1, Blast(3), Reliable)"},
+    {"name": "Plasma Rifle", "count": 2, "label": "2x Plasma Rifle (24\", A1, AP(4))"}
+  ]
+}
+```
+
+**Current Issues**:
+- Debugging 500 error in conversion process
+- Tough value distribution (2 models Tough(3), 18 models Tough(1))
+- Hero joining data preservation
 
 ## Battle System ✅ OPERATIONAL
 

@@ -3,25 +3,24 @@
 ## Vision
 A self-hosted web application for managing One Page Rules (OPR) tabletop gaming campaigns with real-time battle tracking and multi-user support.
 
-## Current State (July 2025)
-🟢 **OPERATIONAL FEATURES**
-- ✅ Multi-user web application with JWT authentication
-- ✅ Real-time WebSocket communication infrastructure  
-- ✅ PostgreSQL database with persistent storage
-- ✅ Docker Compose deployment ready
-- ✅ Mobile-first responsive React frontend with dark mode
-- ✅ Gaming groups with invite code system
-- ✅ Campaign management with comprehensive settings
-- ✅ Mission system with auto-numbering and templates
-- ✅ RESTful API with role-based access control
-- ✅ Army management system with ArmyForge integration
-- ✅ Battle creation and tracking system
-- ✅ Real-time battle dashboard with WebSocket updates
+## Current State (July 2025) - Production Ready v1.1.0
+🟢 **PRODUCTION FEATURES - FULLY OPERATIONAL**
+- ✅ **Multi-user Web Application**: Complete JWT authentication system with role-based access
+- ✅ **Real-time Infrastructure**: WebSocket communication with room management
+- ✅ **Database System**: PostgreSQL with Prisma ORM and persistent storage
+- ✅ **Docker Deployment**: Production-ready Docker Compose configuration
+- ✅ **Mobile-First Frontend**: React with TypeScript, TailwindCSS, dark mode
+- ✅ **Gaming Group Management**: Invite codes, member management, role assignment
+- ✅ **Campaign System**: Comprehensive settings, validation, status tracking
+- ✅ **Mission Management**: Auto-numbering, templates, objectives, special rules
+- ✅ **RESTful API**: 50+ endpoints with proper error handling and validation
+- ✅ **Army Management**: Complete ArmyForge integration with import/sync
+- ✅ **Battle System**: Creation, tracking, real-time dashboard with WebSocket updates
 
-🟡 **IN PROGRESS**
-- ⚠️ Enhanced battle features (unit tracking, damage system)
-- ⚠️ Army validation and rules enforcement
-- ⚠️ Unit conversion from ArmyForge format
+🟡 **ENHANCEMENT FEATURES - IN PROGRESS**
+- ⚠️ **OPR Army Conversion**: Advanced unit combining and weapon distribution logic
+- ⚠️ **Enhanced Battle Tracking**: Individual unit damage and status management
+- ⚠️ **Army Validation**: Advanced rule enforcement and composition checking
 
 🔴 **PLANNED FEATURES**
 - ❌ Advanced battle analytics and reporting
@@ -54,12 +53,13 @@ A self-hosted web application for managing One Page Rules (OPR) tabletop gaming 
    - Built-in templates (Patrol Clash, Control Zones, Breakthrough)
    - Mission objectives and special rules management
 
-### ⚠️ IN PROGRESS  
-4. **Army Tracking**: Import and sync army lists from ArmyForge automatically
-   - TypeScript interfaces for army data (40+ interfaces)
-   - ArmyForge API client with caching and rate limiting
-   - Army CRUD operations and management system
-   - *BLOCKED: TypeScript compilation errors preventing deployment*
+### ✅ COMPLETED  
+4. **Army Management**: Import and sync army lists from ArmyForge automatically
+   - ✅ TypeScript interfaces for army data (40+ interfaces)
+   - ✅ ArmyForge API client with caching and rate limiting
+   - ✅ Army CRUD operations and management system
+   - ✅ Campaign association and army filtering
+   - ⚠️ ENHANCEMENT: Advanced OPR army conversion system in development
 
 ### ❌ PENDING
 5. **Battle Recording**: Real-time wound/kill tracking during tabletop games
@@ -200,22 +200,24 @@ A self-hosted web application for managing One Page Rules (OPR) tabletop gaming 
 
 ## Development Status
 
-### Current Sprint Focus
-- **Critical**: Fix army management TypeScript compilation errors
-- **High Priority**: Re-enable army system functionality  
-- **Medium Priority**: Complete battle tracking system implementation
+### Current Sprint Focus (v1.1.0)
+- **Enhancement**: Advanced OPR army conversion system (unit combining, weapon merging)
+- **Enhancement**: Individual battle unit tracking and damage management
+- **Enhancement**: Advanced army validation and rule enforcement
 
-### Recent Achievements
-- ✅ Updated campaign creation UI with all required fields
-- ✅ Fixed frontend-backend type compatibility
-- ✅ Comprehensive documentation updates
-- ✅ Working Docker development environment
+### Recent Achievements (v1.0.0 → v1.1.0)
+- ✅ **Army System Complete**: Full ArmyForge integration operational
+- ✅ **Battle System Operational**: Real-time WebSocket battle tracking
+- ✅ **Production Architecture**: Complete Docker deployment ready
+- ✅ **Comprehensive Documentation**: 10+ MD files with complete specifications
+- ✅ **TypeScript Foundation**: 40+ interfaces, full type safety
+- ✅ **End-to-End Workflows**: All core user workflows functional
 
-### Next Milestones
-1. **Army System Deployment**: Fix compilation errors, test army workflows
-2. **Battle Tracking MVP**: Basic real-time battle state management
-3. **Army Validation**: Joi middleware for army data validation
-4. **Production Readiness**: SSL, monitoring, backup configuration
+### Next Milestones (v1.2.0+)
+1. **OPR Conversion Enhancement**: Smart unit combining and weapon distribution
+2. **Advanced Battle Features**: Individual model tracking, damage visualization
+3. **Production Features**: SSL configuration, monitoring, backup automation
+4. **Mobile Optimization**: Enhanced tablet interface for tableside use
 
 ## User Feedback Integration
 

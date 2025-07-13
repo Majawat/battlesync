@@ -114,7 +114,7 @@ export class OPRArmyConverter {
       // Create models from unit size and basic stats
       const modelCount = armyUnit.size || 1;
       for (let i = 0; i < modelCount; i++) {
-        const battleModel = this.createModelFromUnit(armyUnit, i);
+        const battleModel = OPRArmyConverter.createModelFromUnit(armyUnit, i);
         models.push(battleModel);
       }
     }
@@ -308,27 +308,130 @@ export class OPRArmyConverter {
    * Create battle model from unit data (when detailed models not available)
    */
   private static createModelFromUnit(armyUnit: ArmyForgeUnit, index: number): OPRBattleModel {
-    const isHero = this.isHeroUnit(armyUnit);
-    const toughValue = this.getEffectiveToughValue(armyUnit);
-    const effectiveRules = this.getEffectiveRules(armyUnit);
+    const isHero = OPRArmyConverter.isHeroUnit(armyUnit);
+    const effectiveRules = OPRArmyConverter.getEffectiveRules(armyUnit);
+
+    // Distribute weapons to this specific model based on weapon counts
+    const modelWeapons = OPRArmyConverter.distributeWeaponsToModel(armyUnit, index);
+    
+    // Distribute special rules to this specific model based on rule counts
+    const modelSpecialRules = OPRArmyConverter.distributeRulesToModel(armyUnit, index, effectiveRules);
+    
+    // Calculate individual model tough value based on upgrades
+    // TODO: Fix tough value distribution properly
+    const modelToughValue = 1; // Temporary basic tough value
 
     return {
       modelId: `${armyUnit.id}_model_${index}`,
       name: `${armyUnit.name} Model ${index + 1}`,
       isHero,
-      maxTough: toughValue,
-      currentTough: toughValue,
+      maxTough: modelToughValue,
+      currentTough: modelToughValue,
       quality: armyUnit.quality || 4,
       defense: armyUnit.defense || 4,
       casterTokens: 0,
       isDestroyed: false,
-      weapons: [], // Weapons now tracked at unit level in weaponSummary
-      specialRules: effectiveRules.map(r => r.label || r.name)
+      weapons: modelWeapons,
+      specialRules: modelSpecialRules
     };
   }
 
   /**
-   * Process combined units (merge two identical units)
+   * Distribute weapons to a specific model based on weapon count distribution
+   * Uses sequential allocation for partial upgrades (non-overlapping weapon upgrades)
+   */
+  private static distributeWeaponsToModel(armyUnit: ArmyForgeUnit, modelIndex: number): string[] {
+    if (!armyUnit.weapons || armyUnit.weapons.length === 0) {
+      return [];
+    }
+
+    const modelWeapons: string[] = [];
+    const unitSize = armyUnit.size || 1;
+    
+    // Separate universal weapons from upgrade weapons
+    const universalWeapons = armyUnit.weapons.filter(w => (w.count || unitSize) >= unitSize);
+    const upgradeWeapons = armyUnit.weapons.filter(w => (w.count || unitSize) < unitSize);
+
+    // Give universal weapons to all models
+    universalWeapons.forEach(weapon => {
+      modelWeapons.push(weapon.label || weapon.name);
+    });
+
+    // Distribute upgrade weapons sequentially
+    // This handles cases where upgrades are mutually exclusive (shotguns vs plasma rifles)
+    let currentStartIndex = 0;
+    for (const weapon of upgradeWeapons) {
+      const weaponCount = weapon.count || 0;
+      const weaponLabel = weapon.label || weapon.name;
+
+      // Check if this model falls within the range for this weapon
+      if (modelIndex >= currentStartIndex && modelIndex < currentStartIndex + weaponCount) {
+        modelWeapons.push(weaponLabel);
+      }
+      
+      // Move start index for next weapon type
+      currentStartIndex += weaponCount;
+    }
+
+    return modelWeapons;
+  }
+
+  /**
+   * Distribute special rules to a specific model based on rule count distribution
+   */
+  private static distributeRulesToModel(
+    armyUnit: ArmyForgeUnit, 
+    modelIndex: number, 
+    allRules: any[]
+  ): string[] {
+    const modelRules: string[] = [];
+
+    for (const rule of allRules) {
+      const ruleCount = rule.count || armyUnit.size || 1;
+      const ruleLabel = rule.label || rule.name;
+
+      // Distribute this rule to the first 'ruleCount' models
+      if (modelIndex < ruleCount) {
+        modelRules.push(ruleLabel);
+      }
+    }
+
+    return [...new Set(modelRules)]; // Remove duplicates
+  }
+
+  /**
+   * Calculate Tough value for a specific model based on base tough + upgrade tough
+   */
+  private static getModelToughValue(
+    armyUnit: ArmyForgeUnit, 
+    modelIndex: number, 
+    effectiveRules: any[]
+  ): number {
+    // Base tough value for the unit type
+    let baseToughValue = 1; // Default for infantry
+    
+    // Check base unit rules for tough
+    const baseRule = armyUnit.rules?.find(rule => rule.name.toLowerCase() === 'tough');
+    if (baseRule?.rating) {
+      baseToughValue = Number(baseRule.rating);
+    }
+
+    // Check if this model gets upgrade tough (from weapon teams, etc.)
+    let upgradeToughValue = 0;
+    for (const rule of effectiveRules) {
+      if (rule.name.toLowerCase() === 'tough' && rule.count) {
+        // This upgrade gives tough to specific number of models
+        if (modelIndex < rule.count) {
+          upgradeToughValue += Number(rule.rating || 0);
+        }
+      }
+    }
+
+    return baseToughValue + upgradeToughValue;
+  }
+
+  /**
+   * Process combined units (merge units with same name that are marked as combined)
    */
   private static processCombinedUnits(units: OPRBattleUnit[]): {
     units: OPRBattleUnit[];
@@ -341,7 +444,7 @@ export class OPRArmyConverter {
     // Group units by name for potential combining
     for (const unit of units) {
       if (unit.isCombined) {
-        const key = `${unit.name}_${unit.sourceUnit.cost}_${unit.sourceUnit.rules?.length || 0}`;
+        const key = unit.name; // Group by name only, not by loadout
         if (!combinedGroups.has(key)) {
           combinedGroups.set(key, []);
         }
@@ -354,10 +457,10 @@ export class OPRArmyConverter {
     // Process combined groups
     for (const [key, groupUnits] of combinedGroups) {
       if (groupUnits.length === 2) {
-        // Valid combined unit - merge them
+        // Valid combined unit - merge them intelligently
         const combinedUnit = this.mergeCombinedUnits(groupUnits[0], groupUnits[1]);
         processedUnits.push(combinedUnit);
-        warnings.push(`Combined unit "${combinedUnit.name}" created from 2 identical units`);
+        warnings.push(`Combined unit "${combinedUnit.name}" created from 2 units with different loadouts`);
       } else if (groupUnits.length === 1) {
         // Single unit marked as combined - treat as normal
         groupUnits[0].type = 'STANDARD';
@@ -531,16 +634,13 @@ export class OPRArmyConverter {
   }
 
   /**
-   * Merge two units into a combined unit
+   * Merge two units into a combined unit (intelligently combining different loadouts)
    */
   private static mergeCombinedUnits(unit1: OPRBattleUnit, unit2: OPRBattleUnit): OPRBattleUnit {
     const mergedModels = [...unit1.models, ...unit2.models];
     
-    // Combine weapon summaries by doubling the counts (since we're combining identical units)
-    const combinedWeaponSummary = unit1.weaponSummary.map(weapon => ({
-      ...weapon,
-      count: weapon.count * 2
-    }));
+    // Intelligently combine weapon summaries from both units
+    const combinedWeaponSummary = this.mergeWeaponSummaries(unit1.weaponSummary, unit2.weaponSummary);
     
     return {
       ...unit1,
@@ -552,6 +652,37 @@ export class OPRArmyConverter {
       weaponSummary: combinedWeaponSummary,
       combinedFrom: [unit1.unitId, unit2.unitId]
     };
+  }
+
+  /**
+   * Merge weapon summaries from two units, combining counts for same weapons
+   */
+  private static mergeWeaponSummaries(
+    summary1: OPRWeaponSummary[], 
+    summary2: OPRWeaponSummary[]
+  ): OPRWeaponSummary[] {
+    const merged = new Map<string, OPRWeaponSummary>();
+    
+    // Add weapons from first unit
+    summary1.forEach(weapon => {
+      merged.set(weapon.name, { ...weapon });
+    });
+    
+    // Add weapons from second unit, combining counts if weapon already exists
+    summary2.forEach(weapon => {
+      if (merged.has(weapon.name)) {
+        const existing = merged.get(weapon.name)!;
+        existing.count += weapon.count;
+        // Update label to reflect new count
+        existing.label = existing.count > 1 ? 
+          `${existing.count}x ${weapon.name} (${weapon.range ? weapon.range + '", ' : ''}A${weapon.attacks}${weapon.specialRules.length > 0 ? ', ' + weapon.specialRules.join(', ') : ''})` :
+          `${weapon.name} (${weapon.range ? weapon.range + '", ' : ''}A${weapon.attacks}${weapon.specialRules.length > 0 ? ', ' + weapon.specialRules.join(', ') : ''})`;
+      } else {
+        merged.set(weapon.name, { ...weapon });
+      }
+    });
+    
+    return Array.from(merged.values());
   }
 
   /**
