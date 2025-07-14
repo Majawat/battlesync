@@ -6,7 +6,7 @@ import {
   OPRBattlePhase,
   BattleUIState,
   DamageResult,
-  BattleWebSocketMessage 
+  BattleWebSocketMessage
 } from '../types/oprBattle';
 
 interface BattleDashboardProps {
@@ -24,6 +24,7 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
     showDetails: false,
     compactMode: false
   });
+  const [selectedArmyId, setSelectedArmyId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [, setWsConnection] = useState<WebSocket | null>(null);
@@ -165,9 +166,21 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
     }
   };
 
-  // Get current user's army
+  // Get armies and current view
   const userArmy = battleState?.armies.find(army => army.userId === user?.id);
-  const enemyArmies = battleState?.armies.filter(army => army.userId !== user?.id) || [];
+  const allArmies = battleState?.armies || [];
+  
+  // Determine which army to display (default to user's army)
+  const displayedArmy = selectedArmyId 
+    ? allArmies.find(army => army.userId === selectedArmyId) 
+    : userArmy;
+  
+  // Auto-select user army on load
+  useEffect(() => {
+    if (userArmy && !selectedArmyId) {
+      setSelectedArmyId(userArmy.userId);
+    }
+  }, [userArmy, selectedArmyId]);
 
   // Phase progression logic
   const getNextPhase = (currentPhase: OPRBattlePhase): OPRBattlePhase | null => {
@@ -216,79 +229,164 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
-      {/* Header */}
-      <div className="bg-gray-800 border-b border-gray-700 p-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            {onExit && (
-              <button
-                onClick={onExit}
-                className="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded text-sm"
-              >
-                ← Exit
-              </button>
-            )}
-            <h1 className="text-xl font-bold">OPR Battle</h1>
-            <span className="text-sm text-gray-400">
-              {battleState.phase.replace('_', ' ')} • Round {battleState.currentRound}
-            </span>
-          </div>
-          
-          <div className="flex items-center space-x-3">
-            {/* Phase Controls */}
-            {canAdvancePhase(battleState.phase) && (
-              <button
-                onClick={() => {
-                  const nextPhase = getNextPhase(battleState.phase);
-                  if (nextPhase) handlePhaseTransition(nextPhase);
-                }}
-                className="px-4 py-2 bg-green-600 hover:bg-green-700 rounded text-sm font-medium"
-              >
-                Next Phase
-              </button>
-            )}
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+      {/* Enhanced Header */}
+      <div className="bg-gray-800/90 backdrop-blur-sm border-b border-gray-600/50 shadow-lg">
+        <div className="max-w-7xl mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-6">
+              {onExit && (
+                <button
+                  onClick={onExit}
+                  className="flex items-center px-3 py-2 bg-gray-700/80 hover:bg-gray-600 rounded-lg text-sm font-medium transition-colors duration-200"
+                >
+                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                  </svg>
+                  Exit Battle
+                </button>
+              )}
+              <div>
+                <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                  OPR Battle Tracker
+                </h1>
+                <div className="flex items-center space-x-4 mt-1">
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-900/50 text-blue-200 border border-blue-700/50">
+                    {battleState.phase.replace('_', ' ')}
+                  </span>
+                  <span className="text-sm text-gray-300">
+                    Round {battleState.currentRound}
+                  </span>
+                </div>
+              </div>
+            </div>
             
-            {/* UI Mode Toggles */}
-            <button
-              onClick={() => setUIState(prev => ({ ...prev, compactMode: !prev.compactMode }))}
-              className={`px-3 py-1 rounded text-xs ${
-                uiState.compactMode ? 'bg-blue-600' : 'bg-gray-700'
-              }`}
-            >
-              Compact
-            </button>
-            
-            <button
-              onClick={() => setUIState(prev => ({ ...prev, damageMode: !prev.damageMode }))}
-              className={`px-3 py-1 rounded text-xs ${
-                uiState.damageMode ? 'bg-red-600' : 'bg-gray-700'
-              }`}
-            >
-              Damage Mode
-            </button>
+            <div className="flex items-center space-x-3">
+              {/* Phase Controls */}
+              {canAdvancePhase(battleState.phase) && (
+                <button
+                  onClick={() => {
+                    const nextPhase = getNextPhase(battleState.phase);
+                    if (nextPhase) handlePhaseTransition(nextPhase);
+                  }}
+                  className="flex items-center px-4 py-2 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 rounded-lg text-sm font-medium transition-all duration-200 shadow-lg"
+                >
+                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                  Next Phase
+                </button>
+              )}
+              
+              {/* UI Mode Toggles */}
+              <button
+                onClick={() => setUIState(prev => ({ ...prev, compactMode: !prev.compactMode }))}
+                className={`px-3 py-2 rounded-lg text-xs font-medium transition-colors duration-200 ${
+                  uiState.compactMode 
+                    ? 'bg-blue-600 text-white shadow-md' 
+                    : 'bg-gray-700/80 text-gray-300 hover:bg-gray-600'
+                }`}
+              >
+                Compact
+              </button>
+              
+              <button
+                onClick={() => setUIState(prev => ({ ...prev, damageMode: !prev.damageMode }))}
+                className={`px-3 py-2 rounded-lg text-xs font-medium transition-colors duration-200 ${
+                  uiState.damageMode 
+                    ? 'bg-red-600 text-white shadow-md' 
+                    : 'bg-gray-700/80 text-gray-300 hover:bg-gray-600'
+                }`}
+              >
+                Damage Mode
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Main Battle View */}
-      <div className="flex flex-col lg:flex-row h-screen">
-        {/* User Army Panel */}
-        {userArmy && (
-          <div className="lg:w-1/2 border-r border-gray-700 p-4">
-            <h2 className="text-lg font-semibold mb-3 text-green-400">
-              Your Army: {userArmy.armyName}
-            </h2>
-            <div className="text-sm text-gray-300 mb-4">
-              {userArmy.faction} • {userArmy.totalPoints} pts • {userArmy.killCount} kills
+      {/* Army Selector */}
+      <div className="bg-gray-800/50 border-b border-gray-600/50">
+        <div className="max-w-7xl mx-auto px-4 py-3">
+          <div className="flex items-center space-x-2 overflow-x-auto">
+            <span className="text-sm font-medium text-gray-400 whitespace-nowrap">View Army:</span>
+            {allArmies.map(army => {
+              const isUserArmy = army.userId === user?.id;
+              const isSelected = selectedArmyId === army.userId;
+              
+              return (
+                <button
+                  key={army.userId}
+                  onClick={() => setSelectedArmyId(army.userId)}
+                  className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-all duration-200 ${
+                    isSelected
+                      ? isUserArmy
+                        ? 'bg-gradient-to-r from-green-600 to-green-700 text-white shadow-md'
+                        : 'bg-gradient-to-r from-red-600 to-red-700 text-white shadow-md'
+                      : 'bg-gray-700/60 text-gray-300 hover:bg-gray-600/80'
+                  }`}
+                >
+                  {isUserArmy && (
+                    <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                    </svg>
+                  )}
+                  {army.armyName}
+                  <span className="ml-2 text-xs opacity-75">
+                    ({army.faction})
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      {/* Main Army View */}
+      <div className="max-w-7xl mx-auto px-4 py-6">
+        {displayedArmy ? (
+          <div>
+            {/* Army Header */}
+            <div className="mb-6 p-6 bg-gradient-to-r from-gray-800/60 to-gray-700/60 rounded-xl border border-gray-600/50 backdrop-blur-sm">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className={`text-2xl font-bold ${
+                  displayedArmy.userId === user?.id 
+                    ? 'text-green-400' 
+                    : 'text-red-400'
+                }`}>
+                  {displayedArmy.userId === user?.id ? '👤 Your Army' : '⚔️ Enemy Army'}: {displayedArmy.armyName}
+                </h2>
+                <div className="text-right">
+                  <div className="text-sm text-gray-400">Battle Performance</div>
+                  <div className="text-lg font-semibold text-white">
+                    {displayedArmy.killCount} Kills
+                  </div>
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="bg-gray-900/40 rounded-lg p-3">
+                  <div className="text-sm text-gray-400">Faction</div>
+                  <div className="text-lg font-medium text-white">{displayedArmy.faction}</div>
+                </div>
+                <div className="bg-gray-900/40 rounded-lg p-3">
+                  <div className="text-sm text-gray-400">Points Value</div>
+                  <div className="text-lg font-medium text-white">{displayedArmy.totalPoints} pts</div>
+                </div>
+                <div className="bg-gray-900/40 rounded-lg p-3">
+                  <div className="text-sm text-gray-400">Unit Count</div>
+                  <div className="text-lg font-medium text-white">{displayedArmy.units.length} units</div>
+                </div>
+              </div>
             </div>
             
-            <div className="space-y-3 max-h-[calc(100vh-12rem)] overflow-y-auto">
-              {userArmy.units.map(unit => (
+            {/* Units Grid */}
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+              {displayedArmy.units.map(unit => (
                 <BattleUnitCard
                   key={unit.unitId}
                   unit={unit}
-                  isOwned={true}
+                  isOwned={displayedArmy.userId === user?.id}
                   isSelected={uiState.selectedUnit === unit.unitId}
                   damageMode={uiState.damageMode}
                   compactMode={uiState.compactMode}
@@ -301,39 +399,11 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
               ))}
             </div>
           </div>
+        ) : (
+          <div className="text-center py-12">
+            <div className="text-gray-400 text-lg">No army selected</div>
+          </div>
         )}
-
-        {/* Enemy Armies Panel */}
-        <div className="lg:w-1/2 p-4">
-          {enemyArmies.map(army => (
-            <div key={army.userId} className="mb-6">
-              <h2 className="text-lg font-semibold mb-3 text-red-400">
-                Enemy: {army.armyName}
-              </h2>
-              <div className="text-sm text-gray-300 mb-4">
-                {army.faction} • {army.totalPoints} pts • {army.killCount} kills
-              </div>
-              
-              <div className="space-y-3">
-                {army.units.map(unit => (
-                  <BattleUnitCard
-                    key={unit.unitId}
-                    unit={unit}
-                    isOwned={false}
-                    isSelected={uiState.selectedUnit === unit.unitId}
-                    damageMode={uiState.damageMode}
-                    compactMode={uiState.compactMode}
-                    onSelect={() => setUIState(prev => ({ 
-                      ...prev, 
-                      selectedUnit: prev.selectedUnit === unit.unitId ? undefined : unit.unitId 
-                    }))}
-                    onQuickDamage={(damage, modelId) => handleQuickDamage(unit.unitId, damage, modelId)}
-                  />
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
       </div>
     </div>
   );
