@@ -164,6 +164,9 @@ export class OPRArmyConverter {
     const modelRules = armyModel.stats.special || [];
     const combinedRules = [...modelRules, ...effectiveRules.map(r => r.label || r.name)];
 
+    // Calculate effective defense considering upgrades
+    const effectiveDefense = this.calculateEffectiveDefense(parentUnit, armyModel.stats.defense);
+
     return {
       modelId: armyModel.id,
       name: armyModel.name,
@@ -171,7 +174,7 @@ export class OPRArmyConverter {
       maxTough: toughValue,
       currentTough: toughValue,
       quality: armyModel.stats.quality,
-      defense: armyModel.stats.defense,
+      defense: effectiveDefense,
       casterTokens: 0,
       isDestroyed: false,
       weapons: armyModel.equipment || [],
@@ -191,17 +194,16 @@ export class OPRArmyConverter {
     }
 
     return finalWeapons.map(weapon => {
-      // Extract count from label if present, otherwise use weapon.count
+      // Use actual weapon count, not count from pre-formatted label
       let count = weapon.count || 1;
       let label = weapon.label || weapon.name;
       
-      // Check if label already includes count (e.g., "8x Rifle (24", A1)")
-      const countMatch = label.match(/^(\d+)x\s/);
-      if (countMatch) {
-        count = parseInt(countMatch[1], 10);
-        // Label already formatted correctly, don't duplicate count
-      } else if (count > 1) {
-        // Add count prefix if not already present
+      // Remove any existing count prefix from label to avoid conflicts
+      label = label.replace(/^\d+x\s/, '');
+      
+      // Add correct count prefix if needed
+      if (count > 1) {
+        // Add count prefix
         label = `${count}x ${label}`;
       }
       
@@ -252,7 +254,20 @@ export class OPRArmyConverter {
   private static getEffectiveRules(armyUnit: ArmyForgeUnit): any[] {
     const baseRules = armyUnit.rules || [];
     const upgradeRules: any[] = [];
+    
+    // Add campaign traits as special rules
+    if (armyUnit.traits && armyUnit.traits.length > 0) {
+      armyUnit.traits.forEach(trait => {
+        upgradeRules.push({
+          id: `campaign_trait_${trait}`,
+          name: trait,
+          label: trait,
+          count: armyUnit.size || 1 // Apply to all models in the unit
+        });
+      });
+    }
 
+    // Process loadout items (weapons, equipment)
     if (armyUnit.loadout) {
       armyUnit.loadout.forEach((item: any) => {
         if (item.type === 'ArmyBookItem' && item.content) {
@@ -271,7 +286,100 @@ export class OPRArmyConverter {
       });
     }
 
-    return [...baseRules, ...upgradeRules];
+    // Process selectedUpgrades (model-level upgrades like Field Radio, Company Standard)
+    if (armyUnit.selectedUpgrades) {
+      armyUnit.selectedUpgrades.forEach((upgrade: any) => {
+        if (upgrade.option && upgrade.option.gains) {
+          upgrade.option.gains.forEach((gain: any) => {
+            if (gain.type === 'ArmyBookRule') {
+              // Use upgrade.affects.value to determine how many models get this rule
+              const affectedModelCount = upgrade.upgrade?.affects?.value || gain.count || 1;
+              
+              upgradeRules.push({
+                id: gain.id,
+                name: gain.name,
+                rating: gain.rating,
+                label: gain.label || `${gain.name}${gain.rating ? `(${gain.rating})` : ''}`,
+                count: affectedModelCount
+              });
+            }
+          });
+        }
+      });
+    }
+
+    // Combine all rules and merge duplicates with additive ratings
+    const allRules = [...baseRules, ...upgradeRules];
+    return this.mergeAdditiveRules(allRules);
+  }
+
+  /**
+   * Merge rules with the same name, combining their ratings for additive rules
+   */
+  private static mergeAdditiveRules(rules: any[]): any[] {
+    const mergedRules = new Map<string, any>();
+    
+    // Rules that should have their values added together
+    const additiveRules = ['impact', 'tough', 'defense', 'ap'];
+    
+    for (const rule of rules) {
+      const ruleName = rule.name.toLowerCase();
+      const ruleKey = ruleName;
+      
+      if (mergedRules.has(ruleKey)) {
+        const existing = mergedRules.get(ruleKey)!;
+        
+        // Check if this is an additive rule type
+        if (additiveRules.includes(ruleName) && rule.rating && existing.rating) {
+          // Add the ratings together
+          const combinedRating = Number(existing.rating) + Number(rule.rating);
+          existing.rating = combinedRating;
+          existing.label = `${rule.name}(${combinedRating})`;
+        }
+        // For non-additive rules, keep the existing one (first wins)
+      } else {
+        // First occurrence of this rule
+        mergedRules.set(ruleKey, { ...rule });
+      }
+    }
+    
+    return Array.from(mergedRules.values());
+  }
+
+  /**
+   * Calculate effective defense considering upgrades (Defense upgrades reduce the number)
+   */
+  private static calculateEffectiveDefense(armyUnit: ArmyForgeUnit, baseDefense: number): number {
+    let effectiveDefense = baseDefense;
+    
+    // Check for Defense upgrades in loadout
+    if (armyUnit.loadout) {
+      armyUnit.loadout.forEach((item: any) => {
+        if (item.type === 'ArmyBookItem' && item.content) {
+          item.content.forEach((content: any) => {
+            if (content.name && content.name.toLowerCase() === 'defense' && content.rating) {
+              // Defense upgrades improve defense by reducing the number
+              effectiveDefense = Math.max(1, effectiveDefense - Number(content.rating));
+            }
+          });
+        }
+      });
+    }
+    
+    // Check selectedUpgrades for Defense improvements
+    if (armyUnit.selectedUpgrades) {
+      armyUnit.selectedUpgrades.forEach((upgrade: any) => {
+        if (upgrade.option && upgrade.option.gains) {
+          upgrade.option.gains.forEach((gain: any) => {
+            if (gain.name && gain.name.toLowerCase() === 'defense' && gain.rating) {
+              effectiveDefense = Math.max(1, effectiveDefense - Number(gain.rating));
+            }
+          });
+        }
+      });
+    }
+    
+    return effectiveDefense;
   }
 
   /**
@@ -318,8 +426,10 @@ export class OPRArmyConverter {
     const modelSpecialRules = OPRArmyConverter.distributeRulesToModel(armyUnit, index, effectiveRules);
     
     // Calculate individual model tough value based on upgrades
-    // TODO: Fix tough value distribution properly
-    const modelToughValue = 1; // Temporary basic tough value
+    const modelToughValue = this.getModelToughValue(armyUnit, index, effectiveRules);
+    
+    // Calculate effective defense considering upgrades
+    const effectiveDefense = this.calculateEffectiveDefense(armyUnit, armyUnit.defense || 4);
 
     return {
       modelId: `${armyUnit.id}_model_${index}`,
@@ -328,7 +438,7 @@ export class OPRArmyConverter {
       maxTough: modelToughValue,
       currentTough: modelToughValue,
       quality: armyUnit.quality || 4,
-      defense: armyUnit.defense || 4,
+      defense: effectiveDefense,
       casterTokens: 0,
       isDestroyed: false,
       weapons: modelWeapons,
@@ -637,14 +747,36 @@ export class OPRArmyConverter {
    * Merge two units into a combined unit (intelligently combining different loadouts)
    */
   private static mergeCombinedUnits(unit1: OPRBattleUnit, unit2: OPRBattleUnit): OPRBattleUnit {
-    const mergedModels = [...unit1.models, ...unit2.models];
+    // Create unique models for the combined unit with proper sequential naming
+    const mergedModels: OPRBattleModel[] = [];
+    const combinedUnitId = `combined_${unit1.unitId}_${unit2.unitId}`;
+    const unitName = unit1.name;
+    
+    // Add models from first unit with unique IDs and names
+    unit1.models.forEach((model, index) => {
+      mergedModels.push({
+        ...model,
+        modelId: `${combinedUnitId}_model_${index}`,
+        name: `${unitName} Model ${index + 1}`
+      });
+    });
+    
+    // Add models from second unit with unique IDs and names (continuing sequence)
+    unit2.models.forEach((model, index) => {
+      const combinedIndex = unit1.models.length + index;
+      mergedModels.push({
+        ...model,
+        modelId: `${combinedUnitId}_model_${combinedIndex}`,
+        name: `${unitName} Model ${combinedIndex + 1}`
+      });
+    });
     
     // Intelligently combine weapon summaries from both units
     const combinedWeaponSummary = this.mergeWeaponSummaries(unit1.weaponSummary, unit2.weaponSummary);
     
     return {
       ...unit1,
-      unitId: `combined_${unit1.unitId}_${unit2.unitId}`,
+      unitId: combinedUnitId,
       type: 'COMBINED',
       originalSize: mergedModels.length,
       currentSize: mergedModels.length,
