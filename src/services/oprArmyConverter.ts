@@ -394,14 +394,13 @@ export class OPRArmyConverter {
       toughValue = Number(baseRule.rating);
     }
 
-    // Add cumulative Tough values from loadout items
+    // Add cumulative Tough values from loadout items (like Combat Bike)
     if (armyUnit.loadout) {
       armyUnit.loadout.forEach((item: any) => {
         if (item.type === 'ArmyBookItem' && item.content) {
           item.content.forEach((content: any) => {
-            if (content.name.toLowerCase() === 'tough' && content.rating) {
-              // Tough values are cumulative for single model units
-              // TODO: Handle multi-model units where upgrades might apply to individual models
+            if (content.type === 'ArmyBookRule' && content.name.toLowerCase() === 'tough' && content.rating) {
+              // Tough values are cumulative for heroes and single model units
               toughValue += Number(content.rating);
             }
           });
@@ -526,18 +525,34 @@ export class OPRArmyConverter {
       baseToughValue = Number(baseRule.rating);
     }
 
-    // Check if this model gets upgrade tough (from weapon teams, etc.)
-    let upgradeToughValue = 0;
+    // Check if this model gets upgrade tough (from weapon teams, crew, etc.)
+    // Some upgrades SET tough (like Crew), others ADD tough (like equipment)
+    let finalToughValue = baseToughValue;
+    let hasToughReplacement = false;
+    
     for (const rule of effectiveRules) {
       if (rule.name.toLowerCase() === 'tough' && rule.count) {
         // This upgrade gives tough to specific number of models
         if (modelIndex < rule.count) {
-          upgradeToughValue += Number(rule.rating || 0);
+          // Check if this is a weapon team / crew upgrade (sets tough rather than adds)
+          // Weapon team upgrades from selectedUpgrades typically set tough to the specified value
+          const isWeaponTeamUpgrade = rule.label?.includes('Weapon Team') || 
+                                    rule.label?.includes('Crew') ||
+                                    (rule.id && rule.id.includes('a0YtInGiUDd6')); // Tough rule ID from weapon teams
+          
+          if (isWeaponTeamUpgrade) {
+            // This is a replacement tough value, not additive
+            finalToughValue = Number(rule.rating || 0);
+            hasToughReplacement = true;
+          } else if (!hasToughReplacement) {
+            // Only add if we haven't already had a replacement
+            finalToughValue += Number(rule.rating || 0);
+          }
         }
       }
     }
 
-    return baseToughValue + upgradeToughValue;
+    return finalToughValue;
   }
 
   /**
@@ -692,14 +707,17 @@ export class OPRArmyConverter {
    * Join a hero to a unit, creating a new joined unit
    */
   private static joinHeroToUnit(hero: OPRBattleUnit, targetUnit: OPRBattleUnit): OPRBattleUnit {
+    // Calculate correct tough value for hero (base + all loadout bonuses)
+    const heroToughValue = this.getEffectiveToughValue(hero.sourceUnit);
+    
     // Create hero model from the hero unit
     const heroModel: any = {
       modelId: hero.models[0].modelId,
       name: hero.customName || hero.name,
       customName: hero.customName,
       isHero: true,
-      maxTough: hero.models[0].maxTough,
-      currentTough: hero.models[0].currentTough,
+      maxTough: heroToughValue,
+      currentTough: heroToughValue,
       quality: hero.models[0].quality,
       defense: hero.models[0].defense,
       casterTokens: hero.models[0].casterTokens,
@@ -708,11 +726,9 @@ export class OPRArmyConverter {
       specialRules: hero.models[0].specialRules
     };
     
-    // Combine weapon summaries (target unit + hero weapons)
-    const combinedWeaponSummary = [
-      ...targetUnit.weaponSummary,
-      ...hero.weaponSummary
-    ];
+    // Keep hero weapons separate - only use target unit's weapons in summary
+    // Hero weapons are tracked separately in the joinedHero field
+    const unitWeaponSummary = [...targetUnit.weaponSummary];
     
     // Create joined unit based on target unit
     const joinedUnit: OPRBattleUnit = {
@@ -720,7 +736,7 @@ export class OPRArmyConverter {
       type: 'JOINED',
       originalSize: targetUnit.originalSize + 1, // Add hero to size
       currentSize: targetUnit.currentSize + 1,
-      weaponSummary: combinedWeaponSummary,
+      weaponSummary: unitWeaponSummary, // Only unit weapons, hero weapons separate
       joinedHero: heroModel,
       // Note: models array stays the same (regular models only)
       // Hero is tracked separately in joinedHero field
