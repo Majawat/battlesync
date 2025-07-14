@@ -1,4 +1,4 @@
-import { ArmyForgeData, ArmyForgeUnit } from './army';
+import { ArmyForgeUnit } from './army';
 
 // OPR-Specific Battle Phases
 export type OPRBattlePhase = 'GAME_SETUP' | 'DEPLOYMENT' | 'BATTLE_ROUNDS' | 'GAME_END';

@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 
 BattleSync is a self-hosted web application for managing One Page Rules (OPR) tabletop gaming campaigns with real-time battle tracking. 
 
-**Current State**: Production-ready multi-user application (v1.1.0) - All core systems operational
+**Current State**: Production-ready multi-user application (v1.1.1) - All core systems operational
 **Target State**: Enhanced battle features with advanced OPR conversion and analytics
 
 ## Current Implementation Status
