@@ -37,18 +37,36 @@ export const ArmyCard: React.FC<ArmyCardProps> = ({
     }
   };
 
-  const handleDelete = async () => {
-    if (!confirm(`Are you sure you want to delete "${army.name}"? This action cannot be undone.`)) {
+  const handleDelete = async (force: boolean = false) => {
+    const confirmMessage = force 
+      ? `Are you sure you want to force delete "${army.name}"? This will remove it from all battles and cannot be undone.`
+      : `Are you sure you want to delete "${army.name}"? This action cannot be undone.`;
+      
+    if (!confirm(confirmMessage)) {
       return;
     }
 
     try {
       setDeleting(true);
-      await apiClient.deleteArmy(army.id);
+      await apiClient.deleteArmy(army.id, force);
       onDelete();
     } catch (error: any) {
       console.error('Failed to delete army:', error);
-      // TODO: Show error toast
+      const errorMessage = error.response?.data?.message || error.message || 'Failed to delete army';
+      
+      // If the error indicates battle participants and we haven't tried force yet
+      if (!force && errorMessage.includes('participated in battles')) {
+        const forceDelete = confirm(
+          `${errorMessage}\n\nWould you like to force delete this army? This will remove it from all battles.`
+        );
+        
+        if (forceDelete) {
+          await handleDelete(true); // Recursive call with force=true
+          return;
+        }
+      } else {
+        alert(`Error: ${errorMessage}`);
+      }
     } finally {
       setDeleting(false);
     }

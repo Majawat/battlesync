@@ -154,19 +154,20 @@ export class ArmyController {
 
   /**
    * Delete army
-   * DELETE /api/armies/:id
+   * DELETE /api/armies/:id?force=true
    */
   static async deleteArmy(req: Request, res: Response): Promise<void> {
     try {
       const userId = (req as AuthenticatedRequest).user!.id;
       const armyId = req.params.id;
+      const force = req.query.force === 'true';
 
       if (!armyId) {
         res.status(400).json(errorResponse('Army ID is required'));
         return;
       }
 
-      await armyService.deleteArmy(armyId, userId);
+      await armyService.deleteArmy(armyId, userId, force);
       
       res.json(successResponse(null, 'Army deleted successfully'));
     } catch (error) {

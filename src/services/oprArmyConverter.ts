@@ -602,7 +602,7 @@ export class OPRArmyConverter {
         // Valid combined unit - merge them intelligently
         const combinedUnit = this.mergeCombinedUnits(groupUnits[0], groupUnits[1]);
         processedUnits.push(combinedUnit);
-        warnings.push(`Combined unit "${combinedUnit.name}" created from 2 units with different loadouts`);
+        // Successfully created combined unit - this is expected behavior, not a warning
       } else if (groupUnits.length === 1) {
         // Single unit marked as combined - treat as normal
         groupUnits[0].type = 'STANDARD';
@@ -653,7 +653,7 @@ export class OPRArmyConverter {
           
           if (isValidHeroJoin) {
             heroesToJoin.push(unit);
-            warnings.push(`Hero ${unit.customName || unit.name} joined unit ${targetUnit.customName || targetUnit.name}`);
+            // Successfully joined hero to unit - this is expected behavior, not a warning
           } else {
             // Can't join - keep as separate unit
             processedUnits.push(unit);

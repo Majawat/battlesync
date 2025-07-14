@@ -405,17 +405,36 @@ class ArmyService {
   /**
    * Delete army
    */
-  async deleteArmy(armyId: string, userId: string): Promise<void> {
+  async deleteArmy(armyId: string, userId: string, force: boolean = false): Promise<void> {
     try {
       const army = await this.getArmyById(armyId, userId);
 
       // Check if army is used in any battles
-      const battleParticipants = await prisma.battleParticipant.count({
+      const battleParticipants = await prisma.battleParticipant.findMany({
         where: { armyId },
+        include: {
+          battle: {
+            select: { id: true, status: true, createdAt: true }
+          }
+        }
       });
 
-      if (battleParticipants > 0) {
-        throw new ApiError(400, 'Cannot delete army that has participated in battles');
+      console.log(`Army ${armyId} battle participants:`, battleParticipants);
+
+      if (battleParticipants.length > 0 && !force) {
+        const battleInfo = battleParticipants.map(bp => 
+          `Battle ${bp.battle.id} (${bp.battle.status}) from ${bp.battle.createdAt}`
+        ).join(', ');
+        
+        throw new ApiError(400, `Cannot delete army that has participated in battles: ${battleInfo}. Use force=true to delete anyway.`);
+      }
+
+      // If force delete, remove battle participants first
+      if (force && battleParticipants.length > 0) {
+        await prisma.battleParticipant.deleteMany({
+          where: { armyId }
+        });
+        console.log(`Force deleted ${battleParticipants.length} battle participants for army ${armyId}`);
       }
 
       await prisma.army.delete({

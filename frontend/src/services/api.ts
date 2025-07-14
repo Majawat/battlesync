@@ -221,8 +221,9 @@ class ApiClient {
     return this.client.put(`/armies/${armyId}/customizations`, data);
   }
 
-  async deleteArmy(armyId: string): Promise<any> {
-    return this.client.delete(`/armies/${armyId}`);
+  async deleteArmy(armyId: string, force: boolean = false): Promise<any> {
+    const params = force ? { force: 'true' } : {};
+    return this.client.delete(`/armies/${armyId}`, { params });
   }
 
   async addBattleHonor(armyId: string, battleHonor: Omit<BattleHonor, 'id' | 'dateEarned'>): Promise<any> {

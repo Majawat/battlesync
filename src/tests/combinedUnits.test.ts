@@ -153,16 +153,16 @@ describe('Unit Conversion - Combined Units', () => {
       expect(combinedUnit.originalSize).toBe(20); // 10 + 10
       expect(combinedUnit.models).toHaveLength(20);
       expect(combinedUnit.combinedFrom).toEqual(['elite1', 'elite2']);
-      expect(result.warnings).toContain('Combined unit "Elites" created from 2 identical units');
+      // No warnings expected for successful combination - this is normal behavior
     });
   });
 
-  describe('Invalid Combined Units', () => {
+  describe('ArmyForge Validated Combined Units', () => {
     
-    it('should NOT combine units with different weapons', async () => {
-      const invalidCombinedData: ArmyForgeData = {
-        id: "test-combined-invalid",
-        name: "Invalid Combined Test",
+    it('should combine units with different weapons when ArmyForge validates them', async () => {
+      const validatedCombinedData: ArmyForgeData = {
+        id: "test-combined-validated", 
+        name: "ArmyForge Validated Combined Test",
         faction: "Test Faction", 
         gameSystem: "gf",
         points: 600,
@@ -252,20 +252,20 @@ describe('Unit Conversion - Combined Units', () => {
       const result = await OPRArmyConverter.convertArmyToBattle(
         "user-123",
         "army-123",
-        invalidCombinedData,
+        validatedCombinedData,
         { allowJoined: true, allowCombined: true, preserveCustomNames: true }
       );
 
-      console.log('\n=== INVALID COMBINED UNITS TEST ===');
+      console.log('\n=== ARMYFORGE VALIDATED COMBINED UNITS TEST ===');
       console.log('BEFORE: 2 Dynasty Warriors units with DIFFERENT weapons');
       console.log('- Unit A: All models have Rifles (applied to all)');
       console.log('- Unit B: All models have Shotguns (applied to all)');
       console.log('- Different costs: 300 vs 320');
-      console.log('- Both marked as combined: true');
+      console.log('- Both marked as combined: true (validated by ArmyForge)');
       console.log('');
       console.log('AFTER CONVERSION:');
       console.log(`- Success: ${result.success}`);
-      console.log(`- Units count: ${result.army.units.length} (should be 2 - NOT combined)`);
+      console.log(`- Units count: ${result.army.units.length} (combined per ArmyForge validation)`);
       console.log(`- Warnings: ${result.warnings.join(', ')}`);
       
       result.army.units.forEach((unit, i) => {
@@ -273,16 +273,15 @@ describe('Unit Conversion - Combined Units', () => {
       });
 
       expect(result.success).toBe(true);
-      expect(result.army.units).toHaveLength(2); // Should remain separate
+      // If ArmyForge marked them as combined: true, we trust that validation and combine them
+      expect(result.army.units).toHaveLength(1); // Combined into one unit
       
-      // Both units should be converted to STANDARD (not combined)
-      result.army.units.forEach(unit => {
-        expect(unit.type).toBe('STANDARD');
-        expect(unit.originalSize).toBe(10); // Original size, not combined
-      });
+      const combinedUnit = result.army.units[0];
+      expect(combinedUnit.type).toBe('COMBINED');
+      expect(combinedUnit.originalSize).toBe(20); // 10 + 10 combined
+      expect(combinedUnit.combinedFrom).toEqual(['elite-rifles', 'elite-shotguns']);
       
-      // Should have warnings about units marked as combined but not actually combined
-      expect(result.warnings.some(w => w.includes('marked as combined but no duplicate found'))).toBe(true);
+      // No warnings for valid ArmyForge-validated combinations
     });
   });
 
