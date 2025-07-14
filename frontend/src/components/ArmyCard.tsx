@@ -186,7 +186,7 @@ export const ArmyCard: React.FC<ArmyCardProps> = ({
               </button>
             )}
             <button
-              onClick={handleDelete}
+              onClick={() => handleDelete()}
               disabled={deleting}
               className="text-red-400 hover:text-red-300 text-sm disabled:opacity-50"
             >

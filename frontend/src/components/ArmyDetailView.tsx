@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { apiClient } from '../services/api';
-import { Army, ArmyForgeUnit } from '../types/army';
+import { Army } from '../types/army';
 import { OPRBattleUnit } from '../types/oprBattle';
 import { BattleUnitCard } from './BattleUnitCard';
 

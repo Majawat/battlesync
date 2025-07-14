@@ -52,10 +52,10 @@ class ApiClient {
               originalRequest.headers.Authorization = `Bearer ${accessToken}`;
               return this.client(originalRequest);
             } catch (refreshError) {
-              // Refresh failed, redirect to login
+              // Refresh failed, redirect to auth
               localStorage.removeItem('accessToken');
               localStorage.removeItem('refreshToken');
-              window.location.href = '/login';
+              window.location.href = '/auth';
             }
           }
         }
