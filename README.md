@@ -74,12 +74,22 @@ npm run lint            # Code linting
 
 ## 📚 Documentation
 
-For comprehensive documentation, see the [**docs/**](./docs/) directory:
+### **🎯 For New Users**
+- **[Quick Start](#-quick-start)** - Get BattleSync running in 5 minutes
+- **[Features Guide](./docs/user/FEATURES.md)** - What BattleSync can do
 
-- **[Project Overview](./docs/PROJECT_OVERVIEW.md)** - Detailed vision and implementation status
-- **[User Guide](./docs/user/FEATURES.md)** - Complete feature documentation
-- **[Technical Docs](./docs/technical/)** - Architecture, APIs, and implementation details
-- **[Development](./docs/development/)** - Development tasks and roadmap
+### **🔧 For Developers**  
+- **[Project Overview](./docs/PROJECT_OVERVIEW.md)** - Comprehensive project status and roadmap
+- **[Architecture](./docs/technical/ARCHITECTURE.md)** - System design at `src/` level
+- **[API Reference](./docs/technical/API_REFERENCE.md)** - All REST endpoints and WebSocket events
+- **[Data Models](./docs/technical/DATA_MODELS.md)** - Database schema and TypeScript interfaces
+- **[External APIs](./docs/technical/API_INTEGRATIONS.md)** - ArmyForge and other integrations
+
+### **🤖 For AI Assistants**
+- **[CLAUDE.md](./CLAUDE.md)** - Comprehensive project context and instructions
+- **[AI Project Map](./docs/AI_PROJECT_MAP.md)** - Machine-readable codebase overview with file purposes
+- **[OPR Conversion](./docs/technical/OPR_ARMY_CONVERSION.md)** - Complex army conversion system details  
+- **[Current Tasks](./docs/development/TODO.md)** - Active development priorities
 
 ## 🎯 One Page Rules Integration
 

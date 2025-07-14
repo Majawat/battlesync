@@ -1,4 +1,6 @@
-# API Integrations v1.1.0
+# External API Integrations
+
+This document covers **external APIs** that BattleSync integrates with. For BattleSync's own REST API, see [API_REFERENCE.md](./API_REFERENCE.md).
 
 ## ArmyForge API Integration ✅ PRODUCTION READY
 
