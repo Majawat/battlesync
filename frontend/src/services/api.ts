@@ -250,6 +250,10 @@ class ApiClient {
     return this.client.delete('/armies/armyforge/cache', { params });
   }
 
+  async updateArmyCampaignAssociation(armyId: string, campaignId: string | null): Promise<any> {
+    return this.client.put(`/armies/${armyId}/campaign`, { campaignId });
+  }
+
   // ============= CAMPAIGN MEMBERSHIP =============
 
   async getCampaignMembers(campaignId: string): Promise<any> {

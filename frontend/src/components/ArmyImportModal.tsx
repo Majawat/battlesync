@@ -54,7 +54,7 @@ export const ArmyImportModal: React.FC<ArmyImportModalProps> = ({
           // Show warnings but still complete the import
           setTimeout(() => {
             onImport(result);
-          }, 3000); // Give user time to read warnings
+          }, 8000); // Give user time to read warnings
         } else {
           onImport(result);
         }

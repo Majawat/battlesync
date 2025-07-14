@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArmySummary } from '../types/army';
 import { apiClient } from '../services/api';
+import { EditArmyModal } from './EditArmyModal';
 
 interface ArmyCardProps {
   army: ArmySummary;
@@ -17,6 +18,7 @@ export const ArmyCard: React.FC<ArmyCardProps> = ({
   const navigate = useNavigate();
   const [syncing, setSyncing] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
 
   const handleSync = async () => {
     if (!army.lastSyncedAt) return; // Can't sync non-ArmyForge armies
@@ -150,6 +152,12 @@ export const ArmyCard: React.FC<ArmyCardProps> = ({
           </button>
           
           <div className="flex space-x-2">
+            <button
+              onClick={() => setShowEditModal(true)}
+              className="text-blue-400 hover:text-blue-300 text-sm"
+            >
+              Edit
+            </button>
             {army.lastSyncedAt && (
               <button
                 onClick={handleSync}
@@ -169,6 +177,17 @@ export const ArmyCard: React.FC<ArmyCardProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Edit Modal */}
+      <EditArmyModal
+        army={army}
+        isOpen={showEditModal}
+        onClose={() => setShowEditModal(false)}
+        onUpdate={() => {
+          setShowEditModal(false);
+          onRefresh();
+        }}
+      />
     </div>
   );
 };

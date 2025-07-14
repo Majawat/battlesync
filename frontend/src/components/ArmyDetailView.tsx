@@ -59,12 +59,15 @@ export const ArmyDetailView: React.FC = () => {
 
       if (response.ok) {
         const result = await response.json();
-        if (result.status === 'success' && result.data?.units) {
+        if (result.status === 'success' && result.data && result.data.units) {
           setBattleUnits(result.data.units);
         } else {
+          console.error('Army conversion failed:', result);
           setBattleUnits([]);
         }
       } else {
+        const errorText = await response.text();
+        console.error('Army conversion request failed:', response.status, errorText);
         setBattleUnits([]);
       }
     } catch (error) {

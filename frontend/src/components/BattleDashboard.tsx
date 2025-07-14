@@ -43,7 +43,12 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
       }
 
       const data = await response.json();
-      setBattleState(data.data);
+      console.log('Battle state response:', data); // Debug log
+      if (data.success && data.data) {
+        setBattleState(data.data);
+      } else {
+        throw new Error(data.error || 'Invalid battle state response');
+      }
       setLoading(false);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error');

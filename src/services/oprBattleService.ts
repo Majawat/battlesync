@@ -120,25 +120,33 @@ export class OPRBattleService {
         });
       }));
 
-      // Convert armies to battle format
+      // Convert armies to battle format or use existing battle data
       const battleArmies: OPRBattleArmy[] = [];
       for (const army of armies) {
         if (army.armyData) {
-          const conversionResult = await OPRArmyConverter.convertArmyToBattle(
-            army.userId,
-            army.id,
-            army.armyData as any, // Type assertion for JSON data
-            {
-              allowCombined: true,
-              allowJoined: true,
-              preserveCustomNames: true
-            }
-          );
-
-          if (conversionResult.success) {
-            battleArmies.push(conversionResult.army);
+          // Check if armyData is already in OPRBattleArmy format
+          const armyData = army.armyData as any;
+          if (armyData.armyId && armyData.units && Array.isArray(armyData.units)) {
+            // Already in battle format, use directly
+            battleArmies.push(armyData as OPRBattleArmy);
           } else {
-            logger.error(`Failed to convert army ${army.name}:`, conversionResult.errors);
+            // Raw ArmyForge data, need to convert
+            const conversionResult = await OPRArmyConverter.convertArmyToBattle(
+              army.userId,
+              army.id,
+              armyData,
+              {
+                allowCombined: true,
+                allowJoined: true,
+                preserveCustomNames: true
+              }
+            );
+
+            if (conversionResult.success) {
+              battleArmies.push(conversionResult.army);
+            } else {
+              logger.error(`Failed to convert army ${army.name}:`, conversionResult.errors);
+            }
           }
         }
       }
