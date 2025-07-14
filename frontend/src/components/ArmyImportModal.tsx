@@ -34,6 +34,8 @@ export const ArmyImportModal: React.FC<ArmyImportModalProps> = ({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [warnings, setWarnings] = useState<string[]>([]);
+  const [showWarnings, setShowWarnings] = useState(false);
+  const [pendingResult, setPendingResult] = useState<any>(null);
   const [campaigns, setCampaigns] = useState<any[]>([]);
   const [loadingCampaigns, setLoadingCampaigns] = useState(true);
 
@@ -51,10 +53,11 @@ export const ArmyImportModal: React.FC<ArmyImportModalProps> = ({
         setWarnings(result.warnings);
         
         if (result.warnings.length > 0) {
-          // Show warnings but still complete the import
-          setTimeout(() => {
-            onImport(result);
-          }, 8000); // Give user time to read warnings
+          // Show warnings and wait for user to dismiss manually
+          setWarnings(result.warnings);
+          setShowWarnings(true);
+          // Store result for later completion
+          setPendingResult(result);
         } else {
           onImport(result);
         }
@@ -96,7 +99,7 @@ export const ArmyImportModal: React.FC<ArmyImportModalProps> = ({
           </div>
         )}
 
-        {warnings.length > 0 && (
+        {showWarnings && warnings.length > 0 && (
           <div className="mb-4 bg-yellow-900 border border-yellow-600 text-yellow-200 p-3 rounded">
             <div className="font-medium mb-2">Import completed with warnings:</div>
             <ul className="text-sm space-y-1">
@@ -104,8 +107,18 @@ export const ArmyImportModal: React.FC<ArmyImportModalProps> = ({
                 <li key={index}>• {warning}</li>
               ))}
             </ul>
-            <div className="text-xs mt-2 text-yellow-300">
-              Modal will close automatically in a few seconds...
+            <div className="flex justify-end mt-3">
+              <button
+                onClick={() => {
+                  setShowWarnings(false);
+                  if (pendingResult) {
+                    onImport(pendingResult);
+                  }
+                }}
+                className="px-4 py-2 bg-yellow-700 hover:bg-yellow-600 text-white rounded text-sm"
+              >
+                Continue
+              </button>
             </div>
           </div>
         )}
@@ -128,7 +141,13 @@ export const ArmyImportModal: React.FC<ArmyImportModalProps> = ({
             />
             <div className="text-xs text-gray-400 mt-1 space-y-1">
               <div>Find this in your ArmyForge army URL: army-forge.onepagerules.com/tts?id=<strong>IJ1JM_m-jmka</strong></div>
-              <div>Try the example: <button type="button" onClick={() => setFormData(prev => ({...prev, armyForgeId: 'IJ1JM_m-jmka'}))} className="text-blue-400 hover:text-blue-300 underline">IJ1JM_m-jmka</button> (The Ashen Pact)</div>
+              <div>Try the example armies:</div>
+              <ul><li>
+              <div><button type="button" onClick={() => setFormData(prev => ({...prev, armyForgeId: 'IJ1JM_m-jmka'}))} className="text-blue-400 hover:text-blue-300 underline">IJ1JM_m-jmka</button> (Test Army)</li>
+              <li><div><button type="button" onClick={() => setFormData(prev => ({...prev, armyForgeId: 'vMzljLVC6ZGv'}))} className="text-blue-400 hover:text-blue-300 underline">vMzljLVC6ZGv</button> (The Ashen Pact)</div></li>
+              <li><div><button type="button" onClick={() => setFormData(prev => ({...prev, armyForgeId: 'Xo19MAwQPGbs'}))} className="text-blue-400 hover:text-blue-300 underline">Xo19MAwQPGbs</button> (van Louen's Roughnecks)</div></li>
+              <li><div><button type="button" onClick={() => setFormData(prev => ({...prev, armyForgeId: 'Un3_pRTu2xBO'}))} className="text-blue-400 hover:text-blue-300 underline">Un3_pRTu2xBO</button> (Hive Fleet Tarvos)</div></li>
+              <li><div><button type="button" onClick={() => setFormData(prev => ({...prev, armyForgeId: 'OKOrilTDQs6P'}))} className="text-blue-400 hover:text-blue-300 underline">OKOrilTDQs6P</button> (Galdoo'o naahlk wildigitkw)</div></li></ul>
             </div>
           </div>
 

@@ -39,11 +39,18 @@ export const EditArmyModal: React.FC<EditArmyModalProps> = ({
     try {
       setLoading(true);
       const response = await apiClient.getUserCampaigns();
+      console.log('Campaigns response:', response); // Debug log
       if (response.data.status === 'success') {
-        setCampaigns(response.data.data.filter((c: Campaign) => c.status === 'ACTIVE'));
+        const allCampaigns = response.data.data || [];
+        console.log('All campaigns:', allCampaigns); // Debug log
+        
+        // For now, show all campaigns instead of filtering by status
+        // since status might not be 'ACTIVE' or might be different
+        setCampaigns(allCampaigns);
       }
     } catch (err) {
       console.error('Failed to load campaigns:', err);
+      setError('Failed to load campaigns');
     } finally {
       setLoading(false);
     }
@@ -54,21 +61,27 @@ export const EditArmyModal: React.FC<EditArmyModalProps> = ({
       setSaving(true);
       setError(null);
 
+      console.log('Saving army campaign association...'); // Debug log
+      console.log('Army ID:', army.id); // Debug log
+      console.log('Current campaign ID:', army.campaignId); // Debug log
+      console.log('Selected campaign ID:', selectedCampaignId); // Debug log
+
       // Update campaign association if changed
       if (selectedCampaignId !== army.campaignId) {
-        await apiClient.updateArmyCampaignAssociation(
+        console.log('Updating campaign association...'); // Debug log
+        const response = await apiClient.updateArmyCampaignAssociation(
           army.id, 
           selectedCampaignId || null
         );
+        console.log('Campaign association update response:', response); // Debug log
+      } else {
+        console.log('No changes to save'); // Debug log
       }
 
-      // For now, custom name editing is disabled since ArmySummary doesn't have customizations
-      // This would require extending the ArmySummary type or fetching full Army data
-
       onUpdate(); // Trigger parent refresh
-
       onClose();
     } catch (err: any) {
+      console.error('Failed to update army:', err); // Debug log
       setError(err.response?.data?.message || 'Failed to update army');
     } finally {
       setSaving(false);
@@ -115,18 +128,27 @@ export const EditArmyModal: React.FC<EditArmyModalProps> = ({
             {loading ? (
               <div className="text-gray-400 text-sm">Loading campaigns...</div>
             ) : (
-              <select
-                value={selectedCampaignId}
-                onChange={(e) => setSelectedCampaignId(e.target.value)}
-                className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white focus:outline-none focus:border-blue-500"
-              >
-                <option value="">One-off / Unassigned</option>
-                {campaigns.map((campaign) => (
-                  <option key={campaign.id} value={campaign.id}>
-                    {campaign.name}
-                  </option>
-                ))}
-              </select>
+              <>
+                <select
+                  value={selectedCampaignId}
+                  onChange={(e) => setSelectedCampaignId(e.target.value)}
+                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white focus:outline-none focus:border-blue-500"
+                >
+                  <option value="">One-off / Unassigned</option>
+                  {campaigns.map((campaign) => (
+                    <option key={campaign.id} value={campaign.id}>
+                      {campaign.name} ({campaign.status})
+                    </option>
+                  ))}
+                </select>
+                <div className="text-xs text-gray-500 mt-1">
+                  {campaigns.length > 0 ? (
+                    <div>Found {campaigns.length} campaign(s) available</div>
+                  ) : (
+                    <div className="text-yellow-400">No campaigns found. Create a campaign first to assign armies.</div>
+                  )}
+                </div>
+              </>
             )}
             <p className="text-xs text-gray-500 mt-1">
               Choose a campaign or leave unassigned for one-off battles
