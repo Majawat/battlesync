@@ -33,10 +33,18 @@ export const ArmyDetailView: React.FC = () => {
       setLoading(true);
       const response = await apiClient.getArmy(armyId);
       if (response.data.status === 'success' && response.data.data) {
-        setArmy(response.data.data);
+        const armyData = response.data.data;
+        console.log('=== ARMY DATA DEBUG ===');
+        console.log('Full army object:', armyData);
+        console.log('Army data field:', armyData.armyData);
+        console.log('Army data type:', typeof armyData.armyData);
+        console.log('Army data keys:', armyData.armyData ? Object.keys(armyData.armyData) : 'null');
+        console.log('======================');
+        
+        setArmy(armyData);
         // Convert to battle units if needed
         if (showBattleView) {
-          await convertArmyToBattleUnits(response.data.data);
+          await convertArmyToBattleUnits(armyData);
         }
       } else {
         setError('Failed to load army details');
@@ -51,6 +59,23 @@ export const ArmyDetailView: React.FC = () => {
   const convertArmyToBattleUnits = async (armyData: Army) => {
     try {
       setConverting(true);
+      
+      // Check if we have stored converted battle data
+      const armyDataObj = armyData.armyData as any;
+      console.log('=== BATTLE CONVERSION DEBUG ===');
+      console.log('Army data for battle conversion:', armyDataObj);
+      console.log('Has convertedBattleData?', !!armyDataObj?.convertedBattleData);
+      console.log('===============================');
+      
+      if (armyDataObj?.convertedBattleData?.units) {
+        // Use stored converted data
+        console.log('Using stored converted battle data');
+        setBattleUnits(armyDataObj.convertedBattleData.units);
+        return;
+      }
+      
+      // Fallback to API conversion
+      console.log('Falling back to API conversion');
       const response = await fetch(`/api/armies/${armyData.id}/convert`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
@@ -59,6 +84,7 @@ export const ArmyDetailView: React.FC = () => {
 
       if (response.ok) {
         const result = await response.json();
+        console.log('API conversion result:', result);
         if (result.status === 'success' && result.data && result.data.units) {
           setBattleUnits(result.data.units);
         } else {
@@ -262,8 +288,70 @@ export const ArmyDetailView: React.FC = () => {
                         const armyData = army.armyData as any;
                         console.log('Army data structure:', armyData); // Debug log
                         
-                        if (armyData.units && Array.isArray(armyData.units)) {
-                          // This is converted OPRBattleArmy format - display the units
+                        if (armyData.convertedBattleData) {
+                          // New format: show the original ArmyForge units (not converted data)
+                          const originalUnits = armyData.units || [];
+                          return originalUnits.map((unit: any, index: number) => (
+                            <div key={`armyforge-unit-${unit.id || index}`} className="bg-gray-700 p-4 rounded border-l-4 border-blue-500">
+                              <div className="flex justify-between items-start mb-2">
+                                <h4 className="text-lg font-semibold text-white">
+                                  {unit.customName || unit.name}
+                                </h4>
+                                <div className="text-right">
+                                  <div className="text-white font-medium">{unit.cost} pts</div>
+                                  <div className="text-gray-400 text-sm">Size: {unit.size}</div>
+                                </div>
+                              </div>
+                              
+                              {/* Unit Stats */}
+                              {(unit.quality || unit.defense) && (
+                                <div className="mb-3">
+                                  <div className="flex space-x-4 text-sm">
+                                    {unit.quality && (
+                                      <span className="text-gray-300">Quality: <span className="text-white">{unit.quality}+</span></span>
+                                    )}
+                                    {unit.defense && (
+                                      <span className="text-gray-300">Defense: <span className="text-white">{unit.defense}+</span></span>
+                                    )}
+                                  </div>
+                                </div>
+                              )}
+
+                              {/* Weapons */}
+                              {unit.weapons && unit.weapons.length > 0 && (
+                                <div className="mb-3">
+                                  <h5 className="text-sm font-medium text-gray-300 mb-1">Weapons:</h5>
+                                  <div className="space-y-1">
+                                    {unit.weapons.map((weapon: any, weaponIndex: number) => (
+                                      <div key={`weapon-${unit.id}-${weapon.id || weaponIndex}`} className="text-sm text-gray-400">
+                                        <span className="text-white">{weapon.name}</span>
+                                        {weapon.label && <span className="ml-2">({weapon.label})</span>}
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+
+                              {/* Special Rules */}
+                              {unit.rules && unit.rules.length > 0 && (
+                                <div>
+                                  <h5 className="text-sm font-medium text-gray-300 mb-1">Special Rules:</h5>
+                                  <div className="flex flex-wrap gap-1">
+                                    {unit.rules.map((rule: any, ruleIndex: number) => (
+                                      <span 
+                                        key={`rule-${unit.id}-${rule.id || ruleIndex}`}
+                                        className="inline-block bg-blue-900 text-blue-200 text-xs px-2 py-1 rounded"
+                                      >
+                                        {rule.label || rule.name}
+                                      </span>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          ));
+                        } else if (armyData.units && Array.isArray(armyData.units)) {
+                          // Legacy: converted OPRBattleArmy format - display the units
                           return armyData.units.map((unit: any, index: number) => (
                             <div key={`converted-unit-${unit.unitId || index}`} className="bg-gray-700 p-4 rounded border-l-4 border-green-500">
                               <div className="flex justify-between items-start mb-2">

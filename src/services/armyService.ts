@@ -119,7 +119,7 @@ class ArmyService {
       // Add conversion warnings to our warnings array
       warnings.push(...conversionResult.warnings);
 
-      // Create army record with converted battle data
+      // Create army record with original ArmyForge data for raw view and on-demand conversion
       const army = await prisma.army.create({
         data: {
           userId,
@@ -128,7 +128,10 @@ class ArmyService {
           name: request.customName || armyForgeData.name,
           faction: armyForgeData.faction,
           points: armyForgeData.points,
-          armyData: conversionResult.army as any, // Store converted battle data
+          armyData: {
+            ...armyForgeData, // Store original ArmyForge data for raw view
+            convertedBattleData: conversionResult.army // Also store converted data for battles
+          } as any,
           customizations: {
             name: request.customName,
             notes: '',
@@ -249,7 +252,10 @@ class ArmyService {
             : newArmyForgeData.name,
           faction: newArmyForgeData.faction,
           points: newArmyForgeData.points,
-          armyData: conversionResult.army as any, // Store converted battle data
+          armyData: {
+            ...newArmyForgeData, // Store original ArmyForge data for raw view
+            convertedBattleData: conversionResult.army // Also store converted data for battles
+          } as any,
           lastSyncedAt: new Date(),
         },
       });

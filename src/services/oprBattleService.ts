@@ -124,13 +124,17 @@ export class OPRBattleService {
       const battleArmies: OPRBattleArmy[] = [];
       for (const army of armies) {
         if (army.armyData) {
-          // Check if armyData is already in OPRBattleArmy format
           const armyData = army.armyData as any;
-          if (armyData.armyId && armyData.units && Array.isArray(armyData.units)) {
-            // Already in battle format, use directly
+          
+          // Check if we have pre-converted battle data
+          if (armyData.convertedBattleData) {
+            // Use the stored converted data
+            battleArmies.push(armyData.convertedBattleData as OPRBattleArmy);
+          } else if (armyData.armyId && armyData.units && Array.isArray(armyData.units)) {
+            // Legacy: already in battle format, use directly
             battleArmies.push(armyData as OPRBattleArmy);
           } else {
-            // Raw ArmyForge data, need to convert
+            // Fallback: convert on the fly from ArmyForge data
             const conversionResult = await OPRArmyConverter.convertArmyToBattle(
               army.userId,
               army.id,
