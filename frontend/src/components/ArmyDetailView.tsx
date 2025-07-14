@@ -198,7 +198,25 @@ export const ArmyDetailView: React.FC = () => {
               <div>
                 <h2 className="text-3xl font-bold text-white">{army.name}</h2>
                 <p className="text-gray-400 mt-2">
-                  {army.faction} • {formatGameSystem(army.armyData?.gameSystem || '')}
+                  {(() => {
+                    // Use resolved factions from metadata if available, otherwise fall back to faction field
+                    const armyData = army.armyData as any;
+                    const resolvedFactions = armyData?.metadata?.resolvedFactions;
+                    const gameSystemName = armyData?.metadata?.gameSystemName || formatGameSystem(armyData?.gameSystem || '');
+                    
+                    if (resolvedFactions && resolvedFactions.length > 0) {
+                      return `${resolvedFactions.join(', ')} • ${gameSystemName}`;
+                    }
+                    
+                    // Fallback: check if faction looks like a description
+                    const faction = army.faction;
+                    if (faction && (faction.length > 25 || faction.includes("'s ") || faction.toLowerCase().includes('army'))) {
+                      // This looks like a description, show game system instead
+                      return gameSystemName;
+                    }
+                    
+                    return `${faction} • ${gameSystemName}`;
+                  })()}
                 </p>
               </div>
               <div className="flex space-x-4">
@@ -320,14 +338,42 @@ export const ArmyDetailView: React.FC = () => {
                               {/* Weapons */}
                               {unit.weapons && unit.weapons.length > 0 && (
                                 <div className="mb-3">
-                                  <h5 className="text-sm font-medium text-gray-300 mb-1">Weapons:</h5>
-                                  <div className="space-y-1">
-                                    {unit.weapons.map((weapon: any, weaponIndex: number) => (
-                                      <div key={`weapon-${unit.id}-${weapon.id || weaponIndex}`} className="text-sm text-gray-400">
-                                        <span className="text-white">{weapon.name}</span>
-                                        {weapon.label && <span className="ml-2">({weapon.label})</span>}
-                                      </div>
-                                    ))}
+                                  <h5 className="text-sm font-medium text-gray-300 mb-2">Weapons:</h5>
+                                  <div className="overflow-x-auto">
+                                    <table className="min-w-full text-sm">
+                                      <thead>
+                                        <tr className="border-b border-gray-600">
+                                          <th className="text-left text-gray-300 font-medium py-1 pr-4">Weapon</th>
+                                          <th className="text-left text-gray-300 font-medium py-1 pr-4">RNG</th>
+                                          <th className="text-left text-gray-300 font-medium py-1 pr-4">ATK</th>
+                                          <th className="text-left text-gray-300 font-medium py-1 pr-4">AP</th>
+                                          <th className="text-left text-gray-300 font-medium py-1">Special</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        {unit.weapons.map((weapon: any, weaponIndex: number) => {
+                                          // Extract AP value from special rules
+                                          const apRule = weapon.specialRules?.find((rule: any) => rule.name === 'AP');
+                                          const apValue = apRule ? apRule.rating || apRule.label?.match(/\((\d+)\)/)?.[1] : null;
+                                          
+                                          // Get other special rules (excluding AP)
+                                          const otherRules = weapon.specialRules?.filter((rule: any) => rule.name !== 'AP') || [];
+                                          const specialText = otherRules.length > 0 
+                                            ? otherRules.map((rule: any) => rule.label || rule.name).join(', ')
+                                            : '-';
+                                          
+                                          return (
+                                            <tr key={`weapon-${unit.id}-${weapon.id || weaponIndex}`} className="border-b border-gray-700/50">
+                                              <td className="text-white py-2 pr-4">{weapon.name}</td>
+                                              <td className="text-gray-300 py-2 pr-4">{weapon.range ? `${weapon.range}"` : '-'}</td>
+                                              <td className="text-gray-300 py-2 pr-4">A{weapon.attacks || '1'}</td>
+                                              <td className="text-gray-300 py-2 pr-4">{apValue || '-'}</td>
+                                              <td className="text-gray-300 py-2">{specialText}</td>
+                                            </tr>
+                                          );
+                                        })}
+                                      </tbody>
+                                    </table>
                                   </div>
                                 </div>
                               )}
@@ -423,14 +469,42 @@ export const ArmyDetailView: React.FC = () => {
                               {/* Weapons for raw ArmyForge data */}
                               {unit.weapons && unit.weapons.length > 0 && (
                                 <div className="mb-3">
-                                  <h5 className="text-sm font-medium text-gray-300 mb-1">Weapons:</h5>
-                                  <div className="space-y-1">
-                                    {unit.weapons.map((weapon: any, weaponIndex: number) => (
-                                      <div key={`weapon-${unit.id}-${weapon.id || weaponIndex}`} className="text-sm text-gray-400">
-                                        <span className="text-white">{weapon.name}</span>
-                                        {weapon.label && <span className="ml-2">({weapon.label})</span>}
-                                      </div>
-                                    ))}
+                                  <h5 className="text-sm font-medium text-gray-300 mb-2">Weapons:</h5>
+                                  <div className="overflow-x-auto">
+                                    <table className="min-w-full text-sm">
+                                      <thead>
+                                        <tr className="border-b border-gray-600">
+                                          <th className="text-left text-gray-300 font-medium py-1 pr-4">Weapon</th>
+                                          <th className="text-left text-gray-300 font-medium py-1 pr-4">RNG</th>
+                                          <th className="text-left text-gray-300 font-medium py-1 pr-4">ATK</th>
+                                          <th className="text-left text-gray-300 font-medium py-1 pr-4">AP</th>
+                                          <th className="text-left text-gray-300 font-medium py-1">Special</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        {unit.weapons.map((weapon: any, weaponIndex: number) => {
+                                          // Extract AP value from special rules
+                                          const apRule = weapon.specialRules?.find((rule: any) => rule.name === 'AP');
+                                          const apValue = apRule ? apRule.rating || apRule.label?.match(/\((\d+)\)/)?.[1] : null;
+                                          
+                                          // Get other special rules (excluding AP)
+                                          const otherRules = weapon.specialRules?.filter((rule: any) => rule.name !== 'AP') || [];
+                                          const specialText = otherRules.length > 0 
+                                            ? otherRules.map((rule: any) => rule.label || rule.name).join(', ')
+                                            : '-';
+                                          
+                                          return (
+                                            <tr key={`weapon-${unit.id}-${weapon.id || weaponIndex}`} className="border-b border-gray-700/50">
+                                              <td className="text-white py-2 pr-4">{weapon.name}</td>
+                                              <td className="text-gray-300 py-2 pr-4">{weapon.range ? `${weapon.range}"` : '-'}</td>
+                                              <td className="text-gray-300 py-2 pr-4">A{weapon.attacks || '1'}</td>
+                                              <td className="text-gray-300 py-2 pr-4">{apValue || '-'}</td>
+                                              <td className="text-gray-300 py-2">{specialText}</td>
+                                            </tr>
+                                          );
+                                        })}
+                                      </tbody>
+                                    </table>
                                   </div>
                                 </div>
                               )}
@@ -483,8 +557,42 @@ export const ArmyDetailView: React.FC = () => {
                 <div className="space-y-3">
                   <div>
                     <div className="text-gray-400 text-sm">Faction</div>
-                    <div className="text-white">{army.faction}</div>
+                    <div className="text-white">
+                      {(() => {
+                        // Use resolved factions from metadata if available
+                        const armyData = army.armyData as any;
+                        const resolvedFactions = armyData?.metadata?.resolvedFactions;
+                        
+                        if (resolvedFactions && resolvedFactions.length > 0) {
+                          return resolvedFactions.join(', ');
+                        }
+                        
+                        // Fallback: check if faction looks like a description
+                        const faction = army.faction;
+                        if (faction && (faction.length > 25 || faction.includes("'s ") || faction.toLowerCase().includes('army'))) {
+                          return armyData?.metadata?.gameSystemName || formatGameSystem(armyData?.gameSystem || '');
+                        }
+                        
+                        return faction;
+                      })()}
+                    </div>
                   </div>
+                  {(() => {
+                    // Show description if available and different from faction
+                    const armyData = army.armyData as any;
+                    const description = armyData?.metadata?.description;
+                    const resolvedFactions = armyData?.metadata?.resolvedFactions;
+                    
+                    if (description && description.trim() && resolvedFactions && resolvedFactions.length > 0) {
+                      return (
+                        <div>
+                          <div className="text-gray-400 text-sm">Description</div>
+                          <div className="text-white text-sm">{description}</div>
+                        </div>
+                      );
+                    }
+                    return null;
+                  })()}
                   <div>
                     <div className="text-gray-400 text-sm">Game System</div>
                     <div className="text-white">{formatGameSystem(army.armyData?.gameSystem || '')}</div>

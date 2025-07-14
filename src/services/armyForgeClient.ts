@@ -197,34 +197,14 @@ class ArmyForgeClient {
       throw new Error(`Army not found or invalid response for ID: ${armyId}`);
     }
 
-    // Helper function to determine faction from army data
-    const inferFactionFromArmy = (armyData: any): string => {
-      // If there's a description, use it as faction info
-      if (armyData.description) {
-        return armyData.description;
-      }
-      
-      // Fallback: Try to infer from unit names or use army name
-      if (armyData.name && armyData.name !== 'Untitled Army') {
-        return armyData.name;
-      }
-      
-      // Last resort: Use game system with friendly name
-      const gameSystemNames: Record<string, string> = {
-        'gf': 'Grimdark Future',
-        'aof': 'Age of Fantasy', 
-        'ff': 'Firefight',
-        'wftl': 'Warfleets FTL'
-      };
-      
-      return gameSystemNames[armyData.gameSystem] || armyData.gameSystem;
-    };
+    // Resolve factions from unit armyIds using Army Books API
+    const factions = await this.resolveFactions(armyData);
 
     // Transform the ArmyForge data to our expected format
     const result: ArmyForgeData = {
       id: armyData.id,
       name: armyData.name,
-      faction: inferFactionFromArmy(armyData), // Use smarter faction detection
+      faction: factions.length > 0 ? factions.join(', ') : this.inferFactionFromArmy(armyData),
       gameSystem: armyData.gameSystem,
       points: armyData.listPoints || armyData.pointsLimit || 0,
       units: armyData.units || [],
@@ -232,7 +212,10 @@ class ArmyForgeClient {
       metadata: {
         version: '1.0',
         lastModified: armyData.modified || armyData.cloudModified || new Date().toISOString(),
-        createdBy: 'ArmyForge'
+        createdBy: 'ArmyForge',
+        description: armyData.description || '',
+        resolvedFactions: factions,
+        gameSystemName: this.getGameSystemName(armyData.gameSystem)
       }
     };
 
@@ -264,29 +247,6 @@ class ArmyForgeClient {
     return result;
   }
 
-  /**
-   * Get factions for a specific game system
-   */
-  async getFactions(gameSystemId: string): Promise<ArmyForgeFaction[]> {
-    const cacheKey = this.getCacheKey(`factions:${gameSystemId}`);
-    
-    // Try cache first (TTL: 30 minutes for factions)
-    const cached = await this.cache.get<ArmyForgeFaction[]>(cacheKey);
-    if (cached) {
-      return cached;
-    }
-
-    const response: any = 
-      await this.client.get(`/game-systems/${gameSystemId}/factions`);
-
-    if (!response.data.success) {
-      throw new Error(`ArmyForge API Error: ${response.data.message}`);
-    }
-
-    const result = response.data.data;
-    await this.cache.set(cacheKey, result, 30 * 60); // 30 minutes TTL
-    return result;
-  }
 
   /**
    * Get army books for a faction
@@ -376,6 +336,94 @@ class ArmyForgeClient {
    */
   async getCacheStats(): Promise<{ size: number; hitRate: number }> {
     return this.cache.getStats();
+  }
+
+  /**
+   * Resolve factions from army units using Army Books API
+   */
+  private async resolveFactions(armyData: any): Promise<string[]> {
+    const factions = new Set<string>();
+    
+    try {
+      // Get game system slug for API calls
+      const gameSystem = armyData.gameSystem;
+      if (!gameSystem) return [];
+
+      // Map game system codes to slugs
+      const gameSystemSlugs: Record<string, string> = {
+        'gf': 'grimdark-future',
+        'aof': 'age-of-fantasy',
+        'ff': 'grimdark-future-firefight',
+        'wftl': 'grimdark-future-warfleet'
+      };
+      
+      const gameSystemSlug = gameSystemSlugs[gameSystem] || gameSystem;
+
+      // Collect unique armyIds from units
+      const armyIds = new Set<string>();
+      if (armyData.units) {
+        armyData.units.forEach((unit: any) => {
+          if (unit.armyId) {
+            armyIds.add(unit.armyId);
+          }
+        });
+      }
+
+      console.log(`Found ${armyIds.size} unique armyIds:`, Array.from(armyIds));
+
+      if (armyIds.size === 0) {
+        return [];
+      }
+
+      // Get all army books for this game system
+      const armyBooksResponse = await this.client.get(`/army-books?filters=official&gameSystemSlug=${gameSystemSlug}`);
+      const armyBooks = armyBooksResponse.data;
+
+      console.log(`Found ${armyBooks.length} army books for ${gameSystemSlug}`);
+
+      // For each unique armyId, find the corresponding army book/faction
+      for (const armyId of armyIds) {
+        const matchingBook = armyBooks.find((book: any) => book.uid === armyId);
+        if (matchingBook) {
+          factions.add(matchingBook.name);
+          console.log(`Resolved armyId ${armyId} to faction: ${matchingBook.name}`);
+        } else {
+          console.warn(`Could not resolve armyId: ${armyId}`);
+        }
+      }
+    } catch (error) {
+      console.warn('Failed to resolve factions from Army Books API:', (error as Error).message || error);
+      return [];
+    }
+
+    return Array.from(factions);
+  }
+
+  /**
+   * Fallback faction inference from army data when API resolution fails
+   */
+  private inferFactionFromArmy(armyData: any): string {
+    // Try army name first if it's meaningful
+    if (armyData.name && armyData.name !== 'Untitled Army') {
+      return armyData.name;
+    }
+    
+    // Use game system with friendly name as last resort
+    return this.getGameSystemName(armyData.gameSystem);
+  }
+
+  /**
+   * Get friendly game system name
+   */
+  private getGameSystemName(gameSystem: string): string {
+    const gameSystemNames: Record<string, string> = {
+      'gf': 'Grimdark Future',
+      'aof': 'Age of Fantasy', 
+      'ff': 'Firefight',
+      'wftl': 'Warfleets FTL'
+    };
+    
+    return gameSystemNames[gameSystem] || gameSystem;
   }
 
   /**

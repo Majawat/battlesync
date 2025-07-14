@@ -65,6 +65,9 @@ export interface OPRBattleUnit {
   // Weapon summary for unit
   weaponSummary: OPRWeaponSummary[];
   
+  // Unit special rules (base rules + upgrades/traits)
+  specialRules: string[];
+  
   // Hero joining logic
   joinedHero?: OPRBattleModel; // If this is a JOINED unit
   

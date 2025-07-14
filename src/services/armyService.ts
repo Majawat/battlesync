@@ -119,7 +119,7 @@ class ArmyService {
       // Add conversion warnings to our warnings array
       warnings.push(...conversionResult.warnings);
 
-      // Create army record with original ArmyForge data for raw view and on-demand conversion
+      // Create army record with enriched metadata
       const army = await prisma.army.create({
         data: {
           userId,
@@ -129,7 +129,7 @@ class ArmyService {
           faction: armyForgeData.faction,
           points: armyForgeData.points,
           armyData: {
-            ...armyForgeData, // Store original ArmyForge data for raw view
+            ...armyForgeData, // Store original ArmyForge data with enhanced metadata
             convertedBattleData: conversionResult.army // Also store converted data for battles
           } as any,
           customizations: {
@@ -253,7 +253,7 @@ class ArmyService {
           faction: newArmyForgeData.faction,
           points: newArmyForgeData.points,
           armyData: {
-            ...newArmyForgeData, // Store original ArmyForge data for raw view
+            ...newArmyForgeData, // Store original ArmyForge data with enhanced metadata
             convertedBattleData: conversionResult.army // Also store converted data for battles
           } as any,
           lastSyncedAt: new Date(),
@@ -324,18 +324,41 @@ class ArmyService {
         return army.campaign !== null;
       });
 
-      return validArmies.map(army => ({
-        id: army.id,
-        name: army.name,
-        faction: army.faction,
-        points: army.points,
-        unitCount: 0, // TODO: Calculate from armyData
-        lastSyncedAt: army.lastSyncedAt,
-        hasCustomizations: this.hasCustomizations(army.customizations as any),
-        campaignId: army.campaignId,
-        experiencePoints: (army.customizations as any)?.experience?.experiencePoints || 0,
-        battlesPlayed: (army.customizations as any)?.experience?.totalBattles || 0,
-      }));
+      return validArmies.map(army => {
+        // Extract resolved faction from metadata if available
+        const armyData = army.armyData as any;
+        const resolvedFactions = armyData?.metadata?.resolvedFactions;
+        let displayFaction = army.faction;
+        
+        if (resolvedFactions && resolvedFactions.length > 0) {
+          displayFaction = resolvedFactions.join(', ');
+        } else if (army.faction && (army.faction.length > 25 || army.faction.includes("'s ") || army.faction.toLowerCase().includes('army'))) {
+          // This looks like a description (long, possessive, or contains 'army'), use game system instead
+          const gameSystemNames: Record<string, string> = {
+            'gf': 'Grimdark Future',
+            'aof': 'Age of Fantasy', 
+            'ff': 'Firefight',
+            'wftl': 'Warfleets FTL'
+          };
+          displayFaction = armyData?.metadata?.gameSystemName || 
+                          gameSystemNames[armyData?.gameSystem] || 
+                          armyData?.gameSystem || 
+                          'Unknown';
+        }
+        
+        return {
+          id: army.id,
+          name: army.name,
+          faction: displayFaction,
+          points: army.points,
+          unitCount: 0, // TODO: Calculate from armyData
+          lastSyncedAt: army.lastSyncedAt,
+          hasCustomizations: this.hasCustomizations(army.customizations as any),
+          campaignId: army.campaignId,
+          experiencePoints: (army.customizations as any)?.experience?.experiencePoints || 0,
+          battlesPlayed: (army.customizations as any)?.experience?.totalBattles || 0,
+        };
+      });
 
     } catch (error) {
       throw new ApiError(500, `Failed to get armies: ${(error as Error).message}`);

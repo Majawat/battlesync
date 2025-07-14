@@ -111,19 +111,41 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
       {unit.weaponSummary && unit.weaponSummary.length > 0 && (
         <div className="mt-2">
           <div className="text-xs text-gray-400 mb-1">Weapons:</div>
-          <div className="text-xs space-y-1">
-            {unit.weaponSummary.map((weapon, index) => (
-              <div key={index} className="flex justify-between items-center">
-                <span className="text-gray-300">
-                  {weapon.count}x {weapon.name}
-                </span>
-                <span className="text-gray-400">
-                  {weapon.range && `${weapon.range}"`}
-                  {weapon.attacks && ` A${weapon.attacks}`}
-                  {weapon.specialRules.length > 0 && ` ${weapon.specialRules.join(', ')}`}
-                </span>
-              </div>
-            ))}
+          <div className="overflow-x-auto">
+            <table className="min-w-full text-xs">
+              <thead>
+                <tr className="border-b border-gray-600">
+                  <th className="text-left text-gray-400 font-medium py-1 pr-2">Weapon</th>
+                  <th className="text-left text-gray-400 font-medium py-1 pr-2">RNG</th>
+                  <th className="text-left text-gray-400 font-medium py-1 pr-2">ATK</th>
+                  <th className="text-left text-gray-400 font-medium py-1 pr-2">AP</th>
+                  <th className="text-left text-gray-400 font-medium py-1">Special</th>
+                </tr>
+              </thead>
+              <tbody>
+                {unit.weaponSummary.map((weapon, index) => {
+                  // Extract AP value from special rules
+                  const apRule = weapon.specialRules.find(rule => rule.toLowerCase().includes('ap('));
+                  const apValue = apRule ? apRule.match(/ap\((\d+)\)/i)?.[1] : null;
+                  
+                  // Get other special rules (excluding AP)
+                  const otherRules = weapon.specialRules.filter(rule => !rule.toLowerCase().includes('ap('));
+                  const specialText = otherRules.length > 0 ? otherRules.join(', ') : '-';
+                  
+                  return (
+                    <tr key={index} className="border-b border-gray-700/50">
+                      <td className="text-gray-300 py-1 pr-2">
+                        {weapon.count > 1 ? `${weapon.count}x ` : ''}{weapon.name}
+                      </td>
+                      <td className="text-gray-400 py-1 pr-2">{weapon.range ? `${weapon.range}"` : '-'}</td>
+                      <td className="text-gray-400 py-1 pr-2">A{weapon.attacks || '1'}</td>
+                      <td className="text-gray-400 py-1 pr-2">{apValue || '-'}</td>
+                      <td className="text-gray-400 py-1">{specialText}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
         </div>
       )}

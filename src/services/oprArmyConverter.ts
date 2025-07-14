@@ -122,6 +122,10 @@ export class OPRArmyConverter {
     // Create weapon summary
     const weaponSummary = this.createWeaponSummary(armyUnit);
 
+    // Get effective special rules (base rules + upgrades/traits)
+    const effectiveRules = this.getEffectiveRules(armyUnit);
+    const specialRules = this.calculateFinalSpecialRules(effectiveRules);
+
     // Create battle unit
     const battleUnit: OPRBattleUnit = {
       unitId: armyUnit.id,
@@ -140,12 +144,74 @@ export class OPRArmyConverter {
       kills: 0,
       models,
       weaponSummary,
+      specialRules,
       
       isCombined: armyUnit.combined || false,
       sourceUnit: armyUnit
     };
 
     return battleUnit;
+  }
+
+  /**
+   * Calculate final special rules by combining base rules with upgrades
+   * Handles rule stacking (like Impact) and replacements
+   */
+  private static calculateFinalSpecialRules(effectiveRules: any[]): string[] {
+    const ruleMap = new Map<string, any>();
+    
+    // Process all rules and handle stacking/replacement
+    effectiveRules.forEach(rule => {
+      const ruleName = rule.name;
+      const existingRule = ruleMap.get(ruleName);
+      
+      if (existingRule) {
+        // Handle rule stacking based on rule type
+        if (ruleName === 'Impact') {
+          // Impact stacks: base Impact(3) + Great Grinder Impact(5) = Impact(8)
+          const existingRating = existingRule.rating || 0;
+          const newRating = rule.rating || 0;
+          const totalRating = existingRating + newRating;
+          
+          ruleMap.set(ruleName, {
+            ...rule,
+            rating: totalRating,
+            label: `Impact(${totalRating})`
+          });
+        } else if (ruleName === 'Defense') {
+          // Defense upgrades: lower is better, so take the lowest value
+          const existingRating = existingRule.rating || 0;
+          const newRating = rule.rating || 0;
+          const finalRating = Math.min(existingRating, newRating);
+          
+          ruleMap.set(ruleName, {
+            ...rule,
+            rating: finalRating,
+            label: `Defense(${finalRating})`
+          });
+        } else if (rule.rating && existingRule.rating) {
+          // For other rated rules, take the higher rating (unless specified otherwise)
+          const existingRating = existingRule.rating || 0;
+          const newRating = rule.rating || 0;
+          const finalRating = Math.max(existingRating, newRating);
+          
+          ruleMap.set(ruleName, {
+            ...rule,
+            rating: finalRating,
+            label: rule.label || `${ruleName}(${finalRating})`
+          });
+        } else {
+          // For non-rated rules, keep the existing one (no stacking)
+          // Do nothing - keep existing rule
+        }
+      } else {
+        // First occurrence of this rule
+        ruleMap.set(ruleName, rule);
+      }
+    });
+    
+    // Convert to string array for display
+    return Array.from(ruleMap.values()).map(rule => rule.label || rule.name);
   }
 
   /**
