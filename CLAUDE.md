@@ -35,13 +35,18 @@ BattleSync is a self-hosted web application for managing One Page Rules (OPR) ta
 - **API Layer**: RESTful endpoints with proper error handling and validation
 - **Docker Environment**: Full development setup with hot reload
 
-### ⚠️ IN PROGRESS
-- **OPR Army Conversion System**: Fixing army-to-battle conversion logic
+### ✅ RECENTLY COMPLETED (v1.1.1 Updates)
+- **OPR Army Conversion System**: Complete and production-ready
   - ✅ Unit combining logic (merge different loadouts intelligently)
   - ✅ Smart weapon summary merging (no duplication, proper counts)
-  - ⚠️ Tough value distribution (2 models Tough(3), 18 models Tough(1))
-  - ⚠️ Hero joining mechanics (Mrs. Bitchtits joining units)
-  - ⚠️ Debugging 500 error in conversion process
+  - ✅ Tough value distribution (replacement vs additive tough upgrades)
+  - ✅ Hero joining mechanics (weapons kept separate, proper tough calculation)
+  - ✅ Defense upgrade processing (Defense upgrades reduce values correctly)
+  - ✅ Weapon count accuracy (fixed Blessed Titan weapon counts)
+  - ✅ Complex upgrade scenarios (tested with heavily customized armies)
+  - ✅ Edge case handling (identical combined units, custom names)
+
+### ⚠️ IN PROGRESS
 - **Enhanced Battle Features**: Individual unit tracking, damage system, turn management
 - **Army Validation**: Enhanced Joi middleware for army endpoints (basic validation implemented)
 

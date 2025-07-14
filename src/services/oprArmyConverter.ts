@@ -184,6 +184,11 @@ export class OPRArmyConverter {
 
   /**
    * Create weapon summary for a unit using final loadout (after upgrades)
+   * 
+   * Uses actual weapon counts from ArmyForge loadout, not pre-formatted label counts.
+   * This ensures accurate weapon counting for complex upgrade scenarios.
+   * 
+   * Fixed issues with weapons showing incorrect counts (e.g., Blessed Titan Titan Claws).
    */
   private static createWeaponSummary(armyUnit: ArmyForgeUnit): OPRWeaponSummary[] {
     // Use loadout as authoritative source for final weapons
@@ -348,6 +353,9 @@ export class OPRArmyConverter {
 
   /**
    * Calculate effective defense considering upgrades (Defense upgrades reduce the number)
+   * 
+   * In OPR, Defense upgrades improve armor by reducing the target number needed.
+   * Example: Base Defense 5+ with Defense(1) upgrade = 4+ (better armor save)
    */
   private static calculateEffectiveDefense(armyUnit: ArmyForgeUnit, baseDefense: number): number {
     let effectiveDefense = baseDefense;
@@ -384,6 +392,9 @@ export class OPRArmyConverter {
 
   /**
    * Get effective Tough value from base rules plus upgrades (cumulative)
+   * 
+   * For single-model units and heroes, tough values from equipment are additive.
+   * Example: Hero with Tough(3) + Combat Bike Tough(3) = Tough(6) total
    */
   private static getEffectiveToughValue(armyUnit: ArmyForgeUnit): number {
     let toughValue = 1; // Default
@@ -510,6 +521,12 @@ export class OPRArmyConverter {
 
   /**
    * Calculate Tough value for a specific model based on base tough + upgrade tough
+   * 
+   * Handles two types of tough upgrades:
+   * 1. Replacement (Crew/Weapon Team): Sets tough to specific value (e.g., Crew Tough(3))
+   * 2. Additive (Equipment): Adds to base tough (e.g., +1 from armor)
+   * 
+   * Crew/Weapon Team upgrades take precedence and replace base tough entirely.
    */
   private static getModelToughValue(
     armyUnit: ArmyForgeUnit, 
@@ -705,6 +722,12 @@ export class OPRArmyConverter {
   
   /**
    * Join a hero to a unit, creating a new joined unit
+   * 
+   * Creates a JOINED unit type where:
+   * - Hero is stored separately in joinedHero field (not in models array)
+   * - Hero weapons are kept separate from unit weapons
+   * - Hero tough value is recalculated to include all equipment bonuses
+   * - Unit size includes the hero (+1 to originalSize)
    */
   private static joinHeroToUnit(hero: OPRBattleUnit, targetUnit: OPRBattleUnit): OPRBattleUnit {
     // Calculate correct tough value for hero (base + all loadout bonuses)

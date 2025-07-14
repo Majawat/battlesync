@@ -4,18 +4,20 @@ This file tracks current and future development tasks for the BattleSync project
 
 ## Current Sprint (High Priority)
 
-### 🟡 OPR Army Conversion System Fixes
-**Status**: In Progress  
-**Assigned**: Current focus  
-**Due**: Active debugging
+### 🟢 COMPLETED - OPR Army Conversion System Fixes
+**Status**: ✅ COMPLETE  
+**Completed**: 2025-07-14
+**Version**: v1.1.1
 
-#### Issues Being Fixed:
+#### All Critical Issues Resolved:
 - [x] ✅ **Smart Unit Combining**: Fixed unit grouping to merge different loadouts
 - [x] ✅ **Weapon Summary Merging**: Implemented intelligent weapon count combination
 - [x] ✅ **Static Method Calls**: Fixed TypeScript compilation errors
-- [ ] **500 Error in Import Process**: Debug silent failure after token validation
-- [ ] **Tough Value Distribution**: Implement 2 models Tough(3), 18 models Tough(1)
-- [ ] **Hero Joining Data**: Preserve Mrs. Bitchtits data in joined Minions unit
+- [x] ✅ **Weapon Count Accuracy**: Fixed Blessed Titan weapon counts (1 Titan Claw, not 2)
+- [x] ✅ **Defense Upgrade Processing**: Defense upgrades now reduce values correctly (5→4)
+- [x] ✅ **Tough Value Distribution**: Proper replacement vs additive tough logic
+- [x] ✅ **Hero Joining Mechanics**: Hero weapons kept separate, correct tough calculation
+- [x] ✅ **Complex Edge Cases**: Tested with heavily customized armies (16 upgrades)
 
 #### Expected Results:
 - Infantry Squad [20] properly combines two different loadouts
