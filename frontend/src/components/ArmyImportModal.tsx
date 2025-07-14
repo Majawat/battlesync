@@ -140,14 +140,14 @@ export const ArmyImportModal: React.FC<ArmyImportModalProps> = ({
               disabled={loading}
             />
             <div className="text-xs text-gray-400 mt-1 space-y-1">
-              <div>Find this in your ArmyForge army URL: army-forge.onepagerules.com/tts?id=<strong>IJ1JM_m-jmka</strong></div>
+              <div>Find this in your ArmyForge army URL: https://army-forge.onepagerules.com/list?listId=<strong>IJ1JM_m-jmka</strong></div>
               <div>Try the example armies:</div>
               <ul><li>
-              <div><button type="button" onClick={() => setFormData(prev => ({...prev, armyForgeId: 'IJ1JM_m-jmka'}))} className="text-blue-400 hover:text-blue-300 underline">IJ1JM_m-jmka</button> (Test Army)</li>
-              <li><div><button type="button" onClick={() => setFormData(prev => ({...prev, armyForgeId: 'vMzljLVC6ZGv'}))} className="text-blue-400 hover:text-blue-300 underline">vMzljLVC6ZGv</button> (The Ashen Pact)</div></li>
-              <li><div><button type="button" onClick={() => setFormData(prev => ({...prev, armyForgeId: 'Xo19MAwQPGbs'}))} className="text-blue-400 hover:text-blue-300 underline">Xo19MAwQPGbs</button> (van Louen's Roughnecks)</div></li>
-              <li><div><button type="button" onClick={() => setFormData(prev => ({...prev, armyForgeId: 'Un3_pRTu2xBO'}))} className="text-blue-400 hover:text-blue-300 underline">Un3_pRTu2xBO</button> (Hive Fleet Tarvos)</div></li>
-              <li><div><button type="button" onClick={() => setFormData(prev => ({...prev, armyForgeId: 'OKOrilTDQs6P'}))} className="text-blue-400 hover:text-blue-300 underline">OKOrilTDQs6P</button> (Galdoo'o naahlk wildigitkw)</div></li></ul>
+              <button type="button" onClick={() => setFormData(prev => ({...prev, armyForgeId: 'IJ1JM_m-jmka'}))} className="text-blue-400 hover:text-blue-300 underline">IJ1JM_m-jmka</button> (Test Army)</li>
+              <li><button type="button" onClick={() => setFormData(prev => ({...prev, armyForgeId: 'vMzljLVC6ZGv'}))} className="text-blue-400 hover:text-blue-300 underline">vMzljLVC6ZGv</button> (The Ashen Pact)</li>
+              <li><button type="button" onClick={() => setFormData(prev => ({...prev, armyForgeId: 'Xo19MAwQPGbs'}))} className="text-blue-400 hover:text-blue-300 underline">Xo19MAwQPGbs</button> (van Louen's Roughnecks)</li>
+              <li><button type="button" onClick={() => setFormData(prev => ({...prev, armyForgeId: 'Un3_pRTu2xBO'}))} className="text-blue-400 hover:text-blue-300 underline">Un3_pRTu2xBO</button> (Hive Fleet Tarvos)</li>
+              <li><button type="button" onClick={() => setFormData(prev => ({...prev, armyForgeId: 'OKOrilTDQs6P'}))} className="text-blue-400 hover:text-blue-300 underline">OKOrilTDQs6P</button> (Galdoo'o naahlk wildigitkw)</li></ul>
             </div>
           </div>
 
