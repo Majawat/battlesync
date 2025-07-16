@@ -192,6 +192,11 @@ async function main() {
   console.log('   Username: admin');
   console.log('   Password: admin123');
   console.log('   Gaming group invite code: DEMO2024');
+  
+  // Force exit to prevent hanging due to army service connections
+  setTimeout(() => {
+    process.exit(0);
+  }, 1000);
 }
 
 main()
