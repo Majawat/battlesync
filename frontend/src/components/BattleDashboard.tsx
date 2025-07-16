@@ -64,27 +64,60 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
     const token = localStorage.getItem('accessToken');
     if (!token) return;
 
-    const ws = new WebSocket(`ws://localhost:3001?token=${token}`);
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const ws = new WebSocket(`${protocol}//${window.location.host}/ws`);
     
     ws.onopen = () => {
-      // Join battle room
+      console.log('WebSocket connected, authenticating...');
+      // First authenticate with token
       ws.send(JSON.stringify({
-        type: 'join_room',
-        data: { room: `battles:${battleId}` }
+        type: 'auth',
+        data: { token }
       }));
     };
 
     ws.onmessage = (event) => {
       try {
         const message: BattleWebSocketMessage = JSON.parse(event.data);
+        console.log('WebSocket message received:', message);
         
         switch (message.type) {
+          case 'welcome':
+            console.log('WebSocket welcome message received:', message.data);
+            break;
+          case 'auth':
+            if (message.data.success) {
+              console.log('WebSocket authenticated successfully, joining battle room:', `battles:${battleId}`);
+              // Now join the battle room
+              ws.send(JSON.stringify({
+                type: 'join_room',
+                data: { 
+                  roomId: `battles:${battleId}`,
+                  roomType: 'battle'
+                }
+              }));
+            } else {
+              console.error('WebSocket authentication failed:', message.data);
+            }
+            break;
+          case 'join_room':
+            if (message.data.success) {
+              console.log('Successfully joined battle room:', message.data.roomId);
+            } else {
+              console.error('Failed to join battle room:', message.data);
+            }
+            break;
+          case 'error':
+            console.error('WebSocket error:', message.data || message.error);
+            break;
           case 'damage_applied':
             // Refresh battle state when damage is applied
+            console.log('Damage applied, refreshing battle state');
             fetchBattleState();
             break;
           case 'phase_changed':
             // Update phase in real-time
+            console.log('Phase changed:', message.data);
             setBattleState(prev => prev ? {
               ...prev,
               phase: message.data.phase,
@@ -94,21 +127,28 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
             break;
           case 'unit_action':
             // Handle unit action updates
-            console.log('Unit action:', message.data);
+            console.log('Unit action WebSocket message:', message.data);
             fetchBattleState();
             break;
           case 'battle_completed':
             // Handle battle completion
+            console.log('Battle completed, refreshing battle state');
             fetchBattleState();
             break;
+          default:
+            console.log('Unhandled WebSocket message type:', message.type);
         }
       } catch (err) {
         console.error('Error parsing WebSocket message:', err);
       }
     };
 
-    ws.onclose = () => {
-      console.log('WebSocket connection closed');
+    ws.onclose = (event) => {
+      console.log('WebSocket connection closed:', event.code, event.reason);
+    };
+
+    ws.onerror = (error) => {
+      console.error('WebSocket error:', error);
     };
 
     setWsConnection(ws);

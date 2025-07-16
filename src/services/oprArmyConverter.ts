@@ -215,6 +215,19 @@ export class OPRArmyConverter {
   }
 
   /**
+   * Extracts caster tokens from special rules
+   */
+  private static extractCasterTokens(specialRules: string[]): number {
+    for (const rule of specialRules) {
+      const match = rule.match(/Caster\((\d+)\)/i);
+      if (match) {
+        return parseInt(match[1], 10);
+      }
+    }
+    return 0;
+  }
+
+  /**
    * Convert ArmyForge model to battle model
    */
   private static convertModelToBattle(

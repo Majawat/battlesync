@@ -467,7 +467,7 @@ export class OPRBattleController {
         const wsManager = getWebSocketManager();
         if (wsManager) {
           wsManager.broadcastToRoomPublic(`battles:${battleId}`, {
-            type: 'UNIT_ACTION',
+            type: 'unit_action',
             data: { unitId, action, unitName: unit.name },
             timestamp: new Date().toISOString()
           });
