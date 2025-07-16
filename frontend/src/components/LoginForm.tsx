@@ -53,6 +53,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
               type="text"
               name="username"
               placeholder="Enter your username"
+              autoComplete="username"
               value={formData.username}
               onChange={handleChange}
               required
@@ -68,6 +69,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
               id="password"
               type="password"
               name="password"
+              autoComplete="current-password"
               placeholder="Enter your password"
               value={formData.password}
               onChange={handleChange}

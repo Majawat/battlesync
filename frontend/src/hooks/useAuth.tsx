@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { AuthState, LoginRequest, RegisterRequest } from '../types/auth';
 import { apiClient } from '../services/api';
+import { ConnectionManager } from '../utils/connectionManager';
 
 interface AuthContextType extends AuthState {
   login: (credentials: LoginRequest) => Promise<void>;
@@ -39,6 +40,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const token = localStorage.getItem('accessToken');
       if (token) {
         try {
+          // Check if backend is available before making API calls
+          const isBackendAvailable = await ConnectionManager.isBackendAvailable();
+          if (!isBackendAvailable) {
+            // Backend is not available, keep loading state
+            console.log('Backend not available during auth initialization, keeping loading state');
+            return;
+          }
+
           const response = await apiClient.getProfile();
           const user = response.data.data || null;
           setState(prev => ({
@@ -86,7 +95,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         isLoading: false,
       });
     } catch (error: any) {
-      const errorMessage = error.response?.data?.message || 'Login failed';
+      let errorMessage = 'Login failed';
+      
+      if (error.response) {
+        // Server responded with error
+        errorMessage = error.response.data?.message || `Server error: ${error.response.status}`;
+      } else if (error.request) {
+        // Network error - backend is down
+        errorMessage = 'Cannot connect to server. Please check if the backend is running.';
+      } else {
+        // Other error
+        errorMessage = error.message || 'Login failed';
+      }
+      
+      console.error('Login error:', error);
       setError(errorMessage);
       setState(prev => ({ ...prev, isLoading: false }));
       throw error;

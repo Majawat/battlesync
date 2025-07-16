@@ -14,6 +14,14 @@ export const BackendConnectionWait: React.FC<BackendConnectionWaitProps> = ({ ch
   const [currentStatus, setCurrentStatus] = useState<ConnectionStatus[]>([]);
   const [currentStep, setCurrentStep] = useState<string>('starting');
 
+  // Debug logging
+  console.log('BackendConnectionWait state:', { 
+    isBackendReady, 
+    isChecking, 
+    error, 
+    currentStep 
+  });
+
   useEffect(() => {
     const checkBackend = async () => {
       setIsChecking(true);
@@ -114,7 +122,7 @@ export const BackendConnectionWait: React.FC<BackendConnectionWaitProps> = ({ ch
                     </div>
                   </div>
                 ) : (
-                  currentStatus.map((status, index) => (
+                  currentStatus.map((status) => (
                     <div key={status.step} className="flex items-center justify-between">
                       <div className="flex items-center space-x-2">
                         <div className={`w-2 h-2 rounded-full ${

@@ -224,7 +224,12 @@ export class ConnectionManager {
    */
   static async isBackendAvailable(): Promise<boolean> {
     try {
-      const response = await apiClient.healthCheck();
+      // Use direct fetch instead of apiClient to avoid dependency issues
+      const response = await fetch('/health', { 
+        method: 'GET',
+        cache: 'no-cache',
+        signal: AbortSignal.timeout(5000) // 5 second timeout
+      });
       return response.status === 200;
     } catch (error) {
       return false;
