@@ -148,8 +148,8 @@ export const ArmyCard: React.FC<ArmyCardProps> = ({
         {/* Campaign Info */}
         {army.campaignId && (
           <div className="mb-4">
-            <div className="text-xs text-gray-400">Campaign</div>
-            <div className="text-sm text-white truncate">Campaign {army.campaignId}</div>
+            <div className="text-xs text-gray-400">Campaign ID</div>
+            <div className="text-sm text-white truncate">{army.campaignId}</div>
           </div>
         )}
 

@@ -351,7 +351,7 @@ class ArmyService {
           name: army.name,
           faction: displayFaction,
           points: army.points,
-          unitCount: 0, // TODO: Calculate from armyData
+          unitCount: armyData.units.length || 0,
           lastSyncedAt: army.lastSyncedAt,
           hasCustomizations: this.hasCustomizations(army.customizations as any),
           campaignId: army.campaignId,

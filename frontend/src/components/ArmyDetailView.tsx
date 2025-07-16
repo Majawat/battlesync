@@ -201,19 +201,10 @@ export const ArmyDetailView: React.FC = () => {
                   {(() => {
                     // Use resolved factions from metadata if available, otherwise fall back to faction field
                     const armyData = army.armyData as any;
-                    const resolvedFactions = armyData?.metadata?.resolvedFactions;
                     const gameSystemName = armyData?.metadata?.gameSystemName || formatGameSystem(armyData?.gameSystem || '');
                     
-                    if (resolvedFactions && resolvedFactions.length > 0) {
-                      return `${resolvedFactions.join(', ')} • ${gameSystemName}`;
-                    }
-                    
                     // Fallback: check if faction looks like a description
-                    const faction = army.faction;
-                    if (faction && (faction.length > 25 || faction.includes("'s ") || faction.toLowerCase().includes('army'))) {
-                      // This looks like a description, show game system instead
-                      return gameSystemName;
-                    }
+                    const faction = armyData.metadata.description;
                     
                     return `${faction} • ${gameSystemName}`;
                   })()}
@@ -556,7 +547,7 @@ export const ArmyDetailView: React.FC = () => {
                 <h3 className="text-lg font-bold text-white mb-4">Army Information</h3>
                 <div className="space-y-3">
                   <div>
-                    <div className="text-gray-400 text-sm">Faction</div>
+                    <div className="text-gray-400 text-sm">Faction(s)</div>
                     <div className="text-white">
                       {(() => {
                         // Use resolved factions from metadata if available

@@ -153,6 +153,9 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
         <div className="flex-1 mr-3">
           <div className="flex items-center justify-between">
             <h3 className="font-medium text-sm">
+              {unit.type === 'JOINED' && unit.joinedHero && (
+                      <span>{unit.joinedHero.name} & </span>
+              )}
               {unit.customName || unit.name}
             </h3>
             {/* Unit Health Overview */}
@@ -169,7 +172,6 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
             </div>
           </div>
           <div className="text-xs text-gray-400 mt-1">
-            {unit.type} 
             {unit.kills > 0 && ` • ${unit.kills} kills`}
             {unit.currentSize < unit.originalSize && (
               <span className="text-red-400 ml-1">
