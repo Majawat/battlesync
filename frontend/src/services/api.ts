@@ -100,7 +100,15 @@ class ApiClient {
 
   // Health check
   async healthCheck(): Promise<any> {
-    return this.client.get('/health');
+    // Use a separate axios instance without auth headers for health check
+    // Health endpoint is at root level, not under /api
+    const healthClient = axios.create({
+      baseURL: '/',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return healthClient.get('/health');
   }
 
   // Gaming Groups endpoints
@@ -305,6 +313,62 @@ class ApiClient {
 
   async getPendingGroupInvitations(): Promise<any> {
     return this.client.get('/groups/invitations/pending');
+  }
+
+  // ============= DAMAGE HISTORY =============
+
+  async applyDamageWithHistory(battleId: string, damageData: any): Promise<any> {
+    return this.client.post(`/damage/battles/${battleId}/damage`, damageData);
+  }
+
+  async undoDamage(battleId: string, historyId?: string): Promise<any> {
+    return this.client.post(`/damage/battles/${battleId}/undo`, { historyId });
+  }
+
+  async getBattleDamageHistory(battleId: string, params?: {
+    limit?: number;
+    includeUndone?: boolean;
+    unitId?: string;
+  }): Promise<any> {
+    return this.client.get(`/damage/battles/${battleId}/history`, { params });
+  }
+
+  async getRecentDamageActions(battleId: string, limit?: number): Promise<any> {
+    const params = limit ? { limit } : {};
+    return this.client.get(`/damage/battles/${battleId}/recent`, { params });
+  }
+
+  async checkUndoCapability(historyId: string): Promise<any> {
+    return this.client.get(`/damage/${historyId}/can-undo`);
+  }
+
+  // ============= COMMAND POINTS =============
+
+  async spendCommandPoints(battleId: string, data: {
+    armyId: string;
+    commandPointsToSpend: number;
+    purpose: string;
+    targetUnitId?: string;
+    additionalData?: Record<string, any>;
+  }): Promise<any> {
+    return this.client.post(`/command-points/battles/${battleId}/command-points/spend`, data);
+  }
+
+  async getCommandPointHistory(battleId: string, armyId: string): Promise<any> {
+    return this.client.get(`/command-points/battles/${battleId}/command-points/history`, {
+      params: { armyId }
+    });
+  }
+
+  async resetCommandPoints(battleId: string): Promise<any> {
+    return this.client.post(`/command-points/battles/${battleId}/command-points/reset`);
+  }
+
+  async calculateCommandPoints(armyPoints: number, bonusCP?: number): Promise<any> {
+    return this.client.post('/command-points/command-points/calculate', {
+      armyPoints,
+      bonusCP
+    });
   }
 }
 

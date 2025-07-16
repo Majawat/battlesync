@@ -46,9 +46,45 @@ BattleSync is a self-hosted web application for managing One Page Rules (OPR) ta
   - ✅ Complex upgrade scenarios (tested with heavily customized armies)
   - ✅ Edge case handling (identical combined units, custom names)
 
-### ⚠️ IN PROGRESS
-- **Enhanced Battle Features**: Individual unit tracking, damage system, turn management
-- **Army Validation**: Enhanced Joi middleware for army endpoints (basic validation implemented)
+### ⚠️ IN PROGRESS - DAMAGE TRACKING SYSTEM
+- **Enhanced Damage Visualization**: ✅ COMPLETED
+  - Health bars with color-coded status (green→yellow→orange→red)
+  - Wound markers (💀 indicators) showing damage taken
+  - Unit-level health overview in card headers
+  - Individual model display with health bars and wound status
+
+- **Damage History & Undo System**: ✅ COMPLETED & TESTED
+  - Complete damage history tracking with database storage
+  - Undo functionality for recent damage actions
+  - DamageHistoryPanel with recent actions and full history views
+  - Quick undo button in battle dashboard
+  - Database schema includes before/after state snapshots for reliable undo
+  - All API endpoints registered and accessible
+
+- **Advanced Damage Types**: ✅ COMPLETED & TESTED
+  - Instant Kill: Quality roll-based damage that bypasses tough
+  - Pierce: Ignores X points of tough value  
+  - Multi-Damage: Targets multiple models simultaneously
+  - Area Effect: Template weapon damage handling
+  - Advanced Damage Modal with intuitive UI for complex damage scenarios
+  - TypeScript compilation errors resolved
+
+- **Enhanced Error Handling**: ✅ COMPLETED
+  - BackendConnectionWait component with detailed error messages
+  - Specific error codes and descriptions (connection refused, timeout, etc.)
+  - Improved troubleshooting information for users
+  - Automatic retry with exponential backoff
+
+### 🔧 DATABASE POLICY
+- **NO MIGRATIONS NEEDED**: Database contains no sacred data - delete and recreate as needed
+- **Schema Changes**: Update Prisma schema, then recreate database with `docker-compose down -v && docker-compose up -d`
+- **Development Focus**: Waste no time on data migrations or preservation
+- **DamageHistory**: Already added to schema with before/after state snapshots and undo relationships
+
+- **Backend Connection Wait System**: ✅ COMPLETED
+  - ConnectionManager utility with exponential backoff retry
+  - BackendConnectionWait component shows loading screen until backend ready
+  - Wrapped entire React app to prevent frontend/backend timing issues
 
 ### ❌ PENDING (Not Started)
 - **Advanced Battle Analytics**: Battle statistics, performance tracking

@@ -6,6 +6,8 @@ import { missionRoutes } from './missionRoutes';
 import armyRoutes from './armyRoutes';
 import battleRoutes from './battleRoutes';
 import oprBattleRoutes from './oprBattleRoutes';
+import damageHistoryRoutes from './damageHistoryRoutes';
+import commandPointRoutes from './commandPointRoutes';
 
 const router = Router();
 
@@ -17,6 +19,8 @@ router.use('/', missionRoutes);
 router.use('/armies', armyRoutes);
 router.use('/battles', battleRoutes);
 router.use('/opr/battles', oprBattleRoutes);
+router.use('/damage', damageHistoryRoutes);
+router.use('/command-points', commandPointRoutes);
 
 // Health check for API
 router.get('/health', (req, res) => {

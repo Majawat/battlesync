@@ -1,6 +1,55 @@
 import React from 'react';
 import { OPRBattleUnit } from '../types/oprBattle';
 
+// Helper component for health bars
+const HealthBar: React.FC<{ 
+  current: number; 
+  max: number; 
+  size?: 'sm' | 'md';
+  showNumbers?: boolean;
+}> = ({ current, max, size = 'sm', showNumbers = true }) => {
+  const percentage = max > 0 ? (current / max) * 100 : 0;
+  const height = size === 'sm' ? 'h-2' : 'h-3';
+  
+  // Color based on health percentage
+  const healthColor = percentage > 75 ? 'bg-green-500' : 
+                     percentage > 50 ? 'bg-yellow-500' : 
+                     percentage > 25 ? 'bg-orange-500' : 'bg-red-500';
+  
+  return (
+    <div className="flex items-center space-x-2">
+      <div className={`flex-1 bg-gray-700 rounded ${height}`}>
+        <div 
+          className={`${healthColor} ${height} rounded transition-all duration-300`}
+          style={{ width: `${Math.max(0, percentage)}%` }}
+        />
+      </div>
+      {showNumbers && (
+        <span className="text-xs text-gray-400 min-w-0">
+          {current}/{max}
+        </span>
+      )}
+    </div>
+  );
+};
+
+// Helper component for wound markers
+const WoundMarkers: React.FC<{ 
+  currentTough: number; 
+  maxTough: number;
+  modelName: string;
+}> = ({ currentTough, maxTough, modelName }) => {
+  const wounds = maxTough - currentTough;
+  if (wounds <= 0) return null;
+  
+  return (
+    <div className="flex items-center space-x-1">
+      <span className="text-xs text-red-400">💀</span>
+      <span className="text-xs text-red-400">{wounds}</span>
+    </div>
+  );
+};
+
 interface BattleUnitCardProps {
   unit: OPRBattleUnit;
   isOwned?: boolean;
@@ -9,6 +58,7 @@ interface BattleUnitCardProps {
   compactMode?: boolean;
   onSelect?: () => void;
   onQuickDamage?: (damage: number, modelId?: string) => void;
+  onAdvancedDamage?: () => void;
 }
 
 export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({ 
@@ -18,7 +68,8 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
   damageMode = false,
   compactMode = false,
   onSelect,
-  onQuickDamage
+  onQuickDamage,
+  onAdvancedDamage
 }) => {
   const isDestroyed = unit.currentSize === 0;
   const isShaken = unit.shaken;
@@ -41,20 +92,39 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
       onClick={onSelect}
     >
       <div className="flex items-center justify-between mb-2">
-        <div>
-          <h3 className="font-medium text-sm">
-            {unit.customName || unit.name}
-          </h3>
-          <div className="text-xs text-gray-400">
-            {unit.type} • {unit.currentSize}/{unit.originalSize} models
+        <div className="flex-1 mr-3">
+          <div className="flex items-center justify-between">
+            <h3 className="font-medium text-sm">
+              {unit.customName || unit.name}
+            </h3>
+            {/* Unit Health Overview */}
+            <div className="flex items-center space-x-2">
+              <HealthBar 
+                current={unit.currentSize} 
+                max={unit.originalSize} 
+                size="sm"
+                showNumbers={false}
+              />
+              <span className="text-xs text-gray-400">
+                {unit.currentSize}/{unit.originalSize}
+              </span>
+            </div>
+          </div>
+          <div className="text-xs text-gray-400 mt-1">
+            {unit.type} 
             {unit.kills > 0 && ` • ${unit.kills} kills`}
+            {unit.currentSize < unit.originalSize && (
+              <span className="text-red-400 ml-1">
+                • {unit.originalSize - unit.currentSize} lost
+              </span>
+            )}
           </div>
         </div>
         
         {/* Quick Damage Buttons (Touch Optimized) */}
-        {damageMode && !isDestroyed && onQuickDamage && (
+        {damageMode && !isDestroyed && (
           <div className="flex space-x-1">
-            {[1, 2, 3, 5].map(damage => (
+            {onQuickDamage && [1, 2, 3, 5].map(damage => (
               <button
                 key={damage}
                 onClick={(e) => {
@@ -66,6 +136,18 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
                 {damage}
               </button>
             ))}
+            {onAdvancedDamage && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onAdvancedDamage();
+                }}
+                className="px-2 h-8 bg-purple-600 hover:bg-purple-700 rounded text-xs font-bold touch-manipulation"
+                title="Advanced Damage Types"
+              >
+                ADV
+              </button>
+            )}
           </div>
         )}
       </div>
@@ -81,11 +163,25 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
       {/* Joined Hero Information */}
       {unit.type === 'JOINED' && unit.joinedHero && (
         <div className="mt-2 text-xs">
-          <div className="text-gray-300">
-            Joined Hero: {unit.joinedHero.name} • 
-            Tough: {unit.joinedHero.currentTough}/{unit.joinedHero.maxTough} • 
-            Quality: {unit.joinedHero.quality}+ • 
-            Defense: {unit.joinedHero.defense}+
+          <div className="flex items-center justify-between mb-1">
+            <div className="text-gray-300 flex items-center space-x-2">
+              <span>Joined Hero: {unit.joinedHero.name}</span>
+              <WoundMarkers 
+                currentTough={unit.joinedHero.currentTough}
+                maxTough={unit.joinedHero.maxTough}
+                modelName={unit.joinedHero.name}
+              />
+            </div>
+            <div className="text-gray-400">
+              Q{unit.joinedHero.quality}+ • D{unit.joinedHero.defense}+
+            </div>
+          </div>
+          <div className="mb-2">
+            <HealthBar 
+              current={unit.joinedHero.currentTough} 
+              max={unit.joinedHero.maxTough}
+              size="sm"
+            />
           </div>
           {unit.joinedHero.weapons && unit.joinedHero.weapons.length > 0 && (
             <div className="text-gray-400">
@@ -156,30 +252,43 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
           <div className="text-xs space-y-1">
             {/* Regular Models */}
             {unit.models.filter(m => !m.isDestroyed).map(model => (
-              <div key={model.modelId} className="flex items-center justify-between">
-                <span className={model.isHero ? 'text-yellow-400 font-medium' : ''}>
-                  {model.customName || model.name}
-                  {model.isHero && ' (Hero)'}
-                </span>
-                <span className="text-gray-400">
-                  {model.currentTough}/{model.maxTough} Tough
-                </span>
-                {damageMode && onQuickDamage && (
-                  <div className="flex space-x-1">
-                    {[1, 2, 3].map(damage => (
-                      <button
-                        key={damage}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onQuickDamage(damage, model.modelId);
-                        }}
-                        className="w-6 h-6 bg-red-600 hover:bg-red-700 rounded text-xs touch-manipulation"
-                      >
-                        {damage}
-                      </button>
-                    ))}
+              <div key={model.modelId} className="space-y-1">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <span className={model.isHero ? 'text-yellow-400 font-medium' : ''}>
+                      {model.customName || model.name}
+                      {model.isHero && ' (Hero)'}
+                    </span>
+                    <WoundMarkers 
+                      currentTough={model.currentTough}
+                      maxTough={model.maxTough}
+                      modelName={model.name}
+                    />
                   </div>
-                )}
+                  {damageMode && onQuickDamage && (
+                    <div className="flex space-x-1">
+                      {[1, 2, 3].map(damage => (
+                        <button
+                          key={damage}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onQuickDamage(damage, model.modelId);
+                          }}
+                          className="w-6 h-6 bg-red-600 hover:bg-red-700 rounded text-xs touch-manipulation"
+                        >
+                          {damage}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                <div className="pl-4">
+                  <HealthBar 
+                    current={model.currentTough} 
+                    max={model.maxTough}
+                    size="sm"
+                  />
+                </div>
               </div>
             ))}
             
@@ -189,29 +298,42 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
                 <div className="border-t border-gray-700 my-2 pt-2">
                   <div className="text-gray-500 text-xs mb-1">Joined Hero:</div>
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-yellow-400 font-medium">
-                    {unit.joinedHero.name}
-                  </span>
-                  <span className="text-gray-400">
-                    {unit.joinedHero.currentTough}/{unit.joinedHero.maxTough} Tough
-                  </span>
-                  {damageMode && onQuickDamage && (
-                    <div className="flex space-x-1">
-                      {[1, 2, 3].map(damage => (
-                        <button
-                          key={damage}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            onQuickDamage(damage, unit.joinedHero!.modelId);
-                          }}
-                          className="w-6 h-6 bg-red-600 hover:bg-red-700 rounded text-xs touch-manipulation"
-                        >
-                          {damage}
-                        </button>
-                      ))}
+                <div className="space-y-1">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      <span className="text-yellow-400 font-medium">
+                        {unit.joinedHero.name}
+                      </span>
+                      <WoundMarkers 
+                        currentTough={unit.joinedHero.currentTough}
+                        maxTough={unit.joinedHero.maxTough}
+                        modelName={unit.joinedHero.name}
+                      />
                     </div>
-                  )}
+                    {damageMode && onQuickDamage && (
+                      <div className="flex space-x-1">
+                        {[1, 2, 3].map(damage => (
+                          <button
+                            key={damage}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              onQuickDamage(damage, unit.joinedHero!.modelId);
+                            }}
+                            className="w-6 h-6 bg-red-600 hover:bg-red-700 rounded text-xs touch-manipulation"
+                          >
+                            {damage}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  <div className="pl-4">
+                    <HealthBar 
+                      current={unit.joinedHero.currentTough} 
+                      max={unit.joinedHero.maxTough}
+                      size="sm"
+                    />
+                  </div>
                 </div>
               </>
             )}

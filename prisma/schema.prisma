@@ -28,6 +28,8 @@ model User {
   // campaignMemberships removed - using GroupMembership + CampaignParticipation
   armies              Army[]
   battleEvents        BattleEvent[]
+  damageHistory       DamageHistory[]
+  undamageHistory     DamageHistory[]   @relation("DamageHistoryUndoneBy")
   createdCampaigns    Campaign[]
   createdBattles      Battle[]
 
@@ -164,6 +166,7 @@ model Battle {
   creator      User                @relation(fields: [createdBy], references: [id])
   participants BattleParticipant[]
   events       BattleEvent[]
+  damageHistory DamageHistory[]
 
   @@map("battles")
 }
@@ -223,6 +226,36 @@ model Mission {
   battles  Battle[]
 
   @@map("missions")
+}
+
+model DamageHistory {
+  id                  String            @id @default(uuid())
+  battleId            String
+  userId              String
+  timestamp           DateTime          @default(now())
+  actionType          DamageActionType
+  
+  // Damage details
+  targetUnitId        String
+  targetModelId       String?
+  damage              Int
+  sourceDescription   String?
+  
+  // State snapshots for undo functionality
+  beforeState         Json              // Pre-damage unit/model state
+  afterState          Json              // Post-damage unit/model state
+  
+  // Undo information
+  canUndo             Boolean           @default(true)
+  undoneAt            DateTime?
+  undoneBy            String?
+  
+  // Relationships
+  battle              Battle            @relation(fields: [battleId], references: [id])
+  user                User              @relation(fields: [userId], references: [id])
+  undoneByUser        User?             @relation("DamageHistoryUndoneBy", fields: [undoneBy], references: [id])
+  
+  @@map("damage_history")
 }
 
 // Enums
@@ -299,4 +332,9 @@ enum MembershipStatus {
   ACTIVE     // Active member
   INACTIVE   // Temporarily inactive
   REMOVED    // Removed from campaign
+}
+
+enum DamageActionType {
+  DAMAGE_APPLIED
+  DAMAGE_UNDONE
 }

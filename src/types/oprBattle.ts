@@ -166,6 +166,8 @@ export interface UnitConversionOptions {
 }
 
 // Damage Application
+export type DamageType = 'NORMAL' | 'INSTANT_KILL' | 'MULTI_DAMAGE' | 'PIERCE' | 'AREA_EFFECT';
+
 export interface ApplyDamageRequest {
   battleId: string;
   userId: string;
@@ -175,6 +177,10 @@ export interface ApplyDamageRequest {
   sourceUnitId?: string;
   sourceDescription?: string;
   ignoreTough?: boolean; // For special rules
+  damageType?: DamageType; // Advanced damage types
+  pierceValue?: number; // For PIERCE damage (ignores X points of tough)
+  multiTargets?: string[]; // For MULTI_DAMAGE/AREA_EFFECT (model IDs)
+  instantKillRoll?: number; // For INSTANT_KILL (quality roll result)
 }
 
 export interface DamageResult {

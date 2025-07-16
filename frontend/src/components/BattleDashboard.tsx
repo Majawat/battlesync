@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { BattleUnitCard } from './BattleUnitCard';
+import { DamageHistoryPanel } from './DamageHistoryPanel';
 import { 
   OPRBattleState, 
   OPRBattlePhase,
@@ -28,6 +29,7 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [, setWsConnection] = useState<WebSocket | null>(null);
+  const [showDamageHistory, setShowDamageHistory] = useState(false);
 
   // Fetch initial battle state
   const fetchBattleState = useCallback(async () => {
@@ -305,6 +307,16 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
               >
                 Damage Mode
               </button>
+              
+              <button
+                onClick={() => setShowDamageHistory(true)}
+                className="flex items-center px-3 py-2 bg-yellow-600/80 hover:bg-yellow-600 rounded-lg text-xs font-medium transition-colors duration-200"
+              >
+                <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
+                </svg>
+                Undo
+              </button>
             </div>
           </div>
         </div>
@@ -410,6 +422,17 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
           </div>
         )}
       </div>
+
+      {/* Damage History Panel */}
+      <DamageHistoryPanel
+        battleId={battleId}
+        isVisible={showDamageHistory}
+        onClose={() => setShowDamageHistory(false)}
+        onDamageUndone={() => {
+          fetchBattleState();
+          setShowDamageHistory(false);
+        }}
+      />
     </div>
   );
 };
