@@ -462,17 +462,19 @@ export class OPRBattleController {
       );
 
       // Broadcast to WebSocket room
-      const wsClients = (global as any).wsClients || new Map();
-      const roomId = `battles:${battleId}`;
-      wsClients.forEach((client: any) => {
-        if (client.readyState === 1 && client.rooms?.has(roomId)) {
-          client.send(JSON.stringify({
-            type: 'unit_action',
+      try {
+        const { getWebSocketManager } = await import('../services/websocket');
+        const wsManager = getWebSocketManager();
+        if (wsManager) {
+          wsManager.broadcastToRoomPublic(`battles:${battleId}`, {
+            type: 'UNIT_ACTION',
             data: { unitId, action, unitName: unit.name },
             timestamp: new Date().toISOString()
-          }));
+          });
         }
-      });
+      } catch (wsError) {
+        logger.warn('Failed to broadcast unit action to WebSocket:', wsError);
+      }
 
       res.json({
         success: true,

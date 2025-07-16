@@ -19,6 +19,12 @@ export default defineConfig({
         changeOrigin: true,
         secure: false,
       },
+      // WebSocket proxy - proxy root WebSocket connections
+      '/': {
+        target: 'ws://app:3001',
+        ws: true,
+        changeOrigin: true,
+      },
     },
   },
 })
