@@ -31,12 +31,12 @@ export class CommandPointService {
    * Basic rule: 1 CP per full 200 points of army value
    */
   static calculateMaxCommandPoints(armyPoints: number, bonusCP: number = 0): CommandPointCalculation {
-    const baseCommandPoints = Math.floor(armyPoints / 200);
+    const baseCommandPoints = Math.floor(armyPoints / 2000);
     const totalCommandPoints = baseCommandPoints + bonusCP;
     
     const calculation = [
       `Army Points: ${armyPoints}`,
-      `Base CP: ${armyPoints} ÷ 200 = ${baseCommandPoints}`,
+      `Base CP: ${armyPoints} ÷ 2000 = ${baseCommandPoints}`,
     ];
     
     if (bonusCP > 0) {
