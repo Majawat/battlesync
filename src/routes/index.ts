@@ -23,13 +23,35 @@ router.use('/damage', damageHistoryRoutes);
 router.use('/command-points', commandPointRoutes);
 
 // Health check for API
-router.get('/health', (req, res) => {
-  res.json({
-    status: 'ok',
-    timestamp: new Date().toISOString(),
-    service: 'BattleSync API',
-    version: '0.1.0'
-  });
+router.get('/health', async (req, res) => {
+  try {
+    const { HealthService } = await import('../services/healthService');
+    const health = await HealthService.getHealthCheck();
+    
+    // Set appropriate HTTP status code
+    const statusCode = health.status === 'healthy' ? 200 : 
+                      health.status === 'degraded' ? 200 : 503;
+    
+    res.status(statusCode).json({
+      ...health,
+      service: 'BattleSync API',
+      version: '0.1.0'
+    });
+  } catch (error) {
+    res.status(503).json({
+      status: 'unhealthy',
+      timestamp: new Date().toISOString(),
+      service: 'BattleSync API',
+      version: '0.1.0',
+      components: {
+        database: { status: 'unhealthy', details: 'Health check failed' },
+        auth: { status: 'unhealthy', details: 'Health check failed' },
+        websocket: { status: 'unhealthy', details: 'Health check failed' },
+        armyforge: { status: 'unhealthy', details: 'Health check failed' },
+        seeding: { status: 'unhealthy', details: 'Health check failed' }
+      }
+    });
+  }
 });
 
 // Fallback route

@@ -108,10 +108,36 @@ export class ConnectionManager {
   
   private static async checkHealthEndpoint(): Promise<{ success: boolean; error?: string; details?: string }> {
     try {
-      const response = await apiClient.healthCheck();
+      // Use direct fetch to /health endpoint (not /api/health)
+      const response = await fetch('/health', {
+        method: 'GET',
+        cache: 'no-cache',
+        signal: AbortSignal.timeout(5000)
+      });
+      
       if (response.status === 200) {
-        this.updateStatus('health', '✅ Health endpoint responding correctly');
-        return { success: true };
+        const healthData = await response.json();
+        
+        // Check if critical components are healthy
+        const criticalComponents = ['database', 'auth', 'seeding'];
+        const criticalHealth = criticalComponents.map(component => ({
+          component,
+          status: healthData.components?.[component]?.status || 'unknown'
+        }));
+        
+        const unhealthyComponents = criticalHealth.filter(c => c.status !== 'healthy');
+        
+        if (unhealthyComponents.length === 0) {
+          this.updateStatus('health', '✅ All critical components healthy');
+          return { success: true };
+        } else {
+          const unhealthyList = unhealthyComponents.map(c => `${c.component}: ${c.status}`).join(', ');
+          return { 
+            success: false, 
+            error: 'Components unhealthy', 
+            details: `Critical components not ready: ${unhealthyList}` 
+          };
+        }
       } else {
         return { 
           success: false, 
@@ -123,12 +149,15 @@ export class ConnectionManager {
       let errorMsg = 'Health check failed';
       let details = 'Health endpoint is not responding';
       
-      if (error.response) {
-        errorMsg = `HTTP ${error.response.status}`;
-        details = error.response.data?.message || error.response.statusText || 'Health endpoint error';
-      } else if (error.code) {
-        errorMsg = error.code;
-        details = error.message || 'Network error accessing health endpoint';
+      if (error.name === 'AbortError') {
+        errorMsg = 'Health check timeout';
+        details = 'Health endpoint took too long to respond';
+      } else if (error.message?.includes('fetch')) {
+        errorMsg = 'Connection refused';
+        details = 'Cannot connect to health endpoint';
+      } else {
+        errorMsg = error.message || 'Health check error';
+        details = 'Network error accessing health endpoint';
       }
       
       return { success: false, error: errorMsg, details };
@@ -139,8 +168,7 @@ export class ConnectionManager {
     try {
       // Test a few key endpoints to make sure routing is working
       const testEndpoints = [
-        { path: '/health', name: 'Health' },
-        { path: '/api/health', name: 'API Health' }
+        { path: '/health', name: 'Health' }
       ];
       
       for (const endpoint of testEndpoints) {
@@ -224,14 +252,29 @@ export class ConnectionManager {
    */
   static async isBackendAvailable(): Promise<boolean> {
     try {
-      // Use direct fetch instead of apiClient to avoid dependency issues
-      const response = await fetch('/health', { 
+      // Check comprehensive health endpoint
+      const healthResponse = await fetch('/health', { 
         method: 'GET',
         cache: 'no-cache',
         signal: AbortSignal.timeout(5000) // 5 second timeout
       });
-      return response.status === 200;
+      
+      if (healthResponse.status !== 200) {
+        return false;
+      }
+      
+      // Parse health response to check critical components
+      const healthData = await healthResponse.json();
+      
+      // Backend is available if critical components are healthy
+      const criticalComponents = ['database', 'auth', 'seeding'];
+      const isCriticalHealthy = criticalComponents.every(component => 
+        healthData.components?.[component]?.status === 'healthy'
+      );
+      
+      return isCriticalHealthy;
     } catch (error) {
+      // Connection refused, timeout, or other network error means backend is not available
       return false;
     }
   }

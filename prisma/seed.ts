@@ -1,10 +1,12 @@
 import { PrismaClient } from '@prisma/client';
 import { armyService } from '../src/services/armyService';
+import { HealthService } from '../src/services/healthService';
 
 const prisma = new PrismaClient();
 
 async function main() {
   console.log('🌱 Seeding database...');
+  HealthService.setSeedingStatus('in_progress');
 
   // Create a server owner user (using same hashing as CryptoUtils)
   const hashedPassword = Buffer.from('admin123' + 'salt').toString('base64');
@@ -193,6 +195,8 @@ async function main() {
   console.log('   Password: admin123');
   console.log('   Gaming group invite code: DEMO2024');
   
+  HealthService.setSeedingStatus('complete');
+  
   // Force exit to prevent hanging due to army service connections
   setTimeout(() => {
     process.exit(0);
@@ -202,6 +206,7 @@ async function main() {
 main()
   .catch((e) => {
     console.error('❌ Error seeding database:', e);
+    HealthService.setSeedingStatus('failed');
     process.exit(1);
   })
   .finally(async () => {

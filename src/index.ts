@@ -23,6 +23,11 @@ const wss = new WebSocketServer({ server });
 // Setup WebSocket
 const wsManager = setupWebSocket(wss);
 
+// Register WebSocket manager with health service
+import('./services/healthService').then(({ HealthService }) => {
+  HealthService.setWebSocketManager(wsManager);
+});
+
 // Security middleware
 app.use(helmet());
 app.use(compression());
@@ -39,12 +44,29 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
 // Health check endpoint
-app.get('/health', (req, res) => {
-  res.json({ 
-    status: 'ok', 
-    timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || 'development'
-  });
+app.get('/health', async (req, res) => {
+  try {
+    const { HealthService } = await import('./services/healthService');
+    const health = await HealthService.getHealthCheck();
+    
+    // Set appropriate HTTP status code
+    const statusCode = health.status === 'healthy' ? 200 : 
+                      health.status === 'degraded' ? 200 : 503;
+    
+    res.status(statusCode).json(health);
+  } catch (error) {
+    res.status(503).json({
+      status: 'unhealthy',
+      timestamp: new Date().toISOString(),
+      components: {
+        database: { status: 'unhealthy', details: 'Health check failed' },
+        auth: { status: 'unhealthy', details: 'Health check failed' },
+        websocket: { status: 'unhealthy', details: 'Health check failed' },
+        armyforge: { status: 'unhealthy', details: 'Health check failed' },
+        seeding: { status: 'unhealthy', details: 'Health check failed' }
+      }
+    });
+  }
 });
 
 // API routes
