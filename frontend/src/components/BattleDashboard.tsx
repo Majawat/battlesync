@@ -64,9 +64,7 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
     const token = localStorage.getItem('accessToken');
     if (!token) return;
 
-    // Use the same host as the frontend but with ws protocol (will be proxied to backend)
-    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const ws = new WebSocket(`${protocol}//${window.location.host}?token=${token}`);
+    const ws = new WebSocket(`ws://localhost:3001?token=${token}`);
     
     ws.onopen = () => {
       // Join battle room
