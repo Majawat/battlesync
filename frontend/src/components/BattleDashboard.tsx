@@ -130,6 +130,16 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
             console.log('Unit action WebSocket message:', message.data);
             fetchBattleState();
             break;
+          case 'spell_cast':
+            // Handle spell casting updates
+            console.log('Spell cast WebSocket message:', message.data);
+            fetchBattleState();
+            break;
+          case 'round_advanced':
+            // Handle round advancement updates
+            console.log('Round advanced WebSocket message:', message.data);
+            fetchBattleState();
+            break;
           case 'battle_completed':
             // Handle battle completion
             console.log('Battle completed, refreshing battle state');

@@ -254,7 +254,7 @@ export class OPRArmyConverter {
       currentTough: toughValue,
       quality: armyModel.stats.quality,
       defense: effectiveDefense,
-      casterTokens: 0,
+      casterTokens: this.extractCasterTokens(combinedRules),
       isDestroyed: false,
       weapons: armyModel.equipment || [],
       specialRules: [...new Set(combinedRules)] // Remove duplicates
@@ -528,7 +528,7 @@ export class OPRArmyConverter {
       currentTough: modelToughValue,
       quality: armyUnit.quality || 4,
       defense: effectiveDefense,
-      casterTokens: 0,
+      casterTokens: this.extractCasterTokens(modelSpecialRules),
       isDestroyed: false,
       weapons: modelWeapons,
       specialRules: modelSpecialRules

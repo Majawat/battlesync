@@ -26,6 +26,30 @@ const prisma = new PrismaClient();
 export class OPRBattleService {
 
   /**
+   * Refresh caster tokens for all caster units at the start of a new round
+   */
+  private static refreshCasterTokens(battleState: OPRBattleState): void {
+    for (const army of battleState.armies) {
+      for (const unit of army.units) {
+        for (const model of unit.models) {
+          if (model.casterTokens > 0 || model.specialRules.some(rule => rule.includes('Caster('))) {
+            // Extract the max caster tokens from special rules
+            const casterRule = model.specialRules.find(rule => rule.includes('Caster('));
+            if (casterRule) {
+              const match = casterRule.match(/Caster\((\d+)\)/i);
+              if (match) {
+                const maxTokens = parseInt(match[1], 10);
+                // Refresh to max tokens (max 6 as per OPR rules)
+                model.casterTokens = Math.min(maxTokens, 6);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /**
    * Helper method to broadcast WebSocket messages to battle room
    */
   private static broadcastToBattleRoom(battleId: string, type: string, data: any): void {
@@ -469,6 +493,8 @@ export class OPRBattleService {
       if (newPhase === 'BATTLE_ROUNDS' && oldPhase === 'DEPLOYMENT') {
         battleState.status = 'ACTIVE';
         battleState.currentRound = 1;
+        // Refresh caster tokens at start of battle rounds
+        this.refreshCasterTokens(battleState);
       }
 
       // Save updated state
@@ -504,6 +530,63 @@ export class OPRBattleService {
     } catch (error) {
       logger.error('Error transitioning battle phase:', error);
       return { success: false, error: 'Failed to transition phase' };
+    }
+  }
+
+  /**
+   * Advance to next round in battle
+   */
+  static async advanceRound(
+    battleId: string,
+    userId: string
+  ): Promise<{ success: boolean; error?: string }> {
+    try {
+      const battleState = await this.getOPRBattleState(battleId, userId);
+      if (!battleState) {
+        return { success: false, error: 'Battle not found' };
+      }
+
+      if (battleState.phase !== 'BATTLE_ROUNDS') {
+        return { success: false, error: 'Can only advance rounds during battle phase' };
+      }
+
+      // Advance to next round
+      battleState.currentRound++;
+      
+      // Refresh caster tokens at start of new round
+      this.refreshCasterTokens(battleState);
+
+      // Save updated state
+      await prisma.battle.update({
+        where: { id: battleId },
+        data: { 
+          currentState: battleState as any
+        }
+      });
+
+      // Record event
+      await this.recordBattleEvent(
+        battleId,
+        userId,
+        'ROUND_STARTED',
+        {
+          description: `Round ${battleState.currentRound} started`,
+          round: battleState.currentRound
+        }
+      );
+
+      // Broadcast update
+      this.broadcastToBattleRoom(battleId, 'round_advanced', {
+        battleId,
+        round: battleState.currentRound,
+        phase: battleState.phase,
+        status: battleState.status
+      });
+
+      return { success: true };
+    } catch (error) {
+      logger.error('Error advancing battle round:', error);
+      return { success: false, error: 'Failed to advance round' };
     }
   }
 

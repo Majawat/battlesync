@@ -613,9 +613,58 @@ export class OPRBattleController {
         return;
       }
 
-      // For now, just decrease caster tokens (full spell system would be implemented later)
-      if (casterModel.casterTokens > 0) {
-        casterModel.casterTokens--;
+      // Basic spell casting mechanics
+      if (casterModel.casterTokens <= 0) {
+        res.status(400).json({
+          success: false,
+          error: 'No caster tokens available'
+        });
+        return;
+      }
+
+      // Spend caster token for spell attempt
+      casterModel.casterTokens--;
+
+      // TODO: Implement full spell system with:
+      // - Spell cost validation
+      // - Cooperative casting from nearby casters
+      // - Spell success roll (4+ on d6)
+      // - Spell effects and target resolution
+
+      // Save updated battle state
+      await prisma.battle.update({
+        where: { id: battleId },
+        data: { 
+          currentState: battleState as any
+        }
+      });
+
+      // Record battle event
+      await OPRBattleService.recordBattleEvent(
+        battleId,
+        userId,
+        'SPELL_CAST',
+        {
+          unitId,
+          spellName,
+          targetId,
+          remainingTokens: casterModel.casterTokens
+        }
+      );
+
+      // Broadcast to WebSocket room
+      try {
+        const { getWebSocketManager } = await import('../services/websocket');
+        const wsManager = getWebSocketManager();
+        if (wsManager) {
+          wsManager.broadcastToRoomPublic(`battles:${battleId}`, {
+            type: 'spell_cast',
+            data: { unitId, spellName, targetId, remainingTokens: casterModel.casterTokens },
+            timestamp: new Date().toISOString()
+          });
+        }
+      } catch (wsError) {
+        logger.warn('Failed to broadcast spell cast to WebSocket:', wsError);
       }
 
       // Log the spell casting event
