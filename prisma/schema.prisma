@@ -296,6 +296,7 @@ enum BattleEventType {
   // OPR-specific battle events
   PHASE_CHANGED
   ROUND_STARTED
+  UNIT_ACTION
   UNIT_ACTIVATED
   DAMAGE_APPLIED
   MODEL_DESTROYED
