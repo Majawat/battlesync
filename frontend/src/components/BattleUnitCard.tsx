@@ -1,5 +1,6 @@
-import React from 'react';
-import { OPRBattleUnit } from '../types/oprBattle';
+import React, { useState } from 'react';
+import { OPRBattleUnit, OPRSpell } from '../types/oprBattle';
+import { SpellCastModal } from './SpellCastModal';
 
 // Helper component for health bars
 const HealthBar: React.FC<{ 

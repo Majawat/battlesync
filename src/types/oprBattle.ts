@@ -216,6 +216,56 @@ export interface BattleResult {
   finalState: OPRBattleState;
 }
 
+// Spell System Types
+export interface OPRSpell {
+  id: string;
+  name: string;
+  cost: number; // Token cost
+  range: string; // e.g., "12\"", "18\"", "Touch"
+  targets: string; // e.g., "1 enemy unit", "2 friendly units"
+  effect: string; // Description of what the spell does
+  duration: 'instant' | 'next-action' | 'end-of-round' | 'permanent';
+  damage?: number; // For damage spells
+  hits?: number; // Number of hits dealt
+  armorPiercing?: number; // AP value for damage spells
+  modifiers?: SpellModifier[]; // Buffs/debuffs applied
+}
+
+export interface SpellModifier {
+  type: 'buff' | 'debuff';
+  stat: 'quality' | 'defense' | 'tough' | 'range' | 'attacks';
+  value: number; // +/- modifier
+  condition: string; // When it applies, e.g., "next time they fight in melee"
+}
+
+export interface SpellCastAttempt {
+  spellId: string;
+  casterUnitId: string;
+  casterModelId?: string;
+  targetUnitIds: string[];
+  tokensCost: number;
+  cooperatingCasters?: CooperatingCaster[]; // Other casters contributing tokens
+  rollRequired: number; // Target number for success roll
+  rollModifier: number; // +/- from cooperating casters
+}
+
+export interface CooperatingCaster {
+  unitId: string;
+  modelId?: string;
+  tokensContributed: number;
+  modifier: number; // +1 or -1 per token
+}
+
+export interface SpellCastResult {
+  success: boolean;
+  rollResult: number;
+  rollTarget: number;
+  spellUsed: OPRSpell;
+  tokensSpent: number;
+  effectsApplied: string[];
+  unitsAffected: string[];
+}
+
 // Command Point System
 export interface CommandPointAction {
   type: 'ACTIVATION' | 'REROLL' | 'SPECIAL_ABILITY';
