@@ -127,6 +127,7 @@ export type OPRBattleEventType =
   | 'ROUND_STARTED'
   | 'UNIT_ACTIVATED'
   | 'UNIT_ACTION'
+  | 'SPELL_CAST'
   | 'DAMAGE_APPLIED'
   | 'MODEL_DESTROYED'
   | 'UNIT_DESTROYED'

@@ -64,7 +64,7 @@ export class OPRBattleService {
         };
         
         // Use the public broadcastToRoom method via the manager instance
-        // Note: We'll need to check the WebSocketManager API for the correct method
+        wsManager.broadcastToRoomPublic(roomId, message);
         logger.debug(`Broadcasting to battle room ${roomId}:`, { type, data });
       } else {
         logger.warn('WebSocket manager not available for battle broadcast');

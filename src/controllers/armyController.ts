@@ -440,7 +440,7 @@ export class ArmyController {
       }
 
       // Update army campaign association
-      const updatedArmy = await prisma.army.update({
+      await prisma.army.update({
         where: {
           id: armyId,
           userId // Ensure user owns the army
