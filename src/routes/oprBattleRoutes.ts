@@ -57,6 +57,12 @@ const unitStatusSchema = Joi.object({
   value: Joi.boolean().required()
 });
 
+const castSpellSchema = Joi.object({
+  unitId: Joi.string().required(),
+  spellName: Joi.string().required(),
+  targetId: Joi.string().optional()
+});
+
 // Generic validation middleware factory
 function validateSchema(schema: Joi.ObjectSchema) {
   return (req: Request, res: Response, next: NextFunction) => {
@@ -194,6 +200,17 @@ router.post(
   authenticate,
   validateSchema(unitStatusSchema),
   OPRBattleController.toggleUnitStatus
+);
+
+/**
+ * Cast spell
+ * POST /api/opr/battles/:battleId/cast-spell
+ */
+router.post(
+  '/:battleId/cast-spell',
+  authenticate,
+  validateSchema(castSpellSchema),
+  OPRBattleController.castSpell
 );
 
 export default router;

@@ -59,7 +59,38 @@ interface BattleUnitCardProps {
   onSelect?: () => void;
   onQuickDamage?: (damage: number, modelId?: string) => void;
   onAdvancedDamage?: () => void;
+  onAction?: (action: 'hold' | 'advance' | 'rush' | 'charge', targetId?: string) => void;
+  onCastSpell?: (spellName: string) => void;
+  canAct?: boolean;
 }
+
+// Helper function to calculate movement distances based on special rules
+const calculateMovement = (unit: OPRBattleUnit) => {
+  const hasSpecialRule = (rule: string) => {
+    return unit.models.some(model => 
+      model.specialRules.some(sr => sr.toLowerCase().includes(rule.toLowerCase()))
+    );
+  };
+
+  let advanceDistance = 6;
+  let rushChargeDistance = 12;
+
+  if (hasSpecialRule('fast')) {
+    advanceDistance += 2;
+    rushChargeDistance += 4;
+  } else if (hasSpecialRule('slow')) {
+    advanceDistance = Math.max(0, advanceDistance - 2);
+    rushChargeDistance = Math.max(0, rushChargeDistance - 4);
+  }
+
+  // Aircraft have special movement
+  if (hasSpecialRule('aircraft')) {
+    advanceDistance = 30;
+    rushChargeDistance = 30;
+  }
+
+  return { advanceDistance, rushChargeDistance };
+};
 
 export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({ 
   unit, 
@@ -69,7 +100,10 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
   compactMode = false,
   onSelect,
   onQuickDamage,
-  onAdvancedDamage
+  onAdvancedDamage,
+  onAction,
+  onCastSpell,
+  canAct = false
 }) => {
   const isDestroyed = unit.currentSize === 0;
   const isShaken = unit.shaken;
@@ -81,6 +115,25 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
                      'border-gray-600';
 
   const bgColor = isOwned ? 'bg-gray-800' : 'bg-gray-750';
+
+  // Calculate movement distances
+  const { advanceDistance, rushChargeDistance } = calculateMovement(unit);
+
+  // Check if unit can perform different actions
+  const canPerformAction = canAct && !isDestroyed && !isRouted;
+  const canAdvanceRushCharge = canPerformAction && !isShaken;
+  const canOnlyHold = canPerformAction && isShaken;
+
+  // Check for special rules
+  const hasSpecialRule = (rule: string) => {
+    return unit.models.some(model => 
+      model.specialRules.some(sr => sr.toLowerCase().includes(rule.toLowerCase()))
+    );
+  };
+
+  const isAircraft = hasSpecialRule('aircraft');
+  const isImmobile = hasSpecialRule('immobile');
+  const hasCaster = unit.models.some(model => model.casterTokens > 0);
 
   return (
     <div 
@@ -151,6 +204,97 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
           </div>
         )}
       </div>
+
+      {/* Action Buttons */}
+      {canPerformAction && !damageMode && (
+        <div className="mb-3 p-2 bg-gray-900/50 rounded border border-gray-700">
+          <div className="flex flex-wrap gap-2">
+            {/* Hold Action */}
+            <button
+              onClick={() => onAction?.('hold')}
+              disabled={!canPerformAction}
+              className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
+                canPerformAction 
+                  ? 'bg-blue-600 hover:bg-blue-700 text-white' 
+                  : 'bg-gray-600 text-gray-400 cursor-not-allowed'
+              }`}
+            >
+              Hold
+            </button>
+
+            {/* Advance Action */}
+            <button
+              onClick={() => onAction?.('advance')}
+              disabled={!canAdvanceRushCharge || isImmobile}
+              className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
+                canAdvanceRushCharge && !isImmobile
+                  ? 'bg-green-600 hover:bg-green-700 text-white' 
+                  : 'bg-gray-600 text-gray-400 cursor-not-allowed'
+              }`}
+              title={isImmobile ? 'Unit is immobile' : isShaken ? 'Unit is shaken' : ''}
+            >
+              Advance ({advanceDistance}")
+            </button>
+
+            {/* Rush Action */}
+            <button
+              onClick={() => onAction?.('rush')}
+              disabled={!canAdvanceRushCharge || isImmobile || isAircraft}
+              className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
+                canAdvanceRushCharge && !isImmobile && !isAircraft
+                  ? 'bg-yellow-600 hover:bg-yellow-700 text-white' 
+                  : 'bg-gray-600 text-gray-400 cursor-not-allowed'
+              }`}
+              title={isImmobile ? 'Unit is immobile' : isAircraft ? 'Aircraft cannot rush' : isShaken ? 'Unit is shaken' : ''}
+            >
+              Rush ({rushChargeDistance}")
+            </button>
+
+            {/* Charge Action */}
+            <button
+              onClick={() => onAction?.('charge')}
+              disabled={!canAdvanceRushCharge || isImmobile || isAircraft}
+              className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
+                canAdvanceRushCharge && !isImmobile && !isAircraft
+                  ? 'bg-red-600 hover:bg-red-700 text-white' 
+                  : 'bg-gray-600 text-gray-400 cursor-not-allowed'
+              }`}
+              title={isImmobile ? 'Unit is immobile' : isAircraft ? 'Aircraft cannot charge' : isShaken ? 'Unit is shaken' : ''}
+            >
+              Charge ({rushChargeDistance}")
+            </button>
+          </div>
+
+          {/* Cast Spell Action (if unit has caster) */}
+          {hasCaster && (
+            <div className="mt-2 pt-2 border-t border-gray-700">
+              <button
+                onClick={() => onCastSpell?.('spell')}
+                disabled={!canPerformAction}
+                className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
+                  canPerformAction 
+                    ? 'bg-purple-600 hover:bg-purple-700 text-white' 
+                    : 'bg-gray-600 text-gray-400 cursor-not-allowed'
+                }`}
+              >
+                Cast Spell ({unit.models.find(m => m.casterTokens > 0)?.casterTokens || 0} tokens)
+              </button>
+            </div>
+          )}
+
+          {/* Action Warnings */}
+          {canOnlyHold && (
+            <div className="mt-2 text-xs text-yellow-400">
+              Unit is shaken - can only Hold to recover
+            </div>
+          )}
+          {unit.fatigued && (
+            <div className="mt-2 text-xs text-orange-400">
+              Unit is fatigued - melee hits on 6s only
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Unit Status Indicators */}
       <div className="flex items-center space-x-2 text-xs">

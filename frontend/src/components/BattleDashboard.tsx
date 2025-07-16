@@ -204,6 +204,63 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
     }
   };
 
+  // Unit action handler
+  const handleUnitAction = async (unitId: string, action: 'hold' | 'advance' | 'rush' | 'charge', targetId?: string) => {
+    try {
+      const response = await fetch(`/api/opr/battles/${battleId}/unit-action`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        },
+        body: JSON.stringify({
+          unitId,
+          action,
+          targetId
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to perform action');
+      }
+
+      // State will be updated via WebSocket
+      console.log(`Unit ${unitId} performed action: ${action}`);
+      
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to perform unit action');
+    }
+  };
+
+  // Spell casting handler
+  const handleCastSpell = async (unitId: string, spellName: string) => {
+    try {
+      const response = await fetch(`/api/opr/battles/${battleId}/cast-spell`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        },
+        body: JSON.stringify({
+          unitId,
+          spellName
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to cast spell');
+      }
+
+      // State will be updated via WebSocket
+      console.log(`Unit ${unitId} cast spell: ${spellName}`);
+      
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to cast spell');
+    }
+  };
+
   // Get armies and current view
   const userArmy = battleState?.armies.find(army => army.userId === user?.id);
   const allArmies = battleState?.armies || [];
@@ -449,11 +506,14 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
                   isSelected={uiState.selectedUnit === unit.unitId}
                   damageMode={uiState.damageMode}
                   compactMode={uiState.compactMode}
+                  canAct={displayedArmy.userId === user?.id && battleState.phase === 'BATTLE_ROUNDS'}
                   onSelect={() => setUIState(prev => ({ 
                     ...prev, 
                     selectedUnit: prev.selectedUnit === unit.unitId ? undefined : unit.unitId 
                   }))}
                   onQuickDamage={(damage, modelId) => handleQuickDamage(unit.unitId, damage, modelId)}
+                  onAction={(action, targetId) => handleUnitAction(unit.unitId, action, targetId)}
+                  onCastSpell={(spellName) => handleCastSpell(unit.unitId, spellName)}
                 />
               ))}
             </div>

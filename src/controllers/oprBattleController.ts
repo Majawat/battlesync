@@ -515,4 +515,87 @@ export class OPRBattleController {
       });
     }
   }
+
+  /**
+   * Cast spell
+   * POST /api/opr/battles/:battleId/cast-spell
+   */
+  static async castSpell(req: Request, res: Response): Promise<void> {
+    try {
+      const userId = (req as AuthenticatedRequest).user!.id;
+      const { battleId } = req.params;
+      const { unitId, spellName, targetId } = req.body;
+
+      if (!unitId || !spellName) {
+        res.status(400).json({
+          success: false,
+          error: 'Missing required fields: unitId, spellName'
+        });
+        return;
+      }
+
+      const battleState = await OPRBattleService.getOPRBattleState(battleId, userId);
+      if (!battleState) {
+        res.status(404).json({
+          success: false,
+          error: 'Battle not found'
+        });
+        return;
+      }
+
+      // Find caster unit
+      const userArmy = battleState.armies.find(a => a.userId === userId);
+      if (!userArmy) {
+        res.status(403).json({
+          success: false,
+          error: 'Not your army'
+        });
+        return;
+      }
+
+      const casterUnit = userArmy.units.find(u => u.unitId === unitId);
+      if (!casterUnit) {
+        res.status(404).json({
+          success: false,
+          error: 'Unit not found'
+        });
+        return;
+      }
+
+      // Check if unit has caster models
+      const casterModel = casterUnit.models.find(m => m.casterTokens > 0);
+      if (!casterModel) {
+        res.status(400).json({
+          success: false,
+          error: 'Unit has no caster models'
+        });
+        return;
+      }
+
+      // For now, just decrease caster tokens (full spell system would be implemented later)
+      if (casterModel.casterTokens > 0) {
+        casterModel.casterTokens--;
+      }
+
+      // Log the spell casting event
+      logger.info(`Spell cast: ${spellName} by unit ${unitId} in battle ${battleId}`);
+
+      res.json({
+        success: true,
+        data: { 
+          unitId, 
+          spellName, 
+          targetId,
+          remainingTokens: casterModel.casterTokens
+        }
+      });
+
+    } catch (error) {
+      logger.error('Cast spell error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to cast spell'
+      });
+    }
+  }
 }
