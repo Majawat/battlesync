@@ -64,6 +64,57 @@ export class OPRBattleService {
   }
 
   /**
+   * Refresh command points for growing/temporary methods
+   */
+  private static refreshCommandPoints(battleState: OPRBattleState, campaign: any): void {
+    const commandPointMethod = campaign.settings?.commandPointMethod || 'fixed';
+    const methodConfig = this.getCommandPointMethodConfig(commandPointMethod);
+    
+    if (!methodConfig.isGrowing) {
+      return; // Only refresh for growing methods
+    }
+    
+    for (const army of battleState.armies) {
+      // Calculate command points for this round
+      const { CommandPointService } = require('./commandPointService');
+      const result = CommandPointService.calculateCommandPoints(army.totalPoints, commandPointMethod);
+      
+      if (methodConfig.isTemporary) {
+        // Temporary: Reset to new amount (discard unspent)
+        army.currentCommandPoints = result.totalCommandPoints;
+      } else {
+        // Growing: Add to existing amount
+        army.currentCommandPoints += result.totalCommandPoints;
+      }
+      
+      // Update max for tracking purposes
+      army.maxCommandPoints = Math.max(army.maxCommandPoints, army.currentCommandPoints);
+    }
+  }
+
+  /**
+   * Get command point method configuration
+   */
+  private static getCommandPointMethodConfig(method: string) {
+    switch (method) {
+      case 'fixed':
+        return { basePerThousand: 4, isRandom: false, isGrowing: false, isTemporary: false };
+      case 'growing':
+        return { basePerThousand: 1, isRandom: false, isGrowing: true, isTemporary: false };
+      case 'temporary':
+        return { basePerThousand: 1, isRandom: false, isGrowing: true, isTemporary: true };
+      case 'fixed-random':
+        return { basePerThousand: 2, isRandom: true, isGrowing: false, isTemporary: false };
+      case 'growing-random':
+        return { basePerThousand: 0.5, isRandom: true, isGrowing: true, isTemporary: false };
+      case 'temporary-random':
+        return { basePerThousand: 0.5, isRandom: true, isGrowing: true, isTemporary: true };
+      default:
+        return { basePerThousand: 4, isRandom: false, isGrowing: false, isTemporary: false };
+    }
+  }
+
+  /**
    * Helper method to broadcast WebSocket messages to battle room
    */
   private static broadcastToBattleRoom(battleId: string, type: string, data: any): void {
@@ -507,8 +558,22 @@ export class OPRBattleService {
       if (newPhase === 'BATTLE_ROUNDS' && oldPhase === 'DEPLOYMENT') {
         battleState.status = 'ACTIVE';
         battleState.currentRound = 1;
+        
+        // Get campaign data for command point settings
+        const battle = await prisma.battle.findUnique({
+          where: { id: battleId },
+          include: {
+            campaign: true
+          }
+        });
+        
         // Refresh caster tokens at start of battle rounds
         this.refreshCasterTokens(battleState);
+        
+        // Refresh command points if using growing/temporary methods
+        if (battle?.campaign) {
+          this.refreshCommandPoints(battleState, battle.campaign);
+        }
       }
 
       // Save updated state
@@ -567,8 +632,21 @@ export class OPRBattleService {
       // Advance to next round
       battleState.currentRound++;
       
+      // Get campaign data for command point settings
+      const battle = await prisma.battle.findUnique({
+        where: { id: battleId },
+        include: {
+          campaign: true
+        }
+      });
+      
       // Refresh caster tokens at start of new round
       this.refreshCasterTokens(battleState);
+      
+      // Refresh command points if using growing/temporary methods
+      if (battle?.campaign) {
+        this.refreshCommandPoints(battleState, battle.campaign);
+      }
 
       // Save updated state
       await prisma.battle.update({

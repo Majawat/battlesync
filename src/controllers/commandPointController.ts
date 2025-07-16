@@ -189,7 +189,7 @@ export class CommandPointController {
         return;
       }
 
-      const calculation = CommandPointService.calculateMaxCommandPoints(armyPoints, bonusCP);
+      const calculation = CommandPointService.calculateCommandPoints(armyPoints, 'fixed', bonusCP);
 
       res.json({
         status: 'success',

@@ -23,7 +23,8 @@ export class OPRArmyConverter {
       allowCombined: true,
       allowJoined: true,
       preserveCustomNames: true
-    }
+    },
+    commandPointMethod: 'fixed' | 'growing' | 'temporary' | 'fixed-random' | 'growing-random' | 'temporary-random' = 'fixed'
   ): Promise<ArmyConversionResult> {
     try {
       const warnings: string[] = [];
@@ -36,8 +37,8 @@ export class OPRArmyConverter {
         armyName: armyData.name,
         faction: armyData.faction,
         totalPoints: armyData.points,
-        maxCommandPoints: this.calculateCommandPoints(armyData.points),
-        currentCommandPoints: this.calculateCommandPoints(armyData.points),
+        maxCommandPoints: this.calculateCommandPoints(armyData.points, commandPointMethod),
+        currentCommandPoints: this.calculateCommandPoints(armyData.points, commandPointMethod),
         maxUnderdogPoints: 0,
         currentUnderdogPoints: 0,
         selectedDoctrine: undefined,
@@ -996,11 +997,16 @@ export class OPRArmyConverter {
   }
 
   /**
-   * Calculate command points based on army points
+   * Calculate command points based on army points and campaign method
    */
-  private static calculateCommandPoints(armyPoints: number): number {
-    // OPR standard: 1 command point per 100 points (minimum 1)
-    return Math.max(1, Math.floor(armyPoints / 100));
+  private static calculateCommandPoints(
+    armyPoints: number, 
+    method: 'fixed' | 'growing' | 'temporary' | 'fixed-random' | 'growing-random' | 'temporary-random' = 'fixed'
+  ): number {
+    // Use CommandPointService for consistent calculation
+    const { CommandPointService } = require('./commandPointService');
+    const result = CommandPointService.calculateCommandPoints(armyPoints, method);
+    return result.totalCommandPoints;
   }
 
   /**

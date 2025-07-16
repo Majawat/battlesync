@@ -27,17 +27,33 @@ export interface CommandPointCalculation {
 
 export class CommandPointService {
   /**
-   * Calculate maximum command points for an army
-   * Basic rule: 1 CP per full 2000 points of army value
+   * Calculate command points based on method
    */
-  static calculateMaxCommandPoints(armyPoints: number, bonusCP: number = 0): CommandPointCalculation {
-    const baseCommandPoints = Math.floor(armyPoints / 2000);
+  static calculateCommandPoints(
+    armyPoints: number, 
+    method: 'fixed' | 'growing' | 'temporary' | 'fixed-random' | 'growing-random' | 'temporary-random' = 'fixed',
+    bonusCP: number = 0
+  ): CommandPointCalculation {
+    const methodConfig = this.getCommandPointMethodConfig(method);
+    let baseCommandPoints = Math.ceil((armyPoints / 1000) * methodConfig.basePerThousand);
+    
+    // Apply random multiplier if method requires it
+    if (methodConfig.isRandom) {
+      const d3Roll = Math.floor(Math.random() * 3) + 1; // D3 (1-3)
+      baseCommandPoints *= d3Roll;
+    }
+    
     const totalCommandPoints = baseCommandPoints + bonusCP;
     
     const calculation = [
       `Army Points: ${armyPoints}`,
-      `Base CP: ${armyPoints} ÷ 2000 = ${baseCommandPoints}`,
+      `Method: ${method}`,
+      `Base CP: ${armyPoints / 1000} × ${methodConfig.basePerThousand} = ${(armyPoints / 1000) * methodConfig.basePerThousand} (rounded up to ${Math.ceil((armyPoints / 1000) * methodConfig.basePerThousand)})`,
     ];
+    
+    if (methodConfig.isRandom) {
+      calculation.push(`Random multiplier (D3): ${baseCommandPoints / (Math.floor(armyPoints / 1000) * methodConfig.basePerThousand)}`);
+    }
     
     if (bonusCP > 0) {
       calculation.push(`Bonus CP: +${bonusCP}`);
@@ -51,6 +67,28 @@ export class CommandPointService {
       totalCommandPoints,
       calculation
     };
+  }
+
+  /**
+   * Get configuration for command point calculation method
+   */
+  private static getCommandPointMethodConfig(method: string) {
+    switch (method) {
+      case 'fixed':
+        return { basePerThousand: 4, isRandom: false, isGrowing: false, isTemporary: false };
+      case 'growing':
+        return { basePerThousand: 1, isRandom: false, isGrowing: true, isTemporary: false };
+      case 'temporary':
+        return { basePerThousand: 1, isRandom: false, isGrowing: true, isTemporary: true };
+      case 'fixed-random':
+        return { basePerThousand: 2, isRandom: true, isGrowing: false, isTemporary: false };
+      case 'growing-random':
+        return { basePerThousand: 0.5, isRandom: true, isGrowing: true, isTemporary: false };
+      case 'temporary-random':
+        return { basePerThousand: 0.5, isRandom: true, isGrowing: true, isTemporary: true };
+      default:
+        return { basePerThousand: 4, isRandom: false, isGrowing: false, isTemporary: false };
+    }
   }
 
   /**
