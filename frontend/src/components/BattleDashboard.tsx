@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { BattleUnitCard } from './BattleUnitCard';
 import { DamageHistoryPanel } from './DamageHistoryPanel';
+import { CommandPointPanel } from './CommandPointPanel';
 import { 
   OPRBattleState, 
   OPRBattlePhase,
@@ -170,6 +171,36 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
       // State will be updated via WebSocket
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to apply damage');
+    }
+  };
+
+  // Command point spending handler
+  const handleSpendCommandPoints = async (armyId: string, amount: number, purpose: string, targetUnitId?: string) => {
+    try {
+      const response = await fetch(`/api/command-points/battles/${battleId}/command-points/spend`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        },
+        body: JSON.stringify({
+          armyId,
+          commandPointsToSpend: amount,
+          purpose,
+          targetUnitId
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to spend command points');
+      }
+
+      // State will be updated via WebSocket
+      console.log(`Spent ${amount} CP for: ${purpose}`);
+      
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to spend command points');
     }
   };
 
@@ -396,6 +427,17 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
                 </div>
               </div>
             </div>
+            
+            {/* Command Points Panel - Only show for user's own army */}
+            {displayedArmy.userId === user?.id && (
+              <div className="mb-6">
+                <CommandPointPanel
+                  army={displayedArmy}
+                  onSpendCommandPoints={handleSpendCommandPoints}
+                  canSpend={battleState.phase === 'BATTLE_ROUNDS'}
+                />
+              </div>
+            )}
             
             {/* Units Grid */}
             <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">

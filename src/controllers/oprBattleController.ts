@@ -99,6 +99,77 @@ export class OPRBattleController {
   }
 
   /**
+   * Join an existing battle
+   * POST /api/opr/battles/:battleId/join
+   */
+  static async joinBattle(req: Request, res: Response): Promise<void> {
+    try {
+      const userId = (req as AuthenticatedRequest).user!.id;
+      const { battleId } = req.params;
+      const { armyId } = req.body;
+
+      if (!armyId) {
+        res.status(400).json({
+          success: false,
+          error: 'Missing required field: armyId'
+        });
+        return;
+      }
+
+      const result = await OPRBattleService.joinBattle(battleId, userId, armyId);
+
+      if (!result.success) {
+        res.status(400).json({
+          success: false,
+          error: result.error
+        });
+        return;
+      }
+
+      res.json({
+        success: true,
+        data: {
+          battleState: result.battleState
+        },
+        message: 'Successfully joined battle'
+      });
+
+    } catch (error) {
+      logger.error('Error in joinBattle controller:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Internal server error'
+      });
+    }
+  }
+
+  /**
+   * Get available battles for a campaign
+   * GET /api/opr/campaigns/:campaignId/available-battles
+   */
+  static async getAvailableBattles(req: Request, res: Response): Promise<void> {
+    try {
+      const userId = (req as AuthenticatedRequest).user!.id;
+      const { campaignId } = req.params;
+
+      const battles = await OPRBattleService.getAvailableBattles(campaignId, userId);
+
+      res.json({
+        success: true,
+        data: battles,
+        message: `Found ${battles.length} available battles`
+      });
+
+    } catch (error) {
+      logger.error('Error in getAvailableBattles controller:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Internal server error'
+      });
+    }
+  }
+
+  /**
    * Transition battle phase
    * POST /api/opr/battles/:battleId/phase
    */

@@ -97,6 +97,29 @@ router.get(
 );
 
 /**
+ * Join an existing battle
+ * POST /api/opr/battles/:battleId/join
+ */
+router.post(
+  '/:battleId/join',
+  authenticate,
+  validateSchema(Joi.object({
+    armyId: Joi.string().required()
+  })),
+  OPRBattleController.joinBattle
+);
+
+/**
+ * Get available battles for a campaign
+ * GET /api/opr/campaigns/:campaignId/available-battles  
+ */
+router.get(
+  '/campaigns/:campaignId/available-battles',
+  authenticate,
+  OPRBattleController.getAvailableBattles
+);
+
+/**
  * Transition battle phase
  * POST /api/opr/battles/:battleId/phase
  */

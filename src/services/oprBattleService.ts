@@ -215,6 +215,201 @@ export class OPRBattleService {
   }
 
   /**
+   * Join an existing battle with user's army
+   */
+  static async joinBattle(
+    battleId: string,
+    userId: string,
+    armyId: string
+  ): Promise<{ success: boolean; battleState?: OPRBattleState; error?: string }> {
+    try {
+      // Get battle and validate
+      const battle = await prisma.battle.findUnique({
+        where: { id: battleId },
+        include: {
+          mission: {
+            include: { campaign: true }
+          },
+          participants: true
+        }
+      });
+
+      if (!battle) {
+        return { success: false, error: 'Battle not found' };
+      }
+
+      if (battle.status !== 'SETUP') {
+        return { success: false, error: 'Can only join battles in SETUP phase' };
+      }
+
+      // Check if user is already a participant
+      const existingParticipant = battle.participants.find(p => p.userId === userId);
+      if (existingParticipant) {
+        return { success: false, error: 'User is already participating in this battle' };
+      }
+
+      // Validate army ownership and campaign membership
+      const army = await prisma.army.findUnique({
+        where: { id: armyId },
+        include: { user: true }
+      });
+
+      if (!army) {
+        return { success: false, error: 'Army not found' };
+      }
+
+      if (army.userId !== userId) {
+        return { success: false, error: 'You do not own this army' };
+      }
+
+      if (army.campaignId !== battle.mission?.campaignId) {
+        return { success: false, error: 'Army is not registered to this campaign' };
+      }
+
+      // Check if user is a campaign member
+      const campaignMember = await prisma.campaignParticipation.findFirst({
+        where: {
+          campaignId: battle.mission?.campaignId,
+          groupMembership: {
+            userId: userId
+          }
+        },
+        include: {
+          groupMembership: true
+        }
+      });
+
+      if (!campaignMember) {
+        return { success: false, error: 'You are not a member of this campaign' };
+      }
+
+      // Convert army to battle format
+      const armyData = JSON.parse(army.armyData as string);
+      const conversionResult = await OPRArmyConverter.convertArmyToBattle(userId, armyId, armyData);
+      
+      if (!conversionResult.success) {
+        return { 
+          success: false, 
+          error: `Failed to convert army: ${conversionResult.errors?.join(', ')}` 
+        };
+      }
+
+      // Add participant to battle
+      await prisma.battleParticipant.create({
+        data: {
+          battleId,
+          userId,
+          armyId,
+          faction: conversionResult.army.faction,
+          startingPoints: conversionResult.army.totalPoints
+        }
+      });
+
+      // Get current battle state and add the new army
+      const currentState = battle.currentState as any;
+      currentState.armies.push(conversionResult.army);
+
+      // Update battle state
+      await prisma.battle.update({
+        where: { id: battleId },
+        data: { currentState: currentState as any }
+      });
+
+      // Broadcast join event
+      this.broadcastToBattleRoom(battleId, 'player_joined', {
+        userId,
+        armyName: conversionResult.army.armyName,
+        faction: conversionResult.army.faction
+      });
+
+      logger.info(`User ${userId} joined battle ${battleId} with army ${armyId}`);
+
+      return { success: true, battleState: currentState };
+
+    } catch (error) {
+      logger.error('Error joining battle:', error);
+      return { success: false, error: 'Failed to join battle' };
+    }
+  }
+
+  /**
+   * Get available battles for a campaign member to join
+   */
+  static async getAvailableBattles(
+    campaignId: string,
+    userId: string
+  ): Promise<Array<{
+    battleId: string;
+    missionName: string;
+    missionNumber: number;
+    createdBy: string;
+    createdByUsername: string;
+    participantCount: number;
+    maxParticipants: number;
+    status: string;
+    createdAt: Date;
+  }>> {
+    try {
+      // Verify user is a campaign member
+      const campaignMember = await prisma.campaignParticipation.findFirst({
+        where: {
+          campaignId,
+          groupMembership: {
+            userId: userId
+          }
+        }
+      });
+
+      if (!campaignMember) {
+        return [];
+      }
+
+      // Get battles in SETUP phase that user hasn't joined
+      const battles = await prisma.battle.findMany({
+        where: {
+          mission: {
+            campaignId: campaignId
+          },
+          status: 'SETUP',
+          participants: {
+            none: {
+              userId: userId
+            }
+          }
+        },
+        include: {
+          mission: true,
+          participants: true,
+          creator: {
+            select: {
+              username: true
+            }
+          }
+        },
+        orderBy: {
+          createdAt: 'desc'
+        }
+      });
+
+      return battles.map(battle => ({
+        battleId: battle.id,
+        missionName: battle.mission!.title,
+        missionNumber: battle.mission!.number,
+        createdBy: battle.createdBy,
+        createdByUsername: battle.creator.username,
+        participantCount: battle.participants.length,
+        maxParticipants: 4, // Standard OPR max - could be configurable
+        status: battle.status,
+        createdAt: battle.createdAt
+      }));
+
+    } catch (error) {
+      logger.error('Error getting available battles:', error);
+      return [];
+    }
+  }
+
+  /**
    * Get OPR battle state
    */
   static async getOPRBattleState(battleId: string, userId: string): Promise<OPRBattleState | null> {
