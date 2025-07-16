@@ -1,4 +1,4 @@
-import { apiClient } from '../services/api';
+// Removed unused apiClient import
 
 export interface ConnectionStatus {
   step: string;
@@ -8,7 +8,6 @@ export interface ConnectionStatus {
 }
 
 export class ConnectionManager {
-  private static retryAttempts = 0;
   private static maxRetries = 10;
   private static retryDelay = 2000; // 2 seconds
   private static statusCallback?: (status: ConnectionStatus) => void;
@@ -77,7 +76,7 @@ export class ConnectionManager {
     for (let attempt = 1; attempt <= this.maxRetries; attempt++) {
       try {
         // Try a simple fetch to see if the server is listening
-        const response = await fetch('/health', { 
+        await fetch('/health', { 
           method: 'GET',
           cache: 'no-cache'
         });
@@ -108,7 +107,6 @@ export class ConnectionManager {
   
   private static async checkHealthEndpoint(): Promise<{ success: boolean; error?: string; details?: string }> {
     try {
-      // Use direct fetch to /health endpoint (not /api/health)
       const response = await fetch('/health', {
         method: 'GET',
         cache: 'no-cache',
@@ -283,7 +281,6 @@ export class ConnectionManager {
    * Reset retry counter for fresh attempts
    */
   static resetRetries(): void {
-    this.retryAttempts = 0;
     this.retryDelay = 2000;
   }
 

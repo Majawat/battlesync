@@ -67,7 +67,7 @@ router.use('*', (req, res) => {
       armies: '/api/armies/*',
       battles: '/api/battles/*, /api/campaigns/:campaignId/battles',
       oprBattles: '/api/opr/battles/*',
-      health: '/api/health'
+      health: '/health'
     }
   });
 });
