@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { PrismaClient } from '@prisma/client';
 import { OPRBattleService } from '../services/oprBattleService';
 import { logger } from '../utils/logger';
 import { AuthenticatedRequest } from '../middleware/auth';
@@ -7,6 +8,8 @@ import {
   ApplyDamageRequest, 
   TouchDamageInput 
 } from '../types/oprBattle';
+
+const prisma = new PrismaClient();
 
 export class OPRBattleController {
 
@@ -433,8 +436,44 @@ export class OPRBattleController {
 
       unit.action = action;
 
-      // Save updated state (this would be in the service in a real implementation)
-      // For now, just respond with success
+      // Apply fatigue for charge actions
+      if (action === 'charge') {
+        unit.fatigued = true;
+      }
+
+      // Save updated state to database
+      await prisma.battle.update({
+        where: { id: battleId },
+        data: { 
+          currentState: battleState as any
+        }
+      });
+
+      // Record battle event
+      await OPRBattleService.recordBattleEvent(
+        battleId,
+        userId,
+        'UNIT_ACTION',
+        {
+          unitId,
+          action,
+          description: `Unit ${unit.name} performed ${action} action${action === 'charge' ? ' (now fatigued)' : ''}`
+        }
+      );
+
+      // Broadcast to WebSocket room
+      const wsClients = (global as any).wsClients || new Map();
+      const roomId = `battles:${battleId}`;
+      wsClients.forEach((client: any) => {
+        if (client.readyState === 1 && client.rooms?.has(roomId)) {
+          client.send(JSON.stringify({
+            type: 'unit_action',
+            data: { unitId, action, unitName: unit.name },
+            timestamp: new Date().toISOString()
+          }));
+        }
+      });
+
       res.json({
         success: true,
         data: { unitId, action }

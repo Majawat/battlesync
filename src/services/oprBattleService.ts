@@ -816,7 +816,7 @@ export class OPRBattleService {
   /**
    * Record battle event
    */
-  private static async recordBattleEvent(
+  static async recordBattleEvent(
     battleId: string,
     userId: string,
     eventType: OPRBattleEventType,

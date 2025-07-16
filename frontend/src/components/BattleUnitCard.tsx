@@ -124,6 +124,9 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
   const canAdvanceRushCharge = canPerformAction && !isShaken;
   const canOnlyHold = canPerformAction && isShaken;
 
+  // Debug logging (remove for production)
+  // console.log(`Unit ${unit.name}: canAct=${canAct}, isDestroyed=${isDestroyed}, isRouted=${isRouted}, canPerformAction=${canPerformAction}`);
+
   // Check for special rules
   const hasSpecialRule = (rule: string) => {
     return unit.models.some(model => 
@@ -211,7 +214,10 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
           <div className="flex flex-wrap gap-2">
             {/* Hold Action */}
             <button
-              onClick={() => onAction?.('hold')}
+              onClick={(e) => {
+                e.stopPropagation();
+                onAction?.('hold');
+              }}
               disabled={!canPerformAction}
               className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
                 canPerformAction 
@@ -224,7 +230,10 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
 
             {/* Advance Action */}
             <button
-              onClick={() => onAction?.('advance')}
+              onClick={(e) => {
+                e.stopPropagation();
+                onAction?.('advance');
+              }}
               disabled={!canAdvanceRushCharge || isImmobile}
               className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
                 canAdvanceRushCharge && !isImmobile
@@ -238,7 +247,10 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
 
             {/* Rush Action */}
             <button
-              onClick={() => onAction?.('rush')}
+              onClick={(e) => {
+                e.stopPropagation();
+                onAction?.('rush');
+              }}
               disabled={!canAdvanceRushCharge || isImmobile || isAircraft}
               className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
                 canAdvanceRushCharge && !isImmobile && !isAircraft
@@ -252,7 +264,10 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
 
             {/* Charge Action */}
             <button
-              onClick={() => onAction?.('charge')}
+              onClick={(e) => {
+                e.stopPropagation();
+                onAction?.('charge');
+              }}
               disabled={!canAdvanceRushCharge || isImmobile || isAircraft}
               className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
                 canAdvanceRushCharge && !isImmobile && !isAircraft
@@ -269,7 +284,10 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
           {hasCaster && (
             <div className="mt-2 pt-2 border-t border-gray-700">
               <button
-                onClick={() => onCastSpell?.('spell')}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onCastSpell?.('spell');
+                }}
                 disabled={!canPerformAction}
                 className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
                   canPerformAction 

@@ -92,6 +92,11 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
               status: message.data.status
             } : null);
             break;
+          case 'unit_action':
+            // Handle unit action updates
+            console.log('Unit action:', message.data);
+            fetchBattleState();
+            break;
           case 'battle_completed':
             // Handle battle completion
             fetchBattleState();
@@ -121,8 +126,9 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
   // Phase transition handler
   const handlePhaseTransition = async (newPhase: OPRBattlePhase) => {
     try {
+      console.log('Attempting phase transition to:', newPhase);
       const response = await fetch(`/api/opr/battles/${battleId}/phase`, {
-        method: 'PUT',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
@@ -130,12 +136,25 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
         body: JSON.stringify({ phase: newPhase })
       });
 
+      console.log('Phase transition response:', response.status, response.statusText);
+
       if (!response.ok) {
-        throw new Error('Failed to transition phase');
+        const errorData = await response.json();
+        console.log('Phase transition error:', errorData);
+        throw new Error(errorData.error || 'Failed to transition phase');
       }
 
-      // State will be updated via WebSocket
+      // Immediately update local state to prevent race condition
+      setBattleState(prev => prev ? {
+        ...prev,
+        phase: newPhase,
+        status: newPhase === 'BATTLE_ROUNDS' ? 'ACTIVE' : prev.status,
+        currentRound: newPhase === 'BATTLE_ROUNDS' ? 1 : prev.currentRound
+      } : null);
+
+      // State will also be updated via WebSocket
     } catch (err) {
+      console.error('Phase transition error:', err);
       setError(err instanceof Error ? err.message : 'Failed to transition phase');
     }
   };
@@ -277,6 +296,19 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
     }
   }, [userArmy, selectedArmyId]);
 
+  // Debug logging
+  useEffect(() => {
+    if (battleState && user && displayedArmy) {
+      console.log('Battle Debug:', {
+        phase: battleState.phase,
+        isMyArmy: displayedArmy.userId === user.id,
+        canAct: displayedArmy.userId === user.id && battleState.phase === 'BATTLE_ROUNDS',
+        userId: user.id,
+        armyUserId: displayedArmy.userId
+      });
+    }
+  }, [battleState, user, displayedArmy]);
+
   // Phase progression logic
   const getNextPhase = (currentPhase: OPRBattlePhase): OPRBattlePhase | null => {
     switch (currentPhase) {
@@ -362,6 +394,7 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
                 <button
                   onClick={() => {
                     const nextPhase = getNextPhase(battleState.phase);
+                    console.log('Current phase:', battleState.phase, 'Next phase:', nextPhase);
                     if (nextPhase) handlePhaseTransition(nextPhase);
                   }}
                   className="flex items-center px-4 py-2 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 rounded-lg text-sm font-medium transition-all duration-200 shadow-lg"
@@ -506,7 +539,7 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
                   isSelected={uiState.selectedUnit === unit.unitId}
                   damageMode={uiState.damageMode}
                   compactMode={uiState.compactMode}
-                  canAct={displayedArmy.userId === user?.id && battleState.phase === 'BATTLE_ROUNDS'}
+                  canAct={displayedArmy.userId === user?.id}
                   onSelect={() => setUIState(prev => ({ 
                     ...prev, 
                     selectedUnit: prev.selectedUnit === unit.unitId ? undefined : unit.unitId 

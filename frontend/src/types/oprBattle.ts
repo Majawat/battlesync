@@ -174,7 +174,7 @@ export interface TouchDamageProps {
 
 // WebSocket message types
 export interface BattleWebSocketMessage {
-  type: 'battle_created' | 'phase_changed' | 'damage_applied' | 'hero_joined' | 'battle_completed';
+  type: 'battle_created' | 'phase_changed' | 'damage_applied' | 'hero_joined' | 'battle_completed' | 'unit_action';
   data: any;
   timestamp: string;
 }
