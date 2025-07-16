@@ -603,8 +603,12 @@ export class OPRBattleController {
         return;
       }
 
-      // Check if unit has caster models
-      const casterModel = casterUnit.models.find(m => m.casterTokens > 0);
+      // Check if unit has caster models (in unit models or joined hero)
+      let casterModel = casterUnit.models.find(m => m.casterTokens > 0);
+      if (!casterModel && casterUnit.joinedHero && casterUnit.joinedHero.casterTokens > 0) {
+        casterModel = casterUnit.joinedHero;
+      }
+      
       if (!casterModel) {
         res.status(400).json({
           success: false,

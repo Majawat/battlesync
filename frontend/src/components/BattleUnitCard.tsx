@@ -136,7 +136,8 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
 
   const isAircraft = hasSpecialRule('aircraft');
   const isImmobile = hasSpecialRule('immobile');
-  const hasCaster = unit.models.some(model => model.casterTokens > 0);
+  const hasCaster = unit.models.some(model => model.casterTokens > 0) || 
+                    (unit.joinedHero && unit.joinedHero.casterTokens > 0);
 
   return (
     <div 
@@ -295,7 +296,10 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
                     : 'bg-gray-600 text-gray-400 cursor-not-allowed'
                 }`}
               >
-                Cast Spell ({unit.models.find(m => m.casterTokens > 0)?.casterTokens || 0} tokens)
+                Cast Spell ({
+                  unit.models.find(m => m.casterTokens > 0)?.casterTokens || 
+                  unit.joinedHero?.casterTokens || 0
+                } tokens)
               </button>
             </div>
           )}

@@ -31,6 +31,7 @@ export class OPRBattleService {
   private static refreshCasterTokens(battleState: OPRBattleState): void {
     for (const army of battleState.armies) {
       for (const unit of army.units) {
+        // Refresh caster tokens for regular models
         for (const model of unit.models) {
           if (model.casterTokens > 0 || model.specialRules.some(rule => rule.includes('Caster('))) {
             // Extract the max caster tokens from special rules
@@ -42,6 +43,19 @@ export class OPRBattleService {
                 // Refresh to max tokens (max 6 as per OPR rules)
                 model.casterTokens = Math.min(maxTokens, 6);
               }
+            }
+          }
+        }
+        
+        // Refresh caster tokens for joined heroes
+        if (unit.joinedHero && (unit.joinedHero.casterTokens > 0 || unit.joinedHero.specialRules.some(rule => rule.includes('Caster(')))) {
+          const casterRule = unit.joinedHero.specialRules.find(rule => rule.includes('Caster('));
+          if (casterRule) {
+            const match = casterRule.match(/Caster\((\d+)\)/i);
+            if (match) {
+              const maxTokens = parseInt(match[1], 10);
+              // Refresh to max tokens (max 6 as per OPR rules)
+              unit.joinedHero.casterTokens = Math.min(maxTokens, 6);
             }
           }
         }

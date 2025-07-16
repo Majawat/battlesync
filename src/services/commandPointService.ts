@@ -28,7 +28,7 @@ export interface CommandPointCalculation {
 export class CommandPointService {
   /**
    * Calculate maximum command points for an army
-   * Basic rule: 1 CP per full 200 points of army value
+   * Basic rule: 1 CP per full 2000 points of army value
    */
   static calculateMaxCommandPoints(armyPoints: number, bonusCP: number = 0): CommandPointCalculation {
     const baseCommandPoints = Math.floor(armyPoints / 2000);
