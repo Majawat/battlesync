@@ -57,7 +57,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             isLoading: false,
           }));
         } catch (error) {
-          // Token is invalid, clear it
+          console.log('Token validation failed, clearing tokens:', error);
+          // Token is invalid, clear it and stop loading
           localStorage.removeItem('accessToken');
           localStorage.removeItem('refreshToken');
           setState(prev => ({
@@ -73,7 +74,25 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
     };
 
-    initializeAuth();
+    // Add a timeout to prevent infinite loading
+    const timeoutId = setTimeout(() => {
+      console.log('Auth initialization timeout, clearing tokens');
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      setState(prev => ({
+        ...prev,
+        accessToken: null,
+        refreshToken: null,
+        isAuthenticated: false,
+        isLoading: false,
+      }));
+    }, 10000); // 10 second timeout
+
+    initializeAuth().finally(() => {
+      clearTimeout(timeoutId);
+    });
+
+    return () => clearTimeout(timeoutId);
   }, []);
 
   const login = async (credentials: LoginRequest) => {
