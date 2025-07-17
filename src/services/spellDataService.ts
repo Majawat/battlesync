@@ -18,7 +18,7 @@ interface ArmyForgeBook {
 }
 
 /**
- * Service for managing faction-specific spell data from ArmyForge API
+ * Backend service for managing faction-specific spell data from ArmyForge API
  */
 export class SpellDataService {
   private static spellCache: Map<string, { spells: OPRSpell[], timestamp: number }> = new Map();
@@ -40,7 +40,7 @@ export class SpellDataService {
       const armyBookId = await this.getFactionArmyBookId(factionName, gameSystem);
       if (!armyBookId) {
         console.warn(`No army book found for faction: ${factionName}`);
-        return this.getFallbackSpells();
+        return [];
       }
 
       // Fetch spell data from ArmyForge
@@ -52,26 +52,49 @@ export class SpellDataService {
       return spells;
     } catch (error) {
       console.error('Error fetching spells for faction:', error);
-      return this.getFallbackSpells();
+      return [];
     }
   }
 
   /**
-   * Get faction army book ID from faction name
+   * Get spells for faction by armyId
    */
-  private static async getFactionArmyBookId(factionName: string, gameSystem: number): Promise<string | null> {
-    // This would need to be enhanced with a proper faction -> army book mapping
-    // For now, we'll use known mappings
-    const factionMappings: Record<string, string> = {
-      'blessed sisters': '7oi8zeiqfamiur21',
-      'blessedsisters': '7oi8zeiqfamiur21',
-      'blessed': '7oi8zeiqfamiur21',
-      'sisters': '7oi8zeiqfamiur21'
-      // Add more mappings as needed
-    };
+  static async getSpellsForArmyId(armyId: string, gameSystem: number = 2): Promise<OPRSpell[]> {
+    try {
+      // Try to get from cache first
+      const cacheKey = `spells_armyId_${armyId}_${gameSystem}`;
+      const cached = this.spellCache.get(cacheKey);
+      if (cached && (Date.now() - cached.timestamp) < this.CACHE_TTL) {
+        return cached.spells;
+      }
 
-    const normalizedName = factionName.toLowerCase().replace(/[^a-z\s]/g, '').trim();
-    return factionMappings[normalizedName] || null;
+      // Use armyId directly as army book ID
+      const spells = await this.fetchSpellsFromArmyForge(armyId, gameSystem);
+      
+      // Cache for 1 hour
+      this.spellCache.set(cacheKey, { spells, timestamp: Date.now() });
+      
+      return spells;
+    } catch (error) {
+      console.error('Error fetching spells for armyId:', error);
+      return [];
+    }
+  }
+
+  /**
+   * Get faction army book ID from faction name (legacy method)
+   */
+  private static async getFactionArmyBookId(factionName: string, _gameSystem: number): Promise<string | null> {
+    // Import FactionResolver dynamically
+    const { FactionResolver } = await import('./factionResolver');
+    
+    // Try to find armyId by faction name (reverse lookup)
+    const allFactions = FactionResolver.getAllFactions();
+    const faction = allFactions.find(f => 
+      f.factionName.toLowerCase() === factionName.toLowerCase()
+    );
+    
+    return faction?.armyBookId || null;
   }
 
   /**
@@ -182,7 +205,7 @@ export class SpellDataService {
   /**
    * Extract modifiers from spell effect
    */
-  private static extractModifiers(effect: string, spellType: { category: string }): any[] {
+  private static extractModifiers(effect: string, _spellType: { category: string }): any[] {
     const modifiers = [];
     
     // Look for defense modifiers
@@ -219,34 +242,7 @@ export class SpellDataService {
   }
 
   /**
-   * Get fallback spells when API fails
-   */
-  private static getFallbackSpells(): OPRSpell[] {
-    return [
-      {
-        id: 'fallback-mystic-bolt',
-        name: 'Mystic Bolt',
-        cost: 1,
-        range: '18"',
-        targets: '1 enemy unit',
-        effect: 'Target takes 3 hits',
-        duration: 'instant',
-        hits: 3
-      },
-      {
-        id: 'fallback-ward',
-        name: 'Ward',
-        cost: 1,
-        range: '12"',
-        targets: '1 friendly unit',
-        effect: 'Target gets +1 to defense rolls next time they are attacked',
-        duration: 'next-action'
-      }
-    ];
-  }
-
-  /**
-   * Get spell by ID (now checks cache and API)
+   * Get spell by ID 
    */
   static async getSpellById(spellId: string, factionName?: string): Promise<OPRSpell | undefined> {
     if (factionName) {
@@ -254,10 +250,9 @@ export class SpellDataService {
       return factionSpells.find(spell => spell.id === spellId);
     }
     
-    // Fallback: check all cached spells
-    return this.getFallbackSpells().find(spell => spell.id === spellId);
+    // No fallback - return undefined if not found
+    return undefined;
   }
-
 
   /**
    * Get available caster tokens from an army (for cooperative casting)

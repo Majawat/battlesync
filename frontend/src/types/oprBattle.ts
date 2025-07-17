@@ -45,6 +45,7 @@ export interface OPRBattleUnit {
   type: OPRUnitType;
   originalSize: number;
   currentSize: number;
+  faction: string; // Added for spell fetching
   
   // Unit state
   action: 'hold' | 'advance' | 'rush' | 'charge' | null;
@@ -102,6 +103,10 @@ export interface OPRBattleModel {
   // Equipment
   weapons: string[];
   specialRules: string[];
+  
+  // Faction data for heroes
+  originalFaction?: string; // For joined heroes from different factions
+  armyId?: string; // ArmyForge army book ID
 }
 
 export interface OPRBattleEvent {
@@ -174,7 +179,67 @@ export interface TouchDamageProps {
 
 // WebSocket message types
 export interface BattleWebSocketMessage {
-  type: 'battle_created' | 'phase_changed' | 'damage_applied' | 'hero_joined' | 'battle_completed' | 'unit_action';
+  type: 'welcome' | 'auth' | 'join_room' | 'error' | 'round_advanced' | 'battle_created' | 'phase_changed' | 'damage_applied' | 'hero_joined' | 'battle_completed' | 'unit_action' | 'spell_cast';
   data: any;
+  error?: string;
   timestamp: string;
+}
+
+// Spell System Types
+export interface OPRSpell {
+  id: string;
+  name: string;
+  cost: number; // Token cost
+  range: string; // e.g., "12\"", "18\"", "Touch"
+  targets: string; // e.g., "1 enemy unit", "2 friendly units"
+  effect: string; // Description of what the spell does
+  duration: 'instant' | 'next-action' | 'end-of-round' | 'permanent';
+  damage?: number; // For damage spells
+  hits?: number; // Number of hits dealt
+  armorPiercing?: number; // AP value for damage spells
+  modifiers?: SpellModifier[]; // Buffs/debuffs applied
+}
+
+export interface SpellModifier {
+  type: 'buff' | 'debuff';
+  stat: string; // e.g., 'defense', 'attacks', 'range'
+  value: number;
+  condition?: string; // When the modifier applies
+}
+
+export interface SpellCastAttempt {
+  spellId: string;
+  casterUnitId: string;
+  casterModelId?: string;
+  targetUnitIds: string[];
+  tokensCost: number;
+  cooperatingCasters?: CooperatingCaster[];
+  rollRequired: number; // 4+ for OPR
+  rollModifier: number; // From cooperating casters
+}
+
+export interface SpellCastResult {
+  success: boolean;
+  roll: number;
+  rollModifier: number;
+  finalResult: number;
+  spellApplied: boolean;
+  tokensConsumed: number;
+  description: string;
+  effects?: SpellEffect[];
+}
+
+export interface CooperatingCaster {
+  unitId: string;
+  modelId?: string;
+  tokensContributed: number;
+  modifier: number; // +1 or -1 per token
+}
+
+export interface SpellEffect {
+  targetUnitId: string;
+  effectType: 'damage' | 'buff' | 'debuff' | 'special';
+  value?: number;
+  duration: 'instant' | 'next-action' | 'end-of-round' | 'permanent';
+  description: string;
 }

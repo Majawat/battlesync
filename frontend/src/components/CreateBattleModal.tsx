@@ -176,8 +176,7 @@ export const CreateBattleModal: React.FC<CreateBattleModalProps> = ({
                 !participants.some(p => p.armyId === army.id)
               ).map(army => (
                 <option key={army.id} value={army.id}>
-                  {army.name} ({army.faction}, {army.points} pts)
-                </option>
+                  {army.name}</option>
               ))}
             </select>
             <button

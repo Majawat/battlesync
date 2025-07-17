@@ -49,7 +49,10 @@ export class OPRArmyConverter {
       // Convert units
       for (const unit of armyData.units) {
         try {
-          const battleUnit = await this.convertUnitToBattle(unit, options);
+          // Get unit-specific faction from resolved factions or fallback to army faction
+          const unitFaction = this.getUnitFaction(unit, armyData);
+          const unitOptions = { ...options, factionName: unitFaction };
+          const battleUnit = await this.convertUnitToBattle(unit, unitOptions);
           battleArmy.units.push(battleUnit);
         } catch (error) {
           logger.error('Error converting unit to battle:', error);
@@ -135,6 +138,7 @@ export class OPRArmyConverter {
       type: unitType,
       originalSize: models.length,
       currentSize: models.length,
+      faction: options.factionName || 'Unknown', // Add faction for spell casting
       
       // Initial state
       action: null,
@@ -152,6 +156,41 @@ export class OPRArmyConverter {
     };
 
     return battleUnit;
+  }
+
+  /**
+   * Get unit-specific faction from armyId mapping
+   */
+  private static getUnitFaction(unit: any, armyData: any): string {
+    // If we have resolved factions metadata and unit has armyId, try to map it
+    if (unit.armyId) {
+      // Create a mapping from the demo army book IDs we know about
+      const armyIdToFaction: Record<string, string> = {
+        'zz3kp5ry7ks6mxcx': 'Soul-Snatcher Cults',
+        'z65fgu0l29i4lnlu': 'Human Defense Force', 
+        '7oi8zeiqfamiur21': 'Blessed Sisters',
+        'BKi_hJaJflN8ZorH': 'Jackals'
+      };
+
+      const unitFaction = armyIdToFaction[unit.armyId];
+      if (unitFaction) {
+        logger.info(`Resolved unit ${unit.name} with armyId ${unit.armyId} to faction: ${unitFaction}`);
+        return unitFaction;
+      } else {
+        logger.warn(`Unknown armyId ${unit.armyId} for unit ${unit.name}`);
+      }
+    }
+
+    // Fallback: use first faction from the army's faction list
+    if (armyData.faction && armyData.faction.includes(', ')) {
+      const firstFaction = armyData.faction.split(', ')[0];
+      logger.info(`Using first faction from army faction list: ${firstFaction}`);
+      return firstFaction;
+    }
+
+    // Final fallback: use the army faction as-is
+    logger.info(`Using army faction as-is: ${armyData.faction || 'Unknown'}`);
+    return armyData.faction || 'Unknown';
   }
 
   /**
@@ -258,7 +297,8 @@ export class OPRArmyConverter {
       casterTokens: this.extractCasterTokens(combinedRules),
       isDestroyed: false,
       weapons: armyModel.equipment || [],
-      specialRules: [...new Set(combinedRules)] // Remove duplicates
+      specialRules: [...new Set(combinedRules)], // Remove duplicates
+      armyId: parentUnit.armyId // Store armyId for faction resolution
     };
   }
 
@@ -532,7 +572,8 @@ export class OPRArmyConverter {
       casterTokens: this.extractCasterTokens(modelSpecialRules),
       isDestroyed: false,
       weapons: modelWeapons,
-      specialRules: modelSpecialRules
+      specialRules: modelSpecialRules,
+      armyId: armyUnit.armyId // Store armyId for faction resolution
     };
   }
 

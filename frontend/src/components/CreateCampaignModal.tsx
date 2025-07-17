@@ -23,6 +23,7 @@ export const CreateCampaignModal: React.FC<CreateCampaignModalProps> = ({
       allowMultipleArmies: false,
       requireArmyForgeIntegration: false,
       customRules: [],
+      commandPointMethod: 'fixed',
     },
   });
   const [loading, setLoading] = useState(false);

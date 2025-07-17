@@ -48,6 +48,7 @@ export interface OPRBattleUnit {
   type: OPRUnitType;
   originalSize: number; // Starting model count
   currentSize: number; // Current model count
+  faction: string; // For spell casting system
   
   // Unit-level state
   action: 'hold' | 'advance' | 'rush' | 'charge' | null;
@@ -109,6 +110,10 @@ export interface OPRBattleModel {
   // Equipment and rules
   weapons: string[];
   specialRules: string[];
+  
+  // Faction data for heroes
+  originalFaction?: string; // For joined heroes from different factions
+  armyId?: string; // ArmyForge army book ID
 }
 
 export interface OPRBattleEvent {
@@ -165,6 +170,7 @@ export interface UnitConversionOptions {
   allowCombined: boolean;
   allowJoined: boolean;
   preserveCustomNames: boolean;
+  factionName?: string; // For spell casting system
 }
 
 // Damage Application

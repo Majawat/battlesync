@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { OPRBattleUnit, OPRSpell } from '../types/oprBattle';
+import { OPRBattleUnit, OPRSpell, CooperatingCaster } from '../types/oprBattle';
 import { SpellCastModal } from './SpellCastModal';
 
 // Helper component for health bars
@@ -39,7 +39,7 @@ const WoundMarkers: React.FC<{
   currentTough: number; 
   maxTough: number;
   modelName: string;
-}> = ({ currentTough, maxTough, modelName }) => {
+}> = ({ currentTough, maxTough }) => {
   const wounds = maxTough - currentTough;
   if (wounds <= 0) return null;
   
@@ -61,7 +61,8 @@ interface BattleUnitCardProps {
   onQuickDamage?: (damage: number, modelId?: string) => void;
   onAdvancedDamage?: () => void;
   onAction?: (action: 'hold' | 'advance' | 'rush' | 'charge', targetId?: string) => void;
-  onCastSpell?: (spellName: string) => void;
+  onCastSpell?: (spellId: string, cooperatingCasters: CooperatingCaster[]) => void;
+  allArmies?: any[]; // For finding cooperative casters
   canAct?: boolean;
 }
 
@@ -104,8 +105,13 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
   onAdvancedDamage,
   onAction,
   onCastSpell,
+  allArmies = [],
   canAct = false
 }) => {
+  // State for spell modal
+  const [showSpellModal, setShowSpellModal] = useState(false);
+  const [availableSpells, setAvailableSpells] = useState<OPRSpell[]>([]);
+  const [isLoadingSpells, setIsLoadingSpells] = useState(false);
   const isDestroyed = unit.currentSize === 0;
   const isShaken = unit.shaken;
   const isRouted = unit.routed;
@@ -139,6 +145,117 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
   const isImmobile = hasSpecialRule('immobile');
   const hasCaster = unit.models.some(model => model.casterTokens > 0) || 
                     (unit.joinedHero && unit.joinedHero.casterTokens > 0);
+
+  // Handle spell button click - fetch spells and open modal
+  const handleSpellButtonClick = async () => {
+    // Determine the actual caster and their armyId
+    let casterArmyId = null;
+    let casterName = unit.name;
+    
+    // If the caster is a joined hero, use their armyId
+    if (unit.joinedHero && unit.joinedHero.casterTokens > 0) {
+      casterArmyId = unit.joinedHero.armyId;
+      casterName = unit.joinedHero.name;
+    } else {
+      // Find the first caster model in the unit
+      const casterModel = unit.models.find(m => m.casterTokens > 0);
+      if (casterModel) {
+        casterArmyId = casterModel.armyId;
+        casterName = casterModel.name;
+      }
+    }
+    
+    console.log('Spell button clicked for caster:', casterName, 'armyId:', casterArmyId);
+    
+    if (!casterArmyId) {
+      console.error('Caster has no armyId set, cannot fetch spells');
+      return;
+    }
+
+    setIsLoadingSpells(true);
+    try {
+      // Get token for API calls
+      const token = localStorage.getItem('accessToken');
+      if (!token) {
+        console.error('No access token found');
+        return;
+      }
+
+      // Fetch spell data from backend API using armyId
+      const response = await fetch(`/api/spells/army/${encodeURIComponent(casterArmyId)}?gameSystem=2`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`Backend API error: ${response.status} ${response.statusText}`);
+      }
+
+      const result = await response.json();
+      if (!result.success) {
+        throw new Error(result.error || 'Failed to fetch spells');
+      }
+
+      const spells = result.data.spells || [];
+      console.log('Fetched spells for armyId', casterArmyId, ':', spells.length, 'spells');
+      
+      if (spells.length === 0) {
+        console.warn('No spells found for armyId:', casterArmyId);
+        return;
+      }
+      
+      setAvailableSpells(spells);
+      setShowSpellModal(true);
+    } catch (error) {
+      console.error('Error fetching spells:', error);
+      return;
+    } finally {
+      setIsLoadingSpells(false);
+    }
+  };
+
+  // Handle spell selection from modal
+  const handleSpellCast = (spellId: string, cooperatingCasters: CooperatingCaster[]) => {
+    onCastSpell?.(spellId, cooperatingCasters);
+    setShowSpellModal(false);
+  };
+
+  // Get available cooperative casters from all armies (excluding this unit)
+  const getCooperativeCasters = () => {
+    const casters: Array<{unitId: string, modelId?: string, tokens: number, name: string}> = [];
+    
+    for (const army of allArmies) {
+      for (const armyUnit of army.units) {
+        if (armyUnit.unitId === unit.unitId) continue; // Skip current unit
+        
+        // Check unit models for casters
+        for (const model of armyUnit.models) {
+          if (model.casterTokens > 0) {
+            casters.push({
+              unitId: armyUnit.unitId,
+              modelId: model.modelId,
+              tokens: model.casterTokens,
+              name: `${armyUnit.name} - ${model.name}`
+            });
+          }
+        }
+        
+        // Check joined hero for caster tokens
+        if (armyUnit.joinedHero && armyUnit.joinedHero.casterTokens > 0) {
+          casters.push({
+            unitId: armyUnit.unitId,
+            modelId: armyUnit.joinedHero.modelId,
+            tokens: armyUnit.joinedHero.casterTokens,
+            name: `${armyUnit.name} - ${armyUnit.joinedHero.name} (Hero)`
+          });
+        }
+      }
+    }
+    
+    return casters;
+  };
 
   return (
     <div 
@@ -290,19 +407,19 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  onCastSpell?.('spell');
+                  handleSpellButtonClick();
                 }}
-                disabled={!canPerformAction}
+                disabled={!canPerformAction || isLoadingSpells}
                 className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
-                  canPerformAction 
+                  canPerformAction && !isLoadingSpells
                     ? 'bg-purple-600 hover:bg-purple-700 text-white' 
                     : 'bg-gray-600 text-gray-400 cursor-not-allowed'
                 }`}
               >
-                Cast Spell ({
+                {isLoadingSpells ? 'Loading...' : `Cast Spell (${
                   unit.models.find(m => m.casterTokens > 0)?.casterTokens || 
                   unit.joinedHero?.casterTokens || 0
-                } tokens)
+                } tokens)`}
               </button>
             </div>
           )}
@@ -508,6 +625,22 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
             )}
           </div>
         </div>
+      )}
+
+      {/* Spell Cast Modal */}
+      {showSpellModal && (
+        <SpellCastModal
+          isVisible={showSpellModal}
+          onClose={() => setShowSpellModal(false)}
+          casterUnit={unit}
+          availableSpells={availableSpells}
+          availableCasters={getCooperativeCasters()}
+          maxTokens={
+            unit.models.find(m => m.casterTokens > 0)?.casterTokens || 
+            unit.joinedHero?.casterTokens || 0
+          }
+          onCastSpell={handleSpellCast}
+        />
       )}
     </div>
   );

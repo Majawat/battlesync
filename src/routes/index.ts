@@ -8,6 +8,7 @@ import battleRoutes from './battleRoutes';
 import oprBattleRoutes from './oprBattleRoutes';
 import damageHistoryRoutes from './damageHistoryRoutes';
 import commandPointRoutes from './commandPointRoutes';
+import { spellRoutes } from './spellRoutes';
 
 const router = Router();
 
@@ -21,6 +22,7 @@ router.use('/battles', battleRoutes);
 router.use('/opr/battles', oprBattleRoutes);
 router.use('/damage', damageHistoryRoutes);
 router.use('/command-points', commandPointRoutes);
+router.use('/spells', spellRoutes);
 
 // Health check for API
 router.get('/health', async (req, res) => {
