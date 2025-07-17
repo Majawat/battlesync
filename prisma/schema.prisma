@@ -32,6 +32,8 @@ model User {
   undamageHistory     DamageHistory[]   @relation("DamageHistoryUndoneBy")
   createdCampaigns    Campaign[]
   createdBattles      Battle[]
+  battleActionHistory BattleActionHistory[]
+  undoBattleActions   BattleActionHistory[] @relation("BattleActionHistoryUndoneBy")
 
   @@map("users")
 }
@@ -167,6 +169,7 @@ model Battle {
   participants BattleParticipant[]
   events       BattleEvent[]
   damageHistory DamageHistory[]
+  actionHistory BattleActionHistory[]
 
   @@map("battles")
 }
@@ -338,4 +341,52 @@ enum MembershipStatus {
 enum DamageActionType {
   DAMAGE_APPLIED
   DAMAGE_UNDONE
+}
+
+enum BattleActionType {
+  DAMAGE_APPLIED
+  SPELL_CAST
+  UNIT_ACTION_SET
+  UNIT_STATUS_CHANGED
+  HERO_JOINED
+  PHASE_CHANGED
+  ROUND_ADVANCED
+  COMMAND_POINTS_SPENT
+}
+
+enum UndoComplexity {
+  simple    // Simple state restoration
+  complex   // Complex multi-unit changes
+  cascade   // Changes that affect multiple systems
+}
+
+model BattleActionHistory {
+  id              String           @id @default(uuid())
+  battleId        String
+  userId          String
+  timestamp       DateTime         @default(now())
+  actionType      BattleActionType
+  
+  // Action-specific data (JSON)
+  actionData      Json
+  
+  // State snapshots for undo (JSON)
+  beforeState     Json
+  afterState      Json
+  
+  // Undo capability
+  canUndo         Boolean          @default(true)
+  undoneAt        DateTime?
+  undoneBy        String?
+  undoComplexity  UndoComplexity   @default(simple)
+  
+  // Relationships
+  battle          Battle           @relation(fields: [battleId], references: [id], onDelete: Cascade)
+  user            User             @relation(fields: [userId], references: [id])
+  undoneByUser    User?            @relation("BattleActionHistoryUndoneBy", fields: [undoneBy], references: [id])
+
+  @@index([battleId, timestamp])
+  @@index([battleId, canUndo, undoneAt])
+  @@index([userId, timestamp])
+  @@map("battle_action_history")
 }

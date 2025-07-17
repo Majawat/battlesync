@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { SpellDataService } from '../services/spellDataService';
 import { OPRBattleService } from '../services/oprBattleService';
+import { BattleActionHistoryService } from '../services/battleActionHistoryService';
 import { logger } from '../utils/logger';
 import { AuthenticatedRequest } from '../middleware/auth';
 import { 
@@ -428,6 +429,9 @@ export class SpellController {
         return;
       }
 
+      // Store battle state before spell casting for undo functionality
+      const beforeState = JSON.parse(JSON.stringify(battleState));
+
       // Find the caster unit and validate it belongs to the user
       const userArmy = battleState.armies.find(army => army.userId === userId);
       if (!userArmy) {
@@ -565,6 +569,36 @@ export class SpellController {
           tokensSpent: totalTokensSpent,
           rollResult: finalResult,
           success: spellSuccess
+        }
+      );
+
+      // Record action in battle history for undo functionality
+      const affectedUnitIds = [attempt.casterUnitId, ...(attempt.targetUnitIds || [])];
+      if (attempt.cooperatingCasters) {
+        affectedUnitIds.push(...attempt.cooperatingCasters.map(c => c.unitId));
+      }
+
+      await BattleActionHistoryService.recordAction(
+        battleId,
+        userId,
+        'SPELL_CAST',
+        {
+          description: castResult.description,
+          spellId: attempt.spellId,
+          spellName: spellData.name,
+          unitId: attempt.casterUnitId,
+          targetUnitIds: attempt.targetUnitIds,
+          tokensSpent: totalTokensSpent,
+          rollResult: finalResult,
+          success: spellSuccess,
+          cooperatingCasters: attempt.cooperatingCasters
+        },
+        beforeState,
+        battleState,
+        {
+          canUndo: true,
+          undoComplexity: attempt.cooperatingCasters && attempt.cooperatingCasters.length > 0 ? 'complex' : 'simple',
+          affectedUnitIds
         }
       );
 

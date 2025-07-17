@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { BattleUnitCard } from './BattleUnitCard';
-import { DamageHistoryPanel } from './DamageHistoryPanel';
+import { BattleActionHistoryPanel } from './BattleActionHistoryPanel';
 import { CommandPointPanel } from './CommandPointPanel';
 import { CooperativeCastingNotification } from './CooperativeCastingNotification';
 import { 
@@ -31,7 +31,7 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [, setWsConnection] = useState<WebSocket | null>(null);
-  const [showDamageHistory, setShowDamageHistory] = useState(false);
+  const [showActionHistory, setShowActionHistory] = useState(false);
   const [cooperativeCastingHandler, setCooperativeCastingHandler] = useState<((request: any) => void) | null>(null);
 
   // Fetch initial battle state
@@ -509,7 +509,7 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
               </button>
               
               <button
-                onClick={() => setShowDamageHistory(true)}
+                onClick={() => setShowActionHistory(true)}
                 className="flex items-center px-3 py-2 bg-yellow-600/80 hover:bg-yellow-600 rounded-lg text-xs font-medium transition-colors duration-200"
               >
                 <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -635,14 +635,14 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
         )}
       </div>
 
-      {/* Damage History Panel */}
-      <DamageHistoryPanel
+      {/* Battle Action History Panel */}
+      <BattleActionHistoryPanel
         battleId={battleId}
-        isVisible={showDamageHistory}
-        onClose={() => setShowDamageHistory(false)}
-        onDamageUndone={() => {
+        isVisible={showActionHistory}
+        onClose={() => setShowActionHistory(false)}
+        onActionUndone={() => {
           fetchBattleState();
-          setShowDamageHistory(false);
+          setShowActionHistory(false);
         }}
       />
 

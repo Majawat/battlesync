@@ -372,6 +372,35 @@ class ApiClient {
       bonusCP
     });
   }
+
+  // Battle Action History API methods
+  async getBattleActionHistory(battleId: string, options: {
+    limit?: number;
+    includeUndone?: boolean;
+    actionTypes?: string[];
+  } = {}): Promise<any> {
+    return this.client.get(`/battles/${battleId}/action-history`, { params: options });
+  }
+
+  async getRecentUndoableActions(battleId: string, limit: number = 10): Promise<any> {
+    return this.client.get(`/battles/${battleId}/action-history/recent`, { params: { limit } });
+  }
+
+  async undoBattleAction(battleId: string, data: { actionId?: string } = {}): Promise<any> {
+    return this.client.post(`/battles/${battleId}/action-history/undo`, data);
+  }
+
+  async undoBattleActionCascade(battleId: string, data: { actionIds: string[] }): Promise<any> {
+    return this.client.post(`/battles/${battleId}/action-history/undo-cascade`, data);
+  }
+
+  async getUndoSuggestions(battleId: string): Promise<any> {
+    return this.client.get(`/battles/${battleId}/action-history/undo-suggestions`);
+  }
+
+  async exportActionHistory(battleId: string, format: 'json' | 'csv' = 'json'): Promise<any> {
+    return this.client.get(`/battles/${battleId}/action-history/export`, { params: { format } });
+  }
 }
 
 export const apiClient = new ApiClient();
