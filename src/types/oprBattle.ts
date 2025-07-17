@@ -262,14 +262,23 @@ export interface CooperatingCaster {
   modifier: number; // +1 or -1 per token
 }
 
+export interface SpellEffect {
+  targetUnitId: string;
+  effectType: 'damage' | 'buff' | 'debuff' | 'special';
+  value?: number;
+  duration: 'instant' | 'next-action' | 'end-of-round' | 'permanent';
+  description: string;
+}
+
 export interface SpellCastResult {
   success: boolean;
-  rollResult: number;
-  rollTarget: number;
-  spellUsed: OPRSpell;
-  tokensSpent: number;
-  effectsApplied: string[];
-  unitsAffected: string[];
+  roll: number;
+  rollModifier: number;
+  finalResult: number;
+  spellApplied: boolean;
+  tokensConsumed: number;
+  description: string;
+  effects?: SpellEffect[];
 }
 
 // Command Point System

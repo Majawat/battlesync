@@ -4,6 +4,12 @@ import { authenticate } from '../middleware/auth';
 
 const router = Router();
 
+// Request cooperative casting from other players
+router.post('/request-cooperation', authenticate, (req, res) => SpellController.requestCooperativeCasting(req as any, res));
+
+// Cast a spell in battle
+router.post('/cast', authenticate, (req, res) => SpellController.castSpell(req as any, res));
+
 // Get spells by armyId (preferred method)
 router.get('/army/:armyId', authenticate, SpellController.getSpellsForArmyId);
 
