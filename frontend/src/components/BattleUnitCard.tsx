@@ -224,7 +224,7 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
 
   // Get available cooperative casters from all armies (excluding the specific caster casting the spell)
   const getCooperativeCasters = () => {
-    const casters: Array<{unitId: string, modelId?: string, tokens: number, name: string}> = [];
+    const casters: Array<{unitId: string, modelId?: string, tokens: number, name: string, armyName?: string}> = [];
     
     // Find the current active caster to exclude them
     const currentCaster = unit.models.find(m => m.casterTokens > 0) || unit.joinedHero;
@@ -240,7 +240,8 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
                 unitId: armyUnit.unitId,
                 modelId: model.modelId,
                 tokens: model.casterTokens,
-                name: `${armyUnit.name} - ${model.name}`
+                name: model.customName || model.name,
+                armyName: army.armyName
               });
             }
           }
@@ -253,7 +254,8 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
               unitId: armyUnit.unitId,
               modelId: armyUnit.joinedHero.modelId,
               tokens: armyUnit.joinedHero.casterTokens,
-              name: `${armyUnit.name} - ${armyUnit.joinedHero.name} (Hero)`
+              name: armyUnit.joinedHero.customName || armyUnit.joinedHero.name,
+              armyName: army.armyName
             });
           }
         } else {
@@ -265,7 +267,8 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
                 unitId: armyUnit.unitId,
                 modelId: model.modelId,
                 tokens: model.casterTokens,
-                name: `${armyUnit.name} - ${model.name}`
+                name: model.customName || model.name,
+                armyName: army.armyName
               });
             }
           }
@@ -276,7 +279,8 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
               unitId: armyUnit.unitId,
               modelId: armyUnit.joinedHero.modelId,
               tokens: armyUnit.joinedHero.casterTokens,
-              name: `${armyUnit.name} - ${armyUnit.joinedHero.name} (Hero)`
+              name: armyUnit.joinedHero.customName || armyUnit.joinedHero.name,
+              armyName: army.armyName
             });
           }
         }

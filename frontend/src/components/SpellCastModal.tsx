@@ -16,6 +16,7 @@ interface AvailableCaster {
   modelId?: string;
   tokens: number;
   name: string;
+  armyName?: string;
 }
 
 interface CooperatingCaster {
@@ -195,7 +196,10 @@ export const SpellCastModal: React.FC<SpellCastModalProps> = ({
                   
                   return (
                     <div key={`${caster.unitId}-${caster.modelId}`} className="bg-gray-700 rounded-lg p-3">
-                      <div className="font-medium text-white mb-2">{caster.name}</div>
+                      <div className="font-medium text-white mb-1">{caster.name}</div>
+                      {caster.armyName && (
+                        <div className="text-sm text-gray-400 mb-2">{caster.armyName}</div>
+                      )}
                       <div className="text-sm text-gray-300 mb-3">
                         {caster.tokens} {caster.tokens === 1 ? 'token' : 'tokens'} available
                       </div>
