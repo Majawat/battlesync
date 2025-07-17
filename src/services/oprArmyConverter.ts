@@ -867,7 +867,8 @@ export class OPRArmyConverter {
       casterTokens: hero.models[0].casterTokens,
       isDestroyed: false,
       weapons: hero.weaponSummary.map(w => w.label),
-      specialRules: hero.models[0].specialRules
+      specialRules: hero.models[0].specialRules,
+      armyId: hero.models[0].armyId // Preserve armyId from original hero
     };
     
     // Keep hero weapons separate - only use target unit's weapons in summary
