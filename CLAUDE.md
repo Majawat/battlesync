@@ -6,10 +6,17 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 
 BattleSync is a self-hosted web application for managing One Page Rules (OPR) tabletop gaming campaigns with real-time battle tracking. 
 
-**Current State**: Production-ready multi-user application (v1.1.3) - All core systems operational with complete spell casting
+**Current State**: Production-ready multi-user application (v1.2.0) - All core systems operational with comprehensive undo functionality
 **Target State**: Enhanced battle features with advanced OPR conversion and analytics
 
 ## Recent Major Completions
+
+### ✅ **Comprehensive Undo System (v1.2.0)** - FULLY IMPLEMENTED
+- **8 Action Types**: Complete undo support for all battle actions (damage, spells, status, phases, etc.)
+- **Battle Action History**: Full tracking with before/after state snapshots for reliable rollback
+- **Smart Undo UI**: Quick suggestions, recent actions view, and full history export
+- **Export Functionality**: Complete battle history available in JSON/CSV for battle reports
+- **Database Integration**: Optimized schema with proper indexing and cascade relationships
 
 ### ✅ **OPR Spell Casting System (v1.1.3)** - FULLY IMPLEMENTED
 - **Real ArmyForge Integration**: Dynamic spell fetching from faction army books
