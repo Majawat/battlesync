@@ -1,194 +1,230 @@
 import { OPRSpell } from '../types/oprBattle';
 
+interface ArmyForgeSpell {
+  id: string;
+  name: string;
+  type: number; // 0 = offensive, 1 = blessing, 2 = curse
+  effect: string;
+  threshold: number; // Token cost
+  spellbookId: string;
+  effectSkirmish?: string;
+}
+
+interface ArmyForgeBook {
+  spells: ArmyForgeSpell[];
+  factionId: string;
+  factionName: string;
+  uid: string;
+}
+
 /**
- * Service for managing faction-specific spell data
+ * Service for managing faction-specific spell data from ArmyForge API
  */
 export class SpellDataService {
+  private static spellCache: Map<string, { spells: OPRSpell[], timestamp: number }> = new Map();
+  private static readonly CACHE_TTL = 60 * 60 * 1000; // 1 hour
   
   /**
-   * Get available spells for a faction
+   * Get available spells for a faction from ArmyForge API
    */
-  static getSpellsForFaction(faction: string): OPRSpell[] {
-    const normalizedFaction = faction.toLowerCase().replace(/[^a-z]/g, '');
-    
-    switch (normalizedFaction) {
-      case 'blessedsisters':
-      case 'blessed':
-      case 'sisters':
-        return this.getBlessedSistersSpells();
-      case 'soulsnatchercults':
-      case 'soulsnatcher':
-      case 'cults':
-        return this.getSoulSnatcherCultsSpells();
-      default:
-        return this.getGenericSpells();
+  static async getSpellsForFaction(factionName: string, gameSystem: number = 2): Promise<OPRSpell[]> {
+    try {
+      // Try to get from cache first
+      const cacheKey = `spells_${factionName}_${gameSystem}`;
+      const cached = this.spellCache.get(cacheKey);
+      if (cached && (Date.now() - cached.timestamp) < this.CACHE_TTL) {
+        return cached.spells;
+      }
+
+      // Get faction army book data
+      const armyBookId = await this.getFactionArmyBookId(factionName, gameSystem);
+      if (!armyBookId) {
+        console.warn(`No army book found for faction: ${factionName}`);
+        return this.getFallbackSpells();
+      }
+
+      // Fetch spell data from ArmyForge
+      const spells = await this.fetchSpellsFromArmyForge(armyBookId, gameSystem);
+      
+      // Cache for 1 hour
+      this.spellCache.set(cacheKey, { spells, timestamp: Date.now() });
+      
+      return spells;
+    } catch (error) {
+      console.error('Error fetching spells for faction:', error);
+      return this.getFallbackSpells();
     }
   }
 
   /**
-   * Get spell by ID
+   * Get faction army book ID from faction name
    */
-  static getSpellById(spellId: string): OPRSpell | undefined {
-    const allSpells = [
-      ...this.getBlessedSistersSpells(),
-      ...this.getSoulSnatcherCultsSpells(),
-      ...this.getGenericSpells()
-    ];
+  private static async getFactionArmyBookId(factionName: string, gameSystem: number): Promise<string | null> {
+    // This would need to be enhanced with a proper faction -> army book mapping
+    // For now, we'll use known mappings
+    const factionMappings: Record<string, string> = {
+      'blessed sisters': '7oi8zeiqfamiur21',
+      'blessedsisters': '7oi8zeiqfamiur21',
+      'blessed': '7oi8zeiqfamiur21',
+      'sisters': '7oi8zeiqfamiur21'
+      // Add more mappings as needed
+    };
+
+    const normalizedName = factionName.toLowerCase().replace(/[^a-z\s]/g, '').trim();
+    return factionMappings[normalizedName] || null;
+  }
+
+  /**
+   * Fetch spells from ArmyForge API
+   */
+  private static async fetchSpellsFromArmyForge(armyBookId: string, gameSystem: number): Promise<OPRSpell[]> {
+    const response = await fetch(`https://army-forge.onepagerules.com/api/army-books/${armyBookId}?gameSystem=${gameSystem}`);
     
-    return allSpells.find(spell => spell.id === spellId);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch army book: ${response.statusText}`);
+    }
+
+    const armyBook = await response.json() as ArmyForgeBook;
+    
+    return armyBook.spells.map(spell => this.convertArmyForgeSpell(spell));
   }
 
   /**
-   * Blessed Sisters faction spells
+   * Convert ArmyForge spell format to our OPRSpell format
    */
-  private static getBlessedSistersSpells(): OPRSpell[] {
-    return [
-      {
-        id: 'blessed-holy-tears',
-        name: 'Holy Tears',
-        cost: 1,
-        range: '12"',
-        targets: '2 friendly units',
-        effect: 'Target units get Poison next time they fight in melee',
-        duration: 'next-action',
-        modifiers: [
-          {
-            type: 'buff',
-            stat: 'attacks',
-            value: 0, // Poison special rule
-            condition: 'next time they fight in melee'
-          }
-        ]
-      },
-      {
-        id: 'blessed-eternal-flame',
-        name: 'Eternal Flame',
-        cost: 1,
-        range: '12"',
-        targets: '1 enemy unit',
-        effect: 'Target takes 4 hits',
-        duration: 'instant',
-        hits: 4
-      },
-      {
-        id: 'blessed-heretics',
-        name: 'Heretics',
-        cost: 2,
-        range: '18"',
-        targets: '2 enemy units',
-        effect: 'Targets get -1 to defense rolls next time they take hits',
-        duration: 'next-action',
-        modifiers: [
-          {
-            type: 'debuff',
-            stat: 'defense',
-            value: -1,
-            condition: 'next time they take hits'
-          }
-        ]
-      },
-      {
-        id: 'blessed-admonition',
-        name: 'Admonition',
-        cost: 2,
-        range: '12"',
-        targets: '1 enemy model',
-        effect: 'Target takes 2 hits with AP(4)',
-        duration: 'instant',
-        hits: 2,
-        armorPiercing: 4
-      },
-      {
-        id: 'blessed-litanies',
-        name: 'Litanies',
-        cost: 3,
-        range: '12"',
-        targets: '2 friendly units',
-        effect: 'Targets get +18" range next time they shoot',
-        duration: 'next-action',
-        modifiers: [
-          {
-            type: 'buff',
-            stat: 'range',
-            value: 18,
-            condition: 'next time they shoot'
-          }
-        ]
-      },
-      {
-        id: 'blessed-righteous-wrath',
-        name: 'Righteous Wrath',
-        cost: 3,
-        range: '12"',
-        targets: '2 enemy units',
-        effect: 'Each target takes 6 hits',
-        duration: 'instant',
-        hits: 6
-      }
-    ];
+  private static convertArmyForgeSpell(armyForgeSpell: ArmyForgeSpell): OPRSpell {
+    const spellType = this.getSpellTypeInfo(armyForgeSpell.type);
+    
+    return {
+      id: armyForgeSpell.id,
+      name: armyForgeSpell.name,
+      cost: armyForgeSpell.threshold,
+      range: this.extractRange(armyForgeSpell.effect),
+      targets: this.extractTargets(armyForgeSpell.effect),
+      effect: armyForgeSpell.effect,
+      duration: this.determineDuration(armyForgeSpell.effect),
+      hits: this.extractHits(armyForgeSpell.effect),
+      armorPiercing: this.extractAP(armyForgeSpell.effect),
+      modifiers: this.extractModifiers(armyForgeSpell.effect, spellType)
+    };
   }
 
   /**
-   * Soul-Snatcher Cults faction spells
+   * Get spell type information
    */
-  private static getSoulSnatcherCultsSpells(): OPRSpell[] {
-    return [
-      {
-        id: 'cultist-dark-blessing',
-        name: 'Dark Blessing',
-        cost: 1,
-        range: '12"',
-        targets: '1 friendly unit',
-        effect: 'Target gets +1 to hit rolls next time they attack',
-        duration: 'next-action',
-        modifiers: [
-          {
-            type: 'buff',
-            stat: 'quality',
-            value: 1,
-            condition: 'next time they attack'
-          }
-        ]
-      },
-      {
-        id: 'cultist-soul-drain',
-        name: 'Soul Drain',
-        cost: 2,
-        range: '18"',
-        targets: '1 enemy unit',
-        effect: 'Target takes 3 hits and loses 1 tough for the rest of the battle',
-        duration: 'permanent',
-        hits: 3,
-        modifiers: [
-          {
-            type: 'debuff',
-            stat: 'tough',
-            value: -1,
-            condition: 'permanent'
-          }
-        ]
-      },
-      {
-        id: 'cultist-chaos-bolt',
-        name: 'Chaos Bolt',
-        cost: 2,
-        range: '24"',
-        targets: '1 enemy unit',
-        effect: 'Target takes D3+2 hits with AP(2)',
-        duration: 'instant',
-        hits: 4, // Average of D3+2
-        armorPiercing: 2
-      }
-    ];
+  private static getSpellTypeInfo(type: number): { name: string; category: 'offensive' | 'blessing' | 'curse' } {
+    switch (type) {
+      case 0: return { name: 'Offensive', category: 'offensive' };
+      case 1: return { name: 'Blessing', category: 'blessing' };
+      case 2: return { name: 'Curse', category: 'curse' };
+      default: return { name: 'Unknown', category: 'offensive' };
+    }
   }
 
   /**
-   * Generic spells for factions without specific spell lists
+   * Extract range from spell effect text
    */
-  private static getGenericSpells(): OPRSpell[] {
+  private static extractRange(effect: string): string {
+    const rangeMatch = effect.match(/within (\d+[^"\s]*)/i);
+    return rangeMatch ? rangeMatch[1] : 'Touch';
+  }
+
+  /**
+   * Extract targets from spell effect text
+   */
+  private static extractTargets(effect: string): string {
+    if (effect.includes('Target 2 friendly units')) return '2 friendly units';
+    if (effect.includes('Target 2 enemy units')) return '2 enemy units';
+    if (effect.includes('Target enemy unit')) return '1 enemy unit';
+    if (effect.includes('Target enemy model')) return '1 enemy model';
+    if (effect.includes('Target friendly unit')) return '1 friendly unit';
+    if (effect.match(/Target \d+ friendly units/)) {
+      const match = effect.match(/Target (\d+) friendly units/);
+      return match ? `${match[1]} friendly units` : '1 unit';
+    }
+    if (effect.match(/Target \d+ enemy units/)) {
+      const match = effect.match(/Target (\d+) enemy units/);
+      return match ? `${match[1]} enemy units` : '1 unit';
+    }
+    return '1 unit';
+  }
+
+  /**
+   * Extract number of hits from spell effect
+   */
+  private static extractHits(effect: string): number | undefined {
+    const hitsMatch = effect.match(/takes (\d+) hits/i);
+    if (hitsMatch) return parseInt(hitsMatch[1]);
+    
+    const hitsEachMatch = effect.match(/take (\d+) hits each/i);
+    if (hitsEachMatch) return parseInt(hitsEachMatch[1]);
+    
+    return undefined;
+  }
+
+  /**
+   * Extract armor piercing value from spell effect
+   */
+  private static extractAP(effect: string): number | undefined {
+    const apMatch = effect.match(/AP\((\d+)\)/i);
+    return apMatch ? parseInt(apMatch[1]) : undefined;
+  }
+
+  /**
+   * Determine spell duration from effect text
+   */
+  private static determineDuration(effect: string): 'instant' | 'next-action' | 'end-of-round' | 'permanent' {
+    if (effect.includes('next time')) return 'next-action';
+    if (effect.includes('takes') && effect.includes('hits')) return 'instant';
+    return 'instant';
+  }
+
+  /**
+   * Extract modifiers from spell effect
+   */
+  private static extractModifiers(effect: string, spellType: { category: string }): any[] {
+    const modifiers = [];
+    
+    // Look for defense modifiers
+    if (effect.includes('-1 to defense rolls')) {
+      modifiers.push({
+        type: 'debuff',
+        stat: 'defense',
+        value: -1,
+        condition: 'next time they take hits'
+      });
+    }
+    
+    // Look for range modifiers
+    if (effect.includes('+18" range')) {
+      modifiers.push({
+        type: 'buff',
+        stat: 'range',
+        value: 18,
+        condition: 'next time they shoot'
+      });
+    }
+    
+    // Look for poison
+    if (effect.includes('get Poison')) {
+      modifiers.push({
+        type: 'buff',
+        stat: 'attacks',
+        value: 0, // Special rule
+        condition: 'next time they fight in melee'
+      });
+    }
+    
+    return modifiers;
+  }
+
+  /**
+   * Get fallback spells when API fails
+   */
+  private static getFallbackSpells(): OPRSpell[] {
     return [
       {
-        id: 'generic-mystic-bolt',
+        id: 'fallback-mystic-bolt',
         name: 'Mystic Bolt',
         cost: 1,
         range: '18"',
@@ -198,33 +234,30 @@ export class SpellDataService {
         hits: 3
       },
       {
-        id: 'generic-ward',
+        id: 'fallback-ward',
         name: 'Ward',
         cost: 1,
         range: '12"',
         targets: '1 friendly unit',
         effect: 'Target gets +1 to defense rolls next time they are attacked',
-        duration: 'next-action',
-        modifiers: [
-          {
-            type: 'buff',
-            stat: 'defense',
-            value: 1,
-            condition: 'next time they are attacked'
-          }
-        ]
-      },
-      {
-        id: 'generic-dispel',
-        name: 'Dispel',
-        cost: 2,
-        range: '18"',
-        targets: '1 unit',
-        effect: 'Remove all active spell effects from target',
-        duration: 'instant'
+        duration: 'next-action'
       }
     ];
   }
+
+  /**
+   * Get spell by ID (now checks cache and API)
+   */
+  static async getSpellById(spellId: string, factionName?: string): Promise<OPRSpell | undefined> {
+    if (factionName) {
+      const factionSpells = await this.getSpellsForFaction(factionName);
+      return factionSpells.find(spell => spell.id === spellId);
+    }
+    
+    // Fallback: check all cached spells
+    return this.getFallbackSpells().find(spell => spell.id === spellId);
+  }
+
 
   /**
    * Get available caster tokens from an army (for cooperative casting)
