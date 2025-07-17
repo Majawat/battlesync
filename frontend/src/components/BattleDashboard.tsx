@@ -623,6 +623,7 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
                   onQuickDamage={(damage, modelId) => handleQuickDamage(unit.unitId, damage, modelId)}
                   onAction={(action, targetId) => handleUnitAction(unit.unitId, action, targetId)}
                   onCastSpell={(spellId, cooperatingCasters) => handleCastSpell(unit.unitId, spellId, cooperatingCasters)}
+                  allArmies={allArmies}
                 />
               ))}
             </div>

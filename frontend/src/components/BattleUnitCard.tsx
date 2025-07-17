@@ -222,34 +222,63 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
     setShowSpellModal(false);
   };
 
-  // Get available cooperative casters from all armies (excluding this unit)
+  // Get available cooperative casters from all armies (excluding the specific caster casting the spell)
   const getCooperativeCasters = () => {
     const casters: Array<{unitId: string, modelId?: string, tokens: number, name: string}> = [];
     
+    // Find the current active caster to exclude them
+    const currentCaster = unit.models.find(m => m.casterTokens > 0) || unit.joinedHero;
+    
     for (const army of allArmies) {
       for (const armyUnit of army.units) {
-        if (armyUnit.unitId === unit.unitId) continue; // Skip current unit
-        
-        // Check unit models for casters
-        for (const model of armyUnit.models) {
-          if (model.casterTokens > 0) {
+        // For the current unit, check other models but exclude the active caster
+        if (armyUnit.unitId === unit.unitId) {
+          // Check unit models for casters (excluding the current caster)
+          for (const model of armyUnit.models) {
+            if (model.casterTokens > 0 && model.modelId !== currentCaster?.modelId) {
+              casters.push({
+                unitId: armyUnit.unitId,
+                modelId: model.modelId,
+                tokens: model.casterTokens,
+                name: `${armyUnit.name} - ${model.name}`
+              });
+            }
+          }
+          
+          // Check joined hero for caster tokens (excluding if it's the current caster)
+          if (armyUnit.joinedHero && 
+              armyUnit.joinedHero.casterTokens > 0 && 
+              armyUnit.joinedHero.modelId !== currentCaster?.modelId) {
             casters.push({
               unitId: armyUnit.unitId,
-              modelId: model.modelId,
-              tokens: model.casterTokens,
-              name: `${armyUnit.name} - ${model.name}`
+              modelId: armyUnit.joinedHero.modelId,
+              tokens: armyUnit.joinedHero.casterTokens,
+              name: `${armyUnit.name} - ${armyUnit.joinedHero.name} (Hero)`
             });
           }
-        }
-        
-        // Check joined hero for caster tokens
-        if (armyUnit.joinedHero && armyUnit.joinedHero.casterTokens > 0) {
-          casters.push({
-            unitId: armyUnit.unitId,
-            modelId: armyUnit.joinedHero.modelId,
-            tokens: armyUnit.joinedHero.casterTokens,
-            name: `${armyUnit.name} - ${armyUnit.joinedHero.name} (Hero)`
-          });
+        } else {
+          // For other units, include all casters
+          // Check unit models for casters
+          for (const model of armyUnit.models) {
+            if (model.casterTokens > 0) {
+              casters.push({
+                unitId: armyUnit.unitId,
+                modelId: model.modelId,
+                tokens: model.casterTokens,
+                name: `${armyUnit.name} - ${model.name}`
+              });
+            }
+          }
+          
+          // Check joined hero for caster tokens
+          if (armyUnit.joinedHero && armyUnit.joinedHero.casterTokens > 0) {
+            casters.push({
+              unitId: armyUnit.unitId,
+              modelId: armyUnit.joinedHero.modelId,
+              tokens: armyUnit.joinedHero.casterTokens,
+              name: `${armyUnit.name} - ${armyUnit.joinedHero.name} (Hero)`
+            });
+          }
         }
       }
     }
