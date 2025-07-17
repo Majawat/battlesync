@@ -285,14 +285,14 @@ export class CampaignController {
         }
       });
 
-      // If not a group member, add them
+      // If not a group member, add them as PENDING
       if (!groupMembership) {
         groupMembership = await prisma.groupMembership.create({
           data: {
             userId: targetUser.id,
             groupId: campaign.groupId,
             role: 'MEMBER',
-            status: 'ACTIVE',
+            status: 'PENDING',
             invitedBy: userId,
             invitedAt: new Date()
           }
@@ -470,6 +470,189 @@ export class CampaignController {
       res.status(error.statusCode || 500).json({
         status: 'error',
         message: error.message || 'Failed to remove member'
+      });
+    }
+  }
+
+  // Accept campaign invitation
+  static async acceptCampaignInvitation(req: Request, res: Response): Promise<void> {
+    try {
+      const userId = (req as AuthenticatedRequest).user!.id;
+      const campaignId = req.params.campaignId;
+      
+      // Find the campaign
+      const campaign = await prisma.campaign.findUnique({
+        where: { id: campaignId },
+        include: { group: true }
+      });
+
+      if (!campaign) {
+        throw ValidationUtils.createError('Campaign not found', 404);
+      }
+
+      // Find pending group membership
+      const groupMembership = await prisma.groupMembership.findUnique({
+        where: {
+          userId_groupId: {
+            userId,
+            groupId: campaign.groupId
+          }
+        }
+      });
+
+      if (!groupMembership) {
+        throw ValidationUtils.createError('No invitation found', 404);
+      }
+
+      if (groupMembership.status !== 'PENDING') {
+        throw ValidationUtils.createError('No pending invitation found', 400);
+      }
+
+      // Update group membership to ACTIVE and create campaign participation
+      await prisma.$transaction(async (tx) => {
+        // Activate group membership
+        await tx.groupMembership.update({
+          where: { id: groupMembership.id },
+          data: { status: 'ACTIVE' }
+        });
+
+        // Create campaign participation
+        await tx.campaignParticipation.create({
+          data: {
+            groupMembershipId: groupMembership.id,
+            campaignId,
+            campaignRole: 'PARTICIPANT'
+          }
+        });
+      });
+
+      logger.info('Campaign invitation accepted', { campaignId, userId });
+      
+      res.json({
+        status: 'success',
+        message: 'Successfully joined campaign'
+      });
+    } catch (error: any) {
+      logger.error('Accept campaign invitation failed', { error: error.message, userId: (req as AuthenticatedRequest).user?.id });
+      
+      res.status(error.statusCode || 500).json({
+        status: 'error',
+        message: error.message || 'Failed to accept invitation'
+      });
+    }
+  }
+
+  // Decline campaign invitation
+  static async declineCampaignInvitation(req: Request, res: Response): Promise<void> {
+    try {
+      const userId = (req as AuthenticatedRequest).user!.id;
+      const campaignId = req.params.campaignId;
+      
+      // Find the campaign
+      const campaign = await prisma.campaign.findUnique({
+        where: { id: campaignId },
+        include: { group: true }
+      });
+
+      if (!campaign) {
+        throw ValidationUtils.createError('Campaign not found', 404);
+      }
+
+      // Find pending group membership
+      const groupMembership = await prisma.groupMembership.findUnique({
+        where: {
+          userId_groupId: {
+            userId,
+            groupId: campaign.groupId
+          }
+        }
+      });
+
+      if (!groupMembership || groupMembership.status !== 'PENDING') {
+        throw ValidationUtils.createError('No pending invitation found', 404);
+      }
+
+      // Remove the pending group membership
+      await prisma.groupMembership.delete({
+        where: { id: groupMembership.id }
+      });
+
+      logger.info('Campaign invitation declined', { campaignId, userId });
+      
+      res.json({
+        status: 'success',
+        message: 'Invitation declined'
+      });
+    } catch (error: any) {
+      logger.error('Decline campaign invitation failed', { error: error.message, userId: (req as AuthenticatedRequest).user?.id });
+      
+      res.status(error.statusCode || 500).json({
+        status: 'error',
+        message: error.message || 'Failed to decline invitation'
+      });
+    }
+  }
+
+  // Get pending campaign invitations for user
+  static async getPendingCampaignInvitations(req: Request, res: Response): Promise<void> {
+    try {
+      const userId = (req as AuthenticatedRequest).user!.id;
+      
+      // Find all pending group memberships with their campaigns
+      const pendingMemberships = await prisma.groupMembership.findMany({
+        where: {
+          userId,
+          status: 'PENDING'
+        },
+        include: {
+          group: {
+            include: {
+              campaigns: {
+                include: {
+                  creator: {
+                    select: {
+                      id: true,
+                      username: true
+                    }
+                  },
+                  _count: {
+                    select: {
+                      participations: true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          user: false // Don't include user data
+        }
+      });
+
+      const invitations = pendingMemberships.flatMap(membership => 
+        membership.group.campaigns.map(campaign => ({
+          id: campaign.id,
+          name: campaign.name,
+          description: campaign.description,
+          status: campaign.status,
+          groupId: membership.groupId,
+          groupName: membership.group.name,
+          createdBy: campaign.creator.username,
+          participantCount: campaign._count.participations,
+          invitedAt: membership.invitedAt,
+          invitedBy: membership.invitedBy
+        }))
+      );
+      
+      res.json({
+        status: 'success',
+        data: invitations
+      });
+    } catch (error: any) {
+      logger.error('Get pending campaign invitations failed', { error: error.message, userId: (req as AuthenticatedRequest).user?.id });
+      
+      res.status(error.statusCode || 500).json({
+        status: 'error',
+        message: error.message || 'Failed to fetch invitations'
       });
     }
   }

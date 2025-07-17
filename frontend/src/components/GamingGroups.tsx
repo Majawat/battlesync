@@ -6,6 +6,7 @@ import { GamingGroup, CreateGamingGroupRequest, JoinGroupRequest } from '../type
 import { CreateGroupModal } from './CreateGroupModal';
 import { JoinGroupModal } from './JoinGroupModal';
 import { GroupCard } from './GroupCard';
+import { PendingInvitationsModal } from './PendingInvitationsModal';
 
 export const GamingGroups: React.FC = () => {
   const navigate = useNavigate();
@@ -15,10 +16,25 @@ export const GamingGroups: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showJoinModal, setShowJoinModal] = useState(false);
+  const [showInvitationsModal, setShowInvitationsModal] = useState(false);
+  const [pendingInvitationsCount, setPendingInvitationsCount] = useState(0);
 
   useEffect(() => {
     loadGroups();
+    loadPendingInvitations();
   }, []);
+
+  const loadPendingInvitations = async () => {
+    try {
+      const response = await apiClient.getPendingCampaignInvitations();
+      if (response.data.status === 'success') {
+        setPendingInvitationsCount(response.data.data?.length || 0);
+      }
+    } catch (error) {
+      // Silently fail for now - not critical
+      console.warn('Failed to load pending invitations count:', error);
+    }
+  };
 
   const loadGroups = async () => {
     try {
@@ -117,6 +133,24 @@ export const GamingGroups: React.FC = () => {
               >
                 My Armies
               </button>
+              
+              {/* Notifications Button */}
+              <button
+                onClick={() => setShowInvitationsModal(true)}
+                className="relative bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded flex items-center"
+              >
+                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
+                    d="M15 17h5l-5-5v5zM4 17v-5l5 5H4z M4 12V7a8 8 0 018-8 8 8 0 018 8v5M9 21h6" />
+                </svg>
+                Invitations
+                {pendingInvitationsCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+                    {pendingInvitationsCount}
+                  </span>
+                )}
+              </button>
+              
               <span className="text-gray-300">Welcome, {user?.username}!</span>
               <button
                 onClick={logout}
@@ -222,6 +256,16 @@ export const GamingGroups: React.FC = () => {
         <JoinGroupModal
           onClose={() => setShowJoinModal(false)}
           onSubmit={handleJoinGroup}
+        />
+      )}
+
+      {showInvitationsModal && (
+        <PendingInvitationsModal
+          onClose={() => setShowInvitationsModal(false)}
+          onInvitationHandled={() => {
+            loadPendingInvitations();
+            loadGroups(); // Refresh groups in case user joined new ones
+          }}
         />
       )}
     </div>

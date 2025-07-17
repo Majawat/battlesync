@@ -279,6 +279,14 @@ class ApiClient {
     return this.client.post(`/campaigns/${campaignId}/accept-invitation`);
   }
 
+  async declineCampaignInvitation(campaignId: string): Promise<any> {
+    return this.client.post(`/campaigns/${campaignId}/decline-invitation`);
+  }
+
+  async getPendingCampaignInvitations(): Promise<any> {
+    return this.client.get('/campaigns/invitations/pending');
+  }
+
   async updateCampaignMember(campaignId: string, membershipId: string, data: { role?: 'ADMIN' | 'MEMBER'; status?: 'ACTIVE' | 'INACTIVE' }): Promise<any> {
     return this.client.put(`/campaigns/${campaignId}/members/${membershipId}`, data);
   }

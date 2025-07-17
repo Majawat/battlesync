@@ -27,6 +27,15 @@ router.put('/campaigns/:campaignId', validateUpdateCampaign, CampaignController.
 // Join a campaign
 router.post('/campaigns/:campaignId/join', validateJoinCampaign, CampaignController.joinCampaign);
 
+// Accept campaign invitation
+router.post('/campaigns/:campaignId/accept-invitation', CampaignController.acceptCampaignInvitation);
+
+// Decline campaign invitation
+router.post('/campaigns/:campaignId/decline-invitation', CampaignController.declineCampaignInvitation);
+
+// Get pending campaign invitations
+router.get('/campaigns/invitations/pending', CampaignController.getPendingCampaignInvitations);
+
 // Leave a campaign
 router.post('/campaigns/:campaignId/leave', CampaignController.leaveCampaign);
 
