@@ -234,7 +234,7 @@ export class SpellController {
       }
 
       // Create cooperation request ID
-      const cooperationRequestId = `coop_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      const cooperationRequestId = `coop_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
 
       // Broadcast cooperation request to all potential cooperators
       this.broadcastToBattleRoom(battleId, 'cooperative_casting_request', {
@@ -270,6 +270,123 @@ export class SpellController {
       res.status(500).json({
         success: false,
         error: 'Failed to request cooperative casting'
+      });
+    }
+  }
+
+  /**
+   * Respond to cooperative casting request
+   * POST /api/spells/respond-cooperation
+   */
+  static async respondToCooperativeCasting(req: AuthenticatedRequest, res: Response): Promise<void> {
+    try {
+      const { battleId, cooperationRequestId, response } = req.body;
+      const userId = req.user!.id;
+
+      if (!battleId || !cooperationRequestId || !response) {
+        res.status(400).json({
+          success: false,
+          error: 'Battle ID, cooperation request ID, and response are required'
+        });
+        return;
+      }
+
+      // Validate response structure
+      if (!response.hasOwnProperty('accept') || (response.accept && (!response.unitId || !response.tokensContributed || !response.modifier))) {
+        res.status(400).json({
+          success: false,
+          error: 'Invalid response format'
+        });
+        return;
+      }
+
+      // Get battle state to validate the response
+      const battleState = await OPRBattleService.getOPRBattleState(battleId, userId);
+      if (!battleState) {
+        res.status(404).json({
+          success: false,
+          error: 'Battle not found or access denied'
+        });
+        return;
+      }
+
+      // Find the responding user's army
+      const userArmy = battleState.armies.find(army => army.userId === userId);
+      if (!userArmy) {
+        res.status(403).json({
+          success: false,
+          error: 'User is not participating in this battle'
+        });
+        return;
+      }
+
+      let cooperatorInfo = null;
+      
+      if (response.accept) {
+        // Find the cooperating unit
+        const cooperatingUnit = userArmy.units.find(unit => unit.unitId === response.unitId);
+        if (!cooperatingUnit) {
+          res.status(404).json({
+            success: false,
+            error: 'Cooperating unit not found'
+          });
+          return;
+        }
+
+        // Find the cooperating caster model
+        let cooperatingModel = null;
+        if (response.modelId) {
+          cooperatingModel = cooperatingUnit.models.find(m => m.modelId === response.modelId) ||
+                           (cooperatingUnit.joinedHero?.modelId === response.modelId ? cooperatingUnit.joinedHero : null);
+        } else {
+          cooperatingModel = cooperatingUnit.models.find(m => m.casterTokens > 0) || cooperatingUnit.joinedHero;
+        }
+
+        if (!cooperatingModel || cooperatingModel.casterTokens < response.tokensContributed) {
+          res.status(400).json({
+            success: false,
+            error: 'Insufficient caster tokens or cooperating caster not found'
+          });
+          return;
+        }
+
+        cooperatorInfo = {
+          userId,
+          unitId: response.unitId,
+          modelId: cooperatingModel.modelId,
+          unitName: cooperatingUnit.name,
+          casterName: cooperatingModel.name,
+          tokensContributed: response.tokensContributed,
+          modifier: response.modifier
+        };
+      }
+
+      // Broadcast the response to all battle participants
+      this.broadcastToBattleRoom(battleId, 'cooperative_casting_response', {
+        cooperationRequestId,
+        respondingUserId: userId,
+        response: {
+          accept: response.accept,
+          cooperator: cooperatorInfo
+        }
+      });
+
+      logger.info(`Cooperative casting response from user ${userId} for request ${cooperationRequestId}: ${response.accept ? 'ACCEPTED' : 'DECLINED'}`);
+
+      res.json({
+        success: true,
+        data: {
+          cooperationRequestId,
+          accepted: response.accept,
+          cooperator: cooperatorInfo
+        }
+      });
+
+    } catch (error) {
+      logger.error('Respond to cooperative casting error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to respond to cooperative casting'
       });
     }
   }

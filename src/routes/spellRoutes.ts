@@ -7,6 +7,9 @@ const router = Router();
 // Request cooperative casting from other players
 router.post('/request-cooperation', authenticate, (req, res) => SpellController.requestCooperativeCasting(req as any, res));
 
+// Respond to cooperative casting request
+router.post('/respond-cooperation', authenticate, (req, res) => SpellController.respondToCooperativeCasting(req as any, res));
+
 // Cast a spell in battle
 router.post('/cast', authenticate, (req, res) => SpellController.castSpell(req as any, res));
 
