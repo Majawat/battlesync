@@ -3,7 +3,7 @@
 ## Vision
 A self-hosted web application for managing One Page Rules (OPR) tabletop gaming campaigns with real-time battle tracking and multi-user support.
 
-## Current State (July 2025) - Production Ready v1.1.0
+## Current State (July 2025) - Production Ready v1.1.3
 🟢 **PRODUCTION FEATURES - FULLY OPERATIONAL**
 - ✅ **Multi-user Web Application**: Complete JWT authentication system with role-based access
 - ✅ **Real-time Infrastructure**: WebSocket communication with room management
@@ -16,6 +16,8 @@ A self-hosted web application for managing One Page Rules (OPR) tabletop gaming 
 - ✅ **RESTful API**: 50+ endpoints with proper error handling and validation
 - ✅ **Army Management**: Complete ArmyForge integration with import/sync
 - ✅ **Battle System**: Creation, tracking, real-time dashboard with WebSocket updates
+- ✅ **Spell Casting System**: Complete OPR spell casting with ArmyForge integration and cooperative casting
+- ✅ **Command Point System**: All 6 OPR command point calculation methods with automatic refresh
 
 🟡 **ENHANCEMENT FEATURES - IN PROGRESS**
 - ⚠️ **OPR Army Conversion**: Advanced unit combining and weapon distribution logic

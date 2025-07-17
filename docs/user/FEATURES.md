@@ -1,4 +1,4 @@
-# Features ✅ PRODUCTION READY v1.1.0
+# Features ✅ PRODUCTION READY v1.1.3
 
 ## Core Campaign Management ✅
 
@@ -36,12 +36,14 @@
 - **Army Validation**: Ensure armies meet campaign requirements
 - **Statistics Tracking**: Army usage and performance analytics
 
-### ⚠️ OPR Army Conversion System (In Progress)
+### ✅ OPR Army Conversion System (Complete)
 - **Smart Unit Combining**: Intelligently merge units with different loadouts into combined units
 - **Weapon Summary Merging**: Preserve all weapons from combined units without duplication
 - **Model Distribution**: Individual model tracking with proper stat distribution
 - **Hero Joining Mechanics**: Heroes can join multi-model units with preserved data
 - **Battle-Ready Conversion**: Transform ArmyForge armies into trackable battle units
+- **Tough Value Distribution**: Proper handling of replacement vs additive tough upgrades
+- **Defense Upgrade Processing**: Defense upgrades correctly reduce values
 
 ```typescript
 // Example: Infantry Squad [20] - Combined Unit  
@@ -58,11 +60,6 @@
 }
 ```
 
-**Current Issues**:
-- Debugging 500 error in conversion process
-- Tough value distribution (2 models Tough(3), 18 models Tough(1))
-- Hero joining data preservation
-
 ## Battle System ✅ OPERATIONAL
 
 ### ✅ Real-time Battle Tracking
@@ -71,18 +68,59 @@
 - **Live State Management**: Battle state updates synchronized across all participants
 - **Tablet-optimized Interface**: Mobile-first design for tableside use
 
+### ✅ OPR Spell Casting System (v1.1.3)
+- **Real ArmyForge Integration**: Dynamic spell fetching from faction army books
+- **Comprehensive UI**: SpellCastModal with spell selection, token management, and cooperative casting
+- **Backend Validation**: Complete spell casting mechanics with OPR rules compliance
+- **Cooperative Casting**: Real-time WebSocket notifications for multi-player token contributions
+- **Token Management**: Proper OPR timing (tokens granted at round start, max 6 per caster)
+- **armyId Architecture**: Eliminates hardcoded faction mappings for dynamic spell resolution
+
+```typescript
+interface OPRSpell {
+  id: string;
+  name: string;
+  cost: number; // Token cost
+  range: string; // e.g., "12\"", "18\"", "Touch"
+  targets: string; // e.g., "1 enemy unit", "2 friendly units"
+  effect: string; // Full description
+  duration: 'instant' | 'next-action' | 'end-of-round' | 'permanent';
+  hits?: number; // For damage spells
+  armorPiercing?: number; // AP value
+}
+```
+
+### ✅ Command Point System (v1.1.3)
+- **All 6 OPR Methods**: Fixed, Growing, Temporary, Fixed Random, Growing Random, Temporary Random
+- **Automatic Refresh**: CP refreshed during phase transitions and round advancement  
+- **Mathematical Accuracy**: Proper ceiling rounding for fractional CP calculations
+- **Campaign Settings**: Backend support for CP method selection per campaign
+- **Real-time Updates**: WebSocket integration for live CP tracking during battles
+
+```typescript
+// Command Point calculation methods
+interface CommandPointMethod {
+  type: 'fixed' | 'growing' | 'temporary' | 'fixed-random' | 'growing-random' | 'temporary-random';
+  baseMultiplier: number; // CP per 1000 points
+  accumulates: boolean; // Whether unspent CP carry over
+  isRandom: boolean; // Whether to use D3 rolls
+}
+```
+
 ### ✅ Battle Dashboard Features
 - **Real-time Updates**: Live battle state changes via WebSocket
 - **Participant Management**: Join battles as participants
 - **Battle State Persistence**: Save and restore battle progress
 - **Authentication Integration**: Secure access to battle rooms
 
-### ⚠️ Enhanced Battle Features (In Development)
+### ✅ Enhanced Battle Features (Complete)
 - **Individual Unit Tracking**: Track wounds and status for each unit/model
 - **Damage Application System**: Apply wounds with real-time visual feedback
 - **Turn Management**: Turn-based action tracking and progression
-- **Command Point System**: Track and manage command points during battles
+- **Command Point System**: Complete implementation with all 6 OPR calculation methods
 - **Status Effects**: Handle unit status effects (Shaken, Routed, etc.)
+- **Spell Casting System**: Full OPR spell casting with cooperative mechanics
+- **Damage History & Undo**: Complete damage tracking with undo functionality
 
 ```typescript
 interface BattleState {
@@ -423,12 +461,14 @@ interface BattleState {
 4. Real-time battle tracking ✅
 5. Mobile-responsive interface ✅
 
-### Phase 2 (Enhanced) ⚠️ IN PROGRESS
-1. Enhanced battle features (unit tracking, damage system) ⚠️
-2. Advanced analytics and reporting ❌
-3. Export/import functionality ❌
-4. Webhook integrations ❌
-5. Offline capabilities ❌
+### Phase 2 (Enhanced) ✅ MOSTLY COMPLETE
+1. Enhanced battle features (unit tracking, damage system) ✅
+2. OPR Spell Casting System ✅
+3. Command Point System ✅
+4. Advanced analytics and reporting ❌
+5. Export/import functionality ❌
+6. Webhook integrations ❌
+7. Offline capabilities ❌
 
 ### Phase 3 (Advanced)
 1. Community features (sharing, templates)
