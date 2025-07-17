@@ -3,6 +3,7 @@ import { useAuth } from '../hooks/useAuth';
 import { BattleUnitCard } from './BattleUnitCard';
 import { DamageHistoryPanel } from './DamageHistoryPanel';
 import { CommandPointPanel } from './CommandPointPanel';
+import { CooperativeCastingNotification } from './CooperativeCastingNotification';
 import { 
   OPRBattleState, 
   OPRBattlePhase,
@@ -31,6 +32,7 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
   const [error, setError] = useState<string | null>(null);
   const [, setWsConnection] = useState<WebSocket | null>(null);
   const [showDamageHistory, setShowDamageHistory] = useState(false);
+  const [cooperativeCastingHandler, setCooperativeCastingHandler] = useState<((request: any) => void) | null>(null);
 
   // Fetch initial battle state
   const fetchBattleState = useCallback(async () => {
@@ -143,6 +145,23 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
           case 'battle_completed':
             // Handle battle completion
             console.log('Battle completed, refreshing battle state');
+            fetchBattleState();
+            break;
+          case 'cooperative_casting_request':
+            // Handle cooperative casting request
+            console.log('Cooperative casting request:', message.data);
+            if (cooperativeCastingHandler) {
+              cooperativeCastingHandler(message.data);
+            }
+            break;
+          case 'cooperative_casting_response':
+            // Handle cooperative casting response
+            console.log('Cooperative casting response:', message.data);
+            // You might want to show a notification about who responded
+            break;
+          case 'spell_cast_complete':
+            // Handle spell cast completion
+            console.log('Spell cast complete:', message.data);
             fetchBattleState();
             break;
           default:
@@ -617,6 +636,12 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
           fetchBattleState();
           setShowDamageHistory(false);
         }}
+      />
+
+      {/* Cooperative Casting Notification */}
+      <CooperativeCastingNotification
+        battleId={battleId}
+        onCooperativeCastingRequest={(handler) => setCooperativeCastingHandler(() => handler)}
       />
     </div>
   );

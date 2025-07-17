@@ -179,7 +179,7 @@ export interface TouchDamageProps {
 
 // WebSocket message types
 export interface BattleWebSocketMessage {
-  type: 'welcome' | 'auth' | 'join_room' | 'error' | 'round_advanced' | 'battle_created' | 'phase_changed' | 'damage_applied' | 'hero_joined' | 'battle_completed' | 'unit_action' | 'spell_cast';
+  type: 'welcome' | 'auth' | 'join_room' | 'error' | 'round_advanced' | 'battle_created' | 'phase_changed' | 'damage_applied' | 'hero_joined' | 'battle_completed' | 'unit_action' | 'spell_cast' | 'cooperative_casting_request' | 'cooperative_casting_response' | 'spell_cast_complete';
   data: any;
   error?: string;
   timestamp: string;
