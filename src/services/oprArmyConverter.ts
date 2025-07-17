@@ -294,7 +294,7 @@ export class OPRArmyConverter {
       currentTough: toughValue,
       quality: armyModel.stats.quality,
       defense: effectiveDefense,
-      casterTokens: this.extractCasterTokens(combinedRules),
+      casterTokens: 0, // Tokens are granted at the start of each round, not game start
       isDestroyed: false,
       weapons: armyModel.equipment || [],
       specialRules: [...new Set(combinedRules)], // Remove duplicates
@@ -569,7 +569,7 @@ export class OPRArmyConverter {
       currentTough: modelToughValue,
       quality: armyUnit.quality || 4,
       defense: effectiveDefense,
-      casterTokens: this.extractCasterTokens(modelSpecialRules),
+      casterTokens: 0, // Tokens are granted at the start of each round, not game start
       isDestroyed: false,
       weapons: modelWeapons,
       specialRules: modelSpecialRules,

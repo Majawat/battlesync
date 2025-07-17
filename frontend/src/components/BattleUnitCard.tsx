@@ -409,9 +409,9 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
                   e.stopPropagation();
                   handleSpellButtonClick();
                 }}
-                disabled={!canPerformAction || isLoadingSpells}
+                disabled={isLoadingSpells}
                 className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
-                  canPerformAction && !isLoadingSpells
+                  !isLoadingSpells
                     ? 'bg-purple-600 hover:bg-purple-700 text-white' 
                     : 'bg-gray-600 text-gray-400 cursor-not-allowed'
                 }`}

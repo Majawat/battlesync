@@ -322,27 +322,37 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
   };
 
   // Spell casting handler
-  const handleCastSpell = async (unitId: string, spellName: string) => {
+  const handleCastSpell = async (unitId: string, spellId: string, cooperatingCasters: any[] = []) => {
     try {
-      const response = await fetch(`/api/opr/battles/${battleId}/cast-spell`, {
+      const spellCastAttempt = {
+        spellId,
+        casterUnitId: unitId,
+        tokensCost: 1, // This should come from the spell data, but defaulting to 1
+        cooperatingCasters,
+        targetUnitIds: [] // This should be selected in the modal
+      };
+
+      const response = await fetch('/api/spells/cast', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
         },
         body: JSON.stringify({
-          unitId,
-          spellName
+          battleId,
+          spellCastAttempt
         })
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to cast spell');
+        throw new Error(errorData.error || 'Failed to cast spell');
       }
 
-      // State will be updated via WebSocket
-      console.log(`Unit ${unitId} cast spell: ${spellName}`);
+      const result = await response.json();
+      console.log(`Spell cast result:`, result);
+      
+      // Battle state will be updated via WebSocket
       
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to cast spell');
@@ -539,9 +549,6 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
                     </svg>
                   )}
                   {army.armyName}
-                  <span className="ml-2 text-xs opacity-75">
-                    ({army.faction})
-                  </span>
                 </button>
               );
             })}
@@ -615,7 +622,7 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
                   }))}
                   onQuickDamage={(damage, modelId) => handleQuickDamage(unit.unitId, damage, modelId)}
                   onAction={(action, targetId) => handleUnitAction(unit.unitId, action, targetId)}
-                  onCastSpell={(spellName) => handleCastSpell(unit.unitId, spellName)}
+                  onCastSpell={(spellId, cooperatingCasters) => handleCastSpell(unit.unitId, spellId, cooperatingCasters)}
                 />
               ))}
             </div>

@@ -56,7 +56,7 @@ export const CooperativeCastingNotification: React.FC<CooperativeCastingNotifica
       };
       onCooperativeCastingRequest(handler);
     }
-  }, [onCooperativeCastingRequest, user?.id]);
+  }, [user?.id]); // Remove onCooperativeCastingRequest from deps to prevent infinite loop
 
   // Countdown timer
   useEffect(() => {
@@ -124,8 +124,14 @@ export const CooperativeCastingNotification: React.FC<CooperativeCastingNotifica
   }
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-gray-800 border border-gray-600 rounded-lg p-6 max-w-md w-full mx-4">
+    <div 
+      className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <div 
+        className="bg-gray-800 border border-gray-600 rounded-lg p-6 max-w-md w-full mx-4"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="flex justify-between items-start mb-4">
           <h3 className="text-lg font-semibold text-white">
             🪄 Cooperative Casting Request
