@@ -100,4 +100,11 @@ router.get('/:id/validate', ArmyController.validateArmy);
  */
 router.get('/:id/convert', ArmyController.convertToBattleFormat);
 
+/**
+ * @route PUT /api/armies/:id/campaign
+ * @desc Update army campaign association
+ * @access Private
+ */
+router.put('/:id/campaign', ArmyController.updateCampaignAssociation);
+
 export default router;

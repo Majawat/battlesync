@@ -502,4 +502,12 @@ export class WebSocketManager {
       clearInterval(this.heartbeatInterval);
     }
   }
+
+  public broadcastToRoomPublic(roomId: string, message: WebSocketResponse, excludeUserId?: string): void {
+    this.broadcastToRoom(roomId, message, excludeUserId);
+  }
+
+  public getConnectionCount(): number {
+    return this.users.size;
+  }
 }

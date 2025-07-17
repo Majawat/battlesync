@@ -48,6 +48,7 @@ export interface OPRBattleUnit {
   type: OPRUnitType;
   originalSize: number; // Starting model count
   currentSize: number; // Current model count
+  faction: string; // For spell casting system
   
   // Unit-level state
   action: 'hold' | 'advance' | 'rush' | 'charge' | null;
@@ -64,6 +65,9 @@ export interface OPRBattleUnit {
   
   // Weapon summary for unit
   weaponSummary: OPRWeaponSummary[];
+  
+  // Unit special rules (base rules + upgrades/traits)
+  specialRules: string[];
   
   // Hero joining logic
   joinedHero?: OPRBattleModel; // If this is a JOINED unit
@@ -106,6 +110,10 @@ export interface OPRBattleModel {
   // Equipment and rules
   weapons: string[];
   specialRules: string[];
+  
+  // Faction data for heroes
+  originalFaction?: string; // For joined heroes from different factions
+  armyId?: string; // ArmyForge army book ID
 }
 
 export interface OPRBattleEvent {
@@ -123,6 +131,8 @@ export type OPRBattleEventType =
   | 'PHASE_CHANGED'
   | 'ROUND_STARTED'
   | 'UNIT_ACTIVATED'
+  | 'UNIT_ACTION'
+  | 'SPELL_CAST'
   | 'DAMAGE_APPLIED'
   | 'MODEL_DESTROYED'
   | 'UNIT_DESTROYED'
@@ -160,9 +170,12 @@ export interface UnitConversionOptions {
   allowCombined: boolean;
   allowJoined: boolean;
   preserveCustomNames: boolean;
+  factionName?: string; // For spell casting system
 }
 
 // Damage Application
+export type DamageType = 'NORMAL' | 'INSTANT_KILL' | 'MULTI_DAMAGE' | 'PIERCE' | 'AREA_EFFECT';
+
 export interface ApplyDamageRequest {
   battleId: string;
   userId: string;
@@ -172,6 +185,10 @@ export interface ApplyDamageRequest {
   sourceUnitId?: string;
   sourceDescription?: string;
   ignoreTough?: boolean; // For special rules
+  damageType?: DamageType; // Advanced damage types
+  pierceValue?: number; // For PIERCE damage (ignores X points of tough)
+  multiTargets?: string[]; // For MULTI_DAMAGE/AREA_EFFECT (model IDs)
+  instantKillRoll?: number; // For INSTANT_KILL (quality roll result)
 }
 
 export interface DamageResult {
@@ -203,6 +220,65 @@ export interface BattleResult {
   duration: number; // Battle duration in minutes
   totalRounds: number;
   finalState: OPRBattleState;
+}
+
+// Spell System Types
+export interface OPRSpell {
+  id: string;
+  name: string;
+  cost: number; // Token cost
+  range: string; // e.g., "12\"", "18\"", "Touch"
+  targets: string; // e.g., "1 enemy unit", "2 friendly units"
+  effect: string; // Description of what the spell does
+  duration: 'instant' | 'next-action' | 'end-of-round' | 'permanent';
+  damage?: number; // For damage spells
+  hits?: number; // Number of hits dealt
+  armorPiercing?: number; // AP value for damage spells
+  modifiers?: SpellModifier[]; // Buffs/debuffs applied
+}
+
+export interface SpellModifier {
+  type: 'buff' | 'debuff';
+  stat: 'quality' | 'defense' | 'tough' | 'range' | 'attacks';
+  value: number; // +/- modifier
+  condition: string; // When it applies, e.g., "next time they fight in melee"
+}
+
+export interface SpellCastAttempt {
+  spellId: string;
+  casterUnitId: string;
+  casterModelId?: string;
+  targetUnitIds: string[];
+  tokensCost: number;
+  cooperatingCasters?: CooperatingCaster[]; // Other casters contributing tokens
+  rollRequired: number; // Target number for success roll
+  rollModifier: number; // +/- from cooperating casters
+}
+
+export interface CooperatingCaster {
+  unitId: string;
+  modelId?: string;
+  tokensContributed: number;
+  modifier: number; // +1 or -1 per token
+}
+
+export interface SpellEffect {
+  targetUnitId: string;
+  effectType: 'damage' | 'buff' | 'debuff' | 'special';
+  value?: number;
+  duration: 'instant' | 'next-action' | 'end-of-round' | 'permanent';
+  description: string;
+}
+
+export interface SpellCastResult {
+  success: boolean;
+  roll: number;
+  rollModifier: number;
+  finalResult: number;
+  spellApplied: boolean;
+  tokensConsumed: number;
+  description: string;
+  effects?: SpellEffect[];
 }
 
 // Command Point System

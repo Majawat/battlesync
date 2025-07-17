@@ -23,7 +23,8 @@ export class OPRArmyConverter {
       allowCombined: true,
       allowJoined: true,
       preserveCustomNames: true
-    }
+    },
+    commandPointMethod: 'fixed' | 'growing' | 'temporary' | 'fixed-random' | 'growing-random' | 'temporary-random' = 'fixed'
   ): Promise<ArmyConversionResult> {
     try {
       const warnings: string[] = [];
@@ -36,8 +37,8 @@ export class OPRArmyConverter {
         armyName: armyData.name,
         faction: armyData.faction,
         totalPoints: armyData.points,
-        maxCommandPoints: this.calculateCommandPoints(armyData.points),
-        currentCommandPoints: this.calculateCommandPoints(armyData.points),
+        maxCommandPoints: this.calculateCommandPoints(armyData.points, commandPointMethod),
+        currentCommandPoints: this.calculateCommandPoints(armyData.points, commandPointMethod),
         maxUnderdogPoints: 0,
         currentUnderdogPoints: 0,
         selectedDoctrine: undefined,
@@ -48,7 +49,10 @@ export class OPRArmyConverter {
       // Convert units
       for (const unit of armyData.units) {
         try {
-          const battleUnit = await this.convertUnitToBattle(unit, options);
+          // Get unit-specific faction from resolved factions or fallback to army faction
+          const unitFaction = this.getUnitFaction(unit, armyData);
+          const unitOptions = { ...options, factionName: unitFaction };
+          const battleUnit = await this.convertUnitToBattle(unit, unitOptions);
           battleArmy.units.push(battleUnit);
         } catch (error) {
           logger.error('Error converting unit to battle:', error);
@@ -122,6 +126,10 @@ export class OPRArmyConverter {
     // Create weapon summary
     const weaponSummary = this.createWeaponSummary(armyUnit);
 
+    // Get effective special rules (base rules + upgrades/traits)
+    const effectiveRules = this.getEffectiveRules(armyUnit);
+    const specialRules = this.calculateFinalSpecialRules(effectiveRules);
+
     // Create battle unit
     const battleUnit: OPRBattleUnit = {
       unitId: armyUnit.id,
@@ -130,6 +138,7 @@ export class OPRArmyConverter {
       type: unitType,
       originalSize: models.length,
       currentSize: models.length,
+      faction: options.factionName || 'Unknown', // Add faction for spell casting
       
       // Initial state
       action: null,
@@ -140,12 +149,122 @@ export class OPRArmyConverter {
       kills: 0,
       models,
       weaponSummary,
+      specialRules,
       
       isCombined: armyUnit.combined || false,
       sourceUnit: armyUnit
     };
 
     return battleUnit;
+  }
+
+  /**
+   * Get unit-specific faction from armyId mapping
+   */
+  private static getUnitFaction(unit: any, armyData: any): string {
+    // If we have resolved factions metadata and unit has armyId, try to map it
+    if (unit.armyId) {
+      // Create a mapping from the demo army book IDs we know about
+      const armyIdToFaction: Record<string, string> = {
+        'zz3kp5ry7ks6mxcx': 'Soul-Snatcher Cults',
+        'z65fgu0l29i4lnlu': 'Human Defense Force', 
+        '7oi8zeiqfamiur21': 'Blessed Sisters',
+        'BKi_hJaJflN8ZorH': 'Jackals'
+      };
+
+      const unitFaction = armyIdToFaction[unit.armyId];
+      if (unitFaction) {
+        logger.info(`Resolved unit ${unit.name} with armyId ${unit.armyId} to faction: ${unitFaction}`);
+        return unitFaction;
+      } else {
+        logger.warn(`Unknown armyId ${unit.armyId} for unit ${unit.name}`);
+      }
+    }
+
+    // Fallback: use first faction from the army's faction list
+    if (armyData.faction && armyData.faction.includes(', ')) {
+      const firstFaction = armyData.faction.split(', ')[0];
+      logger.info(`Using first faction from army faction list: ${firstFaction}`);
+      return firstFaction;
+    }
+
+    // Final fallback: use the army faction as-is
+    logger.info(`Using army faction as-is: ${armyData.faction || 'Unknown'}`);
+    return armyData.faction || 'Unknown';
+  }
+
+  /**
+   * Calculate final special rules by combining base rules with upgrades
+   * Handles rule stacking (like Impact) and replacements
+   */
+  private static calculateFinalSpecialRules(effectiveRules: any[]): string[] {
+    const ruleMap = new Map<string, any>();
+    
+    // Process all rules and handle stacking/replacement
+    effectiveRules.forEach(rule => {
+      const ruleName = rule.name;
+      const existingRule = ruleMap.get(ruleName);
+      
+      if (existingRule) {
+        // Handle rule stacking based on rule type
+        if (ruleName === 'Impact') {
+          // Impact stacks: base Impact(3) + Great Grinder Impact(5) = Impact(8)
+          const existingRating = existingRule.rating || 0;
+          const newRating = rule.rating || 0;
+          const totalRating = existingRating + newRating;
+          
+          ruleMap.set(ruleName, {
+            ...rule,
+            rating: totalRating,
+            label: `Impact(${totalRating})`
+          });
+        } else if (ruleName === 'Defense') {
+          // Defense upgrades: lower is better, so take the lowest value
+          const existingRating = existingRule.rating || 0;
+          const newRating = rule.rating || 0;
+          const finalRating = Math.min(existingRating, newRating);
+          
+          ruleMap.set(ruleName, {
+            ...rule,
+            rating: finalRating,
+            label: `Defense(${finalRating})`
+          });
+        } else if (rule.rating && existingRule.rating) {
+          // For other rated rules, take the higher rating (unless specified otherwise)
+          const existingRating = existingRule.rating || 0;
+          const newRating = rule.rating || 0;
+          const finalRating = Math.max(existingRating, newRating);
+          
+          ruleMap.set(ruleName, {
+            ...rule,
+            rating: finalRating,
+            label: rule.label || `${ruleName}(${finalRating})`
+          });
+        } else {
+          // For non-rated rules, keep the existing one (no stacking)
+          // Do nothing - keep existing rule
+        }
+      } else {
+        // First occurrence of this rule
+        ruleMap.set(ruleName, rule);
+      }
+    });
+    
+    // Convert to string array for display
+    return Array.from(ruleMap.values()).map(rule => rule.label || rule.name);
+  }
+
+  /**
+   * Extracts caster tokens from special rules
+   */
+  private static extractCasterTokens(specialRules: string[]): number {
+    for (const rule of specialRules) {
+      const match = rule.match(/Caster\((\d+)\)/i);
+      if (match) {
+        return parseInt(match[1], 10);
+      }
+    }
+    return 0;
   }
 
   /**
@@ -175,10 +294,11 @@ export class OPRArmyConverter {
       currentTough: toughValue,
       quality: armyModel.stats.quality,
       defense: effectiveDefense,
-      casterTokens: 0,
+      casterTokens: this.extractCasterTokens(combinedRules),
       isDestroyed: false,
       weapons: armyModel.equipment || [],
-      specialRules: [...new Set(combinedRules)] // Remove duplicates
+      specialRules: [...new Set(combinedRules)], // Remove duplicates
+      armyId: parentUnit.armyId // Store armyId for faction resolution
     };
   }
 
@@ -449,10 +569,11 @@ export class OPRArmyConverter {
       currentTough: modelToughValue,
       quality: armyUnit.quality || 4,
       defense: effectiveDefense,
-      casterTokens: 0,
+      casterTokens: this.extractCasterTokens(modelSpecialRules),
       isDestroyed: false,
       weapons: modelWeapons,
-      specialRules: modelSpecialRules
+      specialRules: modelSpecialRules,
+      armyId: armyUnit.armyId // Store armyId for faction resolution
     };
   }
 
@@ -602,7 +723,7 @@ export class OPRArmyConverter {
         // Valid combined unit - merge them intelligently
         const combinedUnit = this.mergeCombinedUnits(groupUnits[0], groupUnits[1]);
         processedUnits.push(combinedUnit);
-        warnings.push(`Combined unit "${combinedUnit.name}" created from 2 units with different loadouts`);
+        // Successfully created combined unit - this is expected behavior, not a warning
       } else if (groupUnits.length === 1) {
         // Single unit marked as combined - treat as normal
         groupUnits[0].type = 'STANDARD';
@@ -653,7 +774,7 @@ export class OPRArmyConverter {
           
           if (isValidHeroJoin) {
             heroesToJoin.push(unit);
-            warnings.push(`Hero ${unit.customName || unit.name} joined unit ${targetUnit.customName || targetUnit.name}`);
+            // Successfully joined hero to unit - this is expected behavior, not a warning
           } else {
             // Can't join - keep as separate unit
             processedUnits.push(unit);
@@ -746,7 +867,8 @@ export class OPRArmyConverter {
       casterTokens: hero.models[0].casterTokens,
       isDestroyed: false,
       weapons: hero.weaponSummary.map(w => w.label),
-      specialRules: hero.models[0].specialRules
+      specialRules: hero.models[0].specialRules,
+      armyId: hero.models[0].armyId // Preserve armyId from original hero
     };
     
     // Keep hero weapons separate - only use target unit's weapons in summary
@@ -917,11 +1039,16 @@ export class OPRArmyConverter {
   }
 
   /**
-   * Calculate command points based on army points
+   * Calculate command points based on army points and campaign method
    */
-  private static calculateCommandPoints(armyPoints: number): number {
-    // OPR standard: 1 command point per 100 points (minimum 1)
-    return Math.max(1, Math.floor(armyPoints / 100));
+  private static calculateCommandPoints(
+    armyPoints: number, 
+    method: 'fixed' | 'growing' | 'temporary' | 'fixed-random' | 'growing-random' | 'temporary-random' = 'fixed'
+  ): number {
+    // Use CommandPointService for consistent calculation
+    const { CommandPointService } = require('./commandPointService');
+    const result = CommandPointService.calculateCommandPoints(armyPoints, method);
+    return result.totalCommandPoints;
   }
 
   /**

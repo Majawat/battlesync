@@ -3,6 +3,7 @@ import { AuthenticatedRequest } from '../middleware/auth';
 import { armyService } from '../services/armyService';
 import { ApiError } from '../utils/apiError';
 import { successResponse, errorResponse } from '../utils/apiResponse';
+import { prisma } from '../utils/database';
 import { 
   ArmyImportRequest, 
   ArmySyncRequest, 
@@ -153,19 +154,20 @@ export class ArmyController {
 
   /**
    * Delete army
-   * DELETE /api/armies/:id
+   * DELETE /api/armies/:id?force=true
    */
   static async deleteArmy(req: Request, res: Response): Promise<void> {
     try {
       const userId = (req as AuthenticatedRequest).user!.id;
       const armyId = req.params.id;
+      const force = req.query.force === 'true';
 
       if (!armyId) {
         res.status(400).json(errorResponse('Army ID is required'));
         return;
       }
 
-      await armyService.deleteArmy(armyId, userId);
+      await armyService.deleteArmy(armyId, userId, force);
       
       res.json(successResponse(null, 'Army deleted successfully'));
     } catch (error) {
@@ -396,6 +398,72 @@ export class ArmyController {
         res.status(error.statusCode).json(errorResponse(error.message));
       } else {
         res.status(500).json(errorResponse('Failed to convert army to battle format'));
+      }
+    }
+  }
+
+  /**
+   * Update army campaign association
+   * PUT /api/armies/:id/campaign
+   */
+  static async updateCampaignAssociation(req: Request, res: Response): Promise<void> {
+    try {
+      const userId = (req as AuthenticatedRequest).user!.id;
+      const armyId = req.params.id;
+      const { campaignId } = req.body;
+
+      if (!armyId) {
+        res.status(400).json(errorResponse('Army ID is required'));
+        return;
+      }
+
+      // Validate campaign exists and user has access (if campaignId provided)
+      if (campaignId) {
+        const campaign = await prisma.campaign.findFirst({
+          where: {
+            id: campaignId,
+            group: {
+              memberships: {
+                some: {
+                  userId,
+                  status: { in: ['ACTIVE', 'INACTIVE'] }
+                }
+              }
+            }
+          }
+        });
+
+        if (!campaign) {
+          res.status(403).json(errorResponse('Campaign not found or access denied'));
+          return;
+        }
+      }
+
+      // Update army campaign association
+      await prisma.army.update({
+        where: {
+          id: armyId,
+          userId // Ensure user owns the army
+        },
+        data: {
+          campaignId: campaignId || null
+        }
+      });
+
+      // Get the updated army using the service method
+      const transformedArmy = await armyService.getArmyById(armyId, userId);
+      
+      res.json(successResponse(
+        transformedArmy,
+        campaignId 
+          ? 'Army successfully associated with campaign'
+          : 'Army campaign association removed'
+      ));
+    } catch (error) {
+      if (error instanceof ApiError) {
+        res.status(error.statusCode).json(errorResponse(error.message));
+      } else {
+        res.status(500).json(errorResponse('Failed to update army campaign association'));
       }
     }
   }

@@ -115,7 +115,12 @@ export const CreateBattleModal: React.FC<CreateBattleModalProps> = ({
       }
 
       const data = await response.json();
-      onBattleCreated(data.data.battleId);
+      console.log('Battle creation response:', data); // Debug log
+      if (data.success && data.data && data.data.battleId) {
+        onBattleCreated(data.data.battleId);
+      } else {
+        throw new Error('Invalid battle creation response');
+      }
       onClose();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to create battle');
@@ -171,8 +176,7 @@ export const CreateBattleModal: React.FC<CreateBattleModalProps> = ({
                 !participants.some(p => p.armyId === army.id)
               ).map(army => (
                 <option key={army.id} value={army.id}>
-                  {army.name} ({army.faction}, {army.points} pts)
-                </option>
+                  {army.name}</option>
               ))}
             </select>
             <button

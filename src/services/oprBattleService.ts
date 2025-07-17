@@ -26,6 +26,95 @@ const prisma = new PrismaClient();
 export class OPRBattleService {
 
   /**
+   * Refresh caster tokens for all caster units at the start of a new round
+   */
+  private static refreshCasterTokens(battleState: OPRBattleState): void {
+    for (const army of battleState.armies) {
+      for (const unit of army.units) {
+        // Refresh caster tokens for regular models
+        for (const model of unit.models) {
+          if (model.casterTokens > 0 || model.specialRules.some(rule => rule.includes('Caster('))) {
+            // Extract the max caster tokens from special rules
+            const casterRule = model.specialRules.find(rule => rule.includes('Caster('));
+            if (casterRule) {
+              const match = casterRule.match(/Caster\((\d+)\)/i);
+              if (match) {
+                const maxTokens = parseInt(match[1], 10);
+                // Refresh to max tokens (max 6 as per OPR rules)
+                model.casterTokens = Math.min(maxTokens, 6);
+              }
+            }
+          }
+        }
+        
+        // Refresh caster tokens for joined heroes
+        if (unit.joinedHero && (unit.joinedHero.casterTokens > 0 || unit.joinedHero.specialRules.some(rule => rule.includes('Caster(')))) {
+          const casterRule = unit.joinedHero.specialRules.find(rule => rule.includes('Caster('));
+          if (casterRule) {
+            const match = casterRule.match(/Caster\((\d+)\)/i);
+            if (match) {
+              const maxTokens = parseInt(match[1], 10);
+              // Refresh to max tokens (max 6 as per OPR rules)
+              unit.joinedHero.casterTokens = Math.min(maxTokens, 6);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Refresh command points for growing/temporary methods
+   */
+  private static refreshCommandPoints(battleState: OPRBattleState, campaign: any): void {
+    const commandPointMethod = campaign.settings?.commandPointMethod || 'fixed';
+    const methodConfig = this.getCommandPointMethodConfig(commandPointMethod);
+    
+    if (!methodConfig.isGrowing) {
+      return; // Only refresh for growing methods
+    }
+    
+    for (const army of battleState.armies) {
+      // Calculate command points for this round
+      const { CommandPointService } = require('./commandPointService');
+      const result = CommandPointService.calculateCommandPoints(army.totalPoints, commandPointMethod);
+      
+      if (methodConfig.isTemporary) {
+        // Temporary: Reset to new amount (discard unspent)
+        army.currentCommandPoints = result.totalCommandPoints;
+      } else {
+        // Growing: Add to existing amount
+        army.currentCommandPoints += result.totalCommandPoints;
+      }
+      
+      // Update max for tracking purposes
+      army.maxCommandPoints = Math.max(army.maxCommandPoints, army.currentCommandPoints);
+    }
+  }
+
+  /**
+   * Get command point method configuration
+   */
+  private static getCommandPointMethodConfig(method: string) {
+    switch (method) {
+      case 'fixed':
+        return { basePerThousand: 4, isRandom: false, isGrowing: false, isTemporary: false };
+      case 'growing':
+        return { basePerThousand: 1, isRandom: false, isGrowing: true, isTemporary: false };
+      case 'temporary':
+        return { basePerThousand: 1, isRandom: false, isGrowing: true, isTemporary: true };
+      case 'fixed-random':
+        return { basePerThousand: 2, isRandom: true, isGrowing: false, isTemporary: false };
+      case 'growing-random':
+        return { basePerThousand: 0.5, isRandom: true, isGrowing: true, isTemporary: false };
+      case 'temporary-random':
+        return { basePerThousand: 0.5, isRandom: true, isGrowing: true, isTemporary: true };
+      default:
+        return { basePerThousand: 4, isRandom: false, isGrowing: false, isTemporary: false };
+    }
+  }
+
+  /**
    * Helper method to broadcast WebSocket messages to battle room
    */
   private static broadcastToBattleRoom(battleId: string, type: string, data: any): void {
@@ -40,7 +129,7 @@ export class OPRBattleService {
         };
         
         // Use the public broadcastToRoom method via the manager instance
-        // Note: We'll need to check the WebSocketManager API for the correct method
+        wsManager.broadcastToRoomPublic(roomId, message);
         logger.debug(`Broadcasting to battle room ${roomId}:`, { type, data });
       } else {
         logger.warn('WebSocket manager not available for battle broadcast');
@@ -120,25 +209,37 @@ export class OPRBattleService {
         });
       }));
 
-      // Convert armies to battle format
+      // Convert armies to battle format or use existing battle data
       const battleArmies: OPRBattleArmy[] = [];
       for (const army of armies) {
         if (army.armyData) {
-          const conversionResult = await OPRArmyConverter.convertArmyToBattle(
-            army.userId,
-            army.id,
-            army.armyData as any, // Type assertion for JSON data
-            {
-              allowCombined: true,
-              allowJoined: true,
-              preserveCustomNames: true
-            }
-          );
-
-          if (conversionResult.success) {
-            battleArmies.push(conversionResult.army);
+          const armyData = army.armyData as any;
+          
+          // Check if we have pre-converted battle data
+          if (armyData.convertedBattleData) {
+            // Use the stored converted data
+            battleArmies.push(armyData.convertedBattleData as OPRBattleArmy);
+          } else if (armyData.armyId && armyData.units && Array.isArray(armyData.units)) {
+            // Legacy: already in battle format, use directly
+            battleArmies.push(armyData as OPRBattleArmy);
           } else {
-            logger.error(`Failed to convert army ${army.name}:`, conversionResult.errors);
+            // Fallback: convert on the fly from ArmyForge data
+            const conversionResult = await OPRArmyConverter.convertArmyToBattle(
+              army.userId,
+              army.id,
+              armyData,
+              {
+                allowCombined: true,
+                allowJoined: true,
+                preserveCustomNames: true
+              }
+            );
+
+            if (conversionResult.success) {
+              battleArmies.push(conversionResult.army);
+            } else {
+              logger.error(`Failed to convert army ${army.name}:`, conversionResult.errors);
+            }
           }
         }
       }
@@ -203,6 +304,201 @@ export class OPRBattleService {
   }
 
   /**
+   * Join an existing battle with user's army
+   */
+  static async joinBattle(
+    battleId: string,
+    userId: string,
+    armyId: string
+  ): Promise<{ success: boolean; battleState?: OPRBattleState; error?: string }> {
+    try {
+      // Get battle and validate
+      const battle = await prisma.battle.findUnique({
+        where: { id: battleId },
+        include: {
+          mission: {
+            include: { campaign: true }
+          },
+          participants: true
+        }
+      });
+
+      if (!battle) {
+        return { success: false, error: 'Battle not found' };
+      }
+
+      if (battle.status !== 'SETUP') {
+        return { success: false, error: 'Can only join battles in SETUP phase' };
+      }
+
+      // Check if user is already a participant
+      const existingParticipant = battle.participants.find(p => p.userId === userId);
+      if (existingParticipant) {
+        return { success: false, error: 'User is already participating in this battle' };
+      }
+
+      // Validate army ownership and campaign membership
+      const army = await prisma.army.findUnique({
+        where: { id: armyId },
+        include: { user: true }
+      });
+
+      if (!army) {
+        return { success: false, error: 'Army not found' };
+      }
+
+      if (army.userId !== userId) {
+        return { success: false, error: 'You do not own this army' };
+      }
+
+      if (army.campaignId !== battle.mission?.campaignId) {
+        return { success: false, error: 'Army is not registered to this campaign' };
+      }
+
+      // Check if user is a campaign member
+      const campaignMember = await prisma.campaignParticipation.findFirst({
+        where: {
+          campaignId: battle.mission?.campaignId,
+          groupMembership: {
+            userId: userId
+          }
+        },
+        include: {
+          groupMembership: true
+        }
+      });
+
+      if (!campaignMember) {
+        return { success: false, error: 'You are not a member of this campaign' };
+      }
+
+      // Convert army to battle format
+      const armyData = JSON.parse(army.armyData as string);
+      const conversionResult = await OPRArmyConverter.convertArmyToBattle(userId, armyId, armyData);
+      
+      if (!conversionResult.success) {
+        return { 
+          success: false, 
+          error: `Failed to convert army: ${conversionResult.errors?.join(', ')}` 
+        };
+      }
+
+      // Add participant to battle
+      await prisma.battleParticipant.create({
+        data: {
+          battleId,
+          userId,
+          armyId,
+          faction: conversionResult.army.faction,
+          startingPoints: conversionResult.army.totalPoints
+        }
+      });
+
+      // Get current battle state and add the new army
+      const currentState = battle.currentState as any;
+      currentState.armies.push(conversionResult.army);
+
+      // Update battle state
+      await prisma.battle.update({
+        where: { id: battleId },
+        data: { currentState: currentState as any }
+      });
+
+      // Broadcast join event
+      this.broadcastToBattleRoom(battleId, 'player_joined', {
+        userId,
+        armyName: conversionResult.army.armyName,
+        faction: conversionResult.army.faction
+      });
+
+      logger.info(`User ${userId} joined battle ${battleId} with army ${armyId}`);
+
+      return { success: true, battleState: currentState };
+
+    } catch (error) {
+      logger.error('Error joining battle:', error);
+      return { success: false, error: 'Failed to join battle' };
+    }
+  }
+
+  /**
+   * Get available battles for a campaign member to join
+   */
+  static async getAvailableBattles(
+    campaignId: string,
+    userId: string
+  ): Promise<Array<{
+    battleId: string;
+    missionName: string;
+    missionNumber: number;
+    createdBy: string;
+    createdByUsername: string;
+    participantCount: number;
+    maxParticipants: number;
+    status: string;
+    createdAt: Date;
+  }>> {
+    try {
+      // Verify user is a campaign member
+      const campaignMember = await prisma.campaignParticipation.findFirst({
+        where: {
+          campaignId,
+          groupMembership: {
+            userId: userId
+          }
+        }
+      });
+
+      if (!campaignMember) {
+        return [];
+      }
+
+      // Get battles in SETUP phase that user hasn't joined
+      const battles = await prisma.battle.findMany({
+        where: {
+          mission: {
+            campaignId: campaignId
+          },
+          status: 'SETUP',
+          participants: {
+            none: {
+              userId: userId
+            }
+          }
+        },
+        include: {
+          mission: true,
+          participants: true,
+          creator: {
+            select: {
+              username: true
+            }
+          }
+        },
+        orderBy: {
+          createdAt: 'desc'
+        }
+      });
+
+      return battles.map(battle => ({
+        battleId: battle.id,
+        missionName: battle.mission!.title,
+        missionNumber: battle.mission!.number,
+        createdBy: battle.createdBy,
+        createdByUsername: battle.creator.username,
+        participantCount: battle.participants.length,
+        maxParticipants: 4, // Standard OPR max - could be configurable
+        status: battle.status,
+        createdAt: battle.createdAt
+      }));
+
+    } catch (error) {
+      logger.error('Error getting available battles:', error);
+      return [];
+    }
+  }
+
+  /**
    * Get OPR battle state
    */
   static async getOPRBattleState(battleId: string, userId: string): Promise<OPRBattleState | null> {
@@ -262,6 +558,22 @@ export class OPRBattleService {
       if (newPhase === 'BATTLE_ROUNDS' && oldPhase === 'DEPLOYMENT') {
         battleState.status = 'ACTIVE';
         battleState.currentRound = 1;
+        
+        // Get campaign data for command point settings
+        const battle = await prisma.battle.findUnique({
+          where: { id: battleId },
+          include: {
+            campaign: true
+          }
+        });
+        
+        // Refresh caster tokens at start of battle rounds
+        this.refreshCasterTokens(battleState);
+        
+        // Refresh command points if using growing/temporary methods
+        if (battle?.campaign) {
+          this.refreshCommandPoints(battleState, battle.campaign);
+        }
       }
 
       // Save updated state
@@ -297,6 +609,76 @@ export class OPRBattleService {
     } catch (error) {
       logger.error('Error transitioning battle phase:', error);
       return { success: false, error: 'Failed to transition phase' };
+    }
+  }
+
+  /**
+   * Advance to next round in battle
+   */
+  static async advanceRound(
+    battleId: string,
+    userId: string
+  ): Promise<{ success: boolean; error?: string }> {
+    try {
+      const battleState = await this.getOPRBattleState(battleId, userId);
+      if (!battleState) {
+        return { success: false, error: 'Battle not found' };
+      }
+
+      if (battleState.phase !== 'BATTLE_ROUNDS') {
+        return { success: false, error: 'Can only advance rounds during battle phase' };
+      }
+
+      // Advance to next round
+      battleState.currentRound++;
+      
+      // Get campaign data for command point settings
+      const battle = await prisma.battle.findUnique({
+        where: { id: battleId },
+        include: {
+          campaign: true
+        }
+      });
+      
+      // Refresh caster tokens at start of new round
+      this.refreshCasterTokens(battleState);
+      
+      // Refresh command points if using growing/temporary methods
+      if (battle?.campaign) {
+        this.refreshCommandPoints(battleState, battle.campaign);
+      }
+
+      // Save updated state
+      await prisma.battle.update({
+        where: { id: battleId },
+        data: { 
+          currentState: battleState as any
+        }
+      });
+
+      // Record event
+      await this.recordBattleEvent(
+        battleId,
+        userId,
+        'ROUND_STARTED',
+        {
+          description: `Round ${battleState.currentRound} started`,
+          round: battleState.currentRound
+        }
+      );
+
+      // Broadcast update
+      this.broadcastToBattleRoom(battleId, 'round_advanced', {
+        battleId,
+        round: battleState.currentRound,
+        phase: battleState.phase,
+        status: battleState.status
+      });
+
+      return { success: true };
+    } catch (error) {
+      logger.error('Error advancing battle round:', error);
+      return { success: false, error: 'Failed to advance round' };
     }
   }
 
@@ -609,7 +991,7 @@ export class OPRBattleService {
   /**
    * Record battle event
    */
-  private static async recordBattleEvent(
+  static async recordBattleEvent(
     battleId: string,
     userId: string,
     eventType: OPRBattleEventType,

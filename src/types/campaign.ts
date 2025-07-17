@@ -77,6 +77,17 @@ export interface CampaignSettings {
   allowMultipleArmies: boolean;
   requireArmyForgeIntegration: boolean;
   customRules: CustomRule[];
+  commandPointMethod: CommandPointMethod;
+}
+
+export type CommandPointMethod = 'fixed' | 'growing' | 'temporary' | 'fixed-random' | 'growing-random' | 'temporary-random';
+
+export interface CommandPointCalculation {
+  method: CommandPointMethod;
+  basePerThousand: number; // CP per 1000 points
+  isRandom?: boolean; // Whether to use D3 multiplier
+  isTemporary?: boolean; // Whether CP are discarded at end of round
+  isGrowing?: boolean; // Whether CP are gained each round
 }
 
 export interface CustomRule {

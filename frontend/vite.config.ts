@@ -14,6 +14,17 @@ export default defineConfig({
         changeOrigin: true,
         secure: false,
       },
+      '/health': {
+        target: 'http://app:3001',
+        changeOrigin: true,
+        secure: false,
+      },
+      '/ws': {
+        target: 'ws://app:3001',
+        ws: true,
+        changeOrigin: true,
+        secure: false,
+      },
     },
   },
 })

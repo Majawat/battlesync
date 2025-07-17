@@ -25,6 +25,9 @@ export interface ArmyForgeData {
     version: string;
     lastModified: string;
     createdBy: string;
+    description?: string;
+    resolvedFactions?: string[];
+    gameSystemName?: string;
   };
 }
 
@@ -44,6 +47,8 @@ export interface ArmyForgeUnit {
   notes?: string | null;
   traits?: string[];
   combined?: boolean;
+  // Army Books API integration
+  armyId?: string; // Reference to Army Books unit ID for faction resolution
   // Hero joining fields
   joinToUnit?: string | null; // selectionId of target unit to join
   selectionId?: string; // unique ID for this unit selection

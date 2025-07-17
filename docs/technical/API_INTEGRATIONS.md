@@ -1,4 +1,6 @@
-# API Integrations v1.1.0
+# External API Integrations
+
+This document covers **external APIs** that BattleSync integrates with. For BattleSync's own REST API, see [API_REFERENCE.md](./API_REFERENCE.md).
 
 ## ArmyForge API Integration ✅ PRODUCTION READY
 
@@ -48,7 +50,65 @@ GET https://army-forge.onepagerules.com/api/game-systems/{id}/factions
 - Faction validation
 - Army categorization
 
-#### 4. Army Books ✅ IMPLEMENTED
+#### 4. Army Books & Faction Resolution ⚠️ NEEDS IMPLEMENTATION
+
+**Status**: ⚠️ **CRITICAL MISSING ENDPOINT** - Required for proper faction mapping
+
+##### Complete Game System API Reference
+
+| Game | gameSystemSlug | ID | Key | Common Rules API | Faction List API | Example ArmyBook | Faction API |
+|------|---------------|----|----|------------------|------------------|------------------|-------------|
+| **Grimdark Future** | `grimdark-future` | 2 | GF | [Common Rules](https://army-forge.onepagerules.com/api/rules/common/2) | [Faction List](https://army-forge.onepagerules.com/api/army-books?filters=official&gameSystemSlug=grimdark-future) | `7oi8zeiqfamiur21` | [Example](https://army-forge.onepagerules.com/api/army-books/7oi8zeiqfamiur21?gameSystem=2) |
+| **GF: Firefight** | `grimdark-future-firefight` | 3 | GFF | [Common Rules](https://army-forge.onepagerules.com/api/rules/common/3) | [Faction List](https://army-forge.onepagerules.com/api/army-books?filters=official&gameSystemSlug=grimdark-future-firefight) | `7oi8zeiqfamiur22` | [Example](https://army-forge.onepagerules.com/api/army-books/7oi8zeiqfamiur22?gameSystem=3) |
+| **Age of Fantasy** | `age-of-fantasy` | 4 | AOF | [Common Rules](https://army-forge.onepagerules.com/api/rules/common/4) | [Faction List](https://army-forge.onepagerules.com/api/army-books?filters=official&gameSystemSlug=age-of-fantasy) | `t-sIke2snonFSL6Q` | [Example](https://army-forge.onepagerules.com/api/army-books/t-sIke2snonFSL6Q?gameSystem=4) |
+| **AOF: Skirmish** | `age-of-fantasy-skirmish` | 5 | AOFS | [Common Rules](https://army-forge.onepagerules.com/api/rules/common/5) | [Faction List](https://army-forge.onepagerules.com/api/army-books?filters=official&gameSystemSlug=age-of-fantasy-skirmish) | `t-sIke2snonFSL6Q` | [Example](https://army-forge.onepagerules.com/api/army-books/t-sIke2snonFSL6Q?gameSystem=5) |
+| **AOF: Regiments** | `age-of-fantasy-regiments` | 6 | AOFR | [Common Rules](https://army-forge.onepagerules.com/api/rules/common/6) | [Faction List](https://army-forge.onepagerules.com/api/army-books?filters=official&gameSystemSlug=age-of-fantasy-regiments) | `t-sIke2snonFSL6Q` | [Example](https://army-forge.onepagerules.com/api/army-books/t-sIke2snonFSL6Q?gameSystem=6) |
+| **AOF: Quest** | `age-of-fantasy-quest` | 7 | AOFQ | [Common Rules](https://army-forge.onepagerules.com/api/rules/common/7) | [Faction List](https://army-forge.onepagerules.com/api/army-books?filters=official&gameSystemSlug=age-of-fantasy-quest) | `t-sIke2snonFSL6Q` | [Example](https://army-forge.onepagerules.com/api/army-books/t-sIke2snonFSL6Q?gameSystem=7) |
+| **AOF: Quest AI** | `age-of-fantasy-quest-ai` | 8 | AOFQAI | [Common Rules](https://army-forge.onepagerules.com/api/rules/common/8) | [Faction List](https://army-forge.onepagerules.com/api/army-books?filters=official&gameSystemSlug=age-of-fantasy-quest-ai) | `t-sIke2snonFSL6Q` | [Example](https://army-forge.onepagerules.com/api/army-books/t-sIke2snonFSL6Q?gameSystem=8) |
+| **GF: Star Quest** | `grimdark-future-star-quest` | 9 | GFSQ | [Common Rules](https://army-forge.onepagerules.com/api/rules/common/9) | [Faction List](https://army-forge.onepagerules.com/api/army-books?filters=official&gameSystemSlug=grimdark-future-star-quest) | `7oi8zeiqfamiur22` | [Example](https://army-forge.onepagerules.com/api/army-books/7oi8zeiqfamiur22?gameSystem=9) |
+| **GF: Star Quest AI** | `grimdark-future-star-quest-ai` | 10 | GFSQAI | [Common Rules](https://army-forge.onepagerules.com/api/rules/common/10) | [Faction List](https://army-forge.onepagerules.com/api/army-books?filters=official&gameSystemSlug=grimdark-future-star-quest-ai) | `7oi8zeiqfamiur22` | [Example](https://army-forge.onepagerules.com/api/army-books/7oi8zeiqfamiur22?gameSystem=10) |
+
+##### Special Case: Warfleets
+| Game | gameSystemSlug | Key | Faction List API | Example ArmyBook | Special API |
+|------|---------------|-----|------------------|------------------|-------------|
+| **GF: Warfleets** | `grimdark-future-warfleet` | GFWF | [Faction List](https://army-forge.onepagerules.com/api/army-books?filters=official&gameSystemSlug=grimdark-future-warfleet) | `0Yn4iw9zrhHLt3fE` | [Special API](https://army-forge.onepagerules.com/api/gfwf/0Yn4iw9zrhHLt3fE) |
+
+##### Additional Endpoints
+
+**All Official Army Books**
+```
+GET https://army-forge.onepagerules.com/api/army-books?filters=official
+```
+
+**Partner Content**
+```
+GET https://army-forge.onepagerules.com/api/partners/?gameSystem={gameSystemId}
+```
+Example: [Grimdark Future Partners](https://army-forge.onepagerules.com/api/partners/?gameSystem=2)
+
+**Partner Army Lists**
+```
+GET https://army-forge.onepagerules.com/api/army-books/user?gameSystemSlug={gameSystemSlug}&username={partnerName}
+```
+Example: [Titan Forge Lists](https://army-forge.onepagerules.com/api/army-books/user?gameSystemSlug=grimdark-future&username=Titan+Forge)
+
+**Community Books**
+```
+GET https://army-forge.onepagerules.com/api/army-books?filters=community&gameSystemSlug={gameSystemSlug}&searchText={query}&page={pageNumber}
+```
+Example: [GF Community Books](https://army-forge.onepagerules.com/api/army-books?filters=community&gameSystemSlug=grimdark-future&searchText=&page=1)
+
+**Usage for Faction Resolution**:
+- ✅ **Needed**: Unit faction resolution (each unit has armyId that maps to specific army book/faction)
+- ✅ **Needed**: Multi-faction army support
+- ❌ **Current Issue**: Using army Description field as faction (incorrect)
+
+**Example Resolution**: 
+- Unit "Grinder Truck" has `armyId: "zz3kp5ry7ks6mxcx"`
+- Lookup in army-books API reveals this maps to "Soul-Snatcher Cults" faction
+- **Current Problem**: BattleSync incorrectly uses army description as faction name
+
+#### 5. Army Book Rules ✅ IMPLEMENTED
 ```
 GET https://army-forge.onepagerules.com/api/game-systems/{gameSystemId}/factions/{factionId}/books
 ```
@@ -322,3 +382,63 @@ interface APIErrorLog {
 - **Performance Testing**: Validated response times and caching effectiveness
 
 The ArmyForge integration is production-ready and fully operational.
+
+## ⚠️ CRITICAL ISSUE: Faction Mapping Bug
+
+### Current Problem ❌
+**BattleSync is incorrectly mapping army faction data during conversion.**
+
+**What's Wrong**:
+- Currently using army `description` field as the faction name
+- This is incorrect - armies can contain multiple factions
+- Each unit has an `armyId` that should be used to determine its actual faction
+
+### Correct Implementation Needed ✅
+
+**Step 1: Implement Army Books API**
+```
+GET https://army-forge.onepagerules.com/api/army-books?filters=official&gameSystemSlug={gameSystemSlug}
+```
+
+**Step 2: Unit-to-Faction Mapping**
+```typescript
+// Each unit in army data has:
+{
+  "armyId": "zz3kp5ry7ks6mxcx",  // Maps to army book
+  "name": "Grinder Truck",
+  // ... other unit data
+}
+
+// Army Books API returns:
+{
+  "id": "zz3kp5ry7ks6mxcx",
+  "name": "Soul-Snatcher Cults",  // This is the ACTUAL faction
+  "gameSystemSlug": "grimdark-future"
+}
+```
+
+**Step 3: Multi-Faction Army Support**
+- Parse each unit's `armyId` 
+- Look up corresponding army book to get faction name
+- Support armies with units from multiple factions
+- Group units by faction for display/organization
+
+### Example Issue
+**Army**: "Mixed Chaos Forces"
+**Current (Wrong)**: Faction = "Mixed Chaos Forces" (description)
+**Correct**: 
+- Grinder Truck (armyId: zz3kp5ry7ks6mxcx) → Soul-Snatcher Cults
+- Chaos Marines (armyId: abc123) → Havoc Brothers
+- Result: Multi-faction army properly categorized
+
+### Impact
+- ❌ **Incorrect faction categorization** in army lists
+- ❌ **Wrong faction filtering** in campaign views  
+- ❌ **Inaccurate army organization** for users
+- ❌ **Potential rule validation issues** (faction-specific rules)
+
+### Files Requiring Updates
+- `src/services/armyForgeClient.ts` - Add army books API endpoint
+- `src/services/oprArmyConverter.ts` - Update faction resolution logic
+- `src/types/army.ts` - Add army book types and multi-faction support
+- Army import/conversion workflow

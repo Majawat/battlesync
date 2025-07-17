@@ -46,9 +46,69 @@ BattleSync is a self-hosted web application for managing One Page Rules (OPR) ta
   - ✅ Complex upgrade scenarios (tested with heavily customized armies)
   - ✅ Edge case handling (identical combined units, custom names)
 
-### ⚠️ IN PROGRESS
-- **Enhanced Battle Features**: Individual unit tracking, damage system, turn management
-- **Army Validation**: Enhanced Joi middleware for army endpoints (basic validation implemented)
+### ✅ RECENTLY COMPLETED (Latest Updates)
+- **Comprehensive Command Point System**: ✅ COMPLETED & TESTED
+  - Fixed major inconsistency between CommandPointService and OPRArmyConverter  
+  - Implemented all 6 OPR command point calculation methods:
+    * Fixed: 4 CP per 1000pts at game start
+    * Growing: 1 CP per 1000pts each round (accumulates)
+    * Temporary: 1 CP per 1000pts each round (unspent discarded)
+    * Fixed Random: D3×2 CP per 1000pts at game start
+    * Growing Random: D3×0.5 CP per 1000pts each round (accumulates)
+    * Temporary Random: D3×0.5 CP per 1000pts each round (unspent discarded)
+  - Automatic CP refresh integrated into phase transitions and round advancement
+  - Campaign settings support for CP method selection (backend ready, UI pending)
+  - Proper mathematical calculations with ceiling rounding for fractional CP
+
+- **Advanced Spell Casting System**: ✅ FOUNDATION COMPLETED
+  - ✅ Real ArmyForge API integration for faction-specific spells
+  - ✅ Intelligent spell parsing (range, targets, hits, AP, modifiers from effect text)
+  - ✅ Comprehensive TypeScript interfaces (OPRSpell, SpellCastAttempt, SpellCastResult)
+  - ✅ SpellDataService with 1-hour caching for performance
+  - ✅ SpellCastModal component with cooperative casting UI
+  - ✅ Support for joined hero casters (tokens properly detected and managed)
+  - ✅ Automatic caster token refresh each round
+  - ⚠️ **Pending**: Frontend integration, enhanced backend controller, spell effect resolution
+
+### ⚠️ COMPLETED - DAMAGE TRACKING SYSTEM
+- **Enhanced Damage Visualization**: ✅ COMPLETED
+  - Health bars with color-coded status (green→yellow→orange→red)
+  - Wound markers (💀 indicators) showing damage taken
+  - Unit-level health overview in card headers
+  - Individual model display with health bars and wound status
+
+- **Damage History & Undo System**: ✅ COMPLETED & TESTED
+  - Complete damage history tracking with database storage
+  - Undo functionality for recent damage actions
+  - DamageHistoryPanel with recent actions and full history views
+  - Quick undo button in battle dashboard
+  - Database schema includes before/after state snapshots for reliable undo
+  - All API endpoints registered and accessible
+
+- **Advanced Damage Types**: ✅ COMPLETED & TESTED
+  - Instant Kill: Quality roll-based damage that bypasses tough
+  - Pierce: Ignores X points of tough value  
+  - Multi-Damage: Targets multiple models simultaneously
+  - Area Effect: Template weapon damage handling
+  - Advanced Damage Modal with intuitive UI for complex damage scenarios
+  - TypeScript compilation errors resolved
+
+- **Enhanced Error Handling**: ✅ COMPLETED
+  - BackendConnectionWait component with detailed error messages
+  - Specific error codes and descriptions (connection refused, timeout, etc.)
+  - Improved troubleshooting information for users
+  - Automatic retry with exponential backoff
+
+### 🔧 DATABASE POLICY
+- **NO MIGRATIONS NEEDED**: Database contains no sacred data - delete and recreate as needed
+- **Schema Changes**: Update Prisma schema, then recreate database with `docker-compose down -v && docker-compose up -d`
+- **Development Focus**: Waste no time on data migrations or preservation
+- **DamageHistory**: Already added to schema with before/after state snapshots and undo relationships
+
+- **Backend Connection Wait System**: ✅ COMPLETED
+  - ConnectionManager utility with exponential backoff retry
+  - BackendConnectionWait component shows loading screen until backend ready
+  - Wrapped entire React app to prevent frontend/backend timing issues
 
 ### ❌ PENDING (Not Started)
 - **Advanced Battle Analytics**: Battle statistics, performance tracking
@@ -301,7 +361,7 @@ Update version in `package.json` when:
 - **Minor** (0.x.0): New features, significant enhancements  
 - **Major** (x.0.0): Breaking changes, major overhauls
 
-**Current Version**: 1.1.0 (Production-ready with OPR Army Conversion enhancements)
+**Current Version**: 1.1.2 (Production-ready with Command Points & Spell System)
 
 ```bash
 # Update version and commit
@@ -397,6 +457,90 @@ PUT    /api/battles/:id                      # Update battle state
 POST   /api/battles/:id/join                 # Join battle as participant
 DELETE /api/battles/:id                      # Delete battle (admin only)
 ```
+
+## Spell Casting System Implementation
+
+### Current Implementation Status ✅
+The spell casting system is **75% complete** with full ArmyForge integration and comprehensive UI components.
+
+#### ✅ **Completed Components**
+
+**Backend Services:**
+- **`SpellDataService`** - Fetches real spell data from ArmyForge faction army books
+- **Intelligent Parsing** - Extracts range, targets, hits, AP, modifiers from spell effect text
+- **Caching System** - 1-hour cache for spell data performance (Map-based, 60min TTL)
+- **Faction Mapping** - Maps faction names to ArmyForge army book IDs
+- **Fallback System** - Provides basic spells when API unavailable
+
+**Data Structures:**
+- **`OPRSpell`** interface with comprehensive spell properties
+- **`SpellCastAttempt`** for cooperative casting mechanics
+- **`SpellCastResult`** for success/failure tracking
+- **`CooperatingCaster`** for multi-caster token contributions
+
+**Frontend Components:**
+- **`SpellCastModal`** - Full-featured spell selection interface
+- **Cooperative Casting UI** - Token contribution from nearby casters
+- **Spell Details Display** - Range, targets, effects, costs
+- **Token Management** - Visual token tracking and validation
+
+**Caster Token Management:**
+- **Automatic Extraction** - `extractCasterTokens()` parses "Caster(X)" from special rules
+- **Round Refresh** - Tokens restored at start of each round (max 6 per OPR rules)
+- **Joined Hero Support** - Proper token detection for heroes joined to units
+- **WebSocket Updates** - Real-time token changes broadcast to all players
+
+#### ⚠️ **Pending Implementation** (25% remaining)
+
+**Frontend Integration:**
+```typescript
+// Need to update BattleUnitCard.tsx to:
+// 1. Replace basic spell button with SpellCastModal
+// 2. Fetch faction spells when modal opens
+// 3. Handle spell selection and cooperative casting
+// 4. Pass proper parameters to backend
+```
+
+**Enhanced Backend Controller:**
+```typescript
+// Need to upgrade oprBattleController.castSpell() to:
+// 1. Validate spell using SpellDataService.getSpellById()
+// 2. Calculate cooperative casting modifiers
+// 3. Perform success roll (4+ on d6) with token modifiers
+// 4. Apply spell effects (damage, buffs, debuffs)
+// 5. Deduct tokens from all participating casters
+```
+
+**Spell Effect Resolution:**
+- **Damage Application** - Apply hits with AP to target units
+- **Buff/Debuff Tracking** - Store temporary effects ("Poison next melee")
+- **Duration Management** - Handle instant/next-action/permanent effects
+
+#### 🔧 **Integration Points**
+
+**ArmyForge Spell Data Format:**
+```json
+{
+  "id": "PXKkZ",
+  "name": "Holy Tears", 
+  "type": 1,
+  "effect": "Target 2 friendly units within 12\" get Poison next time they fight in melee.",
+  "threshold": 1
+}
+```
+
+**Key Files Modified:**
+- **`/src/types/oprBattle.ts`** - Added spell interfaces
+- **`/src/services/spellDataService.ts`** - ArmyForge integration service  
+- **`/frontend/src/components/SpellCastModal.tsx`** - Spell selection UI
+- **`/src/services/oprArmyConverter.ts`** - Fixed caster token extraction
+- **`/src/services/oprBattleService.ts`** - Token refresh integration
+
+**Next Steps Priority:**
+1. **Frontend Integration** (High) - Connect SpellCastModal to BattleUnitCard
+2. **Backend Enhancement** (High) - Complete spell validation and success rolls  
+3. **Effect Resolution** (Medium) - Implement damage and buff/debuff application
+4. **Undo System** (Low) - Allow reverting recent spell attempts
 
 ## External Integrations
 

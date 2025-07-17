@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { PrismaClient } from '@prisma/client';
 import { OPRBattleService } from '../services/oprBattleService';
 import { logger } from '../utils/logger';
 import { AuthenticatedRequest } from '../middleware/auth';
@@ -7,6 +8,8 @@ import {
   ApplyDamageRequest, 
   TouchDamageInput 
 } from '../types/oprBattle';
+
+const prisma = new PrismaClient();
 
 export class OPRBattleController {
 
@@ -94,6 +97,77 @@ export class OPRBattleController {
       res.status(500).json({
         success: false,
         error: 'Failed to get battle state'
+      });
+    }
+  }
+
+  /**
+   * Join an existing battle
+   * POST /api/opr/battles/:battleId/join
+   */
+  static async joinBattle(req: Request, res: Response): Promise<void> {
+    try {
+      const userId = (req as AuthenticatedRequest).user!.id;
+      const { battleId } = req.params;
+      const { armyId } = req.body;
+
+      if (!armyId) {
+        res.status(400).json({
+          success: false,
+          error: 'Missing required field: armyId'
+        });
+        return;
+      }
+
+      const result = await OPRBattleService.joinBattle(battleId, userId, armyId);
+
+      if (!result.success) {
+        res.status(400).json({
+          success: false,
+          error: result.error
+        });
+        return;
+      }
+
+      res.json({
+        success: true,
+        data: {
+          battleState: result.battleState
+        },
+        message: 'Successfully joined battle'
+      });
+
+    } catch (error) {
+      logger.error('Error in joinBattle controller:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Internal server error'
+      });
+    }
+  }
+
+  /**
+   * Get available battles for a campaign
+   * GET /api/opr/campaigns/:campaignId/available-battles
+   */
+  static async getAvailableBattles(req: Request, res: Response): Promise<void> {
+    try {
+      const userId = (req as AuthenticatedRequest).user!.id;
+      const { campaignId } = req.params;
+
+      const battles = await OPRBattleService.getAvailableBattles(campaignId, userId);
+
+      res.json({
+        success: true,
+        data: battles,
+        message: `Found ${battles.length} available battles`
+      });
+
+    } catch (error) {
+      logger.error('Error in getAvailableBattles controller:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Internal server error'
       });
     }
   }
@@ -362,8 +436,46 @@ export class OPRBattleController {
 
       unit.action = action;
 
-      // Save updated state (this would be in the service in a real implementation)
-      // For now, just respond with success
+      // Apply fatigue for charge actions
+      if (action === 'charge') {
+        unit.fatigued = true;
+      }
+
+      // Save updated state to database
+      await prisma.battle.update({
+        where: { id: battleId },
+        data: { 
+          currentState: battleState as any
+        }
+      });
+
+      // Record battle event
+      await OPRBattleService.recordBattleEvent(
+        battleId,
+        userId,
+        'UNIT_ACTION',
+        {
+          unitId,
+          action,
+          description: `Unit ${unit.name} performed ${action} action${action === 'charge' ? ' (now fatigued)' : ''}`
+        }
+      );
+
+      // Broadcast to WebSocket room
+      try {
+        const { getWebSocketManager } = await import('../services/websocket');
+        const wsManager = getWebSocketManager();
+        if (wsManager) {
+          wsManager.broadcastToRoomPublic(`battles:${battleId}`, {
+            type: 'unit_action',
+            data: { unitId, action, unitName: unit.name },
+            timestamp: new Date().toISOString()
+          });
+        }
+      } catch (wsError) {
+        logger.warn('Failed to broadcast unit action to WebSocket:', wsError);
+      }
+
       res.json({
         success: true,
         data: { unitId, action }
@@ -441,6 +553,142 @@ export class OPRBattleController {
       res.status(500).json({
         success: false,
         error: 'Failed to toggle unit status'
+      });
+    }
+  }
+
+  /**
+   * Cast spell
+   * POST /api/opr/battles/:battleId/cast-spell
+   */
+  static async castSpell(req: Request, res: Response): Promise<void> {
+    try {
+      const userId = (req as AuthenticatedRequest).user!.id;
+      const { battleId } = req.params;
+      const { unitId, spellName, targetId } = req.body;
+
+      if (!unitId || !spellName) {
+        res.status(400).json({
+          success: false,
+          error: 'Missing required fields: unitId, spellName'
+        });
+        return;
+      }
+
+      const battleState = await OPRBattleService.getOPRBattleState(battleId, userId);
+      if (!battleState) {
+        res.status(404).json({
+          success: false,
+          error: 'Battle not found'
+        });
+        return;
+      }
+
+      // Find caster unit
+      const userArmy = battleState.armies.find(a => a.userId === userId);
+      if (!userArmy) {
+        res.status(403).json({
+          success: false,
+          error: 'Not your army'
+        });
+        return;
+      }
+
+      const casterUnit = userArmy.units.find(u => u.unitId === unitId);
+      if (!casterUnit) {
+        res.status(404).json({
+          success: false,
+          error: 'Unit not found'
+        });
+        return;
+      }
+
+      // Check if unit has caster models (in unit models or joined hero)
+      let casterModel = casterUnit.models.find(m => m.casterTokens > 0);
+      if (!casterModel && casterUnit.joinedHero && casterUnit.joinedHero.casterTokens > 0) {
+        casterModel = casterUnit.joinedHero;
+      }
+      
+      if (!casterModel) {
+        res.status(400).json({
+          success: false,
+          error: 'Unit has no caster models'
+        });
+        return;
+      }
+
+      // Basic spell casting mechanics
+      if (casterModel.casterTokens <= 0) {
+        res.status(400).json({
+          success: false,
+          error: 'No caster tokens available'
+        });
+        return;
+      }
+
+      // Spend caster token for spell attempt
+      casterModel.casterTokens--;
+
+      // TODO: Implement full spell system with:
+      // - Spell cost validation
+      // - Cooperative casting from nearby casters
+      // - Spell success roll (4+ on d6)
+      // - Spell effects and target resolution
+
+      // Save updated battle state
+      await prisma.battle.update({
+        where: { id: battleId },
+        data: { 
+          currentState: battleState as any
+        }
+      });
+
+      // Record battle event
+      await OPRBattleService.recordBattleEvent(
+        battleId,
+        userId,
+        'SPELL_CAST',
+        {
+          unitId,
+          spellName,
+          targetId,
+          remainingTokens: casterModel.casterTokens
+        }
+      );
+
+      // Broadcast to WebSocket room
+      try {
+        const { getWebSocketManager } = await import('../services/websocket');
+        const wsManager = getWebSocketManager();
+        if (wsManager) {
+          wsManager.broadcastToRoomPublic(`battles:${battleId}`, {
+            type: 'spell_cast',
+            data: { unitId, spellName, targetId, remainingTokens: casterModel.casterTokens },
+            timestamp: new Date().toISOString()
+          });
+        }
+      } catch (wsError) {
+        logger.warn('Failed to broadcast spell cast to WebSocket:', wsError);
+      }
+
+      // Log the spell casting event
+      logger.info(`Spell cast: ${spellName} by unit ${unitId} in battle ${battleId}`);
+
+      res.json({
+        success: true,
+        data: { 
+          unitId, 
+          spellName, 
+          targetId,
+          remainingTokens: casterModel.casterTokens
+        }
+      });
+
+    } catch (error) {
+      logger.error('Cast spell error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to cast spell'
       });
     }
   }

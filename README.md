@@ -1,303 +1,123 @@
 # BattleSync
 
-A self-hosted web application for managing One Page Rules (OPR) tabletop gaming campaigns with comprehensive army management and ArmyForge integration.
+A self-hosted web application for managing One Page Rules (OPR) tabletop gaming campaigns with comprehensive army management and real-time battle tracking.
 
-## Current Status
+## ✨ Features
 
-🟢 **IMPLEMENTED & TESTED**
-- ✅ JWT Authentication system with role-based access control
-- ✅ Gaming Groups management with invite codes
-- ✅ Campaign management with configurable settings
-- ✅ Mission system with objectives, special rules, and terrain
-- ✅ Complete Army management system with ArmyForge integration
-- ✅ Real ArmyForge API integration with intelligent faction mapping
-- ✅ WebSocket real-time communication infrastructure
-- ✅ React frontend with dark mode UI and responsive design
-- ✅ PostgreSQL database with Prisma ORM
-- ✅ Docker development environment
-- ✅ RESTful API with comprehensive CRUD operations
-- ✅ End-to-end army import and campaign association workflow
+🟢 **Production Ready**
+- ✅ Multi-user authentication with role-based access control
+- ✅ Gaming group management with invite codes
+- ✅ Campaign system with configurable settings
+- ✅ Mission management with objectives and special rules
+- ✅ Army management with ArmyForge integration
+- ✅ Real-time battle tracking with WebSockets
+- ✅ Mobile-first responsive design
+- ✅ Docker deployment ready
 
-🟢 **BATTLE SYSTEM OPERATIONAL**
-- ✅ Battle creation workflow with mission integration
-- ✅ Real-time battle dashboard with WebSocket communication
-- ✅ Battle state management and live updates
-- ✅ Tablet-optimized battle interface
+🟡 **In Development**
+- ⚠️ Enhanced battle features (individual unit tracking)
+- ⚠️ Advanced army validation and composition checking
+- ⚠️ Battle analytics and reporting
 
-🟡 **IN PROGRESS** 
-- ⚠️ OPR Army Conversion System fixes (unit combining, weapon merging)
-- ⚠️ Advanced battle tracking features (unit cards, damage system)
-- ⚠️ Army validation middleware enhancements
+## 🚀 Quick Start
 
-🔴 **PLANNED**
-- ❌ Advanced battle analytics and reporting
-- ❌ Production deployment configuration with SSL
+### Using Docker (Recommended)
 
-## Quick Start
-
-1. **Clone and setup**:
+1. **Clone and start**:
 ```bash
-git clone <repository-url>
+git clone https://github.com/yourusername/battlesync.git
 cd battlesync
-cp .env.example .env
-```
-
-2. **Start with Docker Compose**:
-```bash
 docker-compose up -d
 ```
 
-3. **Access the application**:
+2. **Access the application**:
 - Frontend: http://localhost:3002
 - API: http://localhost:3001
 - Health check: http://localhost:3001/health
-- Database: PostgreSQL on localhost:5433
 
-## Demo Credentials
-
-After starting the containers, you can log in with:
+3. **Demo credentials**:
 - Username: `admin`
 - Password: `admin123`
-- Role: `SERVER_OWNER`
 
-## Development
+### Local Development
 
-### Prerequisites
-- Node.js 18+
-- PostgreSQL 15+
-- Docker & Docker Compose (recommended)
+1. **Prerequisites**: Node.js 18+, PostgreSQL 15+, Docker & Docker Compose
 
-### Local Development Setup
-
-1. **Install dependencies**:
+2. **Install dependencies**:
 ```bash
 npm install
 cd frontend && npm install
 ```
 
-2. **Start development environment**:
+3. **Start development**:
 ```bash
 docker-compose up -d
+npm run dev              # Backend
+cd frontend && npm run dev  # Frontend
 ```
 
-3. **Access development tools**:
+4. **Development tools**:
 ```bash
-# Prisma Studio (database GUI)
-npm run db:studio
-
-# Backend logs
-docker logs battlesync-app-1 -f
-
-# Frontend logs  
-docker logs battlesync-frontend-1 -f
+npm run db:studio        # Database GUI
+npm run test            # Test suite
+npm run lint            # Code linting
 ```
 
-### Available Scripts
+## 🏗️ Architecture
 
-**Backend:**
-- `npm run dev` - Start development server with hot reload
-- `npm run build` - Build TypeScript for production
-- `npm run start` - Start production server
-- `npm run test` - Run test suite
-- `npm run lint` - Run ESLint
-- `npm run db:migrate` - Run database migrations
-- `npm run db:generate` - Generate Prisma client
-- `npm run db:studio` - Open Prisma Studio
-- `npm run db:seed` - Seed database with demo data
-
-**Frontend:**
-- `cd frontend && npm run dev` - Start frontend development server
-- `cd frontend && npm run build` - Build frontend for production
-- `cd frontend && npm run lint` - Run frontend linting
-
-## Architecture
-
-This is a full-stack TypeScript application with:
-- **Backend**: Node.js/Express with TypeScript
-- **Frontend**: React 18+ with TypeScript, TailwindCSS, Vite
-- **Database**: PostgreSQL 15+ with Prisma ORM
-- **Real-time**: WebSockets for live battle tracking
-- **Authentication**: JWT tokens with role-based access control
-- **API**: RESTful endpoints + WebSocket events
+**Full-stack TypeScript application:**
+- **Backend**: Node.js/Express with Prisma ORM
+- **Frontend**: React 18+ with TailwindCSS
+- **Database**: PostgreSQL with real-time WebSockets
 - **Deployment**: Docker Compose ready
+- **Authentication**: JWT with role-based access control
 
-## Project Structure
+## 📚 Documentation
 
-```
-src/                    # Backend source code
-├── controllers/        # Express route handlers
-├── middleware/         # Authentication, validation, logging
-├── routes/            # API route definitions
-├── services/          # Business logic layer
-├── types/             # TypeScript type definitions
-├── utils/             # Utility functions and helpers
-└── index.ts           # Application entry point
+### **🎯 For New Users**
+- **[Quick Start](#-quick-start)** - Get BattleSync running in 5 minutes
+- **[Features Guide](./docs/user/FEATURES.md)** - What BattleSync can do
 
-frontend/              # React frontend application
-├── src/
-│   ├── components/    # React components
-│   ├── hooks/         # Custom React hooks
-│   ├── services/      # API client and utilities
-│   ├── types/         # Frontend TypeScript types
-│   └── App.tsx        # Main application component
-└── package.json
+### **🔧 For Developers**  
+- **[Project Overview](./docs/PROJECT_OVERVIEW.md)** - Comprehensive project status and roadmap
+- **[Architecture](./docs/technical/ARCHITECTURE.md)** - System design at `src/` level
+- **[API Reference](./docs/technical/API_REFERENCE.md)** - All REST endpoints and WebSocket events
+- **[Data Models](./docs/technical/DATA_MODELS.md)** - Database schema and TypeScript interfaces
+- **[External APIs](./docs/technical/API_INTEGRATIONS.md)** - ArmyForge and other integrations
 
-prisma/
-├── schema.prisma      # Database schema
-└── seed.ts            # Database seeding
+### **🤖 For AI Assistants**
+- **[CLAUDE.md](./CLAUDE.md)** - Comprehensive project context and instructions
+- **[AI Project Map](./docs/AI_PROJECT_MAP.md)** - Machine-readable codebase overview with file purposes
+- **[OPR Conversion](./docs/technical/OPR_ARMY_CONVERSION.md)** - Complex army conversion system details  
+- **[Current Tasks](./docs/development/TODO.md)** - Active development priorities
 
-docker/
-└── init-db.sql        # Database initialization
-```
+## 🎯 One Page Rules Integration
 
-## API Endpoints
+BattleSync specializes in **One Page Rules** tabletop gaming:
+- **ArmyForge Integration**: Import armies directly from army-forge.onepagerules.com
+- **OPR Game Systems**: Support for Grimdark Future, Age of Fantasy, Firefight, Warfleets FTL
+- **Combined Units**: Smart handling of OPR combined unit rules
+- **Hero Joining**: Proper hero-to-unit joining mechanics
+- **Battle Tracking**: Real-time damage tracking optimized for tablet use
 
-### Authentication
-- `POST /api/auth/login` - User login
-- `POST /api/auth/register` - User registration  
-- `POST /api/auth/refresh` - Refresh access token
-- `POST /api/auth/logout` - User logout
-- `GET /api/auth/profile` - Get user profile
-- `PUT /api/auth/profile` - Update user profile
+## 🤝 Contributing
 
-### Gaming Groups
-- `GET /api/groups` - Get user's gaming groups
-- `POST /api/groups` - Create gaming group
-- `GET /api/groups/:id` - Get specific group
-- `POST /api/groups/join` - Join group with invite code
-- `POST /api/groups/:id/leave` - Leave gaming group
-- `POST /api/groups/:id/regenerate-invite` - Regenerate invite code
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
 
-### Campaigns
-- `GET /api/groups/:groupId/campaigns` - Get group's campaigns
-- `POST /api/groups/:groupId/campaigns` - Create campaign
-- `GET /api/campaigns/:id` - Get specific campaign
-- `PUT /api/campaigns/:id` - Update campaign
-- `POST /api/campaigns/:id/join` - Join campaign
-- `POST /api/campaigns/:id/leave` - Leave campaign
+## 📄 License
 
-### Missions
-- `GET /api/campaigns/:campaignId/missions` - Get campaign missions
-- `POST /api/campaigns/:campaignId/missions` - Create mission
-- `GET /api/missions/:id` - Get specific mission
-- `PUT /api/missions/:id` - Update mission
-- `DELETE /api/missions/:id` - Delete mission
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-### Army Management
-- `POST /api/armies/import` - Import army from ArmyForge
-- `GET /api/armies` - Get user's armies (with campaign filtering)
-- `GET /api/armies/:id` - Get specific army details
-- `PUT /api/armies/:id/sync` - Sync army with ArmyForge
-- `PUT /api/armies/:id/customizations` - Update army customizations
-- `DELETE /api/armies/:id` - Delete army
-- `GET /api/armies/armyforge/status` - Check ArmyForge API status
+## 🆘 Support
 
-### Battle Management
-- `GET /api/missions/:missionId/battles` - Get mission battles
-- `POST /api/missions/:missionId/battles` - Create battle from mission
-- `GET /api/battles/:id` - Get battle details and state
-- `PUT /api/battles/:id` - Update battle state
-- `POST /api/battles/:id/join` - Join battle as participant
-- `DELETE /api/battles/:id` - Delete battle (admin only)
+- **Documentation**: [docs/](./docs/)
+- **Issues**: [GitHub Issues](https://github.com/yourusername/battlesync/issues)
+- **AI Assistant**: This project includes comprehensive [Claude.md](./CLAUDE.md) instructions for AI-assisted development
 
-### WebSocket Events
-- `connection` - Client connects to real-time system
-- `join-room` - Join specific room (group/campaign/battle)
-- `leave-room` - Leave room
-- `notification` - Real-time notifications
-- `battle-update` - Live battle state updates
-- `heartbeat` - Connection health monitoring
+---
 
-## Key Features
-
-### ✅ Complete Army Management
-- **ArmyForge Integration**: Import armies directly from ArmyForge using army IDs
-- **Intelligent Faction Mapping**: Automatically resolves game system codes to meaningful faction names
-- **Campaign Association**: Link armies to specific campaigns with validation
-- **Real-time Sync**: Keep armies updated with ArmyForge changes
-- **Detailed Army Views**: View units, weapons, special rules, and army statistics
-
-### ✅ Advanced Campaign System
-- **Flexible Settings**: Configure points limits, experience systems, and game rules
-- **Mission Management**: Create detailed missions with objectives, special rules, and terrain
-- **Member Management**: Invite players and track campaign participation
-- **Experience Tracking**: Built-in system for tracking army experience and progression
-
-### ✅ Real-time Features
-- **WebSocket Communication**: Live updates for battle tracking and notifications
-- **Responsive UI**: Modern React interface optimized for desktop and mobile
-- **Dark Mode**: Full dark theme support with system preference detection
-
-## Next Steps
-
-### High Priority
-1. **Enhanced Battle Features**
-   - Individual unit tracking and damage system
-   - Turn-based action management
-   - Battle result recording and experience updates
-   - Unit status effects and modifiers
-
-2. **Enhanced Army Features**
-   - Battle honors and veteran upgrades
-   - Army customization tracking
-   - Comprehensive army validation
-   - Unit conversion from ArmyForge format
-
-### Medium Priority  
-3. **Advanced Analytics**
-   - Campaign statistics and reporting
-   - Player performance tracking
-   - Army usage analytics
-
-4. **Production Features**
-   - SSL/HTTPS configuration
-   - Automated backup systems
-   - Performance monitoring
-
-### Low Priority
-5. **Extended Integrations**
-   - Additional army list providers
-   - Discord bot integration
-   - Mobile app (React Native)
-
-## Documentation
-
-### Development Guides
-- **[CLAUDE.md](./CLAUDE.md)** - Main development guide and project overview
-- **[OPR Army Conversion](./docs/OPR_ARMY_CONVERSION.md)** - Army conversion system documentation
-- **[Architecture](./ARCHITECTURE.md)** - Technical architecture overview
-- **[Features](./FEATURES.md)** - Feature specifications and status
-- **[API Integrations](./API_INTEGRATIONS.md)** - External API documentation
-
-### Project Files
-- **[Project Overview](./PROJECT_OVERVIEW.md)** - High-level project description
-- **[User Workflows](./USER_WORKFLOWS.md)** - User interaction flows
-- **[Data Models](./DATA_MODELS.md)** - Database schema and types
-
-## Contributing
-
-1. Read the development documentation in `CLAUDE.md`
-2. Check current todos and in-progress work
-3. Follow TypeScript best practices and ESLint configuration
-4. Follow commit standards (conventional commits + AI attribution)
-5. Update version numbers appropriately (patch/minor/major)
-6. Push all commits and tags to origin
-7. Update documentation for new features
-
-## Deployment
-
-The application is designed for self-hosted deployment using Docker Compose. See the docker-compose.yml for the complete production-ready setup including database, backend API, and frontend.
-
-For production deployment:
-1. Update environment variables in `.env`
-2. Configure SSL certificates
-3. Set up database backups
-4. Monitor application logs
-
-## Support
-
-This is a self-hosted application designed for tabletop gaming groups. For technical issues:
-1. Check Docker container logs
-2. Verify database connectivity
-3. Review API endpoint documentation
-4. Check WebSocket connection status
+**BattleSync v1.1.2** - Built for the One Page Rules community 🎲

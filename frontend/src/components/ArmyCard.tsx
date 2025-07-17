@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArmySummary } from '../types/army';
 import { apiClient } from '../services/api';
+import { EditArmyModal } from './EditArmyModal';
 
 interface ArmyCardProps {
   army: ArmySummary;
@@ -17,6 +18,7 @@ export const ArmyCard: React.FC<ArmyCardProps> = ({
   const navigate = useNavigate();
   const [syncing, setSyncing] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
 
   const handleSync = async () => {
     if (!army.lastSyncedAt) return; // Can't sync non-ArmyForge armies
@@ -35,18 +37,36 @@ export const ArmyCard: React.FC<ArmyCardProps> = ({
     }
   };
 
-  const handleDelete = async () => {
-    if (!confirm(`Are you sure you want to delete "${army.name}"? This action cannot be undone.`)) {
+  const handleDelete = async (force: boolean = false) => {
+    const confirmMessage = force 
+      ? `Are you sure you want to force delete "${army.name}"? This will remove it from all battles and cannot be undone.`
+      : `Are you sure you want to delete "${army.name}"? This action cannot be undone.`;
+      
+    if (!confirm(confirmMessage)) {
       return;
     }
 
     try {
       setDeleting(true);
-      await apiClient.deleteArmy(army.id);
+      await apiClient.deleteArmy(army.id, force);
       onDelete();
     } catch (error: any) {
       console.error('Failed to delete army:', error);
-      // TODO: Show error toast
+      const errorMessage = error.response?.data?.message || error.message || 'Failed to delete army';
+      
+      // If the error indicates battle participants and we haven't tried force yet
+      if (!force && errorMessage.includes('participated in battles')) {
+        const forceDelete = confirm(
+          `${errorMessage}\n\nWould you like to force delete this army? This will remove it from all battles.`
+        );
+        
+        if (forceDelete) {
+          await handleDelete(true); // Recursive call with force=true
+          return;
+        }
+      } else {
+        alert(`Error: ${errorMessage}`);
+      }
     } finally {
       setDeleting(false);
     }
@@ -128,8 +148,8 @@ export const ArmyCard: React.FC<ArmyCardProps> = ({
         {/* Campaign Info */}
         {army.campaignId && (
           <div className="mb-4">
-            <div className="text-xs text-gray-400">Campaign</div>
-            <div className="text-sm text-white truncate">Campaign {army.campaignId}</div>
+            <div className="text-xs text-gray-400">Campaign ID</div>
+            <div className="text-sm text-white truncate">{army.campaignId}</div>
           </div>
         )}
 
@@ -150,6 +170,12 @@ export const ArmyCard: React.FC<ArmyCardProps> = ({
           </button>
           
           <div className="flex space-x-2">
+            <button
+              onClick={() => setShowEditModal(true)}
+              className="text-blue-400 hover:text-blue-300 text-sm"
+            >
+              Edit
+            </button>
             {army.lastSyncedAt && (
               <button
                 onClick={handleSync}
@@ -160,7 +186,7 @@ export const ArmyCard: React.FC<ArmyCardProps> = ({
               </button>
             )}
             <button
-              onClick={handleDelete}
+              onClick={() => handleDelete()}
               disabled={deleting}
               className="text-red-400 hover:text-red-300 text-sm disabled:opacity-50"
             >
@@ -169,6 +195,17 @@ export const ArmyCard: React.FC<ArmyCardProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Edit Modal */}
+      <EditArmyModal
+        army={army}
+        isOpen={showEditModal}
+        onClose={() => setShowEditModal(false)}
+        onUpdate={() => {
+          setShowEditModal(false);
+          onRefresh();
+        }}
+      />
     </div>
   );
 };

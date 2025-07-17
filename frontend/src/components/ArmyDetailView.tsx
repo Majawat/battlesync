@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { apiClient } from '../services/api';
-import { Army, ArmyForgeUnit } from '../types/army';
+import { Army } from '../types/army';
 import { OPRBattleUnit } from '../types/oprBattle';
 import { BattleUnitCard } from './BattleUnitCard';
 
@@ -33,10 +33,18 @@ export const ArmyDetailView: React.FC = () => {
       setLoading(true);
       const response = await apiClient.getArmy(armyId);
       if (response.data.status === 'success' && response.data.data) {
-        setArmy(response.data.data);
+        const armyData = response.data.data;
+        console.log('=== ARMY DATA DEBUG ===');
+        console.log('Full army object:', armyData);
+        console.log('Army data field:', armyData.armyData);
+        console.log('Army data type:', typeof armyData.armyData);
+        console.log('Army data keys:', armyData.armyData ? Object.keys(armyData.armyData) : 'null');
+        console.log('======================');
+        
+        setArmy(armyData);
         // Convert to battle units if needed
         if (showBattleView) {
-          await convertArmyToBattleUnits(response.data.data);
+          await convertArmyToBattleUnits(armyData);
         }
       } else {
         setError('Failed to load army details');
@@ -51,6 +59,23 @@ export const ArmyDetailView: React.FC = () => {
   const convertArmyToBattleUnits = async (armyData: Army) => {
     try {
       setConverting(true);
+      
+      // Check if we have stored converted battle data
+      const armyDataObj = armyData.armyData as any;
+      console.log('=== BATTLE CONVERSION DEBUG ===');
+      console.log('Army data for battle conversion:', armyDataObj);
+      console.log('Has convertedBattleData?', !!armyDataObj?.convertedBattleData);
+      console.log('===============================');
+      
+      if (armyDataObj?.convertedBattleData?.units) {
+        // Use stored converted data
+        console.log('Using stored converted battle data');
+        setBattleUnits(armyDataObj.convertedBattleData.units);
+        return;
+      }
+      
+      // Fallback to API conversion
+      console.log('Falling back to API conversion');
       const response = await fetch(`/api/armies/${armyData.id}/convert`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
@@ -59,12 +84,16 @@ export const ArmyDetailView: React.FC = () => {
 
       if (response.ok) {
         const result = await response.json();
-        if (result.status === 'success' && result.data?.units) {
+        console.log('API conversion result:', result);
+        if (result.status === 'success' && result.data && result.data.units) {
           setBattleUnits(result.data.units);
         } else {
+          console.error('Army conversion failed:', result);
           setBattleUnits([]);
         }
       } else {
+        const errorText = await response.text();
+        console.error('Army conversion request failed:', response.status, errorText);
         setBattleUnits([]);
       }
     } catch (error) {
@@ -169,7 +198,16 @@ export const ArmyDetailView: React.FC = () => {
               <div>
                 <h2 className="text-3xl font-bold text-white">{army.name}</h2>
                 <p className="text-gray-400 mt-2">
-                  {army.faction} • {formatGameSystem(army.armyData?.gameSystem || '')}
+                  {(() => {
+                    // Use resolved factions from metadata if available, otherwise fall back to faction field
+                    const armyData = army.armyData as any;
+                    const gameSystemName = armyData?.metadata?.gameSystemName || formatGameSystem(armyData?.gameSystem || '');
+                    
+                    // Fallback: check if faction looks like a description
+                    const faction = armyData.metadata.description;
+                    
+                    return `${faction} • ${gameSystemName}`;
+                  })()}
                 </p>
               </div>
               <div className="flex space-x-4">
@@ -230,7 +268,7 @@ export const ArmyDetailView: React.FC = () => {
                   <h3 className="text-xl font-bold text-white">Army Units</h3>
                   {showBattleView}
                 </div>
-                {army.armyData?.units && army.armyData.units.length > 0 ? (
+                {army.armyData ? (
                   <div className="space-y-4">
                     {showBattleView ? (
                       battleUnits.length > 0 ? (
@@ -254,65 +292,244 @@ export const ArmyDetailView: React.FC = () => {
                         </div>
                       )
                     ) : (
-                      army.armyData.units.map((unit: ArmyForgeUnit, index: number) => (
-                      <div key={`raw-unit-${unit.id}-${index}`} className="bg-gray-700 p-4 rounded border-l-4 border-blue-500">
-                        <div className="flex justify-between items-start mb-2">
-                          <h4 className="text-lg font-semibold text-white">
-                            {unit.customName || unit.name}
-                          </h4>
-                          <div className="text-right">
-                            <div className="text-white font-medium">{unit.cost} pts</div>
-                            <div className="text-gray-400 text-sm">Size: {unit.size}</div>
-                          </div>
-                        </div>
+                      (() => {
+                        // Check if this is converted OPRBattleArmy format or raw ArmyForge format
+                        const armyData = army.armyData as any;
+                        console.log('Army data structure:', armyData); // Debug log
                         
-                        {/* Unit Stats */}
-                        {(unit.quality || unit.defense) && (
-                          <div className="mb-3">
-                            <div className="flex space-x-4 text-sm">
-                              {unit.quality && (
-                                <span className="text-gray-300">Quality: <span className="text-white">{unit.quality}+</span></span>
-                              )}
-                              {unit.defense && (
-                                <span className="text-gray-300">Defense: <span className="text-white">{unit.defense}+</span></span>
-                              )}
-                            </div>
-                          </div>
-                        )}
-
-                        {/* Weapons */}
-                        {unit.weapons && unit.weapons.length > 0 && (
-                          <div className="mb-3">
-                            <h5 className="text-sm font-medium text-gray-300 mb-1">Weapons:</h5>
-                            <div className="space-y-1">
-                              {unit.weapons.map((weapon, weaponIndex) => (
-                                <div key={`weapon-${unit.id}-${weapon.id || weaponIndex}`} className="text-sm text-gray-400">
-                                  <span className="text-white">{weapon.name}</span>
-                                  {weapon.label && <span className="ml-2">({weapon.label})</span>}
+                        if (armyData.convertedBattleData) {
+                          // New format: show the original ArmyForge units (not converted data)
+                          const originalUnits = armyData.units || [];
+                          return originalUnits.map((unit: any, index: number) => (
+                            <div key={`armyforge-unit-${unit.id || index}`} className="bg-gray-700 p-4 rounded border-l-4 border-blue-500">
+                              <div className="flex justify-between items-start mb-2">
+                                <h4 className="text-lg font-semibold text-white">
+                                  {unit.customName || unit.name}
+                                </h4>
+                                <div className="text-right">
+                                  <div className="text-white font-medium">{unit.cost} pts</div>
+                                  <div className="text-gray-400 text-sm">Size: {unit.size}</div>
                                 </div>
-                              ))}
-                            </div>
-                          </div>
-                        )}
+                              </div>
+                              
+                              {/* Unit Stats */}
+                              {(unit.quality || unit.defense) && (
+                                <div className="mb-3">
+                                  <div className="flex space-x-4 text-sm">
+                                    {unit.quality && (
+                                      <span className="text-gray-300">Quality: <span className="text-white">{unit.quality}+</span></span>
+                                    )}
+                                    {unit.defense && (
+                                      <span className="text-gray-300">Defense: <span className="text-white">{unit.defense}+</span></span>
+                                    )}
+                                  </div>
+                                </div>
+                              )}
 
-                        {/* Special Rules */}
-                        {unit.rules && unit.rules.length > 0 && (
-                          <div>
-                            <h5 className="text-sm font-medium text-gray-300 mb-1">Special Rules:</h5>
-                            <div className="flex flex-wrap gap-1">
-                              {unit.rules.map((rule, ruleIndex) => (
-                                <span 
-                                  key={`rule-${unit.id}-${rule.id || ruleIndex}`}
-                                  className="inline-block bg-blue-900 text-blue-200 text-xs px-2 py-1 rounded"
-                                >
-                                  {rule.label || rule.name}
-                                </span>
-                              ))}
+                              {/* Weapons */}
+                              {unit.weapons && unit.weapons.length > 0 && (
+                                <div className="mb-3">
+                                  <h5 className="text-sm font-medium text-gray-300 mb-2">Weapons:</h5>
+                                  <div className="overflow-x-auto">
+                                    <table className="min-w-full text-sm">
+                                      <thead>
+                                        <tr className="border-b border-gray-600">
+                                          <th className="text-left text-gray-300 font-medium py-1 pr-4">Weapon</th>
+                                          <th className="text-left text-gray-300 font-medium py-1 pr-4">RNG</th>
+                                          <th className="text-left text-gray-300 font-medium py-1 pr-4">ATK</th>
+                                          <th className="text-left text-gray-300 font-medium py-1 pr-4">AP</th>
+                                          <th className="text-left text-gray-300 font-medium py-1">Special</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        {unit.weapons.map((weapon: any, weaponIndex: number) => {
+                                          // Extract AP value from special rules
+                                          const apRule = weapon.specialRules?.find((rule: any) => rule.name === 'AP');
+                                          const apValue = apRule ? apRule.rating || apRule.label?.match(/\((\d+)\)/)?.[1] : null;
+                                          
+                                          // Get other special rules (excluding AP)
+                                          const otherRules = weapon.specialRules?.filter((rule: any) => rule.name !== 'AP') || [];
+                                          const specialText = otherRules.length > 0 
+                                            ? otherRules.map((rule: any) => rule.label || rule.name).join(', ')
+                                            : '-';
+                                          
+                                          return (
+                                            <tr key={`weapon-${unit.id}-${weapon.id || weaponIndex}`} className="border-b border-gray-700/50">
+                                              <td className="text-white py-2 pr-4">{weapon.name}</td>
+                                              <td className="text-gray-300 py-2 pr-4">{weapon.range ? `${weapon.range}"` : '-'}</td>
+                                              <td className="text-gray-300 py-2 pr-4">A{weapon.attacks || '1'}</td>
+                                              <td className="text-gray-300 py-2 pr-4">{apValue || '-'}</td>
+                                              <td className="text-gray-300 py-2">{specialText}</td>
+                                            </tr>
+                                          );
+                                        })}
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              )}
+
+                              {/* Special Rules */}
+                              {unit.rules && unit.rules.length > 0 && (
+                                <div>
+                                  <h5 className="text-sm font-medium text-gray-300 mb-1">Special Rules:</h5>
+                                  <div className="flex flex-wrap gap-1">
+                                    {unit.rules.map((rule: any, ruleIndex: number) => (
+                                      <span 
+                                        key={`rule-${unit.id}-${rule.id || ruleIndex}`}
+                                        className="inline-block bg-blue-900 text-blue-200 text-xs px-2 py-1 rounded"
+                                      >
+                                        {rule.label || rule.name}
+                                      </span>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
                             </div>
-                          </div>
-                        )}
-                      </div>
-                    ))
+                          ));
+                        } else if (armyData.units && Array.isArray(armyData.units)) {
+                          // Legacy: converted OPRBattleArmy format - display the units
+                          return armyData.units.map((unit: any, index: number) => (
+                            <div key={`converted-unit-${unit.unitId || index}`} className="bg-gray-700 p-4 rounded border-l-4 border-green-500">
+                              <div className="flex justify-between items-start mb-2">
+                                <h4 className="text-lg font-semibold text-white">
+                                  {unit.name}
+                                </h4>
+                                <div className="text-right">
+                                  <div className="text-white font-medium">{unit.points} pts</div>
+                                  <div className="text-gray-400 text-sm">Models: {unit.models?.length || 0}</div>
+                                </div>
+                              </div>
+                              
+                              {/* Show models */}
+                              {unit.models && unit.models.length > 0 && (
+                                <div className="mb-3">
+                                  <h5 className="text-sm font-medium text-gray-300 mb-1">Models:</h5>
+                                  <div className="grid grid-cols-1 gap-2">
+                                    {unit.models.map((model: any, modelIndex: number) => (
+                                      <div key={`model-${modelIndex}`} className="bg-gray-800 p-2 rounded text-sm">
+                                        <div className="text-white font-medium">{model.name}</div>
+                                        <div className="text-gray-400">
+                                          Quality: {model.quality}+ | Defense: {model.defense}+ | Tough: {model.tough}
+                                        </div>
+                                        {model.weapons && model.weapons.length > 0 && (
+                                          <div className="text-gray-300 text-xs mt-1">
+                                            Weapons: {model.weapons.map((w: any) => w.name).join(', ')}
+                                          </div>
+                                        )}
+                                        {model.specialRules && model.specialRules.length > 0 && (
+                                          <div className="text-blue-300 text-xs mt-1">
+                                            Rules: {model.specialRules.map((r: any) => r.name).join(', ')}
+                                          </div>
+                                        )}
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          ));
+                        } else if (armyData.length && Array.isArray(armyData)) {
+                          // This might be raw ArmyForge units array
+                          return armyData.map((unit: any, index: number) => (
+                            <div key={`raw-unit-${unit.id || index}`} className="bg-gray-700 p-4 rounded border-l-4 border-blue-500">
+                              <div className="flex justify-between items-start mb-2">
+                                <h4 className="text-lg font-semibold text-white">
+                                  {unit.customName || unit.name}
+                                </h4>
+                                <div className="text-right">
+                                  <div className="text-white font-medium">{unit.cost} pts</div>
+                                  <div className="text-gray-400 text-sm">Size: {unit.size}</div>
+                                </div>
+                              </div>
+                              
+                              {/* Unit Stats for raw ArmyForge data */}
+                              {(unit.quality || unit.defense) && (
+                                <div className="mb-3">
+                                  <div className="flex space-x-4 text-sm">
+                                    {unit.quality && (
+                                      <span className="text-gray-300">Quality: <span className="text-white">{unit.quality}+</span></span>
+                                    )}
+                                    {unit.defense && (
+                                      <span className="text-gray-300">Defense: <span className="text-white">{unit.defense}+</span></span>
+                                    )}
+                                  </div>
+                                </div>
+                              )}
+
+                              {/* Weapons for raw ArmyForge data */}
+                              {unit.weapons && unit.weapons.length > 0 && (
+                                <div className="mb-3">
+                                  <h5 className="text-sm font-medium text-gray-300 mb-2">Weapons:</h5>
+                                  <div className="overflow-x-auto">
+                                    <table className="min-w-full text-sm">
+                                      <thead>
+                                        <tr className="border-b border-gray-600">
+                                          <th className="text-left text-gray-300 font-medium py-1 pr-4">Weapon</th>
+                                          <th className="text-left text-gray-300 font-medium py-1 pr-4">RNG</th>
+                                          <th className="text-left text-gray-300 font-medium py-1 pr-4">ATK</th>
+                                          <th className="text-left text-gray-300 font-medium py-1 pr-4">AP</th>
+                                          <th className="text-left text-gray-300 font-medium py-1">Special</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        {unit.weapons.map((weapon: any, weaponIndex: number) => {
+                                          // Extract AP value from special rules
+                                          const apRule = weapon.specialRules?.find((rule: any) => rule.name === 'AP');
+                                          const apValue = apRule ? apRule.rating || apRule.label?.match(/\((\d+)\)/)?.[1] : null;
+                                          
+                                          // Get other special rules (excluding AP)
+                                          const otherRules = weapon.specialRules?.filter((rule: any) => rule.name !== 'AP') || [];
+                                          const specialText = otherRules.length > 0 
+                                            ? otherRules.map((rule: any) => rule.label || rule.name).join(', ')
+                                            : '-';
+                                          
+                                          return (
+                                            <tr key={`weapon-${unit.id}-${weapon.id || weaponIndex}`} className="border-b border-gray-700/50">
+                                              <td className="text-white py-2 pr-4">{weapon.name}</td>
+                                              <td className="text-gray-300 py-2 pr-4">{weapon.range ? `${weapon.range}"` : '-'}</td>
+                                              <td className="text-gray-300 py-2 pr-4">A{weapon.attacks || '1'}</td>
+                                              <td className="text-gray-300 py-2 pr-4">{apValue || '-'}</td>
+                                              <td className="text-gray-300 py-2">{specialText}</td>
+                                            </tr>
+                                          );
+                                        })}
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              )}
+
+                              {/* Special Rules for raw ArmyForge data */}
+                              {unit.rules && unit.rules.length > 0 && (
+                                <div>
+                                  <h5 className="text-sm font-medium text-gray-300 mb-1">Special Rules:</h5>
+                                  <div className="flex flex-wrap gap-1">
+                                    {unit.rules.map((rule: any, ruleIndex: number) => (
+                                      <span 
+                                        key={`rule-${unit.id}-${rule.id || ruleIndex}`}
+                                        className="inline-block bg-blue-900 text-blue-200 text-xs px-2 py-1 rounded"
+                                      >
+                                        {rule.label || rule.name}
+                                      </span>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          ));
+                        } else {
+                          // Unknown data format
+                          return (
+                            <div className="text-center py-8">
+                              <div className="text-yellow-400 mb-2">Unknown army data format</div>
+                              <div className="text-gray-400 text-sm">
+                                Data structure: {JSON.stringify(Object.keys(armyData), null, 2)}
+                              </div>
+                            </div>
+                          );
+                        }
+                      })()
                     )}
                   </div>
                 ) : (
@@ -330,9 +547,43 @@ export const ArmyDetailView: React.FC = () => {
                 <h3 className="text-lg font-bold text-white mb-4">Army Information</h3>
                 <div className="space-y-3">
                   <div>
-                    <div className="text-gray-400 text-sm">Faction</div>
-                    <div className="text-white">{army.faction}</div>
+                    <div className="text-gray-400 text-sm">Faction(s)</div>
+                    <div className="text-white">
+                      {(() => {
+                        // Use resolved factions from metadata if available
+                        const armyData = army.armyData as any;
+                        const resolvedFactions = armyData?.metadata?.resolvedFactions;
+                        
+                        if (resolvedFactions && resolvedFactions.length > 0) {
+                          return resolvedFactions.join(', ');
+                        }
+                        
+                        // Fallback: check if faction looks like a description
+                        const faction = army.faction;
+                        if (faction && (faction.length > 25 || faction.includes("'s ") || faction.toLowerCase().includes('army'))) {
+                          return armyData?.metadata?.gameSystemName || formatGameSystem(armyData?.gameSystem || '');
+                        }
+                        
+                        return faction;
+                      })()}
+                    </div>
                   </div>
+                  {(() => {
+                    // Show description if available and different from faction
+                    const armyData = army.armyData as any;
+                    const description = armyData?.metadata?.description;
+                    const resolvedFactions = armyData?.metadata?.resolvedFactions;
+                    
+                    if (description && description.trim() && resolvedFactions && resolvedFactions.length > 0) {
+                      return (
+                        <div>
+                          <div className="text-gray-400 text-sm">Description</div>
+                          <div className="text-white text-sm">{description}</div>
+                        </div>
+                      );
+                    }
+                    return null;
+                  })()}
                   <div>
                     <div className="text-gray-400 text-sm">Game System</div>
                     <div className="text-white">{formatGameSystem(army.armyData?.gameSystem || '')}</div>

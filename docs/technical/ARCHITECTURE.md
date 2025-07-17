@@ -131,7 +131,7 @@ DELETE /api/armies/:id                 # ✅ Delete army
 GET    /api/armies/armyforge/status    # ✅ ArmyForge health check
 
 Health & Utility: ✅
-GET    /api/health                     # ✅ API health check
+GET    /health                     # ✅ API health check
 ```
 
 ### WebSocket Events ✅ IMPLEMENTED
