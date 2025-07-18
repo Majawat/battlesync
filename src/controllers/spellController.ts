@@ -10,6 +10,45 @@ import {
   CooperatingCaster,
   OPRSpell 
 } from '../types/oprBattle';
+
+// Type for cooperation session management
+interface CooperationSession {
+  cooperationRequestId: string;
+  battleId: string;
+  casterUserId: string;
+  casterUnitId: string;
+  casterName: string;
+  spell: {
+    id: string;
+    name: string;
+    cost: number;
+    effect: string;
+    targets: string;
+  };
+  targetUnitIds: string[];
+  targetUnitNames: string[];
+  timeoutSeconds: number;
+  expiresAt: Date;
+  contributions: Map<string, {
+    userId: string;
+    contributions: Array<{
+      unitId: string;
+      modelId: string;
+      unitName: string;
+      casterName: string;
+      tokensContributed: number;
+      modifier: number;
+      maxTokens: number;
+    }>;
+    submittedAt: Date;
+  }>;
+  isComplete: boolean;
+}
+
+// Extend global type to include cooperation sessions
+declare global {
+  var cooperationSessions: Map<string, CooperationSession> | undefined;
+}
 import { getWebSocketManager } from '../services/websocket';
 
 export class SpellController {
@@ -729,6 +768,553 @@ export class SpellController {
       }
     } catch (error) {
       logger.error('Error broadcasting to battle room:', error);
+    }
+  }
+
+  /**
+   * Initiate poker-style cooperative casting (new system)
+   * POST /api/spells/initiate-cooperative-casting
+   */
+  static async initiateCooperativeCasting(req: AuthenticatedRequest, res: Response): Promise<void> {
+    try {
+      const { battleId, spellId, casterUnitId, targetUnitIds = [], timeoutSeconds = 15 } = req.body;
+      const userId = req.user!.id;
+
+      if (!battleId || !spellId || !casterUnitId) {
+        res.status(400).json({
+          success: false,
+          error: 'Battle ID, spell ID, and caster unit ID are required'
+        });
+        return;
+      }
+
+      // Get battle state to validate the request
+      const battleState = await OPRBattleService.getOPRBattleState(battleId, userId);
+      if (!battleState) {
+        res.status(404).json({
+          success: false,
+          error: 'Battle not found or access denied'
+        });
+        return;
+      }
+
+      // Find the main caster unit
+      const userArmy = battleState.armies.find(army => army.userId === userId);
+      if (!userArmy) {
+        res.status(403).json({
+          success: false,
+          error: 'User is not participating in this battle'
+        });
+        return;
+      }
+
+      const casterUnit = userArmy.units.find(unit => unit.unitId === casterUnitId);
+      if (!casterUnit) {
+        res.status(404).json({
+          success: false,
+          error: 'Caster unit not found'
+        });
+        return;
+      }
+
+      // Find the caster model
+      const casterModel = casterUnit.models.find(m => m.casterTokens > 0 && m.specialRules.some(rule => rule.includes('Caster('))) 
+                         || casterUnit.joinedHero;
+
+      if (!casterModel || casterModel.casterTokens <= 0) {
+        res.status(400).json({
+          success: false,
+          error: 'No valid caster found or insufficient tokens'
+        });
+        return;
+      }
+
+      // Get spell data
+      let spellData: OPRSpell | null = null;
+      if (casterModel.armyId) {
+        const spells = await SpellDataService.getSpellsForArmyId(casterModel.armyId);
+        spellData = spells.find(s => s.id === spellId) || null;
+      }
+
+      if (!spellData) {
+        res.status(404).json({
+          success: false,
+          error: 'Spell not found'
+        });
+        return;
+      }
+
+      // Check if caster has enough tokens for base cost
+      if (casterModel.casterTokens < spellData.cost) {
+        res.status(400).json({
+          success: false,
+          error: `Insufficient tokens: need ${spellData.cost}, have ${casterModel.casterTokens}`
+        });
+        return;
+      }
+
+      // Get target unit names for display
+      const targetUnitNames: string[] = [];
+      for (const targetId of targetUnitIds) {
+        for (const army of battleState.armies) {
+          const targetUnit = army.units.find(unit => unit.unitId === targetId);
+          if (targetUnit) {
+            targetUnitNames.push(targetUnit.name);
+            break;
+          }
+        }
+      }
+
+      // Create cooperation request ID
+      const cooperationRequestId = `coop_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
+
+      // Store cooperation session in memory (in production, use Redis or database)
+      // For now, we'll use a simple in-memory store
+      if (!global.cooperationSessions) {
+        global.cooperationSessions = new Map<string, CooperationSession>();
+      }
+
+      const session = {
+        cooperationRequestId,
+        battleId,
+        casterUserId: userId,
+        casterUnitId,
+        casterName: casterModel.name,
+        spell: {
+          id: spellData.id,
+          name: spellData.name,
+          cost: spellData.cost,
+          effect: spellData.effect,
+          targets: spellData.targets
+        },
+        targetUnitIds,
+        targetUnitNames,
+        timeoutSeconds,
+        expiresAt: new Date(Date.now() + timeoutSeconds * 1000),
+        contributions: new Map<string, {
+          userId: string;
+          contributions: Array<{
+            unitId: string;
+            modelId: string;
+            unitName: string;
+            casterName: string;
+            tokensContributed: number;
+            modifier: number;
+            maxTokens: number;
+          }>;
+          submittedAt: Date;
+        }>(), // userId -> contribution data
+        isComplete: false
+      };
+
+      global.cooperationSessions.set(cooperationRequestId, session);
+
+      // Set timeout to auto-complete session
+      setTimeout(() => {
+        this.completeCooperativeSession(cooperationRequestId);
+      }, timeoutSeconds * 1000);
+
+      // Broadcast cooperation request to all battle participants
+      this.broadcastToBattleRoom(battleId, 'cooperative_contribution_request', {
+        cooperationRequestId,
+        casterUserId: userId,
+        casterUnitId,
+        casterName: casterModel.name,
+        spell: {
+          id: spellData.id,
+          name: spellData.name,
+          cost: spellData.cost,
+          effect: spellData.effect,
+          targets: spellData.targets
+        },
+        targetUnitIds,
+        targetUnitNames,
+        timeoutSeconds,
+        expiresAt: session.expiresAt.toISOString()
+      });
+
+      logger.info(`Cooperative casting session ${cooperationRequestId} initiated for spell ${spellData.name} in battle ${battleId}`);
+
+      res.json({
+        success: true,
+        data: {
+          cooperationRequestId,
+          expiresAt: session.expiresAt.toISOString()
+        }
+      });
+
+    } catch (error) {
+      logger.error('Initiate cooperative casting error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to initiate cooperative casting'
+      });
+    }
+  }
+
+  /**
+   * Submit cooperative contribution (poker-style)
+   * POST /api/spells/submit-cooperative-contribution
+   */
+  static async submitCooperativeContribution(req: AuthenticatedRequest, res: Response): Promise<void> {
+    try {
+      const { battleId, cooperationRequestId, contributions = [] } = req.body;
+      const userId = req.user!.id;
+
+      if (!battleId || !cooperationRequestId) {
+        res.status(400).json({
+          success: false,
+          error: 'Battle ID and cooperation request ID are required'
+        });
+        return;
+      }
+
+      // Get cooperation session
+      const session = global.cooperationSessions?.get(cooperationRequestId);
+      if (!session) {
+        res.status(404).json({
+          success: false,
+          error: 'Cooperation session not found or expired'
+        });
+        return;
+      }
+
+      if (session.isComplete) {
+        res.status(400).json({
+          success: false,
+          error: 'Cooperation session already complete'
+        });
+        return;
+      }
+
+      // Validate battle access
+      const battleState = await OPRBattleService.getOPRBattleState(battleId, userId);
+      if (!battleState) {
+        res.status(404).json({
+          success: false,
+          error: 'Battle not found or access denied'
+        });
+        return;
+      }
+
+      // Find user's army
+      const userArmy = battleState.armies.find(army => army.userId === userId);
+      if (!userArmy) {
+        res.status(403).json({
+          success: false,
+          error: 'User is not participating in this battle'
+        });
+        return;
+      }
+
+      // Validate contributions
+      const validatedContributions = [];
+      for (const contribution of contributions) {
+        const { unitId, modelId, tokensContributed, modifier } = contribution;
+
+        if (tokensContributed <= 0) continue; // Skip zero contributions
+
+        // Skip contributions for the casting unit (can't contribute to own spell)
+        if (unitId === session.casterUnitId) continue;
+
+        // Find contributing unit
+        const contributingUnit = userArmy.units.find(unit => unit.unitId === unitId);
+        if (!contributingUnit) continue;
+
+        // Find contributing model
+        let contributingModel = null;
+        if (modelId) {
+          contributingModel = contributingUnit.models.find(m => m.modelId === modelId) ||
+                             (contributingUnit.joinedHero?.modelId === modelId ? contributingUnit.joinedHero : null);
+        } else {
+          contributingModel = contributingUnit.models.find(m => m.casterTokens > 0) || contributingUnit.joinedHero;
+        }
+
+        if (!contributingModel || contributingModel.casterTokens < tokensContributed) {
+          continue; // Skip invalid contributions
+        }
+
+        validatedContributions.push({
+          unitId,
+          modelId: contributingModel.modelId,
+          unitName: contributingUnit.name,
+          casterName: contributingModel.name,
+          tokensContributed,
+          modifier,
+          maxTokens: contributingModel.casterTokens
+        });
+      }
+
+      // Store user's contribution
+      session.contributions.set(userId, {
+        userId,
+        contributions: validatedContributions,
+        submittedAt: new Date()
+      });
+
+      logger.info(`User ${userId} submitted ${validatedContributions.length} contributions for session ${cooperationRequestId}`);
+
+      res.json({
+        success: true,
+        data: {
+          contributionsAccepted: validatedContributions.length,
+          sessionStatus: 'awaiting_others'
+        }
+      });
+
+    } catch (error) {
+      logger.error('Submit cooperative contribution error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to submit contribution'
+      });
+    }
+  }
+
+  /**
+   * Submit spell result (by original caster)
+   * POST /api/spells/submit-result
+   */
+  static async submitSpellResult(req: AuthenticatedRequest, res: Response): Promise<void> {
+    try {
+      const { battleId, cooperationRequestId, success, finalModifier } = req.body;
+      const userId = req.user!.id;
+
+      if (!battleId || !cooperationRequestId || success === undefined) {
+        res.status(400).json({
+          success: false,
+          error: 'Battle ID, cooperation request ID, and success are required'
+        });
+        return;
+      }
+
+      // Get cooperation session
+      const session = global.cooperationSessions?.get(cooperationRequestId);
+      if (!session) {
+        res.status(404).json({
+          success: false,
+          error: 'Cooperation session not found or expired'
+        });
+        return;
+      }
+
+      // Verify user is the original caster
+      if (session.casterUserId !== userId) {
+        res.status(403).json({
+          success: false,
+          error: 'Only the original caster can submit spell result'
+        });
+        return;
+      }
+
+      // Get battle state and apply spell effects
+      const battleState = await OPRBattleService.getOPRBattleState(battleId, userId);
+      if (!battleState) {
+        res.status(404).json({
+          success: false,
+          error: 'Battle not found or access denied'
+        });
+        return;
+      }
+
+      // Store battle state before spell casting for undo functionality
+      const beforeState = JSON.parse(JSON.stringify(battleState));
+
+      // Find caster unit and model
+      const userArmy = battleState.armies.find(army => army.userId === userId);
+      const casterUnit = userArmy?.units.find(unit => unit.unitId === session.casterUnitId);
+      const casterModel = casterUnit?.models.find(m => m.casterTokens > 0) || casterUnit?.joinedHero;
+
+      if (!casterModel) {
+        res.status(400).json({
+          success: false,
+          error: 'Caster not found'
+        });
+        return;
+      }
+
+      // Get spell data
+      let spellData: OPRSpell | null = null;
+      if (casterModel.armyId) {
+        const spells = await SpellDataService.getSpellsForArmyId(casterModel.armyId);
+        spellData = spells.find(s => s.id === session.spell.id) || null;
+      }
+
+      if (!spellData) {
+        res.status(404).json({
+          success: false,
+          error: 'Spell data not found'
+        });
+        return;
+      }
+
+      // Calculate tokens spent and consume them
+      let totalTokensSpent = spellData.cost;
+      
+      // Consume main caster tokens
+      casterModel.casterTokens -= spellData.cost;
+
+      // Consume cooperating caster tokens
+      const cooperatingCasters = [];
+      for (const [contributorUserId, contributorData] of session.contributions) {
+        for (const contribution of contributorData.contributions) {
+          // Find and consume tokens from cooperating casters
+          for (const army of battleState.armies) {
+            if (army.userId === contributorUserId) {
+              const unit = army.units.find(u => u.unitId === contribution.unitId);
+              if (unit) {
+                const model = unit.models.find(m => m.modelId === contribution.modelId) ||
+                             (unit.joinedHero?.modelId === contribution.modelId ? unit.joinedHero : null);
+                if (model && model.casterTokens >= contribution.tokensContributed) {
+                  model.casterTokens -= contribution.tokensContributed;
+                  totalTokensSpent += contribution.tokensContributed;
+                  
+                  cooperatingCasters.push({
+                    userId: contributorUserId,
+                    unitId: contribution.unitId,
+                    modelId: contribution.modelId,
+                    unitName: contribution.unitName,
+                    casterName: contribution.casterName,
+                    tokensContributed: contribution.tokensContributed,
+                    modifier: contribution.modifier
+                  });
+                }
+              }
+              break;
+            }
+          }
+        }
+      }
+
+      // Apply spell effects if successful
+      if (success) {
+        await this.applySpellEffects(battleState, spellData, session.targetUnitIds, userId);
+      }
+
+      // Save updated battle state
+      await OPRBattleService.saveBattleState(battleId, battleState);
+
+      // Record battle event
+      await OPRBattleService.recordBattleEvent(
+        battleId,
+        userId,
+        'SPELL_CAST',
+        {
+          description: `${spellData.name} ${success ? 'cast successfully' : 'failed'}`,
+          spellId: session.spell.id,
+          spellName: spellData.name,
+          casterUnitId: session.casterUnitId,
+          targetUnitIds: session.targetUnitIds,
+          tokensSpent: totalTokensSpent,
+          finalModifier,
+          success
+        }
+      );
+
+      // Record action in battle history for undo functionality
+      const affectedUnitIds = [session.casterUnitId, ...session.targetUnitIds, ...cooperatingCasters.map(c => c.unitId)];
+
+      await BattleActionHistoryService.recordAction(
+        battleId,
+        userId,
+        'SPELL_CAST',
+        {
+          description: `${spellData.name} ${success ? 'cast successfully' : 'failed'}`,
+          spellId: session.spell.id,
+          spellName: spellData.name,
+          unitId: session.casterUnitId,
+          targetUnitIds: session.targetUnitIds,
+          tokensSpent: totalTokensSpent,
+          finalModifier,
+          success,
+          cooperatingCasters
+        },
+        beforeState,
+        battleState,
+        {
+          canUndo: true,
+          undoComplexity: cooperatingCasters.length > 0 ? 'complex' : 'simple',
+          affectedUnitIds
+        }
+      );
+
+      // Mark session as complete
+      session.isComplete = true;
+
+      // Broadcast final result to all battle participants
+      this.broadcastToBattleRoom(battleId, 'spell_cast_complete', {
+        cooperationRequestId,
+        casterUserId: userId,
+        casterUnitId: session.casterUnitId,
+        spellName: spellData.name,
+        success,
+        finalModifier,
+        tokensSpent: totalTokensSpent,
+        cooperatingCasters: cooperatingCasters.length
+      });
+
+      // Clean up session after a delay
+      setTimeout(() => {
+        global.cooperationSessions?.delete(cooperationRequestId);
+      }, 60000); // Keep for 1 minute for any final notifications
+
+      logger.info(`Spell result submitted for session ${cooperationRequestId}: ${success ? 'SUCCESS' : 'FAILURE'}`);
+
+      res.json({
+        success: true,
+        data: {
+          spellSuccess: success,
+          tokensSpent: totalTokensSpent,
+          cooperatingCasters: cooperatingCasters.length
+        }
+      });
+
+    } catch (error) {
+      logger.error('Submit spell result error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to submit spell result'
+      });
+    }
+  }
+
+  /**
+   * Complete cooperative session (timeout handler)
+   */
+  private static async completeCooperativeSession(cooperationRequestId: string): Promise<void> {
+    try {
+      const session = global.cooperationSessions?.get(cooperationRequestId);
+      if (!session || session.isComplete) return;
+
+      // Calculate final modifier from all contributions
+      let finalModifier = 0;
+      const allContributions = [];
+
+      for (const [userId, contributorData] of session.contributions) {
+        for (const contribution of contributorData.contributions) {
+          finalModifier += contribution.modifier;
+          allContributions.push({
+            userId,
+            unitName: contribution.unitName,
+            casterName: contribution.casterName,
+            modifier: contribution.modifier
+          });
+        }
+      }
+
+      // Broadcast contributions complete to original caster
+      this.broadcastToBattleRoom(session.battleId, 'cooperative_contributions_complete', {
+        cooperationRequestId,
+        casterUserId: session.casterUserId,
+        spellName: session.spell.name,
+        finalModifier,
+        allContributions
+      });
+
+      logger.info(`Cooperative session ${cooperationRequestId} completed with final modifier: ${finalModifier}`);
+
+    } catch (error) {
+      logger.error('Error completing cooperative session:', error);
     }
   }
 

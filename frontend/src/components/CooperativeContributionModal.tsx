@@ -86,7 +86,7 @@ export const CooperativeContributionModal: React.FC<CooperativeContributionModal
 
       // Check unit models for casters
       for (const model of unit.models) {
-        if (model.casterTokens > 0 && model.specialRules.some(rule => rule.includes('Caster('))) {
+        if (model.casterTokens > 0 && model.specialRules.some((rule: string) => rule.includes('Caster('))) {
           casters.push({
             unitId: unit.unitId,
             modelId: model.modelId,
@@ -99,7 +99,7 @@ export const CooperativeContributionModal: React.FC<CooperativeContributionModal
 
       // Check joined hero for caster tokens
       if (unit.joinedHero && unit.joinedHero.casterTokens > 0 && 
-          unit.joinedHero.specialRules.some(rule => rule.includes('Caster('))) {
+          unit.joinedHero.specialRules.some((rule: string) => rule.includes('Caster('))) {
         casters.push({
           unitId: unit.unitId,
           modelId: unit.joinedHero.modelId,

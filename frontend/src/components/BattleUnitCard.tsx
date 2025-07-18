@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { OPRBattleUnit, OPRSpell, CooperatingCaster } from '../types/oprBattle';
+import { OPRBattleUnit, OPRSpell } from '../types/oprBattle';
 import { SpellCastModal } from './SpellCastModal';
 
 // Helper component for health bars
@@ -53,7 +53,6 @@ const WoundMarkers: React.FC<{
 
 interface BattleUnitCardProps {
   unit: OPRBattleUnit;
-  battleId: string;
   battlePhase: string;
   isOwned?: boolean;
   isSelected?: boolean;
@@ -98,7 +97,6 @@ const calculateMovement = (unit: OPRBattleUnit) => {
 
 export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({ 
   unit,
-  battleId,
   battlePhase,
   isOwned = true,
   isSelected = false,
@@ -387,8 +385,16 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
                 className="px-3 py-1 rounded text-sm font-medium transition-colors bg-purple-600 hover:bg-purple-700 text-white disabled:bg-gray-600 disabled:text-gray-400 disabled:cursor-not-allowed"
               >
                 {isLoadingSpells ? 'Loading...' : `Cast Spell (${
-                  unit.models.find(m => m.specialRules.some(rule => rule.includes('Caster(')))?.casterTokens || 
-                  unit.joinedHero?.casterTokens || 0
+                  (() => {
+                    // Find the caster model with tokens
+                    const casterModel = unit.models.find(m => m.casterTokens > 0 && m.specialRules.some(rule => rule.includes('Caster(')));
+                    if (casterModel) return casterModel.casterTokens;
+                    
+                    // Check joined hero
+                    if (unit.joinedHero && unit.joinedHero.casterTokens > 0) return unit.joinedHero.casterTokens;
+                    
+                    return 0;
+                  })()
                 } tokens)`}
               </button>
             </div>
@@ -602,7 +608,6 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
         <SpellCastModal
           isVisible={showSpellModal}
           onClose={() => setShowSpellModal(false)}
-          battleId={battleId}
           casterUnit={unit}
           availableSpells={availableSpells}
           allArmies={allArmies || []}

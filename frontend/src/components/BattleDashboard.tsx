@@ -366,7 +366,7 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
   };
 
   // Initiate poker-style cooperative casting
-  const handleInitiateCooperativeCasting = async (unitId: string, spellId: string, targetUnitIds: string[], timeoutSeconds: number = 30) => {
+  const handleInitiateCooperativeCasting = async (unitId: string, spellId: string, targetUnitIds: string[]) => {
     try {
       const response = await fetch('/api/spells/initiate-cooperative-casting', {
         method: 'POST',
@@ -379,7 +379,7 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
           spellId,
           casterUnitId: unitId,
           targetUnitIds,
-          timeoutSeconds
+          timeoutSeconds: 15
         })
       });
 
@@ -706,7 +706,6 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
                 <BattleUnitCard
                   key={unit.unitId}
                   unit={unit}
-                  battleId={battleId}
                   battlePhase={battleState.phase}
                   isOwned={displayedArmy.userId === user?.id}
                   isSelected={uiState.selectedUnit === unit.unitId}

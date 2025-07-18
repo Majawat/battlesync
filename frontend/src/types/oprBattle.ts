@@ -46,6 +46,7 @@ export interface OPRBattleUnit {
   originalSize: number;
   currentSize: number;
   faction: string; // Added for spell fetching
+  userId?: string; // Owner of the unit for spell targeting
   
   // Unit state
   action: 'hold' | 'advance' | 'rush' | 'charge' | null;
@@ -232,7 +233,7 @@ export interface TouchDamageProps {
 
 // WebSocket message types
 export interface BattleWebSocketMessage {
-  type: 'welcome' | 'auth' | 'join_room' | 'error' | 'round_advanced' | 'battle_created' | 'phase_changed' | 'damage_applied' | 'hero_joined' | 'battle_completed' | 'unit_action' | 'spell_cast' | 'cooperative_casting_request' | 'cooperative_casting_response' | 'spell_cast_complete' | 'morale_test_result' | 'quality_test_result';
+  type: 'welcome' | 'auth' | 'join_room' | 'error' | 'round_advanced' | 'battle_created' | 'phase_changed' | 'damage_applied' | 'hero_joined' | 'battle_completed' | 'unit_action' | 'spell_cast' | 'cooperative_casting_request' | 'cooperative_casting_response' | 'cooperative_contribution_request' | 'cooperative_contributions_complete' | 'spell_cast_complete' | 'morale_test_result' | 'quality_test_result';
   data: any;
   error?: string;
   timestamp: string;
@@ -250,6 +251,7 @@ export interface OPRSpell {
   damage?: number; // For damage spells
   hits?: number; // Number of hits dealt
   armorPiercing?: number; // AP value for damage spells
+  special?: string; // Special rules or conditions
   modifiers?: SpellModifier[]; // Buffs/debuffs applied
 }
 

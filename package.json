@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "nodemon src/index.ts",
     "build": "tsc",
+    "typecheck": "tsc --noEmit",
     "start": "node dist/index.js",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -18,7 +19,8 @@
     "db:seed": "tsx prisma/seed.ts",
     "frontend:dev": "cd frontend && npm run dev",
     "frontend:build": "cd frontend && npm run build",
-    "frontend:install": "cd frontend && npm install"
+    "frontend:install": "cd frontend && npm install",
+    "frontend:typecheck": "cd frontend && npm run typecheck"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

@@ -190,6 +190,8 @@ export interface ArmySummary {
   campaignId: string | null;
   experiencePoints: number;
   battlesPlayed: number;
+  userId?: string; // For battle setup
+  username?: string; // For battle setup
 }
 
 export interface ArmyStatistics {

@@ -277,6 +277,7 @@ export const ArmyDetailView: React.FC = () => {
                             <BattleUnitCard 
                               key={`battle-unit-${unit.unitId}-${index}`} 
                               unit={unit}
+                              battlePhase="BATTLE_ROUNDS"
                               isOwned={true}
                             />
                           ))}

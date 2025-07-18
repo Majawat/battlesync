@@ -23,7 +23,7 @@ export const SetupBattleModal: React.FC<SetupBattleModalProps> = ({
   mission,
   onBattleSetup
 }) => {
-  const { user } = useAuth();
+  const { } = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [availableArmies, setAvailableArmies] = useState<ArmySummary[]>([]);
@@ -227,7 +227,7 @@ export const SetupBattleModal: React.FC<SetupBattleModalProps> = ({
             <p className="text-gray-400 text-sm">No armies selected yet. Add at least 2 armies to setup a battle.</p>
           ) : (
             <div className="space-y-2">
-              {selectedParticipants.map((participant, index) => (
+              {selectedParticipants.map((participant) => (
                 <div key={participant.armyId} className="flex items-center justify-between bg-gray-700 rounded p-3">
                   <div className="flex items-center space-x-3">
                     <span className="text-white font-medium">

@@ -8,7 +8,6 @@ interface SpellCastModalProps {
   casterUnit: OPRBattleUnit;
   availableSpells: OPRSpell[];
   maxTokens: number; // Available tokens from main caster
-  battleId: string;
   allArmies: any[]; // For target selection
 }
 
@@ -26,7 +25,6 @@ export const SpellCastModal: React.FC<SpellCastModalProps> = ({
   casterUnit,
   availableSpells,
   maxTokens,
-  battleId,
   allArmies
 }) => {
   const [selectedSpell, setSelectedSpell] = useState<OPRSpell | null>(null);
