@@ -63,7 +63,7 @@ interface BattleUnitCardProps {
   onQuickDamage?: (damage: number, modelId?: string) => void;
   onAdvancedDamage?: () => void;
   onAction?: (action: 'hold' | 'advance' | 'rush' | 'charge', targetId?: string) => void;
-  onCastSpell?: (spellId: string, cooperatingCasters: CooperatingCaster[]) => void;
+  onCastSpell?: (spellId: string, targetUnitIds: string[]) => void;
   allArmies?: any[]; // For finding cooperative casters
   canAct?: boolean;
 }
@@ -225,8 +225,8 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
   };
 
   // Handle spell selection from modal
-  const handleSpellCast = (spellId: string, cooperatingCasters: CooperatingCaster[]) => {
-    onCastSpell?.(spellId, cooperatingCasters);
+  const handleSpellCast = (spellId: string, targetUnitIds: string[]) => {
+    onCastSpell?.(spellId, targetUnitIds);
     setShowSpellModal(false);
   };
 
@@ -672,7 +672,7 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
           battleId={battleId}
           casterUnit={unit}
           availableSpells={availableSpells}
-          availableCasters={getCooperativeCasters()}
+          allArmies={allArmies || []}
           maxTokens={
             unit.models.find(m => m.specialRules.some(rule => rule.includes('Caster(')))?.casterTokens || 
             unit.joinedHero?.casterTokens || 0

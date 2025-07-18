@@ -4,27 +4,19 @@ import { OPRSpell, OPRBattleUnit } from '../types/oprBattle';
 interface SpellCastModalProps {
   isVisible: boolean;
   onClose: () => void;
-  onCastSpell: (spellId: string, cooperatingCasters: CooperatingCaster[]) => void;
+  onCastSpell: (spellId: string, targetUnitIds: string[]) => void;
   casterUnit: OPRBattleUnit;
   availableSpells: OPRSpell[];
-  availableCasters: AvailableCaster[];
   maxTokens: number; // Available tokens from main caster
-  battleId: string; // Need battleId for cooperative casting requests
+  battleId: string;
+  allArmies: any[]; // For target selection
 }
 
-interface AvailableCaster {
+interface TargetUnit {
   unitId: string;
-  modelId?: string;
-  tokens: number;
   name: string;
-  armyName?: string;
-}
-
-interface CooperatingCaster {
-  unitId: string;
-  modelId?: string;
-  tokensContributed: number;
-  modifier: number;
+  armyName: string;
+  isEnemy: boolean;
 }
 
 export const SpellCastModal: React.FC<SpellCastModalProps> = ({
@@ -33,84 +25,69 @@ export const SpellCastModal: React.FC<SpellCastModalProps> = ({
   onCastSpell,
   casterUnit,
   availableSpells,
-  availableCasters,
   maxTokens,
-  battleId
+  battleId,
+  allArmies
 }) => {
   const [selectedSpell, setSelectedSpell] = useState<OPRSpell | null>(null);
-  const [cooperatingCasters, setCooperatingCasters] = useState<CooperatingCaster[]>([]);
+  const [selectedTargets, setSelectedTargets] = useState<string[]>([]);
 
   // Reset state when modal opens/closes
   useEffect(() => {
     if (isVisible) {
       setSelectedSpell(null);
-      setCooperatingCasters([]);
+      setSelectedTargets([]);
     }
   }, [isVisible]);
 
-  // Calculate roll modifier (cooperative casters provide modifiers, not additional tokens)
-  const currentRollModifier = cooperatingCasters.reduce((sum, c) => sum + c.modifier, 0);
-
-  // Main caster must have enough tokens to pay the spell cost
-  const canCastSpell = selectedSpell ? maxTokens >= selectedSpell.cost : false;
-  const tokensAfterCasting = selectedSpell ? maxTokens - selectedSpell.cost : maxTokens;
-
-  const handleCooperatingCasterChange = (caster: AvailableCaster, tokens: number, isPositive: boolean) => {
-    const modifier = isPositive ? tokens : -tokens;
+  // Get all possible target units
+  const getTargetUnits = (): TargetUnit[] => {
+    const targets: TargetUnit[] = [];
     
-    setCooperatingCasters(prev => {
-      const existing = prev.find(c => c.unitId === caster.unitId && c.modelId === caster.modelId);
+    for (const army of allArmies) {
+      const isEnemyArmy = army.userId !== casterUnit.userId; // Assuming casterUnit has userId
       
-      if (existing) {
-        if (tokens === 0) {
-          // Remove caster
-          return prev.filter(c => !(c.unitId === caster.unitId && c.modelId === caster.modelId));
-        } else {
-          // Update existing
-          return prev.map(c => 
-            c.unitId === caster.unitId && c.modelId === caster.modelId
-              ? { ...c, tokensContributed: tokens, modifier }
-              : c
-          );
-        }
-      } else if (tokens > 0) {
-        // Add new cooperating caster
-        return [...prev, {
-          unitId: caster.unitId,
-          modelId: caster.modelId,
-          tokensContributed: tokens,
-          modifier
-        }];
+      for (const unit of army.units) {
+        if (unit.unitId === casterUnit.unitId) continue; // Can't target self
+        
+        targets.push({
+          unitId: unit.unitId,
+          name: unit.name,
+          armyName: army.name || `Army ${army.userId}`,
+          isEnemy: isEnemyArmy
+        });
       }
-      
-      return prev;
-    });
+    }
+    
+    return targets;
   };
 
-  const handleCastSpell = () => {
-    if (!selectedSpell || !canCastSpell) return;
-    
-    onCastSpell(selectedSpell.id, cooperatingCasters);
-    onClose();
+  const targetUnits = getTargetUnits();
+
+  const handleTargetToggle = (unitId: string) => {
+    setSelectedTargets(prev => 
+      prev.includes(unitId) 
+        ? prev.filter(id => id !== unitId)
+        : [...prev, unitId]
+    );
   };
+
+  const handleProceedToCast = () => {
+    if (selectedSpell) {
+      onCastSpell(selectedSpell.id, selectedTargets);
+      onClose();
+    }
+  };
+
+  const canProceed = selectedSpell && maxTokens >= selectedSpell.cost;
 
   if (!isVisible) return null;
 
   return (
-    <div 
-      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-      onClick={onClose}
-    >
-      <div 
-        className="bg-gray-800 rounded-lg p-6 max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-white">Cast Spell - {
-            (casterUnit.joinedHero?.casterTokens || 0) > 0 
-              ? casterUnit.joinedHero?.name 
-              : casterUnit.models.find(m => m.casterTokens > 0)?.name || casterUnit.name
-          }</h2>
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+      <div className="bg-gray-800 border border-gray-600 rounded-lg p-6 max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-bold text-white">Cast Spell - {casterUnit.name}</h2>
           <button
             onClick={onClose}
             className="text-gray-400 hover:text-white text-2xl"
@@ -126,34 +103,26 @@ export const SpellCastModal: React.FC<SpellCastModalProps> = ({
               <span className="text-white font-medium">Available Tokens: </span>
               <span className="text-blue-400 font-bold">{maxTokens}</span>
             </div>
-            <div>
-              <span className="text-white font-medium">Roll Modifier: </span>
-              <span className={`font-bold ${currentRollModifier >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                {currentRollModifier >= 0 ? '+' : ''}{currentRollModifier}
-              </span>
-            </div>
           </div>
-          
-          {selectedSpell && (
-            <div className="mt-2 text-sm">
-              <span className="text-gray-300">After casting: </span>
-              <span className="text-yellow-400">{tokensAfterCasting} tokens remaining</span>
-            </div>
-          )}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Spell Selection */}
-          <div>
-            <h3 className="text-lg font-semibold text-white mb-4">Available Spells</h3>
-            <div className="space-y-2 max-h-64 overflow-y-auto">
+        {/* Spell Selection */}
+        <div className="mb-6">
+          <h3 className="text-lg font-semibold text-white mb-3">Select Spell</h3>
+          
+          {availableSpells.length === 0 ? (
+            <div className="text-gray-400 text-center py-8">
+              No spells available
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-64 overflow-y-auto">
               {availableSpells.map(spell => (
                 <div
                   key={spell.id}
-                  className={`p-3 rounded-lg border-2 cursor-pointer transition-all ${
+                  className={`border rounded-lg p-4 cursor-pointer transition-colors ${
                     selectedSpell?.id === spell.id
-                      ? 'border-blue-500 bg-blue-900/30'
-                      : 'border-gray-600 bg-gray-700 hover:border-gray-500'
+                      ? 'border-purple-500 bg-purple-900/20'
+                      : 'border-gray-600 bg-gray-700 hover:border-purple-400'
                   }`}
                   onClick={() => setSelectedSpell(spell)}
                 >
@@ -167,78 +136,14 @@ export const SpellCastModal: React.FC<SpellCastModalProps> = ({
                       {spell.cost} {spell.cost === 1 ? 'token' : 'tokens'}
                     </span>
                   </div>
-                  
-                  <div className="text-sm text-gray-300 space-y-1">
-                    <div><strong>Range:</strong> {spell.range}</div>
-                    <div><strong>Targets:</strong> {spell.targets}</div>
-                    <div><strong>Effect:</strong> {spell.effect}</div>
+                  <p className="text-gray-300 text-sm mb-2">{spell.effect}</p>
+                  <div className="text-xs text-gray-400">
+                    Range: {spell.range} | Targets: {spell.targets}
                   </div>
                 </div>
               ))}
             </div>
-          </div>
-
-          {/* Cooperative Casting */}
-          <div>
-            <h3 className="text-lg font-semibold text-white mb-4">
-              Cooperative Casting
-              <span className="text-sm text-gray-400 ml-2">(Other casters within 18")</span>
-            </h3>
-            
-            {availableCasters.length === 0 ? (
-              <div className="text-gray-400 text-center py-8">
-                No other casters available for cooperation
-              </div>
-            ) : (
-              <div className="space-y-3 max-h-64 overflow-y-auto">
-                {availableCasters.map(caster => {
-                  const cooperation = cooperatingCasters.find(c => 
-                    c.unitId === caster.unitId && c.modelId === caster.modelId
-                  );
-                  
-                  return (
-                    <div key={`${caster.unitId}-${caster.modelId}`} className="bg-gray-700 rounded-lg p-3">
-                      <div className="font-medium text-white mb-1">{caster.name}</div>
-                      {caster.armyName && (
-                        <div className="text-sm text-gray-400 mb-2">{caster.armyName}</div>
-                      )}
-                      <div className="text-sm text-gray-300 mb-3">
-                        {caster.tokens} {caster.tokens === 1 ? 'token' : 'tokens'} available
-                      </div>
-                      
-                      <div className="grid grid-cols-2 gap-2">
-                        <div>
-                          <label className="block text-xs text-gray-400 mb-1">Positive (+1/token)</label>
-                          <select
-                            value={cooperation && cooperation.modifier > 0 ? cooperation.tokensContributed : 0}
-                            onChange={(e) => handleCooperatingCasterChange(caster, parseInt(e.target.value), true)}
-                            className="w-full bg-gray-600 text-white rounded px-2 py-1 text-sm"
-                          >
-                            {Array.from({ length: caster.tokens + 1 }, (_, i) => (
-                              <option key={i} value={i}>{i} {i === 1 ? 'token' : 'tokens'}</option>
-                            ))}
-                          </select>
-                        </div>
-                        
-                        <div>
-                          <label className="block text-xs text-gray-400 mb-1">Negative (-1/token)</label>
-                          <select
-                            value={cooperation && cooperation.modifier < 0 ? cooperation.tokensContributed : 0}
-                            onChange={(e) => handleCooperatingCasterChange(caster, parseInt(e.target.value), false)}
-                            className="w-full bg-gray-600 text-white rounded px-2 py-1 text-sm"
-                          >
-                            {Array.from({ length: caster.tokens + 1 }, (_, i) => (
-                              <option key={i} value={i}>{i} {i === 1 ? 'token' : 'tokens'}</option>
-                            ))}
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-          </div>
+          )}
         </div>
 
         {/* Spell Details */}
@@ -253,30 +158,65 @@ export const SpellCastModal: React.FC<SpellCastModalProps> = ({
                 <strong className="text-gray-300">Duration:</strong> {selectedSpell.duration}
               </div>
               <div>
-                <strong className="text-gray-300">Success Roll:</strong> 
-                {currentRollModifier !== 0 ? (
-                  <span>
-                    {Math.max(1, Math.min(6, 4 - currentRollModifier))}+ on D6 
-                    <span className={currentRollModifier > 0 ? 'text-green-400' : 'text-red-400'}>
-                      {' '}({currentRollModifier >= 0 ? '+' : ''}{currentRollModifier})
-                    </span>
-                  </span>
-                ) : (
-                  <span> 4+ on D6</span>
-                )}
-                <br/>
+                <strong className="text-gray-300">Base Success:</strong> 4+ on D6<br/>
                 {selectedSpell.hits && (
                   <>
-                    <strong className="text-gray-300">Damage:</strong> {selectedSpell.hits} hits
-                    {selectedSpell.armorPiercing && ` with AP(${selectedSpell.armorPiercing})`}
-                    <br/>
+                    <strong className="text-gray-300">Hits:</strong> {selectedSpell.hits}<br/>
+                  </>
+                )}
+                {selectedSpell.special && (
+                  <>
+                    <strong className="text-gray-300">Special:</strong> {selectedSpell.special}<br/>
                   </>
                 )}
               </div>
             </div>
             <div className="mt-3">
-              <strong className="text-gray-300">Effect:</strong> {selectedSpell.effect}
+              <strong className="text-gray-300">Effect:</strong>
+              <p className="text-white mt-1">{selectedSpell.effect}</p>
             </div>
+          </div>
+        )}
+
+        {/* Target Selection */}
+        {selectedSpell && (
+          <div className="mt-6">
+            <h3 className="text-lg font-semibold text-white mb-3">
+              Select Targets
+              <span className="text-sm text-gray-400 ml-2">(Optional - can be selected later)</span>
+            </h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-64 overflow-y-auto">
+              {targetUnits.map(target => (
+                <div
+                  key={target.unitId}
+                  className={`border rounded-lg p-3 cursor-pointer transition-colors ${
+                    selectedTargets.includes(target.unitId)
+                      ? 'border-yellow-500 bg-yellow-900/20'
+                      : 'border-gray-600 bg-gray-700 hover:border-yellow-400'
+                  }`}
+                  onClick={() => handleTargetToggle(target.unitId)}
+                >
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <div className="font-medium text-white">{target.name}</div>
+                      <div className="text-sm text-gray-400">{target.armyName}</div>
+                    </div>
+                    <div className={`px-2 py-1 rounded text-xs ${
+                      target.isEnemy ? 'bg-red-600 text-white' : 'bg-blue-600 text-white'
+                    }`}>
+                      {target.isEnemy ? 'Enemy' : 'Ally'}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            {selectedTargets.length > 0 && (
+              <div className="mt-3 text-sm text-gray-300">
+                Selected targets: {selectedTargets.length}
+              </div>
+            )}
           </div>
         )}
 
@@ -289,17 +229,17 @@ export const SpellCastModal: React.FC<SpellCastModalProps> = ({
             Cancel
           </button>
           <button
-            onClick={handleCastSpell}
-            disabled={!canCastSpell}
+            onClick={handleProceedToCast}
+            disabled={!canProceed}
             className={`px-6 py-2 rounded font-medium transition-colors ${
-              canCastSpell
+              canProceed
                 ? 'bg-purple-600 hover:bg-purple-700 text-white'
                 : 'bg-gray-600 text-gray-400 cursor-not-allowed'
             }`}
           >
             {!selectedSpell ? 'Select a Spell' : 
-             !canCastSpell ? 'Not Enough Tokens' : 
-             'Attempt to Cast'}
+             !canProceed ? 'Not Enough Tokens' : 
+             'Begin Cooperative Casting'}
           </button>
         </div>
       </div>

@@ -3,7 +3,8 @@ import { useAuth } from '../hooks/useAuth';
 import { BattleUnitCard } from './BattleUnitCard';
 import { BattleActionHistoryPanel } from './BattleActionHistoryPanel';
 import { CommandPointPanel } from './CommandPointPanel';
-import { CooperativeCastingNotification } from './CooperativeCastingNotification';
+import { CooperativeContributionModal } from './CooperativeContributionModal';
+import { SpellResultModal } from './SpellResultModal';
 import { ActivationPanel } from './ActivationPanel';
 import { MoraleTestPanel } from './MoraleTestPanel';
 import { 
@@ -36,13 +37,19 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
   const [showActionHistory, setShowActionHistory] = useState(false);
   const [showActivationPanel, setShowActivationPanel] = useState(false);
   const [showMoraleTestPanel, setShowMoraleTestPanel] = useState(false);
-  const cooperativeCastingHandlerRef = useRef<((request: any) => void) | null>(null);
+  const cooperativeContributionHandlerRef = useRef<((request: any) => void) | null>(null);
+  const [spellResultModal, setSpellResultModal] = useState<{
+    isVisible: boolean;
+    spellName: string;
+    finalModifier: number;
+    targetNumber: number;
+    cooperationRequestId: string;
+  } | null>(null);
 
-  // Stable callback for setting cooperative casting handler
-  const handleCooperativeCastingRequest = useCallback((handler: (request: any) => void) => {
-    console.log('BattleDashboard: Setting cooperative casting handler');
-    cooperativeCastingHandlerRef.current = handler;
-    console.log('BattleDashboard: Handler set, current value:', cooperativeCastingHandlerRef.current !== null);
+  // Stable callback for setting cooperative contribution handler
+  const handleCooperativeContributionRequest = useCallback((handler: (request: any) => void) => {
+    console.log('BattleDashboard: Setting cooperative contribution handler');
+    cooperativeContributionHandlerRef.current = handler;
   }, []);
 
   // Fetch initial battle state
@@ -158,14 +165,27 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
             console.log('Battle completed, refreshing battle state');
             fetchBattleState();
             break;
-          case 'cooperative_casting_request':
-            // Handle cooperative casting request
-            console.log('Cooperative casting request:', message.data);
-            if (cooperativeCastingHandlerRef.current) {
-              console.log('Calling cooperative casting handler with request:', message.data);
-              cooperativeCastingHandlerRef.current(message.data);
+          case 'cooperative_contribution_request':
+            // Handle cooperative contribution request (poker-style)
+            console.log('Cooperative contribution request:', message.data);
+            if (cooperativeContributionHandlerRef.current) {
+              console.log('Calling cooperative contribution handler with request:', message.data);
+              cooperativeContributionHandlerRef.current(message.data);
             } else {
-              console.warn('No cooperative casting handler registered, but received request:', message.data);
+              console.warn('No cooperative contribution handler registered, but received request:', message.data);
+            }
+            break;
+          case 'cooperative_contributions_complete':
+            // Handle when all contributions are collected - show spell result modal to original caster
+            console.log('Cooperative contributions complete:', message.data);
+            if (message.data.casterUserId === user?.id) {
+              setSpellResultModal({
+                isVisible: true,
+                spellName: message.data.spellName,
+                finalModifier: message.data.finalModifier,
+                targetNumber: Math.max(1, Math.min(6, 4 - message.data.finalModifier)),
+                cooperationRequestId: message.data.cooperationRequestId
+              });
             }
             break;
           case 'cooperative_casting_response':
@@ -345,50 +365,10 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
     }
   };
 
-  // Spell casting handler
-  const handleCastSpell = async (unitId: string, spellId: string, cooperatingCasters: any[] = []) => {
+  // Initiate poker-style cooperative casting
+  const handleInitiateCooperativeCasting = async (unitId: string, spellId: string, targetUnitIds: string[], timeoutSeconds: number = 30) => {
     try {
-      const spellCastAttempt = {
-        spellId,
-        casterUnitId: unitId,
-        tokensCost: 1, // This should come from the spell data, but defaulting to 1
-        cooperatingCasters,
-        targetUnitIds: [] // This should be selected in the modal
-      };
-
-      // Check if cooperative casting is needed (if cooperating casters are specified)
-      if (cooperatingCasters && cooperatingCasters.length > 0) {
-        // Request cooperative casting first
-        const cooperationResponse = await fetch('/api/spells/request-cooperation', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-          },
-          body: JSON.stringify({
-            battleId,
-            spellCastAttempt,
-            timeoutSeconds: 30
-          })
-        });
-
-        if (!cooperationResponse.ok) {
-          const errorData = await cooperationResponse.json();
-          throw new Error(errorData.error || 'Failed to request cooperative casting');
-        }
-
-        const cooperationResult = await cooperationResponse.json();
-        console.log(`Cooperative casting request sent:`, cooperationResult);
-        
-        // The actual spell casting will happen after cooperation responses
-        // For now, just show a message that cooperation was requested
-        setError(null); // Clear any previous errors
-        console.log('Cooperative casting requested - waiting for responses');
-        return;
-      }
-
-      // Direct spell casting (no cooperation needed)
-      const response = await fetch('/api/spells/cast', {
+      const response = await fetch('/api/spells/initiate-cooperative-casting', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -396,22 +376,61 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
         },
         body: JSON.stringify({
           battleId,
-          spellCastAttempt
+          spellId,
+          casterUnitId: unitId,
+          targetUnitIds,
+          timeoutSeconds
         })
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to cast spell');
+        throw new Error(errorData.error || 'Failed to initiate cooperative casting');
       }
 
       const result = await response.json();
-      console.log(`Spell cast result:`, result);
+      console.log('Cooperative casting initiated:', result);
       
-      // Battle state will be updated via WebSocket
+      // Clear any previous errors
+      setError(null);
+      
+      // Battle state will be updated via WebSocket as cooperative casting progresses
       
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to cast spell');
+      setError(err instanceof Error ? err.message : 'Failed to initiate cooperative casting');
+    }
+  };
+
+  // Handle spell result submission
+  const handleSpellResultSubmission = async (success: boolean) => {
+    if (!spellResultModal) return;
+
+    try {
+      const response = await fetch('/api/spells/submit-result', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        },
+        body: JSON.stringify({
+          battleId,
+          cooperationRequestId: spellResultModal.cooperationRequestId,
+          success,
+          finalModifier: spellResultModal.finalModifier
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to submit spell result');
+      }
+
+      console.log('Spell result submitted:', success ? 'Success' : 'Failed');
+      setSpellResultModal(null);
+      setError(null);
+      
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to submit spell result');
     }
   };
 
@@ -700,7 +719,7 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
                   }))}
                   onQuickDamage={(damage, modelId) => handleQuickDamage(unit.unitId, damage, modelId)}
                   onAction={(action, targetId) => handleUnitAction(unit.unitId, action, targetId)}
-                  onCastSpell={(spellId, cooperatingCasters) => handleCastSpell(unit.unitId, spellId, cooperatingCasters)}
+                  onCastSpell={(spellId, targetUnitIds) => handleInitiateCooperativeCasting(unit.unitId, spellId, targetUnitIds)}
                   allArmies={allArmies}
                 />
               ))}
@@ -751,11 +770,24 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
         }}
       />
 
-      {/* Cooperative Casting Notification */}
-      <CooperativeCastingNotification
+      {/* Cooperative Contribution Modal */}
+      <CooperativeContributionModal
         battleId={battleId}
-        onCooperativeCastingRequest={handleCooperativeCastingRequest}
+        onCooperativeContributionRequest={handleCooperativeContributionRequest}
+        allArmies={allArmies}
       />
+
+      {/* Spell Result Modal */}
+      {spellResultModal && (
+        <SpellResultModal
+          isVisible={spellResultModal.isVisible}
+          onClose={() => setSpellResultModal(null)}
+          onSubmitResult={handleSpellResultSubmission}
+          spellName={spellResultModal.spellName}
+          finalModifier={spellResultModal.finalModifier}
+          targetNumber={spellResultModal.targetNumber}
+        />
+      )}
     </div>
   );
 };
