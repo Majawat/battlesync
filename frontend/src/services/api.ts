@@ -275,11 +275,11 @@ class ApiClient {
     return this.client.get(`/campaigns/${campaignId}/available-members`);
   }
 
-  async addMemberToCampaign(campaignId: string, data: { groupMembershipId: string; campaignRole?: 'PARTICIPANT' | 'ADMIN' }): Promise<any> {
+  async addMemberToCampaign(campaignId: string, data: { groupMembershipId: string; campaignRole?: 'PARTICIPANT' | 'ORGANIZER' }): Promise<any> {
     return this.client.post(`/campaigns/${campaignId}/members/add`, data);
   }
 
-  async inviteMemberToCampaign(campaignId: string, data: { username: string; role?: 'ADMIN' | 'MEMBER' }): Promise<any> {
+  async inviteMemberToCampaign(campaignId: string, data: { username: string; role?: 'ORGANIZER' | 'PARTICIPANT' }): Promise<any> {
     return this.client.post(`/campaigns/${campaignId}/members/invite`, data);
   }
 

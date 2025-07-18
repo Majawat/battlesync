@@ -45,7 +45,7 @@ export const CampaignMembersModal: React.FC<CampaignMembersModalProps> = ({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [inviteUsername, setInviteUsername] = useState('');
-  const [inviteRole, setInviteRole] = useState<'ADMIN' | 'MEMBER'>('MEMBER');
+  const [inviteRole, setInviteRole] = useState<'ORGANIZER' | 'PARTICIPANT'>('PARTICIPANT');
   const [inviting, setInviting] = useState(false);
   const [showAddMembers, setShowAddMembers] = useState(false);
 
@@ -84,7 +84,7 @@ export const CampaignMembersModal: React.FC<CampaignMembersModalProps> = ({
     }
   };
 
-  const handleAddMember = async (groupMembershipId: string, campaignRole: 'PARTICIPANT' | 'ADMIN' = 'PARTICIPANT') => {
+  const handleAddMember = async (groupMembershipId: string, campaignRole: 'PARTICIPANT' | 'ORGANIZER' = 'PARTICIPANT') => {
     try {
       await apiClient.addMemberToCampaign(campaignId, {
         groupMembershipId,
@@ -108,7 +108,7 @@ export const CampaignMembersModal: React.FC<CampaignMembersModalProps> = ({
         role: inviteRole
       });
       setInviteUsername('');
-      setInviteRole('MEMBER');
+      setInviteRole('PARTICIPANT');
       await loadMembers(); // Refresh the list
     } catch (error: any) {
       setError(error.response?.data?.message || 'Failed to invite member');
@@ -232,12 +232,12 @@ export const CampaignMembersModal: React.FC<CampaignMembersModalProps> = ({
                 />
                 <select
                   value={inviteRole}
-                  onChange={(e) => setInviteRole(e.target.value as 'ADMIN' | 'MEMBER')}
+                  onChange={(e) => setInviteRole(e.target.value as 'ORGANIZER' | 'PARTICIPANT')}
                   className="px-3 py-2 border border-gray-600 rounded bg-gray-800 text-white focus:outline-none focus:border-blue-500"
                   disabled={inviting}
                 >
-                  <option value="MEMBER">Member</option>
-                  <option value="ADMIN">Admin</option>
+                  <option value="PARTICIPANT">Participant</option>
+                  <option value="ORGANIZER">Organizer</option>
                 </select>
                 <button
                   type="submit"
