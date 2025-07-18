@@ -244,6 +244,21 @@ export class OPRBattleService {
         }
       }
 
+      // Initialize activation state for each unit
+      for (const army of battleArmies) {
+        for (const unit of army.units) {
+          unit.activationState = {
+            canActivate: false, // Not active until battle rounds
+            hasActivated: false,
+            activatedInRound: 0,
+            activatedInTurn: 0,
+            isSelected: false,
+            actionPoints: 1, // Standard action points
+            actionsUsed: []
+          };
+        }
+      }
+
       // Create initial OPR battle state
       const oprBattleState: OPRBattleState = {
         battleId: battle.id,
@@ -257,6 +272,17 @@ export class OPRBattleService {
           pointsLimit: 1000, // Default points
           allowUnderdog: true,
           customRules: []
+        },
+        // Initialize empty activation state (will be populated when battle rounds start)
+        activationState: {
+          currentTurn: 0,
+          maxTurns: 0,
+          activationOrder: [],
+          unitsActivatedThisRound: [],
+          isAwaitingActivation: false,
+          canPassTurn: false,
+          passedPlayers: [],
+          roundComplete: true // Setup phase, no activation needed
         }
       };
 

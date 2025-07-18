@@ -16,6 +16,9 @@ export interface OPRBattleState {
   armies: OPRBattleArmy[];
   events: OPRBattleEvent[];
   gameSettings: OPRGameSettings;
+  
+  // Turn-based activation system
+  activationState: OPRActivationState;
 }
 
 export interface OPRGameSettings {
@@ -24,6 +27,49 @@ export interface OPRGameSettings {
   timeLimit?: number; // minutes
   allowUnderdog: boolean;
   customRules: string[];
+}
+
+// Turn-based activation system
+export interface OPRActivationState {
+  currentTurn: number; // Turn within current round (1, 2, 3...)
+  maxTurns: number; // Total turns in this round (based on unit count)
+  activatingPlayerId?: string; // Player who must activate next
+  activationOrder: OPRActivationSlot[]; // Pre-determined order for this round
+  unitsActivatedThisRound: string[]; // Unit IDs already activated
+  isAwaitingActivation: boolean; // Waiting for player to choose unit
+  canPassTurn: boolean; // Whether current player can pass their turn
+  passedPlayers: string[]; // Players who have passed this round
+  roundComplete: boolean; // All activations done for this round
+}
+
+export interface OPRActivationSlot {
+  playerId: string;
+  armyId: string;
+  turnNumber: number;
+  isPassed: boolean; // Player passed on this slot
+  activatedUnitId?: string; // Which unit was activated (if any)
+  timestamp?: Date; // When this activation occurred
+}
+
+// Individual unit activation tracking
+export interface OPRUnitActivationState {
+  canActivate: boolean; // Can this unit be activated this round?
+  hasActivated: boolean; // Has this unit activated this round?
+  activatedInRound: number; // Which round this unit last activated
+  activatedInTurn: number; // Which turn within the round
+  isSelected: boolean; // Currently selected for activation
+  actionPoints: number; // Available action points (usually 1, 2 for fast units)
+  actionsUsed: OPRUnitAction[]; // Actions taken this activation
+}
+
+// Unit actions during activation
+export interface OPRUnitAction {
+  actionType: 'MOVE' | 'SHOOT' | 'FIGHT' | 'CAST_SPELL' | 'SPECIAL' | 'HOLD';
+  actionCost: number; // Action points consumed
+  timestamp: Date;
+  description: string;
+  targetUnitIds?: string[];
+  additionalData?: Record<string, any>;
 }
 
 export interface OPRBattleArmy {
@@ -55,6 +101,9 @@ export interface OPRBattleUnit {
   fatigued: boolean;
   shaken: boolean;
   routed: boolean;
+  
+  // Activation tracking
+  activationState: OPRUnitActivationState;
   
   // Combat tracking
   kills: number; // Kills made by this unit
@@ -130,8 +179,11 @@ export type OPRBattleEventType =
   | 'BATTLE_STARTED'
   | 'PHASE_CHANGED'
   | 'ROUND_STARTED'
+  | 'TURN_STARTED'
   | 'UNIT_ACTIVATED'
   | 'UNIT_ACTION'
+  | 'ACTIVATION_PASSED'
+  | 'ACTIVATION_ORDER_DETERMINED'
   | 'SPELL_CAST'
   | 'DAMAGE_APPLIED'
   | 'MODEL_DESTROYED'
@@ -323,4 +375,32 @@ export interface BattleUIState {
   damageMode: boolean;
   showDetails: boolean;
   compactMode: boolean; // For mobile
+}
+
+// Turn-based activation requests
+export interface ActivateUnitRequest {
+  battleId: string;
+  userId: string;
+  unitId: string;
+  actions?: OPRUnitAction[]; // Actions to perform during activation
+}
+
+export interface PassActivationRequest {
+  battleId: string;
+  userId: string;
+  reason?: string; // Optional reason for passing
+}
+
+export interface StartNewRoundRequest {
+  battleId: string;
+  userId: string;
+}
+
+export interface ActivationResult {
+  success: boolean;
+  newActivationState: OPRActivationState;
+  unitActivated?: OPRBattleUnit;
+  nextActivatingPlayer?: string;
+  roundComplete?: boolean;
+  error?: string;
 }

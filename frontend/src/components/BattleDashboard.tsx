@@ -4,6 +4,7 @@ import { BattleUnitCard } from './BattleUnitCard';
 import { BattleActionHistoryPanel } from './BattleActionHistoryPanel';
 import { CommandPointPanel } from './CommandPointPanel';
 import { CooperativeCastingNotification } from './CooperativeCastingNotification';
+import { ActivationPanel } from './ActivationPanel';
 import { 
   OPRBattleState, 
   OPRBattlePhase,
@@ -32,6 +33,7 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
   const [error, setError] = useState<string | null>(null);
   const [, setWsConnection] = useState<WebSocket | null>(null);
   const [showActionHistory, setShowActionHistory] = useState(false);
+  const [showActivationPanel, setShowActivationPanel] = useState(false);
   const [cooperativeCastingHandler, setCooperativeCastingHandler] = useState<((request: any) => void) | null>(null);
 
   // Fetch initial battle state
@@ -517,6 +519,16 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
                 </svg>
                 Undo
               </button>
+
+              <button
+                onClick={() => setShowActivationPanel(true)}
+                className="flex items-center px-3 py-2 bg-purple-600/80 hover:bg-purple-600 rounded-lg text-xs font-medium transition-colors duration-200"
+              >
+                <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+                Activate
+              </button>
             </div>
           </div>
         </div>
@@ -643,6 +655,18 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
         onActionUndone={() => {
           fetchBattleState();
           setShowActionHistory(false);
+        }}
+      />
+
+      {/* Activation Panel */}
+      <ActivationPanel
+        battleId={battleId}
+        userId={user?.id || ''}
+        isVisible={showActivationPanel}
+        onClose={() => setShowActivationPanel(false)}
+        onActivationComplete={() => {
+          fetchBattleState();
+          setShowActivationPanel(false);
         }}
       />
 

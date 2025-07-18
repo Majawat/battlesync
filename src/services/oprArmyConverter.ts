@@ -152,6 +152,18 @@ export class OPRArmyConverter {
       specialRules,
       
       isCombined: armyUnit.combined || false,
+      
+      // Initialize activation state
+      activationState: {
+        canActivate: false, // Will be set to true when battle rounds start
+        hasActivated: false,
+        activatedInRound: 0,
+        activatedInTurn: 0,
+        isSelected: false,
+        actionPoints: 1, // Standard action points (can be modified by Fast rule)
+        actionsUsed: []
+      },
+      
       sourceUnit: armyUnit
     };
 

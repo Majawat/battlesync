@@ -409,6 +409,34 @@ class ApiClient {
   async exportActionHistory(battleId: string, format: 'json' | 'csv' = 'json'): Promise<any> {
     return this.client.get(`/battles/${battleId}/action-history/export`, { params: { format } });
   }
+
+  // Activation System API methods
+  async startNewRound(battleId: string): Promise<any> {
+    return this.client.post(`/battles/${battleId}/activation/start-round`);
+  }
+
+  async activateUnit(battleId: string, data: { 
+    unitId: string; 
+    actions?: any[] 
+  }): Promise<any> {
+    return this.client.post(`/battles/${battleId}/activation/activate-unit`, data);
+  }
+
+  async passActivation(battleId: string, data: { reason?: string }): Promise<any> {
+    return this.client.post(`/battles/${battleId}/activation/pass`, data);
+  }
+
+  async getActivationStatus(battleId: string): Promise<any> {
+    return this.client.get(`/battles/${battleId}/activation/status`);
+  }
+
+  async getAvailableUnitsForActivation(battleId: string): Promise<any> {
+    return this.client.get(`/battles/${battleId}/activation/available-units`);
+  }
+
+  async getActivationOrder(battleId: string): Promise<any> {
+    return this.client.get(`/battles/${battleId}/activation/order`);
+  }
 }
 
 export const apiClient = new ApiClient();
