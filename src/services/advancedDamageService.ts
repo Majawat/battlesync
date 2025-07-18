@@ -6,6 +6,7 @@ import {
   DamageType
 } from '../types/oprBattle';
 import { logger } from '../utils/logger';
+import { MoraleTestService } from './moraleTestService';
 
 export class AdvancedDamageService {
 
@@ -372,8 +373,8 @@ export class AdvancedDamageService {
       unit.shaken = true; // Routed units are also shaken
     }
 
-    // Morale test required when models are lost
-    const moraleTestRequired = modelsDestroyed > 0;
+    // Check if morale test is required using the new service
+    const moraleTestRequired = MoraleTestService.shouldTakeMoraleTest(unit, modelsDestroyed);
 
     return { unitShaken, unitRouted, moraleTestRequired };
   }

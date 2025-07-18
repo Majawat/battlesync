@@ -170,6 +170,59 @@ export interface BattleUIState {
   compactMode: boolean;
 }
 
+// Morale and Quality Test Types
+export interface MoraleTestRequest {
+  unitId: string;
+  testType: 'MORALE' | 'QUALITY' | 'ROUT_RECOVERY' | 'ACTIVATION';
+  modifier?: number;
+  reason: string;
+  forcedRoll?: number;
+}
+
+export interface MoraleTestResult {
+  success: boolean;
+  rollResult: number;
+  targetNumber: number;
+  finalResult: number;
+  modifier: number;
+  unitShaken: boolean;
+  unitRouted: boolean;
+  unitRecovered: boolean;
+  unitDestroyed: boolean;
+  description: string;
+}
+
+export interface QualityTestRequest {
+  unitId: string;
+  modelId: string;
+  testType: 'ACTIVATION' | 'SPECIAL_ABILITY' | 'INSTANT_KILL' | 'SPELL_RESIST';
+  modifier?: number;
+  reason: string;
+  forcedRoll?: number;
+}
+
+export interface QualityTestResult {
+  success: boolean;
+  rollResult: number;
+  targetNumber: number;
+  finalResult: number;
+  modifier: number;
+  description: string;
+}
+
+export interface MoraleTestSuggestion {
+  testType: string;
+  reason: string;
+  modifier: number;
+  priority: 'high' | 'medium' | 'low';
+}
+
+export interface ActionPenalties {
+  shootingPenalty: number;
+  fightingPenalty: number;
+  movementPenalty: number;
+}
+
 export interface TouchDamageProps {
   unitId: string;
   modelId?: string;
@@ -179,7 +232,7 @@ export interface TouchDamageProps {
 
 // WebSocket message types
 export interface BattleWebSocketMessage {
-  type: 'welcome' | 'auth' | 'join_room' | 'error' | 'round_advanced' | 'battle_created' | 'phase_changed' | 'damage_applied' | 'hero_joined' | 'battle_completed' | 'unit_action' | 'spell_cast' | 'cooperative_casting_request' | 'cooperative_casting_response' | 'spell_cast_complete';
+  type: 'welcome' | 'auth' | 'join_room' | 'error' | 'round_advanced' | 'battle_created' | 'phase_changed' | 'damage_applied' | 'hero_joined' | 'battle_completed' | 'unit_action' | 'spell_cast' | 'cooperative_casting_request' | 'cooperative_casting_response' | 'spell_cast_complete' | 'morale_test_result' | 'quality_test_result';
   data: any;
   error?: string;
   timestamp: string;

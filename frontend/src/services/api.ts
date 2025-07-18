@@ -437,6 +437,36 @@ class ApiClient {
   async getActivationOrder(battleId: string): Promise<any> {
     return this.client.get(`/battles/${battleId}/activation/order`);
   }
+
+  // Morale and Quality Test API methods
+  async performMoraleTest(battleId: string, data: {
+    unitId: string;
+    testType: 'MORALE' | 'QUALITY' | 'ROUT_RECOVERY' | 'ACTIVATION';
+    modifier?: number;
+    reason: string;
+    forcedRoll?: number;
+  }): Promise<any> {
+    return this.client.post(`/battles/${battleId}/morale-test`, data);
+  }
+
+  async performQualityTest(battleId: string, data: {
+    unitId: string;
+    modelId: string;
+    testType: 'ACTIVATION' | 'SPECIAL_ABILITY' | 'INSTANT_KILL' | 'SPELL_RESIST';
+    modifier?: number;
+    reason: string;
+    forcedRoll?: number;
+  }): Promise<any> {
+    return this.client.post(`/battles/${battleId}/quality-test`, data);
+  }
+
+  async getMoraleTestSuggestions(battleId: string, unitId: string): Promise<any> {
+    return this.client.get(`/battles/${battleId}/units/${unitId}/morale-suggestions`);
+  }
+
+  async getQualityTestInfo(battleId: string, unitId: string, modelId: string): Promise<any> {
+    return this.client.get(`/battles/${battleId}/units/${unitId}/models/${modelId}/quality-info`);
+  }
 }
 
 export const apiClient = new ApiClient();

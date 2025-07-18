@@ -5,6 +5,7 @@ import { BattleActionHistoryPanel } from './BattleActionHistoryPanel';
 import { CommandPointPanel } from './CommandPointPanel';
 import { CooperativeCastingNotification } from './CooperativeCastingNotification';
 import { ActivationPanel } from './ActivationPanel';
+import { MoraleTestPanel } from './MoraleTestPanel';
 import { 
   OPRBattleState, 
   OPRBattlePhase,
@@ -34,6 +35,7 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
   const [, setWsConnection] = useState<WebSocket | null>(null);
   const [showActionHistory, setShowActionHistory] = useState(false);
   const [showActivationPanel, setShowActivationPanel] = useState(false);
+  const [showMoraleTestPanel, setShowMoraleTestPanel] = useState(false);
   const [cooperativeCastingHandler, setCooperativeCastingHandler] = useState<((request: any) => void) | null>(null);
 
   // Fetch initial battle state
@@ -164,6 +166,16 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
           case 'spell_cast_complete':
             // Handle spell cast completion
             console.log('Spell cast complete:', message.data);
+            fetchBattleState();
+            break;
+          case 'morale_test_result':
+            // Handle morale test results
+            console.log('Morale test result:', message.data);
+            fetchBattleState();
+            break;
+          case 'quality_test_result':
+            // Handle quality test results
+            console.log('Quality test result:', message.data);
             fetchBattleState();
             break;
           default:
@@ -529,6 +541,16 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
                 </svg>
                 Activate
               </button>
+
+              <button
+                onClick={() => setShowMoraleTestPanel(true)}
+                className="flex items-center px-3 py-2 bg-orange-600/80 hover:bg-orange-600 rounded-lg text-xs font-medium transition-colors duration-200"
+              >
+                <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Tests
+              </button>
             </div>
           </div>
         </div>
@@ -667,6 +689,21 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
         onActivationComplete={() => {
           fetchBattleState();
           setShowActivationPanel(false);
+        }}
+      />
+
+      {/* Morale Test Panel */}
+      <MoraleTestPanel
+        battleId={battleId}
+        selectedUnit={uiState.selectedUnit ? 
+          displayedArmy?.units.find(u => u.unitId === uiState.selectedUnit) || null : null}
+        selectedModel={uiState.selectedModel && uiState.selectedUnit ? 
+          displayedArmy?.units.find(u => u.unitId === uiState.selectedUnit)?.models.find(m => m.modelId === uiState.selectedModel) || null : null}
+        isVisible={showMoraleTestPanel}
+        onClose={() => setShowMoraleTestPanel(false)}
+        onTestComplete={() => {
+          fetchBattleState();
+          setShowMoraleTestPanel(false);
         }}
       />
 

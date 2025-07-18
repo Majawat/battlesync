@@ -11,6 +11,7 @@ import commandPointRoutes from './commandPointRoutes';
 import { spellRoutes } from './spellRoutes';
 import { battleActionHistoryRoutes } from './battleActionHistoryRoutes';
 import { activationRoutes } from './activationRoutes';
+import moraleTestRoutes from './moraleTestRoutes';
 
 const router = Router();
 
@@ -27,6 +28,7 @@ router.use('/command-points', commandPointRoutes);
 router.use('/spells', spellRoutes);
 router.use('/', battleActionHistoryRoutes);
 router.use('/', activationRoutes);
+router.use('/battles', moraleTestRoutes);
 
 // Health check for API
 router.get('/health', async (req, res) => {
