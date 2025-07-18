@@ -47,17 +47,23 @@ export const CooperativeCastingNotification: React.FC<CooperativeCastingNotifica
     if (onCooperativeCastingRequest && user?.id) {
       const handler = (request: CooperativeCastingRequest) => {
         console.log('CooperativeCastingNotification received request:', request);
+        console.log('Current user ID:', user?.id);
+        console.log('All potential cooperators:', request.potentialCooperators);
         // Only show if this user has potential cooperators
         const userCooperators = request.potentialCooperators.filter(c => c.userId === user?.id);
-        console.log('User cooperators found:', userCooperators);
+        console.log('User cooperators found for this user:', userCooperators);
         if (userCooperators.length > 0) {
+          console.log('Setting current request and showing modal');
           setCurrentRequest(request);
           setSelectedCooperator(userCooperators[0].unitId + '_' + (userCooperators[0].modelId || ''));
           setTimeRemaining(request.timeoutSeconds);
+        } else {
+          console.log('No cooperators found for this user, not showing modal');
         }
       };
       console.log('Registering cooperative casting handler for user:', user.id);
       onCooperativeCastingRequest(handler);
+      console.log('Handler registration completed');
     }
   }, [user?.id]); // Remove onCooperativeCastingRequest from deps since it's now stable
 

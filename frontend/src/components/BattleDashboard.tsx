@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { BattleUnitCard } from './BattleUnitCard';
 import { BattleActionHistoryPanel } from './BattleActionHistoryPanel';
@@ -36,12 +36,13 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
   const [showActionHistory, setShowActionHistory] = useState(false);
   const [showActivationPanel, setShowActivationPanel] = useState(false);
   const [showMoraleTestPanel, setShowMoraleTestPanel] = useState(false);
-  const [cooperativeCastingHandler, setCooperativeCastingHandler] = useState<((request: any) => void) | null>(null);
+  const cooperativeCastingHandlerRef = useRef<((request: any) => void) | null>(null);
 
   // Stable callback for setting cooperative casting handler
   const handleCooperativeCastingRequest = useCallback((handler: (request: any) => void) => {
     console.log('BattleDashboard: Setting cooperative casting handler');
-    setCooperativeCastingHandler(() => handler);
+    cooperativeCastingHandlerRef.current = handler;
+    console.log('BattleDashboard: Handler set, current value:', cooperativeCastingHandlerRef.current !== null);
   }, []);
 
   // Fetch initial battle state
@@ -160,8 +161,9 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
           case 'cooperative_casting_request':
             // Handle cooperative casting request
             console.log('Cooperative casting request:', message.data);
-            if (cooperativeCastingHandler) {
-              cooperativeCastingHandler(message.data);
+            if (cooperativeCastingHandlerRef.current) {
+              console.log('Calling cooperative casting handler with request:', message.data);
+              cooperativeCastingHandlerRef.current(message.data);
             } else {
               console.warn('No cooperative casting handler registered, but received request:', message.data);
             }
