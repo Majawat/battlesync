@@ -592,7 +592,10 @@ export class SpellController {
         await this.applySpellEffects(battleState, spellData, attempt.targetUnitIds, userId);
       }
 
-      // Save updated battle state
+      // Save updated battle state to database
+      await OPRBattleService.saveBattleState(battleId, battleState);
+
+      // Record battle event
       await OPRBattleService.recordBattleEvent(
         battleId,
         userId,

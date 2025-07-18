@@ -556,6 +556,22 @@ export class OPRBattleService {
   }
 
   /**
+   * Save battle state to database
+   */
+  static async saveBattleState(battleId: string, battleState: OPRBattleState): Promise<void> {
+    try {
+      await prisma.battle.update({
+        where: { id: battleId },
+        data: { currentState: battleState as any }
+      });
+      logger.info(`Battle state saved for battle ${battleId}`);
+    } catch (error) {
+      logger.error(`Error saving battle state for battle ${battleId}:`, error);
+      throw error;
+    }
+  }
+
+  /**
    * Transition battle phase
    */
   static async transitionPhase(
