@@ -61,7 +61,7 @@ export class CampaignService {
       id: campaign.id,
       name: campaign.name,
       status: campaign.status,
-      memberCount: campaign._count.participations,
+      participantCount: campaign._count.participations,
       battleCount: campaign._count.battles,
       completedBattles: campaign.battles.length,
       createdAt: campaign.createdAt,
@@ -190,7 +190,7 @@ export class CampaignService {
         },
       });
 
-      return this.toCampaignData(campaignWithData!);
+      return this.toCampaignData(campaignWithData!, userId);
     } catch (error: any) {
       if (error.code === 'P2002') {
         throw ValidationUtils.createError('A campaign with this name already exists in the group', 409);
@@ -322,7 +322,7 @@ export class CampaignService {
       throw ValidationUtils.createError('Campaign not found or access denied', 404);
     }
 
-    return this.toCampaignData(campaign);
+    return this.toCampaignData(campaign, userId);
   }
 
   static async getGroupCampaigns(groupId: string, userId: string): Promise<CampaignData[]> {
@@ -337,6 +337,17 @@ export class CampaignService {
             id: true,
             username: true,
             email: true,
+          },
+        },
+        group: {
+          include: {
+            memberships: {
+              where: { userId },
+              select: {
+                userId: true,
+                role: true,
+              },
+            },
           },
         },
         participations: {
@@ -387,7 +398,7 @@ export class CampaignService {
       orderBy: { updatedAt: 'desc' },
     });
 
-    return campaigns.map(campaign => this.toCampaignData(campaign));
+    return campaigns.map(campaign => this.toCampaignData(campaign, userId));
   }
 
   static async updateCampaign(campaignId: string, userId: string, data: UpdateCampaignRequest): Promise<CampaignData> {
@@ -467,7 +478,7 @@ export class CampaignService {
       },
     });
 
-    return this.toCampaignData(updatedCampaign);
+    return this.toCampaignData(updatedCampaign, userId);
   }
 
   static async leaveCampaign(campaignId: string, userId: string): Promise<void> {
@@ -600,7 +611,38 @@ export class CampaignService {
     }
   }
 
-  private static toCampaignData(campaign: any): CampaignData {
+  private static toCampaignData(campaign: any, userId?: string): CampaignData {
+    // Determine user role in the campaign
+    let userRole: 'CREATOR' | 'ADMIN' | 'MEMBER' = 'MEMBER';
+    
+    if (userId) {
+      // Check if user is the campaign creator
+      if (campaign.creator.id === userId) {
+        userRole = 'CREATOR';
+      } else {
+        // Check if user is a campaign participant
+        const participation = campaign.participations.find((p: any) => 
+          p.groupMembership.user.id === userId
+        );
+        
+        if (participation) {
+          // Map campaign role to user role
+          userRole = participation.campaignRole === 'ADMIN' ? 'ADMIN' : 'MEMBER';
+        } else {
+          // Check if user is a group admin (even if not a campaign participant)
+          // We'll need to add this data to the campaign query
+          if (campaign.group?.memberships) {
+            const groupMembership = campaign.group.memberships.find((m: any) => 
+              m.userId === userId && m.role === 'ADMIN'
+            );
+            if (groupMembership) {
+              userRole = 'ADMIN';
+            }
+          }
+        }
+      }
+    }
+
     return {
       id: campaign.id,
       groupId: campaign.groupId,
@@ -644,10 +686,11 @@ export class CampaignService {
         status: mission.status,
         scheduledDate: mission.scheduledDate,
       })),
-      memberCount: campaign._count.participations,
+      participantCount: campaign._count.participations,
       battleCount: campaign._count.battles,
       createdAt: campaign.createdAt,
       updatedAt: campaign.updatedAt,
+      userRole: userRole,
     };
   }
 }

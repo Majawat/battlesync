@@ -44,7 +44,8 @@ BattleSync is a self-hosted web application for managing One Page Rules (OPR) ta
 - Defense upgrade processing and weapon count accuracy
 - Complex upgrade scenarios and edge case handling
 
-## Development Guidelines
+## Development Practices
+- While coding, update our version numbers to accurately describe what we are doing and where the app is
 
 ### Code Standards
 - Use TypeScript strict mode

@@ -14,10 +14,11 @@ export interface CampaignData {
   members: CampaignMember[];
   battles: BattleSummary[];
   missions: MissionSummary[];
-  memberCount: number;
+  participantCount: number;
   battleCount: number;
   createdAt: Date;
   updatedAt: Date;
+  userRole?: 'CREATOR' | 'ADMIN' | 'MEMBER';
 }
 
 export interface CampaignMember {
@@ -109,7 +110,7 @@ export interface CampaignSummary {
   id: string;
   name: string;
   status: CampaignStatus;
-  memberCount: number;
+  participantCount: number;
   battleCount: number;
   completedBattles: number;
   createdAt: Date;
