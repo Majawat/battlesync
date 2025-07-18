@@ -18,6 +18,15 @@ interface CampaignMember {
   primaryArmyName?: string;
 }
 
+interface AvailableGroupMember {
+  groupMembershipId: string;
+  userId: string;
+  username: string;
+  email: string | null;
+  groupRole: 'ADMIN' | 'MEMBER';
+  joinedAt: string;
+}
+
 interface CampaignMembersModalProps {
   campaignId: string;
   campaignName: string;
@@ -32,17 +41,22 @@ export const CampaignMembersModal: React.FC<CampaignMembersModalProps> = ({
   userRole
 }) => {
   const [members, setMembers] = useState<CampaignMember[]>([]);
+  const [availableMembers, setAvailableMembers] = useState<AvailableGroupMember[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [inviteUsername, setInviteUsername] = useState('');
   const [inviteRole, setInviteRole] = useState<'ADMIN' | 'MEMBER'>('MEMBER');
   const [inviting, setInviting] = useState(false);
+  const [showAddMembers, setShowAddMembers] = useState(false);
 
   const canManage = userRole === 'CREATOR' || userRole === 'ADMIN';
 
   useEffect(() => {
     loadMembers();
-  }, [campaignId]);
+    if (canManage) {
+      loadAvailableMembers();
+    }
+  }, [campaignId, canManage]);
 
   const loadMembers = async () => {
     try {
@@ -55,6 +69,31 @@ export const CampaignMembersModal: React.FC<CampaignMembersModalProps> = ({
       setError(error.response?.data?.message || 'Failed to load members');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const loadAvailableMembers = async () => {
+    try {
+      const response = await apiClient.getAvailableGroupMembers(campaignId);
+      if (response.data.status === 'success') {
+        setAvailableMembers(response.data.data || []);
+      }
+    } catch (error: any) {
+      // Don't show error for available members - just fail silently
+      setAvailableMembers([]);
+    }
+  };
+
+  const handleAddMember = async (groupMembershipId: string, campaignRole: 'PARTICIPANT' | 'ADMIN' = 'PARTICIPANT') => {
+    try {
+      await apiClient.addMemberToCampaign(campaignId, {
+        groupMembershipId,
+        campaignRole
+      });
+      await loadMembers(); // Refresh campaign members
+      await loadAvailableMembers(); // Refresh available members
+    } catch (error: any) {
+      setError(error.response?.data?.message || 'Failed to add member');
     }
   };
 
@@ -142,36 +181,73 @@ export const CampaignMembersModal: React.FC<CampaignMembersModalProps> = ({
           </div>
         )}
 
-        {/* Invite Member Form - Only for admins/creators */}
+        {/* Member Management - Only for admins/creators */}
         {canManage && (
-          <div className="mb-6 bg-gray-700 p-4 rounded">
-            <h3 className="text-lg font-medium text-white mb-3">Invite New Member</h3>
-            <form onSubmit={handleInvite} className="flex gap-3">
-              <input
-                type="text"
-                value={inviteUsername}
-                onChange={(e) => setInviteUsername(e.target.value)}
-                placeholder="Username"
-                className="flex-1 px-3 py-2 border border-gray-600 rounded bg-gray-800 text-white focus:outline-none focus:border-blue-500"
-                disabled={inviting}
-              />
-              <select
-                value={inviteRole}
-                onChange={(e) => setInviteRole(e.target.value as 'ADMIN' | 'MEMBER')}
-                className="px-3 py-2 border border-gray-600 rounded bg-gray-800 text-white focus:outline-none focus:border-blue-500"
-                disabled={inviting}
-              >
-                <option value="MEMBER">Member</option>
-                <option value="ADMIN">Admin</option>
-              </select>
-              <button
-                type="submit"
-                disabled={inviting || !inviteUsername.trim()}
-                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
-              >
-                {inviting ? 'Inviting...' : 'Invite'}
-              </button>
-            </form>
+          <div className="mb-6 space-y-4">
+            {/* Add from Group */}
+            {availableMembers.length > 0 && (
+              <div className="bg-gray-700 p-4 rounded">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-lg font-medium text-white">Add from Group</h3>
+                  <button
+                    onClick={() => setShowAddMembers(!showAddMembers)}
+                    className="text-blue-400 hover:text-blue-300 text-sm"
+                  >
+                    {showAddMembers ? 'Hide' : 'Show'} ({availableMembers.length})
+                  </button>
+                </div>
+                
+                {showAddMembers && (
+                  <div className="space-y-2">
+                    {availableMembers.map((member) => (
+                      <div key={member.groupMembershipId} className="bg-gray-600 p-3 rounded flex items-center justify-between">
+                        <div>
+                          <span className="font-medium text-white">{member.username}</span>
+                          <span className="text-sm text-gray-400 ml-2">({member.groupRole})</span>
+                        </div>
+                        <button
+                          onClick={() => handleAddMember(member.groupMembershipId, 'PARTICIPANT')}
+                          className="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 text-sm"
+                        >
+                          Add
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Invite New Member */}
+            <div className="bg-gray-700 p-4 rounded">
+              <h3 className="text-lg font-medium text-white mb-3">Invite New Member</h3>
+              <form onSubmit={handleInvite} className="flex gap-3">
+                <input
+                  type="text"
+                  value={inviteUsername}
+                  onChange={(e) => setInviteUsername(e.target.value)}
+                  placeholder="Username"
+                  className="flex-1 px-3 py-2 border border-gray-600 rounded bg-gray-800 text-white focus:outline-none focus:border-blue-500"
+                  disabled={inviting}
+                />
+                <select
+                  value={inviteRole}
+                  onChange={(e) => setInviteRole(e.target.value as 'ADMIN' | 'MEMBER')}
+                  className="px-3 py-2 border border-gray-600 rounded bg-gray-800 text-white focus:outline-none focus:border-blue-500"
+                  disabled={inviting}
+                >
+                  <option value="MEMBER">Member</option>
+                  <option value="ADMIN">Admin</option>
+                </select>
+                <button
+                  type="submit"
+                  disabled={inviting || !inviteUsername.trim()}
+                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
+                >
+                  {inviting ? 'Inviting...' : 'Invite'}
+                </button>
+              </form>
+            </div>
           </div>
         )}
 

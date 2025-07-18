@@ -440,6 +440,179 @@ export class CampaignController {
     }
   }
 
+  // Get available group members who can be added to campaign
+  static async getAvailableGroupMembers(req: Request, res: Response): Promise<void> {
+    try {
+      const userId = (req as AuthenticatedRequest).user!.id;
+      const campaignId = req.params.campaignId;
+
+      // Get campaign with group info
+      const campaign = await prisma.campaign.findUnique({
+        where: { id: campaignId },
+        include: {
+          group: {
+            include: {
+              memberships: {
+                where: { status: 'ACTIVE' },
+                include: { user: true }
+              }
+            }
+          },
+          participations: {
+            include: {
+              groupMembership: true
+            }
+          }
+        }
+      });
+
+      if (!campaign) {
+        throw ValidationUtils.createError('Campaign not found', 404);
+      }
+
+      // Check if user is campaign creator or group admin
+      const isCreator = campaign.createdBy === userId;
+      const isGroupAdmin = campaign.group.memberships.some(m => m.userId === userId && m.role === 'ADMIN');
+      
+      if (!isCreator && !isGroupAdmin) {
+        throw ValidationUtils.createError('Only campaign creator or group admin can view available members', 403);
+      }
+
+      // Get group membership IDs that are already campaign participants
+      const existingParticipantIds = new Set(
+        campaign.participations.map(p => p.groupMembershipId)
+      );
+
+      // Filter out existing participants
+      const availableMembers = campaign.group.memberships
+        .filter(membership => !existingParticipantIds.has(membership.id))
+        .map(membership => ({
+          groupMembershipId: membership.id,
+          userId: membership.user.id,
+          username: membership.user.username,
+          email: membership.user.email,
+          groupRole: membership.role,
+          joinedAt: membership.user.createdAt
+        }));
+
+      res.json({
+        status: 'success',
+        data: availableMembers
+      });
+    } catch (error: any) {
+      logger.error('Get available group members failed', { error: error.message, userId: (req as AuthenticatedRequest).user?.id });
+      
+      res.status(error.statusCode || 500).json({
+        status: 'error',
+        message: error.message || 'Failed to get available group members'
+      });
+    }
+  }
+
+  // Add existing group member to campaign
+  static async addMemberToCampaign(req: Request, res: Response): Promise<void> {
+    try {
+      const userId = (req as AuthenticatedRequest).user!.id;
+      const campaignId = req.params.campaignId;
+      const { groupMembershipId, campaignRole = 'PARTICIPANT' } = req.body;
+
+      if (!groupMembershipId) {
+        throw ValidationUtils.createError('Group membership ID is required', 400);
+      }
+
+      // Get campaign with creator info
+      const campaign = await prisma.campaign.findUnique({
+        where: { id: campaignId },
+        include: {
+          group: {
+            include: {
+              memberships: {
+                include: { user: true }
+              }
+            }
+          }
+        }
+      });
+
+      if (!campaign) {
+        throw ValidationUtils.createError('Campaign not found', 404);
+      }
+
+      // Check if user is campaign creator or group admin
+      const isCreator = campaign.createdBy === userId;
+      const isGroupAdmin = campaign.group.memberships.some(m => m.userId === userId && m.role === 'ADMIN');
+      
+      if (!isCreator && !isGroupAdmin) {
+        throw ValidationUtils.createError('Only campaign creator or group admin can add members', 403);
+      }
+
+      // Check if the group membership exists and is active
+      const groupMembership = campaign.group.memberships.find(m => m.id === groupMembershipId);
+      if (!groupMembership) {
+        throw ValidationUtils.createError('Group membership not found', 404);
+      }
+
+      if (groupMembership.status !== 'ACTIVE') {
+        throw ValidationUtils.createError('User is not an active group member', 400);
+      }
+
+      // Check if user is already a campaign participant
+      const existingParticipation = await prisma.campaignParticipation.findFirst({
+        where: {
+          campaignId,
+          groupMembershipId
+        }
+      });
+
+      if (existingParticipation) {
+        throw ValidationUtils.createError('User is already a campaign participant', 400);
+      }
+
+      // Create campaign participation
+      const participation = await prisma.campaignParticipation.create({
+        data: {
+          groupMembershipId,
+          campaignId,
+          campaignRole
+        },
+        include: {
+          groupMembership: {
+            include: {
+              user: true
+            }
+          }
+        }
+      });
+
+      logger.info('Member added to campaign', { 
+        campaignId, 
+        addedUserId: participation.groupMembership.user.id,
+        addedBy: userId 
+      });
+
+      res.json({
+        status: 'success',
+        message: 'Member added to campaign successfully',
+        data: {
+          participationId: participation.id,
+          member: {
+            id: participation.groupMembership.user.id,
+            username: participation.groupMembership.user.username,
+            email: participation.groupMembership.user.email,
+            campaignRole: participation.campaignRole
+          }
+        }
+      });
+    } catch (error: any) {
+      logger.error('Add member to campaign failed', { error: error.message, userId: (req as AuthenticatedRequest).user?.id });
+      
+      res.status(error.statusCode || 500).json({
+        status: 'error',
+        message: error.message || 'Failed to add member to campaign'
+      });
+    }
+  }
+
   // Remove member from campaign
   static async removeCampaignMember(req: Request, res: Response): Promise<void> {
     try {

@@ -51,6 +51,12 @@ router.get('/campaigns/:campaignId/battles', BattleController.getCampaignBattles
 // Get campaign members
 router.get('/campaigns/:campaignId/members', CampaignController.getCampaignMembers);
 
+// Get available group members who can be added to campaign
+router.get('/campaigns/:campaignId/available-members', CampaignController.getAvailableGroupMembers);
+
+// Add existing group member to campaign
+router.post('/campaigns/:campaignId/members/add', CampaignController.addMemberToCampaign);
+
 // Invite member to campaign
 router.post('/campaigns/:campaignId/members/invite', CampaignController.inviteMemberToCampaign);
 
