@@ -145,8 +145,11 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
 
   const isAircraft = hasSpecialRule('aircraft');
   const isImmobile = hasSpecialRule('immobile');
-  const hasCaster = unit.models.some(model => model.casterTokens > 0) || 
-                    (unit.joinedHero && unit.joinedHero.casterTokens > 0);
+  // Check if unit has any caster abilities (regardless of current tokens)
+  const hasCaster = unit.models.some(model => 
+    model.casterTokens >= 0 && model.specialRules.some(rule => rule.includes('Caster('))
+  ) || (unit.joinedHero && unit.joinedHero.casterTokens >= 0 && 
+       unit.joinedHero.specialRules.some(rule => rule.includes('Caster(')));
 
   // Handle spell button click - fetch spells and open modal
   const handleSpellButtonClick = async () => {
@@ -445,14 +448,10 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
                   handleSpellButtonClick();
                 }}
                 disabled={isLoadingSpells}
-                className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
-                  !isLoadingSpells
-                    ? 'bg-purple-600 hover:bg-purple-700 text-white' 
-                    : 'bg-gray-600 text-gray-400 cursor-not-allowed'
-                }`}
+                className="px-3 py-1 rounded text-sm font-medium transition-colors bg-purple-600 hover:bg-purple-700 text-white disabled:bg-gray-600 disabled:text-gray-400 disabled:cursor-not-allowed"
               >
                 {isLoadingSpells ? 'Loading...' : `Cast Spell (${
-                  unit.models.find(m => m.casterTokens > 0)?.casterTokens || 
+                  unit.models.find(m => m.specialRules.some(rule => rule.includes('Caster(')))?.casterTokens || 
                   unit.joinedHero?.casterTokens || 0
                 } tokens)`}
               </button>
@@ -672,7 +671,7 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
           availableSpells={availableSpells}
           availableCasters={getCooperativeCasters()}
           maxTokens={
-            unit.models.find(m => m.casterTokens > 0)?.casterTokens || 
+            unit.models.find(m => m.specialRules.some(rule => rule.includes('Caster(')))?.casterTokens || 
             unit.joinedHero?.casterTokens || 0
           }
           onCastSpell={handleSpellCast}
