@@ -293,10 +293,23 @@ export class SpellController {
       }
 
       // Validate response structure
-      if (!response.hasOwnProperty('accept') || (response.accept && (!response.unitId || !response.tokensContributed || !response.modifier))) {
+      if (!response.hasOwnProperty('accept')) {
         res.status(400).json({
           success: false,
-          error: 'Invalid response format'
+          error: 'Invalid response format: missing accept field'
+        });
+        return;
+      }
+      
+      if (response.accept && (!response.unitId || response.tokensContributed === undefined || response.modifier === undefined)) {
+        const missing = [];
+        if (!response.unitId) missing.push('unitId');
+        if (response.tokensContributed === undefined) missing.push('tokensContributed');
+        if (response.modifier === undefined) missing.push('modifier');
+        
+        res.status(400).json({
+          success: false,
+          error: `Invalid response format when accepting: missing ${missing.join(', ')}`
         });
         return;
       }

@@ -90,10 +90,12 @@ export const CooperativeCastingNotification: React.FC<CooperativeCastingNotifica
       const response = {
         accept,
         unitId: accept ? selectedCooperator?.split('_')[0] : undefined,
-        modelId: accept ? selectedCooperator?.split('_')[1] || undefined : undefined,
+        modelId: accept && selectedCooperator?.split('_')[1] ? selectedCooperator.split('_')[1] : undefined,
         tokensContributed: accept ? tokensToContribute : 0,
-        modifier: accept ? (isPositiveModifier ? 1 : -1) : 0
+        modifier: accept ? (isPositiveModifier ? tokensToContribute : -tokensToContribute) : 0
       };
+
+      console.log('Sending cooperation response:', response);
 
       const apiResponse = await fetch('/api/spells/respond-cooperation', {
         method: 'POST',
@@ -109,7 +111,9 @@ export const CooperativeCastingNotification: React.FC<CooperativeCastingNotifica
       });
 
       if (!apiResponse.ok) {
-        throw new Error('Failed to respond to cooperative casting request');
+        const errorData = await apiResponse.json().catch(() => ({}));
+        console.error('Cooperation response error:', errorData);
+        throw new Error(errorData.error || 'Failed to respond to cooperative casting request');
       }
 
       // Close the notification
