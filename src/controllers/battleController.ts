@@ -96,6 +96,42 @@ export class BattleController {
   }
 
   /**
+   * Get battles for a mission
+   * GET /api/battles?missionId=:missionId
+   */
+  static async getBattles(req: AuthenticatedRequest, res: Response) {
+    try {
+      const userId = req.user?.id;
+      if (!userId) {
+        return res.status(401).json({
+          status: 'error',
+          message: 'Authentication required'
+        });
+      }
+
+      const missionId = req.query.missionId as string;
+      if (!missionId) {
+        return res.status(400).json({
+          status: 'error',
+          message: 'Mission ID is required'
+        });
+      }
+
+      const battles = await BattleService.getMissionBattles(missionId, userId);
+
+      res.json({
+        status: 'success',
+        data: battles
+      });
+    } catch (error: any) {
+      res.status(error.statusCode || 500).json({
+        status: 'error',
+        message: error.message || 'Failed to get mission battles'
+      });
+    }
+  }
+
+  /**
    * Start a battle
    * POST /api/battles/:id/start
    */

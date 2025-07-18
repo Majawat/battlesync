@@ -24,6 +24,13 @@ router.post('/import', ArmyController.importArmy);
 router.get('/', ArmyController.getUserArmies);
 
 /**
+ * @route GET /api/armies/campaign/:campaignId/all
+ * @desc Get all armies in a campaign (for CampaignCreator/GroupAdmin)
+ * @access Private
+ */
+router.get('/campaign/:campaignId/all', ArmyController.getCampaignArmies);
+
+/**
  * @route GET /api/armies/statistics
  * @desc Get army statistics for user
  * @access Private

@@ -73,6 +73,32 @@ export class ArmyController {
   }
 
   /**
+   * Get all armies in a campaign (for CampaignCreator/GroupAdmin)
+   * GET /api/armies/campaign/:campaignId/all
+   */
+  static async getCampaignArmies(req: Request, res: Response): Promise<void> {
+    try {
+      const userId = (req as AuthenticatedRequest).user!.id;
+      const campaignId = req.params.campaignId;
+
+      if (!campaignId) {
+        res.status(400).json(errorResponse('Campaign ID is required'));
+        return;
+      }
+
+      const armies = await armyService.getCampaignArmies(userId, campaignId);
+      
+      res.json(successResponse(armies));
+    } catch (error) {
+      if (error instanceof ApiError) {
+        res.status(error.statusCode).json(errorResponse(error.message));
+      } else {
+        res.status(500).json(errorResponse('Failed to get campaign armies'));
+      }
+    }
+  }
+
+  /**
    * Get specific army
    * GET /api/armies/:id
    */

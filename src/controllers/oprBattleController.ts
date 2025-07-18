@@ -69,6 +69,92 @@ export class OPRBattleController {
   }
 
   /**
+   * Setup a new OPR battle (for CampaignCreator)
+   * POST /api/opr/battles/setup
+   */
+  static async setupBattle(req: Request, res: Response): Promise<void> {
+    try {
+      const userId = (req as AuthenticatedRequest).user!.id;
+      const { missionId, participants } = req.body;
+
+      if (!missionId || !participants || !Array.isArray(participants)) {
+        res.status(400).json({
+          success: false,
+          error: 'Missing required fields: missionId, participants'
+        });
+        return;
+      }
+
+      if (participants.length < 2 || participants.length > 8) {
+        res.status(400).json({
+          success: false,
+          error: 'Battle must have 2-8 participants'
+        });
+        return;
+      }
+
+      // Verify user is campaign creator
+      const mission = await prisma.mission.findFirst({
+        where: {
+          id: missionId,
+          campaign: {
+            createdBy: userId
+          }
+        }
+      });
+
+      if (!mission) {
+        res.status(403).json({
+          success: false,
+          error: 'Only campaign creators can setup battles'
+        });
+        return;
+      }
+
+      // Check if battle already exists for this mission
+      const existingBattle = await prisma.battle.findFirst({
+        where: { missionId }
+      });
+
+      if (existingBattle) {
+        res.status(409).json({
+          success: false,
+          error: 'Battle already exists for this mission'
+        });
+        return;
+      }
+
+      const result = await OPRBattleService.createOPRBattle(
+        missionId,
+        participants,
+        userId
+      );
+
+      if (result.success) {
+        res.status(201).json({
+          success: true,
+          data: {
+            battleId: result.battleId,
+            battle: result.battle
+          }
+        });
+      } else {
+        res.status(400).json({
+          success: false,
+          error: result.error
+        });
+      }
+
+    } catch (error) {
+      logger.error('Setup OPR battle error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to setup battle'
+      });
+    }
+  }
+
+  /**
    * Get OPR battle state
    * GET /api/opr/battles/:battleId
    */

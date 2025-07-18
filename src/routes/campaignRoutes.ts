@@ -21,6 +21,9 @@ router.get('/groups/:groupId/campaigns', CampaignController.getGroupCampaigns);
 // Get a specific campaign by ID
 router.get('/campaigns/:campaignId', CampaignController.getCampaignById);
 
+// Get user role in campaign
+router.get('/campaigns/:campaignId/user-role', CampaignController.getUserRole);
+
 // Update a campaign
 router.put('/campaigns/:campaignId', validateUpdateCampaign, CampaignController.updateCampaign);
 

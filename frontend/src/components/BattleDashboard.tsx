@@ -38,6 +38,12 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
   const [showMoraleTestPanel, setShowMoraleTestPanel] = useState(false);
   const [cooperativeCastingHandler, setCooperativeCastingHandler] = useState<((request: any) => void) | null>(null);
 
+  // Stable callback for setting cooperative casting handler
+  const handleCooperativeCastingRequest = useCallback((handler: (request: any) => void) => {
+    console.log('BattleDashboard: Setting cooperative casting handler');
+    setCooperativeCastingHandler(() => handler);
+  }, []);
+
   // Fetch initial battle state
   const fetchBattleState = useCallback(async () => {
     try {
@@ -156,6 +162,8 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
             console.log('Cooperative casting request:', message.data);
             if (cooperativeCastingHandler) {
               cooperativeCastingHandler(message.data);
+            } else {
+              console.warn('No cooperative casting handler registered, but received request:', message.data);
             }
             break;
           case 'cooperative_casting_response':
@@ -346,6 +354,38 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
         targetUnitIds: [] // This should be selected in the modal
       };
 
+      // Check if cooperative casting is needed (if cooperating casters are specified)
+      if (cooperatingCasters && cooperatingCasters.length > 0) {
+        // Request cooperative casting first
+        const cooperationResponse = await fetch('/api/spells/request-cooperation', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+          },
+          body: JSON.stringify({
+            battleId,
+            spellCastAttempt,
+            timeoutSeconds: 30
+          })
+        });
+
+        if (!cooperationResponse.ok) {
+          const errorData = await cooperationResponse.json();
+          throw new Error(errorData.error || 'Failed to request cooperative casting');
+        }
+
+        const cooperationResult = await cooperationResponse.json();
+        console.log(`Cooperative casting request sent:`, cooperationResult);
+        
+        // The actual spell casting will happen after cooperation responses
+        // For now, just show a message that cooperation was requested
+        setError(null); // Clear any previous errors
+        console.log('Cooperative casting requested - waiting for responses');
+        return;
+      }
+
+      // Direct spell casting (no cooperation needed)
       const response = await fetch('/api/spells/cast', {
         method: 'POST',
         headers: {
@@ -645,6 +685,7 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
                 <BattleUnitCard
                   key={unit.unitId}
                   unit={unit}
+                  battleId={battleId}
                   isOwned={displayedArmy.userId === user?.id}
                   isSelected={uiState.selectedUnit === unit.unitId}
                   damageMode={uiState.damageMode}
@@ -710,7 +751,7 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
       {/* Cooperative Casting Notification */}
       <CooperativeCastingNotification
         battleId={battleId}
-        onCooperativeCastingRequest={(handler) => setCooperativeCastingHandler(() => handler)}
+        onCooperativeCastingRequest={handleCooperativeCastingRequest}
       />
     </div>
   );

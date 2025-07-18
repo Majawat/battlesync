@@ -9,6 +9,7 @@ interface SpellCastModalProps {
   availableSpells: OPRSpell[];
   availableCasters: AvailableCaster[];
   maxTokens: number; // Available tokens from main caster
+  battleId: string; // Need battleId for cooperative casting requests
 }
 
 interface AvailableCaster {
@@ -33,7 +34,8 @@ export const SpellCastModal: React.FC<SpellCastModalProps> = ({
   casterUnit,
   availableSpells,
   availableCasters,
-  maxTokens
+  maxTokens,
+  battleId
 }) => {
   const [selectedSpell, setSelectedSpell] = useState<OPRSpell | null>(null);
   const [cooperatingCasters, setCooperatingCasters] = useState<CooperatingCaster[]>([]);
@@ -46,12 +48,12 @@ export const SpellCastModal: React.FC<SpellCastModalProps> = ({
     }
   }, [isVisible]);
 
-  // Calculate total tokens available and roll modifier
-  const totalTokensAvailable = maxTokens + cooperatingCasters.reduce((sum, c) => sum + c.tokensContributed, 0);
+  // Calculate roll modifier (cooperative casters provide modifiers, not additional tokens)
   const currentRollModifier = cooperatingCasters.reduce((sum, c) => sum + c.modifier, 0);
 
-  const canCastSpell = selectedSpell ? totalTokensAvailable >= selectedSpell.cost : false;
-  const tokensAfterCasting = selectedSpell ? totalTokensAvailable - selectedSpell.cost : totalTokensAvailable;
+  // Main caster must have enough tokens to pay the spell cost
+  const canCastSpell = selectedSpell ? maxTokens >= selectedSpell.cost : false;
+  const tokensAfterCasting = selectedSpell ? maxTokens - selectedSpell.cost : maxTokens;
 
   const handleCooperatingCasterChange = (caster: AvailableCaster, tokens: number, isPositive: boolean) => {
     const modifier = isPositive ? tokens : -tokens;
@@ -122,7 +124,7 @@ export const SpellCastModal: React.FC<SpellCastModalProps> = ({
           <div className="flex justify-between items-center">
             <div>
               <span className="text-white font-medium">Available Tokens: </span>
-              <span className="text-blue-400 font-bold">{totalTokensAvailable}</span>
+              <span className="text-blue-400 font-bold">{maxTokens}</span>
             </div>
             <div>
               <span className="text-white font-medium">Roll Modifier: </span>
@@ -158,7 +160,7 @@ export const SpellCastModal: React.FC<SpellCastModalProps> = ({
                   <div className="flex justify-between items-start mb-2">
                     <h4 className="font-semibold text-white">{spell.name}</h4>
                     <span className={`px-2 py-1 rounded text-sm font-medium ${
-                      spell.cost <= totalTokensAvailable 
+                      spell.cost <= maxTokens 
                         ? 'bg-green-600 text-white' 
                         : 'bg-red-600 text-white'
                     }`}>
@@ -251,11 +253,16 @@ export const SpellCastModal: React.FC<SpellCastModalProps> = ({
                 <strong className="text-gray-300">Duration:</strong> {selectedSpell.duration}
               </div>
               <div>
-                <strong className="text-gray-300">Success Roll:</strong> 4+ on D6 
-                {currentRollModifier !== 0 && (
-                  <span className={currentRollModifier > 0 ? 'text-green-400' : 'text-red-400'}>
-                    {' '}({currentRollModifier >= 0 ? '+' : ''}{currentRollModifier})
+                <strong className="text-gray-300">Success Roll:</strong> 
+                {currentRollModifier !== 0 ? (
+                  <span>
+                    {Math.max(1, Math.min(6, 4 - currentRollModifier))}+ on D6 
+                    <span className={currentRollModifier > 0 ? 'text-green-400' : 'text-red-400'}>
+                      {' '}({currentRollModifier >= 0 ? '+' : ''}{currentRollModifier})
+                    </span>
                   </span>
+                ) : (
+                  <span> 4+ on D6</span>
                 )}
                 <br/>
                 {selectedSpell.hits && (

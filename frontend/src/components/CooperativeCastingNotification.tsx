@@ -44,19 +44,22 @@ export const CooperativeCastingNotification: React.FC<CooperativeCastingNotifica
 
   // Handle incoming cooperative casting requests
   useEffect(() => {
-    if (onCooperativeCastingRequest) {
+    if (onCooperativeCastingRequest && user?.id) {
       const handler = (request: CooperativeCastingRequest) => {
+        console.log('CooperativeCastingNotification received request:', request);
         // Only show if this user has potential cooperators
         const userCooperators = request.potentialCooperators.filter(c => c.userId === user?.id);
+        console.log('User cooperators found:', userCooperators);
         if (userCooperators.length > 0) {
           setCurrentRequest(request);
           setSelectedCooperator(userCooperators[0].unitId + '_' + (userCooperators[0].modelId || ''));
           setTimeRemaining(request.timeoutSeconds);
         }
       };
+      console.log('Registering cooperative casting handler for user:', user.id);
       onCooperativeCastingRequest(handler);
     }
-  }, [user?.id]); // Remove onCooperativeCastingRequest from deps to prevent infinite loop
+  }, [user?.id]); // Remove onCooperativeCastingRequest from deps since it's now stable
 
   // Countdown timer
   useEffect(() => {

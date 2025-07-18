@@ -16,6 +16,13 @@ router.use(authenticate);
 router.post('/', validateCreateBattle, BattleController.createBattle);
 
 /**
+ * @route GET /api/battles
+ * @desc Get battles (with query parameters like missionId)
+ * @access Private
+ */
+router.get('/', BattleController.getBattles);
+
+/**
  * @route GET /api/battles/:id
  * @desc Get battle details
  * @access Private (participants only)

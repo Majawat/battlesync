@@ -93,6 +93,17 @@ router.post(
 );
 
 /**
+ * Setup a new OPR battle (for CampaignCreator)
+ * POST /api/opr/battles/setup
+ */
+router.post(
+  '/setup',
+  authenticate,
+  validateSchema(createBattleSchema),
+  OPRBattleController.setupBattle
+);
+
+/**
  * Get OPR battle state
  * GET /api/opr/battles/:battleId
  */

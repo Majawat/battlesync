@@ -53,6 +53,7 @@ const WoundMarkers: React.FC<{
 
 interface BattleUnitCardProps {
   unit: OPRBattleUnit;
+  battleId: string;
   isOwned?: boolean;
   isSelected?: boolean;
   damageMode?: boolean;
@@ -95,7 +96,8 @@ const calculateMovement = (unit: OPRBattleUnit) => {
 };
 
 export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({ 
-  unit, 
+  unit,
+  battleId,
   isOwned = true,
   isSelected = false,
   damageMode = false,
@@ -665,6 +667,7 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
         <SpellCastModal
           isVisible={showSpellModal}
           onClose={() => setShowSpellModal(false)}
+          battleId={battleId}
           casterUnit={unit}
           availableSpells={availableSpells}
           availableCasters={getCooperativeCasters()}

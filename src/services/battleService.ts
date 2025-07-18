@@ -398,6 +398,50 @@ export class BattleService {
   }
 
   /**
+   * Get mission battles
+   */
+  static async getMissionBattles(missionId: string, userId: string) {
+    // Verify user has access to mission through campaign membership
+    const mission = await prisma.mission.findFirst({
+      where: {
+        id: missionId,
+        campaign: {
+          group: {
+            memberships: {
+              some: {
+                userId,
+                status: { in: ['ACTIVE', 'INACTIVE'] }
+              }
+            }
+          }
+        }
+      }
+    });
+
+    if (!mission) {
+      throw ValidationUtils.createError('Access denied to mission', 403);
+    }
+
+    const battles = await prisma.battle.findMany({
+      where: {
+        missionId: missionId
+      },
+      include: {
+        participants: {
+          include: {
+            army: {
+              select: { name: true, faction: true }
+            }
+          }
+        }
+      },
+      orderBy: { createdAt: 'desc' }
+    });
+
+    return battles;
+  }
+
+  /**
    * Helper method to create initial battle state
    */
   private static createInitialBattleState(participants: Array<{ userId: string; armyId: string }>): BattleState {

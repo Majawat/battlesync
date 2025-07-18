@@ -366,6 +366,111 @@ class ArmyService {
   }
 
   /**
+   * Get all armies in a campaign (for CampaignCreator/GroupAdmin)
+   */
+  async getCampaignArmies(userId: string, campaignId: string): Promise<ArmySummary[]> {
+    try {
+      // Verify user has permission to view campaign armies
+      const campaign = await prisma.campaign.findFirst({
+        where: {
+          id: campaignId,
+          group: {
+            memberships: {
+              some: {
+                userId,
+                status: { in: ['ACTIVE', 'INACTIVE'] }
+              }
+            }
+          }
+        },
+        include: {
+          participations: {
+            include: {
+              groupMembership: {
+                include: {
+                  user: true
+                }
+              }
+            }
+          }
+        }
+      });
+
+      if (!campaign) {
+        throw new ApiError(403, 'You are not a member of this campaign or group');
+      }
+
+      // Get all armies in the campaign
+      const armies = await prisma.army.findMany({
+        where: {
+          campaignId: campaignId
+        },
+        include: {
+          user: {
+            select: {
+              id: true,
+              username: true
+            }
+          },
+          campaign: {
+            select: {
+              id: true,
+              name: true
+            }
+          }
+        },
+        orderBy: {
+          name: 'asc'
+        }
+      });
+
+      return armies.map(army => {
+        // Extract resolved faction from metadata if available
+        const armyData = army.armyData as any;
+        const resolvedFactions = armyData?.metadata?.resolvedFactions;
+        let displayFaction = army.faction;
+        
+        if (resolvedFactions && resolvedFactions.length > 0) {
+          displayFaction = resolvedFactions.join(', ');
+        } else if (army.faction && (army.faction.length > 25 || army.faction.includes("'s ") || army.faction.toLowerCase().includes('army'))) {
+          // This looks like a description (long, possessive, or contains 'army'), use game system instead
+          const gameSystemNames: Record<string, string> = {
+            'gf': 'Grimdark Future',
+            'aof': 'Age of Fantasy', 
+            'ff': 'Firefight',
+            'wftl': 'Warfleets FTL'
+          };
+          displayFaction = armyData?.metadata?.gameSystemName || 
+                          gameSystemNames[armyData?.gameSystem] || 
+                          armyData?.gameSystem || 
+                          'Unknown';
+        }
+        
+        return {
+          id: army.id,
+          name: army.name,
+          faction: displayFaction,
+          points: army.points,
+          unitCount: armyData.units.length || 0,
+          lastSyncedAt: army.lastSyncedAt,
+          hasCustomizations: this.hasCustomizations(army.customizations as any),
+          campaignId: army.campaignId,
+          experiencePoints: (army.customizations as any)?.experience?.experiencePoints || 0,
+          battlesPlayed: (army.customizations as any)?.experience?.totalBattles || 0,
+          userId: army.user.id,
+          username: army.user.username
+        };
+      });
+
+    } catch (error) {
+      if (error instanceof ApiError) {
+        throw error;
+      }
+      throw new ApiError(500, `Failed to get campaign armies: ${(error as Error).message}`);
+    }
+  }
+
+  /**
    * Get army by ID
    */
   async getArmyById(armyId: string, userId: string): Promise<Army> {

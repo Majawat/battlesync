@@ -535,6 +535,11 @@ export class SpellController {
       const finalResult = baseRoll + rollModifier;
       const spellSuccess = finalResult >= 4;
 
+      // Calculate the effective target number (what they needed to roll on the die)
+      // Base target is 4, but modifiers change what they need on the die
+      // Positive modifiers make it easier (lower target), negative make it harder (higher target)
+      const effectiveTarget = Math.max(1, Math.min(6, 4 - rollModifier));
+
       // Create spell cast result
       const castResult: SpellCastResult = {
         success: spellSuccess,
@@ -544,8 +549,8 @@ export class SpellController {
         spellApplied: spellSuccess,
         tokensConsumed: totalTokensSpent,
         description: spellSuccess 
-          ? `${spellData.name} cast successfully! (${baseRoll}${rollModifier !== 0 ? ` + ${rollModifier}` : ''} = ${finalResult})`
-          : `${spellData.name} failed to cast (${baseRoll}${rollModifier !== 0 ? ` + ${rollModifier}` : ''} = ${finalResult}, needed 4+)`,
+          ? `${spellData.name} cast successfully! (${baseRoll}${rollModifier !== 0 ? ` + ${rollModifier}` : ''} = ${finalResult}, needed ${effectiveTarget}+ on D6)`
+          : `${spellData.name} failed to cast (${baseRoll}${rollModifier !== 0 ? ` + ${rollModifier}` : ''} = ${finalResult}, needed ${effectiveTarget}+ on D6)`,
         effects: spellSuccess ? this.generateSpellEffects(spellData, attempt.targetUnitIds) : []
       };
 

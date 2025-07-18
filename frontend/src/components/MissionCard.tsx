@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Mission } from '../types/mission';
 import { CreateBattleModal } from './CreateBattleModal';
+import { SetupBattleModal } from './SetupBattleModal';
+import { useAuth } from '../hooks/useAuth';
 
 interface MissionCardProps {
   mission: Mission;
@@ -15,7 +17,50 @@ export const MissionCard: React.FC<MissionCardProps> = ({
   onUpdateStatus,
   onBattleCreated,
 }) => {
+  const { user } = useAuth();
   const [showCreateBattle, setShowCreateBattle] = useState(false);
+  const [showSetupBattle, setShowSetupBattle] = useState(false);
+  const [userRole, setUserRole] = useState<'CREATOR' | 'PARTICIPANT' | 'NONE'>('NONE');
+  const [existingBattle, setExistingBattle] = useState<any>(null);
+
+  // Check user role and existing battle
+  useEffect(() => {
+    if (mission.campaignId && user) {
+      checkUserRoleAndBattle();
+    }
+  }, [mission.campaignId, user]);
+
+  const checkUserRoleAndBattle = async () => {
+    try {
+      // Check user role in campaign
+      const roleResponse = await fetch(`/api/campaigns/${mission.campaignId}/user-role`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        }
+      });
+
+      if (roleResponse.ok) {
+        const roleData = await roleResponse.json();
+        setUserRole(roleData.data.role);
+      }
+
+      // Check for existing battle
+      const battleResponse = await fetch(`/api/battles?missionId=${mission.id}`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        }
+      });
+
+      if (battleResponse.ok) {
+        const battleData = await battleResponse.json();
+        if (battleData.data && battleData.data.length > 0) {
+          setExistingBattle(battleData.data[0]);
+        }
+      }
+    } catch (error) {
+      console.error('Error checking user role and battle:', error);
+    }
+  };
   const getStatusColor = () => {
     switch (mission.status) {
       case 'ACTIVE':
@@ -174,24 +219,88 @@ export const MissionCard: React.FC<MissionCardProps> = ({
               View Details
             </button>
             {mission.status === 'ACTIVE' && (
-              <button 
-                onClick={() => setShowCreateBattle(true)}
-                className="bg-green-600 hover:bg-green-700 text-white text-sm font-medium py-2 px-4 rounded"
-              >
-                Create Battle
-              </button>
+              <>
+                {/* Campaign Creator can setup battles */}
+                {userRole === 'CREATOR' && !existingBattle && (
+                  <button 
+                    onClick={() => setShowSetupBattle(true)}
+                    className="bg-green-600 hover:bg-green-700 text-white text-sm font-medium py-2 px-4 rounded"
+                  >
+                    Setup Battle
+                  </button>
+                )}
+                
+                {/* Campaign Creator can also join their own battle */}
+                {userRole === 'CREATOR' && existingBattle && (
+                  <button 
+                    onClick={() => {
+                      if (onBattleCreated) {
+                        onBattleCreated(existingBattle.id);
+                      }
+                    }}
+                    className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 px-4 rounded"
+                  >
+                    Join Battle
+                  </button>
+                )}
+                
+                {/* Participants can join existing battles */}
+                {userRole === 'PARTICIPANT' && existingBattle && (
+                  <button 
+                    onClick={() => {
+                      if (onBattleCreated) {
+                        onBattleCreated(existingBattle.id);
+                      }
+                    }}
+                    className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 px-4 rounded"
+                  >
+                    Join Battle
+                  </button>
+                )}
+                
+                {/* Show existing battle status */}
+                {existingBattle && (
+                  <div className="text-sm text-gray-400 flex items-center">
+                    Battle Status: <span className="ml-1 text-green-400">{existingBattle.status}</span>
+                  </div>
+                )}
+                
+                {/* Fallback for legacy Create Battle functionality */}
+                {userRole === 'NONE' && (
+                  <button 
+                    onClick={() => setShowCreateBattle(true)}
+                    className="bg-green-600 hover:bg-green-700 text-white text-sm font-medium py-2 px-4 rounded"
+                  >
+                    Create Battle
+                  </button>
+                )}
+              </>
             )}
           </div>
         </div>
       </div>
 
-      {/* Create Battle Modal */}
+      {/* Create Battle Modal - Legacy */}
       <CreateBattleModal
         isOpen={showCreateBattle}
         onClose={() => setShowCreateBattle(false)}
         mission={mission}
         onBattleCreated={(battleId) => {
           setShowCreateBattle(false);
+          if (onBattleCreated) {
+            onBattleCreated(battleId);
+          }
+        }}
+      />
+
+      {/* Setup Battle Modal - For Campaign Creators */}
+      <SetupBattleModal
+        isOpen={showSetupBattle}
+        onClose={() => setShowSetupBattle(false)}
+        mission={mission}
+        onBattleSetup={(battleId) => {
+          setShowSetupBattle(false);
+          setExistingBattle({ id: battleId, status: 'SETUP' });
           if (onBattleCreated) {
             onBattleCreated(battleId);
           }

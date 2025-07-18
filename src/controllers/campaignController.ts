@@ -829,4 +829,56 @@ export class CampaignController {
       });
     }
   }
+
+  // Get user role in campaign
+  static async getUserRole(req: Request, res: Response): Promise<void> {
+    try {
+      const userId = (req as AuthenticatedRequest).user!.id;
+      const campaignId = req.params.campaignId;
+      
+      // Check if user is the campaign creator
+      const campaign = await prisma.campaign.findFirst({
+        where: { id: campaignId, createdBy: userId }
+      });
+
+      if (campaign) {
+        res.json({
+          status: 'success',
+          data: { role: 'CREATOR' }
+        });
+        return;
+      }
+
+      // Check if user is a participant
+      const participation = await prisma.campaignParticipation.findFirst({
+        where: {
+          campaignId: campaignId,
+          groupMembership: {
+            userId: userId
+          }
+        }
+      });
+
+      if (participation) {
+        res.json({
+          status: 'success',
+          data: { role: 'PARTICIPANT' }
+        });
+        return;
+      }
+
+      // User has no role in this campaign
+      res.json({
+        status: 'success',
+        data: { role: 'NONE' }
+      });
+    } catch (error: any) {
+      logger.error('Get user role failed', { error: error.message, userId: (req as AuthenticatedRequest).user?.id });
+      
+      res.status(error.statusCode || 500).json({
+        status: 'error',
+        message: error.message || 'Failed to get user role'
+      });
+    }
+  }
 }
