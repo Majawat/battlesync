@@ -688,6 +688,7 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
                   key={unit.unitId}
                   unit={unit}
                   battleId={battleId}
+                  battlePhase={battleState.phase}
                   isOwned={displayedArmy.userId === user?.id}
                   isSelected={uiState.selectedUnit === unit.unitId}
                   damageMode={uiState.damageMode}

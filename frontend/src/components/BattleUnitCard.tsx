@@ -54,6 +54,7 @@ const WoundMarkers: React.FC<{
 interface BattleUnitCardProps {
   unit: OPRBattleUnit;
   battleId: string;
+  battlePhase: string;
   isOwned?: boolean;
   isSelected?: boolean;
   damageMode?: boolean;
@@ -98,6 +99,7 @@ const calculateMovement = (unit: OPRBattleUnit) => {
 export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({ 
   unit,
   battleId,
+  battlePhase,
   isOwned = true,
   isSelected = false,
   damageMode = false,
@@ -129,7 +131,8 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
   const { advanceDistance, rushChargeDistance } = calculateMovement(unit);
 
   // Check if unit can perform different actions
-  const canPerformAction = canAct && !isDestroyed && !isRouted;
+  const isInGameplayPhase = battlePhase === 'BATTLE_ROUNDS';
+  const canPerformAction = canAct && !isDestroyed && !isRouted && isInGameplayPhase;
   const canAdvanceRushCharge = canPerformAction && !isShaken;
   const canOnlyHold = canPerformAction && isShaken;
 
@@ -439,8 +442,8 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
             </button>
           </div>
 
-          {/* Cast Spell Action (if unit has caster) */}
-          {hasCaster && (
+          {/* Cast Spell Action (if unit has caster and in gameplay phase) */}
+          {hasCaster && isInGameplayPhase && (
             <div className="mt-2 pt-2 border-t border-gray-700">
               <button
                 onClick={(e) => {
