@@ -284,6 +284,8 @@ export class SpellController {
       const { battleId, cooperationRequestId, response } = req.body;
       const userId = req.user!.id;
 
+      logger.info(`Cooperation response from user ${userId} for battle ${battleId}, request ${cooperationRequestId}:`, response);
+
       if (!battleId || !cooperationRequestId || !response) {
         res.status(400).json({
           success: false,
@@ -337,15 +339,20 @@ export class SpellController {
       let cooperatorInfo = null;
       
       if (response.accept) {
+        logger.info(`Looking for cooperating unit ${response.unitId} for user ${userId}`);
+        
         // Find the cooperating unit
         const cooperatingUnit = userArmy.units.find(unit => unit.unitId === response.unitId);
         if (!cooperatingUnit) {
+          logger.error(`Cooperating unit ${response.unitId} not found in user's army`);
           res.status(404).json({
             success: false,
             error: 'Cooperating unit not found'
           });
           return;
         }
+
+        logger.info(`Found cooperating unit: ${cooperatingUnit.name}, looking for model ${response.modelId}`);
 
         // Find the cooperating caster model
         let cooperatingModel = null;
@@ -356,13 +363,25 @@ export class SpellController {
           cooperatingModel = cooperatingUnit.models.find(m => m.casterTokens > 0) || cooperatingUnit.joinedHero;
         }
 
-        if (!cooperatingModel || cooperatingModel.casterTokens < response.tokensContributed) {
+        if (!cooperatingModel) {
+          logger.error(`Cooperating model ${response.modelId} not found in unit ${response.unitId}`);
           res.status(400).json({
             success: false,
-            error: 'Insufficient caster tokens or cooperating caster not found'
+            error: 'Cooperating caster model not found'
           });
           return;
         }
+
+        if (cooperatingModel.casterTokens < response.tokensContributed) {
+          logger.error(`Insufficient tokens: model has ${cooperatingModel.casterTokens}, requested ${response.tokensContributed}`);
+          res.status(400).json({
+            success: false,
+            error: `Insufficient caster tokens: has ${cooperatingModel.casterTokens}, requested ${response.tokensContributed}`
+          });
+          return;
+        }
+
+        logger.info(`Cooperating model found: ${cooperatingModel.name} with ${cooperatingModel.casterTokens} tokens`);
 
         cooperatorInfo = {
           userId,
