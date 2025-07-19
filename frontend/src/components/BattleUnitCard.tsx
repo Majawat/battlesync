@@ -63,6 +63,7 @@ interface BattleUnitCardProps {
   onAdvancedDamage?: () => void;
   onAction?: (action: 'hold' | 'advance' | 'rush' | 'charge', targetId?: string) => void;
   onCastSpell?: (spellId: string, targetUnitIds: string[]) => void;
+  onActionWithModal?: (action: 'hold' | 'advance' | 'rush' | 'charge') => void;
   allArmies?: any[]; // For finding cooperative casters
   canAct?: boolean;
 }
@@ -107,6 +108,7 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
   onAdvancedDamage,
   onAction,
   onCastSpell,
+  onActionWithModal,
   allArmies = [],
   canAct = false
 }) => {
@@ -309,7 +311,16 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                onAction?.('hold');
+                // Check if unit has ranged weapons to decide whether to use modal
+                const hasRangedWeapons = unit.weaponSummary.some(weapon => 
+                  weapon.range && weapon.range !== 'Melee' && weapon.attacks
+                );
+                
+                if (hasRangedWeapons && onActionWithModal) {
+                  onActionWithModal('hold');
+                } else {
+                  onAction?.('hold');
+                }
               }}
               disabled={!canPerformAction}
               className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
@@ -325,7 +336,16 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                onAction?.('advance');
+                // Check if unit has ranged weapons to decide whether to use modal
+                const hasRangedWeapons = unit.weaponSummary.some(weapon => 
+                  weapon.range && weapon.range !== 'Melee' && weapon.attacks
+                );
+                
+                if (hasRangedWeapons && onActionWithModal) {
+                  onActionWithModal('advance');
+                } else {
+                  onAction?.('advance');
+                }
               }}
               disabled={!canAdvanceRushCharge || isImmobile}
               className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
@@ -399,6 +419,7 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
               </button>
             </div>
           )}
+
 
           {/* Action Warnings */}
           {canOnlyHold && (

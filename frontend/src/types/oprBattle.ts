@@ -298,3 +298,4 @@ export interface SpellEffect {
   duration: 'instant' | 'next-action' | 'end-of-round' | 'permanent';
   description: string;
 }
+

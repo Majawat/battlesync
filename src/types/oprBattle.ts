@@ -404,3 +404,4 @@ export interface ActivationResult {
   roundComplete?: boolean;
   error?: string;
 }
+

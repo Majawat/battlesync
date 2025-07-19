@@ -5,6 +5,7 @@ import { BattleActionHistoryPanel } from './BattleActionHistoryPanel';
 import { CommandPointPanel } from './CommandPointPanel';
 import { CooperativeContributionModal } from './CooperativeContributionModal';
 import { SpellResultModal } from './SpellResultModal';
+import { UnitActionModal } from './UnitActionModal';
 import { ActivationPanel } from './ActivationPanel';
 import { MoraleTestPanel } from './MoraleTestPanel';
 import { 
@@ -12,7 +13,8 @@ import {
   OPRBattlePhase,
   BattleUIState,
   DamageResult,
-  BattleWebSocketMessage
+  BattleWebSocketMessage,
+  OPRBattleUnit
 } from '../types/oprBattle';
 
 interface BattleDashboardProps {
@@ -44,6 +46,11 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
     finalModifier: number;
     targetNumber: number;
     cooperationRequestId: string;
+  } | null>(null);
+  const [unitActionModal, setUnitActionModal] = useState<{
+    isVisible: boolean;
+    unit: OPRBattleUnit;
+    action: 'hold' | 'advance' | 'rush' | 'charge';
   } | null>(null);
 
   // Stable callback for setting cooperative contribution handler
@@ -401,6 +408,15 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
     }
   };
 
+  // Handle unit action with modal (for units with ranged weapons)
+  const handleUnitActionWithModal = (unit: OPRBattleUnit, action: 'hold' | 'advance' | 'rush' | 'charge') => {
+    setUnitActionModal({
+      isVisible: true,
+      unit,
+      action
+    });
+  };
+
   // Handle spell result submission
   const handleSpellResultSubmission = async (success: boolean) => {
     if (!spellResultModal) return;
@@ -433,6 +449,7 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
       setError(err instanceof Error ? err.message : 'Failed to submit spell result');
     }
   };
+
 
   // Get armies and current view
   const userArmy = battleState?.armies.find(army => army.userId === user?.id);
@@ -718,6 +735,7 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
                   }))}
                   onQuickDamage={(damage, modelId) => handleQuickDamage(unit.unitId, damage, modelId)}
                   onAction={(action, targetId) => handleUnitAction(unit.unitId, action, targetId)}
+                  onActionWithModal={(action) => handleUnitActionWithModal(unit, action)}
                   onCastSpell={(spellId, targetUnitIds) => handleInitiateCooperativeCasting(unit.unitId, spellId, targetUnitIds)}
                   allArmies={allArmies}
                 />
@@ -787,6 +805,23 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
           targetNumber={spellResultModal.targetNumber}
         />
       )}
+
+      {/* Unit Action Modal */}
+      {unitActionModal && (
+        <UnitActionModal
+          isVisible={unitActionModal.isVisible}
+          onClose={() => setUnitActionModal(null)}
+          unit={unitActionModal.unit}
+          action={unitActionModal.action}
+          allArmies={allArmies}
+          battleId={battleId}
+          onActionComplete={() => {
+            setUnitActionModal(null);
+            // Battle state will be updated via WebSocket
+          }}
+        />
+      )}
+
     </div>
   );
 };
