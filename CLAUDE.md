@@ -50,6 +50,19 @@ BattleSync is a self-hosted web application for managing One Page Rules (OPR) ta
 - Mathematical calculations with proper ceiling rounding for fractional CP
 - Campaign settings support for CP method selection
 
+### ✅ **Simplified Shooting System (v1.2.1)** - FULLY IMPLEMENTED
+- **Integrated Action Flow**: Shooting integrated into Hold/Advance actions (no standalone buttons)
+- **Player Agency Maintained**: No line of sight/range tracking - players handle tabletop positioning
+- **Weapon Summary Display**: Clear "5x Shotguns (15 attacks)" instead of complex individual selection
+- **Simplified Workflow**: Target selection + wound input instead of complex 4-step dice rolling
+- **Natural UX**: UnitActionModal appears only for units with ranged weapons
+- **Reduced Book-keeping**: Minimal hand-holding focused on essential battle tracking
+
+**Key Files:**
+- `/frontend/src/components/UnitActionModal.tsx` - Simplified shooting integrated with actions
+- `/frontend/src/components/BattleUnitCard.tsx` - Smart action button logic (modal vs direct)
+- `/frontend/src/components/BattleDashboard.tsx` - Modal state management and handlers
+
 ### ✅ **OPR Army Conversion System** - PRODUCTION READY
 - Smart unit combining logic with weapon summary merging
 - Tough value distribution and hero joining mechanics
