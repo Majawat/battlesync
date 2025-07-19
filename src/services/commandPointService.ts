@@ -23,37 +23,47 @@ export interface CommandPointCalculation {
   bonusCommandPoints: number;
   totalCommandPoints: number;
   calculation: string[];
+  requiresD3Roll?: boolean; // For random methods that need user dice roll
 }
 
 export class CommandPointService {
   /**
-   * Calculate command points based on method
+   * Calculate command points based on method (for non-random methods)
    */
   static calculateCommandPoints(
     armyPoints: number, 
     method: 'fixed' | 'growing' | 'temporary' | 'fixed-random' | 'growing-random' | 'temporary-random' = 'fixed',
-    bonusCP: number = 0
+    bonusCP: number = 0,
+    d3Roll?: number // User-provided D3 roll for random methods
   ): CommandPointCalculation {
     const methodConfig = this.getCommandPointMethodConfig(method);
-    let baseCommandPoints = Math.ceil((armyPoints / 1000) * methodConfig.basePerThousand);
     
-    // Apply random multiplier if method requires it
-    if (methodConfig.isRandom) {
-      const d3Roll = Math.floor(Math.random() * 3) + 1; // D3 (1-3)
-      baseCommandPoints *= d3Roll;
+    // Calculate base CP using floor() as per OPR rules
+    let baseCommandPoints = Math.floor(armyPoints / 1000) * methodConfig.basePerThousand;
+    
+    // Special handling for 0.5 basePerThousand methods (round up the total)
+    if (methodConfig.basePerThousand === 0.5) {
+      baseCommandPoints = Math.ceil(Math.floor(armyPoints / 1000) * methodConfig.basePerThousand);
     }
-    
-    const totalCommandPoints = baseCommandPoints + bonusCP;
     
     const calculation = [
       `Army Points: ${armyPoints}`,
       `Method: ${method}`,
-      `Base CP: ${armyPoints / 1000} × ${methodConfig.basePerThousand} = ${(armyPoints / 1000) * methodConfig.basePerThousand} (rounded up to ${Math.ceil((armyPoints / 1000) * methodConfig.basePerThousand)})`,
+      `Base CP: floor(${armyPoints}/1000) × ${methodConfig.basePerThousand} = ${Math.floor(armyPoints / 1000)} × ${methodConfig.basePerThousand} = ${baseCommandPoints}`,
     ];
     
+    // Apply user-provided D3 roll for random methods
     if (methodConfig.isRandom) {
-      calculation.push(`Random multiplier (D3): ${baseCommandPoints / (Math.floor(armyPoints / 1000) * methodConfig.basePerThousand)}`);
+      if (d3Roll && d3Roll >= 1 && d3Roll <= 3) {
+        baseCommandPoints *= d3Roll;
+        calculation.push(`D3 Roll: ${d3Roll} (multiplier applied)`);
+      } else {
+        calculation.push(`❗ Random method requires D3 roll (1-3)`);
+        // Return base calculation without random multiplier for UI to handle
+      }
     }
+    
+    const totalCommandPoints = baseCommandPoints + bonusCP;
     
     if (bonusCP > 0) {
       calculation.push(`Bonus CP: +${bonusCP}`);
@@ -65,7 +75,33 @@ export class CommandPointService {
       baseCommandPoints,
       bonusCommandPoints: bonusCP,
       totalCommandPoints,
-      calculation
+      calculation,
+      requiresD3Roll: methodConfig.isRandom && !d3Roll
+    };
+  }
+
+  /**
+   * Get the base CP calculation without random multiplier (for UI display)
+   */
+  static getBaseCommandPointsForMethod(
+    armyPoints: number,
+    method: 'fixed' | 'growing' | 'temporary' | 'fixed-random' | 'growing-random' | 'temporary-random'
+  ): { baseCP: number; formula: string; requiresD3: boolean } {
+    const methodConfig = this.getCommandPointMethodConfig(method);
+    let baseCP = Math.floor(armyPoints / 1000) * methodConfig.basePerThousand;
+    
+    if (methodConfig.basePerThousand === 0.5) {
+      baseCP = Math.ceil(Math.floor(armyPoints / 1000) * methodConfig.basePerThousand);
+    }
+    
+    const formula = methodConfig.isRandom 
+      ? `${baseCP} × D3 (roll 1-3)`
+      : `${baseCP}`;
+    
+    return {
+      baseCP,
+      formula,
+      requiresD3: methodConfig.isRandom
     };
   }
 

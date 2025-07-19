@@ -68,7 +68,8 @@ export class OPRArmyConverter {
         currentUnderdogPoints: 0,
         selectedDoctrine: undefined,
         units: [],
-        killCount: 0
+        killCount: 0,
+        stratagemActivations: []
       };
 
       // Convert units

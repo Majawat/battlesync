@@ -82,9 +82,10 @@ export interface OPRBattleArmy {
   currentCommandPoints: number;
   maxUnderdogPoints: number;
   currentUnderdogPoints: number;
-  selectedDoctrine?: string;
+  selectedDoctrine?: OPRDoctrine; // Changed to use proper type
   units: OPRBattleUnit[];
   killCount: number; // Total kills made by this army
+  stratagemActivations: StratagemActivation[]; // Track stratagem usage
 }
 
 export interface OPRBattleUnit {
@@ -340,6 +341,40 @@ export interface CommandPointAction {
   unitId?: string;
   description: string;
   effect?: string;
+}
+
+// Stratagems and Doctrines
+export type OPRDoctrine = 
+  | 'strategic' 
+  | 'defensive' 
+  | 'shock' 
+  | 'hunting' 
+  | 'valorous' 
+  | 'tactical';
+
+export interface OPRStratagem {
+  id: string;
+  name: string;
+  doctrine: 'universal' | OPRDoctrine;
+  cost: number; // 1-3 CP
+  description: string;
+  timing: 'any' | 'activation' | 'movement' | 'shooting' | 'melee' | 'morale' | 'deployment' | 'round-end';
+  usageLimit: 'once-per-activation' | 'once-per-round' | 'once-per-battle';
+  targetType: 'friendly-unit' | 'enemy-unit' | 'any-unit' | 'self-army' | 'objective' | 'none';
+  canBeCountered: boolean; // Can opponents spend CP to negate?
+}
+
+export interface StratagemActivation {
+  stratagemId: string;
+  activatingUserId: string;
+  activatingArmyId: string;
+  targetUnitId?: string;
+  cpCost: number;
+  timestamp: Date;
+  battleRound: number;
+  description: string;
+  wasCountered?: boolean;
+  counteredBy?: string;
 }
 
 // Underdog Point System
