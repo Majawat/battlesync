@@ -47,3 +47,12 @@ prisma/migrations/dev.db*
 
 # Docker
 docker-compose.override.yml
+
+# OPR Data Collection
+data/opr/*.csv
+data/opr/*.json
+# Keep directory structure and README
+!data/opr/README.md
+
+# Temporary files
+TEMP/
