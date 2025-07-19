@@ -177,10 +177,10 @@ export const CooperativeContributionModal: React.FC<CooperativeContributionModal
   const isOriginalCaster = currentRequest.casterUserId === user.id;
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-gray-800 border border-gray-600 rounded-lg p-6 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-2 sm:p-4">
+      <div className="bg-gray-800 border border-gray-600 rounded-lg p-3 sm:p-6 w-full max-w-sm sm:max-w-lg md:max-w-2xl mx-2 sm:mx-4 max-h-[95vh] sm:max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-start mb-4">
-          <h3 className="text-lg font-semibold text-white">
+          <h3 className="text-base sm:text-lg font-semibold text-white pr-2">
             🪄 Cooperative Spell Casting
           </h3>
           <div className={`px-3 py-1 rounded text-sm font-bold ${
@@ -192,21 +192,21 @@ export const CooperativeContributionModal: React.FC<CooperativeContributionModal
 
         {/* Spell Information */}
         <div className="mb-6">
-          <div className="bg-gray-700 rounded-lg p-4">
-            <h4 className="font-semibold text-white mb-2">
+          <div className="bg-gray-700 rounded-lg p-3 sm:p-4">
+            <h4 className="font-semibold text-white mb-2 text-sm sm:text-base">
               {isOriginalCaster ? 'You are casting:' : `${currentRequest.casterName} is casting:`}
             </h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-3 sm:gap-4">
               <div>
-                <p className="text-blue-400 font-medium text-lg">{currentRequest.spell.name}</p>
-                <p className="text-gray-300 text-sm mt-1">{currentRequest.spell.effect}</p>
-              </div>
-              <div className="text-sm">
-                <p><strong className="text-gray-300">Cost:</strong> {currentRequest.spell.cost} tokens</p>
-                <p><strong className="text-gray-300">Base Roll:</strong> 4+ on D6</p>
-                {currentRequest.targetUnitNames.length > 0 && (
-                  <p><strong className="text-gray-300">Targets:</strong> {currentRequest.targetUnitNames.join(', ')}</p>
-                )}
+                <p className="text-blue-400 font-medium text-base sm:text-lg">{currentRequest.spell.name}</p>
+                <p className="text-gray-300 text-xs sm:text-sm mt-1">{currentRequest.spell.effect}</p>
+                <div className="text-xs sm:text-sm mt-2 space-y-1">
+                  <p><strong className="text-gray-300">Cost:</strong> {currentRequest.spell.cost} tokens</p>
+                  <p><strong className="text-gray-300">Base Roll:</strong> 4+ on D6</p>
+                  {currentRequest.targetUnitNames.length > 0 && (
+                    <p><strong className="text-gray-300">Targets:</strong> {currentRequest.targetUnitNames.join(', ')}</p>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -221,7 +221,7 @@ export const CooperativeContributionModal: React.FC<CooperativeContributionModal
           <>
             {/* User's Casters */}
             <div className="mb-6">
-              <h4 className="font-semibold text-white mb-3">
+              <h4 className="font-semibold text-white mb-3 text-sm sm:text-base">
                 {isOriginalCaster ? 'Your Contribution:' : 'Your Casters Can Contribute:'}
               </h4>
               
@@ -238,17 +238,17 @@ export const CooperativeContributionModal: React.FC<CooperativeContributionModal
                     const contribution = selectedContributions[casterKey];
                     
                     return (
-                      <div key={casterKey} className="bg-gray-700 rounded-lg p-4">
+                      <div key={casterKey} className="bg-gray-700 rounded-lg p-3 sm:p-4">
                         <div className="flex justify-between items-center mb-3">
                           <div>
-                            <div className="font-medium text-white">{caster.name}</div>
-                            <div className="text-sm text-gray-400">{caster.tokens} tokens available</div>
+                            <div className="font-medium text-white text-sm sm:text-base">{caster.name}</div>
+                            <div className="text-xs sm:text-sm text-gray-400">{caster.tokens} tokens available</div>
                           </div>
                         </div>
                         
-                        <div className="grid grid-cols-3 gap-3">
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3">
                           <div>
-                            <label className="block text-sm text-gray-300 mb-1">Tokens</label>
+                            <label className="block text-xs sm:text-sm text-gray-300 mb-1">Tokens</label>
                             <input
                               type="number"
                               min="0"
@@ -301,11 +301,11 @@ export const CooperativeContributionModal: React.FC<CooperativeContributionModal
             </div>
 
             {/* Submit Button */}
-            <div className="flex justify-end space-x-3">
+            <div className="flex justify-center sm:justify-end mt-4">
               <button
                 onClick={() => handleSubmit()}
                 disabled={isSubmitting}
-                className="px-6 py-2 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 text-white rounded font-medium transition-colors"
+                className="w-full sm:w-auto px-6 py-2 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 text-white rounded font-medium transition-colors"
               >
                 {isSubmitting ? 'Submitting...' : 'Submit Contribution'}
               </button>

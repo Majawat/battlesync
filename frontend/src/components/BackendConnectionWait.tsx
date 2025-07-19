@@ -213,7 +213,7 @@ export const BackendConnectionWait: React.FC<BackendConnectionWaitProps> = ({ ch
                 <div className="text-xs text-gray-500 space-y-1">
                   <p><strong>Troubleshooting:</strong></p>
                   <p>• Make sure Docker containers are running: <code className="bg-gray-800 px-1 rounded">docker-compose up</code></p>
-                  <p>• Check if backend is accessible: <code className="bg-gray-800 px-1 rounded">curl http://localhost:3001/health</code></p>
+                  <p>• Check if backend is accessible: <code className="bg-gray-800 px-1 rounded">{window.location.origin}/health</code></p>
                   <p>• View backend logs: <code className="bg-gray-800 px-1 rounded">docker logs battlesync-app-1</code></p>
                   {error === 'HTTP 401' && (
                     <p className="text-yellow-400">• Try clearing browser storage: <code className="bg-gray-800 px-1 rounded">localStorage.clear()</code> in console</p>

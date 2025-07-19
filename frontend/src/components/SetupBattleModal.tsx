@@ -134,9 +134,9 @@ export const SetupBattleModal: React.FC<SetupBattleModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-gray-800 rounded-lg p-6 w-full max-w-3xl mx-4 max-h-[90vh] overflow-y-auto">
-        <h2 className="text-xl font-bold text-white mb-4">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 sm:p-4">
+      <div className="bg-gray-800 rounded-lg p-3 sm:p-6 w-full max-w-sm sm:max-w-lg md:max-w-2xl lg:max-w-3xl mx-2 sm:mx-4 max-h-[95vh] sm:max-h-[90vh] overflow-y-auto">
+        <h2 className="text-lg sm:text-xl font-bold text-white mb-4">
           Setup Battle for {mission.name || mission.title}
         </h2>
 
@@ -147,9 +147,9 @@ export const SetupBattleModal: React.FC<SetupBattleModalProps> = ({
         )}
 
         {/* Mission Info */}
-        <div className="bg-gray-700 rounded p-4 mb-6">
-          <h3 className="text-lg font-semibold text-white mb-2">Mission Details</h3>
-          <div className="grid grid-cols-2 gap-4 text-sm">
+        <div className="bg-gray-700 rounded p-3 sm:p-4 mb-6">
+          <h3 className="text-base sm:text-lg font-semibold text-white mb-2">Mission Details</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 text-xs sm:text-sm">
             <div>
               <span className="text-gray-400">Mission:</span>
               <span className="text-white ml-2">#{mission.missionNumber || mission.number} {mission.name || mission.title}</span>
@@ -160,14 +160,14 @@ export const SetupBattleModal: React.FC<SetupBattleModalProps> = ({
             </div>
           </div>
           {mission.description && (
-            <p className="text-gray-300 text-sm mt-2">{mission.description}</p>
+            <p className="text-gray-300 text-xs sm:text-sm mt-2">{mission.description}</p>
           )}
         </div>
 
         {/* Available Armies */}
         <div className="mb-6">
-          <h3 className="text-lg font-semibold text-white mb-3">Available Campaign Armies</h3>
-          <div className="bg-gray-700 rounded p-4 max-h-40 overflow-y-auto">
+          <h3 className="text-base sm:text-lg font-semibold text-white mb-3">Available Campaign Armies</h3>
+          <div className="bg-gray-700 rounded p-3 sm:p-4 max-h-32 sm:max-h-40 overflow-y-auto">
             {loading ? (
               <div className="text-gray-400">Loading armies...</div>
             ) : availableArmies.length === 0 ? (
@@ -175,12 +175,12 @@ export const SetupBattleModal: React.FC<SetupBattleModalProps> = ({
             ) : (
               <div className="space-y-2">
                 {availableArmies.map(army => (
-                  <div key={army.id} className="flex items-center justify-between p-2 bg-gray-600 rounded">
+                  <div key={army.id} className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-2 bg-gray-600 rounded space-y-1 sm:space-y-0">
                     <div className="flex-1">
-                      <span className="text-white font-medium">{army.name}</span>
-                      <span className="text-gray-400 ml-2">- {army.points}pts</span>
+                      <span className="text-white font-medium text-sm sm:text-base">{army.name}</span>
+                      <span className="text-gray-400 ml-2 text-xs sm:text-sm">- {army.points}pts</span>
                     </div>
-                    <div className="text-sm text-gray-400">
+                    <div className="text-xs sm:text-sm text-gray-400">
                       Owner: {army.username || 'Unknown'}
                     </div>
                   </div>
@@ -250,17 +250,17 @@ export const SetupBattleModal: React.FC<SetupBattleModalProps> = ({
         </div>
 
         {/* Actions */}
-        <div className="flex justify-end space-x-3">
+        <div className="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-3 mt-6">
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded"
+            className="w-full sm:w-auto px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded order-2 sm:order-1"
           >
             Cancel
           </button>
           <button
             onClick={setupBattle}
             disabled={loading || selectedParticipants.length < 2}
-            className="px-4 py-2 bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white rounded"
+            className="w-full sm:w-auto px-4 py-2 bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white rounded order-1 sm:order-2"
           >
             {loading ? 'Setting up...' : `Setup Battle (${selectedParticipants.length} armies)`}
           </button>
