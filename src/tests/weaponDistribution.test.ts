@@ -98,9 +98,9 @@ describe('Weapon Distribution and Upgrade Handling', () => {
       );
 
       expect(result.success).toBe(true);
-      expect(result.army.units).toHaveLength(1);
+      expect(result.army!.units).toHaveLength(1);
 
-      const unit = result.army.units[0];
+      const unit = result.army!.units[0];
       
       console.log('\n' + '='.repeat(80));
       console.log('🔍 CURRENT IMPLEMENTATION ANALYSIS');
@@ -198,7 +198,7 @@ describe('Weapon Distribution and Upgrade Handling', () => {
         complexArmyData
       );
 
-      const unit = result.army.units[0];
+      const unit = result.army!.units[0];
       
       console.log('\n' + '='.repeat(80));
       console.log('🔬 DETAILED MODEL ANALYSIS');

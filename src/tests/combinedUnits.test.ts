@@ -134,11 +134,11 @@ describe('Unit Conversion - Combined Units', () => {
       console.log('');
       console.log('AFTER CONVERSION:');
       console.log(`- Success: ${result.success}`);
-      console.log(`- Units count: ${result.army.units.length}`);
+      console.log(`- Units count: ${result.army!.units.length}`);
       console.log(`- Warnings: ${result.warnings.join(', ')}`);
       
-      if (result.army.units.length > 0) {
-        const combinedUnit = result.army.units[0];
+      if (result.army!.units.length > 0) {
+        const combinedUnit = result.army!.units[0];
         console.log(`- Combined unit type: ${combinedUnit.type}`);
         console.log(`- Combined unit size: ${combinedUnit.originalSize} (10 + 10 = 20)`);
         console.log(`- Models count: ${combinedUnit.models.length}`);
@@ -146,9 +146,9 @@ describe('Unit Conversion - Combined Units', () => {
       }
 
       expect(result.success).toBe(true);
-      expect(result.army.units).toHaveLength(1);
+      expect(result.army!.units).toHaveLength(1);
       
-      const combinedUnit = result.army.units[0];
+      const combinedUnit = result.army!.units[0];
       expect(combinedUnit.type).toBe('COMBINED');
       expect(combinedUnit.originalSize).toBe(20); // 10 + 10
       expect(combinedUnit.models).toHaveLength(20);
@@ -265,18 +265,18 @@ describe('Unit Conversion - Combined Units', () => {
       console.log('');
       console.log('AFTER CONVERSION:');
       console.log(`- Success: ${result.success}`);
-      console.log(`- Units count: ${result.army.units.length} (combined per ArmyForge validation)`);
+      console.log(`- Units count: ${result.army!.units.length} (combined per ArmyForge validation)`);
       console.log(`- Warnings: ${result.warnings.join(', ')}`);
       
-      result.army.units.forEach((unit, i) => {
+      result.army!.units.forEach((unit, i) => {
         console.log(`- Unit ${i + 1}: ${unit.customName}, Type: ${unit.type}, Size: ${unit.originalSize}`);
       });
 
       expect(result.success).toBe(true);
       // If ArmyForge marked them as combined: true, we trust that validation and combine them
-      expect(result.army.units).toHaveLength(1); // Combined into one unit
+      expect(result.army!.units).toHaveLength(1); // Combined into one unit
       
-      const combinedUnit = result.army.units[0];
+      const combinedUnit = result.army!.units[0];
       expect(combinedUnit.type).toBe('COMBINED');
       expect(combinedUnit.originalSize).toBe(20); // 10 + 10 combined
       expect(combinedUnit.combinedFrom).toEqual(['elite-rifles', 'elite-shotguns']);
@@ -341,14 +341,14 @@ describe('Unit Conversion - Combined Units', () => {
       console.log('\n=== SINGLE COMBINED UNIT TEST ===');
       console.log('BEFORE: 1 unit marked as combined but no pair');
       console.log('AFTER: Should be treated as STANDARD unit');
-      console.log(`- Units count: ${result.army.units.length}`);
-      console.log(`- Unit type: ${result.army.units[0]?.type}`);
+      console.log(`- Units count: ${result.army!.units.length}`);
+      console.log(`- Unit type: ${result.army!.units[0]?.type}`);
       console.log(`- Warnings: ${result.warnings.join(', ')}`);
 
       expect(result.success).toBe(true);
-      expect(result.army.units).toHaveLength(1);
-      expect(result.army.units[0].type).toBe('STANDARD');
-      expect(result.army.units[0].isCombined).toBe(false);
+      expect(result.army!.units).toHaveLength(1);
+      expect(result.army!.units[0].type).toBe('STANDARD');
+      expect(result.army!.units[0].isCombined).toBe(false);
       expect(result.warnings).toContain('Unit "Elites" marked as combined but no duplicate found - treating as standard');
     });
   });

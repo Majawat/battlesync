@@ -213,7 +213,7 @@ export interface OPRBattleEventData {
 // Army Conversion Types
 export interface ArmyConversionResult {
   success: boolean;
-  army: OPRBattleArmy;
+  army?: OPRBattleArmy; // Optional for error cases
   warnings: string[];
   errors: string[];
 }

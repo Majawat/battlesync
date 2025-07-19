@@ -405,7 +405,7 @@ export class ArmyController {
         army.armyData
       );
 
-      if (!conversionResult.success) {
+      if (!conversionResult.success || !conversionResult.army) {
         res.status(400).json(errorResponse(
           `Failed to convert army to battle format: ${conversionResult.errors.join(', ')}`
         ));

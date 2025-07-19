@@ -125,18 +125,18 @@ model CampaignParticipation {
 // Removed - replaced by GroupMembership + CampaignParticipation
 
 model Army {
-  id             String   @id @default(uuid())
+  id             String    @id @default(uuid())
   userId         String
   campaignId     String?
-  armyForgeId    String
+  armyForgeId    String?   // Made nullable to match TypeScript interface
   name           String
   faction        String
   points         Int
-  armyData       Json     // ArmyForge data
-  customizations Json?    // ArmyCustomizations
-  lastSyncedAt   DateTime @default(now())
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  armyData       Json      // ArmyForge data
+  customizations Json?     // ArmyCustomizations
+  lastSyncedAt   DateTime? @default(now())
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 
   // Relationships
   user                 User                @relation(fields: [userId], references: [id])

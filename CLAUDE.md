@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 
 BattleSync is a self-hosted web application for managing One Page Rules (OPR) tabletop gaming campaigns with real-time battle tracking. 
 
-**Current State**: Production-ready multi-user application (v1.2.3) - Complete melee system with victim notifications and simplified shooting integration  
+**Current State**: Production-ready multi-user application (v1.2.4) - Complete melee system with victim notifications, simplified shooting integration, and critical armyId assignment bug fixes  
 **Target State**: Enhanced battle features with advanced OPR conversion and analytics
 
 ## Recent Major Completions
@@ -49,6 +49,13 @@ BattleSync is a self-hosted web application for managing One Page Rules (OPR) ta
 - Automatic CP refresh integrated into phase transitions and round advancement
 - Mathematical calculations with proper ceiling rounding for fractional CP
 - Campaign settings support for CP method selection
+
+### ✅ **Critical Bug Fixes (v1.2.4)** - FULLY IMPLEMENTED
+- **Army Conversion Bug Fix**: Fixed critical bug where `army.id` (database ID) was incorrectly passed instead of `army.armyForgeId` (ArmyForge ID) during army conversion
+- **TypeScript Safety Improvements**: Made `army` property optional in `ArmyConversionResult` with proper null checks throughout codebase
+- **Parameter Validation**: Added comprehensive validation to prevent null armyForgeId values from reaching the converter
+- **Database Schema Consistency**: Aligned Prisma schema with TypeScript interfaces for better type safety
+- **Test Suite Updates**: Updated all test files to handle optional army properties correctly
 
 ### ✅ **Complete Melee System (v1.2.3)** - FULLY IMPLEMENTED
 - **5-Phase Melee Workflow**: Target selection → Attacker melee → Defender choice → Defender melee → Resolution

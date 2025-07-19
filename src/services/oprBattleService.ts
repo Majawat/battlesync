@@ -224,9 +224,14 @@ export class OPRBattleService {
             battleArmies.push(armyData as OPRBattleArmy);
           } else {
             // Fallback: convert on the fly from ArmyForge data
+            if (!army.armyForgeId) {
+              logger.error(`Army ${army.id} is missing armyForgeId, cannot convert to battle format`);
+              throw new Error(`Army ${army.name} is not linked to ArmyForge and cannot be used in battles`);
+            }
+            
             const conversionResult = await OPRArmyConverter.convertArmyToBattle(
               army.userId,
-              army.id,
+              army.armyForgeId,
               armyData,
               {
                 allowCombined: true,
@@ -235,7 +240,7 @@ export class OPRBattleService {
               }
             );
 
-            if (conversionResult.success) {
+            if (conversionResult.success && conversionResult.army) {
               battleArmies.push(conversionResult.army);
             } else {
               logger.error(`Failed to convert army ${army.name}:`, conversionResult.errors);
@@ -402,7 +407,7 @@ export class OPRBattleService {
       const armyData = JSON.parse(army.armyData as string);
       const conversionResult = await OPRArmyConverter.convertArmyToBattle(userId, armyId, armyData);
       
-      if (!conversionResult.success) {
+      if (!conversionResult.success || !conversionResult.army) {
         return { 
           success: false, 
           error: `Failed to convert army: ${conversionResult.errors?.join(', ')}` 

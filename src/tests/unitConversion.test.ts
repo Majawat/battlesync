@@ -124,9 +124,9 @@ describe('Unit Conversion - Hero Joining', () => {
       expect(result.errors).toHaveLength(0);
       
       // Should have only 1 unit after joining (not 2 separate units)
-      expect(result.army.units).toHaveLength(1);
+      expect(result.army!.units).toHaveLength(1);
       
-      const joinedUnit = result.army.units[0];
+      const joinedUnit = result.army!.units[0];
       
       // Unit should be marked as JOINED type
       expect(joinedUnit.type).toBe('JOINED');
@@ -184,7 +184,7 @@ describe('Unit Conversion - Hero Joining', () => {
       );
 
       expect(result.success).toBe(true);
-      const joinedUnit = result.army.units[0];
+      const joinedUnit = result.army!.units[0];
       
       // XP should be combined or tracked separately
       // This depends on how we want to implement XP for joined units
@@ -219,10 +219,10 @@ describe('Unit Conversion - Hero Joining', () => {
       expect(result.success).toBe(true);
       
       // Should have 2 separate units (hero shouldn't join)
-      expect(result.army.units).toHaveLength(2);
+      expect(result.army!.units).toHaveLength(2);
       
       // Neither unit should be JOINED type
-      result.army.units.forEach(unit => {
+      result.army!.units.forEach(unit => {
         expect(unit.type).not.toBe('JOINED');
         expect(unit.joinedHero).toBeUndefined();
       });
@@ -248,10 +248,10 @@ describe('Unit Conversion - Hero Joining', () => {
       expect(result.success).toBe(true);
       
       // Should have 2 separate units
-      expect(result.army.units).toHaveLength(2);
+      expect(result.army!.units).toHaveLength(2);
       
       // No units should be joined
-      result.army.units.forEach(unit => {
+      result.army!.units.forEach(unit => {
         expect(unit.type).not.toBe('JOINED');
         expect(unit.joinedHero).toBeUndefined();
       });
@@ -279,7 +279,7 @@ describe('Unit Conversion - Hero Joining', () => {
       expect(result.success).toBe(true);
       
       // Should have 1 unit (hero alone)
-      expect(result.army.units).toHaveLength(1);
+      expect(result.army!.units).toHaveLength(1);
       
       // Should have warning about failed join
       expect(result.warnings[0]).toMatch(/could not find target unit/i);
@@ -298,11 +298,11 @@ describe('Unit Conversion - Hero Joining', () => {
 
       console.log('=== CURRENT CONVERSION RESULT ===');
       console.log('Success:', result.success);
-      console.log('Units count:', result.army.units.length);
+      console.log('Units count:', result.army!.units.length);
       console.log('Warnings:', result.warnings);
       console.log('Errors:', result.errors);
       
-      result.army.units.forEach((unit, i) => {
+      result.army!.units.forEach((unit, i) => {
         console.log(`\nUnit ${i + 1}:`);
         console.log('- Name:', unit.customName || unit.name);
         console.log('- Type:', unit.type);

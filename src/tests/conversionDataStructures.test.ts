@@ -86,19 +86,19 @@ describe('Unit Conversion - Data Structures', () => {
     console.log('🔸 CONVERTED OPR BATTLE DATA STRUCTURE');
     console.log('='.repeat(80));
     
-    const battleArmy = conversionResult.army;
+    const battleArmy = conversionResult.army!;
     console.log('🏛️ BATTLE ARMY:');
-    console.log(`   - Army ID: ${battleArmy.armyId}`);
-    console.log(`   - Army Name: ${battleArmy.armyName}`);
-    console.log(`   - Faction: ${battleArmy.faction}`);
-    console.log(`   - Total Points: ${battleArmy.totalPoints}`);
-    console.log(`   - Command Points: ${battleArmy.currentCommandPoints}/${battleArmy.maxCommandPoints}`);
-    console.log(`   - Underdog Points: ${battleArmy.currentUnderdogPoints}/${battleArmy.maxUnderdogPoints}`);
-    console.log(`   - Battle Units: ${battleArmy.units.length}`);
-    console.log(`   - Kill Count: ${battleArmy.killCount}`);
+    console.log(`   - Army ID: ${battleArmy!.armyId}`);
+    console.log(`   - Army Name: ${battleArmy!.armyName}`);
+    console.log(`   - Faction: ${battleArmy!.faction}`);
+    console.log(`   - Total Points: ${battleArmy!.totalPoints}`);
+    console.log(`   - Command Points: ${battleArmy!.currentCommandPoints}/${battleArmy!.maxCommandPoints}`);
+    console.log(`   - Underdog Points: ${battleArmy!.currentUnderdogPoints}/${battleArmy!.maxUnderdogPoints}`);
+    console.log(`   - Battle Units: ${battleArmy!.units.length}`);
+    console.log(`   - Kill Count: ${battleArmy!.killCount}`);
     console.log('');
 
-    battleArmy.units.forEach((unit, i) => {
+    battleArmy!.units.forEach((unit, i) => {
       console.log(`⚔️ BATTLE UNIT ${i + 1}: ${unit.customName || unit.name}`);
       console.log(`   - Unit ID: ${unit.unitId}`);
       console.log(`   - Type: ${unit.type}`); // Should be 'JOINED'
@@ -168,14 +168,14 @@ describe('Unit Conversion - Data Structures', () => {
     });
     console.log('');
     console.log('AFTER CONVERSION:');
-    console.log(`  - ${battleArmy.units.length} battle units created`);
-    battleArmy.units.forEach(unit => {
+    console.log(`  - ${battleArmy!.units.length} battle units created`);
+    battleArmy!.units.forEach(unit => {
       console.log(`  - ${unit.customName || unit.name}: Type ${unit.type}, Size ${unit.currentSize}, Models: ${unit.models.length}, Hero: ${unit.joinedHero?.name || 'none'}`);
     });
     console.log('');
     
     // Count different unit types
-    const unitTypes = battleArmy.units.reduce((acc, unit) => {
+    const unitTypes = battleArmy!.units.reduce((acc, unit) => {
       acc[unit.type] = (acc[unit.type] || 0) + 1;
       return acc;
     }, {} as Record<string, number>);
@@ -190,12 +190,12 @@ describe('Unit Conversion - Data Structures', () => {
 
     // Verify the conversion worked correctly
     expect(conversionResult.success).toBe(true);
-    expect(battleArmy.units.length).toBeGreaterThan(0);
+    expect(battleArmy!.units.length).toBeGreaterThan(0);
     
     // Check that we have examples of different unit types
-    const hasJoined = battleArmy.units.some(u => u.type === 'JOINED');
-    const hasCombined = battleArmy.units.some(u => u.type === 'COMBINED');
-    const hasStandard = battleArmy.units.some(u => u.type === 'STANDARD');
+    const hasJoined = battleArmy!.units.some(u => u.type === 'JOINED');
+    const hasCombined = battleArmy!.units.some(u => u.type === 'COMBINED');
+    const hasStandard = battleArmy!.units.some(u => u.type === 'STANDARD');
     
     console.log('✅ UNIT TYPE COVERAGE:');
     console.log(`  - Has JOINED units: ${hasJoined ? '✅' : '❌'}`);

@@ -27,6 +27,31 @@ export class OPRArmyConverter {
     commandPointMethod: 'fixed' | 'growing' | 'temporary' | 'fixed-random' | 'growing-random' | 'temporary-random' = 'fixed'
   ): Promise<ArmyConversionResult> {
     try {
+      // Validate required parameters
+      if (!userId) {
+        return {
+          success: false,
+          errors: ['userId is required for army conversion'],
+          warnings: []
+        };
+      }
+
+      if (!armyId) {
+        return {
+          success: false,
+          errors: ['armyId is required for army conversion'],
+          warnings: []
+        };
+      }
+
+      if (!armyData || !armyData.units) {
+        return {
+          success: false,
+          errors: ['Valid armyData with units is required for conversion'],
+          warnings: []
+        };
+      }
+
       const warnings: string[] = [];
       const errors: string[] = [];
 
