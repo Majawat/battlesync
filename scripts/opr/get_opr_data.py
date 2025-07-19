@@ -93,8 +93,43 @@ def main():
         if len(cross_system_armies) > 10:
             print(f"      ... and {len(cross_system_armies) - 10} more")
     
-    # Second pass: collect data efficiently
-    print(f"\n📋 Phase 2: Collecting spell and special rules data...")
+    # Phase 1.5: Collect common rules for each game system
+    print(f"\n📋 Phase 1.5: Collecting common rules...")
+    all_common_rules = []
+    
+    for slug, system_id in GAME_SYSTEMS.items():
+        print(f"   📜 Fetching common rules for {slug}...")
+        common_rules_url = f"https://army-forge.onepagerules.com/api/rules/common/{system_id}"
+        response = requests.get(common_rules_url)
+        
+        if response.status_code != 200:
+            print(f"    ❌ Failed to fetch common rules for {slug}")
+            continue
+            
+        common_rules_data = response.json()
+        
+        # Extract rules from the response
+        rules = common_rules_data.get("rules", []) if isinstance(common_rules_data, dict) else common_rules_data
+        
+        for rule in rules:
+            all_common_rules.append({
+                "ruleSource": "common",
+                "gameSystem": slug,
+                "gameSystemId": system_id,
+                "ruleId": rule.get("id"),
+                "name": rule.get("name"),
+                "aliasedRuleId": rule.get("aliasedRuleId"),
+                "description": rule.get("description"),
+                "hasRating": rule.get("hasRating"),
+                "coreType": rule.get("coreType"),
+                "targetType": rule.get("targetType"),
+            })
+        
+        print(f"    ✅ {len(rules)} common rules")
+        sleep(DELAY_BETWEEN_REQUESTS)
+
+    # Second pass: collect army-specific data efficiently
+    print(f"\n📋 Phase 2: Collecting army-specific spell and special rules data...")
     all_spells = []
     all_special_rules = []
     processed_armies = set()
@@ -151,6 +186,7 @@ def main():
             for slug, system_id in systems:
                 if args.force_duplicates or system_id in enabled_systems or len(systems) == 1:
                     all_special_rules.append({
+                        "ruleSource": "army_specific",
                         "faction": army_name,
                         "gameSystem": slug,
                         "armyUid": uid,
@@ -186,9 +222,9 @@ def main():
             writer.writeheader()
             writer.writerows(all_spells)
     
-    # Save special rules
-    rules_json = OUTPUT_DIR / "special_rules.json"
-    rules_csv = OUTPUT_DIR / "special_rules.csv"
+    # Save army-specific special rules
+    rules_json = OUTPUT_DIR / "army_specific_rules.json"
+    rules_csv = OUTPUT_DIR / "army_specific_rules.csv"
     
     with open(rules_json, "w", encoding="utf-8") as f:
         json.dump(all_special_rules, f, indent=2, ensure_ascii=False)
@@ -199,11 +235,40 @@ def main():
             writer.writeheader()
             writer.writerows(all_special_rules)
     
+    # Save common rules
+    common_rules_json = OUTPUT_DIR / "common_rules.json"
+    common_rules_csv = OUTPUT_DIR / "common_rules.csv"
+    
+    with open(common_rules_json, "w", encoding="utf-8") as f:
+        json.dump(all_common_rules, f, indent=2, ensure_ascii=False)
+    
+    if all_common_rules:
+        with open(common_rules_csv, mode="w", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=all_common_rules[0].keys())
+            writer.writeheader()
+            writer.writerows(all_common_rules)
+    
+    # Save combined special rules (common + army-specific)
+    all_rules_combined = all_common_rules + all_special_rules
+    combined_rules_json = OUTPUT_DIR / "all_special_rules.json"
+    combined_rules_csv = OUTPUT_DIR / "all_special_rules.csv"
+    
+    with open(combined_rules_json, "w", encoding="utf-8") as f:
+        json.dump(all_rules_combined, f, indent=2, ensure_ascii=False)
+    
+    if all_rules_combined:
+        with open(combined_rules_csv, mode="w", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=all_rules_combined[0].keys())
+            writer.writeheader()
+            writer.writerows(all_rules_combined)
+    
     # === SUMMARY ===
     print("\n" + "=" * 50)
     print("📊 Collection Summary:")
     print(f"   🔮 Spells: {len(all_spells)} total")
-    print(f"   ⚡ Special Rules: {len(all_special_rules)} total")
+    print(f"   ⚡ Army-Specific Rules: {len(all_special_rules)} total")
+    print(f"   📜 Common Rules: {len(all_common_rules)} total")
+    print(f"   📋 Combined Rules: {len(all_rules_combined)} total")
     print(f"   📦 Unique Armies: {len(processed_armies)}")
     print(f"   🔄 Cross-system armies: {len(cross_system_armies)}")
     print(f"   🎯 API calls saved: ~{len(cross_system_armies) * 2}")
@@ -213,6 +278,10 @@ def main():
     print(f"   📊 {spells_csv.relative_to(Path.cwd())}")
     print(f"   📄 {rules_json.relative_to(Path.cwd())}")
     print(f"   📊 {rules_csv.relative_to(Path.cwd())}")
+    print(f"   📄 {common_rules_json.relative_to(Path.cwd())}")
+    print(f"   📊 {common_rules_csv.relative_to(Path.cwd())}")
+    print(f"   📄 {combined_rules_json.relative_to(Path.cwd())}")
+    print(f"   📊 {combined_rules_csv.relative_to(Path.cwd())}")
     
     # === PARSING HINTS ===
     if all_special_rules:
