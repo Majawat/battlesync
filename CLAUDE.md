@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 
 BattleSync is a self-hosted web application for managing One Page Rules (OPR) tabletop gaming campaigns with real-time battle tracking. 
 
-**Current State**: Production-ready multi-user application (v1.2.2) - Simplified shooting system with natural action integration  
+**Current State**: Production-ready multi-user application (v1.2.3) - Complete melee system with victim notifications and simplified shooting integration  
 **Target State**: Enhanced battle features with advanced OPR conversion and analytics
 
 ## Recent Major Completions
@@ -49,6 +49,21 @@ BattleSync is a self-hosted web application for managing One Page Rules (OPR) ta
 - Automatic CP refresh integrated into phase transitions and round advancement
 - Mathematical calculations with proper ceiling rounding for fractional CP
 - Campaign settings support for CP method selection
+
+### ✅ **Complete Melee System (v1.2.3)** - FULLY IMPLEMENTED
+- **5-Phase Melee Workflow**: Target selection → Attacker melee → Defender choice → Defender melee → Resolution
+- **Victim Notification System**: Clear notifications to defenders about incoming attacks and options
+- **Strike Back Mechanics**: Defenders choose whether to strike back with full weapon display
+- **Automatic Winner Determination**: Based on wounds caused with proper tie handling
+- **Comprehensive Morale Tests**: Melee losers and units under half strength both trigger tests
+- **Special Rules Integration**: 80+ OPR special rules documented with edge case handling
+- **Weapon Summary Display**: Clear melee weapon breakdowns with attack calculations
+- **Mobile-Responsive Design**: Full tablet/mobile optimization with progressive scaling
+
+**Key Files:**
+- `/frontend/src/components/MeleeAttackModal.tsx` - Complete 5-phase melee system with victim notifications
+- `/frontend/src/components/BattleDashboard.tsx` - Integrated charge action routing to melee modal
+- `/docs/rules/opr/` - Comprehensive OPR special rules documentation for edge cases
 
 ### ✅ **Simplified Shooting System (v1.2.2)** - FULLY IMPLEMENTED
 - **Integrated Action Flow**: Shooting integrated into Hold/Advance actions (no standalone buttons)

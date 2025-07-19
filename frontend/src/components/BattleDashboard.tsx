@@ -6,6 +6,7 @@ import { CommandPointPanel } from './CommandPointPanel';
 import { CooperativeContributionModal } from './CooperativeContributionModal';
 import { SpellResultModal } from './SpellResultModal';
 import { UnitActionModal } from './UnitActionModal';
+import { MeleeAttackModal } from './MeleeAttackModal';
 import { ActivationPanel } from './ActivationPanel';
 import { MoraleTestPanel } from './MoraleTestPanel';
 import { 
@@ -51,6 +52,10 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
     isVisible: boolean;
     unit: OPRBattleUnit;
     action: 'hold' | 'advance' | 'rush' | 'charge';
+  } | null>(null);
+  const [meleeAttackModal, setMeleeAttackModal] = useState<{
+    isVisible: boolean;
+    attackerUnit: OPRBattleUnit;
   } | null>(null);
 
   // Stable callback for setting cooperative contribution handler
@@ -345,6 +350,17 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
 
   // Unit action handler
   const handleUnitAction = async (unitId: string, action: 'hold' | 'advance' | 'rush' | 'charge', targetId?: string) => {
+    // For charge actions, open melee modal instead of direct action
+    if (action === 'charge') {
+      const unit = allUnits.find(u => u.unitId === unitId);
+      if (unit) {
+        setMeleeAttackModal({
+          isVisible: true,
+          attackerUnit: unit
+        });
+        return;
+      }
+    }
     try {
       const response = await fetch(`/api/opr/battles/${battleId}/unit-action`, {
         method: 'POST',
@@ -454,6 +470,7 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
   // Get armies and current view
   const userArmy = battleState?.armies.find(army => army.userId === user?.id);
   const allArmies = battleState?.armies || [];
+  const allUnits = allArmies.flatMap(army => army.units || []);
   
   // Determine which army to display (default to user's army)
   const displayedArmy = selectedArmyId 
@@ -817,6 +834,21 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
           battleId={battleId}
           onActionComplete={() => {
             setUnitActionModal(null);
+            // Battle state will be updated via WebSocket
+          }}
+        />
+      )}
+
+      {/* Melee Attack Modal */}
+      {meleeAttackModal && (
+        <MeleeAttackModal
+          isVisible={meleeAttackModal.isVisible}
+          onClose={() => setMeleeAttackModal(null)}
+          attackerUnit={meleeAttackModal.attackerUnit}
+          allArmies={allArmies}
+          battleId={battleId}
+          onMeleeComplete={() => {
+            setMeleeAttackModal(null);
             // Battle state will be updated via WebSocket
           }}
         />
