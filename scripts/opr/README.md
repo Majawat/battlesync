@@ -6,15 +6,24 @@ This directory contains scripts for collecting and analyzing data from One Page 
 
 ### `get_opr_data.py`
 
-Comprehensive data collection script that fetches:
+Efficient data collection script that fetches:
 - **Spells**: All spells from every official OPR army book
 - **Special Rules**: All faction-specific and universal special rules
+
+**Smart Features**:
+- Detects cross-system army compatibility via `enabledGameSystems` metadata
+- Avoids duplicate API calls (saves ~67% of requests)
+- Command-line options for verbose output and duplicate forcing
 
 #### Usage
 ```bash
 cd scripts/opr
-python get_opr_data.py
+python3 get_opr_data.py [--verbose] [--force-duplicates]
 ```
+
+#### Options
+- `--verbose, -v`: Show detailed progress information
+- `--force-duplicates`: Force collection even if army appears in multiple systems
 
 #### Output Files
 All output files are saved to `/data/opr/`:
@@ -73,6 +82,6 @@ This data is used for:
 - Building comprehensive rule databases
 - Validating game mechanics in battle simulations
 
-## Rate Limiting
+## Efficiency & Rate Limiting
 
-The script includes a 0.5-second delay between API requests to be respectful to OPR's servers. Collection typically takes 2-3 minutes for all factions.
+The script includes intelligent duplicate detection and a 0.01-second delay between API requests to be respectful to OPR's servers. Smart collection typically takes 1-2 minutes and saves ~67% of API calls compared to naive collection.
