@@ -114,8 +114,9 @@ def main():
         for rule in rules:
             all_common_rules.append({
                 "ruleSource": "common",
+                "faction": None,  # Common rules aren't faction-specific
                 "gameSystem": slug,
-                "gameSystemId": system_id,
+                "armyUid": None,  # Common rules aren't army-specific
                 "ruleId": rule.get("id"),
                 "name": rule.get("name"),
                 "aliasedRuleId": rule.get("aliasedRuleId"),
@@ -123,6 +124,7 @@ def main():
                 "hasRating": rule.get("hasRating"),
                 "coreType": rule.get("coreType"),
                 "targetType": rule.get("targetType"),
+                "enabledGameSystems": None,  # Common rules apply to their own system
             })
         
         print(f"    ✅ {len(rules)} common rules")
@@ -257,8 +259,14 @@ def main():
         json.dump(all_rules_combined, f, indent=2, ensure_ascii=False)
     
     if all_rules_combined:
+        # Define fieldnames explicitly to ensure consistency
+        fieldnames = [
+            "ruleSource", "faction", "gameSystem", "armyUid", "ruleId", 
+            "name", "aliasedRuleId", "description", "hasRating", 
+            "coreType", "targetType", "enabledGameSystems"
+        ]
         with open(combined_rules_csv, mode="w", newline="", encoding="utf-8") as f:
-            writer = csv.DictWriter(f, fieldnames=all_rules_combined[0].keys())
+            writer = csv.DictWriter(f, fieldnames=fieldnames)
             writer.writeheader()
             writer.writerows(all_rules_combined)
     
@@ -274,14 +282,14 @@ def main():
     print(f"   🎯 API calls saved: ~{len(cross_system_armies) * 2}")
     
     print(f"\n✅ Files saved:")
-    print(f"   📄 {spells_json.relative_to(Path.cwd())}")
-    print(f"   📊 {spells_csv.relative_to(Path.cwd())}")
-    print(f"   📄 {rules_json.relative_to(Path.cwd())}")
-    print(f"   📊 {rules_csv.relative_to(Path.cwd())}")
-    print(f"   📄 {common_rules_json.relative_to(Path.cwd())}")
-    print(f"   📊 {common_rules_csv.relative_to(Path.cwd())}")
-    print(f"   📄 {combined_rules_json.relative_to(Path.cwd())}")
-    print(f"   📊 {combined_rules_csv.relative_to(Path.cwd())}")
+    print(f"   📄 {spells_json}")
+    print(f"   📊 {spells_csv}")
+    print(f"   📄 {rules_json}")
+    print(f"   📊 {rules_csv}")
+    print(f"   📄 {common_rules_json}")
+    print(f"   📊 {common_rules_csv}")
+    print(f"   📄 {combined_rules_json}")
+    print(f"   📊 {combined_rules_csv}")
     
     # === PARSING HINTS ===
     if all_special_rules:
