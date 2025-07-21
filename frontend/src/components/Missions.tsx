@@ -126,6 +126,13 @@ export const Missions: React.FC = () => {
               <h1 className="text-xl font-semibold text-white">BattleSync</h1>
             </div>
             <div className="flex items-center space-x-4">
+              <button
+                onClick={() => navigate('/armies')}
+                className="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-2 sm:px-4 rounded text-sm sm:text-base"
+              >
+                <span className="hidden sm:inline">My Armies</span>
+                <span className="sm:hidden">⚔️</span>
+              </button>
               <span className="text-gray-300">Welcome, {user?.username}!</span>
             </div>
           </div>

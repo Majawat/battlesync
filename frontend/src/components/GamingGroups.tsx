@@ -129,9 +129,10 @@ export const GamingGroups: React.FC = () => {
             <div className="flex items-center space-x-4">
               <button
                 onClick={() => navigate('/armies')}
-                className="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded"
+                className="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-2 sm:px-4 rounded text-sm sm:text-base"
               >
-                My Armies
+                <span className="hidden sm:inline">My Armies</span>
+                <span className="sm:hidden">⚔️</span>
               </button>
               
               {/* Notifications Button */}
