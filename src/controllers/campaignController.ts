@@ -267,8 +267,13 @@ export class CampaignController {
       }
 
       // Find target user
-      const targetUser = await prisma.user.findUnique({
-        where: { username }
+      const targetUser = await prisma.user.findFirst({
+        where: { 
+          username: {
+            equals: username,
+            mode: 'insensitive'
+          }
+        }
       });
 
       if (!targetUser) {

@@ -92,9 +92,14 @@ export class GroupMembershipService {
     // Verify requester can manage group
     await this.validateGroupManageAccess(groupId, requesterId);
 
-    // Find user to invite
-    const userToInvite = await prisma.user.findUnique({
-      where: { username: data.username },
+    // Find user to invite (case-insensitive)
+    const userToInvite = await prisma.user.findFirst({
+      where: { 
+        username: {
+          equals: data.username,
+          mode: 'insensitive'
+        }
+      },
       select: {
         id: true,
         username: true,

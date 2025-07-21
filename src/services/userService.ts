@@ -17,9 +17,14 @@ const toUserPublic = (user: any): UserPublic => ({
 export class UserService {
   static async createUser(data: RegisterRequest): Promise<UserPublic> {
     try {
-      // Check if username already exists
-      const existingUser = await prisma.user.findUnique({
-        where: { username: data.username }
+      // Check if username already exists (case-insensitive)
+      const existingUser = await prisma.user.findFirst({
+        where: { 
+          username: {
+            equals: data.username,
+            mode: 'insensitive'
+          }
+        }
       });
 
       if (existingUser) {
@@ -71,8 +76,13 @@ export class UserService {
   }
 
   static async authenticateUser(data: LoginRequest): Promise<UserPublic> {
-    const user = await prisma.user.findUnique({
-      where: { username: data.username }
+    const user = await prisma.user.findFirst({
+      where: { 
+        username: {
+          equals: data.username,
+          mode: 'insensitive'
+        }
+      }
     });
 
     if (!user) {
