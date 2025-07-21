@@ -215,7 +215,15 @@ class ArmyForgeClient {
         createdBy: 'ArmyForge',
         description: armyData.description || '',
         resolvedFactions: factions,
-        gameSystemName: this.getGameSystemName(armyData.gameSystem)
+        gameSystemName: this.getGameSystemName(armyData.gameSystem),
+        // Additional ArmyForge fields for future use
+        modelCount: armyData.modelCount || 0,
+        activationCount: armyData.activationCount || 0,
+        pointsLimit: armyData.pointsLimit || 0,
+        campaignMode: armyData.campaignMode || false,
+        narrativeMode: armyData.narrativeMode || false,
+        isCloud: armyData.isCloud || false,
+        forceOrg: armyData.forceOrg || null
       }
     };
 

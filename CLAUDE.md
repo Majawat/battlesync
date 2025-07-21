@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 
 BattleSync is a self-hosted web application for managing One Page Rules (OPR) tabletop gaming campaigns with real-time battle tracking. 
 
-**Current State**: Production-ready multi-user application (v1.2.4) - Complete melee system with victim notifications, simplified shooting integration, and critical armyId assignment bug fixes  
+**Current State**: Production-ready multi-user application (v1.2.8) - Complete battle system with functional trait mechanics, turn/round management, ArmyForge metadata integration, and enhanced unit displays  
 **Target State**: Enhanced battle features with advanced OPR conversion and analytics
 
 ## Recent Major Completions
@@ -57,6 +57,31 @@ BattleSync is a self-hosted web application for managing One Page Rules (OPR) ta
 - **Database Schema Consistency**: Aligned Prisma schema with TypeScript interfaces for better type safety
 - **Test Suite Updates**: Updated all test files to handle optional army properties correctly
 
+### ✅ **ArmyForge Notes Integration (v1.2.6+)** - FULLY IMPLEMENTED
+- **Notes Field Support**: Unit notes from ArmyForge now display in battle view under unit names
+- **Frontend/Backend Type Sync**: Added `notes?: string | null` to frontend ArmyForgeUnit interface
+- **Battle Card Display**: Notes appear in blue italic text below unit names in BattleUnitCard component
+- **Seamless Integration**: Notes are automatically captured during army conversion via `sourceUnit` field
+- **Mobile Responsive**: Notes display properly on all screen sizes with responsive text styling
+
+### ✅ **Extended ArmyForge Metadata Capture (v1.2.6+)** - FULLY IMPLEMENTED
+- **Complete Metadata Storage**: Now capturing all available ArmyForge fields for future use
+- **Army Descriptions**: Display army backstory/notes in army detail view with blue-bordered styling
+- **Version Tracking**: Capture `lastModified` timestamps for sync management
+- **Battle Validation**: Store `modelCount` and `activationCount` for turn order and victory conditions
+- **Campaign Features**: Capture `campaignMode`, `narrativeMode`, and `traits` for future campaign integration
+- **Quality Assurance**: All fields stored but selectively displayed to avoid UI clutter
+
+### ✅ **OPR Turn and Round Management System (v1.2.7)** - FULLY IMPLEMENTED
+- **Complete OPR Rules Implementation**: Proper rounds, turns, and activation system per OPR rules
+- **Round Start Events**: Caster token refresh, command point management, fatigue clearing, random events (campaigns)
+- **Round End Events**: Objective checking, morale tests, army statistics, victory conditions
+- **Turn Notifications**: Non-obtrusive "Your Turn" indicator with animated dot for active players
+- **Activation Tracking**: Full validation of unit activations with proper sequencing
+- **Campaign Integration**: Random events (5+ on D6) and command point method support
+- **WebSocket Sync**: Real-time turn notifications and round progression for all players
+- **Mobile Responsive**: Turn indicators work seamlessly on all screen sizes
+
 ### ✅ **Complete Melee System (v1.2.3)** - FULLY IMPLEMENTED
 - **5-Phase Melee Workflow**: Target selection → Attacker melee → Defender choice → Defender melee → Resolution
 - **Victim Notification System**: Clear notifications to defenders about incoming attacks and options
@@ -90,6 +115,26 @@ BattleSync is a self-hosted web application for managing One Page Rules (OPR) ta
 - Tough value distribution and hero joining mechanics
 - Defense upgrade processing and weapon count accuracy
 - Complex upgrade scenarios and edge case handling
+
+### ✅ **Functional Trait System (v1.2.8)** - FULLY IMPLEMENTED
+- **Intelligent Trait Analysis**: Automatic detection of functional vs cosmetic traits from ArmyForge metadata
+- **Game Mechanics Integration**: Traits like "Agile", "Hardy", "Veteran" provide actual gameplay benefits
+- **Movement Calculation**: Traits affect movement distances (Fast/Swift +1", Slow -1", stackable with special rules)
+- **Visual Distinction**: Functional traits displayed with green highlighting and effect descriptions
+- **Comprehensive Coverage**: 10+ functional trait types with specific game effects
+- **Hover Tooltips**: Cosmetic traits show descriptions on hover for lore context
+
+**Key Functional Traits:**
+- **Agile**: +1" Advance, may ignore first melee hit
+- **Hardy**: Ignores first wound on 4+
+- **Veteran**: +1 to quality tests, reroll failed morale
+- **Elite**: Reroll one failed die per activation
+- **Stealth/Camo**: Enemy shooting -1 to hit beyond 12"
+- **Flying/Jump**: Ignores terrain, moves over units
+- **Fearless/Brave**: Immune to fear/terror, +1 morale
+
+**Key Files:**
+- `/frontend/src/components/BattleUnitCard.tsx` - Trait analysis and display system with functional mechanics
 
 ## New TypeCheck Scripts Added (v1.2.1)
 - `npm run typecheck` - Backend TypeScript checking without build

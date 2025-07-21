@@ -196,7 +196,8 @@ export type OPRBattleEventType =
   | 'UNDERDOG_POINTS_GAINED'
   | 'KILL_RECORDED'
   | 'BATTLE_ENDED'
-  | 'EXPERIENCE_AWARDED';
+  | 'EXPERIENCE_AWARDED'
+  | 'RANDOM_EVENT';
 
 export interface OPRBattleEventData {
   unitId?: string;

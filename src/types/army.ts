@@ -28,6 +28,14 @@ export interface ArmyForgeData {
     description?: string;
     resolvedFactions?: string[];
     gameSystemName?: string;
+    // Additional ArmyForge metadata
+    modelCount?: number;
+    activationCount?: number;
+    pointsLimit?: number;
+    campaignMode?: boolean;
+    narrativeMode?: boolean;
+    isCloud?: boolean;
+    forceOrg?: any;
   };
 }
 
@@ -47,6 +55,7 @@ export interface ArmyForgeUnit {
   notes?: string | null;
   traits?: string[];
   combined?: boolean;
+  bases?: string[];
   // Army Books API integration
   armyId?: string; // Reference to Army Books unit ID for faction resolution
   // Hero joining fields

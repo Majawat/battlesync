@@ -68,7 +68,102 @@ interface BattleUnitCardProps {
   canAct?: boolean;
 }
 
-// Helper function to calculate movement distances based on special rules
+// Trait functionality system
+interface TraitEffect {
+  name: string;
+  description: string;
+  functional: boolean; // Whether this trait has game mechanics
+  gameEffect?: string; // Description of what it does mechanically
+}
+
+const analyzeTraits = (unit: OPRBattleUnit): TraitEffect[] => {
+  const traits = unit.sourceUnit?.traits || [];
+  return traits.map((trait: string) => {
+    const lowerTrait = trait.toLowerCase();
+    
+    // Check for functional traits that affect gameplay
+    if (lowerTrait.includes('agile')) {
+      return {
+        name: trait,
+        description: 'Unit gains improved mobility and evasion',
+        functional: true,
+        gameEffect: '+1 to Advance actions, may ignore first hit in melee'
+      };
+    } else if (lowerTrait.includes('hardy')) {
+      return {
+        name: trait,
+        description: 'Unit is more resistant to damage',
+        functional: true,
+        gameEffect: 'Ignores first wound on 4+'
+      };
+    } else if (lowerTrait.includes('veteran')) {
+      return {
+        name: trait,
+        description: 'Experienced unit with improved quality',
+        functional: true,
+        gameEffect: '+1 to quality tests, may reroll failed morale'
+      };
+    } else if (lowerTrait.includes('elite')) {
+      return {
+        name: trait,
+        description: 'Superior training and equipment',
+        functional: true,
+        gameEffect: 'May reroll one failed die per activation'
+      };
+    } else if (lowerTrait.includes('stealth') || lowerTrait.includes('camo')) {
+      return {
+        name: trait,
+        description: 'Unit is harder to target at range',
+        functional: true,
+        gameEffect: 'Enemy shooting gets -1 to hit beyond 12"'
+      };
+    } else if (lowerTrait.includes('fast') || lowerTrait.includes('swift')) {
+      return {
+        name: trait,
+        description: 'Unit moves faster than normal',
+        functional: true,
+        gameEffect: '+2" to all movement actions'
+      };
+    } else if (lowerTrait.includes('slow')) {
+      return {
+        name: trait,
+        description: 'Unit moves slower than normal',
+        functional: true,
+        gameEffect: '-2" to all movement actions'
+      };
+    } else if (lowerTrait.includes('flying') || lowerTrait.includes('jump')) {
+      return {
+        name: trait,
+        description: 'Unit can ignore terrain and models',
+        functional: true,
+        gameEffect: 'Ignores terrain for movement, may move over units'
+      };
+    } else if (lowerTrait.includes('tough')) {
+      return {
+        name: trait,
+        description: 'Unit is harder to wound',
+        functional: true,
+        gameEffect: '+1 to wound rolls required'
+      };
+    } else if (lowerTrait.includes('fearless') || lowerTrait.includes('brave')) {
+      return {
+        name: trait,
+        description: 'Unit ignores fear and terror',
+        functional: true,
+        gameEffect: 'Immune to fear/terror, +1 to morale tests'
+      };
+    } else {
+      // Non-functional trait (cosmetic/lore)
+      return {
+        name: trait,
+        description: 'Unit characteristic',
+        functional: false
+      };
+    }
+  });
+};
+
+// Helper function to calculate movement distances based on special rules AND traits
 const calculateMovement = (unit: OPRBattleUnit) => {
   const hasSpecialRule = (rule: string) => {
     return unit.models.some(model => 
@@ -76,15 +171,30 @@ const calculateMovement = (unit: OPRBattleUnit) => {
     );
   };
 
+  const hasTraitEffect = (effect: string) => {
+    const traits = unit.sourceUnit?.traits || [];
+    return traits.some((trait: string) => trait.toLowerCase().includes(effect.toLowerCase()));
+  };
+
   let advanceDistance = 6;
   let rushChargeDistance = 12;
 
+  // Check special rules first
   if (hasSpecialRule('fast')) {
     advanceDistance += 2;
     rushChargeDistance += 4;
   } else if (hasSpecialRule('slow')) {
     advanceDistance = Math.max(0, advanceDistance - 2);
     rushChargeDistance = Math.max(0, rushChargeDistance - 4);
+  }
+
+  // Then check trait effects (can stack with special rules)
+  if (hasTraitEffect('fast') || hasTraitEffect('swift') || hasTraitEffect('agile')) {
+    advanceDistance += 1; // Trait bonus is smaller than special rule
+    rushChargeDistance += 2;
+  } else if (hasTraitEffect('slow')) {
+    advanceDistance = Math.max(0, advanceDistance - 1);
+    rushChargeDistance = Math.max(0, rushChargeDistance - 2);
   }
 
   // Aircraft have special movement
@@ -268,6 +378,60 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
               {unit.sourceUnit.notes}
             </div>
           )}
+          
+          {/* Unit Traits with Functionality */}
+          {(() => {
+            const traitEffects = analyzeTraits(unit);
+            const functionalTraits = traitEffects.filter(t => t.functional);
+            const cosmenticTraits = traitEffects.filter(t => !t.functional);
+            
+            if (traitEffects.length === 0) return null;
+            
+            return (
+              <div className="mt-2 text-xs">
+                {/* Functional Traits */}
+                {functionalTraits.length > 0 && (
+                  <div className="mb-1">
+                    <div className="text-green-400 font-medium mb-1">Active Traits:</div>
+                    <div className="space-y-1">
+                      {functionalTraits.map((trait, index) => (
+                        <div key={index} className="flex flex-col bg-green-900/20 border border-green-700/50 rounded p-2">
+                          <div className="flex items-center justify-between">
+                            <span className="text-green-300 font-medium">{trait.name}</span>
+                            <span className="text-green-500 text-xs">⚡</span>
+                          </div>
+                          <div className="text-gray-300 text-xs mt-1">{trait.description}</div>
+                          {trait.gameEffect && (
+                            <div className="text-green-400 text-xs font-medium mt-1 italic">
+                              Effect: {trait.gameEffect}
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                
+                {/* Cosmetic Traits */}
+                {cosmenticTraits.length > 0 && (
+                  <div>
+                    <div className="text-gray-400 font-medium mb-1">Unit Traits:</div>
+                    <div className="flex flex-wrap gap-1">
+                      {cosmenticTraits.map((trait, index) => (
+                        <span 
+                          key={index} 
+                          className="px-2 py-1 bg-gray-700/50 border border-gray-600/50 rounded text-gray-300 text-xs"
+                          title={trait.description}
+                        >
+                          {trait.name}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })()}
           <div className="text-xs text-gray-400 mt-1">
             {unit.kills > 0 && ` • ${unit.kills} kills`}
             {unit.currentSize < unit.originalSize && (

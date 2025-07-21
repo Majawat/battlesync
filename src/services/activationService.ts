@@ -41,6 +41,11 @@ export class ActivationService {
       // Increment round counter
       battleState.currentRound += 1;
 
+      // Process round end events (if this isn't the first round)
+      if (battleState.currentRound > 1) {
+        await this.processRoundEndEvents(battleState, beforeState.currentRound);
+      }
+
       // Generate new activation order for this round
       const newActivationState = this.generateActivationOrder(battleState.armies, battleState.currentRound);
 
@@ -53,6 +58,9 @@ export class ActivationService {
 
       // Update battle state
       battleState.activationState = newActivationState;
+
+      // Process round start events
+      await this.processRoundStartEvents(battleState, battleId);
 
       // Save the updated state
       await prisma.battle.update({
@@ -542,6 +550,272 @@ export class ActivationService {
         availableUnits: [],
         canStartNewRound: false
       };
+    }
+  }
+
+  /**
+   * Process events that happen at the start of each round
+   */
+  private static async processRoundStartEvents(
+    battleState: OPRBattleState, 
+    battleId: string
+  ): Promise<void> {
+    logger.info(`Processing round start events for round ${battleState.currentRound}`);
+
+    // 1. Refresh Caster Tokens (OPR Core Rule)
+    this.refreshCasterTokens(battleState);
+
+    // 2. Refresh Command Points for growing/temporary methods
+    await this.refreshCommandPointsFromBattle(battleState, battleId);
+
+    // 3. Clear fatigue from all units (OPR: fatigue ends at start of round)
+    this.clearFatigue(battleState);
+
+    // 4. Check for random events in campaign mode
+    await this.processRandomEvents(battleState, battleId);
+
+    // 5. Reset shaken units that chose to Hold last turn
+    this.processRallyingUnits(battleState);
+
+    logger.info(`Round start events completed for round ${battleState.currentRound}`);
+  }
+
+  /**
+   * Process events that happen at the end of each round
+   */
+  private static async processRoundEndEvents(
+    battleState: OPRBattleState, 
+    completedRound: number
+  ): Promise<void> {
+    logger.info(`Processing round end events for completed round ${completedRound}`);
+
+    // 1. Check objective markers (OPR: objectives checked at end of round)
+    this.processObjectiveControl(battleState);
+
+    // 2. Process morale tests for units under half strength
+    this.processMoraleTests(battleState);
+
+    // 3. Update army kill counts and experience
+    this.updateArmyStatistics(battleState);
+
+    // 4. Check for victory conditions
+    this.checkVictoryConditions(battleState, completedRound);
+
+    logger.info(`Round end events completed for round ${completedRound}`);
+  }
+
+  /**
+   * Refresh caster tokens for all units with Caster ability
+   */
+  private static refreshCasterTokens(battleState: OPRBattleState): void {
+    for (const army of battleState.armies) {
+      for (const unit of army.units) {
+        // Refresh regular models
+        for (const model of unit.models) {
+          const casterRule = model.specialRules.find(rule => rule.includes('Caster('));
+          if (casterRule) {
+            const match = casterRule.match(/Caster\((\d+)\)/i);
+            if (match) {
+              const maxTokens = parseInt(match[1], 10);
+              model.casterTokens = Math.min(maxTokens, 6); // OPR max is 6
+            }
+          }
+        }
+
+        // Refresh joined heroes
+        if (unit.joinedHero) {
+          const casterRule = unit.joinedHero.specialRules.find(rule => rule.includes('Caster('));
+          if (casterRule) {
+            const match = casterRule.match(/Caster\((\d+)\)/i);
+            if (match) {
+              const maxTokens = parseInt(match[1], 10);
+              unit.joinedHero.casterTokens = Math.min(maxTokens, 6);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Clear fatigue from all units (OPR: fatigue ends at start of round)
+   */
+  private static clearFatigue(battleState: OPRBattleState): void {
+    for (const army of battleState.armies) {
+      for (const unit of army.units) {
+        unit.fatigued = false;
+      }
+    }
+  }
+
+  /**
+   * Process random events for campaign battles
+   */
+  private static async processRandomEvents(
+    battleState: OPRBattleState, 
+    battleId: string
+  ): Promise<void> {
+    // Get campaign info to check if random events are enabled
+    const battle = await prisma.battle.findUnique({
+      where: { id: battleId },
+      include: {
+        mission: {
+          include: {
+            campaign: true
+          }
+        }
+      }
+    });
+
+    // Only process random events if this is a campaign battle
+    if (battle?.mission?.campaign) {
+      // Roll for random event (OPR Campaign Rules: 5+ on D6)
+      const roll = Math.floor(Math.random() * 6) + 1;
+      if (roll >= 5) {
+        logger.info(`Random event triggered with roll of ${roll}`);
+        
+        // TODO: Implement specific random events based on campaign rules
+        // For now, just log that an event would occur
+        await OPRBattleService.recordBattleEvent(
+          battleId,
+          'system',
+          'RANDOM_EVENT',
+          {
+            description: `Random event rolled (${roll}) but not yet implemented`,
+            additionalData: { roll }
+          }
+        );
+      }
+    }
+  }
+
+  /**
+   * Process rallying for shaken units
+   */
+  private static processRallyingUnits(battleState: OPRBattleState): void {
+    for (const army of battleState.armies) {
+      for (const unit of army.units) {
+        // Units that held while shaken automatically stop being shaken
+        if (unit.shaken && unit.action === 'hold') {
+          unit.shaken = false;
+          logger.info(`Unit ${unit.name} rallied from being shaken`);
+        }
+      }
+    }
+  }
+
+  /**
+   * Process objective control at end of round
+   */
+  private static processObjectiveControl(battleState: OPRBattleState): void {
+    // TODO: Implement objective marker control logic
+    // This would check which units are within 3" of markers
+    // and determine control based on OPR rules
+    logger.debug('Processing objective control (not yet implemented)');
+  }
+
+  /**
+   * Process morale tests for units under half strength
+   */
+  private static processMoraleTests(battleState: OPRBattleState): void {
+    // TODO: Implement automatic morale tests for units under half strength
+    // that haven't already been tested this round
+    logger.debug('Processing automatic morale tests (not yet implemented)');
+  }
+
+  /**
+   * Update army statistics and kill counts
+   */
+  private static updateArmyStatistics(battleState: OPRBattleState): void {
+    // Kill counts are already tracked, just ensure consistency
+    for (const army of battleState.armies) {
+      let totalKills = 0;
+      for (const unit of army.units) {
+        totalKills += unit.kills;
+      }
+      army.killCount = totalKills;
+    }
+  }
+
+  /**
+   * Check for victory conditions
+   */
+  private static checkVictoryConditions(
+    battleState: OPRBattleState, 
+    completedRound: number
+  ): void {
+    // TODO: Check for victory conditions based on mission objectives
+    // Standard OPR missions end after 4 rounds unless extended
+    if (completedRound >= 4) {
+      logger.info(`Battle has completed ${completedRound} rounds, victory conditions should be checked`);
+    }
+  }
+
+  /**
+   * Refresh command points for growing/temporary methods
+   */
+  private static async refreshCommandPointsFromBattle(
+    battleState: OPRBattleState, 
+    battleId: string
+  ): Promise<void> {
+    try {
+      const battle = await prisma.battle.findUnique({
+        where: { id: battleId },
+        include: {
+          mission: {
+            include: {
+              campaign: true
+            }
+          }
+        }
+      });
+
+      if (battle?.mission?.campaign) {
+        const settings = battle.mission.campaign.settings as Record<string, any> || {};
+        const commandPointMethod = settings.commandPointMethod || 'fixed';
+        
+        // Use the same logic as in OPRBattleService
+        const methodConfig = this.getCommandPointMethodConfig(commandPointMethod);
+        
+        if (methodConfig.isGrowing) {
+          for (const army of battleState.armies) {
+            const { CommandPointService } = require('./commandPointService');
+            const result = CommandPointService.calculateCommandPoints(army.totalPoints, commandPointMethod);
+            
+            if (methodConfig.isTemporary) {
+              army.currentCommandPoints = result.totalCommandPoints;
+            } else {
+              army.currentCommandPoints += result.totalCommandPoints;
+            }
+            
+            army.maxCommandPoints = Math.max(army.maxCommandPoints, army.currentCommandPoints);
+          }
+        }
+      }
+    } catch (error) {
+      logger.error('Error refreshing command points:', error);
+    }
+  }
+
+  /**
+   * Get command point method configuration
+   */
+  private static getCommandPointMethodConfig(method: string) {
+    switch (method) {
+      case 'fixed':
+        return { basePerThousand: 4, isRandom: false, isGrowing: false, isTemporary: false };
+      case 'growing':
+        return { basePerThousand: 1, isRandom: false, isGrowing: true, isTemporary: false };
+      case 'temporary':
+        return { basePerThousand: 1, isRandom: false, isGrowing: true, isTemporary: true };
+      case 'fixed-random':
+        return { basePerThousand: 2, isRandom: true, isGrowing: false, isTemporary: false };
+      case 'growing-random':
+        return { basePerThousand: 0.5, isRandom: true, isGrowing: true, isTemporary: false };
+      case 'temporary-random':
+        return { basePerThousand: 0.5, isRandom: true, isGrowing: true, isTemporary: true };
+      default:
+        return { basePerThousand: 4, isRandom: false, isGrowing: false, isTemporary: false };
     }
   }
 }
