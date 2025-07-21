@@ -69,7 +69,7 @@ export class MissionService {
     }
   }
 
-  static async getCampaignMissions(campaignId: string, userId: string): Promise<MissionSummary[]> {
+  static async getCampaignMissions(campaignId: string, userId: string): Promise<MissionData[]> {
     // Validate access
     await this.validateCampaignAccess(campaignId, userId);
 
@@ -80,24 +80,18 @@ export class MissionService {
           select: {
             id: true,
             status: true,
+            startedAt: true,
+            completedAt: true,
+            participants: {
+              select: { id: true }
+            }
           },
         },
       },
       orderBy: { number: 'asc' },
     });
 
-    return missions.map(mission => ({
-      id: mission.id,
-      campaignId: mission.campaignId,
-      number: mission.number,
-      title: mission.title,
-      points: mission.points,
-      status: mission.status as any,
-      scheduledDate: mission.scheduledDate,
-      battleCount: mission.battles.length,
-      completedBattles: mission.battles.filter(b => b.status === 'COMPLETED').length,
-      objectiveCount: Array.isArray(mission.objectives) ? mission.objectives.length : 0,
-    }));
+    return missions.map(mission => this.toMissionData(mission));
   }
 
   static async getMissionById(missionId: string, userId: string): Promise<MissionData> {

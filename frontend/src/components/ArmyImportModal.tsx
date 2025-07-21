@@ -65,7 +65,21 @@ export const ArmyImportModal: React.FC<ArmyImportModalProps> = ({
         throw new Error(response.data.message || 'Failed to import army');
       }
     } catch (error: any) {
-      setError(error.response?.data?.message || error.message || 'Failed to import army');
+      const statusCode = error.response?.status;
+      const errorMessage = error.response?.data?.message || error.message || 'Failed to import army';
+      
+      // Provide specific error messages for common ArmyForge issues
+      if (statusCode === 500) {
+        setError(`ArmyForge Server Error: ${errorMessage}\n\nThis is likely a temporary issue with the ArmyForge API. Please:\n• Wait a few minutes and try again\n• Check if your Army ID is correct\n• Try a different army if the problem persists\n\nIf you're working with the ArmyForge developer on this issue, please share this error with them.`);
+      } else if (statusCode === 404) {
+        setError(`Army Not Found: The army ID "${formData.armyForgeId}" could not be found on ArmyForge.\n\nPlease check:\n• The Army ID is spelled correctly\n• The army exists and is public\n• You copied the full ID from the ArmyForge URL`);
+      } else if (statusCode === 403) {
+        setError(`Access Denied: The army "${formData.armyForgeId}" cannot be accessed.\n\nThis might mean:\n• The army is private\n• The army has restricted access\n• There are permission issues with ArmyForge`);
+      } else if (errorMessage.includes('timeout') || errorMessage.includes('ECONNREFUSED')) {
+        setError(`Connection Timeout: Unable to reach ArmyForge servers.\n\nPlease check:\n• Your internet connection\n• ArmyForge service status\n• Try again in a few minutes`);
+      } else {
+        setError(`Import Error: ${errorMessage}\n\nIf this problem persists, please contact support with the Army ID: ${formData.armyForgeId}`);
+      }
     } finally {
       setLoading(false);
     }
@@ -94,8 +108,10 @@ export const ArmyImportModal: React.FC<ArmyImportModalProps> = ({
         </div>
 
         {error && (
-          <div className="mb-4 bg-red-900 border border-red-600 text-red-200 p-3 rounded">
-            {error}
+          <div className="mb-4 bg-red-900 border border-red-600 text-red-200 p-4 rounded">
+            <div className="whitespace-pre-line text-sm leading-relaxed">
+              {error}
+            </div>
           </div>
         )}
 

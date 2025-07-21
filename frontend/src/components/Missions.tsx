@@ -32,7 +32,14 @@ export const Missions: React.FC = () => {
       setLoading(true);
       const response = await apiClient.getCampaignMissions(campaignId);
       if (response.data.status === 'success' && response.data.data) {
-        setMissions(response.data.data);
+        // Add aliases for compatibility with MissionCard component
+        const missionsWithAliases = response.data.data.map((mission: any) => ({
+          ...mission,
+          missionNumber: mission.number, // Add alias
+          name: mission.title, // Add alias
+          missionType: mission.missionType || 'Standard', // Default type
+        }));
+        setMissions(missionsWithAliases);
       } else {
         setError('Failed to load missions');
       }
