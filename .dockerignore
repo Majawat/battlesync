@@ -8,3 +8,22 @@ ARCHITECTURE.md
 DATA_MODELS.md
 API_INTEGRATIONS.md
 FEATURES.md
+
+# Build artifacts (rebuilt in container)
+frontend/dist/
+frontend/build/
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Development files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment and temp files  
+.env.local
+.env.development
+TEMP/
