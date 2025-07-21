@@ -565,13 +565,30 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
                 <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
                   OPR Battle Tracker
                 </h1>
-                <div className="flex items-center space-x-4 mt-1">
+                <div className="flex items-center flex-wrap gap-2 mt-1">
                   <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-900/50 text-blue-200 border border-blue-700/50">
                     {battleState.phase.replace('_', ' ')}
                   </span>
                   <span className="text-sm text-gray-300">
                     Round {battleState.currentRound}
                   </span>
+                  {battleState.activationState && battleState.phase === 'BATTLE_ROUNDS' && (
+                    <span className="text-sm text-blue-300">
+                      Turn {battleState.activationState.currentTurn}/{battleState.activationState.maxTurns}
+                    </span>
+                  )}
+                  {/* Turn indicator - non-obtrusive */}
+                  {battleState.activationState?.isAwaitingActivation && user?.id === battleState.activationState.activatingPlayerId && (
+                    <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-900/50 text-green-200 border border-green-700/50 animate-pulse">
+                      <span className="w-2 h-2 bg-green-400 rounded-full mr-1.5 animate-ping"></span>
+                      Your Turn
+                    </span>
+                  )}
+                  {battleState.activationState?.roundComplete && (
+                    <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-900/50 text-yellow-200 border border-yellow-700/50">
+                      Round Complete
+                    </span>
+                  )}
                 </div>
               </div>
             </div>

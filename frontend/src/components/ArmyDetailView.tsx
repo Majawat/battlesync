@@ -202,13 +202,27 @@ export const ArmyDetailView: React.FC = () => {
                     // Use resolved factions from metadata if available, otherwise fall back to faction field
                     const armyData = army.armyData as any;
                     const gameSystemName = armyData?.metadata?.gameSystemName || formatGameSystem(armyData?.gameSystem || '');
-                    
-                    // Fallback: check if faction looks like a description
-                    const faction = armyData.metadata.description;
+                    const resolvedFactions = armyData?.metadata?.resolvedFactions;
+                    const faction = resolvedFactions?.join(', ') || army.faction;
                     
                     return `${faction} • ${gameSystemName}`;
                   })()}
                 </p>
+                {/* Army Description */}
+                {(() => {
+                  const armyData = army.armyData as any;
+                  const description = armyData?.metadata?.description;
+                  if (description && description.trim()) {
+                    return (
+                      <div className="mt-3 p-3 bg-gray-800 rounded-lg border-l-4 border-blue-500">
+                        <p className="text-sm text-gray-300 italic">
+                          {description}
+                        </p>
+                      </div>
+                    );
+                  }
+                  return null;
+                })()}
               </div>
               <div className="flex space-x-4">
                 {army.armyForgeId && (

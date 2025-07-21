@@ -25,6 +25,17 @@ export interface ArmyForgeData {
     version: string;
     lastModified: string;
     createdBy: string;
+    description?: string;
+    resolvedFactions?: string[];
+    gameSystemName?: string;
+    // Additional ArmyForge metadata
+    modelCount?: number;
+    activationCount?: number;
+    pointsLimit?: number;
+    campaignMode?: boolean;
+    narrativeMode?: boolean;
+    isCloud?: boolean;
+    forceOrg?: any;
   };
 }
 
@@ -41,6 +52,9 @@ export interface ArmyForgeUnit {
   rules?: ArmyForgeRule[];
   specialRules?: string[];
   cost: number;
+  notes?: string | null;
+  traits?: string[];
+  bases?: string[];
   maxCount?: number;
   minCount?: number;
 }

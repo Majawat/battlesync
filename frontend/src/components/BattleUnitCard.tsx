@@ -262,6 +262,12 @@ export const BattleUnitCard: React.FC<BattleUnitCardProps> = ({
               </span>
             </div>
           </div>
+          {/* Unit Notes from ArmyForge */}
+          {unit.sourceUnit?.notes && (
+            <div className="text-xs text-blue-300 mt-1 italic">
+              {unit.sourceUnit.notes}
+            </div>
+          )}
           <div className="text-xs text-gray-400 mt-1">
             {unit.kills > 0 && ` • ${unit.kills} kills`}
             {unit.currentSize < unit.originalSize && (

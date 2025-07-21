@@ -13,6 +13,9 @@ export interface OPRBattleState {
   armies: OPRBattleArmy[];
   events: OPRBattleEvent[];
   gameSettings: OPRGameSettings;
+  
+  // Turn-based activation system
+  activationState: OPRActivationState;
 }
 
 export interface OPRGameSettings {
@@ -21,6 +24,28 @@ export interface OPRGameSettings {
   timeLimit?: number;
   allowUnderdog: boolean;
   customRules: string[];
+}
+
+// Turn-based activation system
+export interface OPRActivationState {
+  currentTurn: number; // Turn within current round (1, 2, 3...)
+  maxTurns: number; // Total turns in this round (based on unit count)
+  activatingPlayerId?: string; // Player who must activate next
+  activationOrder: OPRActivationSlot[]; // Pre-determined order for this round
+  unitsActivatedThisRound: string[]; // Unit IDs already activated
+  isAwaitingActivation: boolean; // Waiting for player to choose unit
+  canPassTurn: boolean; // Whether current player can pass their turn
+  passedPlayers: string[]; // Players who have passed this round
+  roundComplete: boolean; // All activations done for this round
+}
+
+export interface OPRActivationSlot {
+  playerId: string;
+  armyId: string;
+  turnNumber: number;
+  isPassed: boolean; // Player passed on this slot
+  activatedUnitId?: string; // Which unit was activated (if any)
+  timestamp?: Date; // When this activation occurred
 }
 
 export interface OPRBattleArmy {
