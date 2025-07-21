@@ -9,6 +9,7 @@ import { ArmyManagement } from './components/ArmyManagement';
 import { ArmyDetailView } from './components/ArmyDetailView';
 import { BattleRoute } from './components/BattleRoute';
 import { BackendConnectionWait } from './components/BackendConnectionWait';
+import { DiagnosticFooter } from './components/DiagnosticFooter';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isAuthenticated, isLoading } = useAuth();
@@ -92,6 +93,7 @@ const App: React.FC = () => {
     <BackendConnectionWait>
       <AuthProvider>
         <AppRoutes />
+        <DiagnosticFooter />
       </AuthProvider>
     </BackendConnectionWait>
   );
