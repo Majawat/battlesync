@@ -80,8 +80,8 @@ export const ArmyImportModal: React.FC<ArmyImportModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 overflow-y-auto">
-      <div className="bg-gray-800 rounded-lg p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto my-8">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-2 sm:p-4 z-50 overflow-y-auto">
+      <div className="bg-gray-800 rounded-lg p-4 sm:p-6 w-full max-w-sm sm:max-w-lg max-h-[95vh] sm:max-h-[90vh] overflow-y-auto my-2 sm:my-8">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-bold text-white">Import Army from ArmyForge</h2>
           <button
@@ -209,18 +209,18 @@ export const ArmyImportModal: React.FC<ArmyImportModalProps> = ({
             </ul>
           </div>
 
-          <div className="flex justify-end space-x-4">
+          <div className="flex flex-col sm:flex-row justify-end gap-3 sm:gap-4">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 border border-gray-600 text-gray-300 rounded hover:bg-gray-700"
+              className="w-full sm:w-auto px-4 py-2 border border-gray-600 text-gray-300 rounded hover:bg-gray-700 order-2 sm:order-1"
               disabled={loading}
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
+              className="w-full sm:w-auto px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50 order-1 sm:order-2"
               disabled={loading || !formData.armyForgeId.trim()}
             >
               {loading ? 'Importing...' : 'Import Army'}

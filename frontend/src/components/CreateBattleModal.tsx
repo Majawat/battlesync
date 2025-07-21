@@ -132,8 +132,8 @@ export const CreateBattleModal: React.FC<CreateBattleModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-gray-800 rounded-lg p-6 w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 sm:p-4">
+      <div className="bg-gray-800 rounded-lg p-4 sm:p-6 w-full max-w-sm sm:max-w-lg md:max-w-2xl mx-2 sm:mx-4 max-h-[95vh] sm:max-h-[90vh] overflow-y-auto">
         <h2 className="text-xl font-bold text-white mb-4">
           Create Battle for {mission.name || mission.title}
         </h2>
@@ -147,7 +147,7 @@ export const CreateBattleModal: React.FC<CreateBattleModalProps> = ({
         {/* Mission Info */}
         <div className="bg-gray-700 rounded p-4 mb-6">
           <h3 className="text-lg font-semibold text-white mb-2">Mission Details</h3>
-          <div className="grid grid-cols-2 gap-4 text-sm">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 text-sm">
             <div>
               <span className="text-gray-400">Mission:</span>
               <span className="text-white ml-2">#{mission.missionNumber || mission.number} {mission.name || mission.title}</span>
@@ -165,7 +165,7 @@ export const CreateBattleModal: React.FC<CreateBattleModalProps> = ({
         {/* Add Participant Section */}
         <div className="mb-6">
           <h3 className="text-lg font-semibold text-white mb-3">Add Armies to Battle</h3>
-          <div className="flex space-x-3 mb-4">
+          <div className="flex flex-col sm:flex-row gap-3 mb-4">
             <select
               value={selectedArmyId}
               onChange={(e) => setSelectedArmyId(e.target.value)}
@@ -182,7 +182,7 @@ export const CreateBattleModal: React.FC<CreateBattleModalProps> = ({
             <button
               onClick={addParticipant}
               disabled={!selectedArmyId}
-              className="bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white px-4 py-2 rounded"
+              className="w-full sm:w-auto bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white px-4 py-2 rounded"
             >
               Add Army
             </button>
@@ -228,17 +228,17 @@ export const CreateBattleModal: React.FC<CreateBattleModalProps> = ({
         )}
 
         {/* Actions */}
-        <div className="flex justify-end space-x-3">
+        <div className="flex flex-col sm:flex-row justify-end gap-3">
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded"
+            className="w-full sm:w-auto px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded order-2 sm:order-1"
           >
             Cancel
           </button>
           <button
             onClick={createBattle}
             disabled={loading || participants.length < 1}
-            className="px-4 py-2 bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white rounded"
+            className="w-full sm:w-auto px-4 py-2 bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white rounded order-1 sm:order-2"
           >
             {loading ? 'Creating...' : `Create Battle (${participants.length} ${participants.length === 1 ? 'army' : 'armies'})`}
           </button>

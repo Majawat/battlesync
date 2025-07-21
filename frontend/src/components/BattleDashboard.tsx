@@ -576,8 +576,9 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
               </div>
             </div>
             
-            <div className="flex items-center space-x-3">
-              {/* Phase Controls */}
+            {/* Mobile-responsive button layout */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3">
+              {/* Phase Controls - Always prioritized on mobile */}
               {canAdvancePhase(battleState.phase) && (
                 <button
                   onClick={() => {
@@ -585,7 +586,7 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
                     console.log('Current phase:', battleState.phase, 'Next phase:', nextPhase);
                     if (nextPhase) handlePhaseTransition(nextPhase);
                   }}
-                  className="flex items-center px-4 py-2 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 rounded-lg text-sm font-medium transition-all duration-200 shadow-lg"
+                  className="flex items-center justify-center w-full sm:w-auto px-4 py-2 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 rounded-lg text-sm font-medium transition-all duration-200 shadow-lg"
                 >
                   <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -594,58 +595,64 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
                 </button>
               )}
               
-              {/* UI Mode Toggles */}
-              <button
-                onClick={() => setUIState(prev => ({ ...prev, compactMode: !prev.compactMode }))}
-                className={`px-3 py-2 rounded-lg text-xs font-medium transition-colors duration-200 ${
-                  uiState.compactMode 
-                    ? 'bg-blue-600 text-white shadow-md' 
-                    : 'bg-gray-700/80 text-gray-300 hover:bg-gray-600'
-                }`}
-              >
-                Compact
-              </button>
+              {/* UI Mode Toggles - Row on mobile, inline on larger screens */}
+              <div className="flex items-center gap-2 w-full sm:w-auto">
+                <button
+                  onClick={() => setUIState(prev => ({ ...prev, compactMode: !prev.compactMode }))}
+                  className={`flex-1 sm:flex-initial px-3 py-2 rounded-lg text-xs font-medium transition-colors duration-200 ${
+                    uiState.compactMode 
+                      ? 'bg-blue-600 text-white shadow-md' 
+                      : 'bg-gray-700/80 text-gray-300 hover:bg-gray-600'
+                  }`}
+                >
+                  Compact
+                </button>
+                
+                <button
+                  onClick={() => setUIState(prev => ({ ...prev, damageMode: !prev.damageMode }))}
+                  className={`flex-1 sm:flex-initial px-3 py-2 rounded-lg text-xs font-medium transition-colors duration-200 ${
+                    uiState.damageMode 
+                      ? 'bg-red-600 text-white shadow-md' 
+                      : 'bg-gray-700/80 text-gray-300 hover:bg-gray-600'
+                  }`}
+                >
+                  Damage Mode
+                </button>
+              </div>
               
-              <button
-                onClick={() => setUIState(prev => ({ ...prev, damageMode: !prev.damageMode }))}
-                className={`px-3 py-2 rounded-lg text-xs font-medium transition-colors duration-200 ${
-                  uiState.damageMode 
-                    ? 'bg-red-600 text-white shadow-md' 
-                    : 'bg-gray-700/80 text-gray-300 hover:bg-gray-600'
-                }`}
-              >
-                Damage Mode
-              </button>
-              
-              <button
-                onClick={() => setShowActionHistory(true)}
-                className="flex items-center px-3 py-2 bg-yellow-600/80 hover:bg-yellow-600 rounded-lg text-xs font-medium transition-colors duration-200"
-              >
-                <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
-                </svg>
-                Undo
-              </button>
+              {/* Action Buttons - Row on mobile, inline on larger screens */}
+              <div className="flex items-center gap-2 w-full sm:w-auto">
+                <button
+                  onClick={() => setShowActionHistory(true)}
+                  className="flex-1 sm:flex-initial flex items-center justify-center px-3 py-2 bg-yellow-600/80 hover:bg-yellow-600 rounded-lg text-xs font-medium transition-colors duration-200"
+                >
+                  <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
+                  </svg>
+                  Undo
+                </button>
 
-              <button
-                onClick={() => setShowActivationPanel(true)}
-                className="flex items-center px-3 py-2 bg-purple-600/80 hover:bg-purple-600 rounded-lg text-xs font-medium transition-colors duration-200"
-              >
-                <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-                Activate
-              </button>
+                <button
+                  onClick={() => setShowActivationPanel(true)}
+                  className="flex-1 sm:flex-initial flex items-center justify-center px-3 py-2 bg-purple-600/80 hover:bg-purple-600 rounded-lg text-xs font-medium transition-colors duration-200"
+                >
+                  <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                  <span className="hidden sm:inline">Activate</span>
+                  <span className="sm:hidden">Act</span>
+                </button>
 
-              <button
-                onClick={() => setShowMoraleTestPanel(true)}
-                className="flex items-center px-3 py-2 bg-orange-600/80 hover:bg-orange-600 rounded-lg text-xs font-medium transition-colors duration-200"
-              >
-                <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                Tests
-              </button>
+                <button
+                  onClick={() => setShowMoraleTestPanel(true)}
+                  className="flex-1 sm:flex-initial flex items-center justify-center px-3 py-2 bg-orange-600/80 hover:bg-orange-600 rounded-lg text-xs font-medium transition-colors duration-200"
+                >
+                  <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  Tests
+                </button>
+              </div>
             </div>
           </div>
         </div>
