@@ -116,12 +116,12 @@ BattleSync is a self-hosted web application for managing One Page Rules (OPR) ta
 - Defense upgrade processing and weapon count accuracy
 - Complex upgrade scenarios and edge case handling
 
-### ✅ **Functional Trait System (v1.2.8)** - FULLY IMPLEMENTED
+### ✅ **Functional Trait System (v1.2.9)** - FULLY IMPLEMENTED
 - **Intelligent Trait Analysis**: Automatic detection of functional vs cosmetic traits from ArmyForge metadata
 - **Game Mechanics Integration**: Traits like "Agile", "Hardy", "Veteran" provide actual gameplay benefits
 - **Movement Calculation**: Traits affect movement distances (Fast/Swift +1", Slow -1", stackable with special rules)
 - **Visual Distinction**: Functional traits displayed with green highlighting and effect descriptions
-- **Comprehensive Coverage**: 10+ functional trait types with specific game effects
+- **Comprehensive Coverage**: 20+ functional trait types with specific game effects
 - **Hover Tooltips**: Cosmetic traits show descriptions on hover for lore context
 
 **Key Functional Traits:**
@@ -132,6 +132,16 @@ BattleSync is a self-hosted web application for managing One Page Rules (OPR) ta
 - **Stealth/Camo**: Enemy shooting -1 to hit beyond 12"
 - **Flying/Jump**: Ignores terrain, moves over units
 - **Fearless/Brave**: Immune to fear/terror, +1 morale
+- **Strider**: Ignores difficult terrain penalties
+- **Poison**: Ignores Regeneration, target re-rolls Defense 6s
+- **Rending**: Hit 6s get AP(4), ignores Regeneration
+- **Regeneration**: 5+ to ignore wounds
+- **Relentless**: Hit 6s deal extra hit on Hold actions
+- **Reliable**: Attacks hit on 2+ regardless of Quality
+- **Sniper**: Shoots at 2+, may target specific models
+- **Lock-On**: Ignores cover and negative modifiers
+- **Entrenched**: Enemies -2 to hit from 9"+ if unit hasn't moved
+- **Immobile**: May only use Hold actions
 
 **Key Files:**
 - `/frontend/src/components/BattleUnitCard.tsx` - Trait analysis and display system with functional mechanics

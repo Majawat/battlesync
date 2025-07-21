@@ -152,6 +152,76 @@ const analyzeTraits = (unit: OPRBattleUnit): TraitEffect[] => {
         functional: true,
         gameEffect: 'Immune to fear/terror, +1 to morale tests'
       };
+    } else if (lowerTrait.includes('strider')) {
+      return {
+        name: trait,
+        description: 'Unit ignores difficult terrain penalties',
+        functional: true,
+        gameEffect: 'May ignore effects of difficult terrain when moving'
+      };
+    } else if (lowerTrait.includes('poison')) {
+      return {
+        name: trait,
+        description: 'Weapon bypasses natural defenses',
+        functional: true,
+        gameEffect: 'Ignores Regeneration, target re-rolls Defense 6s'
+      };
+    } else if (lowerTrait.includes('rending')) {
+      return {
+        name: trait,
+        description: 'Weapon can pierce armor on lucky hits',
+        functional: true,
+        gameEffect: 'Unmodified hit 6s get AP(4), ignores Regeneration'
+      };
+    } else if (lowerTrait.includes('regeneration') || lowerTrait.includes('regen')) {
+      return {
+        name: trait,
+        description: 'Unit can shrug off wounds',
+        functional: true,
+        gameEffect: '5+ to ignore each wound taken'
+      };
+    } else if (lowerTrait.includes('relentless')) {
+      return {
+        name: trait,
+        description: 'Unit is more effective when stationary',
+        functional: true,
+        gameEffect: 'Hit 6s deal extra hit when using Hold action'
+      };
+    } else if (lowerTrait.includes('reliable')) {
+      return {
+        name: trait,
+        description: 'Weapon rarely misfires',
+        functional: true,
+        gameEffect: 'Attacks hit on 2+ regardless of unit Quality'
+      };
+    } else if (lowerTrait.includes('sniper')) {
+      return {
+        name: trait,
+        description: 'Weapon can target individuals precisely',
+        functional: true,
+        gameEffect: 'Shoots at 2+, may target specific models'
+      };
+    } else if (lowerTrait.includes('lock-on') || lowerTrait.includes('lock on')) {
+      return {
+        name: trait,
+        description: 'Advanced targeting systems',
+        functional: true,
+        gameEffect: 'Ignores cover and negative hit modifiers'
+      };
+    } else if (lowerTrait.includes('entrenched')) {
+      return {
+        name: trait,
+        description: 'Unit benefits from defensive positions',
+        functional: true,
+        gameEffect: 'Enemies get -2 to hit from 9"+ if unit hasn\'t moved'
+      };
+    } else if (lowerTrait.includes('immobile')) {
+      return {
+        name: trait,
+        description: 'Unit cannot move from its position',
+        functional: true,
+        gameEffect: 'May only use Hold actions'
+      };
     } else {
       // Non-functional trait (cosmetic/lore)
       return {
@@ -201,6 +271,12 @@ const calculateMovement = (unit: OPRBattleUnit) => {
   if (hasSpecialRule('aircraft')) {
     advanceDistance = 30;
     rushChargeDistance = 30;
+  }
+
+  // Immobile units cannot move
+  if (hasSpecialRule('immobile') || hasTraitEffect('immobile')) {
+    advanceDistance = 0;
+    rushChargeDistance = 0;
   }
 
   return { advanceDistance, rushChargeDistance };
