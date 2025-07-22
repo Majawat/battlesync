@@ -385,6 +385,7 @@ export interface UnderdogPointGain {
   description: string;
 }
 
+
 // Battle Statistics
 export interface BattleStatistics {
   totalDamageDealt: Record<string, number>; // By user ID

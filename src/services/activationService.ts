@@ -577,6 +577,7 @@ export class ActivationService {
     // 5. Reset shaken units that chose to Hold last turn
     this.processRallyingUnits(battleState);
 
+
     logger.info(`Round start events completed for round ${battleState.currentRound}`);
   }
 
@@ -589,16 +590,13 @@ export class ActivationService {
   ): Promise<void> {
     logger.info(`Processing round end events for completed round ${completedRound}`);
 
-    // 1. Check objective markers (OPR: objectives checked at end of round)
-    this.processObjectiveControl(battleState);
-
-    // 2. Process morale tests for units under half strength
+    // 1. Process morale tests for units under half strength
     this.processMoraleTests(battleState);
 
-    // 3. Update army kill counts and experience
+    // 2. Update army kill counts and experience
     this.updateArmyStatistics(battleState);
 
-    // 4. Check for victory conditions
+    // 3. Check for victory conditions
     this.checkVictoryConditions(battleState, completedRound);
 
     logger.info(`Round end events completed for round ${completedRound}`);
@@ -704,23 +702,28 @@ export class ActivationService {
     }
   }
 
-  /**
-   * Process objective control at end of round
-   */
-  private static processObjectiveControl(battleState: OPRBattleState): void {
-    // TODO: Implement objective marker control logic
-    // This would check which units are within 3" of markers
-    // and determine control based on OPR rules
-    logger.debug('Processing objective control (not yet implemented)');
-  }
 
   /**
-   * Process morale tests for units under half strength
+   * Check unit status at round end (informational only)
    */
   private static processMoraleTests(battleState: OPRBattleState): void {
-    // TODO: Implement automatic morale tests for units under half strength
-    // that haven't already been tested this round
-    logger.debug('Processing automatic morale tests (not yet implemented)');
+    // OPR Rule: Morale tests are triggered by specific events (damage, melee loss)
+    // NOT automatically at round end. This method only logs unit status for information.
+    for (const army of battleState.armies) {
+      for (const unit of army.units) {
+        // Skip already destroyed or routed units
+        if (unit.currentSize === 0 || unit.routed) {
+          continue;
+        }
+
+        // Check if unit is under half strength (informational)
+        const isUnderHalfStrength = unit.currentSize <= Math.floor(unit.originalSize / 2);
+        
+        if (isUnderHalfStrength && !unit.shaken) {
+          logger.info(`Unit ${unit.name} (${army.armyName}) is under half strength (${unit.currentSize}/${unit.originalSize}) - vulnerable to routing if morale test fails`);
+        }
+      }
+    }
   }
 
   /**
