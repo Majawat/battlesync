@@ -396,6 +396,76 @@ export class OPRBattleController {
   }
 
   /**
+   * Deploy unit to battlefield
+   * POST /api/opr/battles/:battleId/deployment/deploy-unit
+   */
+  static async deployUnit(req: Request, res: Response): Promise<void> {
+    try {
+      const userId = (req as AuthenticatedRequest).user!.id;
+      const { battleId } = req.params;
+      const { unitId } = req.body;
+
+      if (!unitId) {
+        res.status(400).json({
+          success: false,
+          error: 'Missing required field: unitId'
+        });
+        return;
+      }
+
+      const result = await OPRBattleService.deployUnit(battleId, userId, unitId);
+
+      if (!result.success) {
+        res.status(400).json(result);
+        return;
+      }
+
+      res.json(result);
+    } catch (error) {
+      logger.error('Deploy unit error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to deploy unit'
+      });
+    }
+  }
+
+  /**
+   * Set unit to ambush reserves
+   * POST /api/opr/battles/:battleId/deployment/ambush-unit
+   */
+  static async ambushUnit(req: Request, res: Response): Promise<void> {
+    try {
+      const userId = (req as AuthenticatedRequest).user!.id;
+      const { battleId } = req.params;
+      const { unitId } = req.body;
+
+      if (!unitId) {
+        res.status(400).json({
+          success: false,
+          error: 'Missing required field: unitId'
+        });
+        return;
+      }
+
+      const result = await OPRBattleService.ambushUnit(battleId, userId, unitId);
+
+      if (!result.success) {
+        res.status(400).json(result);
+        return;
+      }
+
+      res.json(result);
+    } catch (error) {
+      logger.error('Ambush unit error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to set unit to ambush'
+      });
+    }
+  }
+
+  /**
    * Apply damage to unit/model
    * POST /api/opr/battles/:battleId/damage
    */

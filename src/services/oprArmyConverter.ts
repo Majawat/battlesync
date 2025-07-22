@@ -190,6 +190,12 @@ export class OPRArmyConverter {
         actionsUsed: []
       },
       
+      // Initialize deployment state
+      deploymentState: {
+        status: 'PENDING',
+        deploymentMethod: 'STANDARD'
+      },
+      
       sourceUnit: armyUnit
     };
 

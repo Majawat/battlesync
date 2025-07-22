@@ -17,6 +17,7 @@ import {
 } from '../types/oprBattle';
 import { Army } from '../types/army';
 import { OPRArmyConverter } from './oprArmyConverter';
+import { DeploymentService } from './deploymentService';
 import { getWebSocketManager } from './websocket';
 import { NotificationService } from './notificationService';
 import { logger } from '../utils/logger';
@@ -1241,15 +1242,15 @@ export class OPRBattleService {
         rollOff.winner = rollResult.winner;
         rollOff.status = 'COMPLETED';
         
-        // Automatically transition to BATTLE_ROUNDS phase
-        battleState.phase = 'BATTLE_ROUNDS';
-        battleState.status = 'ACTIVE';
-        battleState.currentRound = 1;
+        // Initialize deployment state for unit placement
+        const winner = rollResult.winner || battleState.armies[0]?.userId || '';
+        battleState.activationState.deploymentState = DeploymentService.initializeDeploymentState(
+          battleState,
+          winner,
+          winner // Winner can choose to go first (for now, just use winner)
+        );
         
-        // Set first player based on roll-off winner choice
-        battleState.activationState.firstPlayerThisRound = rollResult.winner;
-        
-        logger.info(`Deployment roll-off completed for battle ${battleId}, winner: ${rollResult.winner}, transitioning to BATTLE_ROUNDS`);
+        logger.info(`Deployment roll-off completed for battle ${battleId}, winner: ${rollResult.winner}, beginning unit deployment`);
       } else {
         rollOff.status = 'ROLLING';
         if (rollResult.tiebreakStarted) {
@@ -1265,7 +1266,7 @@ export class OPRBattleService {
 
       // Notify all players
       const statusMessage = rollResult.completed ? 
-        `Deployment roll-off completed, winner: ${rollOff.winner}` : 
+        `Deployment roll-off completed, winner: ${rollOff.winner}. Begin unit deployment!` : 
         'Deployment roll submitted';
       await NotificationService.notifyBattleStateChange(battleId, statusMessage);
 
@@ -1505,5 +1506,154 @@ export class OPRBattleService {
       canRoll,
       tiedPlayers
     };
+  }
+
+  /**
+   * Deploy a unit to the battlefield
+   */
+  static async deployUnit(battleId: string, userId: string, unitId: string): Promise<{ success: boolean; error?: string }> {
+    try {
+      const battleState = await this.getOPRBattleState(battleId, userId);
+      if (!battleState) {
+        return { success: false, error: 'Battle not found' };
+      }
+
+      const result = DeploymentService.deployUnit(battleId, userId, unitId, battleState);
+      
+      if (result.success) {
+        // Save updated state
+        await prisma.battle.update({
+          where: { id: battleId },
+          data: { currentState: battleState as any }
+        });
+
+        // Notify all players
+        await NotificationService.notifyBattleStateChange(battleId, `Unit deployed by ${userId}`);
+        
+        // Check if deployment is complete and transition to battle
+        if (DeploymentService.checkDeploymentComplete(battleState)) {
+          await this.transitionToBattleRounds(battleId, battleState);
+        }
+      }
+
+      return result;
+    } catch (error) {
+      logger.error('Error deploying unit:', error);
+      return { success: false, error: 'Failed to deploy unit' };
+    }
+  }
+
+  /**
+   * Set a unit to ambush reserves
+   */
+  static async ambushUnit(battleId: string, userId: string, unitId: string): Promise<{ success: boolean; error?: string }> {
+    try {
+      const battleState = await this.getOPRBattleState(battleId, userId);
+      if (!battleState) {
+        return { success: false, error: 'Battle not found' };
+      }
+
+      const result = DeploymentService.setUnitToAmbush(battleId, userId, unitId, battleState);
+      
+      if (result.success) {
+        // Save updated state
+        await prisma.battle.update({
+          where: { id: battleId },
+          data: { currentState: battleState as any }
+        });
+
+        // Notify all players
+        await NotificationService.notifyBattleStateChange(battleId, `Unit set to ambush by ${userId}`);
+        
+        // Check if deployment is complete and transition to battle
+        if (DeploymentService.checkDeploymentComplete(battleState)) {
+          await this.transitionToBattleRounds(battleId, battleState);
+        }
+      }
+
+      return result;
+    } catch (error) {
+      logger.error('Error setting unit to ambush:', error);
+      return { success: false, error: 'Failed to set unit to ambush' };
+    }
+  }
+
+  /**
+   * Transition battle from deployment phase to battle rounds with proper turn initialization
+   */
+  static async transitionToBattleRounds(battleId: string, battleState: OPRBattleState): Promise<void> {
+    try {
+      logger.info(`Transitioning battle ${battleId} from deployment to battle rounds`);
+      
+      // Import ActivationService here to avoid circular dependency
+      const { ActivationService } = require('./activationService');
+      
+      // Change battle phase to BATTLE_ROUNDS
+      battleState.phase = 'BATTLE_ROUNDS';
+      battleState.status = 'ACTIVE';
+      battleState.currentRound = 1;
+
+      // Initialize turn order based on deployment roll-off winner
+      const rollOff = battleState.activationState.deploymentRollOff;
+      if (rollOff?.winner) {
+        battleState.activationState.firstPlayerThisRound = rollOff.winner;
+      }
+
+      // Generate activation order for first round
+      const newActivationState = ActivationService.generateActivationOrder(
+        battleState.armies,
+        1, // Round number
+        battleState.activationState
+      );
+
+      // Update activation state
+      battleState.activationState = {
+        ...battleState.activationState,
+        ...newActivationState,
+        isAwaitingActivation: true,
+        roundComplete: false
+      };
+
+      // Initialize unit activation states
+      for (const army of battleState.armies) {
+        for (const unit of army.units) {
+          // Only units that are deployed can activate (not reserves)
+          const canActivate = unit.deploymentState.status === 'DEPLOYED' && 
+                            !unit.routed && 
+                            !unit.models.every(m => m.isDestroyed);
+          
+          unit.activationState = {
+            canActivate,
+            hasActivated: false,
+            activatedInRound: 0,
+            activatedInTurn: 0,
+            isSelected: false,
+            actionPoints: 1,
+            actionsUsed: []
+          };
+        }
+      }
+
+      // Process round start events (caster tokens, CP refresh, etc.)
+      await ActivationService.processRoundStartEvents(battleState, battleId);
+
+      // Save the updated battle state
+      await prisma.battle.update({
+        where: { id: battleId },
+        data: { currentState: battleState as any }
+      });
+
+      // Notify all players that battle has begun
+      await NotificationService.notifyBattleStateChange(
+        battleId, 
+        `Battle Round 1 begins! ${battleState.activationState.activatingPlayerId}'s turn to activate`
+      );
+
+      logger.info(`Battle ${battleId} successfully transitioned to battle rounds with ${battleState.activationState.maxTurns} turns per round`);
+      
+    } catch (error) {
+      logger.error(`Error transitioning battle ${battleId} to battle rounds:`, error);
+      throw error;
+    }
   }
 }

@@ -45,6 +45,9 @@ export interface OPRActivationState {
   deploymentRollOff?: OPRDeploymentRollOff;
   firstPlayerThisRound?: string; // Player who goes first this round
   lastRoundFinishOrder: string[]; // Order players finished previous round (first = [0])
+  
+  // Deployment phase tracking
+  deploymentState?: OPRDeploymentState;
 }
 
 export interface OPRActivationSlot {
@@ -139,6 +142,9 @@ export interface OPRBattleUnit {
   // Combined unit tracking
   isCombined: boolean;
   combinedFrom?: string[]; // Original unit IDs if combined
+  
+  // Deployment state (not position - players handle tabletop positioning)
+  deploymentState: OPRUnitDeploymentState;
   
   // Original ArmyForge data reference
   sourceUnit: ArmyForgeUnit;
@@ -454,5 +460,75 @@ export interface ActivationResult {
   nextActivatingPlayer?: string;
   roundComplete?: boolean;
   error?: string;
+}
+
+// ===== DEPLOYMENT SYSTEM =====
+// BattleSync handles deployment STATUS only - not positioning
+// Physical model positions are managed by players on their tabletop
+
+// Unit deployment states during deployment phase
+export type OPRUnitDeploymentStatus = 
+  | 'PENDING'      // Not yet deployed
+  | 'DEPLOYED'     // Placed on battlefield
+  | 'RESERVES'     // In reserves (Ambush, Scout, etc.)
+  | 'EMBARKED';    // Inside a transport
+
+// Individual unit deployment tracking
+export interface OPRUnitDeploymentState {
+  status: OPRUnitDeploymentStatus;
+  deployedInTurn?: number; // Which deployment turn this unit was placed
+  deploymentMethod: 'STANDARD' | 'AMBUSH' | 'SCOUT' | 'TRANSPORT';
+  
+  // For reserve deployments
+  canDeployThisRound?: boolean; // Ambush units can't deploy round 1
+  originalDeploymentZone?: 'PLAYER1' | 'PLAYER2'; // For Scout repositioning
+  
+  // For transport deployments  
+  transportId?: string; // Unit ID of transport if embarked
+  deployedFromTransport?: boolean; // If unit was deployed from inside transport
+}
+
+// Overall deployment phase state
+export interface OPRDeploymentState {
+  phase: 'ROLL_OFF' | 'DEPLOYMENT' | 'RESERVES' | 'COMPLETED';
+  currentDeployingPlayer?: string; // Who must deploy next unit
+  deploymentTurn: number; // Current turn in alternating deployment (1, 2, 3...)
+  
+  // Deployment order (set by roll-off winner)
+  firstDeployingPlayer?: string;
+  deploymentOrder: string[]; // Alternating player order
+  
+  // Units pending deployment
+  unitsToDeploy: Record<string, string[]>; // playerId -> unitId[]
+  unitsDeployed: Record<string, string[]>; // playerId -> unitId[]
+  
+  // Reserve unit tracking
+  ambushUnits: string[]; // Units with Ambush rule
+  scoutUnits: string[]; // Units with Scout rule
+  
+  // Deployment validation
+  allUnitsDeployed: boolean;
+  readyForBattle: boolean;
+}
+
+// Deployment zone definitions (conceptual - not enforced)
+export interface DeploymentZone {
+  name: string;
+  description: string; // e.g., "Within 12" of your table edge"
+  playerId: string;
+}
+
+// Special deployment rules
+export interface SpecialDeploymentRule {
+  rule: 'AMBUSH' | 'SCOUT' | 'TRANSPORT';
+  description: string;
+  restrictions?: string;
+}
+
+// Rules that grant deployment abilities
+export interface DeploymentRuleGranter {
+  ruleName: string; // e.g., "Hidden Route"
+  grants: 'AMBUSH' | 'SCOUT'; // What deployment ability it grants
+  description: string;
 }
 

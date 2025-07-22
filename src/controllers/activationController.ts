@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { ActivationService } from '../services/activationService';
 import { AuthenticatedRequest } from '../middleware/auth';
 import { logger } from '../utils/logger';
-import { getWebSocketManager } from '../services/websocket';
+import { NotificationService } from '../services/notificationService';
 
 export class ActivationController {
 
@@ -18,15 +18,11 @@ export class ActivationController {
       const result = await ActivationService.startNewRound(battleId, userId);
 
       if (result.success) {
-        // Broadcast round start to all battle participants
-        const wsManager = getWebSocketManager();
-        if (wsManager && 'broadcast' in wsManager) {
-          (wsManager as any).broadcastToBattleRoom?.(battleId, 'round_started', {
-            roundNumber: result.newActivationState.currentTurn,
-            activationOrder: result.newActivationState.activationOrder,
-            nextActivatingPlayer: result.nextActivatingPlayer
-          });
-        }
+        // Notify all battle participants
+        await NotificationService.notifyBattleStateChange(
+          battleId, 
+          `Round ${result.newActivationState.currentTurn} started! ${result.nextActivatingPlayer}'s turn to activate`
+        );
 
         res.json({
           success: true,
@@ -78,18 +74,11 @@ export class ActivationController {
       });
 
       if (result.success) {
-        // Broadcast activation to all battle participants
-        const wsManager = getWebSocketManager();
-        if (wsManager && 'broadcast' in wsManager) {
-          (wsManager as any).broadcastToBattleRoom?.(battleId, 'unit_activated', {
-            unitId,
-            activatedBy: userId,
-            unitName: result.unitActivated?.name,
-            nextActivatingPlayer: result.nextActivatingPlayer,
-            roundComplete: result.roundComplete,
-            activationState: result.newActivationState
-          });
-        }
+        // Notify all battle participants
+        await NotificationService.notifyBattleStateChange(
+          battleId, 
+          `Unit "${result.unitActivated?.name}" activated. ${result.nextActivatingPlayer ? `${result.nextActivatingPlayer}'s turn to activate` : 'Round complete!'}`
+        );
 
         res.json({
           success: true,
@@ -134,17 +123,11 @@ export class ActivationController {
       });
 
       if (result.success) {
-        // Broadcast pass to all battle participants
-        const wsManager = getWebSocketManager();
-        if (wsManager && 'broadcast' in wsManager) {
-          (wsManager as any).broadcastToBattleRoom?.(battleId, 'activation_passed', {
-            passedBy: userId,
-            reason,
-            nextActivatingPlayer: result.nextActivatingPlayer,
-            roundComplete: result.roundComplete,
-            activationState: result.newActivationState
-          });
-        }
+        // Notify all battle participants
+        await NotificationService.notifyBattleStateChange(
+          battleId, 
+          `Player ${userId} passed activation${reason ? ` (${reason})` : ''}. ${result.nextActivatingPlayer ? `${result.nextActivatingPlayer}'s turn to activate` : 'Round complete!'}`
+        );
 
         res.json({
           success: true,

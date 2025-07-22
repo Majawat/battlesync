@@ -42,6 +42,9 @@ export interface OPRActivationState {
   deploymentRollOff?: OPRDeploymentRollOff;
   firstPlayerThisRound?: string; // Player who goes first this round
   lastRoundFinishOrder: string[]; // Order players finished previous round (first = [0])
+  
+  // Deployment phase tracking
+  deploymentState?: OPRDeploymentState;
 }
 
 // OPR Deployment Roll-off System
@@ -103,11 +106,17 @@ export interface OPRBattleUnit {
   // Weapon summary for unit
   weaponSummary: OPRWeaponSummary[];
   
+  // Unit special rules (base rules + upgrades/traits)
+  specialRules: string[];
+  
   joinedHero?: OPRBattleModel;
   
   // Combined unit tracking
   isCombined: boolean;
   combinedFrom?: string[];
+  
+  // Deployment state (not position - players handle tabletop positioning)
+  deploymentState: OPRUnitDeploymentState;
   
   // Source data
   sourceUnit: any; // ArmyForge unit data
@@ -336,5 +345,39 @@ export interface SpellEffect {
   value?: number;
   duration: 'instant' | 'next-action' | 'end-of-round' | 'permanent';
   description: string;
+}
+
+// ===== DEPLOYMENT SYSTEM =====
+// BattleSync handles deployment STATUS only - not positioning
+// Physical model positions are managed by players on their tabletop
+
+export type OPRUnitDeploymentStatus = 
+  | 'PENDING'      // Not yet deployed
+  | 'DEPLOYED'     // Placed on battlefield
+  | 'RESERVES'     // In reserves (Ambush, Scout, etc.)
+  | 'EMBARKED';    // Inside a transport
+
+export interface OPRUnitDeploymentState {
+  status: OPRUnitDeploymentStatus;
+  deployedInTurn?: number;
+  deploymentMethod: 'STANDARD' | 'AMBUSH' | 'SCOUT' | 'TRANSPORT';
+  canDeployThisRound?: boolean;
+  originalDeploymentZone?: 'PLAYER1' | 'PLAYER2';
+  transportId?: string;
+  deployedFromTransport?: boolean;
+}
+
+export interface OPRDeploymentState {
+  phase: 'ROLL_OFF' | 'DEPLOYMENT' | 'RESERVES' | 'COMPLETED';
+  currentDeployingPlayer?: string;
+  deploymentTurn: number;
+  firstDeployingPlayer?: string;
+  deploymentOrder: string[];
+  unitsToDeploy: Record<string, string[]>;
+  unitsDeployed: Record<string, string[]>;
+  ambushUnits: string[];
+  scoutUnits: string[];
+  allUnitsDeployed: boolean;
+  readyForBattle: boolean;
 }
 

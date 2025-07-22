@@ -330,16 +330,19 @@ export class ActivationService {
   /**
    * Generate activation order for a round using OPR turn order rules
    */
-  private static generateActivationOrder(
+  static generateActivationOrder(
     armies: OPRBattleArmy[], 
     round: number, 
     existingActivationState?: OPRActivationState
   ): OPRActivationState {
-    // Count units per army (excluding routed units)
+    // Count units per army (excluding routed units and those in reserves)
     const armyUnitCounts = armies.map(army => ({
       userId: army.userId,
       armyId: army.armyId,
-      unitCount: army.units.filter(unit => !unit.routed).length
+      unitCount: army.units.filter(unit => 
+        !unit.routed && 
+        unit.deploymentState?.status === 'DEPLOYED'
+      ).length
     }));
 
     // Calculate total activations needed
@@ -408,7 +411,10 @@ export class ActivationService {
       // OPR turn order tracking
       deploymentRollOff: existingActivationState?.deploymentRollOff,
       firstPlayerThisRound: firstPlayerId,
-      lastRoundFinishOrder: existingActivationState?.lastRoundFinishOrder || []
+      lastRoundFinishOrder: existingActivationState?.lastRoundFinishOrder || [],
+      
+      // Deployment phase tracking
+      deploymentState: existingActivationState?.deploymentState
     };
   }
 
@@ -470,6 +476,11 @@ export class ActivationService {
     // Check if unit has already activated this round
     if (unit.activationState.hasActivated && unit.activationState.activatedInRound === battleState.currentRound) {
       return { valid: false, error: 'Unit has already activated this round' };
+    }
+
+    // Check if unit is deployed (not in reserves)
+    if (unit.deploymentState?.status !== 'DEPLOYED') {
+      return { valid: false, error: 'Cannot activate units in reserves' };
     }
 
     return { valid: true };
@@ -573,11 +584,13 @@ export class ActivationService {
         return { units: [], canActivate: false };
       }
 
-      // Filter available units
+      // Filter available units (must be deployed, not routed, have models, and not already activated this round)
       const availableUnits = army.units.filter(unit => 
         !unit.routed && 
         unit.currentSize > 0 && 
-        (!unit.activationState.hasActivated || unit.activationState.activatedInRound !== battleState.currentRound)
+        unit.deploymentState?.status === 'DEPLOYED' &&
+        unit.activationState?.canActivate !== false &&
+        (!unit.activationState?.hasActivated || unit.activationState.activatedInRound !== battleState.currentRound)
       );
 
       return { units: availableUnits, canActivate: true };
@@ -634,7 +647,7 @@ export class ActivationService {
   /**
    * Process events that happen at the start of each round
    */
-  private static async processRoundStartEvents(
+  static async processRoundStartEvents(
     battleState: OPRBattleState, 
     battleId: string
   ): Promise<void> {

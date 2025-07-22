@@ -10,6 +10,7 @@ import { MeleeAttackModal } from './MeleeAttackModal';
 import { ActivationPanel } from './ActivationPanel';
 import { MoraleTestPanel } from './MoraleTestPanel';
 import { DeploymentRollOffModal } from './DeploymentRollOffModal';
+import { DeploymentModal } from './DeploymentModal';
 import { 
   OPRBattleState, 
   OPRBattlePhase,
@@ -61,6 +62,7 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
   } | null>(null);
   const [showDeploymentRollOff, setShowDeploymentRollOff] = useState(false);
   const [deploymentRollOffState, setDeploymentRollOffState] = useState<OPRDeploymentRollOff | null>(null);
+  const [showDeploymentModal, setShowDeploymentModal] = useState(false);
 
   // Stable callback for setting cooperative contribution handler
   const handleCooperativeContributionRequest = useCallback((handler: (request: any) => void) => {
@@ -86,14 +88,27 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
       if (data.success && data.data) {
         setBattleState(data.data);
         
-        // Check if we're in deployment phase and need to show the roll-off modal
-        if (data.data.phase === 'DEPLOYMENT' && data.data.activationState?.deploymentRollOff) {
-          const rollOff = data.data.activationState.deploymentRollOff;
-          if (rollOff.status === 'ROLLING' || rollOff.status === 'PENDING') {
+        // Check if we're in deployment phase and need to show modals
+        if (data.data.phase === 'DEPLOYMENT') {
+          const rollOff = data.data.activationState?.deploymentRollOff;
+          const deploymentState = data.data.activationState?.deploymentState;
+          
+          if (rollOff && (rollOff.status === 'ROLLING' || rollOff.status === 'PENDING')) {
+            // Show roll-off modal
             console.log('Auto-showing deployment roll-off modal on page load');
             setShowDeploymentRollOff(true);
             setDeploymentRollOffState(rollOff);
+            setShowDeploymentModal(false);
+          } else if (deploymentState && deploymentState.phase === 'DEPLOYMENT') {
+            // Show unit deployment modal
+            console.log('Auto-showing deployment modal for unit placement');
+            setShowDeploymentRollOff(false);
+            setShowDeploymentModal(true);
           }
+        } else if (data.data.phase === 'BATTLE_ROUNDS') {
+          // Close deployment modals when battle starts
+          setShowDeploymentRollOff(false);
+          setShowDeploymentModal(false);
         }
       } else {
         throw new Error(data.error || 'Invalid battle state response');
@@ -240,10 +255,11 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
             const rollOffUpdate = message.data.deploymentRollOff || message.data;
             setDeploymentRollOffState(rollOffUpdate);
             
-            // If roll-off completed, close modal and refresh battle state
+            // If roll-off completed, close modal and show deployment modal
             if (rollOffUpdate.status === 'COMPLETED') {
               setTimeout(() => {
                 setShowDeploymentRollOff(false);
+                setShowDeploymentModal(true);
                 fetchBattleState();
               }, 3000); // Show completion for 3 seconds, then close
             }
@@ -430,12 +446,72 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
   };
 
   const handleDeploymentRollOffClose = async () => {
-    // If roll-off is completed, the backend already transitioned to BATTLE_ROUNDS
-    // Just close the modal and refresh battle state
+    // If roll-off is completed, show deployment modal
+    // Otherwise just close the modal and refresh battle state
     setShowDeploymentRollOff(false);
     if (deploymentRollOffState?.status === 'COMPLETED') {
+      setShowDeploymentModal(true);
       await fetchBattleState();
     }
+  };
+
+  // Deployment action handlers
+  const handleDeployUnit = async (unitId: string) => {
+    try {
+      const response = await fetch(`/api/opr/battles/${battleId}/deployment/deploy-unit`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        },
+        body: JSON.stringify({ unitId })
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        await fetchBattleState();
+      } else {
+        setError(data.error || 'Failed to deploy unit');
+      }
+    } catch (err) {
+      setError(`Failed to deploy unit: ${err instanceof Error ? err.message : 'Unknown error'}`);
+    }
+  };
+
+  const handleAmbushUnit = async (unitId: string) => {
+    try {
+      const response = await fetch(`/api/opr/battles/${battleId}/deployment/ambush-unit`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        },
+        body: JSON.stringify({ unitId })
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        await fetchBattleState();
+      } else {
+        setError(data.error || 'Failed to set unit to ambush');
+      }
+    } catch (err) {
+      setError(`Failed to set unit to ambush: ${err instanceof Error ? err.message : 'Unknown error'}`);
+    }
+  };
+
+  const handleScoutUnit = async (_unitId: string) => {
+    // TODO: Implement scout deployment
+    setError('Scout deployment not yet implemented');
+  };
+
+  const handleEmbarkUnit = async (_unitId: string, _transportId: string) => {
+    // TODO: Implement transport embarkation
+    setError('Transport embarkation not yet implemented');
+  };
+
+  const handleDeploymentModalClose = () => {
+    setShowDeploymentModal(false);
   };
 
   // Quick damage application
@@ -1045,6 +1121,20 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
         rollOffState={deploymentRollOffState || undefined}
         onRollSubmitted={handleRollSubmission}
       />
+
+      {/* Deployment Modal */}
+      {battleState && (
+        <DeploymentModal
+          isVisible={showDeploymentModal}
+          onClose={handleDeploymentModalClose}
+          battleState={battleState}
+          currentUserId={user?.id || ''}
+          onDeployUnit={handleDeployUnit}
+          onAmbushUnit={handleAmbushUnit}
+          onScoutUnit={handleScoutUnit}
+          onEmbarkUnit={handleEmbarkUnit}
+        />
+      )}
 
     </div>
   );

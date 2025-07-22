@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 
 BattleSync is a self-hosted web application for managing One Page Rules (OPR) tabletop gaming campaigns with real-time battle tracking. 
 
-**Current State**: Production-ready multi-user application (v1.2.8) - Complete battle system with functional trait mechanics, turn/round management, ArmyForge metadata integration, and enhanced unit displays  
+**Current State**: Production-ready multi-user application (v1.3.4) - Complete battle system with deployment phase management, functional trait mechanics, turn/round management, ArmyForge metadata integration, and enhanced unit displays  
 **Target State**: Enhanced battle features with advanced OPR conversion and analytics
 
 ## Recent Major Completions
@@ -116,6 +116,43 @@ BattleSync is a self-hosted web application for managing One Page Rules (OPR) ta
 - Defense upgrade processing and weapon count accuracy
 - Complex upgrade scenarios and edge case handling
 
+### ✅ **Complete Deployment System (v1.3.3-v1.3.4)** - FULLY IMPLEMENTED
+- **OPR-Compliant Deployment Phase**: Roll-off → Unit Placement → Battle Start transition system
+- **Alternating Unit Placement**: Players take turns deploying units within 12" of table edge
+- **Ambush Reserve System**: Units with Ambush-granting rules (Hidden Route, etc.) can be placed in reserves
+- **Deployment Modal Interface**: Mobile-responsive unit deployment interface with action buttons
+- **Turn Order Inheritance**: Deployment roll-off winner determines first player in battle rounds
+- **Status-Only Tracking**: Tracks deployment status without coordinate enforcement (player agency maintained)
+
+**Supported Special Rules:**
+- **Ambush/Hidden Route/Surprise Attack**: Units deploy in reserves until round 2+
+- **Dynamic Rule Detection**: Intelligent detection of rules that grant deployment abilities
+- **Reserve Validation**: Units in reserves cannot activate until deployed on battlefield
+
+**Key Files:**
+- `/src/services/deploymentService.ts` - Core deployment logic with rule detection
+- `/frontend/src/components/DeploymentModal.tsx` - Complete unit deployment interface
+- `/src/services/oprBattleService.ts` - Battle phase transition management
+
+### ✅ **Enhanced Turn System (v1.3.4)** - FULLY IMPLEMENTED  
+- **Proper Phase Transitions**: Seamless flow from deployment completion to battle rounds
+- **Activation Order Generation**: Correct alternating turn pattern based on deployment roll-off
+- **Unit Activation Validation**: Comprehensive validation preventing activation of reserve/routed units
+- **Real-time Notifications**: Clear turn progression notifications via WebSocket system
+- **Round Start Events**: Automatic caster token refresh and command point management
+- **Reserve Unit Exclusion**: Only deployed units count toward activation slots
+
+**Technical Improvements:**
+- Fixed deployment to battle transition with proper turn initialization
+- Enhanced activation validation to prevent reserve unit activation
+- Improved notification system replacing problematic WebSocket broadcasts
+- Consistent API integration between frontend ActivationPanel and backend services
+
+**Key Files:**
+- `/src/services/activationService.ts` - Complete turn and activation management
+- `/frontend/src/components/ActivationPanel.tsx` - Turn-based activation interface
+- `/src/controllers/activationController.ts` - API endpoints with proper notifications
+
 ### ✅ **Functional Trait System (v1.2.9)** - FULLY IMPLEMENTED
 - **Intelligent Trait Analysis**: Automatic detection of functional vs cosmetic traits from ArmyForge metadata
 - **Game Mechanics Integration**: Traits like "Agile", "Hardy", "Veteran" provide actual gameplay benefits
@@ -150,6 +187,23 @@ BattleSync is a self-hosted web application for managing One Page Rules (OPR) ta
 - `npm run typecheck` - Backend TypeScript checking without build
 - `npm run frontend:typecheck` - Frontend TypeScript checking without build  
 - These complement existing build commands for faster development iteration
+
+## Core Design Philosophy
+
+### Positioning and Spatial Awareness
+**IMPORTANT**: BattleSync is a battle tracker, NOT a virtual tabletop. The system intentionally does NOT track unit positions, coordinates, or battlefield layout.
+
+- **Players Handle Positioning**: All unit placement, movement, line-of-sight, and range measurements are handled by players on their physical tabletop
+- **No Coordinate System**: Units have no x/y coordinates or battlefield positions in the database
+- **Deployment Status Only**: The deployment system tracks deployment STATUS (deployed/reserves/embarked) but not WHERE units are placed
+- **Range Display Only**: Weapon ranges are displayed for reference but not enforced
+- **Player Agency**: This design maintains player control over the physical game while BattleSync handles bookkeeping
+
+When implementing deployment features:
+- Track which units are deployed vs in reserves
+- Handle special deployment rules (Ambush, Scout, Transport)
+- Provide deployment zone DESCRIPTIONS ("within 12\" of your table edge")
+- Never implement coordinate systems or positioning validation
 
 ## Development Practices
 - While coding, update our version numbers to accurately describe what we are doing and where the app is

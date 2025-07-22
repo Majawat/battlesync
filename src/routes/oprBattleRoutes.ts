@@ -178,6 +178,32 @@ router.get(
 );
 
 /**
+ * Deploy unit to battlefield
+ * POST /api/opr/battles/:battleId/deployment/deploy-unit
+ */
+router.post(
+  '/:battleId/deployment/deploy-unit',
+  authenticate,
+  validateSchema(Joi.object({
+    unitId: Joi.string().required()
+  })),
+  OPRBattleController.deployUnit
+);
+
+/**
+ * Set unit to ambush reserves
+ * POST /api/opr/battles/:battleId/deployment/ambush-unit
+ */
+router.post(
+  '/:battleId/deployment/ambush-unit',
+  authenticate,
+  validateSchema(Joi.object({
+    unitId: Joi.string().required()
+  })),
+  OPRBattleController.ambushUnit
+);
+
+/**
  * Apply damage to unit/model
  * POST /api/opr/battles/:battleId/damage
  */
