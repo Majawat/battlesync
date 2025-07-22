@@ -1228,26 +1228,24 @@ export class OPRBattleService {
         return { success: false, error: 'You are not a participant in this battle' };
       }
 
-      // Check if player already rolled
-      if (rollOff.rolls[userId]) {
-        return { success: false, error: 'You have already submitted your roll' };
+      // Check if player should be rolling in current round
+      const canRoll = this.canPlayerRollInCurrentRound(rollOff, userId, battleState.armies);
+      if (!canRoll.allowed) {
+        return { success: false, error: canRoll.reason };
       }
 
-      // Submit the roll
-      rollOff.rolls[userId] = roll;
-      rollOff.status = 'ROLLING';
-
-      // Check if all players have rolled
-      const allPlayerIds = battleState.armies.map(army => army.userId);
-      const hasAllRolls = allPlayerIds.every(playerId => rollOff.rolls[playerId] !== undefined);
-
-      if (hasAllRolls) {
-        // Determine winner
-        const winner = this.determineRollOffWinner(rollOff.rolls, allPlayerIds);
-        rollOff.winner = winner;
+      // Handle roll submission and tie-breaking logic
+      const rollResult = this.processRollSubmission(rollOff, userId, roll, battleState.armies);
+      
+      if (rollResult.completed) {
+        rollOff.winner = rollResult.winner;
         rollOff.status = 'COMPLETED';
-        
-        logger.info(`Deployment roll-off completed for battle ${battleId}, winner: ${winner}`);
+        logger.info(`Deployment roll-off completed for battle ${battleId}, winner: ${rollResult.winner}`);
+      } else {
+        rollOff.status = 'ROLLING';
+        if (rollResult.tiebreakStarted) {
+          logger.info(`Tie detected, starting tie-breaker round ${rollResult.tiebreakRound} between: ${rollResult.tiedPlayers?.join(', ')}`);
+        }
       }
 
       // Save updated state
@@ -1257,7 +1255,7 @@ export class OPRBattleService {
       });
 
       // Notify all players
-      const statusMessage = hasAllRolls ? 
+      const statusMessage = rollResult.completed ? 
         `Deployment roll-off completed, winner: ${rollOff.winner}` : 
         'Deployment roll submitted';
       await NotificationService.notifyBattleStateChange(battleId, statusMessage);
@@ -1266,7 +1264,7 @@ export class OPRBattleService {
         success: true, 
         data: { 
           deploymentRollOff: rollOff,
-          allRollsComplete: hasAllRolls
+          allRollsComplete: rollResult.completed
         } 
       };
 
@@ -1291,14 +1289,24 @@ export class OPRBattleService {
         return { success: false, error: 'No deployment roll-off started' };
       }
 
+      // Determine current round info
+      const currentRoundInfo = this.getCurrentRoundInfo(rollOff, userId);
+      
       // Don't reveal other players' rolls until all are submitted
       const sanitizedRollOff = {
         status: rollOff.status,
-        hasSubmittedRoll: rollOff.rolls[userId] !== undefined,
         winner: rollOff.winner,
         timestamp: rollOff.timestamp,
-        // Only show rolls if completed or this is the player's own roll
-        rolls: rollOff.status === 'COMPLETED' ? rollOff.rolls : { [userId]: rollOff.rolls[userId] }
+        currentRound: currentRoundInfo.roundType,
+        tiebreakRound: currentRoundInfo.tiebreakRound,
+        canPlayerRoll: currentRoundInfo.canRoll,
+        tiedPlayers: currentRoundInfo.tiedPlayers,
+        // Only show rolls if completed
+        rolls: rollOff.status === 'COMPLETED' ? rollOff.rolls : undefined,
+        tiebreakRolls: rollOff.status === 'COMPLETED' ? rollOff.tiebreakRolls : undefined,
+        // Show player's own rolls
+        playerRoll: rollOff.rolls[userId],
+        playerTiebreakRolls: rollOff.tiebreakRolls?.map(round => round[userId]).filter(r => r !== undefined)
       };
 
       return { 
@@ -1313,21 +1321,180 @@ export class OPRBattleService {
   }
 
   /**
-   * Determine winner of deployment roll-off (handles ties with highest roll wins)
+   * Process roll submission and handle tie-breaking logic
    */
-  private static determineRollOffWinner(rolls: Record<string, number>, playerIds: string[]): string {
+  private static processRollSubmission(
+    rollOff: any, 
+    userId: string, 
+    roll: number, 
+    armies: any[]
+  ): {
+    completed: boolean;
+    winner?: string;
+    tiebreakStarted?: boolean;
+    tiebreakRound?: number;
+    tiedPlayers?: string[];
+  } {
+    const allPlayerIds = armies.map(army => army.userId);
+    
+    // Determine which round we're in
+    if (!rollOff.tiebreakRolls || rollOff.tiebreakRolls.length === 0) {
+      // Initial round
+      rollOff.rolls[userId] = roll;
+      
+      // Check if all players have rolled
+      const hasAllRolls = allPlayerIds.every(playerId => rollOff.rolls[playerId] !== undefined);
+      if (!hasAllRolls) {
+        return { completed: false };
+      }
+      
+      // All have rolled, check for ties
+      const tieResult = this.analyzeRolls(rollOff.rolls);
+      if (tieResult.tiedPlayers.length <= 1) {
+        // No tie, we have a winner
+        return { completed: true, winner: tieResult.tiedPlayers[0] };
+      }
+      
+      // Tie detected, start tie-breaker
+      rollOff.tiebreakRolls = [{}];
+      return {
+        completed: false,
+        tiebreakStarted: true,
+        tiebreakRound: 1,
+        tiedPlayers: tieResult.tiedPlayers
+      };
+    } else {
+      // Tie-breaker round
+      const currentRound = rollOff.tiebreakRolls.length - 1;
+      rollOff.tiebreakRolls[currentRound][userId] = roll;
+      
+      // Get players who are still tied (from previous round)
+      const previousTiedPlayers = this.getTiedPlayersFromPreviousRound(rollOff);
+      
+      // Check if all tied players have rolled in this tie-breaker round
+      const hasAllTiebreakRolls = previousTiedPlayers.every(
+        playerId => rollOff.tiebreakRolls[currentRound][playerId] !== undefined
+      );
+      
+      if (!hasAllTiebreakRolls) {
+        return { completed: false };
+      }
+      
+      // All tied players have rolled, analyze results
+      const tieResult = this.analyzeRolls(rollOff.tiebreakRolls[currentRound]);
+      if (tieResult.tiedPlayers.length <= 1) {
+        // Tie-breaker resolved
+        return { completed: true, winner: tieResult.tiedPlayers[0] };
+      }
+      
+      // Still tied, start another tie-breaker round
+      rollOff.tiebreakRolls.push({});
+      return {
+        completed: false,
+        tiebreakStarted: true,
+        tiebreakRound: rollOff.tiebreakRolls.length,
+        tiedPlayers: tieResult.tiedPlayers
+      };
+    }
+  }
+
+  /**
+   * Analyze rolls to find highest rollers (handles ties)
+   */
+  private static analyzeRolls(rolls: Record<string, number>): { tiedPlayers: string[] } {
     const rollEntries = Object.entries(rolls);
+    
+    if (rollEntries.length === 0) {
+      return { tiedPlayers: [] };
+    }
     
     // Find highest roll
     const maxRoll = Math.max(...rollEntries.map(([_, roll]) => roll));
-    const winners = rollEntries.filter(([_, roll]) => roll === maxRoll);
+    const highestRollers = rollEntries
+      .filter(([_, roll]) => roll === maxRoll)
+      .map(([playerId, _]) => playerId);
     
-    if (winners.length === 1) {
-      return winners[0][0];
+    return { tiedPlayers: highestRollers };
+  }
+
+  /**
+   * Get players who were tied in the previous round
+   */
+  private static getTiedPlayersFromPreviousRound(rollOff: any): string[] {
+    if (!rollOff.tiebreakRolls || rollOff.tiebreakRolls.length === 0) {
+      // First round, analyze initial rolls
+      return this.analyzeRolls(rollOff.rolls).tiedPlayers;
     }
     
-    // In case of tie, return first winner (could be enhanced with tie-breaker rolls)
-    logger.info(`Deployment roll-off tie between: ${winners.map(w => w[0]).join(', ')}, selecting first`);
-    return winners[0][0];
+    // Get the previous tie-breaker round
+    const prevRoundIndex = rollOff.tiebreakRolls.length - 2;
+    if (prevRoundIndex < 0) {
+      // First tie-breaker round, get from initial rolls
+      return this.analyzeRolls(rollOff.rolls).tiedPlayers;
+    }
+    
+    return this.analyzeRolls(rollOff.tiebreakRolls[prevRoundIndex]).tiedPlayers;
+  }
+
+  /**
+   * Check if player can roll in the current round
+   */
+  private static canPlayerRollInCurrentRound(
+    rollOff: any, 
+    userId: string, 
+    armies: any[]
+  ): { allowed: boolean; reason?: string } {
+    // Initial round - all players can roll
+    if (!rollOff.tiebreakRolls || rollOff.tiebreakRolls.length === 0) {
+      if (rollOff.rolls[userId] !== undefined) {
+        return { allowed: false, reason: 'You have already submitted your roll' };
+      }
+      return { allowed: true };
+    }
+    
+    // Tie-breaker round - only tied players can roll
+    const currentRound = rollOff.tiebreakRolls.length - 1;
+    const tiedPlayers = this.getTiedPlayersFromPreviousRound(rollOff);
+    
+    if (!tiedPlayers.includes(userId)) {
+      return { allowed: false, reason: 'Only tied players can roll in tie-breaker rounds' };
+    }
+    
+    if (rollOff.tiebreakRolls[currentRound][userId] !== undefined) {
+      return { allowed: false, reason: 'You have already submitted your tie-breaker roll' };
+    }
+    
+    return { allowed: true };
+  }
+
+  /**
+   * Get current round information for status display
+   */
+  private static getCurrentRoundInfo(rollOff: any, userId: string): {
+    roundType: 'initial' | 'tiebreak';
+    tiebreakRound?: number;
+    canRoll: boolean;
+    tiedPlayers?: string[];
+  } {
+    if (!rollOff.tiebreakRolls || rollOff.tiebreakRolls.length === 0) {
+      // Initial round
+      return {
+        roundType: 'initial',
+        canRoll: rollOff.rolls[userId] === undefined
+      };
+    }
+    
+    // Tie-breaker round
+    const currentRound = rollOff.tiebreakRolls.length - 1;
+    const tiedPlayers = this.getTiedPlayersFromPreviousRound(rollOff);
+    const canRoll = tiedPlayers.includes(userId) && 
+                   rollOff.tiebreakRolls[currentRound][userId] === undefined;
+    
+    return {
+      roundType: 'tiebreak',
+      tiebreakRound: rollOff.tiebreakRolls.length,
+      canRoll,
+      tiedPlayers
+    };
   }
 }
