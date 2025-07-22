@@ -18,6 +18,7 @@ import {
 import { Army } from '../types/army';
 import { OPRArmyConverter } from './oprArmyConverter';
 import { getWebSocketManager } from './websocket';
+import { NotificationService } from './notificationService';
 import { logger } from '../utils/logger';
 import { ValidationUtils } from '../utils/validation';
 
@@ -287,7 +288,8 @@ export class OPRBattleService {
           isAwaitingActivation: false,
           canPassTurn: false,
           passedPlayers: [],
-          roundComplete: true // Setup phase, no activation needed
+          roundComplete: true, // Setup phase, no activation needed
+          lastRoundFinishOrder: []
         }
       };
 
@@ -1149,5 +1151,183 @@ export class OPRBattleService {
       logger.error('Error completing OPR battle:', error);
       throw error;
     }
+  }
+
+  /**
+   * Start deployment roll-off for turn order determination
+   */
+  static async startDeploymentRollOff(battleId: string, userId: string): Promise<{ success: boolean; error?: string; data?: any }> {
+    try {
+      const battleState = await this.getOPRBattleState(battleId, userId);
+      if (!battleState) {
+        return { success: false, error: 'Battle not found' };
+      }
+
+      // Must be in deployment phase
+      if (battleState.phase !== 'DEPLOYMENT') {
+        return { success: false, error: 'Can only start roll-off during deployment phase' };
+      }
+
+      // Check if roll-off already exists
+      if (battleState.activationState.deploymentRollOff) {
+        return { success: false, error: 'Deployment roll-off already started' };
+      }
+
+      // Initialize deployment roll-off
+      const deploymentRollOff = {
+        status: 'PENDING' as const,
+        rolls: {},
+        timestamp: new Date()
+      };
+
+      battleState.activationState.deploymentRollOff = deploymentRollOff;
+
+      // Save updated state
+      await prisma.battle.update({
+        where: { id: battleId },
+        data: { currentState: battleState as any }
+      });
+
+      // Notify all players
+      await NotificationService.notifyBattleStateChange(battleId, 'deployment roll-off started');
+
+      logger.info(`Deployment roll-off started for battle ${battleId}`);
+      return { 
+        success: true, 
+        data: { deploymentRollOff } 
+      };
+
+    } catch (error) {
+      logger.error('Error starting deployment roll-off:', error);
+      return { success: false, error: 'Failed to start deployment roll-off' };
+    }
+  }
+
+  /**
+   * Submit a player's dice roll for deployment
+   */
+  static async submitDeploymentRoll(battleId: string, userId: string, roll: number): Promise<{ success: boolean; error?: string; data?: any }> {
+    try {
+      const battleState = await this.getOPRBattleState(battleId, userId);
+      if (!battleState) {
+        return { success: false, error: 'Battle not found' };
+      }
+
+      const rollOff = battleState.activationState.deploymentRollOff;
+      if (!rollOff) {
+        return { success: false, error: 'No deployment roll-off in progress' };
+      }
+
+      if (rollOff.status !== 'PENDING') {
+        return { success: false, error: 'Deployment roll-off is not accepting rolls' };
+      }
+
+      // Check if player is in this battle
+      const playerArmy = battleState.armies.find(army => army.userId === userId);
+      if (!playerArmy) {
+        return { success: false, error: 'You are not a participant in this battle' };
+      }
+
+      // Check if player already rolled
+      if (rollOff.rolls[userId]) {
+        return { success: false, error: 'You have already submitted your roll' };
+      }
+
+      // Submit the roll
+      rollOff.rolls[userId] = roll;
+      rollOff.status = 'ROLLING';
+
+      // Check if all players have rolled
+      const allPlayerIds = battleState.armies.map(army => army.userId);
+      const hasAllRolls = allPlayerIds.every(playerId => rollOff.rolls[playerId] !== undefined);
+
+      if (hasAllRolls) {
+        // Determine winner
+        const winner = this.determineRollOffWinner(rollOff.rolls, allPlayerIds);
+        rollOff.winner = winner;
+        rollOff.status = 'COMPLETED';
+        
+        logger.info(`Deployment roll-off completed for battle ${battleId}, winner: ${winner}`);
+      }
+
+      // Save updated state
+      await prisma.battle.update({
+        where: { id: battleId },
+        data: { currentState: battleState as any }
+      });
+
+      // Notify all players
+      const statusMessage = hasAllRolls ? 
+        `Deployment roll-off completed, winner: ${rollOff.winner}` : 
+        'Deployment roll submitted';
+      await NotificationService.notifyBattleStateChange(battleId, statusMessage);
+
+      return { 
+        success: true, 
+        data: { 
+          deploymentRollOff: rollOff,
+          allRollsComplete: hasAllRolls
+        } 
+      };
+
+    } catch (error) {
+      logger.error('Error submitting deployment roll:', error);
+      return { success: false, error: 'Failed to submit deployment roll' };
+    }
+  }
+
+  /**
+   * Get current deployment roll-off status
+   */
+  static async getDeploymentRollOffStatus(battleId: string, userId: string): Promise<{ success: boolean; error?: string; data?: any }> {
+    try {
+      const battleState = await this.getOPRBattleState(battleId, userId);
+      if (!battleState) {
+        return { success: false, error: 'Battle not found' };
+      }
+
+      const rollOff = battleState.activationState.deploymentRollOff;
+      if (!rollOff) {
+        return { success: false, error: 'No deployment roll-off started' };
+      }
+
+      // Don't reveal other players' rolls until all are submitted
+      const sanitizedRollOff = {
+        status: rollOff.status,
+        hasSubmittedRoll: rollOff.rolls[userId] !== undefined,
+        winner: rollOff.winner,
+        timestamp: rollOff.timestamp,
+        // Only show rolls if completed or this is the player's own roll
+        rolls: rollOff.status === 'COMPLETED' ? rollOff.rolls : { [userId]: rollOff.rolls[userId] }
+      };
+
+      return { 
+        success: true, 
+        data: { deploymentRollOff: sanitizedRollOff } 
+      };
+
+    } catch (error) {
+      logger.error('Error getting deployment roll-off status:', error);
+      return { success: false, error: 'Failed to get deployment status' };
+    }
+  }
+
+  /**
+   * Determine winner of deployment roll-off (handles ties with highest roll wins)
+   */
+  private static determineRollOffWinner(rolls: Record<string, number>, playerIds: string[]): string {
+    const rollEntries = Object.entries(rolls);
+    
+    // Find highest roll
+    const maxRoll = Math.max(...rollEntries.map(([_, roll]) => roll));
+    const winners = rollEntries.filter(([_, roll]) => roll === maxRoll);
+    
+    if (winners.length === 1) {
+      return winners[0][0];
+    }
+    
+    // In case of tie, return first winner (could be enhanced with tie-breaker rolls)
+    logger.info(`Deployment roll-off tie between: ${winners.map(w => w[0]).join(', ')}, selecting first`);
+    return winners[0][0];
   }
 }

@@ -40,6 +40,11 @@ export interface OPRActivationState {
   canPassTurn: boolean; // Whether current player can pass their turn
   passedPlayers: string[]; // Players who have passed this round
   roundComplete: boolean; // All activations done for this round
+  
+  // OPR turn order tracking
+  deploymentRollOff?: OPRDeploymentRollOff;
+  firstPlayerThisRound?: string; // Player who goes first this round
+  lastRoundFinishOrder: string[]; // Order players finished previous round (first = [0])
 }
 
 export interface OPRActivationSlot {
@@ -49,6 +54,15 @@ export interface OPRActivationSlot {
   isPassed: boolean; // Player passed on this slot
   activatedUnitId?: string; // Which unit was activated (if any)
   timestamp?: Date; // When this activation occurred
+}
+
+// OPR Deployment Roll-off System
+export interface OPRDeploymentRollOff {
+  status: 'PENDING' | 'ROLLING' | 'COMPLETED';
+  rolls: Record<string, number>; // playerId -> dice roll (1-6)
+  winner?: string; // Player who won the roll-off
+  timestamp?: Date;
+  tiebreakRolls?: Record<string, number>[]; // Array of tie-breaking rolls if needed
 }
 
 // Individual unit activation tracking

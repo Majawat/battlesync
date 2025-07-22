@@ -46,8 +46,12 @@ export class ActivationService {
         await this.processRoundEndEvents(battleState, beforeState.currentRound);
       }
 
-      // Generate new activation order for this round
-      const newActivationState = this.generateActivationOrder(battleState.armies, battleState.currentRound);
+      // Generate new activation order for this round (pass existing state for OPR turn order)
+      const newActivationState = this.generateActivationOrder(
+        battleState.armies, 
+        battleState.currentRound,
+        battleState.activationState
+      );
 
       // Reset all unit activation states for the new round
       for (const army of battleState.armies) {
@@ -324,9 +328,13 @@ export class ActivationService {
   }
 
   /**
-   * Generate activation order for a round using alternating activation
+   * Generate activation order for a round using OPR turn order rules
    */
-  private static generateActivationOrder(armies: OPRBattleArmy[], round: number): OPRActivationState {
+  private static generateActivationOrder(
+    armies: OPRBattleArmy[], 
+    round: number, 
+    existingActivationState?: OPRActivationState
+  ): OPRActivationState {
     // Count units per army (excluding routed units)
     const armyUnitCounts = armies.map(army => ({
       userId: army.userId,
@@ -336,15 +344,45 @@ export class ActivationService {
 
     // Calculate total activations needed
     const maxUnits = Math.max(...armyUnitCounts.map(a => a.unitCount));
-    const totalActivations = armyUnitCounts.reduce((sum, a) => sum + a.unitCount, 0);
+    
+    // Determine first player based on OPR rules
+    let firstPlayerId: string;
+    
+    if (round === 1) {
+      // First round: Use deployment roll-off winner
+      if (existingActivationState?.deploymentRollOff?.winner) {
+        firstPlayerId = existingActivationState.deploymentRollOff.winner;
+      } else {
+        // Fallback to first army if no deployment roll-off
+        firstPlayerId = armies[0]?.userId || '';
+        logger.warn('No deployment roll-off winner found for first round, using first army');
+      }
+    } else {
+      // Subsequent rounds: Player who finished activating first in previous round
+      if (existingActivationState?.lastRoundFinishOrder && existingActivationState.lastRoundFinishOrder.length > 0) {
+        firstPlayerId = existingActivationState.lastRoundFinishOrder[0];
+      } else {
+        // Fallback to previous round's first player
+        firstPlayerId = existingActivationState?.firstPlayerThisRound || armies[0]?.userId || '';
+        logger.warn('No finish order from previous round, using fallback');
+      }
+    }
 
-    // Generate alternating activation order
+    // Create ordered list starting with first player
+    const orderedArmies = [...armyUnitCounts];
+    const firstPlayerIndex = orderedArmies.findIndex(army => army.userId === firstPlayerId);
+    if (firstPlayerIndex > 0) {
+      // Move first player to front, maintain relative order of others
+      const firstPlayerArmy = orderedArmies.splice(firstPlayerIndex, 1)[0];
+      orderedArmies.unshift(firstPlayerArmy);
+    }
+
+    // Generate alternating activation order starting with determined first player
     const activationOrder: OPRActivationSlot[] = [];
     let turnNumber = 1;
 
-    // Simple alternating system - can be enhanced with initiative rolls later
     for (let turn = 1; turn <= maxUnits; turn++) {
-      for (const armyData of armyUnitCounts) {
+      for (const armyData of orderedArmies) {
         if (turn <= armyData.unitCount) {
           activationOrder.push({
             playerId: armyData.userId,
@@ -365,7 +403,12 @@ export class ActivationService {
       isAwaitingActivation: true,
       canPassTurn: true,
       passedPlayers: [],
-      roundComplete: false
+      roundComplete: false,
+      
+      // OPR turn order tracking
+      deploymentRollOff: existingActivationState?.deploymentRollOff,
+      firstPlayerThisRound: firstPlayerId,
+      lastRoundFinishOrder: existingActivationState?.lastRoundFinishOrder || []
     };
   }
 
@@ -444,6 +487,9 @@ export class ActivationService {
 
     // Check if this was the last turn
     if (currentTurn >= maxTurns) {
+      // Round is complete - finalize finish order tracking for OPR turn order
+      this.finalizeRoundFinishOrder(battleState);
+      
       battleState.activationState.roundComplete = true;
       battleState.activationState.isAwaitingActivation = false;
       battleState.activationState.activatingPlayerId = undefined;
@@ -461,10 +507,42 @@ export class ActivationService {
     }
 
     // Fallback - round complete
+    this.finalizeRoundFinishOrder(battleState);
     battleState.activationState.roundComplete = true;
     battleState.activationState.isAwaitingActivation = false;
     battleState.activationState.activatingPlayerId = undefined;
     return { roundComplete: true };
+  }
+
+  /**
+   * Track finish order for OPR turn order in subsequent rounds
+   */
+  private static finalizeRoundFinishOrder(battleState: OPRBattleState): void {
+    // Determine the order in which players finished activating all their units
+    const playerFinishOrder: string[] = [];
+    const playersWithUnits = new Set(battleState.armies.map(army => army.userId));
+    
+    // Go through activation order to find when each player finished their last activation
+    const activatedSlots = battleState.activationState.activationOrder
+      .filter(slot => slot.activatedUnitId || slot.isPassed)
+      .sort((a, b) => a.turnNumber - b.turnNumber);
+    
+    const playerLastActivation = new Map<string, number>();
+    
+    // Find each player's last activation turn
+    for (const slot of activatedSlots) {
+      playerLastActivation.set(slot.playerId, slot.turnNumber);
+    }
+    
+    // Sort players by when they finished (earliest finish = first in order)
+    const sortedFinishOrder = Array.from(playerLastActivation.entries())
+      .sort((a, b) => a[1] - b[1])  // Sort by turn number (ascending)
+      .map(entry => entry[0]);      // Extract player IDs
+    
+    // Store finish order for next round's turn order determination
+    battleState.activationState.lastRoundFinishOrder = sortedFinishOrder;
+    
+    logger.info(`Round ${battleState.currentRound} finish order: ${sortedFinishOrder.join(', ')}`);
   }
 
   /**

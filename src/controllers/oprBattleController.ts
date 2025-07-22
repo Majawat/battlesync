@@ -309,6 +309,93 @@ export class OPRBattleController {
   }
 
   /**
+   * Start deployment roll-off
+   * POST /api/opr/battles/:battleId/deployment/start-rolloff
+   */
+  static async startDeploymentRollOff(req: Request, res: Response): Promise<void> {
+    try {
+      const userId = (req as AuthenticatedRequest).user!.id;
+      const { battleId } = req.params;
+
+      const result = await OPRBattleService.startDeploymentRollOff(battleId, userId);
+
+      if (!result.success) {
+        res.status(400).json(result);
+        return;
+      }
+
+      res.json(result);
+    } catch (error) {
+      logger.error('Start deployment roll-off error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to start deployment roll-off'
+      });
+    }
+  }
+
+  /**
+   * Submit deployment dice roll
+   * POST /api/opr/battles/:battleId/deployment/roll
+   */
+  static async submitDeploymentRoll(req: Request, res: Response): Promise<void> {
+    try {
+      const userId = (req as AuthenticatedRequest).user!.id;
+      const { battleId } = req.params;
+      const { roll } = req.body;
+
+      if (!roll || roll < 1 || roll > 6) {
+        res.status(400).json({
+          success: false,
+          error: 'Roll must be a number between 1 and 6'
+        });
+        return;
+      }
+
+      const result = await OPRBattleService.submitDeploymentRoll(battleId, userId, parseInt(roll));
+
+      if (!result.success) {
+        res.status(400).json(result);
+        return;
+      }
+
+      res.json(result);
+    } catch (error) {
+      logger.error('Submit deployment roll error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to submit deployment roll'
+      });
+    }
+  }
+
+  /**
+   * Get deployment roll-off status
+   * GET /api/opr/battles/:battleId/deployment/status
+   */
+  static async getDeploymentRollOffStatus(req: Request, res: Response): Promise<void> {
+    try {
+      const userId = (req as AuthenticatedRequest).user!.id;
+      const { battleId } = req.params;
+
+      const result = await OPRBattleService.getDeploymentRollOffStatus(battleId, userId);
+
+      if (!result.success) {
+        res.status(400).json(result);
+        return;
+      }
+
+      res.json(result);
+    } catch (error) {
+      logger.error('Get deployment status error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to get deployment status'
+      });
+    }
+  }
+
+  /**
    * Apply damage to unit/model
    * POST /api/opr/battles/:battleId/damage
    */

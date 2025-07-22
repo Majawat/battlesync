@@ -148,6 +148,36 @@ router.post(
 );
 
 /**
+ * Start deployment roll-off
+ * POST /api/opr/battles/:battleId/deployment/start-rolloff
+ */
+router.post(
+  '/:battleId/deployment/start-rolloff',
+  authenticate,
+  OPRBattleController.startDeploymentRollOff
+);
+
+/**
+ * Submit deployment dice roll
+ * POST /api/opr/battles/:battleId/deployment/roll
+ */
+router.post(
+  '/:battleId/deployment/roll',
+  authenticate,
+  OPRBattleController.submitDeploymentRoll
+);
+
+/**
+ * Get deployment roll-off status
+ * GET /api/opr/battles/:battleId/deployment/status
+ */
+router.get(
+  '/:battleId/deployment/status',
+  authenticate,
+  OPRBattleController.getDeploymentRollOffStatus
+);
+
+/**
  * Apply damage to unit/model
  * POST /api/opr/battles/:battleId/damage
  */
