@@ -1175,7 +1175,7 @@ export class OPRBattleService {
 
       // Initialize deployment roll-off
       const deploymentRollOff = {
-        status: 'PENDING' as const,
+        status: 'ROLLING' as const,
         rolls: {},
         timestamp: new Date()
       };
@@ -1218,7 +1218,7 @@ export class OPRBattleService {
         return { success: false, error: 'No deployment roll-off in progress' };
       }
 
-      if (rollOff.status !== 'PENDING') {
+      if (rollOff.status !== 'ROLLING' && rollOff.status !== 'PENDING') {
         return { success: false, error: 'Deployment roll-off is not accepting rolls' };
       }
 
@@ -1240,7 +1240,16 @@ export class OPRBattleService {
       if (rollResult.completed) {
         rollOff.winner = rollResult.winner;
         rollOff.status = 'COMPLETED';
-        logger.info(`Deployment roll-off completed for battle ${battleId}, winner: ${rollResult.winner}`);
+        
+        // Automatically transition to BATTLE_ROUNDS phase
+        battleState.phase = 'BATTLE_ROUNDS';
+        battleState.status = 'ACTIVE';
+        battleState.currentRound = 1;
+        
+        // Set first player based on roll-off winner choice
+        battleState.activationState.firstPlayerThisRound = rollResult.winner;
+        
+        logger.info(`Deployment roll-off completed for battle ${battleId}, winner: ${rollResult.winner}, transitioning to BATTLE_ROUNDS`);
       } else {
         rollOff.status = 'ROLLING';
         if (rollResult.tiebreakStarted) {

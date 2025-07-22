@@ -37,6 +37,20 @@ export interface OPRActivationState {
   canPassTurn: boolean; // Whether current player can pass their turn
   passedPlayers: string[]; // Players who have passed this round
   roundComplete: boolean; // All activations done for this round
+  
+  // OPR turn order tracking
+  deploymentRollOff?: OPRDeploymentRollOff;
+  firstPlayerThisRound?: string; // Player who goes first this round
+  lastRoundFinishOrder: string[]; // Order players finished previous round (first = [0])
+}
+
+// OPR Deployment Roll-off System
+export interface OPRDeploymentRollOff {
+  status: 'PENDING' | 'ROLLING' | 'COMPLETED';
+  rolls: Record<string, number>; // playerId -> dice roll (1-6)
+  winner?: string; // Player who won the roll-off
+  timestamp?: Date;
+  tiebreakRolls?: Record<string, number>[]; // Array of tie-breaking rolls if needed
 }
 
 export interface OPRActivationSlot {
@@ -258,7 +272,7 @@ export interface TouchDamageProps {
 
 // WebSocket message types
 export interface BattleWebSocketMessage {
-  type: 'welcome' | 'auth' | 'join_room' | 'error' | 'round_advanced' | 'battle_created' | 'phase_changed' | 'damage_applied' | 'hero_joined' | 'battle_completed' | 'unit_action' | 'spell_cast' | 'cooperative_casting_request' | 'cooperative_casting_response' | 'cooperative_contribution_request' | 'cooperative_contributions_complete' | 'spell_cast_complete' | 'morale_test_result' | 'quality_test_result';
+  type: 'welcome' | 'auth' | 'join_room' | 'error' | 'round_advanced' | 'battle_created' | 'phase_changed' | 'damage_applied' | 'hero_joined' | 'battle_completed' | 'unit_action' | 'spell_cast' | 'cooperative_casting_request' | 'cooperative_casting_response' | 'cooperative_contribution_request' | 'cooperative_contributions_complete' | 'spell_cast_complete' | 'morale_test_result' | 'quality_test_result' | 'deployment_roll_off_updated';
   data: any;
   error?: string;
   timestamp: string;

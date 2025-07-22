@@ -260,13 +260,11 @@ export class ActivationController {
    */
   static async endCurrentRound(req: Request, res: Response): Promise<void> {
     try {
-      const userId = (req as AuthenticatedRequest).user!.id;
-      const { battleId } = req.params;
+      // const userId = (req as AuthenticatedRequest).user!.id;
+      // const { battleId } = req.params;
 
       // For now, this is a simple admin function
       // In production, you'd want proper authorization checks
-
-      const status = await ActivationService.getActivationStatus(battleId, userId);
       
       // Mark round as complete (this is a simple implementation)
       // In a full implementation, you'd update the battle state properly

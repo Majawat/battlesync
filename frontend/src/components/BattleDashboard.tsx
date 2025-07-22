@@ -9,13 +9,15 @@ import { UnitActionModal } from './UnitActionModal';
 import { MeleeAttackModal } from './MeleeAttackModal';
 import { ActivationPanel } from './ActivationPanel';
 import { MoraleTestPanel } from './MoraleTestPanel';
+import { DeploymentRollOffModal } from './DeploymentRollOffModal';
 import { 
   OPRBattleState, 
   OPRBattlePhase,
   BattleUIState,
   DamageResult,
   BattleWebSocketMessage,
-  OPRBattleUnit
+  OPRBattleUnit,
+  OPRDeploymentRollOff
 } from '../types/oprBattle';
 
 interface BattleDashboardProps {
@@ -57,6 +59,8 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
     isVisible: boolean;
     attackerUnit: OPRBattleUnit;
   } | null>(null);
+  const [showDeploymentRollOff, setShowDeploymentRollOff] = useState(false);
+  const [deploymentRollOffState, setDeploymentRollOffState] = useState<OPRDeploymentRollOff | null>(null);
 
   // Stable callback for setting cooperative contribution handler
   const handleCooperativeContributionRequest = useCallback((handler: (request: any) => void) => {
@@ -81,6 +85,16 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
       console.log('Battle state response:', data); // Debug log
       if (data.success && data.data) {
         setBattleState(data.data);
+        
+        // Check if we're in deployment phase and need to show the roll-off modal
+        if (data.data.phase === 'DEPLOYMENT' && data.data.activationState?.deploymentRollOff) {
+          const rollOff = data.data.activationState.deploymentRollOff;
+          if (rollOff.status === 'ROLLING' || rollOff.status === 'PENDING') {
+            console.log('Auto-showing deployment roll-off modal on page load');
+            setShowDeploymentRollOff(true);
+            setDeploymentRollOffState(rollOff);
+          }
+        }
       } else {
         throw new Error(data.error || 'Invalid battle state response');
       }
@@ -220,6 +234,20 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
             console.log('Quality test result:', message.data);
             fetchBattleState();
             break;
+          case 'deployment_roll_off_updated':
+            // Handle deployment roll-off updates
+            console.log('Deployment roll-off updated:', message.data);
+            const rollOffUpdate = message.data.deploymentRollOff || message.data;
+            setDeploymentRollOffState(rollOffUpdate);
+            
+            // If roll-off completed, close modal and refresh battle state
+            if (rollOffUpdate.status === 'COMPLETED') {
+              setTimeout(() => {
+                setShowDeploymentRollOff(false);
+                fetchBattleState();
+              }, 3000); // Show completion for 3 seconds, then close
+            }
+            break;
           default:
             console.log('Unhandled WebSocket message type:', message.type);
         }
@@ -252,6 +280,35 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
   const handlePhaseTransition = async (newPhase: OPRBattlePhase) => {
     try {
       console.log('Attempting phase transition to:', newPhase);
+      
+      // Special handling for DEPLOYMENT phase
+      if (newPhase === 'DEPLOYMENT') {
+        // First transition to DEPLOYMENT phase, then start roll-off
+        const response = await fetch(`/api/opr/battles/${battleId}/phase`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+          },
+          body: JSON.stringify({ phase: newPhase })
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || 'Failed to transition phase');
+        }
+
+        // Update local state immediately
+        setBattleState(prev => prev ? {
+          ...prev,
+          phase: 'DEPLOYMENT'
+        } : null);
+
+        // Now start the roll-off
+        await startDeploymentRollOff();
+        return;
+      }
+      
       const response = await fetch(`/api/opr/battles/${battleId}/phase`, {
         method: 'POST',
         headers: {
@@ -281,6 +338,103 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
     } catch (err) {
       console.error('Phase transition error:', err);
       setError(err instanceof Error ? err.message : 'Failed to transition phase');
+    }
+  };
+
+  // Deployment roll-off handlers
+  const startDeploymentRollOff = async () => {
+    try {
+      const response = await fetch(`/api/opr/battles/${battleId}/deployment/start-rolloff`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        }
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to start deployment roll-off');
+      }
+
+      // Transition to deployment phase and show modal
+      setBattleState(prev => prev ? {
+        ...prev,
+        phase: 'DEPLOYMENT'
+      } : null);
+      
+      setShowDeploymentRollOff(true);
+      
+      // Fetch initial roll-off state
+      await fetchDeploymentRollOffStatus();
+      
+    } catch (err) {
+      console.error('Failed to start deployment roll-off:', err);
+      setError(`Failed to start deployment roll-off: ${err instanceof Error ? err.message : 'Unknown error'}`);
+    }
+  };
+
+  const fetchDeploymentRollOffStatus = async () => {
+    try {
+      console.log('Fetching deployment roll-off status for battle:', battleId);
+      const response = await fetch(`/api/opr/battles/${battleId}/deployment/status`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        }
+      });
+
+      console.log('Deployment roll-off status response:', response.status);
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch deployment roll-off status');
+      }
+
+      const data = await response.json();
+      console.log('Deployment roll-off status data:', data);
+      if (data.success && data.data) {
+        console.log('Setting deployment roll-off state:', data.data);
+        // Extract the deploymentRollOff from the nested structure
+        const rollOffData = data.data.deploymentRollOff || data.data;
+        setDeploymentRollOffState(rollOffData);
+      } else {
+        console.log('No deployment roll-off data or unsuccessful response');
+      }
+    } catch (err) {
+      console.error('Failed to fetch deployment roll-off status:', err);
+    }
+  };
+
+  const handleRollSubmission = async (roll: number) => {
+    try {
+      const response = await fetch(`/api/opr/battles/${battleId}/deployment/roll`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        },
+        body: JSON.stringify({ roll })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to submit roll');
+      }
+
+      // Refresh roll-off status
+      await fetchDeploymentRollOffStatus();
+      
+    } catch (err) {
+      console.error('Failed to submit roll:', err);
+      setError(`Failed to submit roll: ${err instanceof Error ? err.message : 'Unknown error'}`);
+    }
+  };
+
+  const handleDeploymentRollOffClose = async () => {
+    // If roll-off is completed, the backend already transitioned to BATTLE_ROUNDS
+    // Just close the modal and refresh battle state
+    setShowDeploymentRollOff(false);
+    if (deploymentRollOffState?.status === 'COMPLETED') {
+      await fetchBattleState();
     }
   };
 
@@ -877,6 +1031,20 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
           }}
         />
       )}
+
+      {/* Deployment Roll-Off Modal */}
+      <DeploymentRollOffModal
+        isVisible={showDeploymentRollOff}
+        onClose={handleDeploymentRollOffClose}
+        currentUserId={user?.id || ''}
+        players={battleState ? battleState.armies.map(army => ({
+          userId: army.userId,
+          name: army.userId, // TODO: Get actual player names
+          armyName: army.armyName
+        })) : []}
+        rollOffState={deploymentRollOffState || undefined}
+        onRollSubmitted={handleRollSubmission}
+      />
 
     </div>
   );
