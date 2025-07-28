@@ -324,9 +324,9 @@ Players activate units in predetermined turn order:
 
 ### **Unit Experience Defaults**
 - **Survival**: +1XP if not casualty
-- **Kill Unit**: +1XP for destroying enemy unit
-- **Kill Hero**: +2XP for destroying enemy hero
-- **Kill Hero+Joined**: +3XP for destroying hero with joined unit
+- **Regular Unit Kill**: +1XP for destroying enemy unit
+- **Lone Hero Kill**: +1XP for destroying enemy hero
+- **Joined Unit Kill**: +2XP for destroying hero with joined unit
 
 ### **Special Objectives** (Default 1D6 Table)
 | Roll | Objective |
