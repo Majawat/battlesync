@@ -286,23 +286,66 @@ Players activate units in predetermined turn order:
 
 ## Development Priorities
 
-### **High Priority** (Core Battle Flow)
+### **High Priority** (Core Battle Flow & Critical Issues)
 1. **Complete Transport Embarkation**: Finish deployment embarkation system
 2. **Ambush Round 2+ Deployment**: Allow Ambush units to deploy at start of rounds
 3. **Rush/Charge Actions**: Implement remaining unit actions with movement modifiers
 4. **Turn Order Updates**: Fix activation order based on round completion timing
+5. **Deployment Validation**: Add validation before battle start
+6. **Battle UI Polish**: Fix scroll behavior, add loading states for operations
 
-### **Medium Priority** (Enhanced Features)
-5. **Game Setup Phase**: Add terrain/objective acknowledgment and doctrine selection
-6. **Spell Casting Integration**: Ensure spells work before unit actions in activation
-7. **Charge-Back Mechanics**: Allow defenders to charge back in melee combat
-8. **End Game Mechanics**: Manual game end with XP calculation
+### **Medium Priority** (Enhanced Features & UX)
+7. **Game Setup Phase**: Add terrain/objective acknowledgment and doctrine selection
+8. **Spell Casting Integration**: Ensure spells work before unit actions in activation
+9. **Charge-Back Mechanics**: Allow defenders to charge back in melee combat
+10. **End Game Mechanics**: Manual game end with XP calculation
+11. **Unit Card Improvements**: Better readability and visual indicators
+12. **Confirmation Dialogs**: Add dialogs for destructive actions
+13. **Mobile UI Optimization**: Better touch targets and responsive design
 
-### **Low Priority** (Campaign Features)
-9. **Secondary Objectives**: Campaign-specific objective selection
-10. **Random Events**: Campaign mode random events (5+ on D6)
-11. **Casualty Management**: Post-battle casualty rolls for campaigns
-12. **Battle Reports**: Enhanced reporting with complete statistics
+### **Low Priority** (Campaign Features & Polish)
+14. **Secondary Objectives**: Campaign-specific objective selection with default 1D6 table
+15. **Random Events**: Campaign mode random events (5+ on D6)
+16. **Casualty Management**: Post-battle casualty rolls for campaigns
+17. **Battle Reports**: Enhanced reporting with complete statistics and export
+18. **Keyboard Shortcuts**: Quality of life features and accessibility
+
+### **Critical System Issues** (Outside Battle System)
+- **Mission System**: Fix mission card display, titles, and refresh bugs
+- **Army Management**: Fix ArmyForge modal UX, conversion errors, unit combining
+- **Campaign Management**: Add membership management, invite/remove users
+- **Group Settings**: Fix non-functional settings buttons
+
+## Campaign Configuration Defaults
+
+### **Mission Reward Defaults**
+- **Win**: 2VP + 150pts
+- **Loss**: 0VP + 300pts
+
+### **Unit Experience Defaults**
+- **Survival**: +1XP if not casualty
+- **Kill Unit**: +1XP for destroying enemy unit
+- **Kill Hero**: +2XP for destroying enemy hero
+- **Kill Hero+Joined**: +3XP for destroying hero with joined unit
+
+### **Special Objectives** (Default 1D6 Table)
+| Roll | Objective |
+|------|-----------|
+| 1 | **Mastery** - One friendly unit in each table quarter at end |
+| 2 | **Honor** - No enemy units in own deployment zone at end |
+| 3 | **Casting** - At least one spell attempt per round |
+| 4 | **Recovery** - First to stop a unit from being shaken |
+| 5 | **First Blood** - First to destroy an enemy unit |
+| 6 | **Big Game** - Destroy most expensive enemy unit |
+
+### **Campaign Length Options**
+- **Game-Limited**: Fixed number of games (D6+4 formula)
+- **Point-Limited**: First to reach target victory points
+- **Time-Limited**: Campaign ends after set time period
+- **Endless**: Ongoing campaign with periodic seasons
+
+### **Underdog Bonus**
+- **Default**: 1pt per 50pts difference from highest army value
 
 ## Core Design Philosophy
 
