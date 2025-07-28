@@ -190,6 +190,120 @@ BattleSync is a self-hosted web application for managing One Page Rules (OPR) ta
 - `npm run frontend:typecheck` - Frontend TypeScript checking without build  
 - These complement existing build commands for faster development iteration
 
+## Complete OPR Game Flow
+
+BattleSync follows the complete One Page Rules game flow from setup to conclusion:
+
+### **Phase 1: Game Setup**
+1. **Terrain & Objectives**: Players place terrain and objectives on their physical tabletop
+2. **Campaign Secondary Objectives**: Campaign players choose secondary objectives via roll-off
+3. **Doctrine Selection**: Players choose command point doctrines (Strategic, Defensive, Shock, Hunting, Valorous, Tactical)
+4. **Mission Rules Review**: Players review any mission-specific rules and special conditions
+
+### **Phase 2: Deployment**
+1. **Deployment Roll-off**: Players roll dice and input results to determine deployment and turn order
+2. **Unit Deployment**: In alternating turns, players mark each unit as:
+   - **Deploy**: Standard deployment within 12" of table edge
+   - **Ambush**: Reserve deployment for round 2+ (units with Ambush/Hidden Route/etc.)
+   - **Scout**: Deploy after regular deployment in Scout phase
+   - **Embark**: Deploy inside available transport units
+3. **Scout Phase**: After regular deployment, Scout units deploy in alternating turns
+4. **Battle Validation**: System validates all units are deployed/reserved before battle start
+
+### **Phase 3: Battle Rounds**
+Each round follows this sequence:
+
+#### **Round Start Events**
+- All caster models receive caster tokens
+- Command points refresh based on chosen method (Fixed/Growing/etc.)
+- **Round 2+ Only**: Ambush units may deploy in turn order or remain in reserves
+- Fatigue and temporary effects cleared
+- Campaign random events (5+ on D6)
+
+#### **Activation Phase**
+Players activate units in predetermined turn order:
+1. **Unit Selection**: Active player selects a unit for activation
+2. **Spell Casting**: If unit contains casters, may attempt spells before actions
+3. **Action Selection**: Choose unit action:
+   - **Hold**: Stay in place, may shoot
+   - **Advance**: Move 6" + modifiers, may shoot
+   - **Rush**: Move 12" + modifiers, no shooting
+   - **Charge**: Move 12" + modifiers into melee contact
+4. **Combat Resolution**: 
+   - **Shooting**: Target selection, wound application, morale tests
+   - **Melee**: 5-phase system (attack → defend choice → counter-attack → resolution → morale)
+5. **State Updates**: Track wounds, destroyed units, routing, experience gains
+
+#### **Round End Events**
+- Objective checking and scoring
+- Army-wide morale tests for heavy casualties
+- Victory condition evaluation
+- Battle statistics update
+
+#### **Turn Order Updates**
+- **Completion Tracking**: System tracks which player finishes activating all their units first
+- **Next Round Priority**: Player who completed activations first becomes first player next round
+- **Subsequent Order**: Remaining players follow in the order they completed their activations
+- **Example**: If Player B finishes before Player A in Round 1, then Round 2 order becomes: Player B → Player A
+- **Automatic Calculation**: System automatically determines new activation order for next round
+
+### **Phase 4: Game End**
+1. **Manual End Declaration**: Players press "End Game" button when appropriate
+2. **Experience Calculation**: System calculates XP gains (not auto-applied)
+3. **Campaign Casualties**: Roll-offs for unit casualties in campaign mode
+4. **Battle Report**: Complete action history and statistics available
+
+### **Battle Tracking & Undo System**
+- **Complete Action History**: Every game change tracked by player, target, round/turn
+- **8 Undo Action Types**: Damage, spells, status, phases, activations, etc.
+- **State Snapshots**: Before/after states for reliable rollback
+- **Export Functionality**: Battle reports in JSON/CSV formats
+
+## Implementation Status
+
+### ✅ **Currently Implemented** (v1.3.5)
+- **Complete Deployment Phase**: Roll-off, unit placement, Scout deployment, battle transition
+- **Turn-Based Activation System**: Proper OPR turn order with alternating activations
+- **Round Management**: Start-of-round events, caster token refresh, command point management
+- **Combat Systems**: Simplified shooting, complete 5-phase melee system
+- **Spell Casting**: Poker-style cooperative casting with ArmyForge integration
+- **Damage & Health**: Complete wound tracking, model destruction, unit routing
+- **Undo System**: Full battle action history with 8 action types
+- **Mobile UI**: Comprehensive responsive design for all battle features
+
+### 🚧 **Partially Implemented**
+- **Unit Actions**: Hold/Advance actions partially done, need Rush/Charge implementation
+- **Transport System**: Basic embarkation structure exists, needs full deployment integration
+- **Command Points**: System exists but doctrine selection needs UI integration
+
+### ❌ **Not Yet Implemented**
+- **Game Setup Phase**: Terrain placement, secondary objectives, doctrine selection UI
+- **Ambush Deployment**: Round 2+ deployment from reserves
+- **Complete Action System**: Rush and Charge actions with movement modifiers
+- **Turn Order Updates**: New activation order based on round completion timing
+- **End Game Flow**: Manual end declaration, XP calculation, casualty rolls
+- **Campaign Features**: Secondary objectives, random events, casualty management
+
+## Development Priorities
+
+### **High Priority** (Core Battle Flow)
+1. **Complete Transport Embarkation**: Finish deployment embarkation system
+2. **Ambush Round 2+ Deployment**: Allow Ambush units to deploy at start of rounds
+3. **Rush/Charge Actions**: Implement remaining unit actions with movement modifiers
+4. **Turn Order Updates**: Fix activation order based on round completion timing
+
+### **Medium Priority** (Enhanced Features)
+5. **Game Setup Phase**: Add terrain/objective acknowledgment and doctrine selection
+6. **Spell Casting Integration**: Ensure spells work before unit actions in activation
+7. **Charge-Back Mechanics**: Allow defenders to charge back in melee combat
+8. **End Game Mechanics**: Manual game end with XP calculation
+
+### **Low Priority** (Campaign Features)
+9. **Secondary Objectives**: Campaign-specific objective selection
+10. **Random Events**: Campaign mode random events (5+ on D6)
+11. **Casualty Management**: Post-battle casualty rolls for campaigns
+12. **Battle Reports**: Enhanced reporting with complete statistics
+
 ## Core Design Philosophy
 
 ### Positioning and Spatial Awareness
