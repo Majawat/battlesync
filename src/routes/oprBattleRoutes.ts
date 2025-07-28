@@ -204,6 +204,32 @@ router.post(
 );
 
 /**
+ * Set unit to scout reserves
+ * POST /api/opr/battles/:battleId/deployment/scout-unit
+ */
+router.post(
+  '/:battleId/deployment/scout-unit',
+  authenticate,
+  validateSchema(Joi.object({
+    unitId: Joi.string().required()
+  })),
+  OPRBattleController.scoutUnit
+);
+
+/**
+ * Deploy scout unit from reserves
+ * POST /api/opr/battles/:battleId/deployment/deploy-scout
+ */
+router.post(
+  '/:battleId/deployment/deploy-scout',
+  authenticate,
+  validateSchema(Joi.object({
+    unitId: Joi.string().required()
+  })),
+  OPRBattleController.deployScoutUnit
+);
+
+/**
  * Apply damage to unit/model
  * POST /api/opr/battles/:battleId/damage
  */

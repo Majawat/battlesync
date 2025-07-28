@@ -490,7 +490,7 @@ export interface OPRUnitDeploymentState {
 
 // Overall deployment phase state
 export interface OPRDeploymentState {
-  phase: 'ROLL_OFF' | 'DEPLOYMENT' | 'RESERVES' | 'COMPLETED';
+  phase: 'ROLL_OFF' | 'DEPLOYMENT' | 'SCOUT' | 'RESERVES' | 'COMPLETED';
   currentDeployingPlayer?: string; // Who must deploy next unit
   deploymentTurn: number; // Current turn in alternating deployment (1, 2, 3...)
   

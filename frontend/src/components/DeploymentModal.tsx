@@ -12,6 +12,7 @@ interface DeploymentModalProps {
   onDeployUnit: (unitId: string) => void;
   onAmbushUnit: (unitId: string) => void;
   onScoutUnit: (unitId: string) => void;
+  onDeployScoutUnit: (unitId: string) => void;
   onEmbarkUnit: (unitId: string, transportId: string) => void;
 }
 
@@ -31,6 +32,7 @@ export const DeploymentModal: React.FC<DeploymentModalProps> = ({
   onDeployUnit,
   onAmbushUnit,
   onScoutUnit,
+  onDeployScoutUnit,
   onEmbarkUnit
 }) => {
   const [selectedUnit, setSelectedUnit] = useState<string | null>(null);
@@ -45,9 +47,21 @@ export const DeploymentModal: React.FC<DeploymentModalProps> = ({
   }
 
   const isMyTurn = deploymentState.currentDeployingPlayer === currentUserId;
-  const pendingUnits = myArmy.units.filter(unit => 
-    unit.deploymentState.status === 'PENDING'
-  );
+  
+  // Filter units based on deployment phase
+  const pendingUnits = myArmy.units.filter(unit => {
+    if (unit.deploymentState.status !== 'PENDING') {
+      return false;
+    }
+    
+    // During Scout phase, only show Scout reserve units
+    if (deploymentState.phase === 'SCOUT') {
+      return unit.deploymentState.deploymentMethod === 'SCOUT';
+    }
+    
+    // During regular deployment, show all pending units
+    return true;
+  });
 
   // Get deployment capabilities for a unit
   const getDeploymentCapabilities = (unit: OPRBattleUnit): UnitDeploymentCapabilities => {
@@ -108,6 +122,11 @@ export const DeploymentModal: React.FC<DeploymentModalProps> = ({
     onScoutUnit(unitId);
     setSelectedUnit(null);
   }, [onScoutUnit]);
+
+  const handleDeployScoutUnit = useCallback((unitId: string) => {
+    onDeployScoutUnit(unitId);
+    setSelectedUnit(null);
+  }, [onDeployScoutUnit]);
 
   const handleEmbarkUnit = useCallback((unitId: string, transportId: string) => {
     onEmbarkUnit(unitId, transportId);
@@ -206,14 +225,25 @@ export const DeploymentModal: React.FC<DeploymentModalProps> = ({
                         </button>
                       )}
 
-                      {/* Scout Button */}
-                      {capabilities.canScout && (
+                      {/* Scout Button - different behavior based on phase */}
+                      {capabilities.canScout && deploymentState.phase === 'DEPLOYMENT' && (
                         <button
                           onClick={() => handleScoutUnit(unit.unitId)}
                           className="px-3 py-1 bg-blue-600 hover:bg-blue-500 text-white rounded transition-colors text-sm"
-                          title="Deploy after other units, may redeploy within 12 inches"
+                          title="Set to scout reserves - deploy after other units"
                         >
                           Scout
+                        </button>
+                      )}
+                      
+                      {/* Deploy Scout Unit Button - only during Scout phase */}
+                      {deploymentState.phase === 'SCOUT' && unit.deploymentState.deploymentMethod === 'SCOUT' && (
+                        <button
+                          onClick={() => handleDeployScoutUnit(unit.unitId)}
+                          className="px-3 py-1 bg-blue-600 hover:bg-blue-500 text-white rounded transition-colors text-sm"
+                          title="Deploy scout unit on the battlefield"
+                        >
+                          Deploy Scout
                         </button>
                       )}
 

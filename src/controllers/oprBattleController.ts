@@ -466,6 +466,76 @@ export class OPRBattleController {
   }
 
   /**
+   * Set unit to scout reserves
+   * POST /api/opr/battles/:battleId/deployment/scout-unit
+   */
+  static async scoutUnit(req: Request, res: Response): Promise<void> {
+    try {
+      const userId = (req as AuthenticatedRequest).user!.id;
+      const { battleId } = req.params;
+      const { unitId } = req.body;
+
+      if (!unitId) {
+        res.status(400).json({
+          success: false,
+          error: 'Missing required field: unitId'
+        });
+        return;
+      }
+
+      const result = await OPRBattleService.scoutUnit(battleId, userId, unitId);
+
+      if (!result.success) {
+        res.status(400).json(result);
+        return;
+      }
+
+      res.json(result);
+    } catch (error) {
+      logger.error('Scout unit error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to set unit to scout'
+      });
+    }
+  }
+
+  /**
+   * Deploy scout unit from reserves
+   * POST /api/opr/battles/:battleId/deployment/deploy-scout
+   */
+  static async deployScoutUnit(req: Request, res: Response): Promise<void> {
+    try {
+      const userId = (req as AuthenticatedRequest).user!.id;
+      const { battleId } = req.params;
+      const { unitId } = req.body;
+
+      if (!unitId) {
+        res.status(400).json({
+          success: false,
+          error: 'Missing required field: unitId'
+        });
+        return;
+      }
+
+      const result = await OPRBattleService.deployScoutUnit(battleId, userId, unitId);
+
+      if (!result.success) {
+        res.status(400).json(result);
+        return;
+      }
+
+      res.json(result);
+    } catch (error) {
+      logger.error('Deploy scout unit error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to deploy scout unit'
+      });
+    }
+  }
+
+  /**
    * Apply damage to unit/model
    * POST /api/opr/battles/:battleId/damage
    */

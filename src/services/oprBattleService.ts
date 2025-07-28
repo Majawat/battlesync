@@ -1579,6 +1579,76 @@ export class OPRBattleService {
   }
 
   /**
+   * Set a unit to scout reserves
+   */
+  static async scoutUnit(battleId: string, userId: string, unitId: string): Promise<{ success: boolean; error?: string }> {
+    try {
+      const battleState = await this.getOPRBattleState(battleId, userId);
+      if (!battleState) {
+        return { success: false, error: 'Battle not found' };
+      }
+
+      const result = DeploymentService.setUnitToScout(battleId, userId, unitId, battleState);
+      
+      if (result.success) {
+        // Save updated state
+        await prisma.battle.update({
+          where: { id: battleId },
+          data: { currentState: battleState as any }
+        });
+
+        // Notify all players
+        await NotificationService.notifyBattleStateChange(battleId, `Unit set to scout by ${userId}`);
+        
+        // Check if deployment is complete and transition to scout phase or battle
+        if (DeploymentService.checkDeploymentComplete(battleState)) {
+          await this.transitionToBattleRounds(battleId, battleState);
+        }
+      }
+
+      return result;
+    } catch (error) {
+      logger.error('Error setting unit to scout:', error);
+      return { success: false, error: 'Failed to set unit to scout' };
+    }
+  }
+
+  /**
+   * Deploy a scout unit from reserves
+   */
+  static async deployScoutUnit(battleId: string, userId: string, unitId: string): Promise<{ success: boolean; error?: string }> {
+    try {
+      const battleState = await this.getOPRBattleState(battleId, userId);
+      if (!battleState) {
+        return { success: false, error: 'Battle not found' };
+      }
+
+      const result = DeploymentService.deployScoutUnit(battleId, userId, unitId, battleState);
+      
+      if (result.success) {
+        // Save updated state
+        await prisma.battle.update({
+          where: { id: battleId },
+          data: { currentState: battleState as any }
+        });
+
+        // Notify all players
+        await NotificationService.notifyBattleStateChange(battleId, `Scout unit deployed by ${userId}`);
+        
+        // Check if scout deployment is complete and transition to battle
+        if (DeploymentService.checkDeploymentComplete(battleState)) {
+          await this.transitionToBattleRounds(battleId, battleState);
+        }
+      }
+
+      return result;
+    } catch (error) {
+      logger.error('Error deploying scout unit:', error);
+      return { success: false, error: 'Failed to deploy scout unit' };
+    }
+  }
+
+  /**
    * Transition battle from deployment phase to battle rounds with proper turn initialization
    */
   static async transitionToBattleRounds(battleId: string, battleState: OPRBattleState): Promise<void> {

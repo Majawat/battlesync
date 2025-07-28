@@ -368,7 +368,7 @@ export interface OPRUnitDeploymentState {
 }
 
 export interface OPRDeploymentState {
-  phase: 'ROLL_OFF' | 'DEPLOYMENT' | 'RESERVES' | 'COMPLETED';
+  phase: 'ROLL_OFF' | 'DEPLOYMENT' | 'SCOUT' | 'RESERVES' | 'COMPLETED';
   currentDeployingPlayer?: string;
   deploymentTurn: number;
   firstDeployingPlayer?: string;

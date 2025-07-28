@@ -16,6 +16,9 @@ export class DeploymentService {
     { ruleName: 'Dark Assault', grants: 'AMBUSH', description: 'Unit may deploy via Ambush' },
     { ruleName: 'Shadow', grants: 'AMBUSH', description: 'Unit may deploy via Ambush' },
     { ruleName: 'Tunneller', grants: 'AMBUSH', description: 'Unit may deploy via Ambush' },
+    { ruleName: 'Scout', grants: 'SCOUT', description: 'Unit may deploy after others with Scout movement' },
+    { ruleName: 'Pathfinder', grants: 'SCOUT', description: 'Unit may deploy via Scout' },
+    { ruleName: 'Reconnaissance', grants: 'SCOUT', description: 'Unit may deploy via Scout' },
     // Add more as discovered
   ];
 
@@ -232,6 +235,55 @@ export class DeploymentService {
   }
 
   /**
+   * Set unit to scout reserves
+   */
+  static setUnitToScout(
+    battleId: string,
+    userId: string,
+    unitId: string,
+    battleState: OPRBattleState
+  ): { success: boolean; error?: string } {
+    
+    const deploymentState = battleState.activationState.deploymentState;
+    if (!deploymentState || deploymentState.phase !== 'DEPLOYMENT') {
+      return { success: false, error: 'Not in deployment phase' };
+    }
+
+    if (deploymentState.currentDeployingPlayer !== userId) {
+      return { success: false, error: 'Not your turn to deploy' };
+    }
+
+    const unit = this.findUnit(battleState, unitId);
+    if (!unit) {
+      return { success: false, error: 'Unit not found' };
+    }
+
+    const capabilities = this.getUnitDeploymentCapabilities(unit);
+    if (!capabilities.canScout) {
+      return { success: false, error: 'Unit cannot use Scout deployment' };
+    }
+
+    if (unit.deploymentState.status !== 'PENDING') {
+      return { success: false, error: 'Unit already deployed' };
+    }
+
+    // Set to scout reserves
+    unit.deploymentState.status = 'RESERVES';
+    unit.deploymentState.deploymentMethod = 'SCOUT';
+    unit.deploymentState.originalDeploymentZone = deploymentState.firstDeployingPlayer === userId ? 'PLAYER1' : 'PLAYER2';
+
+    deploymentState.unitsDeployed[userId].push(unitId);
+    deploymentState.unitsToDeploy[userId] = deploymentState.unitsToDeploy[userId]
+      .filter(id => id !== unitId);
+
+    // Advance to next player
+    this.advanceDeploymentTurn(deploymentState);
+
+    logger.info(`Unit ${unitId} set to scout by player ${userId} in battle ${battleId}`);
+    return { success: true };
+  }
+
+  /**
    * Set unit to ambush reserves
    */
   static setUnitToAmbush(
@@ -283,13 +335,87 @@ export class DeploymentService {
     const allDeployed = Object.values(deploymentState.unitsToDeploy)
       .every(units => units.length === 0);
 
-    if (allDeployed) {
+    if (allDeployed && deploymentState.phase === 'DEPLOYMENT') {
+      // Check if there are Scout units that need to be deployed
+      if (deploymentState.scoutUnits.length > 0) {
+        // Transition to Scout deployment phase
+        deploymentState.phase = 'SCOUT';
+        deploymentState.deploymentTurn = 1;
+        deploymentState.currentDeployingPlayer = deploymentState.firstDeployingPlayer;
+        
+        // Prepare Scout units for deployment
+        for (const army of battleState.armies) {
+          for (const unit of army.units) {
+            if (unit.deploymentState.status === 'RESERVES' && 
+                unit.deploymentState.deploymentMethod === 'SCOUT') {
+              unit.deploymentState.status = 'PENDING'; // Make available for Scout deployment
+            }
+          }
+        }
+        
+        logger.info(`Transitioning to Scout deployment phase with ${deploymentState.scoutUnits.length} units`);
+        return false; // Not ready for battle yet
+      } else {
+        // No Scout units, ready for battle
+        deploymentState.allUnitsDeployed = true;
+        deploymentState.readyForBattle = true;
+        deploymentState.phase = 'COMPLETED';
+        return true;
+      }
+    } else if (allDeployed && deploymentState.phase === 'SCOUT') {
+      // Scout deployment complete, ready for battle
       deploymentState.allUnitsDeployed = true;
       deploymentState.readyForBattle = true;
       deploymentState.phase = 'COMPLETED';
+      return true;
     }
 
-    return allDeployed;
+    return false;
+  }
+
+  /**
+   * Deploy a Scout unit from reserves (after regular deployment)
+   */
+  static deployScoutUnit(
+    battleId: string,
+    userId: string,
+    unitId: string,
+    battleState: OPRBattleState
+  ): { success: boolean; error?: string } {
+    
+    const deploymentState = battleState.activationState.deploymentState;
+    if (!deploymentState || deploymentState.phase !== 'SCOUT') {
+      return { success: false, error: 'Not in Scout deployment phase' };
+    }
+
+    if (deploymentState.currentDeployingPlayer !== userId) {
+      return { success: false, error: 'Not your turn to deploy Scout units' };
+    }
+
+    const unit = this.findUnit(battleState, unitId);
+    if (!unit) {
+      return { success: false, error: 'Unit not found' };
+    }
+
+    if (unit.deploymentState.status !== 'PENDING' || 
+        unit.deploymentState.deploymentMethod !== 'SCOUT') {
+      return { success: false, error: 'Unit is not a Scout unit ready for deployment' };
+    }
+
+    // Deploy the Scout unit
+    unit.deploymentState.status = 'DEPLOYED';
+    unit.deploymentState.deployedInTurn = deploymentState.deploymentTurn;
+
+    // Update deployment tracking
+    deploymentState.unitsDeployed[userId].push(unitId);
+    deploymentState.unitsToDeploy[userId] = deploymentState.unitsToDeploy[userId]
+      .filter(id => id !== unitId);
+
+    // Advance to next player
+    this.advanceDeploymentTurn(deploymentState);
+
+    logger.info(`Scout unit ${unitId} deployed by player ${userId} in battle ${battleId}`);
+    return { success: true };
   }
 
   // Helper methods

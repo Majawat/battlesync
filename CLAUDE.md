@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 
 BattleSync is a self-hosted web application for managing One Page Rules (OPR) tabletop gaming campaigns with real-time battle tracking. 
 
-**Current State**: Production-ready multi-user application (v1.3.4) - Complete battle system with deployment phase management, functional trait mechanics, turn/round management, ArmyForge metadata integration, and enhanced unit displays  
+**Current State**: Production-ready multi-user application (v1.3.5) - Complete battle system with Scout deployment rules, deployment phase management, functional trait mechanics, turn/round management, ArmyForge metadata integration, and enhanced unit displays  
 **Target State**: Enhanced battle features with advanced OPR conversion and analytics
 
 ## Recent Major Completions
@@ -116,16 +116,18 @@ BattleSync is a self-hosted web application for managing One Page Rules (OPR) ta
 - Defense upgrade processing and weapon count accuracy
 - Complex upgrade scenarios and edge case handling
 
-### ✅ **Complete Deployment System (v1.3.3-v1.3.4)** - FULLY IMPLEMENTED
-- **OPR-Compliant Deployment Phase**: Roll-off → Unit Placement → Battle Start transition system
+### ✅ **Complete Deployment System with Scout Rules (v1.3.3-v1.3.5)** - FULLY IMPLEMENTED
+- **OPR-Compliant Deployment Phase**: Roll-off → Unit Placement → Scout Phase → Battle Start transition system
 - **Alternating Unit Placement**: Players take turns deploying units within 12" of table edge
 - **Ambush Reserve System**: Units with Ambush-granting rules (Hidden Route, etc.) can be placed in reserves
-- **Deployment Modal Interface**: Mobile-responsive unit deployment interface with action buttons
+- **Scout Deployment System**: Units with Scout rules deploy after regular deployment in separate phase
+- **Deployment Modal Interface**: Mobile-responsive unit deployment interface with dynamic action buttons
 - **Turn Order Inheritance**: Deployment roll-off winner determines first player in battle rounds
 - **Status-Only Tracking**: Tracks deployment status without coordinate enforcement (player agency maintained)
 
 **Supported Special Rules:**
 - **Ambush/Hidden Route/Surprise Attack**: Units deploy in reserves until round 2+
+- **Scout/Pathfinder/Reconnaissance**: Units deploy after all others in separate Scout phase
 - **Dynamic Rule Detection**: Intelligent detection of rules that grant deployment abilities
 - **Reserve Validation**: Units in reserves cannot activate until deployed on battlefield
 

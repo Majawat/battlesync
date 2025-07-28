@@ -500,9 +500,48 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
     }
   };
 
-  const handleScoutUnit = async (_unitId: string) => {
-    // TODO: Implement scout deployment
-    setError('Scout deployment not yet implemented');
+  const handleScoutUnit = async (unitId: string) => {
+    try {
+      const response = await fetch(`/api/opr/battles/${battleId}/deployment/scout-unit`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        },
+        body: JSON.stringify({ unitId })
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        await fetchBattleState();
+      } else {
+        setError(data.error || 'Failed to set unit to scout');
+      }
+    } catch (err) {
+      setError(`Failed to set unit to scout: ${err instanceof Error ? err.message : 'Unknown error'}`);
+    }
+  };
+
+  const handleDeployScoutUnit = async (unitId: string) => {
+    try {
+      const response = await fetch(`/api/opr/battles/${battleId}/deployment/deploy-scout`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        },
+        body: JSON.stringify({ unitId })
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        await fetchBattleState();
+      } else {
+        setError(data.error || 'Failed to deploy scout unit');
+      }
+    } catch (err) {
+      setError(`Failed to deploy scout unit: ${err instanceof Error ? err.message : 'Unknown error'}`);
+    }
   };
 
   const handleEmbarkUnit = async (_unitId: string, _transportId: string) => {
@@ -1132,6 +1171,7 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
           onDeployUnit={handleDeployUnit}
           onAmbushUnit={handleAmbushUnit}
           onScoutUnit={handleScoutUnit}
+          onDeployScoutUnit={handleDeployScoutUnit}
           onEmbarkUnit={handleEmbarkUnit}
         />
       )}
