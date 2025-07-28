@@ -73,6 +73,11 @@ export interface BattleSyncSubunit {
   models: BattleSyncModel[];
   weapons: BattleSyncWeapon[];
   specialRules: string[];
+  
+  // Optional metadata for tracking combined units
+  metadata?: {
+    combinedFromUnits?: string[];
+  };
 }
 
 export interface BattleSyncModel {

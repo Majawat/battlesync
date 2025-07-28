@@ -130,7 +130,7 @@ export class BattleSyncConverter {
   }
 
   /**
-   * Convert ArmyForge units to container format with joining logic
+   * Convert ArmyForge units to container format with simplified joining logic
    */
   private static async convertUnitsToContainers(
     armyForgeUnits: ArmyForgeUnit[], 
@@ -141,54 +141,402 @@ export class BattleSyncConverter {
     const errors: string[] = [];
     const containers: BattleSyncUnit[] = [];
     const processedUnits = new Set<string>();
+    const containerMap = new Map<string, BattleSyncUnit>(); // selectionId -> container
 
+    // PASS 1: Create containers for units that don't need to join anything
     for (const unit of armyForgeUnits) {
-      const unitSelectionId = unit.selectionId || unit.id; // Fallback to id if no selectionId
+      const unitSelectionId = unit.selectionId || unit.id;
       
-      if (processedUnits.has(unitSelectionId)) {
-        continue; // Already processed as part of a joined unit
-      }
-
-      // Check if this unit should join another
-      if (unit.joinToUnit && options.allowJoined) {
-        // Find the target unit
-        const targetUnit = armyForgeUnits.find(u => (u.selectionId || u.id) === unit.joinToUnit);
-        if (targetUnit) {
-          // Create joined container
-          const container = await this.createJoinedContainer(targetUnit, unit, options);
-          containers.push(container);
-          processedUnits.add(targetUnit.selectionId || targetUnit.id);
-          processedUnits.add(unitSelectionId);
-          continue;
-        } else {
-          warnings.push(`Unit ${unit.customName || unit.name} wants to join ${unit.joinToUnit} but target not found`);
-        }
-      }
-
-      // Check if another unit wants to join this one
-      const joiningUnit = armyForgeUnits.find(u => u.joinToUnit === unitSelectionId);
-      if (joiningUnit && options.allowJoined && !processedUnits.has(joiningUnit.selectionId || joiningUnit.id)) {
-        // Create joined container
-        const container = await this.createJoinedContainer(unit, joiningUnit, options);
-        containers.push(container);
-        processedUnits.add(unitSelectionId);
-        processedUnits.add(joiningUnit.selectionId || joiningUnit.id);
+      // Skip if unit needs to join something - handle in Pass 2
+      if (unit.joinToUnit) {
         continue;
       }
 
-      // Create standard container with single subunit
+      // Create container for this unit
       const container = await this.createStandardContainer(unit, options);
+      
+      // Mark as combined if needed
+      if (unit.combined) {
+        container.subunits[0].isCombined = true;
+      }
+      
       containers.push(container);
       processedUnits.add(unitSelectionId);
+      containerMap.set(unitSelectionId, container);
     }
 
-    // Process combined units if enabled
-    if (options.allowCombined) {
-      const combinedResult = this.processCombinedUnits(containers);
-      warnings.push(...combinedResult.warnings);
+    // PASS 2: Handle all joining operations
+    for (const unit of armyForgeUnits) {
+      const unitSelectionId = unit.selectionId || unit.id;
+      
+      if (processedUnits.has(unitSelectionId)) {
+        continue; // Already processed in Pass 1
+      }
+
+      if (!unit.joinToUnit) {
+        continue; // Should have been handled in Pass 1
+      }
+
+      // Find the target container
+      const targetContainer = containerMap.get(unit.joinToUnit);
+      if (!targetContainer) {
+        warnings.push(`Unit ${unit.customName || unit.name} wants to join ${unit.joinToUnit} but target not found`);
+        // Create standalone container as fallback
+        const container = await this.createStandardContainer(unit, options);
+        containers.push(container);
+        processedUnits.add(unitSelectionId);
+        continue;
+      }
+
+      const isHero = this.isHeroUnit(unit);
+
+      if (unit.combined && options.allowCombined) {
+        // COMBINED UNIT JOINING: Merge into existing subunit
+        await this.mergeUnitIntoContainer(targetContainer, unit, options);
+        processedUnits.add(unitSelectionId);
+      } else if (isHero && options.allowJoined) {
+        // HERO JOINING: Add as new subunit
+        await this.addHeroToContainer(targetContainer, unit, options);
+        processedUnits.add(unitSelectionId);
+      } else {
+        warnings.push(`Unit ${unit.customName || unit.name} wants to join but is neither combined nor hero`);
+        // Create standalone container as fallback
+        const container = await this.createStandardContainer(unit, options);
+        containers.push(container);
+        processedUnits.add(unitSelectionId);
+      }
     }
 
     return { units: containers, warnings, errors };
+  }
+
+  /**
+   * Check if unit is a hero based on special rules from ArmyForge
+   */
+  private static isHeroUnit(unit: ArmyForgeUnit): boolean {
+    // Check for explicit Hero special rule in unit special rules
+    if (unit.specialRules?.includes('Hero')) {
+      return true;
+    }
+
+    // Check for Hero rule in unit.rules array (alternative location)
+    if (unit.rules?.some(rule => rule.name === 'Hero')) {
+      return true;
+    }
+
+    // Check loadout for Hero rules
+    if (unit.loadout) {
+      for (const item of unit.loadout) {
+        if (item.type === 'ArmyBookRule' && item.name === 'Hero') {
+          return true;
+        }
+        if (item.content) {
+          for (const content of item.content) {
+            if (content.type === 'ArmyBookRule' && content.name === 'Hero') {
+              return true;
+            }
+          }
+        }
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * Check if unit has caster abilities based on special rules from ArmyForge
+   */
+  private static isCasterUnit(unit: ArmyForgeUnit): boolean {
+    // Check for Caster special rule in unit special rules
+    if (unit.specialRules?.some(rule => rule.includes('Caster'))) {
+      return true;
+    }
+
+    // Check for Caster rule in unit.rules array (alternative location)
+    if (unit.rules) {
+      for (const rule of unit.rules) {
+        if (rule.name?.includes('Caster')) {
+          return true;
+        }
+      }
+    }
+
+    // Check loadout for Caster rules
+    if (unit.loadout) {
+      for (const item of unit.loadout) {
+        if (item.type === 'ArmyBookRule' && item.name?.includes('Caster')) {
+          return true;
+        }
+        if (item.content) {
+          for (const content of item.content) {
+            if (content.type === 'ArmyBookRule' && content.name?.includes('Caster')) {
+              return true;
+            }
+          }
+        }
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * Extract caster token count from special rules
+   */
+  private static extractCasterTokens(unit: ArmyForgeUnit): number {
+    // Check unit special rules
+    if (unit.specialRules) {
+      for (const rule of unit.specialRules) {
+        if (rule.includes('Caster')) {
+          const match = rule.match(/Caster\((\d+)\)/);
+          if (match) {
+            return parseInt(match[1]);
+          }
+        }
+      }
+    }
+
+    // Check unit.rules array
+    if (unit.rules) {
+      for (const rule of unit.rules) {
+        if (rule.name?.includes('Caster')) {
+          const match = rule.name.match(/Caster\((\d+)\)/);
+          if (match) {
+            return parseInt(match[1]);
+          }
+        }
+      }
+    }
+
+    // Check loadout for Caster rules
+    if (unit.loadout) {
+      for (const item of unit.loadout) {
+        if (item.type === 'ArmyBookRule' && item.name?.includes('Caster')) {
+          const match = item.name.match(/Caster\((\d+)\)/);
+          if (match) {
+            return parseInt(match[1]);
+          }
+        }
+        if (item.content) {
+          for (const content of item.content) {
+            if (content.type === 'ArmyBookRule' && content.name?.includes('Caster')) {
+              const match = content.name.match(/Caster\((\d+)\)/);
+              if (match) {
+                return parseInt(match[1]);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // Default to 1 if no specific count found but unit is a caster
+    return 1;
+  }
+
+  /**
+   * Merge a combined unit into an existing container's subunit
+   */
+  private static async mergeUnitIntoContainer(
+    targetContainer: BattleSyncUnit,
+    joiningUnit: ArmyForgeUnit,
+    options: BattleSyncConversionOptions
+  ): Promise<void> {
+    
+    // Get the target subunit (should be the first and only one for combined units)
+    const targetSubunit = targetContainer.subunits[0];
+    
+    // Convert joining unit to get its data
+    const joiningSubunit = await this.convertToSubunit(joiningUnit, options);
+    
+    // Merge models
+    targetSubunit.models.push(...joiningSubunit.models);
+    
+    // Merge weapons
+    targetSubunit.weapons.push(...joiningSubunit.weapons);
+    
+    // Store original sub-unit IDs if needed (as you suggested)
+    if (!targetSubunit.metadata) {
+      targetSubunit.metadata = { combinedFromUnits: [] };
+    }
+    if (!targetSubunit.metadata.combinedFromUnits) {
+      targetSubunit.metadata.combinedFromUnits = [];
+    }
+    targetSubunit.metadata.combinedFromUnits.push(joiningUnit.id);
+    
+    // Update container totals
+    targetContainer.originalSize += joiningSubunit.models.length;
+    targetContainer.currentSize += joiningSubunit.models.length;
+    targetContainer.originalToughTotal += this.calculateTotalTough(joiningSubunit.models);
+    targetContainer.currentToughTotal += this.calculateTotalTough(joiningSubunit.models);
+    
+    // Regenerate weapon summary from all subunits
+    targetContainer.weaponSummary = this.createWeaponSummary(targetContainer.subunits);
+    
+    // Add to source units metadata
+    if (targetContainer.metadata?.sourceUnits) {
+      targetContainer.metadata.sourceUnits.push(joiningUnit);
+    }
+  }
+
+  /**
+   * Add a hero as a new subunit to an existing container
+   */
+  private static async addHeroToContainer(
+    targetContainer: BattleSyncUnit,
+    heroUnit: ArmyForgeUnit,
+    options: BattleSyncConversionOptions
+  ): Promise<void> {
+    
+    // Convert hero to subunit
+    const heroSubunit = await this.convertToSubunit(heroUnit, options);
+    
+    // Add as new subunit
+    targetContainer.subunits.push(heroSubunit);
+    
+    // Update container properties
+    targetContainer.isJoined = true;
+    targetContainer.originalSize += heroSubunit.models.length;
+    targetContainer.currentSize += heroSubunit.models.length;
+    targetContainer.originalToughTotal += this.calculateTotalTough(heroSubunit.models);
+    targetContainer.currentToughTotal += this.calculateTotalTough(heroSubunit.models);
+    
+    // Update container name to reflect joining
+    const originalName = targetContainer.name;
+    const heroName = options.preserveCustomNames ? (heroUnit.customName || heroUnit.name) : heroUnit.name;
+    targetContainer.name = `${originalName} with ${heroName}`;
+    
+    // Regenerate weapon summary from all subunits
+    targetContainer.weaponSummary = this.createWeaponSummary(targetContainer.subunits);
+    
+    // Add to source units metadata
+    if (targetContainer.metadata?.sourceUnits) {
+      targetContainer.metadata.sourceUnits.push(heroUnit);
+    }
+  }
+
+  /**
+   * Create a combined container from multiple combined units
+   * This merges multiple ArmyForge units into a single BattleSync subunit
+   */
+  private static async createCombinedContainer(
+    units: ArmyForgeUnit[],
+    options: BattleSyncConversionOptions
+  ): Promise<BattleSyncUnit> {
+    
+    // Merge all units into a single combined subunit
+    const combinedUnit = this.mergeUnitsIntoOne(units, options);
+    const subunit = await this.convertToSubunit(combinedUnit, options);
+    subunit.isCombined = true;
+
+    // Calculate totals
+    const originalSize = subunit.models.length;
+    const originalToughTotal = this.calculateTotalTough(subunit.models);
+
+    // Create weapon summary from the single combined subunit
+    const weaponSummary = this.createWeaponSummary([subunit]);
+
+    // Use the name of the first unit as the container name
+    const containerName = options.preserveCustomNames 
+      ? (units[0].customName || units[0].name)
+      : units[0].name;
+
+    return {
+      battleSyncUnitId: uuidv4(),
+      isJoined: false, // Combined units are not joined
+      name: containerName,
+      originalSize,
+      currentSize: originalSize,
+      originalToughTotal,
+      currentToughTotal: originalToughTotal,
+      
+      // Battle state
+      action: null,
+      fatigued: false,
+      shaken: false,
+      routed: false,
+      casualty: false,
+      
+      // Deployment state
+      deploymentState: {
+        status: 'PENDING',
+        deploymentMethod: this.determineDeploymentMethod(units[0])
+      },
+      
+      // Combat tracking
+      kills: [],
+      
+      // UI data
+      weaponSummary,
+      activationState: {
+        canActivate: true,
+        hasActivated: false,
+        activatedInRound: 0,
+        activatedInTurn: 0,
+        isSelected: false,
+        actionPoints: 1,
+        actionsUsed: []
+      },
+      
+      // Single combined subunit
+      subunits: [subunit],
+      
+      // Metadata
+      metadata: {
+        sourceUnits: units
+      }
+    };
+  }
+
+  /**
+   * Merge multiple ArmyForge units into a single unit for combined processing
+   */
+  private static mergeUnitsIntoOne(units: ArmyForgeUnit[], options: BattleSyncConversionOptions): ArmyForgeUnit {
+    const baseUnit = units[0];
+    
+    // Combine sizes
+    const totalSize = units.reduce((sum, unit) => sum + (unit.size || 1), 0);
+    
+    // Combine loadouts
+    const combinedLoadout: any[] = [];
+    for (const unit of units) {
+      if (unit.loadout) {
+        combinedLoadout.push(...unit.loadout);
+      }
+    }
+    
+    // Combine models if available
+    const combinedModels: any[] = [];
+    for (const unit of units) {
+      if (unit.models && unit.models.length > 0) {
+        combinedModels.push(...unit.models);
+      } else {
+        // Create models from size if no detailed models
+        for (let i = 0; i < (unit.size || 1); i++) {
+          combinedModels.push({
+            id: `${unit.id}_model_${i}`,
+            name: `${unit.name} Model ${i + 1}`,
+            count: 1,
+            stats: {
+              quality: unit.quality || 4,
+              defense: unit.defense || 5,
+              wounds: 1
+            },
+            equipment: [],
+            cost: 0
+          });
+        }
+      }
+    }
+
+    // Create merged unit
+    return {
+      ...baseUnit,
+      size: totalSize,
+      loadout: combinedLoadout,
+      models: combinedModels,
+      combined: true
+    };
   }
 
   /**
@@ -351,8 +699,8 @@ export class BattleSyncConverter {
     // Convert weapons
     const weapons = this.convertWeaponsToBattleSync(unit);
 
-    // Determine if hero
-    const isHero = unit.specialRules?.includes('Hero') || false;
+    // Determine if hero using enhanced detection
+    const isHero = this.isHeroUnit(unit);
 
     return {
       armyForgeUnitId: unit.id,
@@ -378,20 +726,13 @@ export class BattleSyncConverter {
     index: number
   ): BattleSyncModel {
     
-    const isHero = unit.specialRules?.includes('Hero') || false;
-    const isCaster = unit.specialRules?.some(rule => rule.startsWith('Caster')) || false;
+    const isHero = this.isHeroUnit(unit);
+    const isCaster = this.isCasterUnit(unit);
     
     let casterTokens = 0;
     if (isCaster) {
       // Extract caster token count from rules like "Caster(2)"
-      const casterRule = (unit.specialRules || [])
-        .find(rule => rule.startsWith('Caster'));
-      if (casterRule) {
-        const match = casterRule.match(/Caster\((\d+)\)/);
-        if (match) {
-          casterTokens = parseInt(match[1]);
-        }
-      }
+      casterTokens = this.extractCasterTokens(unit);
     }
 
     // Get tough from model stats or use default
@@ -414,8 +755,8 @@ export class BattleSyncConverter {
    * Create model from unit data (when no detailed models available)
    */
   private static createModelFromUnit(unit: ArmyForgeUnit, index: number): BattleSyncModel {
-    const isHero = unit.specialRules?.includes('Hero') || false;
-    const isCaster = unit.specialRules?.some(rule => rule.startsWith('Caster')) || false;
+    const isHero = this.isHeroUnit(unit);
+    const isCaster = this.isCasterUnit(unit);
     
     let casterTokens = 0;
     if (isCaster) {
@@ -532,23 +873,6 @@ export class BattleSyncConverter {
     return 'STANDARD';
   }
 
-  /**
-   * Process combined units logic
-   */
-  private static processCombinedUnits(containers: BattleSyncUnit[]): {warnings: string[]} {
-    const warnings: string[] = [];
-    
-    // For now, just mark subunits as combined if they have the combined flag
-    for (const container of containers) {
-      for (const subunit of container.subunits) {
-        if (subunit.isCombined) {
-          warnings.push(`Unit ${subunit.name} has combined flag but combination logic not fully implemented`);
-        }
-      }
-    }
-    
-    return { warnings };
-  }
 
   /**
    * Extract AP value from weapon special rules
