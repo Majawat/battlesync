@@ -56,14 +56,13 @@ export class BattleSyncService {
         where: {
           id: battleId,
           OR: [
-            { createdByUserId: userId },
+            { createdBy: userId },
             { participants: { some: { userId } } }
           ]
         },
         include: {
           participants: {
             include: {
-              user: true,
               army: true
             }
           },
@@ -78,7 +77,7 @@ export class BattleSyncService {
       }
 
       // Convert stored battle data to BattleSync format
-      const battleData = battle.battleData as any;
+      const battleData = battle.currentState as any;
       
       // If battle data is already in BattleSync format, return it
       if (battleData?.armies && battleData.armies.length > 0 && battleData.armies[0].units) {
@@ -148,7 +147,8 @@ export class BattleSyncService {
           isAwaitingActivation: false,
           canPassTurn: false,
           passedPlayers: [],
-          roundComplete: false
+          roundComplete: false,
+          lastRoundFinishOrder: []
         }
       };
 
@@ -171,11 +171,8 @@ export class BattleSyncService {
       await prisma.battle.update({
         where: { id: battleState.battleId },
         data: {
-          battleData: battleState as any,
-          currentRound: battleState.currentRound,
-          status: battleState.status,
-          phase: battleState.phase,
-          currentPlayer: battleState.currentPlayer
+          currentState: battleState as any,
+          status: battleState.status
         }
       });
 
@@ -230,12 +227,15 @@ export class BattleSyncService {
       // Send WebSocket update
       const wsMessage = {
         type: 'DAMAGE_APPLIED',
-        battleId,
-        unitId,
-        damage,
-        ...damageResult
+        data: {
+          battleId,
+          unitId,
+          damage,
+          ...damageResult
+        },
+        timestamp: new Date().toISOString()
       };
-      getWebSocketManager().sendToBattle(battleId, wsMessage);
+      getWebSocketManager()?.broadcastToRoomPublic(`battle:${battleId}`, wsMessage);
 
       return { success: true, ...damageResult };
 
@@ -350,10 +350,13 @@ export class BattleSyncService {
       await this.saveBattleState(battleState);
 
       // Send notification
-      getWebSocketManager().sendToBattle(battleId, {
+      getWebSocketManager()?.broadcastToRoomPublic(`battle:${battleId}`, {
         type: 'ROUND_STARTED',
-        battleId,
-        round: battleState.currentRound
+        data: {
+          battleId,
+          round: battleState.currentRound
+        },
+        timestamp: new Date().toISOString()
       });
 
       return { success: true };
@@ -368,7 +371,8 @@ export class BattleSyncService {
    * Create a new battle from armies using BattleSync format
    */
   static async createBattle(
-    createdByUserId: string,
+    createdBy: string,
+    groupId: string,
     missionId: string,
     armyIds: string[]
   ): Promise<{ success: boolean; battleId?: string; error?: string }> {
@@ -385,7 +389,7 @@ export class BattleSyncService {
           const conversionResult = await BattleSyncConverter.convertArmyToBattleSync(
             army.userId,
             army.id,
-            army.armyData,
+            army.armyData as any,
             {
               allowCombined: true,
               allowJoined: true,
@@ -425,19 +429,19 @@ export class BattleSyncService {
           isAwaitingActivation: false,
           canPassTurn: false,
           passedPlayers: [],
-          roundComplete: false
+          roundComplete: false,
+          lastRoundFinishOrder: []
         }
       };
 
       // Create battle in database
       const battle = await prisma.battle.create({
         data: {
-          createdByUserId,
+          createdBy,
+          groupId,
           missionId,
           status: 'SETUP',
-          phase: 'DEPLOYMENT',
-          currentRound: 1,
-          battleData: battleState as any
+          currentState: battleState as any
         }
       });
 
@@ -445,7 +449,7 @@ export class BattleSyncService {
       battleState.battleId = battle.id;
       await prisma.battle.update({
         where: { id: battle.id },
-        data: { battleData: battleState as any }
+        data: { currentState: battleState as any }
       });
 
       // Create participants
@@ -454,7 +458,9 @@ export class BattleSyncService {
           data: {
             battleId: battle.id,
             userId: army.userId,
-            armyId: army.armyId
+            armyId: army.armyId,
+            faction: army.factions?.[0]?.factionName || 'Unknown',
+            startingPoints: army.totalPoints || 0
           }
         });
       }

@@ -94,22 +94,26 @@ export class BattleSyncActivationService {
       const turnResult = this.advanceTurnOrder(battleState);
 
       // Record battle action for undo system
-      await BattleActionHistoryService.recordBattleAction({
+      await BattleActionHistoryService.recordAction(
         battleId,
-        actionType: 'UNIT_ACTIVATION',
-        playerId: userId,
-        round: battleState.currentRound,
-        turn: battleState.activationState.currentTurn,
-        description: `${targetUnit.name} performed ${request.action} action`,
-        beforeState,
-        afterState: JSON.parse(JSON.stringify(battleState)),
-        targetUnitId: targetUnit.battleSyncUnitId,
-        additionalData: {
+        userId,
+        'UNIT_ACTION_SET',
+        {
           action: request.action,
           targetUnitId: request.targetUnitId,
-          targetPosition: request.targetPosition
+          targetPosition: request.targetPosition,
+          round: battleState.currentRound,
+          turn: battleState.activationState.currentTurn,
+          description: `${targetUnit.name} performed ${request.action} action`
+        },
+        beforeState as any,
+        JSON.parse(JSON.stringify(battleState)) as any,
+        {
+          canUndo: true,
+          undoComplexity: 'simple',
+          affectedUnitIds: [targetUnit.battleSyncUnitId]
         }
-      });
+      );
 
       // Save battle state
       await BattleSyncService.saveBattleState(battleState);
@@ -307,16 +311,23 @@ export class BattleSyncActivationService {
       const turnResult = this.advanceTurnOrder(battleState);
 
       // Record action
-      await BattleActionHistoryService.recordBattleAction({
+      await BattleActionHistoryService.recordAction(
         battleId,
-        actionType: 'ACTIVATION_PASSED',
-        playerId: userId,
-        round: battleState.currentRound,
-        turn: battleState.activationState.currentTurn,
-        description: 'Player passed activation',
-        beforeState: JSON.parse(JSON.stringify(battleState)),
-        afterState: JSON.parse(JSON.stringify(battleState))
-      });
+        userId,
+        'UNIT_ACTION_SET',
+        {
+          action: 'PASS',
+          round: battleState.currentRound,
+          turn: battleState.activationState.currentTurn,
+          description: 'Player passed activation'
+        },
+        JSON.parse(JSON.stringify(battleState)) as any,
+        JSON.parse(JSON.stringify(battleState)) as any,
+        {
+          canUndo: true,
+          undoComplexity: 'simple'
+        }
+      );
 
       // Save state
       await BattleSyncService.saveBattleState(battleState);

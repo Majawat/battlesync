@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 
 BattleSync is a self-hosted web application for managing One Page Rules (OPR) tabletop gaming campaigns with real-time battle tracking. 
 
-**Current State**: Production-ready multi-user application (v1.3.6) - Complete battle system with Scout deployment rules, deployment phase management, functional trait mechanics, turn/round management, ArmyForge metadata integration, enhanced unit displays, and advanced army conversion system  
+**Current State**: Production-ready multi-user application (v1.3.7) - Complete battle system with Scout deployment rules, deployment phase management, functional trait mechanics, turn/round management, ArmyForge metadata integration, enhanced unit displays, advanced army conversion system, and comprehensive development quality assurance workflow  
 **Target State**: Enhanced battle features with advanced OPR conversion and analytics
 
 ## Recent Major Completions
@@ -115,6 +115,26 @@ BattleSync is a self-hosted web application for managing One Page Rules (OPR) ta
 - Tough value distribution and hero joining mechanics
 - Defense upgrade processing and weapon count accuracy
 - Complex upgrade scenarios and edge case handling
+
+### ✅ **Comprehensive Development Quality Assurance (v1.3.7)** - FULLY IMPLEMENTED
+- **TypeScript Validation Workflow**: Mandatory compilation checks before any commit
+- **Core Function Testing**: Docker startup, health endpoints, authentication flow validation
+- **API Verification**: Automated testing of core APIs (armies, campaigns, missions, health)
+- **Version Management**: Synchronized version updates across package.json files and documentation
+- **Git Workflow Standards**: Detailed commit messages with immediate push after testing
+- **Quality Gates**: Zero tolerance for compilation failures or broken core functionality
+- **Testing Commands**: Standardized bash commands for consistent validation workflow
+
+**Quality Assurance Commands:**
+- `npm run typecheck && npm run frontend:typecheck` - TypeScript validation
+- `docker compose up -d` - Container startup testing
+- `curl -f http://localhost:3001/health` - Health endpoint verification
+- `curl -f http://localhost:3002/` - Frontend serving test
+- Authentication and API testing via curl commands
+
+**Key Files:**
+- `/CLAUDE.md` - Development workflow documentation with mandatory quality gates
+- `/package.json` & `/frontend/package.json` - Version synchronization requirements
 
 ### ✅ **Advanced Army Conversion System (v1.3.6)** - FULLY IMPLEMENTED
 - **Two-Pass Conversion Logic**: Sophisticated unit relationship handling with container/subunit architecture
@@ -283,7 +303,7 @@ Players activate units in predetermined turn order:
 
 ## Implementation Status
 
-### ✅ **Currently Implemented** (v1.3.6)
+### ✅ **Currently Implemented** (v1.3.7)
 - **Complete Deployment Phase**: Roll-off, unit placement, Scout deployment, battle transition
 - **Turn-Based Activation System**: Proper OPR turn order with alternating activations
 - **Round Management**: Start-of-round events, caster token refresh, command point management
@@ -387,7 +407,50 @@ When implementing deployment features:
 - Never implement coordinate systems or positioning validation
 
 ## Development Practices
-- While coding, update our version numbers to accurately describe what we are doing and where the app is
+
+### CRITICAL: Quality Assurance Workflow
+**ALWAYS follow this workflow during development to prevent broken deployments:**
+
+1. **TypeScript Validation**
+   - Run `npm run typecheck` and `npm run frontend:typecheck` before any commit
+   - Fix ALL TypeScript errors - zero tolerance for compilation failures
+   - Never commit code that doesn't compile cleanly
+
+2. **Core Function Testing**
+   - Test Docker container startup: `docker compose up -d`
+   - Verify health endpoint: `curl http://localhost:3001/health`
+   - Test authentication flow: register/login via API
+   - Verify core APIs are responding (armies, campaigns, missions)
+   - Test frontend serving: `curl http://localhost:3002/`
+
+3. **Version Management**
+   - Update version numbers in both `package.json` and `frontend/package.json`
+   - Update version references in `CLAUDE.md` documentation
+   - Increment appropriately: patch for fixes, minor for features, major for breaking changes
+
+4. **Git Workflow**
+   - Commit with detailed, descriptive messages explaining what was implemented
+   - Include technical details and rationale in commit messages
+   - Push to GitHub immediately after successful testing
+   - Use conventional commit format with emoji indicators
+
+**Example Quality Check:**
+```bash
+# 1. TypeScript validation
+npm run typecheck && npm run frontend:typecheck
+
+# 2. Docker testing
+docker compose up -d
+curl -f http://localhost:3001/health
+curl -f http://localhost:3002/
+
+# 3. API testing
+curl -X POST http://localhost:3001/api/auth/login -H "Content-Type: application/json" -d '{"username":"test","password":"test"}'
+
+# 4. Version update and commit
+git add . && git commit -m "feat: implement feature with proper testing"
+git push
+```
 
 ### Code Standards
 - Use TypeScript strict mode
@@ -397,4 +460,3 @@ When implementing deployment features:
 - Validate all inputs with Joi or custom validation
 - **ALWAYS use correct TypeScript syntax**
 - Always verify functionality through the webapp's api to ensure it's working as expected
-- Commit with comments and push to github when appropriate while developing
