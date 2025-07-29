@@ -10,7 +10,10 @@ import {
   UserSession, 
   RoomType,
   NotificationData,
-  WSMessageType
+  WSMessageType,
+  BattleAuraDevice,
+  DeviceRegistration,
+  DeviceStatusUpdate
 } from '../types/websocket';
 
 export class WebSocketManager {
@@ -18,6 +21,9 @@ export class WebSocketManager {
   private users: Map<string, UserSession> = new Map();
   private rooms: Map<string, Room> = new Map();
   private heartbeatInterval!: NodeJS.Timeout;
+  
+  // BattleAura device management
+  private battleAuraDevices: Map<string, BattleAuraDevice> = new Map();
 
   constructor(wss: WebSocketServer) {
     this.wss = wss;
@@ -97,6 +103,12 @@ export class WebSocketManager {
         case 'mission_update':
         case 'battle_update':
           this.handleRoomBroadcast(ws, wsMessage, messageId);
+          break;
+        case 'device_register':
+          this.handleDeviceRegistration(ws, wsMessage, messageId);
+          break;
+        case 'device_status':
+          this.handleDeviceStatusUpdate(ws, wsMessage, messageId);
           break;
         default:
           this.sendError(ws, `Unknown message type: ${wsMessage.type}`, messageId);
@@ -509,5 +521,154 @@ export class WebSocketManager {
 
   public getConnectionCount(): number {
     return this.users.size;
+  }
+
+  // BattleAura Device Management Methods
+  private handleDeviceRegistration(ws: AuthenticatedWebSocket, message: WebSocketMessage, messageId: string): void {
+    try {
+      const registration = message.data as DeviceRegistration;
+      
+      if (!registration.deviceId || !registration.name || !registration.capabilities) {
+        this.sendError(ws, 'Invalid device registration data', messageId);
+        return;
+      }
+
+      // Create or update device record
+      const device: BattleAuraDevice = {
+        id: registration.deviceId,
+        name: registration.name,
+        status: 'online',
+        lastSeen: new Date(),
+        capabilities: registration.capabilities
+      };
+
+      this.battleAuraDevices.set(registration.deviceId, device);
+
+      // Store device WebSocket connection
+      (ws as any).deviceId = registration.deviceId;
+      (ws as any).isDevice = true;
+
+      // Acknowledge registration
+      this.sendMessage(ws, {
+        type: 'device_register',
+        data: {
+          success: true,
+          deviceId: registration.deviceId,
+          serverTime: new Date().toISOString()
+        },
+        timestamp: new Date().toISOString(),
+        messageId
+      });
+
+      // Broadcast device online status to relevant users
+      this.broadcastDeviceStatus(registration.deviceId, 'online');
+
+      logger.info(`BattleAura device registered: ${registration.name} (${registration.deviceId})`);
+    } catch (error) {
+      logger.error('Device registration error:', error);
+      this.sendError(ws, 'Device registration failed', messageId);
+    }
+  }
+
+  private handleDeviceStatusUpdate(ws: AuthenticatedWebSocket, message: WebSocketMessage, messageId: string): void {
+    try {
+      const statusUpdate = message.data as DeviceStatusUpdate;
+      const deviceId = (ws as any).deviceId;
+
+      if (!deviceId || deviceId !== statusUpdate.deviceId) {
+        this.sendError(ws, 'Invalid device status update', messageId);
+        return;
+      }
+
+      const device = this.battleAuraDevices.get(deviceId);
+      if (device) {
+        device.status = statusUpdate.status;
+        device.lastSeen = new Date();
+        
+        if (statusUpdate.batteryLevel !== undefined) {
+          device.capabilities.batteryLevel = statusUpdate.batteryLevel;
+        }
+
+        this.battleAuraDevices.set(deviceId, device);
+
+        // Broadcast status update
+        this.broadcastDeviceStatus(deviceId, statusUpdate.status);
+      }
+
+      // Acknowledge status update
+      this.sendMessage(ws, {
+        type: 'device_status',
+        data: { success: true },
+        timestamp: new Date().toISOString(),
+        messageId
+      });
+    } catch (error) {
+      logger.error('Device status update error:', error);
+      this.sendError(ws, 'Status update failed', messageId);
+    }
+  }
+
+  private broadcastDeviceStatus(deviceId: string, status: BattleAuraDevice['status']): void {
+    const device = this.battleAuraDevices.get(deviceId);
+    if (!device) return;
+
+    const statusMessage: WebSocketResponse = {
+      type: 'device_status',
+      data: {
+        deviceId,
+        status,
+        device: device
+      },
+      timestamp: new Date().toISOString()
+    };
+
+    // Broadcast to all authenticated users
+    this.users.forEach((session) => {
+      if (session.isOnline) {
+        this.sendMessage(session.ws, statusMessage);
+      }
+    });
+  }
+
+  // Public methods for BattleAura integration
+  public sendBattleAuraEvent(deviceId: string, event: any): void {
+    const device = this.battleAuraDevices.get(deviceId);
+    if (!device || device.status !== 'online') {
+      logger.warn(`Cannot send event to offline device: ${deviceId}`);
+      return;
+    }
+
+    // Find device WebSocket connection
+    this.wss.clients.forEach((client) => {
+      const deviceWs = client as any;
+      if (deviceWs.deviceId === deviceId && deviceWs.readyState === WebSocket.OPEN) {
+        this.sendMessage(deviceWs, {
+          type: 'battlearua_event',
+          data: event,
+          timestamp: new Date().toISOString()
+        });
+      }
+    });
+  }
+
+  public getBattleAuraDevices(): BattleAuraDevice[] {
+    return Array.from(this.battleAuraDevices.values());
+  }
+
+  public getBattleAuraDevice(deviceId: string): BattleAuraDevice | undefined {
+    return this.battleAuraDevices.get(deviceId);
+  }
+
+  public assignDeviceToUnit(deviceId: string, unitId: string): boolean {
+    const device = this.battleAuraDevices.get(deviceId);
+    if (device) {
+      device.unitId = unitId;
+      this.battleAuraDevices.set(deviceId, device);
+      
+      // Broadcast assignment update
+      this.broadcastDeviceStatus(deviceId, device.status);
+      return true;
+    }
+    return false;
   }
 }

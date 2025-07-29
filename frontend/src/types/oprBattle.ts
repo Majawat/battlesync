@@ -106,6 +106,9 @@ export interface OPRBattleUnit {
   faction: string; // Added for spell fetching
   userId?: string; // Owner of the unit for spell targeting
   
+  // BattleAura integration
+  battleAuraDeviceId?: string; // Assigned ESP32 device
+  
   // Unit state
   action: 'hold' | 'advance' | 'rush' | 'charge' | null;
   fatigued: boolean;
@@ -395,5 +398,39 @@ export interface OPRDeploymentState {
   scoutUnits: string[];
   allUnitsDeployed: boolean;
   readyForBattle: boolean;
+}
+
+// BattleAura ESP32 Integration Types
+export interface BattleAuraDevice {
+  id: string;              // MAC address or unique identifier
+  name: string;            // "BattleAura-A1B2C3"
+  ipAddress?: string;      // Local IP for discovery
+  status: 'online' | 'offline' | 'connecting' | 'discovered';
+  lastSeen: Date;
+  unitId?: string;         // Assigned BattleSync unit ID
+  capabilities: {
+    ledCount: number;
+    hasAudio: boolean;
+    hasTiltSensor: boolean;
+    batteryLevel?: number;
+    firmwareVersion: string;
+  };
+}
+
+export interface BattleAuraEvent {
+  type: 'UNIT_SHOOTING' | 'UNIT_DAMAGE' | 'UNIT_ACTIVATION' | 'UNIT_MOVEMENT';
+  battleId: string;
+  unitId: string;
+  timestamp: string;
+  
+  // BattleAura-specific effect data
+  battleAura?: {
+    deviceId?: string;
+    effect: 'WEAPON_FIRE' | 'DAMAGE_TAKEN' | 'ACTIVATION' | 'MOVEMENT' | 'DESTROYED';
+    weaponName?: string;
+    intensity?: number;     // 1-10 scale
+    duration?: number;      // Effect duration in ms
+    color?: string;         // LED color code
+  };
 }
 

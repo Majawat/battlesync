@@ -5,6 +5,7 @@ import { apiClient } from '../services/api';
 import { Army } from '../types/army';
 import { OPRBattleUnit } from '../types/oprBattle';
 import { BattleUnitCard } from './BattleUnitCard';
+import { BattleAuraSetup } from './BattleAuraSetup';
 
 export const ArmyDetailView: React.FC = () => {
   const { armyId } = useParams<{ armyId: string }>();
@@ -286,16 +287,27 @@ export const ArmyDetailView: React.FC = () => {
                   <div className="space-y-4">
                     {showBattleView ? (
                       battleUnits.length > 0 ? (
-                        <div className="space-y-3">
-                          {battleUnits.map((unit: OPRBattleUnit, index: number) => (
-                            <BattleUnitCard 
-                              key={`battle-unit-${unit.unitId}-${index}`} 
-                              unit={unit}
-                              battlePhase="BATTLE_ROUNDS"
-                              isOwned={true}
-                            />
-                          ))}
-                        </div>
+                        <>
+                          <div className="space-y-3">
+                            {battleUnits.map((unit: OPRBattleUnit, index: number) => (
+                              <BattleUnitCard 
+                                key={`battle-unit-${unit.unitId}-${index}`} 
+                                unit={unit}
+                                battlePhase="BATTLE_ROUNDS"
+                                isOwned={true}
+                              />
+                            ))}
+                          </div>
+                          
+                          {/* BattleAura ESP32 Integration */}
+                          <BattleAuraSetup 
+                            battleUnits={battleUnits}
+                            onDeviceAssignment={(deviceId, unitId) => {
+                              console.log(`Device ${deviceId} assigned to unit ${unitId}`);
+                              // Optionally update local state or trigger refresh
+                            }}
+                          />
+                        </>
                       ) : (
                         <div className="text-center py-8">
                           <div className="text-gray-400 mb-4">
