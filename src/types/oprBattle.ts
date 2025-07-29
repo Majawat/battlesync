@@ -477,7 +477,7 @@ export type OPRUnitDeploymentStatus =
 export interface OPRUnitDeploymentState {
   status: OPRUnitDeploymentStatus;
   deployedInTurn?: number; // Which deployment turn this unit was placed
-  deploymentMethod: 'STANDARD' | 'AMBUSH' | 'SCOUT' | 'TRANSPORT';
+  deploymentMethod: 'STANDARD' | 'AMBUSH' | 'SCOUT' | 'TRANSPORT' | 'EMBARK';
   
   // For reserve deployments
   canDeployThisRound?: boolean; // Ambush units can't deploy round 1

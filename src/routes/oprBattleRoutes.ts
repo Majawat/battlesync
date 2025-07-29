@@ -230,6 +230,20 @@ router.post(
 );
 
 /**
+ * Embark unit in transport
+ * POST /api/opr/battles/:battleId/deployment/embark-unit
+ */
+router.post(
+  '/:battleId/deployment/embark-unit',
+  authenticate,
+  validateSchema(Joi.object({
+    unitId: Joi.string().required(),
+    transportId: Joi.string().required()
+  })),
+  OPRBattleController.embarkUnit
+);
+
+/**
  * Apply damage to unit/model
  * POST /api/opr/battles/:battleId/damage
  */

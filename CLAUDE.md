@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 
 BattleSync is a self-hosted web application for managing One Page Rules (OPR) tabletop gaming campaigns with real-time battle tracking. 
 
-**Current State**: Production-ready multi-user application (v1.3.7) - Complete battle system with Scout deployment rules, deployment phase management, functional trait mechanics, turn/round management, ArmyForge metadata integration, enhanced unit displays, advanced army conversion system, and comprehensive development quality assurance workflow  
+**Current State**: Production-ready multi-user application (v1.3.8) - Complete battle system with Scout deployment rules, deployment phase management, functional trait mechanics, turn/round management, ArmyForge metadata integration, enhanced unit displays, advanced army conversion system, comprehensive development quality assurance workflow, and basic transport embarkation system  
 **Target State**: Enhanced battle features with advanced OPR conversion and analytics
 
 ## Recent Major Completions
@@ -115,6 +115,35 @@ BattleSync is a self-hosted web application for managing One Page Rules (OPR) ta
 - Tough value distribution and hero joining mechanics
 - Defense upgrade processing and weapon count accuracy
 - Complex upgrade scenarios and edge case handling
+
+### ✅ **Basic Transport Embarkation System (v1.3.8)** - FULLY IMPLEMENTED
+- **Simple Deployment Status**: Units can embark in transports during deployment phase
+- **Transport Relationship Tracking**: Records which transport units are embarked in for battle reports and undo
+- **Backend Service**: Complete embarkation validation with same-army requirements
+- **API Integration**: RESTful endpoint for embarkation requests with proper error handling
+- **Frontend UI**: Existing embark buttons now functional in DeploymentModal
+- **Battle Phase Compatibility**: Embarked units appear normally in activation panel (no restrictions yet)
+- **TypeScript Safety**: Added EMBARK deployment method to type definitions
+
+**Core Features:**
+- **Deployment Validation**: Transport must be deployed before units can embark
+- **Army Validation**: Only units from same army can embark in transports
+- **Turn Management**: Embarkation advances deployment turn like other deployment actions
+- **State Tracking**: Embarked status persists through battle for reports and undo system
+- **Player Agency**: No capacity or movement restrictions - players handle tabletop logistics
+
+**Key Files:**
+- `/src/services/deploymentService.ts` - Core embarkation logic with validation
+- `/src/controllers/oprBattleController.ts` - API endpoint implementation
+- `/src/routes/oprBattleRoutes.ts` - Route definition with schema validation
+- `/frontend/src/components/BattleDashboard.tsx` - Frontend integration
+- `/src/types/oprBattle.ts` - Type definitions for EMBARK deployment method
+
+**Future Expansion Points:**
+- Transport capacity validation and enforcement
+- Movement restrictions for embarked units
+- Disembarkation mechanics during battle
+- Transport destruction effects
 
 ### ✅ **Comprehensive Development Quality Assurance (v1.3.7)** - FULLY IMPLEMENTED
 - **TypeScript Validation Workflow**: Mandatory compilation checks before any commit
@@ -303,7 +332,7 @@ Players activate units in predetermined turn order:
 
 ## Implementation Status
 
-### ✅ **Currently Implemented** (v1.3.7)
+### ✅ **Currently Implemented** (v1.3.8)
 - **Complete Deployment Phase**: Roll-off, unit placement, Scout deployment, battle transition
 - **Turn-Based Activation System**: Proper OPR turn order with alternating activations
 - **Round Management**: Start-of-round events, caster token refresh, command point management
@@ -315,7 +344,7 @@ Players activate units in predetermined turn order:
 
 ### 🚧 **Partially Implemented**
 - **Unit Actions**: Hold/Advance actions partially done, need Rush/Charge implementation
-- **Transport System**: Basic embarkation structure exists, needs full deployment integration
+- **Transport System**: Basic embarkation implemented, needs capacity validation and disembarkation mechanics
 - **Command Points**: System exists but doctrine selection needs UI integration
 
 ### ❌ **Not Yet Implemented**
@@ -329,11 +358,11 @@ Players activate units in predetermined turn order:
 ## Development Priorities
 
 ### **High Priority** (Core Battle Flow & Critical Issues)
-1. **Complete Transport Embarkation**: Finish deployment embarkation system
-2. **Ambush Round 2+ Deployment**: Allow Ambush units to deploy at start of rounds
-3. **Rush/Charge Actions**: Implement remaining unit actions with movement modifiers
-4. **Turn Order Updates**: Fix activation order based on round completion timing
-5. **Deployment Validation**: Add validation before battle start
+1. **Ambush Round 2+ Deployment**: Allow Ambush units to deploy at start of rounds
+2. **Rush/Charge Actions**: Implement remaining unit actions with movement modifiers  
+3. **Turn Order Updates**: Fix activation order based on round completion timing
+4. **Deployment Validation**: Add validation before battle start
+5. **Transport Capacity System**: Implement capacity validation and disembarkation mechanics
 6. **Battle UI Polish**: Fix scroll behavior, add loading states for operations
 
 ### **Medium Priority** (Enhanced Features & UX)

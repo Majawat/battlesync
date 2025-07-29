@@ -418,6 +418,69 @@ export class DeploymentService {
     return { success: true };
   }
 
+  /**
+   * Deploy a unit as embarked in a transport
+   */
+  static deployUnitEmbarked(
+    battleState: OPRBattleState,
+    unitId: string,
+    transportId: string,
+    userId: string
+  ): { success: boolean; error?: string } {
+    
+    const deploymentState = battleState.activationState.deploymentState;
+    if (!deploymentState || deploymentState.phase !== 'DEPLOYMENT') {
+      return { success: false, error: 'Not in deployment phase' };
+    }
+
+    if (deploymentState.currentDeployingPlayer !== userId) {
+      return { success: false, error: 'Not your turn to deploy' };
+    }
+
+    const unit = this.findUnit(battleState, unitId);
+    if (!unit) {
+      return { success: false, error: 'Unit not found' };
+    }
+
+    const transport = this.findUnit(battleState, transportId);
+    if (!transport) {
+      return { success: false, error: 'Transport not found' };
+    }
+
+    if (unit.deploymentState.status !== 'PENDING') {
+      return { success: false, error: 'Unit already deployed' };
+    }
+
+    if (transport.deploymentState.status !== 'DEPLOYED') {
+      return { success: false, error: 'Transport must be deployed first' };
+    }
+
+    // Verify both units are in same army
+    const unitArmy = battleState.armies.find(army => army.units.some(u => u.unitId === unitId));
+    const transportArmy = battleState.armies.find(army => army.units.some(u => u.unitId === transportId));
+    
+    if (unitArmy?.userId !== transportArmy?.userId) {
+      return { success: false, error: 'Unit and transport must be in same army' };
+    }
+
+    // Deploy the unit as embarked
+    unit.deploymentState.status = 'DEPLOYED';
+    unit.deploymentState.deployedInTurn = deploymentState.deploymentTurn;
+    unit.deploymentState.deploymentMethod = 'EMBARK';
+    unit.deploymentState.transportId = transportId;
+    unit.deploymentState.deployedFromTransport = true;
+
+    // Update deployment tracking
+    deploymentState.unitsDeployed[userId].push(unitId);
+    deploymentState.unitsToDeploy[userId] = deploymentState.unitsToDeploy[userId]
+      .filter(id => id !== unitId);
+
+    // Advance to next player's turn
+    this.advanceDeploymentTurn(deploymentState);
+
+    return { success: true };
+  }
+
   // Helper methods
   private static findUnit(battleState: OPRBattleState, unitId: string): OPRBattleUnit | null {
     for (const army of battleState.armies) {

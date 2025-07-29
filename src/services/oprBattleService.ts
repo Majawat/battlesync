@@ -1649,6 +1649,41 @@ export class OPRBattleService {
   }
 
   /**
+   * Embark unit in transport during deployment
+   */
+  static async embarkUnit(battleId: string, userId: string, unitId: string, transportId: string): Promise<{ success: boolean; error?: string }> {
+    try {
+      const battleState = await this.getOPRBattleState(battleId, userId);
+      if (!battleState) {
+        return { success: false, error: 'Battle not found' };
+      }
+
+      const result = DeploymentService.deployUnitEmbarked(battleState, unitId, transportId, userId);
+      
+      if (result.success) {
+        // Save updated state
+        await prisma.battle.update({
+          where: { id: battleId },
+          data: { currentState: battleState as any }
+        });
+
+        // Notify all players
+        await NotificationService.notifyBattleStateChange(battleId, `Unit embarked in transport by ${userId}`);
+        
+        // Check if deployment is complete and transition to battle
+        if (DeploymentService.checkDeploymentComplete(battleState)) {
+          await this.transitionToBattleRounds(battleId, battleState);
+        }
+      }
+
+      return result;
+    } catch (error) {
+      logger.error('Error embarking unit:', error);
+      return { success: false, error: 'Failed to embark unit' };
+    }
+  }
+
+  /**
    * Transition battle from deployment phase to battle rounds with proper turn initialization
    */
   static async transitionToBattleRounds(battleId: string, battleState: OPRBattleState): Promise<void> {

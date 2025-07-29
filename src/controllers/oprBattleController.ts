@@ -536,6 +536,41 @@ export class OPRBattleController {
   }
 
   /**
+   * Embark unit in transport
+   * POST /api/opr/battles/:battleId/deployment/embark-unit
+   */
+  static async embarkUnit(req: Request, res: Response): Promise<void> {
+    try {
+      const userId = (req as AuthenticatedRequest).user!.id;
+      const { battleId } = req.params;
+      const { unitId, transportId } = req.body;
+
+      if (!unitId || !transportId) {
+        res.status(400).json({
+          success: false,
+          error: 'Missing required fields: unitId, transportId'
+        });
+        return;
+      }
+
+      const result = await OPRBattleService.embarkUnit(battleId, userId, unitId, transportId);
+
+      if (!result.success) {
+        res.status(400).json(result);
+        return;
+      }
+
+      res.json(result);
+    } catch (error) {
+      logger.error('Embark unit error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to embark unit'
+      });
+    }
+  }
+
+  /**
    * Apply damage to unit/model
    * POST /api/opr/battles/:battleId/damage
    */

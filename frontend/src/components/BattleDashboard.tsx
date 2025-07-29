@@ -544,9 +544,27 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
     }
   };
 
-  const handleEmbarkUnit = async (_unitId: string, _transportId: string) => {
-    // TODO: Implement transport embarkation
-    setError('Transport embarkation not yet implemented');
+  const handleEmbarkUnit = async (unitId: string, transportId: string) => {
+    try {
+      const response = await fetch(`/api/opr/battles/${battleId}/deployment/embark-unit`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        },
+        body: JSON.stringify({ unitId, transportId })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to embark unit');
+      }
+
+      // Refresh battle state
+      await fetchBattleState();
+    } catch (err) {
+      setError(`Failed to embark unit: ${err instanceof Error ? err.message : 'Unknown error'}`);
+    }
   };
 
   const handleDeploymentModalClose = () => {
