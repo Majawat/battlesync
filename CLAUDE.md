@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 
 BattleSync is a self-hosted web application for managing One Page Rules (OPR) tabletop gaming campaigns with real-time battle tracking. 
 
-**Current State**: Production-ready multi-user application (v1.3.5) - Complete battle system with Scout deployment rules, deployment phase management, functional trait mechanics, turn/round management, ArmyForge metadata integration, and enhanced unit displays  
+**Current State**: Production-ready multi-user application (v1.3.6) - Complete battle system with Scout deployment rules, deployment phase management, functional trait mechanics, turn/round management, ArmyForge metadata integration, enhanced unit displays, and advanced army conversion system  
 **Target State**: Enhanced battle features with advanced OPR conversion and analytics
 
 ## Recent Major Completions
@@ -115,6 +115,28 @@ BattleSync is a self-hosted web application for managing One Page Rules (OPR) ta
 - Tough value distribution and hero joining mechanics
 - Defense upgrade processing and weapon count accuracy
 - Complex upgrade scenarios and edge case handling
+
+### ✅ **Advanced Army Conversion System (v1.3.6)** - FULLY IMPLEMENTED
+- **Two-Pass Conversion Logic**: Sophisticated unit relationship handling with container/subunit architecture
+- **Intelligent Hero Detection**: Automatic hero identification via ArmyForge special rules (not hardcoded names)
+- **Caster Token Extraction**: Dynamic caster detection and token extraction from special rules
+- **Combined Unit Merging**: Multiple ArmyForge units intelligently combined into single containers
+- **Joined Unit Logic**: Heroes automatically join regular units as subunits when specified
+- **UUID-Based Identification**: Robust unit tracking with proper selectionId mapping
+- **Weapon Aggregation**: Smart weapon merging with proper count calculations
+- **Metadata Preservation**: Complete tracking of original unit relationships and transformations
+
+**Key Technical Features:**
+- **Container Map Lookup**: Efficient O(1) container lookup using Map<selectionId, container>
+- **Decision Tree Logic**: Proper handling of combined/joined unit relationships
+- **TypeScript Safety**: Strict typing with proper ArmyForge interface definitions
+- **Test Coverage**: Comprehensive validation ensuring exact unit count expectations
+- **Rule-Based Processing**: Uses actual ArmyForge special rules data instead of hardcoded heuristics
+
+**Key Files:**
+- `/src/services/battleSyncConverter.ts` - Core two-pass conversion logic with container/subunit handling
+- `/src/types/battleSync.ts` - Enhanced BattleSyncSubunit interface with metadata tracking
+- `/src/tests/battleSyncConverter.test.ts` - Validation tests ensuring perfect conversion results
 
 ### ✅ **Complete Deployment System with Scout Rules (v1.3.3-v1.3.5)** - FULLY IMPLEMENTED
 - **OPR-Compliant Deployment Phase**: Roll-off → Unit Placement → Scout Phase → Battle Start transition system
@@ -261,7 +283,7 @@ Players activate units in predetermined turn order:
 
 ## Implementation Status
 
-### ✅ **Currently Implemented** (v1.3.5)
+### ✅ **Currently Implemented** (v1.3.6)
 - **Complete Deployment Phase**: Roll-off, unit placement, Scout deployment, battle transition
 - **Turn-Based Activation System**: Proper OPR turn order with alternating activations
 - **Round Management**: Start-of-round events, caster token refresh, command point management
