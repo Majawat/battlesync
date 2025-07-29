@@ -11,6 +11,7 @@ import { ActivationPanel } from './ActivationPanel';
 import { MoraleTestPanel } from './MoraleTestPanel';
 import { DeploymentRollOffModal } from './DeploymentRollOffModal';
 import { DeploymentModal } from './DeploymentModal';
+import { AmbushDeploymentModal } from './AmbushDeploymentModal';
 import { 
   OPRBattleState, 
   OPRBattlePhase,
@@ -63,6 +64,7 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
   const [showDeploymentRollOff, setShowDeploymentRollOff] = useState(false);
   const [deploymentRollOffState, setDeploymentRollOffState] = useState<OPRDeploymentRollOff | null>(null);
   const [showDeploymentModal, setShowDeploymentModal] = useState(false);
+  const [showAmbushModal, setShowAmbushModal] = useState(false);
 
   // Stable callback for setting cooperative contribution handler
   const handleCooperativeContributionRequest = useCallback((handler: (request: any) => void) => {
@@ -109,6 +111,19 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
           // Close deployment modals when battle starts
           setShowDeploymentRollOff(false);
           setShowDeploymentModal(false);
+          
+          // Check for ambush deployment opportunity
+          const ambushAvailable = data.data.activationState?.ambushDeploymentAvailable;
+          const availableAmbushUnits = data.data.activationState?.availableAmbushUnits || [];
+          const hasMyAmbushUnits = availableAmbushUnits.some((unit: any) => unit.userId === user?.id);
+          
+          if (ambushAvailable && hasMyAmbushUnits && !showAmbushModal) {
+            console.log('Auto-showing ambush deployment modal');
+            setShowAmbushModal(true);
+          } else if (!ambushAvailable && showAmbushModal) {
+            console.log('Auto-closing ambush deployment modal - all decisions made');
+            setShowAmbushModal(false);
+          }
         }
       } else {
         throw new Error(data.error || 'Invalid battle state response');
@@ -569,6 +584,56 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
 
   const handleDeploymentModalClose = () => {
     setShowDeploymentModal(false);
+  };
+
+  const handleAmbushModalClose = () => {
+    setShowAmbushModal(false);
+  };
+
+  const handleDeployAmbushUnit = async (unitId: string) => {
+    try {
+      const response = await fetch(`/api/opr/battles/${battleId}/ambush/deploy-unit`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        },
+        body: JSON.stringify({ unitId })
+      });
+
+      if (response.ok) {
+        await fetchBattleState();
+        // Don't close modal automatically - let user make decisions for other units
+      } else {
+        const errorData = await response.json();
+        console.error('Failed to deploy ambush unit:', errorData.error);
+      }
+    } catch (error) {
+      console.error('Error deploying ambush unit:', error);
+    }
+  };
+
+  const handleKeepAmbushUnitInReserves = async (unitId: string) => {
+    try {
+      const response = await fetch(`/api/opr/battles/${battleId}/ambush/keep-in-reserves`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        },
+        body: JSON.stringify({ unitId })
+      });
+
+      if (response.ok) {
+        await fetchBattleState();
+        // Don't close modal automatically - let user make decisions for other units
+      } else {
+        const errorData = await response.json();
+        console.error('Failed to keep ambush unit in reserves:', errorData.error);
+      }
+    } catch (error) {
+      console.error('Error keeping ambush unit in reserves:', error);
+    }
   };
 
   // Quick damage application
@@ -1191,6 +1256,18 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
           onScoutUnit={handleScoutUnit}
           onDeployScoutUnit={handleDeployScoutUnit}
           onEmbarkUnit={handleEmbarkUnit}
+        />
+      )}
+
+      {/* Ambush Deployment Modal */}
+      {battleState && (
+        <AmbushDeploymentModal
+          isVisible={showAmbushModal}
+          onClose={handleAmbushModalClose}
+          battleState={battleState}
+          currentUserId={user?.id || ''}
+          onDeployAmbushUnit={handleDeployAmbushUnit}
+          onKeepInReserves={handleKeepAmbushUnitInReserves}
         />
       )}
 

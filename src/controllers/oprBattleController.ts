@@ -571,6 +571,76 @@ export class OPRBattleController {
   }
 
   /**
+   * Deploy ambush unit from reserves (Round 2+)
+   * POST /api/opr/battles/:battleId/ambush/deploy-unit
+   */
+  static async deployAmbushUnit(req: Request, res: Response): Promise<void> {
+    try {
+      const userId = (req as AuthenticatedRequest).user!.id;
+      const { battleId } = req.params;
+      const { unitId } = req.body;
+
+      if (!unitId) {
+        res.status(400).json({
+          success: false,
+          error: 'Missing required field: unitId'
+        });
+        return;
+      }
+
+      const result = await OPRBattleService.deployAmbushUnit(battleId, userId, unitId);
+
+      if (!result.success) {
+        res.status(400).json(result);
+        return;
+      }
+
+      res.json(result);
+    } catch (error) {
+      logger.error('Deploy ambush unit error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to deploy ambush unit'
+      });
+    }
+  }
+
+  /**
+   * Keep ambush unit in reserves for this round
+   * POST /api/opr/battles/:battleId/ambush/keep-in-reserves
+   */
+  static async keepAmbushUnitInReserves(req: Request, res: Response): Promise<void> {
+    try {
+      const userId = (req as AuthenticatedRequest).user!.id;
+      const { battleId } = req.params;
+      const { unitId } = req.body;
+
+      if (!unitId) {
+        res.status(400).json({
+          success: false,
+          error: 'Missing required field: unitId'
+        });
+        return;
+      }
+
+      const result = await OPRBattleService.keepAmbushUnitInReserves(battleId, userId, unitId);
+
+      if (!result.success) {
+        res.status(400).json(result);
+        return;
+      }
+
+      res.json(result);
+    } catch (error) {
+      logger.error('Keep ambush unit in reserves error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to keep ambush unit in reserves'
+      });
+    }
+  }
+
+  /**
    * Apply damage to unit/model
    * POST /api/opr/battles/:battleId/damage
    */

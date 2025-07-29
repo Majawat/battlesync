@@ -1684,6 +1684,109 @@ export class OPRBattleService {
   }
 
   /**
+   * Deploy ambush unit from reserves (Round 2+)
+   */
+  static async deployAmbushUnit(battleId: string, userId: string, unitId: string): Promise<{ success: boolean; error?: string }> {
+    try {
+      const battleState = await this.getOPRBattleState(battleId, userId);
+      if (!battleState) {
+        return { success: false, error: 'Battle not found' };
+      }
+
+      const result = DeploymentService.deployAmbushUnit(battleState, unitId, userId);
+      
+      if (result.success) {
+        // Save updated state
+        await prisma.battle.update({
+          where: { id: battleId },
+          data: { currentState: battleState as any }
+        });
+
+        // Notify all players
+        await NotificationService.notifyBattleStateChange(battleId, `Ambush unit deployed by ${userId}`);
+        
+        // Record battle event
+        await this.recordBattleEvent(
+          battleId,
+          userId,
+          'UNIT_ACTIVATED',
+          {
+            description: `Ambush unit deployed from reserves`,
+            unitId,
+            additionalData: {
+              deploymentMethod: 'AMBUSH',
+              round: battleState.currentRound
+            }
+          }
+        );
+        
+        // Clear ambush deployment flag if all decisions made
+        if (DeploymentService.checkAmbushDeploymentComplete(battleState)) {
+          battleState.activationState.ambushDeploymentAvailable = false;
+          battleState.activationState.availableAmbushUnits = [];
+        }
+      }
+
+      return result;
+    } catch (error) {
+      logger.error('Error deploying ambush unit:', error);
+      return { success: false, error: 'Failed to deploy ambush unit' };
+    }
+  }
+
+  /**
+   * Keep ambush unit in reserves for this round
+   */
+  static async keepAmbushUnitInReserves(battleId: string, userId: string, unitId: string): Promise<{ success: boolean; error?: string }> {
+    try {
+      const battleState = await this.getOPRBattleState(battleId, userId);
+      if (!battleState) {
+        return { success: false, error: 'Battle not found' };
+      }
+
+      const result = DeploymentService.keepAmbushUnitInReserves(battleState, unitId, userId);
+      
+      if (result.success) {
+        // Save updated state
+        await prisma.battle.update({
+          where: { id: battleId },
+          data: { currentState: battleState as any }
+        });
+
+        // Notify all players
+        await NotificationService.notifyBattleStateChange(battleId, `Ambush unit kept in reserves by ${userId}`);
+        
+        // Record battle event
+        await this.recordBattleEvent(
+          battleId,
+          userId,
+          'UNIT_ACTION',
+          {
+            description: `Ambush unit kept in reserves for round ${battleState.currentRound}`,
+            unitId,
+            additionalData: {
+              deploymentMethod: 'AMBUSH',
+              round: battleState.currentRound,
+              decision: 'KEEP_IN_RESERVES'
+            }
+          }
+        );
+        
+        // Clear ambush deployment flag if all decisions made
+        if (DeploymentService.checkAmbushDeploymentComplete(battleState)) {
+          battleState.activationState.ambushDeploymentAvailable = false;
+          battleState.activationState.availableAmbushUnits = [];
+        }
+      }
+
+      return result;
+    } catch (error) {
+      logger.error('Error keeping ambush unit in reserves:', error);
+      return { success: false, error: 'Failed to keep ambush unit in reserves' };
+    }
+  }
+
+  /**
    * Transition battle from deployment phase to battle rounds with proper turn initialization
    */
   static async transitionToBattleRounds(battleId: string, battleState: OPRBattleState): Promise<void> {

@@ -244,6 +244,32 @@ router.post(
 );
 
 /**
+ * Deploy ambush unit from reserves (Round 2+)
+ * POST /api/opr/battles/:battleId/ambush/deploy-unit
+ */
+router.post(
+  '/:battleId/ambush/deploy-unit',
+  authenticate,
+  validateSchema(Joi.object({
+    unitId: Joi.string().required()
+  })),
+  OPRBattleController.deployAmbushUnit
+);
+
+/**
+ * Keep ambush unit in reserves for this round
+ * POST /api/opr/battles/:battleId/ambush/keep-in-reserves
+ */
+router.post(
+  '/:battleId/ambush/keep-in-reserves',
+  authenticate,
+  validateSchema(Joi.object({
+    unitId: Joi.string().required()
+  })),
+  OPRBattleController.keepAmbushUnitInReserves
+);
+
+/**
  * Apply damage to unit/model
  * POST /api/opr/battles/:battleId/damage
  */

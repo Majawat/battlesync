@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 
 BattleSync is a self-hosted web application for managing One Page Rules (OPR) tabletop gaming campaigns with real-time battle tracking. 
 
-**Current State**: Production-ready multi-user application (v1.3.8) - Complete battle system with Scout deployment rules, deployment phase management, functional trait mechanics, turn/round management, ArmyForge metadata integration, enhanced unit displays, advanced army conversion system, comprehensive development quality assurance workflow, and basic transport embarkation system  
+**Current State**: Production-ready multi-user application (v1.4.0) - Complete battle system with Scout deployment rules, deployment phase management, functional trait mechanics, turn/round management, ArmyForge metadata integration, enhanced unit displays, advanced army conversion system, comprehensive development quality assurance workflow, basic transport embarkation system, and Ambush Round 2+ Deployment system  
 **Target State**: Enhanced battle features with advanced OPR conversion and analytics
 
 ## Recent Major Completions
@@ -144,6 +144,38 @@ BattleSync is a self-hosted web application for managing One Page Rules (OPR) ta
 - Movement restrictions for embarked units
 - Disembarkation mechanics during battle
 - Transport destruction effects
+
+### ✅ **Ambush Round 2+ Deployment System (v1.4.0)** - FULLY IMPLEMENTED
+- **Round Start Detection**: Automatic detection of ambush deployment opportunity from round 2 onwards
+- **Ambush Unit Tracking**: Intelligent tracking of units with ambush-granting special rules
+- **Player Decision System**: Modal interface for players to choose deployment or keep in reserves
+- **Backend Validation**: Complete validation ensuring round restrictions and unit ownership
+- **Real-time Integration**: Seamless integration with existing round start events and battle flow
+- **State Management**: Proper cleanup of ambush flags when all deployment decisions are made
+- **TypeScript Safety**: Added ambush deployment tracking to activation state interface
+
+**Core Features:**
+- **Round 2+ Restriction**: Ambush deployment only available from round 2 onwards per OPR rules
+- **Special Rules Detection**: Automatic detection of ambush-granting rules (Hidden Route, Surprise Attack, etc.)
+- **Player Agency**: Deploy within 9" of any table edge or keep in reserves for tactical flexibility
+- **Turn Order Independence**: Ambush deployment operates independently of standard activation order
+- **Decision Tracking**: System tracks deployment decisions to prevent duplicate choices
+- **Modal Auto-Management**: Automatic show/hide of deployment modal based on available units
+
+**Key Files:**
+- `/src/services/activationService.ts` - Round start ambush detection logic
+- `/src/services/deploymentService.ts` - Core ambush deployment validation and state management
+- `/src/controllers/oprBattleController.ts` - API endpoints for ambush deployment actions
+- `/src/routes/oprBattleRoutes.ts` - Route definitions with validation schemas
+- `/frontend/src/components/AmbushDeploymentModal.tsx` - Modal interface for ambush decisions
+- `/frontend/src/components/BattleDashboard.tsx` - Integration and auto-modal management
+- `/src/types/oprBattle.ts` - Type definitions for ambush deployment tracking
+
+**Future Expansion Points:**
+- Support for multi-round deployment decisions (keeping units for round 3+)
+- Enhanced special rule detection for more ambush-granting abilities
+- Advanced deployment zone restrictions based on mission rules
+- Integration with transport capacity for embarked ambush units
 
 ### ✅ **Comprehensive Development Quality Assurance (v1.3.7)** - FULLY IMPLEMENTED
 - **TypeScript Validation Workflow**: Mandatory compilation checks before any commit

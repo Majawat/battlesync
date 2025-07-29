@@ -48,6 +48,15 @@ export interface OPRActivationState {
   
   // Deployment phase tracking
   deploymentState?: OPRDeploymentState;
+  
+  // Ambush deployment tracking (Round 2+)
+  ambushDeploymentAvailable?: boolean;
+  availableAmbushUnits?: Array<{
+    armyId: string;
+    userId: string;
+    unitId: string;
+    unitName: string;
+  }>;
 }
 
 export interface OPRActivationSlot {

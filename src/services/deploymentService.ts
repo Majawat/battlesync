@@ -481,6 +481,103 @@ export class DeploymentService {
     return { success: true };
   }
 
+  /**
+   * Deploy ambush unit from reserves (Round 2+)
+   */
+  static deployAmbushUnit(
+    battleState: OPRBattleState,
+    unitId: string,
+    userId: string
+  ): { success: boolean; error?: string } {
+    
+    // Must be round 2 or later
+    if (battleState.currentRound < 2) {
+      return { success: false, error: 'Ambush deployment only available from round 2+' };
+    }
+
+    // Must be battle rounds phase
+    if (battleState.phase !== 'BATTLE_ROUNDS') {
+      return { success: false, error: 'Ambush deployment only available during battle rounds' };
+    }
+
+    const unit = this.findUnit(battleState, unitId);
+    if (!unit) {
+      return { success: false, error: 'Unit not found' };
+    }
+
+    // Must be in ambush reserves
+    if (unit.deploymentState.status !== 'RESERVES' || 
+        unit.deploymentState.deploymentMethod !== 'AMBUSH') {
+      return { success: false, error: 'Unit is not in ambush reserves' };
+    }
+
+    // Must be the unit owner
+    const unitArmy = battleState.armies.find(army => army.units.some(u => u.unitId === unitId));
+    if (unitArmy?.userId !== userId) {
+      return { success: false, error: 'Not your unit' };
+    }
+
+    // Deploy the unit from reserves
+    unit.deploymentState.status = 'DEPLOYED';
+    unit.deploymentState.canDeployThisRound = true;
+
+    logger.info(`Ambush unit ${unitId} deployed from reserves in round ${battleState.currentRound}`);
+    
+    return { success: true };
+  }
+
+  /**
+   * Keep ambush unit in reserves for this round
+   */
+  static keepAmbushUnitInReserves(
+    battleState: OPRBattleState,
+    unitId: string,
+    userId: string
+  ): { success: boolean; error?: string } {
+    
+    const unit = this.findUnit(battleState, unitId);
+    if (!unit) {
+      return { success: false, error: 'Unit not found' };
+    }
+
+    // Must be in ambush reserves
+    if (unit.deploymentState.status !== 'RESERVES' || 
+        unit.deploymentState.deploymentMethod !== 'AMBUSH') {
+      return { success: false, error: 'Unit is not in ambush reserves' };
+    }
+
+    // Must be the unit owner
+    const unitArmy = battleState.armies.find(army => army.units.some(u => u.unitId === unitId));
+    if (unitArmy?.userId !== userId) {
+      return { success: false, error: 'Not your unit' };
+    }
+
+    // Mark as not deployable this round (stays in reserves)
+    unit.deploymentState.canDeployThisRound = false;
+
+    logger.info(`Ambush unit ${unitId} kept in reserves for round ${battleState.currentRound}`);
+    
+    return { success: true };
+  }
+
+  /**
+   * Check if all ambush deployment decisions have been made for this round
+   */
+  static checkAmbushDeploymentComplete(battleState: OPRBattleState): boolean {
+    // Find all ambush units still in reserves
+    for (const army of battleState.armies) {
+      for (const unit of army.units) {
+        if (unit.deploymentState.status === 'RESERVES' && 
+            unit.deploymentState.deploymentMethod === 'AMBUSH' &&
+            unit.deploymentState.canDeployThisRound === undefined) {
+          // Found a unit that hasn't had its deployment decision made
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
   // Helper methods
   private static findUnit(battleState: OPRBattleState, unitId: string): OPRBattleUnit | null {
     for (const army of battleState.armies) {

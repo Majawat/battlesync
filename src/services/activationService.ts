@@ -668,6 +668,8 @@ export class ActivationService {
     // 5. Reset shaken units that chose to Hold last turn
     this.processRallyingUnits(battleState);
 
+    // 6. Check for ambush deployment opportunity (Round 2+)
+    this.checkAmbushDeploymentOpportunity(battleState);
 
     logger.info(`Round start events completed for round ${battleState.currentRound}`);
   }
@@ -910,6 +912,44 @@ export class ActivationService {
         return { basePerThousand: 0.5, isRandom: true, isGrowing: true, isTemporary: true };
       default:
         return { basePerThousand: 4, isRandom: false, isGrowing: false, isTemporary: false };
+    }
+  }
+
+  /**
+   * Check for ambush deployment opportunity at round start (Round 2+)
+   */
+  private static checkAmbushDeploymentOpportunity(battleState: OPRBattleState): void {
+    // Only allow ambush deployment from round 2 onwards
+    if (battleState.currentRound < 2) {
+      return;
+    }
+
+    // Find units in ambush reserves
+    const ambushUnits: { army: OPRBattleArmy, unit: OPRBattleUnit }[] = [];
+    
+    for (const army of battleState.armies) {
+      for (const unit of army.units) {
+        if (unit.deploymentState.status === 'RESERVES' && 
+            unit.deploymentState.deploymentMethod === 'AMBUSH') {
+          ambushUnits.push({ army, unit });
+        }
+      }
+    }
+
+    if (ambushUnits.length > 0) {
+      // Set flag indicating ambush deployment is available
+      battleState.activationState.ambushDeploymentAvailable = true;
+      battleState.activationState.availableAmbushUnits = ambushUnits.map(item => ({
+        armyId: item.army.armyId,
+        userId: item.army.userId,
+        unitId: item.unit.unitId,
+        unitName: item.unit.name
+      }));
+      
+      logger.info(`Found ${ambushUnits.length} ambush units available for deployment in round ${battleState.currentRound}`);
+    } else {
+      battleState.activationState.ambushDeploymentAvailable = false;
+      battleState.activationState.availableAmbushUnits = [];
     }
   }
 }
