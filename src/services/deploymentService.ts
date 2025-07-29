@@ -482,13 +482,13 @@ export class DeploymentService {
   }
 
   /**
-   * Deploy ambush unit from reserves (Round 2+)
+   * Deploy ambush unit from reserves (Round 2+) - Turn-based implementation
    */
   static deployAmbushUnit(
     battleState: OPRBattleState,
     unitId: string,
     userId: string
-  ): { success: boolean; error?: string } {
+  ): { success: boolean; error?: string; advanceTurn?: boolean } {
     
     // Must be round 2 or later
     if (battleState.currentRound < 2) {
@@ -498,6 +498,16 @@ export class DeploymentService {
     // Must be battle rounds phase
     if (battleState.phase !== 'BATTLE_ROUNDS') {
       return { success: false, error: 'Ambush deployment only available during battle rounds' };
+    }
+
+    // Must be in ambush deployment phase
+    if (battleState.activationState.ambushDeploymentPhase !== 'ACTIVE') {
+      return { success: false, error: 'Not in ambush deployment phase' };
+    }
+
+    // Must be current ambush player's turn
+    if (battleState.activationState.currentAmbushPlayer !== userId) {
+      return { success: false, error: 'Not your turn for ambush deployment' };
     }
 
     const unit = this.findUnit(battleState, unitId);
@@ -521,20 +531,37 @@ export class DeploymentService {
     unit.deploymentState.status = 'DEPLOYED';
     unit.deploymentState.canDeployThisRound = true;
 
-    logger.info(`Ambush unit ${unitId} deployed from reserves in round ${battleState.currentRound}`);
+    logger.info(`Ambush unit ${unitId} deployed from reserves by ${userId} in round ${battleState.currentRound}`);
     
-    return { success: true };
+    // Check if player has more ambush units to deploy
+    const { ActivationService } = require('./activationService');
+    const hasMoreUnits = ActivationService.playerHasAmbushUnitsRemaining(battleState, userId);
+    
+    return { 
+      success: true, 
+      advanceTurn: !hasMoreUnits // Advance turn if player has no more units
+    };
   }
 
   /**
-   * Keep ambush unit in reserves for this round
+   * Keep ambush unit in reserves for this round - Turn-based implementation
    */
   static keepAmbushUnitInReserves(
     battleState: OPRBattleState,
     unitId: string,
     userId: string
-  ): { success: boolean; error?: string } {
+  ): { success: boolean; error?: string; advanceTurn?: boolean } {
     
+    // Must be in ambush deployment phase
+    if (battleState.activationState.ambushDeploymentPhase !== 'ACTIVE') {
+      return { success: false, error: 'Not in ambush deployment phase' };
+    }
+
+    // Must be current ambush player's turn
+    if (battleState.activationState.currentAmbushPlayer !== userId) {
+      return { success: false, error: 'Not your turn for ambush deployment' };
+    }
+
     const unit = this.findUnit(battleState, unitId);
     if (!unit) {
       return { success: false, error: 'Unit not found' };
@@ -555,7 +582,53 @@ export class DeploymentService {
     // Mark as not deployable this round (stays in reserves)
     unit.deploymentState.canDeployThisRound = false;
 
-    logger.info(`Ambush unit ${unitId} kept in reserves for round ${battleState.currentRound}`);
+    logger.info(`Ambush unit ${unitId} kept in reserves for round ${battleState.currentRound} by ${userId}`);
+    
+    // Check if player has more ambush units to deploy
+    const { ActivationService } = require('./activationService');
+    const hasMoreUnits = ActivationService.playerHasAmbushUnitsRemaining(battleState, userId);
+    
+    return { 
+      success: true, 
+      advanceTurn: !hasMoreUnits // Advance turn if player has no more units
+    };
+  }
+
+  /**
+   * Pass ambush deployment turn (keep all remaining units in reserves)
+   */
+  static passAmbushDeploymentTurn(
+    battleState: OPRBattleState,
+    userId: string
+  ): { success: boolean; error?: string } {
+    
+    // Must be in ambush deployment phase
+    if (battleState.activationState.ambushDeploymentPhase !== 'ACTIVE') {
+      return { success: false, error: 'Not in ambush deployment phase' };
+    }
+
+    // Must be current ambush player's turn
+    if (battleState.activationState.currentAmbushPlayer !== userId) {
+      return { success: false, error: 'Not your turn for ambush deployment' };
+    }
+
+    // Mark all remaining ambush units for this player as not deployable this round
+    let unitsMarked = 0;
+    for (const army of battleState.armies) {
+      if (army.userId === userId) {
+        for (const unit of army.units) {
+          if (unit.deploymentState.status === 'RESERVES' && 
+              unit.deploymentState.deploymentMethod === 'AMBUSH' &&
+              unit.deploymentState.canDeployThisRound !== false) {
+            unit.deploymentState.canDeployThisRound = false;
+            unitsMarked++;
+          }
+        }
+        break;
+      }
+    }
+
+    logger.info(`Player ${userId} passed ambush deployment turn, ${unitsMarked} units kept in reserves for round ${battleState.currentRound}`);
     
     return { success: true };
   }

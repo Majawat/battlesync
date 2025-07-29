@@ -12,6 +12,7 @@ interface AmbushDeploymentModalProps {
   currentUserId: string;
   onDeployAmbushUnit: (unitId: string) => void;
   onKeepInReserves: (unitId: string) => void;
+  onPassTurn: () => void;
 }
 
 interface AmbushUnitInfo {
@@ -26,7 +27,8 @@ export const AmbushDeploymentModal: React.FC<AmbushDeploymentModalProps> = ({
   battleState,
   currentUserId,
   onDeployAmbushUnit,
-  onKeepInReserves
+  onKeepInReserves,
+  onPassTurn
 }) => {
   const [selectedUnit, setSelectedUnit] = useState<string | null>(null);
   const [processingUnit, setProcessingUnit] = useState<string | null>(null);
@@ -35,10 +37,16 @@ export const AmbushDeploymentModal: React.FC<AmbushDeploymentModalProps> = ({
 
   // Check if ambush deployment is available
   const ambushAvailable = battleState.activationState.ambushDeploymentAvailable;
+  const currentAmbushPlayer = battleState.activationState.currentAmbushPlayer;
+  const ambushTurn = battleState.activationState.ambushDeploymentTurn || 1;
+  const ambushOrder = battleState.activationState.ambushDeploymentOrder || [];
   const availableAmbushUnits = battleState.activationState.availableAmbushUnits || [];
 
   // Filter units belonging to current user
   const myAmbushUnits = availableAmbushUnits.filter((unit: any) => unit.userId === currentUserId);
+  
+  // Check if it's the current user's turn
+  const isMyTurn = currentAmbushPlayer === currentUserId;
 
   // Get full unit details for display
   const ambushUnitsInfo: AmbushUnitInfo[] = myAmbushUnits.map((ambushUnit: any) => {
@@ -167,31 +175,44 @@ export const AmbushDeploymentModal: React.FC<AmbushDeploymentModalProps> = ({
         {/* Action Buttons */}
         {isSelected && (
           <div className="mt-4 pt-3 border-t border-gray-200">
-            <div className="flex flex-col sm:flex-row gap-2">
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleDeployUnit(unit.unitId);
-                }}
-                disabled={isProcessing}
-                className="flex-1 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 text-sm font-medium"
-              >
-                {isProcessing ? 'Deploying...' : '📍 Deploy Now'}
-              </button>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleKeepInReserves(unit.unitId);
-                }}
-                disabled={isProcessing}
-                className="flex-1 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 text-sm font-medium"
-              >
-                {isProcessing ? 'Waiting...' : '⏳ Keep in Reserves'}
-              </button>
-            </div>
-            <p className="text-xs text-gray-500 mt-2 text-center">
-              Deploy within 9" of any table edge or keep in reserves for later rounds
-            </p>
+            {isMyTurn ? (
+              <>
+                <div className="flex flex-col sm:flex-row gap-2">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDeployUnit(unit.unitId);
+                    }}
+                    disabled={isProcessing}
+                    className="flex-1 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 text-sm font-medium"
+                  >
+                    {isProcessing ? 'Deploying...' : '📍 Deploy Now'}
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleKeepInReserves(unit.unitId);
+                    }}
+                    disabled={isProcessing}
+                    className="flex-1 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 text-sm font-medium"
+                  >
+                    {isProcessing ? 'Waiting...' : '⏳ Keep in Reserves'}
+                  </button>
+                </div>
+                <p className="text-xs text-gray-500 mt-2 text-center">
+                  Deploy within 9" of any table edge or keep in reserves for later rounds
+                </p>
+              </>
+            ) : (
+              <div className="text-center py-2">
+                <p className="text-sm text-orange-600 font-medium">
+                  ⏳ Waiting for {currentAmbushPlayer} to make their decisions
+                </p>
+                <p className="text-xs text-gray-500 mt-1">
+                  You can view your units but cannot deploy until it's your turn
+                </p>
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -209,7 +230,19 @@ export const AmbushDeploymentModal: React.FC<AmbushDeploymentModalProps> = ({
                 Ambush Deployment - Round {battleState.currentRound}
               </h2>
               <p className="text-sm text-gray-600 mt-1">
-                Choose whether to deploy your ambush units or keep them in reserves
+                {isMyTurn ? (
+                  <>
+                    <span className="font-semibold text-green-700">🎯 Your Turn</span> - Turn {ambushTurn} of {ambushOrder.length}
+                    <br />
+                    Choose whether to deploy your ambush units or keep them in reserves
+                  </>
+                ) : (
+                  <>
+                    <span className="font-semibold text-orange-700">⏳ Waiting</span> - {currentAmbushPlayer}'s turn ({ambushTurn} of {ambushOrder.length})
+                    <br />
+                    Players take turns making ambush deployment decisions
+                  </>
+                )}
               </p>
             </div>
             <button
@@ -266,18 +299,32 @@ export const AmbushDeploymentModal: React.FC<AmbushDeploymentModalProps> = ({
         <div className="px-6 py-4 border-t border-gray-200 bg-gray-50">
           <div className="flex justify-between items-center">
             <div className="text-sm text-gray-600">
-              {myAmbushUnits.length > 0 ? (
-                `Make decisions for all ${myAmbushUnits.length} ambush units`
+              {isMyTurn ? (
+                myAmbushUnits.length > 0 ? (
+                  `Your turn: ${myAmbushUnits.length} ambush units available`
+                ) : (
+                  'Your turn: No ambush units to deploy'
+                )
               ) : (
-                'No ambush deployment decisions needed'
+                `Waiting for ${currentAmbushPlayer} to make decisions`
               )}
             </div>
-            <button
-              onClick={onClose}
-              className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors duration-200 text-sm font-medium"
-            >
-              Close
-            </button>
+            <div className="flex gap-2">
+              {isMyTurn && myAmbushUnits.length > 0 && (
+                <button
+                  onClick={onPassTurn}
+                  className="px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors duration-200 text-sm font-medium"
+                >
+                  ⏭️ Pass Turn
+                </button>
+              )}
+              <button
+                onClick={onClose}
+                className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors duration-200 text-sm font-medium"
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
       </div>

@@ -54,6 +54,13 @@ export interface OPRActivationState {
     unitId: string;
     unitName: string;
   }>;
+  
+  // Turn-based ambush deployment phase
+  ambushDeploymentPhase?: 'ACTIVE' | 'COMPLETED';
+  ambushDeploymentTurn?: number;
+  ambushDeploymentOrder?: string[]; // Player order for ambush deployment
+  currentAmbushPlayer?: string; // Current player making ambush decisions
+  playersCompletedAmbush?: string[]; // Players who have finished their ambush decisions
 }
 
 // OPR Deployment Roll-off System

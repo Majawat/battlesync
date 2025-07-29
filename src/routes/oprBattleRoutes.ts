@@ -270,6 +270,16 @@ router.post(
 );
 
 /**
+ * Pass ambush deployment turn (keep all remaining units in reserves)
+ * POST /api/opr/battles/:battleId/ambush/pass-turn
+ */
+router.post(
+  '/:battleId/ambush/pass-turn',
+  authenticate,
+  OPRBattleController.passAmbushDeploymentTurn
+);
+
+/**
  * Apply damage to unit/model
  * POST /api/opr/battles/:battleId/damage
  */

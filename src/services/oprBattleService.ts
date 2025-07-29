@@ -1696,6 +1696,12 @@ export class OPRBattleService {
       const result = DeploymentService.deployAmbushUnit(battleState, unitId, userId);
       
       if (result.success) {
+        // Advance turn if needed
+        if (result.advanceTurn) {
+          const { ActivationService } = require('./activationService');
+          ActivationService.advanceAmbushDeploymentTurn(battleState);
+        }
+
         // Save updated state
         await prisma.battle.update({
           where: { id: battleId },
@@ -1715,16 +1721,11 @@ export class OPRBattleService {
             unitId,
             additionalData: {
               deploymentMethod: 'AMBUSH',
-              round: battleState.currentRound
+              round: battleState.currentRound,
+              turnBased: true
             }
           }
         );
-        
-        // Clear ambush deployment flag if all decisions made
-        if (DeploymentService.checkAmbushDeploymentComplete(battleState)) {
-          battleState.activationState.ambushDeploymentAvailable = false;
-          battleState.activationState.availableAmbushUnits = [];
-        }
       }
 
       return result;
@@ -1747,6 +1748,12 @@ export class OPRBattleService {
       const result = DeploymentService.keepAmbushUnitInReserves(battleState, unitId, userId);
       
       if (result.success) {
+        // Advance turn if needed
+        if (result.advanceTurn) {
+          const { ActivationService } = require('./activationService');
+          ActivationService.advanceAmbushDeploymentTurn(battleState);
+        }
+
         // Save updated state
         await prisma.battle.update({
           where: { id: battleId },
@@ -1767,22 +1774,67 @@ export class OPRBattleService {
             additionalData: {
               deploymentMethod: 'AMBUSH',
               round: battleState.currentRound,
-              decision: 'KEEP_IN_RESERVES'
+              decision: 'KEEP_IN_RESERVES',
+              turnBased: true
             }
           }
         );
-        
-        // Clear ambush deployment flag if all decisions made
-        if (DeploymentService.checkAmbushDeploymentComplete(battleState)) {
-          battleState.activationState.ambushDeploymentAvailable = false;
-          battleState.activationState.availableAmbushUnits = [];
-        }
       }
 
       return result;
     } catch (error) {
       logger.error('Error keeping ambush unit in reserves:', error);
       return { success: false, error: 'Failed to keep ambush unit in reserves' };
+    }
+  }
+
+  /**
+   * Pass ambush deployment turn (keep all remaining units in reserves)
+   */
+  static async passAmbushDeploymentTurn(battleId: string, userId: string): Promise<{ success: boolean; error?: string }> {
+    try {
+      const battleState = await this.getOPRBattleState(battleId, userId);
+      if (!battleState) {
+        return { success: false, error: 'Battle not found' };
+      }
+
+      const result = DeploymentService.passAmbushDeploymentTurn(battleState, userId);
+      
+      if (result.success) {
+        // Always advance turn when passing
+        const { ActivationService } = require('./activationService');
+        ActivationService.advanceAmbushDeploymentTurn(battleState);
+
+        // Save updated state
+        await prisma.battle.update({
+          where: { id: battleId },
+          data: { currentState: battleState as any }
+        });
+
+        // Notify all players
+        await NotificationService.notifyBattleStateChange(battleId, `${userId} passed ambush deployment turn`);
+        
+        // Record battle event
+        await this.recordBattleEvent(
+          battleId,
+          userId,
+          'ACTIVATION_PASSED',
+          {
+            description: `Passed ambush deployment turn for round ${battleState.currentRound}`,
+            additionalData: {
+              deploymentMethod: 'AMBUSH',
+              round: battleState.currentRound,
+              decision: 'PASS_TURN',
+              turnBased: true
+            }
+          }
+        );
+      }
+
+      return result;
+    } catch (error) {
+      logger.error('Error passing ambush deployment turn:', error);
+      return { success: false, error: 'Failed to pass ambush deployment turn' };
     }
   }
 

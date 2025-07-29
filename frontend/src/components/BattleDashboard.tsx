@@ -112,16 +112,24 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
           setShowDeploymentRollOff(false);
           setShowDeploymentModal(false);
           
-          // Check for ambush deployment opportunity
+          // Check for turn-based ambush deployment opportunity
           const ambushAvailable = data.data.activationState?.ambushDeploymentAvailable;
+          const ambushPhase = data.data.activationState?.ambushDeploymentPhase;
+          const currentAmbushPlayer = data.data.activationState?.currentAmbushPlayer;
           const availableAmbushUnits = data.data.activationState?.availableAmbushUnits || [];
           const hasMyAmbushUnits = availableAmbushUnits.some((unit: any) => unit.userId === user?.id);
           
-          if (ambushAvailable && hasMyAmbushUnits && !showAmbushModal) {
-            console.log('Auto-showing ambush deployment modal');
+          // Only show modal if it's the player's turn and they have ambush units
+          const isMyAmbushTurn = ambushAvailable && 
+                                 ambushPhase === 'ACTIVE' && 
+                                 currentAmbushPlayer === user?.id && 
+                                 hasMyAmbushUnits;
+          
+          if (isMyAmbushTurn && !showAmbushModal) {
+            console.log('Auto-showing ambush deployment modal - your turn');
             setShowAmbushModal(true);
-          } else if (!ambushAvailable && showAmbushModal) {
-            console.log('Auto-closing ambush deployment modal - all decisions made');
+          } else if (!isMyAmbushTurn && showAmbushModal) {
+            console.log('Auto-closing ambush deployment modal - not your turn or phase completed');
             setShowAmbushModal(false);
           }
         }
@@ -633,6 +641,28 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
       }
     } catch (error) {
       console.error('Error keeping ambush unit in reserves:', error);
+    }
+  };
+
+  const handlePassAmbushTurn = async () => {
+    try {
+      const response = await fetch(`/api/opr/battles/${battleId}/ambush/pass-turn`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        }
+      });
+
+      if (response.ok) {
+        await fetchBattleState();
+        // Modal will close automatically when turn advances
+      } else {
+        const errorData = await response.json();
+        console.error('Failed to pass ambush turn:', errorData.error);
+      }
+    } catch (error) {
+      console.error('Error passing ambush turn:', error);
     }
   };
 
@@ -1268,6 +1298,7 @@ export const BattleDashboard: React.FC<BattleDashboardProps> = ({ battleId, onEx
           currentUserId={user?.id || ''}
           onDeployAmbushUnit={handleDeployAmbushUnit}
           onKeepInReserves={handleKeepAmbushUnitInReserves}
+          onPassTurn={handlePassAmbushTurn}
         />
       )}
 

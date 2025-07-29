@@ -641,6 +641,32 @@ export class OPRBattleController {
   }
 
   /**
+   * Pass ambush deployment turn (keep all remaining units in reserves)
+   * POST /api/opr/battles/:battleId/ambush/pass-turn
+   */
+  static async passAmbushDeploymentTurn(req: Request, res: Response): Promise<void> {
+    try {
+      const userId = (req as AuthenticatedRequest).user!.id;
+      const { battleId } = req.params;
+
+      const result = await OPRBattleService.passAmbushDeploymentTurn(battleId, userId);
+
+      if (!result.success) {
+        res.status(400).json(result);
+        return;
+      }
+
+      res.json(result);
+    } catch (error) {
+      logger.error('Pass ambush deployment turn error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to pass ambush deployment turn'
+      });
+    }
+  }
+
+  /**
    * Apply damage to unit/model
    * POST /api/opr/battles/:battleId/damage
    */

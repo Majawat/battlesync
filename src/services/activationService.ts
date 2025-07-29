@@ -916,7 +916,7 @@ export class ActivationService {
   }
 
   /**
-   * Check for ambush deployment opportunity at round start (Round 2+)
+   * Check for ambush deployment opportunity at round start (Round 2+) and initialize turn-based phase
    */
   private static checkAmbushDeploymentOpportunity(battleState: OPRBattleState): void {
     // Only allow ambush deployment from round 2 onwards
@@ -924,32 +924,141 @@ export class ActivationService {
       return;
     }
 
-    // Find units in ambush reserves
-    const ambushUnits: { army: OPRBattleArmy, unit: OPRBattleUnit }[] = [];
+    // Find units in ambush reserves grouped by player
+    const ambushUnitsByPlayer = new Map<string, { army: OPRBattleArmy, units: OPRBattleUnit[] }>();
     
     for (const army of battleState.armies) {
-      for (const unit of army.units) {
-        if (unit.deploymentState.status === 'RESERVES' && 
-            unit.deploymentState.deploymentMethod === 'AMBUSH') {
-          ambushUnits.push({ army, unit });
-        }
+      const playerAmbushUnits = army.units.filter(unit => 
+        unit.deploymentState.status === 'RESERVES' && 
+        unit.deploymentState.deploymentMethod === 'AMBUSH'
+      );
+      
+      if (playerAmbushUnits.length > 0) {
+        ambushUnitsByPlayer.set(army.userId, { army, units: playerAmbushUnits });
       }
     }
 
-    if (ambushUnits.length > 0) {
-      // Set flag indicating ambush deployment is available
+    if (ambushUnitsByPlayer.size > 0) {
+      // Initialize turn-based ambush deployment phase
       battleState.activationState.ambushDeploymentAvailable = true;
-      battleState.activationState.availableAmbushUnits = ambushUnits.map(item => ({
-        armyId: item.army.armyId,
-        userId: item.army.userId,
-        unitId: item.unit.unitId,
-        unitName: item.unit.name
-      }));
+      battleState.activationState.ambushDeploymentPhase = 'ACTIVE';
+      battleState.activationState.ambushDeploymentTurn = 1;
+      battleState.activationState.playersCompletedAmbush = [];
       
-      logger.info(`Found ${ambushUnits.length} ambush units available for deployment in round ${battleState.currentRound}`);
+      // Create turn order based on existing activation order (first player from this round)
+      const firstPlayerId = battleState.activationState.firstPlayerThisRound;
+      const playersWithAmbushUnits = Array.from(ambushUnitsByPlayer.keys());
+      
+      // Arrange players in turn order starting with first player
+      const orderedPlayers: string[] = [];
+      if (firstPlayerId && playersWithAmbushUnits.includes(firstPlayerId)) {
+        orderedPlayers.push(firstPlayerId);
+      }
+      
+      // Add remaining players in the order they appear in armies array
+      for (const army of battleState.armies) {
+        if (playersWithAmbushUnits.includes(army.userId) && !orderedPlayers.includes(army.userId)) {
+          orderedPlayers.push(army.userId);
+        }
+      }
+      
+      battleState.activationState.ambushDeploymentOrder = orderedPlayers;
+      battleState.activationState.currentAmbushPlayer = orderedPlayers[0];
+      
+      // Create available units list for all players (but only current player can act)
+      const allAmbushUnits: Array<{armyId: string; userId: string; unitId: string; unitName: string}> = [];
+      for (const [userId, {army, units}] of ambushUnitsByPlayer) {
+        for (const unit of units) {
+          allAmbushUnits.push({
+            armyId: army.armyId,
+            userId: userId,
+            unitId: unit.unitId,
+            unitName: unit.name
+          });
+        }
+      }
+      battleState.activationState.availableAmbushUnits = allAmbushUnits;
+      
+      logger.info(`Initialized turn-based ambush deployment for ${orderedPlayers.length} players with ${allAmbushUnits.length} total units in round ${battleState.currentRound}`);
+      logger.info(`Ambush turn order: ${orderedPlayers.join(' → ')}, starting with ${orderedPlayers[0]}`);
     } else {
       battleState.activationState.ambushDeploymentAvailable = false;
+      battleState.activationState.ambushDeploymentPhase = undefined;
       battleState.activationState.availableAmbushUnits = [];
     }
+  }
+
+  /**
+   * Advance ambush deployment to next player or complete the phase
+   */
+  static advanceAmbushDeploymentTurn(battleState: OPRBattleState): void {
+    if (battleState.activationState.ambushDeploymentPhase !== 'ACTIVE' || 
+        !battleState.activationState.ambushDeploymentOrder ||
+        !battleState.activationState.currentAmbushPlayer) {
+      return;
+    }
+
+    const currentPlayer = battleState.activationState.currentAmbushPlayer;
+    const playersCompleted = battleState.activationState.playersCompletedAmbush || [];
+    
+    // Add current player to completed list if not already there
+    if (!playersCompleted.includes(currentPlayer)) {
+      playersCompleted.push(currentPlayer);
+      battleState.activationState.playersCompletedAmbush = playersCompleted;
+    }
+
+    // Find next player who hasn't completed ambush deployment
+    const ambushOrder = battleState.activationState.ambushDeploymentOrder;
+    const currentIndex = ambushOrder.indexOf(currentPlayer);
+    
+    let nextPlayer: string | undefined;
+    for (let i = 1; i < ambushOrder.length; i++) {
+      const checkIndex = (currentIndex + i) % ambushOrder.length;
+      const candidatePlayer = ambushOrder[checkIndex];
+      if (!playersCompleted.includes(candidatePlayer)) {
+        nextPlayer = candidatePlayer;
+        break;
+      }
+    }
+
+    if (nextPlayer) {
+      // Move to next player
+      battleState.activationState.currentAmbushPlayer = nextPlayer;
+      battleState.activationState.ambushDeploymentTurn = (battleState.activationState.ambushDeploymentTurn || 0) + 1;
+      logger.info(`Ambush deployment turn advanced to ${nextPlayer} (turn ${battleState.activationState.ambushDeploymentTurn})`);
+    } else {
+      // All players have completed ambush deployment
+      this.completeAmbushDeploymentPhase(battleState);
+    }
+  }
+
+  /**
+   * Complete the ambush deployment phase and proceed to regular activations
+   */
+  private static completeAmbushDeploymentPhase(battleState: OPRBattleState): void {
+    battleState.activationState.ambushDeploymentPhase = 'COMPLETED';
+    battleState.activationState.ambushDeploymentAvailable = false;
+    battleState.activationState.currentAmbushPlayer = undefined;
+    
+    // Clear the units list since deployment phase is done
+    battleState.activationState.availableAmbushUnits = [];
+    
+    logger.info(`Ambush deployment phase completed, proceeding to regular activations for round ${battleState.currentRound}`);
+  }
+
+  /**
+   * Check if current player has any ambush units left to deploy
+   */
+  static playerHasAmbushUnitsRemaining(battleState: OPRBattleState, playerId: string): boolean {
+    if (!battleState.activationState.availableAmbushUnits) {
+      return false;
+    }
+
+    return battleState.activationState.availableAmbushUnits.some(unit => 
+      unit.userId === playerId && 
+      battleState.armies.find(army => army.userId === unit.userId)
+        ?.units.find(u => u.unitId === unit.unitId)
+        ?.deploymentState.canDeployThisRound !== false
+    );
   }
 }
