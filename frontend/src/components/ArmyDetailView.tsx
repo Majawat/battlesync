@@ -34,12 +34,6 @@ export const ArmyDetailView: React.FC = () => {
       const response = await apiClient.getArmy(armyId);
       if (response.data.status === 'success' && response.data.data) {
         const armyData = response.data.data;
-        console.log('=== ARMY DATA DEBUG ===');
-        console.log('Full army object:', armyData);
-        console.log('Army data field:', armyData.armyData);
-        console.log('Army data type:', typeof armyData.armyData);
-        console.log('Army data keys:', armyData.armyData ? Object.keys(armyData.armyData) : 'null');
-        console.log('======================');
         
         setArmy(armyData);
         // Always convert to battle units for display
@@ -60,20 +54,14 @@ export const ArmyDetailView: React.FC = () => {
       
       // Check if we have stored converted battle data
       const armyDataObj = armyData.armyData as any;
-      console.log('=== BATTLE CONVERSION DEBUG ===');
-      console.log('Army data for battle conversion:', armyDataObj);
-      console.log('Has convertedBattleData?', !!armyDataObj?.convertedBattleData);
-      console.log('===============================');
       
       if (armyDataObj?.convertedBattleData?.units) {
         // Use stored converted data
-        console.log('Using stored converted battle data');
         setBattleUnits(armyDataObj.convertedBattleData.units);
         return;
       }
       
       // Fallback to API conversion
-      console.log('Falling back to API conversion');
       const response = await fetch(`/api/armies/${armyData.id}/convert`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
@@ -82,20 +70,15 @@ export const ArmyDetailView: React.FC = () => {
 
       if (response.ok) {
         const result = await response.json();
-        console.log('API conversion result:', result);
         if (result.status === 'success' && result.data && result.data.units) {
           setBattleUnits(result.data.units);
         } else {
-          console.error('Army conversion failed:', result);
           setBattleUnits([]);
         }
       } else {
-        const errorText = await response.text();
-        console.error('Army conversion request failed:', response.status, errorText);
         setBattleUnits([]);
       }
     } catch (error) {
-      console.error('Could not convert army to battle format:', error);
       setBattleUnits([]);
     } finally {
       setConverting(false);

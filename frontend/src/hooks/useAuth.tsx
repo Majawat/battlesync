@@ -44,7 +44,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           const isBackendAvailable = await ConnectionManager.isBackendAvailable();
           if (!isBackendAvailable) {
             // Backend is not available, keep loading state
-            console.log('Backend not available during auth initialization, keeping loading state');
             return;
           }
 
@@ -57,7 +56,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             isLoading: false,
           }));
         } catch (error) {
-          console.log('Token validation failed, clearing tokens:', error);
           // Token is invalid, clear it and stop loading
           localStorage.removeItem('accessToken');
           localStorage.removeItem('refreshToken');
@@ -76,7 +74,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     // Add a timeout to prevent infinite loading
     const timeoutId = setTimeout(() => {
-      console.log('Auth initialization timeout, clearing tokens');
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
       setState(prev => ({
@@ -127,7 +124,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         errorMessage = error.message || 'Login failed';
       }
       
-      console.error('Login error:', error);
       setError(errorMessage);
       setState(prev => ({ ...prev, isLoading: false }));
       throw error;

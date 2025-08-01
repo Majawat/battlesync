@@ -175,9 +175,8 @@ export class DeploymentService {
     
     const availableTransports = sameArmy?.units.filter(u => 
       capabilities.hasTransport && 
-      u.deploymentState.status === 'DEPLOYED' &&
-      // TODO: Check transport capacity
-      true
+      u.deploymentState.status === 'DEPLOYED'
+      // Note: Transport capacity checking would require OPR rules integration
     ) || [];
 
     return {

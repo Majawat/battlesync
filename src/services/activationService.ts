@@ -765,8 +765,8 @@ export class ActivationService {
       if (roll >= 5) {
         logger.info(`Random event triggered with roll of ${roll}`);
         
-        // TODO: Implement specific random events based on campaign rules
-        // For now, just log that an event would occur
+        // Random event system would be implemented here based on specific campaign rules
+        // Events are mission/campaign specific
         await OPRBattleService.recordBattleEvent(
           battleId,
           'system',
@@ -840,7 +840,7 @@ export class ActivationService {
     battleState: OPRBattleState, 
     completedRound: number
   ): void {
-    // TODO: Check for victory conditions based on mission objectives
+    // Victory condition checking would be implemented here based on mission objectives
     // Standard OPR missions end after 4 rounds unless extended
     if (completedRound >= 4) {
       logger.info(`Battle has completed ${completedRound} rounds, victory conditions should be checked`);

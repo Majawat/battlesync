@@ -1,0 +1,66 @@
+/**
+ * Application Constants
+ * Centralized configuration values for the BattleSync application
+ */
+
+// Server Configuration
+export const SERVER_CONFIG = {
+  DEFAULT_FRONTEND_PORT: 3000,
+  DEFAULT_BACKEND_PORT: 3001,
+  CONTAINER_BACKEND_HOST: 'app:3001',
+  WEBSOCKET_PATH: '/ws',
+  AUTH_TIMEOUT_MS: 10000, // 10 seconds
+} as const;
+
+// Network and Device Discovery
+export const NETWORK_CONFIG = {
+  DEVICE_SCAN_TIMEOUT_MS: 2000,
+  BATTLEARAURA_SCAN_RANGE: { start: 100, end: 200 },
+  STUN_SERVER: 'stun:stun.l.google.com:19302',
+  WEBRTC_TIMEOUT_MS: 5000,
+} as const;
+
+// Battle System
+export const BATTLE_CONFIG = {
+  COOPERATIVE_CAST_TIMEOUT_SECONDS: 15,
+  MAX_DAMAGE_PER_ACTION: 20,
+  MAX_MORALE_MODIFIER: 10,
+  DEFAULT_DICE_SIDES: 6,
+  MAX_BATTLE_HISTORY_RECORDS: 100,
+  MAX_DAMAGE_HISTORY_RECORDS: 50,
+} as const;
+
+// Campaign System
+export const CAMPAIGN_CONFIG = {
+  DEFAULT_ARMY_POINTS: 1000,
+  MIN_ARMY_POINTS: 100,
+  MAX_ARMY_POINTS: 10000,
+  DEFAULT_WIN_REWARD_VP: 2,
+  DEFAULT_WIN_REWARD_POINTS: 150,
+  DEFAULT_LOSS_REWARD_VP: 0,
+  DEFAULT_LOSS_REWARD_POINTS: 300,
+  MAX_EXPERIENCE_MODIFIER: 10,
+  RANDOM_EVENT_THRESHOLD: 5, // OPR Campaign Rules: 5+ on D6
+} as const;
+
+// UI Configuration
+export const UI_CONFIG = {
+  MIN_VIEWPORT_WIDTH: 320,
+  TABLET_BREAKPOINT: 768,
+  DESKTOP_MAX_WIDTH: 1280,
+  LOADING_TIMEOUT_MS: 30000,
+} as const;
+
+// Security
+export const SECURITY_CONFIG = {
+  INVITE_CODE_LENGTH: 8,
+  SECURE_TOKEN_LENGTH: 32,
+  ENCRYPTION_ALGORITHM: 'aes-256-cbc',
+} as const;
+
+// ESP32/BattleAura
+export const BATTLEARAURA_CONFIG = {
+  TEST_EFFECT_DURATION_MS: 2000,
+  DEFAULT_EFFECT_INTENSITY: 7,
+  DEVICE_CONFIG_TIMEOUT_MS: 5000,
+} as const;

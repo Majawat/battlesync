@@ -13,7 +13,6 @@ export class CryptoUtils {
       // TODO: Fix bcrypt in Alpine Linux and revert to proper hashing
       return Buffer.from(password + 'salt').toString('base64');
     } catch (error) {
-      console.error('Password hash error:', error);
       throw error;
     }
   }
@@ -25,7 +24,6 @@ export class CryptoUtils {
       const expectedHash = Buffer.from(password + 'salt').toString('base64');
       return hash === expectedHash;
     } catch (error) {
-      console.error('Password compare error:', error);
       return false;
     }
   }

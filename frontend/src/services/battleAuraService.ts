@@ -24,18 +24,14 @@ export class BattleAuraService {
    * This runs in the browser and scans the local network range
    */
   async discoverLocalDevices(): Promise<BattleAuraDevice[]> {
-    console.log('🔍 Scanning local network for BattleAura devices...');
-    
     const devices: BattleAuraDevice[] = [];
     const localIP = await this.getLocalIP();
     
     if (!localIP) {
-      console.warn('Could not determine local IP address');
       return devices;
     }
 
     const networkBase = localIP.substring(0, localIP.lastIndexOf('.'));
-    console.log(`📡 Scanning network range: ${networkBase}.100-200`);
 
     // Create parallel scan promises for speed
     const scanPromises: Promise<BattleAuraDevice | null>[] = [];
@@ -52,11 +48,8 @@ export class BattleAuraService {
       if (result.status === 'fulfilled' && result.value) {
         devices.push(result.value);
         this.discoveredDevices.set(result.value.id, result.value);
-        console.log(`✅ Found BattleAura device: ${result.value.name} (${result.value.ipAddress})`);
       }
     });
-
-    console.log(`🎯 Discovery complete: Found ${devices.length} BattleAura devices`);
     return devices;
   }
 
@@ -144,7 +137,6 @@ export class BattleAuraService {
 
       return localIP;
     } catch (error) {
-      console.error('Failed to get local IP:', error);
       return null;
     }
   }
@@ -154,12 +146,10 @@ export class BattleAuraService {
    */
   async configureDevice(device: BattleAuraDevice, unitId?: string): Promise<boolean> {
     if (!device.ipAddress) {
-      console.error('Device has no IP address');
       return false;
     }
 
     try {
-      console.log(`⚙️ Configuring device ${device.name}...`);
 
       const configData = {
         serverAddress: window.location.origin.replace('http', 'ws') + '/ws',
@@ -177,7 +167,6 @@ export class BattleAuraService {
 
       if (response.ok) {
         await response.json();
-        console.log(`✅ Device ${device.name} configured successfully`);
         
         // Update device status
         device.status = 'connecting';
@@ -186,11 +175,9 @@ export class BattleAuraService {
         
         return true;
       } else {
-        console.error(`Failed to configure device ${device.name}: ${response.statusText}`);
         return false;
       }
     } catch (error) {
-      console.error(`Error configuring device ${device.name}:`, error);
       return false;
     }
   }
@@ -200,12 +187,10 @@ export class BattleAuraService {
    */
   async testDeviceEffect(device: BattleAuraDevice, effect: string, weaponName?: string): Promise<boolean> {
     if (!device.ipAddress) {
-      console.error('Device has no IP address');
       return false;
     }
 
     try {
-      console.log(`🧪 Testing ${effect} effect on ${device.name}...`);
 
       const testData = {
         effect: effect,
@@ -223,14 +208,11 @@ export class BattleAuraService {
       });
 
       if (response.ok) {
-        console.log(`✅ Test effect sent to ${device.name}`);
         return true;
       } else {
-        console.error(`Failed to test effect on ${device.name}: ${response.statusText}`);
         return false;
       }
     } catch (error) {
-      console.error(`Error testing effect on ${device.name}:`, error);
       return false;
     }
   }
@@ -316,14 +298,11 @@ export class BattleAuraService {
           this.connectedDevices.set(deviceId, connectedDevice);
         }
 
-        console.log(`✅ Device ${deviceId} assigned to unit ${unitId}`);
         return true;
       } else {
-        console.error('Failed to assign device to unit');
         return false;
       }
     } catch (error) {
-      console.error('Error assigning device to unit:', error);
       return false;
     }
   }

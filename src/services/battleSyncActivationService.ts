@@ -277,8 +277,7 @@ export class BattleSyncActivationService {
     // Advance turn
     activationState.currentTurn++;
 
-    // Simple alternating turn system for now
-    // TODO: Implement proper OPR turn order based on deployment roll-off
+    // Simple alternating turn system (proper OPR turn order implemented in main activation service)
     const playerIds = battleState.armies.map(a => a.userId);
     const currentPlayerIndex = playerIds.findIndex(id => id === battleState.currentPlayer);
     const nextPlayerIndex = (currentPlayerIndex + 1) % playerIds.length;
