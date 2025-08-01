@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 
 BattleSync is a self-hosted web application for managing One Page Rules (OPR) tabletop gaming campaigns with real-time battle tracking. 
 
-**Current State**: Production-ready multi-user application (v1.4.1) - Complete battle system with Scout deployment rules, deployment phase management, functional trait mechanics, turn/round management, ArmyForge metadata integration, enhanced unit displays, advanced army conversion system, comprehensive development quality assurance workflow, basic transport embarkation system, and Turn-Based Ambush Round 2+ Deployment system  
+**Current State**: Production-ready multi-user application (v1.5.2) - Complete battle system with Scout deployment rules, deployment phase management, functional trait mechanics, turn/round management, ArmyForge metadata integration, enhanced unit displays, advanced army conversion system, comprehensive development quality assurance workflow, basic transport embarkation system, Turn-Based Ambush Round 2+ Deployment system, comprehensive code cleanup and technical debt removal, Real Campaign Database Setup  
 **Target State**: Enhanced battle features with advanced OPR conversion and analytics
 
 ## Recent Major Completions

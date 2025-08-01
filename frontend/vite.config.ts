@@ -12,7 +12,7 @@ export default defineConfig({
   server: {
     host: true,
     port: FRONTEND_PORT,
-    allowedHosts: ['bastet', 'localhost', '127.0.0.1'],
+    allowedHosts: ['bastet','battlesync.me', 'localhost', '127.0.0.1'],
     proxy: {
       '/api': {
         target: BACKEND_TARGET,
