@@ -59,7 +59,7 @@ Previous v1.5.2 implementation is archived at git tag `v1.5.2-final-archive` and
 
 - `npm install` - Install dependencies
 - `npm run build` - Build TypeScript to JavaScript
-- `npm start` - Start production server from built files (port 3001)
+- `npm start` - Start production server from built files (port 40999)
 - `npm run dev` - Start development server with ts-node-dev
 - `npm test` - Run test suite with Jest
 - `npm run test:watch` - Run tests in watch mode
@@ -112,7 +112,7 @@ docker-compose.dev.yml # Development Docker Compose
 - Uses Node.js 20 LTS Alpine image
 - Multi-stage build for optimized image size
 - Health checks included
-- Runs on port 3001
+- Runs on port 40999 (Warhammer 40k + 999.M41 reference)
 
 ### Development
 - Separate development Dockerfile for hot reloading

@@ -1,6 +1,6 @@
 {
   "name": "battlesync",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "Simple OPR Battle Tracker - Clean v2 rewrite",
   "main": "dist/server.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "test:watch": "jest --watch",
     "typecheck": "tsc --noEmit",
     "docker:build": "docker build -t battlesync:latest .",
-    "docker:run": "docker run -p 3001:3001 battlesync:latest",
+    "docker:run": "docker run -p 40999:40999 battlesync:latest",
     "docker:up": "docker compose up -d",
     "docker:down": "docker compose down",
     "docker:dev": "docker compose -f docker-compose.dev.yml up",
