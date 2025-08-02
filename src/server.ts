@@ -22,7 +22,7 @@ interface ApiInfoResponse {
 app.get('/health', (req: Request, res: Response<HealthResponse>) => {
   res.json({ 
     status: 'ok', 
-    version: '2.1.0',
+    version: '2.2.0',
     timestamp: new Date().toISOString()
   });
 });
@@ -30,7 +30,7 @@ app.get('/health', (req: Request, res: Response<HealthResponse>) => {
 app.get('/', (req: Request, res: Response<ApiInfoResponse>) => {
   res.json({ 
     message: 'BattleSync v2 API',
-    version: '2.1.0'
+    version: '2.2.0'
   });
 });
 

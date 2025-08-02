@@ -1,6 +1,6 @@
 {
   "name": "battlesync",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Simple OPR Battle Tracker - Clean v2 rewrite",
   "main": "dist/server.js",
   "scripts": {
@@ -9,7 +9,13 @@
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "test": "jest",
     "test:watch": "jest --watch",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "docker:build": "docker build -t battlesync:latest .",
+    "docker:run": "docker run -p 3001:3001 battlesync:latest",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
+    "docker:dev": "docker compose -f docker-compose.dev.yml up",
+    "docker:logs": "docker compose logs -f"
   },
   "keywords": ["opr", "battle", "tracker", "gaming"],
   "author": "",

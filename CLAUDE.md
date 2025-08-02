@@ -15,7 +15,7 @@ BattleSync v2 is a clean rewrite of an OPR (One Page Rules) battle tracker appli
 
 ## Current State
 
-TypeScript backend implemented with Express server, health endpoints, and test suite. All code uses strict TypeScript for type safety.
+TypeScript backend with Docker containerization implemented. Express server with health endpoints, test suite, and full Docker development/production setup. All code uses strict TypeScript for type safety.
 
 ## Tech Stack
 
@@ -24,6 +24,7 @@ TypeScript backend implemented with Express server, health endpoints, and test s
 - **Styling**: TailwindCSS (mobile-first, planned)
 - **Database**: SQLite (simple, no ORM)
 - **Testing**: Jest + ts-jest + Supertest
+- **Containerization**: Docker + Docker Compose with Node.js 20 LTS
 
 ## Development Phases
 
@@ -64,6 +65,15 @@ Previous v1.5.2 implementation is archived at git tag `v1.5.2-final-archive` and
 - `npm run test:watch` - Run tests in watch mode
 - `npm run typecheck` - Check TypeScript types without building
 
+### Docker Commands
+
+- `npm run docker:build` - Build Docker image
+- `npm run docker:run` - Run Docker container directly
+- `npm run docker:up` - Start with Docker Compose (production)
+- `npm run docker:down` - Stop Docker Compose
+- `npm run docker:dev` - Start development environment with hot reload
+- `npm run docker:logs` - View container logs
+
 ## Development Workflow
 
 **ALWAYS follow this workflow for any changes:**
@@ -83,11 +93,28 @@ Previous v1.5.2 implementation is archived at git tag `v1.5.2-final-archive` and
 
 ```
 src/
-  server.ts       # Main Express server (TypeScript)
+  server.ts           # Main Express server (TypeScript)
 tests/
-  server.test.ts  # API tests (TypeScript)
-dist/             # Compiled JavaScript (generated)
-tsconfig.json     # TypeScript configuration
-jest.config.js    # Jest configuration with ts-jest
-package.json      # Dependencies and scripts
+  server.test.ts      # API tests (TypeScript)
+dist/                 # Compiled JavaScript (generated)
+tsconfig.json         # TypeScript configuration
+jest.config.js        # Jest configuration with ts-jest
+package.json          # Dependencies and scripts
+Dockerfile            # Production Docker image
+Dockerfile.dev        # Development Docker image
+docker-compose.yml    # Production Docker Compose
+docker-compose.dev.yml # Development Docker Compose
 ```
+
+## Docker Setup
+
+### Production
+- Uses Node.js 20 LTS Alpine image
+- Multi-stage build for optimized image size
+- Health checks included
+- Runs on port 3001
+
+### Development
+- Separate development Dockerfile for hot reloading
+- Volume mounts for live code changes
+- All dev dependencies included
