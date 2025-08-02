@@ -21,11 +21,11 @@ RUN npm ci && npm run build
 RUN rm -rf node_modules && npm ci --only=production
 
 # Expose port
-EXPOSE 40999
+EXPOSE 4019
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD node -e "require('http').get('http://localhost:40999/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) })"
+  CMD node -e "require('http').get('http://localhost:4019/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) })"
 
 # Start the application
 CMD ["npm", "start"]

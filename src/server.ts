@@ -3,7 +3,7 @@ import cors from 'cors';
 import { Server } from 'http';
 
 const app = express();
-const PORT = process.env.PORT || 40999;
+const PORT = process.env.PORT || 4019;
 
 app.use(cors());
 app.use(express.json());
@@ -22,7 +22,7 @@ interface ApiInfoResponse {
 app.get('/health', (req: Request, res: Response<HealthResponse>) => {
   res.json({ 
     status: 'ok', 
-    version: '2.3.0',
+    version: '2.4.0',
     timestamp: new Date().toISOString()
   });
 });
@@ -30,7 +30,7 @@ app.get('/health', (req: Request, res: Response<HealthResponse>) => {
 app.get('/', (req: Request, res: Response<ApiInfoResponse>) => {
   res.json({ 
     message: 'BattleSync v2 API',
-    version: '2.3.0'
+    version: '2.4.0'
   });
 });
 

@@ -2,12 +2,12 @@ services:
   app:
     build: .
     ports:
-      - "40999:40999"
+      - "4019:4019"
     environment:
       - NODE_ENV=production
-      - PORT=40999
+      - PORT=4019
     healthcheck:
-      test: ["CMD", "node", "-e", "require('http').get('http://localhost:40999/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) })"]
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:4019/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) })"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -20,13 +20,13 @@ services:
       context: .
       target: development
     ports:
-      - "40999:40999"
+      - "4019:4019"
     volumes:
       - .:/app
       - /app/node_modules
     environment:
       - NODE_ENV=development
-      - PORT=40999
+      - PORT=4019
     command: npm run dev
     profiles:
       - dev

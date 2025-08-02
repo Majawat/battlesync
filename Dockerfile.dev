@@ -17,7 +17,7 @@ COPY tsconfig.json ./
 COPY jest.config.js ./
 
 # Expose port
-EXPOSE 40999
+EXPOSE 4019
 
 # Start development server with hot reload
 CMD ["npm", "run", "dev"]

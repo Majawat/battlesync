@@ -7,11 +7,11 @@ services:
       context: .
       dockerfile: Dockerfile.dev
     ports:
-      - "40999:40999"
+      - "4019:4019"
     volumes:
       - .:/app
       - /app/node_modules
     environment:
       - NODE_ENV=development
-      - PORT=40999
+      - PORT=4019
     restart: unless-stopped
