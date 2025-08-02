@@ -19,18 +19,18 @@ interface ApiInfoResponse {
   version: string;
 }
 
-app.get('/health', (req: Request, res: Response<HealthResponse>) => {
+app.get('/health', (_req: Request, res: Response<HealthResponse>) => {
   res.json({ 
     status: 'ok', 
-    version: '2.4.0',
+    version: '2.5.0',
     timestamp: new Date().toISOString()
   });
 });
 
-app.get('/', (req: Request, res: Response<ApiInfoResponse>) => {
+app.get('/', (_req: Request, res: Response<ApiInfoResponse>) => {
   res.json({ 
     message: 'BattleSync v2 API',
-    version: '2.4.0'
+    version: '2.5.0'
   });
 });
 

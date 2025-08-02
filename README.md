@@ -28,13 +28,39 @@ git ls-tree -r v1.5.2-final-archive | wc -l  # 170+ files
 - **Focused**: Battle tracking only (no premature features)
 - **Mobile**: Built mobile-first with TailwindCSS
 
-## 📁 Next Steps
+## 🚀 Current Status (v2.4.0)
 
-1. Set up basic Node.js + Express backend
-2. Set up React + Vite frontend  
-3. Implement auth + army import
-4. Build core battle tracking
-5. Add polish + mobile optimization
+✅ **Backend Complete**: TypeScript Express server with Docker containerization  
+🔄 **In Progress**: Documentation and feature planning  
+📋 **Next**: Frontend React + Vite setup
+
+**Server**: http://localhost:4019 (Warhammer 40k themed port!)
+
+## 📚 Documentation
+
+Full documentation is available in the [docs/](docs/) folder:
+
+- **[Features & Roadmap](docs/features.md)** - What we're building
+- **[API Reference](docs/api.md)** - Backend API docs
+- **[Development Setup](docs/development.md)** - Get up and running
+- **[Architecture](docs/architecture.md)** - Technical design
+
+## 🛠️ Quick Start
+
+```bash
+# Clone and install
+git clone https://github.com/Majawat/battlesync.git
+cd battlesync
+npm install
+
+# Start development server
+npm run dev
+
+# Or use Docker
+npm run docker:dev
+```
+
+Visit http://localhost:4019/health to verify it's running!
 
 ---
 *Starting fresh with lessons learned from v1's complexity.*
