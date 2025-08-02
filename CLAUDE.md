@@ -15,14 +15,15 @@ BattleSync v2 is a clean rewrite of an OPR (One Page Rules) battle tracker appli
 
 ## Current State
 
-Basic backend is implemented with Express server, health endpoints, and test suite.
+TypeScript backend implemented with Express server, health endpoints, and test suite. All code uses strict TypeScript for type safety.
 
-## Planned Tech Stack
+## Tech Stack
 
-- **Backend**: Node.js + Express + SQLite
-- **Frontend**: React + Vite
-- **Styling**: TailwindCSS (mobile-first)
+- **Backend**: Node.js + Express + SQLite + TypeScript
+- **Frontend**: React + Vite (planned)
+- **Styling**: TailwindCSS (mobile-first, planned)
 - **Database**: SQLite (simple, no ORM)
+- **Testing**: Jest + ts-jest + Supertest
 
 ## Development Phases
 
@@ -56,10 +57,22 @@ Previous v1.5.2 implementation is archived at git tag `v1.5.2-final-archive` and
 ## Development Commands
 
 - `npm install` - Install dependencies
-- `npm start` - Start production server (port 3001)
-- `npm run dev` - Start development server with nodemon
-- `npm test` - Run test suite
+- `npm run build` - Build TypeScript to JavaScript
+- `npm start` - Start production server from built files (port 3001)
+- `npm run dev` - Start development server with ts-node-dev
+- `npm test` - Run test suite with Jest
 - `npm run test:watch` - Run tests in watch mode
+- `npm run typecheck` - Check TypeScript types without building
+
+## Development Workflow
+
+**ALWAYS follow this workflow for any changes:**
+1. Write/modify TypeScript code with proper types
+2. Run `npm run typecheck` to ensure TypeScript compilation
+3. Run `npm test` to ensure all tests pass
+4. Update version numbers in package.json and code
+5. Update documentation (CLAUDE.md, comments)
+6. Commit with descriptive messages and push
 
 ## API Endpoints
 
@@ -70,9 +83,11 @@ Previous v1.5.2 implementation is archived at git tag `v1.5.2-final-archive` and
 
 ```
 src/
-  server.js       # Main Express server
+  server.ts       # Main Express server (TypeScript)
 tests/
-  server.test.js  # API tests
-jest.config.js    # Jest configuration
+  server.test.ts  # API tests (TypeScript)
+dist/             # Compiled JavaScript (generated)
+tsconfig.json     # TypeScript configuration
+jest.config.js    # Jest configuration with ts-jest
 package.json      # Dependencies and scripts
 ```

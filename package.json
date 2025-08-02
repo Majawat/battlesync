@@ -1,13 +1,15 @@
 {
   "name": "battlesync",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Simple OPR Battle Tracker - Clean v2 rewrite",
-  "main": "src/server.js",
+  "main": "dist/server.js",
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "nodemon src/server.js",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "typecheck": "tsc --noEmit"
   },
   "keywords": ["opr", "battle", "tracker", "gaming"],
   "author": "",
@@ -18,8 +20,15 @@
     "cors": "^2.8.5"
   },
   "devDependencies": {
-    "nodemon": "^3.0.2",
+    "typescript": "^5.3.3",
+    "ts-node-dev": "^2.0.0",
+    "@types/node": "^20.10.5",
+    "@types/express": "^4.17.21",
+    "@types/cors": "^2.8.17",
+    "@types/jest": "^29.5.8",
+    "@types/supertest": "^6.0.2",
     "jest": "^29.7.0",
+    "ts-jest": "^29.1.1",
     "supertest": "^6.3.3"
   }
 }
