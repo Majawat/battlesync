@@ -35,12 +35,44 @@ When implementing features, follow this planned progression:
 4. Build core battle tracking functionality
 5. Add polish + mobile optimization
 
+## OPR Grimdark Future Game System
+
+BattleSync tracks battles for One Page Rules' Grimdark Future system. Key concepts:
+
+### Army Structure
+- **Regular Units**: Standard units (single or multi-model)
+- **Combined Units**: Doubled model count (appears as 2 units in ArmyForge, merge in app)
+- **Joined Units**: Hero attached to regular unit (separate identities, shared mechanics)
+
+### Battle Flow
+1. **Setup Phase**: Determine turn order, choose doctrines
+2. **Deployment Phase**: Standard, Ambush, Scout, or Transport deployment
+3. **Game Rounds**: Players alternate activating units with actions:
+   - Hold (stay, can shoot)
+   - Advance (move 6", can shoot) 
+   - Rush (move 12", no shooting)
+   - Charge (move 12" into melee)
+4. **End Game**: Predetermined rounds or mission conditions
+
+### Critical Tracking Requirements
+- **Unit Health**: Model casualties and wounds
+- **Unit States**: Normal, Shaken (idle, can't contest objectives), Routed (removed)
+- **Fatigue**: After first melee attack, only hit on 6s until round end
+- **Morale Tests**: When unit drops to half size or loses melee
+- **Action History**: For undo functionality and battle reports
+
+### ArmyForge Integration
+- Import via share links (https://army-forge.onepagerules.com/share?id=...)
+- API endpoint: https://army-forge.onepagerules.com/api/tts?id=...
+- ArmyForge handles validation - trust their data structure
+- Handle all upgrade/trait edge cases from their JSON
+
 ## Core Features to Implement
 
-- Import armies from ArmyForge
-- Track damage during OPR battles
+- Import armies from ArmyForge (handle Combined/Joined unit merging)
+- Track unit health, states, and battle actions
 - Basic undo functionality for mistakes
-- View battle history
+- View battle history and reports
 
 ## Database Design
 
