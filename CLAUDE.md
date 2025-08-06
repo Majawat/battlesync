@@ -41,8 +41,8 @@ BattleSync tracks battles for One Page Rules' Grimdark Future system. Key concep
 
 ### Army Structure
 - **Regular Units**: Standard units (single or multi-model)
-- **Combined Units**: Doubled model count (appears as 2 units in ArmyForge, merge in app)
-- **Joined Units**: Hero attached to regular unit (separate identities, shared mechanics)
+- **Combined Units**: Doubled model count (appears as 2 units in ArmyForge with different stats - must carefully merge, not just double)
+- **Joined Units**: Hero attached to regular unit (Hero uses unit's Defense stat until last model, damage allocated to regular models first unless Sniper rule)
 
 ### Battle Flow
 1. **Setup Phase**: Determine turn order, choose doctrines
@@ -57,7 +57,9 @@ BattleSync tracks battles for One Page Rules' Grimdark Future system. Key concep
 ### Critical Tracking Requirements
 - **Unit Health**: Model casualties and wounds
 - **Unit States**: Normal, Shaken (idle, can't contest objectives), Routed (removed)
-- **Fatigue**: After first melee attack, only hit on 6s until round end
+- **Fatigue**: After participating in melee attack (charging or striking back), only hit on 6s until round end
+- **Damage Allocation**: Regular models first, then Heroes (unless Sniper special rule)
+- **Defense Stats**: Joined units use base unit's Defense until Hero is last model
 - **Morale Tests**: When unit drops to half size or loses melee
 - **Action History**: For undo functionality and battle reports
 
@@ -66,6 +68,8 @@ BattleSync tracks battles for One Page Rules' Grimdark Future system. Key concep
 - API endpoint: https://army-forge.onepagerules.com/api/tts?id=...
 - ArmyForge handles validation - trust their data structure
 - Handle all upgrade/trait edge cases from their JSON
+- Combined units appear as 2 separate units with "join to" field - merge carefully as stats differ
+- Transport capacity tracking not implemented - users handle manually
 
 ## Core Features to Implement
 
