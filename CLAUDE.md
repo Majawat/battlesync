@@ -113,12 +113,14 @@ Previous v1.5.2 implementation is archived at git tag `v1.5.2-final-archive` and
 ## Development Workflow
 
 **ALWAYS follow this workflow for any changes:**
-1. Write/modify TypeScript code with proper types
-2. Run `npm run typecheck` to ensure TypeScript compilation
-3. Run `npm test` to ensure all tests pass
-4. Update version numbers in package.json and code
-5. Update documentation (CLAUDE.md, comments)
-6. Commit with descriptive messages and push
+1. **Ask clarifying questions** before writing code if requirements are unclear
+2. **Write unit tests** as you develop features (test-driven development)
+3. Write/modify TypeScript code with proper types
+4. Run `npm run typecheck` to ensure TypeScript compilation
+5. Run `npm test` to ensure all tests pass
+6. Update version numbers in package.json and code
+7. Update documentation (CLAUDE.md, comments)
+8. Commit with descriptive messages and push
 
 ## API Endpoints
 
