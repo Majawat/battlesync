@@ -17,6 +17,9 @@ COPY tsconfig.json ./
 # Install dev dependencies for building
 RUN npm ci && npm run build
 
+# Ensure schema.sql is available in dist
+RUN mkdir -p dist/database && cp src/database/schema.sql dist/database/
+
 # Remove dev dependencies and reinstall only production
 RUN rm -rf node_modules && npm ci --only=production
 

@@ -3,6 +3,8 @@ services:
     build: .
     ports:
       - "4019:4019"
+    volumes:
+      - ./data:/app/data
     environment:
       - NODE_ENV=production
       - PORT=4019
