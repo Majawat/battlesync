@@ -112,15 +112,88 @@ Previous v1.5.2 implementation is archived at git tag `v1.5.2-final-archive` and
 
 ## Development Workflow
 
-**ALWAYS follow this workflow for any changes:**
+**ALWAYS follow this comprehensive workflow for any changes:**
+
+### Phase 1: Planning & Development
 1. **Ask clarifying questions** before writing code if requirements are unclear
 2. **Write unit tests** as you develop features (test-driven development)
 3. Write/modify TypeScript code with proper types
 4. Run `npm run typecheck` to ensure TypeScript compilation
 5. Run `npm test` to ensure all tests pass
-6. Update version numbers in package.json and code
-7. Update documentation (CLAUDE.md, comments)
-8. Commit with descriptive messages and push
+
+### Phase 2: Version & Documentation Updates  
+6. **Update version numbers** in package.json and code (server.ts response objects)
+7. **Update all documentation** to reflect current state:
+   - Update CLAUDE.md with new features/endpoints
+   - Update docs/api.md with new endpoints and examples
+   - Update docs/features.md with completed features
+   - Update README.md current status section
+   - Update docs/README.md version history
+
+### Phase 3: Codebase Maintenance
+8. **Clean up technical debt**:
+   - Remove temporary/test files (test_*.ts, *.tmp files)
+   - Remove unused imports, variables, or functions
+   - Remove outdated comments or TODO items
+   - Consolidate duplicate code if found
+9. **Update configuration files as needed**:
+   - Add new file patterns to .gitignore if needed
+   - Update .dockerignore for new file types
+   - Update tsconfig.json if new paths added
+
+### Phase 4: Final Verification & Commit
+10. **Final checks**:
+    - Run `npm run typecheck` again after all changes
+    - Run `npm test` to ensure all tests still pass
+    - Verify documentation accuracy matches implementation
+11. **Git workflow**:
+    - Stage all changes with `git add .`
+    - Commit with descriptive message using established format
+    - Include 🤖 Generated with Claude Code footer
+
+**Example commit message format:**
+```
+feat: implement [feature name] with [key capabilities]
+
+- Brief bullet point of main changes
+- Include any breaking changes
+- Note documentation updates
+- Mention cleanup performed
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+```
+
+**Never skip steps** - This comprehensive workflow ensures code quality, documentation accuracy, and maintainable codebase.
+
+## Code Quality Standards
+
+### File Organization
+- Remove any temporary files (test_*.ts, *.tmp, debug files) before commits  
+- Keep only production-ready code in the repository
+- Organize imports: built-in modules, external packages, then internal modules
+- Use consistent naming conventions throughout
+
+### Configuration Maintenance
+- **`.gitignore`**: Keep updated with patterns for temporary files, build artifacts, secrets
+- **`.dockerignore`**: Exclude development files, documentation, tests from production images  
+- **`tsconfig.json`**: Update paths and includes as project structure evolves
+- **`package.json`**: Keep dependencies up-to-date and remove unused packages
+
+### Documentation Standards  
+- All API endpoints must be documented with request/response examples
+- Version numbers must be consistent across all files
+- Feature documentation must accurately reflect implementation status
+- Include clear examples and usage patterns
+- Remove outdated information promptly
+
+### Technical Debt Management
+- Address TypeScript warnings and errors immediately
+- Remove unused code during each development cycle
+- Consolidate duplicate logic when found  
+- Update comments to match current implementation
+- Maintain consistent error handling patterns
 
 ## API Endpoints
 

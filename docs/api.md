@@ -23,7 +23,7 @@ Get API information and version.
 ```json
 {
   "message": "BattleSync v2 API",
-  "version": "2.6.0"
+  "version": "2.6.1"
 }
 ```
 
@@ -34,7 +34,7 @@ Health check endpoint with system status.
 ```json
 {
   "status": "ok",
-  "version": "2.6.0",
+  "version": "2.6.1",
   "timestamp": "2025-08-07T13:22:21.393Z"
 }
 ```
@@ -169,7 +169,7 @@ All endpoints return errors in this format:
 
 API version is included in response headers:
 ```
-X-API-Version: 2.6.0
+X-API-Version: 2.6.1
 ```
 
 ---

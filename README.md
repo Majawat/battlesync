@@ -28,7 +28,7 @@ git ls-tree -r v1.5.2-final-archive | wc -l  # 170+ files
 - **Focused**: Battle tracking only (no premature features)
 - **Mobile**: Built mobile-first with TailwindCSS
 
-## 🚀 Current Status (v2.6.0)
+## 🚀 Current Status (v2.6.1)
 
 ✅ **Army Import System**: Complete ArmyForge integration with OPR unit processing  
 ✅ **Backend Complete**: TypeScript Express server with SQLite storage and Docker  

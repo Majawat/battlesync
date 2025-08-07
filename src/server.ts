@@ -61,7 +61,7 @@ interface StoredArmySummary {
 app.get('/health', (_req: Request, res: Response<HealthResponse>) => {
   res.json({ 
     status: 'ok', 
-    version: '2.6.0',
+    version: '2.6.1',
     timestamp: new Date().toISOString()
   });
 });
@@ -69,7 +69,7 @@ app.get('/health', (_req: Request, res: Response<HealthResponse>) => {
 app.get('/', (_req: Request, res: Response<ApiInfoResponse>) => {
   res.json({ 
     message: 'BattleSync v2 API',
-    version: '2.6.0'
+    version: '2.6.1'
   });
 });
 
