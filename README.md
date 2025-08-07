@@ -42,7 +42,8 @@ git ls-tree -r v1.5.2-final-archive | wc -l  # 170+ files
 Full documentation is available in the [docs/](docs/) folder:
 
 - **[Features & Roadmap](docs/features.md)** - What we're building
-- **[API Reference](docs/api.md)** - Backend API docs
+- **[API Reference](docs/api.md)** - BattleSync API endpoints
+- **[OPR API Reference](docs/opr-api-reference.md)** - One Page Rules API docs
 - **[OPR Game Guide](docs/opr-guide.md)** - Grimdark Future mechanics
 - **[Development Setup](docs/development.md)** - Get up and running
 - **[Architecture](docs/architecture.md)** - Technical design

@@ -5,7 +5,9 @@ Welcome to the BattleSync v2 documentation! This clean rewrite focuses on simpli
 ## 📚 Documentation Structure
 
 - **[Features & Roadmap](features.md)** - Current and planned features
-- **[API Reference](api.md)** - API endpoints and usage  
+- **[API Reference](api.md)** - BattleSync API endpoints and usage  
+- **[OPR API Reference](opr-api-reference.md)** - One Page Rules API documentation
+- **[Caching Strategy](caching-strategy.md)** - Intelligent OPR data caching system
 - **[OPR Grimdark Future Guide](opr-guide.md)** - Game system mechanics
 - **[Development Setup](development.md)** - How to set up and contribute
 - **[Architecture](architecture.md)** - System design and tech stack
