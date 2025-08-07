@@ -128,5 +128,6 @@ export interface ArmyForgeArmy {
   narrativeMode: boolean;
   activationCount: number;
   listPoints: number;
+  forceOrgErrors?: string[] | null;
   units: ArmyForgeUnit[];
 }

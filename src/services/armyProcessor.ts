@@ -23,11 +23,18 @@ export class ArmyProcessor {
     const totalCost = finalUnits.reduce((sum, unit) => sum + unit.total_cost, 0);
     const totalModels = finalUnits.reduce((sum, unit) => sum + unit.model_count, 0);
 
+    // Check for army-level validation issues
+    const hasArmyValidationIssues = armyForgeData.forceOrgErrors && armyForgeData.forceOrgErrors.length > 0;
+    const validationNotes = hasArmyValidationIssues ? 
+      `ARMY VALIDATION: ${armyForgeData.forceOrgErrors?.join(', ')}` : '';
+
     return {
       id: '', // Will be set when saving to database
       armyforge_id: armyForgeData.id,
       name: armyForgeData.name,
-      description: armyForgeData.description,
+      description: validationNotes ? 
+        `${armyForgeData.description || ''}${armyForgeData.description ? ' | ' : ''}${validationNotes}`.trim() :
+        armyForgeData.description,
       points_limit: armyForgeData.pointsLimit,
       list_points: totalCost, // Use our calculated total
       model_count: totalModels,
@@ -56,6 +63,11 @@ export class ArmyProcessor {
     
     const casterRating = casterRule?.rating ? parseInt(casterRule.rating.toString()) : undefined;
 
+    // Check for validation issues from ArmyForge
+    const hasValidationIssues = !unit.valid || unit.hasBalanceInvalid || 
+                               (unit.disabledSections && unit.disabledSections.length > 0) || 
+                               (unit.disabledUpgradeSections && unit.disabledUpgradeSections.length > 0);
+
     return {
       id: unit.selectionId,
       armyforge_unit_id: unit.id,
@@ -75,7 +87,9 @@ export class ArmyProcessor {
       rules: this.processRules(unit.rules),
       items: this.processRules(unit.items?.flatMap(item => item.content) || []),
       models: this.generateModels(unit),
-      notes: unit.notes || undefined
+      notes: hasValidationIssues ? 
+        `${unit.notes || ''}${unit.notes ? ' | ' : ''}VALIDATION: ${!unit.valid ? 'Invalid unit' : ''}${unit.hasBalanceInvalid ? ' Balance invalid' : ''}${unit.disabledSections && unit.disabledSections.length > 0 ? ` Disabled sections: ${unit.disabledSections.join(', ')}` : ''}`.trim() :
+        unit.notes || undefined
     };
   }
 
@@ -249,11 +263,14 @@ export class ArmyProcessor {
    * Create a standalone unit (no joining)
    */
   private static createStandaloneUnit(subUnit: ProcessedSubUnit, isCombined = false): ProcessedUnit {
+    // Always prioritize custom name over regular name
+    const displayName = subUnit.custom_name || subUnit.name;
+    
     return {
       id: subUnit.id,
       army_id: '', // Will be set when saving
       armyforge_unit_ids: [subUnit.armyforge_unit_id],
-      name: subUnit.name,
+      name: displayName,
       custom_name: subUnit.custom_name,
       quality: subUnit.quality,
       defense: subUnit.defense,
@@ -272,12 +289,17 @@ export class ArmyProcessor {
    * Create a joined unit (hero + regular unit)
    */
   private static createJoinedUnit(regularUnit: ProcessedSubUnit, heroUnit: ProcessedSubUnit): ProcessedUnit {
+    // Use custom names for display, format as "Hero w/ Unit"
+    const heroDisplayName = heroUnit.custom_name || heroUnit.name;
+    const unitDisplayName = regularUnit.custom_name || regularUnit.name;
+    const joinedName = `${heroDisplayName} w/ ${unitDisplayName}`;
+    
     return {
       id: regularUnit.id, // Use regular unit's ID as primary
       army_id: '', // Will be set when saving
       armyforge_unit_ids: [regularUnit.armyforge_unit_id, heroUnit.armyforge_unit_id],
-      name: `${regularUnit.name} + ${heroUnit.name}`,
-      custom_name: undefined,
+      name: joinedName,
+      custom_name: joinedName, // Use the joined name as custom name
       quality: heroUnit.quality, // Use hero's quality
       defense: regularUnit.defense, // Use regular unit's defense
       total_cost: regularUnit.cost + heroUnit.cost,

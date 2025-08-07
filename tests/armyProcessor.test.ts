@@ -31,9 +31,9 @@ describe('ArmyProcessor', () => {
     test('should merge Combined units correctly', () => {
       const processed = ArmyProcessor.processArmy(testArmyData);
       
-      // Find the combined Infantry Squad
+      // Find the combined Infantry Squad (now uses custom name as display name)
       const combinedUnit = processed.units.find(u => 
-        u.name === 'Infantry Squad' && u.is_combined
+        u.name === 'Bullshit-Squad Crews' && u.is_combined
       );
       
       expect(combinedUnit).toBeDefined();
@@ -45,10 +45,11 @@ describe('ArmyProcessor', () => {
     test('should merge Joined units correctly', () => {
       const processed = ArmyProcessor.processArmy(testArmyData);
       
-      // Find the joined unit (Minions + Mrs. Bitchtits)
+      // Find the joined unit (Mrs. Bitchtits w/ Minions)
       const joinedUnit = processed.units.find(u => u.is_joined);
       
       expect(joinedUnit).toBeDefined();
+      expect(joinedUnit!.name).toBe('Mrs. Bitchtits w/ Minions'); // New naming format
       expect(joinedUnit!.total_cost).toBe(355); // 140 + 215
       expect(joinedUnit!.model_count).toBe(11); // 10 + 1 models
       expect(joinedUnit!.has_hero).toBe(true);
@@ -73,18 +74,15 @@ describe('ArmyProcessor', () => {
       const processed = ArmyProcessor.processArmy(testArmyData);
       
       const expectedCosts = [
-        { name: 'Elite Veteran', cost: 140 },
-        { name: 'Storm Leader', customName: 'Darth Vader', cost: 145 },
-        { name: 'Company Leader', customName: 'Captain Bullshit', cost: 150 },
-        { name: 'Grinder Truck', customName: 'Grindr Love Truck', cost: 335 },
-        { name: 'Blessed Titan', cost: 1130 }
+        { displayName: 'Elite Veteran', cost: 140 }, // No custom name
+        { displayName: 'Darth Vader', cost: 145 }, // Uses custom name as display name
+        { displayName: 'Captain Bullshit', cost: 150 }, // Uses custom name as display name
+        { displayName: 'Grindr Love Truck', cost: 335 }, // Uses custom name as display name
+        { displayName: 'Blessed Titan', cost: 1130 } // No custom name
       ];
 
       expectedCosts.forEach(expected => {
-        const unit = processed.units.find(u => 
-          u.name === expected.name && 
-          (expected.customName ? u.custom_name === expected.customName : true)
-        );
+        const unit = processed.units.find(u => u.name === expected.displayName);
         
         expect(unit).toBeDefined();
         expect(unit!.total_cost).toBe(expected.cost);
@@ -94,8 +92,8 @@ describe('ArmyProcessor', () => {
     test('should preserve campaign data correctly', () => {
       const processed = ArmyProcessor.processArmy(testArmyData);
       
-      // Check Mrs. Bitchtits has campaign data
-      const joinedUnit = processed.units.find(u => u.is_joined);
+      // Check Mrs. Bitchtits has campaign data in joined unit
+      const joinedUnit = processed.units.find(u => u.name === 'Mrs. Bitchtits w/ Minions');
       const heroSubUnit = joinedUnit!.sub_units.find(su => su.is_hero);
       
       expect(heroSubUnit!.xp).toBe(5);
@@ -106,12 +104,12 @@ describe('ArmyProcessor', () => {
       const processed = ArmyProcessor.processArmy(testArmyData);
       
       // Joined unit should use Hero's Quality and regular unit's Defense
-      const joinedUnit = processed.units.find(u => u.is_joined);
+      const joinedUnit = processed.units.find(u => u.name === 'Mrs. Bitchtits w/ Minions');
       const heroSubUnit = joinedUnit!.sub_units.find(su => su.is_hero);
       const regularSubUnit = joinedUnit!.sub_units.find(su => !su.is_hero);
       
-      expect(joinedUnit!.quality).toBe(heroSubUnit!.quality); // Hero quality
-      expect(joinedUnit!.defense).toBe(regularSubUnit!.defense); // Regular unit defense
+      expect(joinedUnit!.quality).toBe(heroSubUnit!.quality); // Hero quality (4)
+      expect(joinedUnit!.defense).toBe(regularSubUnit!.defense); // Regular unit defense (5)
     });
   });
 });
