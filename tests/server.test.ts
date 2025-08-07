@@ -1,9 +1,16 @@
 import request from 'supertest';
-import { app, server } from '../src/server';
+import { app } from '../src/server';
+import { db } from '../src/database/db';
 
 describe('BattleSync v2 API', () => {
-  afterAll(() => {
-    server.close();
+  beforeAll(async () => {
+    // Initialize database for tests (in-memory)
+    await db.initialize();
+  });
+
+  afterAll(async () => {
+    // Close database connection after tests
+    await db.close();
   });
 
   test('GET / should return API info', async () => {

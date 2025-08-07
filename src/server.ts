@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import { Server } from 'http';
+import { db } from './database/db';
 
 const app = express();
 const PORT = process.env.PORT || 4019;
@@ -34,8 +35,29 @@ app.get('/', (_req: Request, res: Response<ApiInfoResponse>) => {
   });
 });
 
-const server: Server = app.listen(PORT, () => {
-  console.log(`BattleSync v2 server running on port ${PORT}`);
-});
+// Initialize database and start server
+async function startServer(): Promise<Server> {
+  try {
+    await db.initialize();
+    console.log('Database initialized successfully');
+    
+    const server: Server = app.listen(PORT, () => {
+      console.log(`BattleSync v2 server running on port ${PORT}`);
+    });
+    
+    return server;
+  } catch (error) {
+    console.error('Failed to start server:', error);
+    process.exit(1);
+  }
+}
 
-export { app, server };
+// Start server unless in test environment
+let server: Server | undefined;
+if (process.env.NODE_ENV !== 'test') {
+  startServer().then((s) => {
+    server = s;
+  });
+}
+
+export { app, server, startServer };
