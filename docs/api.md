@@ -23,7 +23,7 @@ Get API information and version.
 ```json
 {
   "message": "BattleSync v2 API",
-  "version": "2.4.0"
+  "version": "2.6.0"
 }
 ```
 
@@ -34,8 +34,8 @@ Health check endpoint with system status.
 ```json
 {
   "status": "ok",
-  "version": "2.4.0",
-  "timestamp": "2025-08-02T13:22:21.393Z"
+  "version": "2.6.0",
+  "timestamp": "2025-08-07T13:22:21.393Z"
 }
 ```
 
@@ -43,32 +43,111 @@ Health check endpoint with system status.
 - `200` - System healthy
 - `500` - System error
 
+### Army Management
+
+#### `POST /api/armies/import`
+Import army from ArmyForge by share ID.
+
+**Request Body:**
+```json
+{
+  "armyForgeId": "IJ1JM_m-jmka"
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "army": {
+    "id": "1",
+    "armyforge_id": "IJ1JM_m-jmka",
+    "name": "Dev Testerson's Bullshit Army",
+    "list_points": 2730,
+    "model_count": 36,
+    "activation_count": 7,
+    "units": [...],
+    ...
+  }
+}
+```
+
+**Status Codes:**
+- `200` - Army imported successfully
+- `400` - Missing armyForgeId
+- `404` - ArmyForge ID not found
+- `500` - Server error
+
+#### `GET /api/armies`
+List all stored armies.
+
+**Response:**
+```json
+{
+  "success": true,
+  "armies": [
+    {
+      "id": 1,
+      "armyforge_id": "IJ1JM_m-jmka",
+      "name": "Dev Testerson's Bullshit Army",
+      "points_limit": 2500,
+      "list_points": 2730,
+      "model_count": 36,
+      "activation_count": 7,
+      "created_at": "2025-08-07T13:22:21.393Z"
+    }
+  ]
+}
+```
+
+#### `GET /api/armies/:id`
+Get specific army with full details including units, sub-units, and models.
+
+**Response:**
+```json
+{
+  "success": true,
+  "army": {
+    "id": "1",
+    "name": "Dev Testerson's Bullshit Army",
+    "units": [
+      {
+        "id": "1",
+        "name": "Combined Grunts",
+        "is_combined": true,
+        "sub_units": [...],
+        ...
+      }
+    ],
+    ...
+  }
+}
+```
+
+**Status Codes:**
+- `200` - Army found
+- `400` - Invalid army ID  
+- `404` - Army not found
+- `500` - Server error
+
 ## Planned Endpoints
 
-### Battle Management *(Coming in Phase 1)*
+### Battle Management *(Coming Soon)*
 
-#### `POST /battles`
-Create a new battle session.
+#### `POST /api/battles`
+Create a new battle session with selected armies.
 
-#### `GET /battles`
-List user's battles.
+#### `GET /api/battles`
+List user's battle sessions.
 
-#### `GET /battles/:id`
-Get specific battle details.
+#### `GET /api/battles/:id`
+Get specific battle details with current state.
 
-#### `POST /battles/:id/events`
-Add battle event (damage, etc.).
+#### `POST /api/battles/:id/events`
+Add battle event (damage, morale test, etc.).
 
-#### `DELETE /battles/:id/events/:eventId`
-Undo battle event.
-
-### Army Management *(Coming in Phase 1)*
-
-#### `POST /armies/import`
-Import army from ArmyForge.
-
-#### `GET /armies`
-List user's armies.
+#### `DELETE /api/battles/:id/events/:eventId`
+Undo battle event for mistake correction.
 
 ## Error Responses
 
@@ -90,7 +169,7 @@ All endpoints return errors in this format:
 
 API version is included in response headers:
 ```
-X-API-Version: 2.4.0
+X-API-Version: 2.6.0
 ```
 
 ---

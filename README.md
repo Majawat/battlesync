@@ -23,16 +23,17 @@ git ls-tree -r v1.5.2-final-archive | wc -l  # 170+ files
 
 ## 🚀 v2 Philosophy
 
-- **Simple**: 5 database tables max (v1 had 17)
+- **Simple**: Minimal database schema (9 tables vs v1's 17)
 - **Fast**: Express + SQLite + React (no complex ORM)  
 - **Focused**: Battle tracking only (no premature features)
 - **Mobile**: Built mobile-first with TailwindCSS
 
-## 🚀 Current Status (v2.4.0)
+## 🚀 Current Status (v2.6.0)
 
-✅ **Backend Complete**: TypeScript Express server with Docker containerization  
-🔄 **In Progress**: Documentation and feature planning  
-📋 **Next**: Frontend React + Vite setup
+✅ **Army Import System**: Complete ArmyForge integration with OPR unit processing  
+✅ **Backend Complete**: TypeScript Express server with SQLite storage and Docker  
+✅ **Testing**: 17 comprehensive tests covering all functionality  
+📋 **Next**: React frontend and battle tracking features
 
 **Server**: http://localhost:4019 (Warhammer 40k themed port!)
 
@@ -42,6 +43,7 @@ Full documentation is available in the [docs/](docs/) folder:
 
 - **[Features & Roadmap](docs/features.md)** - What we're building
 - **[API Reference](docs/api.md)** - Backend API docs
+- **[OPR Game Guide](docs/opr-guide.md)** - Grimdark Future mechanics
 - **[Development Setup](docs/development.md)** - Get up and running
 - **[Architecture](docs/architecture.md)** - Technical design
 
