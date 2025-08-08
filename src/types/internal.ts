@@ -19,6 +19,14 @@ export interface ProcessedRule {
   has_ability?: boolean;
 }
 
+export interface ProcessedModelUpgrade {
+  name: string;
+  description: string;
+  rules: ProcessedRule[];
+  reassignable: boolean; // Can be moved to another model by user
+  source: 'weapon-team' | 'choose-model' | 'unit-wide';
+}
+
 export interface ProcessedModel {
   model_id: string;
   name: string;
@@ -28,6 +36,7 @@ export interface ProcessedModel {
   is_hero: boolean;
   special_rules: ProcessedRule[];
   weapons: ProcessedWeapon[]; // Individual model weapons
+  upgrades: ProcessedModelUpgrade[]; // Model-specific upgrades
 }
 
 export interface ProcessedSubUnit {

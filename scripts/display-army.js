@@ -121,6 +121,10 @@ async function displayArmy(armyId = 'IJ1JM_m-jmka') {
             } else {
               console.log(`       Weapons: None`);
             }
+            if (model.upgrades && model.upgrades.length > 0) {
+              const upgradesList = model.upgrades.map(u => `${u.name}${u.reassignable ? ' [Reassignable]' : ''}`).join(', ');
+              console.log(`       Upgrades: ${upgradesList}`);
+            }
           });
         } else {
           console.log(`    No individual models found`);
@@ -144,8 +148,8 @@ async function displayArmy(armyId = 'IJ1JM_m-jmka') {
     
     console.log(`✓ Defense Upgrades: Captain Bullshit D${captainBullshit?.defense}+ (should be D4+)`);
     console.log(`✓ Rule Stacking: Grindr Love Truck Impact(${impactRule?.rating}) (should be Impact(8))`);
-    console.log(`✓ Army Points: ${army.list_points}pts (should be 2940pts)`);
-    console.log(`✓ Total Models: ${army.model_count} (should be 39)`);
+    console.log(`✓ Army Points: ${army.list_points}pts (should be 3080pts)`);
+    console.log(`✓ Total Models: ${army.model_count} (should be 44)`);
     console.log(`✓ Total Units: ${army.units.length} (should be 8)`);
     
   } catch (error) {

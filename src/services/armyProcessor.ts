@@ -1,5 +1,5 @@
 import { ArmyForgeArmy, ArmyForgeUnit, ArmyForgeWeapon, ArmyForgeRule } from '../types/armyforge';
-import { ProcessedArmy, ProcessedUnit, ProcessedSubUnit, ProcessedWeapon, ProcessedRule, ProcessedModel } from '../types/internal';
+import { ProcessedArmy, ProcessedUnit, ProcessedSubUnit, ProcessedWeapon, ProcessedRule, ProcessedModel, ProcessedModelUpgrade } from '../types/internal';
 
 export class ArmyProcessor {
   /**
@@ -644,12 +644,16 @@ export class ArmyProcessor {
         current_tough: maxTough,
         is_hero: isHero && unit.size === 1, // Only single-model heroes
         special_rules: [],
-        weapons: [] // Will be populated by distributeWeaponsToModels
+        weapons: [], // Will be populated by distributeWeaponsToModels
+        upgrades: [] // Will be populated by assignModelUpgrades
       });
     }
 
     // Distribute weapons to models
     this.distributeWeaponsToModels(models, unitWeapons, unit);
+
+    // Assign model-specific upgrades and calculate final toughness
+    this.assignModelUpgrades(models, unit);
 
     return models;
   }
@@ -727,6 +731,144 @@ export class ArmyProcessor {
             });
           }
         }
+      }
+    });
+  }
+
+  /**
+   * Assign model-specific upgrades and recalculate toughness
+   */
+  private static assignModelUpgrades(models: ProcessedModel[], unit: ArmyForgeUnit): void {
+    if (!unit.selectedUpgrades || unit.selectedUpgrades.length === 0) {
+      return;
+    }
+
+    // Get unit-wide tough value from processed rules
+    const unitRules = this.processEnhancedRules(unit.rules, unit.loadout);
+    const baseToughRule = unitRules.find(rule => rule.name === 'Tough');
+    const baseTough = baseToughRule?.rating ? parseInt(baseToughRule.rating.toString()) : 1;
+
+    // Set base toughness for all models
+    models.forEach(model => {
+      model.max_tough = baseTough;
+      model.current_tough = baseTough;
+    });
+
+    // Process model-specific upgrades
+    unit.selectedUpgrades.forEach(selectedUpgrade => {
+      const upgradeType = this.categorizeUpgrade(selectedUpgrade);
+      
+      if (upgradeType.source === 'unit-wide') {
+        // Unit-wide upgrades affect all models (already handled in unit rules)
+        return;
+      }
+
+      if (upgradeType.source === 'weapon-team') {
+        // Find model with weapon team weapons
+        const targetModel = this.findWeaponTeamModel(models, selectedUpgrade);
+        if (targetModel) {
+          this.applyUpgradeToModel(targetModel, selectedUpgrade, upgradeType);
+        }
+      }
+
+      if (upgradeType.source === 'choose-model') {
+        // Assign to first available model (user can reassign later)
+        const targetModel = models[0]; // Simple assignment for now
+        if (targetModel) {
+          this.applyUpgradeToModel(targetModel, selectedUpgrade, upgradeType);
+        }
+      }
+    });
+  }
+
+  /**
+   * Categorize upgrade based on its affects/select properties
+   */
+  private static categorizeUpgrade(selectedUpgrade: any): { source: 'weapon-team' | 'choose-model' | 'unit-wide'; reassignable: boolean } {
+    const upgrade = selectedUpgrade.upgrade;
+    const option = selectedUpgrade.option;
+
+    // Check if it's a weapon team (affects exactly 1 model and has weapons)
+    if (upgrade.affects?.type === 'exactly' && upgrade.affects?.value === 1 && 
+        option.gains?.some((gain: any) => gain.type === 'ArmyBookItem' && 
+        gain.content?.some((content: any) => content.type === 'ArmyBookWeapon'))) {
+      return { source: 'weapon-team', reassignable: false };
+    }
+
+    // Check if it's a choose-model upgrade (select exactly 1)
+    if (upgrade.select?.type === 'exactly' && upgrade.select?.value === 1) {
+      return { source: 'choose-model', reassignable: true };
+    }
+
+    // Check if it affects all models
+    if (upgrade.affects?.type === 'all') {
+      return { source: 'unit-wide', reassignable: false };
+    }
+
+    // Default to choose-model if unclear
+    return { source: 'choose-model', reassignable: true };
+  }
+
+  /**
+   * Find the model that should get weapon team upgrades
+   */
+  private static findWeaponTeamModel(models: ProcessedModel[], selectedUpgrade: any): ProcessedModel | undefined {
+    const weaponNames = selectedUpgrade.option.gains
+      ?.find((gain: any) => gain.type === 'ArmyBookItem')
+      ?.content?.filter((content: any) => content.type === 'ArmyBookWeapon')
+      ?.map((weapon: any) => weapon.name) || [];
+
+    return models.find(model => 
+      model.weapons.some(weapon => weaponNames.includes(weapon.name))
+    );
+  }
+
+  /**
+   * Apply upgrade to specific model
+   */
+  private static applyUpgradeToModel(model: ProcessedModel, selectedUpgrade: any, upgradeType: { source: string; reassignable: boolean }): void {
+    const option = selectedUpgrade.option;
+    
+    // Extract rules from the upgrade
+    const upgradeRules: ProcessedRule[] = [];
+    option.gains?.forEach((gain: any) => {
+      if (gain.type === 'ArmyBookItem' && gain.content) {
+        gain.content.forEach((content: any) => {
+          if (content.type === 'ArmyBookRule') {
+            upgradeRules.push({
+              name: content.name,
+              type: 'upgrade',
+              rating: content.rating,
+              description: content.name
+            });
+          }
+        });
+      }
+    });
+
+    // Add upgrade to model
+    const modelUpgrade: ProcessedModelUpgrade = {
+      name: option.label || 'Unknown Upgrade',
+      description: option.label || 'Unknown Upgrade',
+      rules: upgradeRules,
+      reassignable: upgradeType.reassignable,
+      source: upgradeType.source as 'weapon-team' | 'choose-model' | 'unit-wide'
+    };
+
+    model.upgrades.push(modelUpgrade);
+
+    // Apply toughness bonuses
+    const toughRule = upgradeRules.find(rule => rule.name === 'Tough');
+    if (toughRule && toughRule.rating) {
+      const bonusTough = parseInt(toughRule.rating.toString());
+      model.max_tough += bonusTough;
+      model.current_tough += bonusTough;
+    }
+
+    // Add other rules to model's special rules
+    upgradeRules.forEach(rule => {
+      if (rule.name !== 'Tough') { // Tough is handled above
+        model.special_rules.push(rule);
       }
     });
   }

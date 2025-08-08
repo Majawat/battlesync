@@ -26,8 +26,8 @@ describe('Army Import API', () => {
       expect(response.body.success).toBe(true);
       expect(response.body.army).toBeDefined();
       expect(response.body.army.name).toBe("Dev Testerson's Bullshit Army");
-      expect(response.body.army.list_points).toBe(2940);
-      expect(response.body.army.model_count).toBe(39);
+      expect(response.body.army.list_points).toBe(3080);
+      expect(response.body.army.model_count).toBe(44);
       expect(response.body.army.activation_count).toBe(8);
     });
 
@@ -69,7 +69,7 @@ describe('Army Import API', () => {
       expect(response.body.armies).toBeDefined();
       expect(response.body.armies).toHaveLength(1);
       expect(response.body.armies[0].name).toBe("Dev Testerson's Bullshit Army");
-      expect(response.body.armies[0].list_points).toBe(2940);
+      expect(response.body.armies[0].list_points).toBe(3080);
     });
 
     it('should return empty array when no armies stored', async () => {

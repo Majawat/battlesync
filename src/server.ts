@@ -216,7 +216,8 @@ async function buildProcessedArmyFromDatabase(armyId: number, armyRow: any): Pro
         current_tough: model.current_tough,
         is_hero: subUnit.is_hero,
         special_rules: JSON.parse(model.special_rules || '[]'),
-        weapons: JSON.parse(model.weapons || '[]')
+        weapons: JSON.parse(model.weapons || '[]'),
+        upgrades: JSON.parse(model.upgrades || '[]')
       }));
 
       processedSubUnits.push({
@@ -366,8 +367,8 @@ async function storeArmyInDatabase(processedArmy: ProcessedArmy, armyForgeData: 
           
           await db.run(`
             INSERT INTO models (
-              sub_unit_id, model_index, name, custom_name, max_tough, current_tough, special_rules, weapons
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+              sub_unit_id, model_index, name, custom_name, max_tough, current_tough, special_rules, weapons, upgrades
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
           `, [
             subUnitId,
             modelIndex,
@@ -376,7 +377,8 @@ async function storeArmyInDatabase(processedArmy: ProcessedArmy, armyForgeData: 
             model.max_tough,
             model.current_tough,
             JSON.stringify(model.special_rules),
-            JSON.stringify(model.weapons)
+            JSON.stringify(model.weapons),
+            JSON.stringify(model.upgrades)
           ]);
         }
       }

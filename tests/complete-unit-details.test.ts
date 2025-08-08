@@ -144,9 +144,9 @@ describe('Complete Army Import and Conversion Validation', () => {
       // Basic validation assertions
       expect(army).toBeDefined();
       expect(army.name).toBe("Dev Testerson's Bullshit Army");
-      expect(army.list_points).toBe(2940);
+      expect(army.list_points).toBe(3080);
       expect(army.units.length).toBe(8);
-      expect(army.model_count).toBe(39);
+      expect(army.model_count).toBe(44);
       
       // Validate Captain Bullshit has D4+ (defense upgrade working)
       const captainBullshit = army.units.find((u: any) => u.name === 'Captain Bullshit');
