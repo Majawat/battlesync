@@ -90,6 +90,7 @@ CREATE TABLE IF NOT EXISTS models (
     
     -- Model-specific rules/upgrades
     special_rules TEXT, -- JSON array of model-specific rules
+    weapons TEXT, -- JSON array of model weapons
     
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     

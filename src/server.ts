@@ -61,7 +61,7 @@ interface StoredArmySummary {
 app.get('/health', (_req: Request, res: Response<HealthResponse>) => {
   res.json({ 
     status: 'ok', 
-    version: '2.6.1',
+    version: '2.7.0',
     timestamp: new Date().toISOString()
   });
 });
@@ -69,7 +69,7 @@ app.get('/health', (_req: Request, res: Response<HealthResponse>) => {
 app.get('/', (_req: Request, res: Response<ApiInfoResponse>) => {
   res.json({ 
     message: 'BattleSync v2 API',
-    version: '2.6.1'
+    version: '2.7.0'
   });
 });
 
@@ -215,7 +215,8 @@ async function buildProcessedArmyFromDatabase(armyId: number, armyRow: any): Pro
         max_tough: model.max_tough,
         current_tough: model.current_tough,
         is_hero: subUnit.is_hero,
-        special_rules: JSON.parse(model.special_rules || '[]')
+        special_rules: JSON.parse(model.special_rules || '[]'),
+        weapons: JSON.parse(model.weapons || '[]')
       }));
 
       processedSubUnits.push({
@@ -358,21 +359,24 @@ async function storeArmyInDatabase(processedArmy: ProcessedArmy, armyForgeData: 
         const subUnitId = subUnitResult.lastID;
         if (!subUnitId) throw new Error(`Failed to get sub-unit ID for: ${subUnit.name}`);
 
-        // Store individual models
-        for (let modelIndex = 0; modelIndex < subUnit.size; modelIndex++) {
-          const toughValue = subUnit.rules.find((r: ProcessedRule) => r.name.toLowerCase() === 'tough')?.rating || 1;
+        // Store individual models (using processed models with weapons)
+        for (let modelIndex = 0; modelIndex < subUnit.models.length; modelIndex++) {
+          const model = subUnit.models[modelIndex];
+          if (!model) continue;
           
           await db.run(`
             INSERT INTO models (
-              sub_unit_id, model_index, name, max_tough, current_tough, special_rules
-            ) VALUES (?, ?, ?, ?, ?, ?)
+              sub_unit_id, model_index, name, custom_name, max_tough, current_tough, special_rules, weapons
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
           `, [
             subUnitId,
             modelIndex,
-            `${subUnit.name} ${modelIndex + 1}`,
-            toughValue,
-            toughValue,
-            JSON.stringify([])
+            model.name,
+            model.custom_name || null,
+            model.max_tough,
+            model.current_tough,
+            JSON.stringify(model.special_rules),
+            JSON.stringify(model.weapons)
           ]);
         }
       }

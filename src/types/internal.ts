@@ -27,6 +27,7 @@ export interface ProcessedModel {
   current_tough: number;
   is_hero: boolean;
   special_rules: ProcessedRule[];
+  weapons: ProcessedWeapon[]; // Individual model weapons
 }
 
 export interface ProcessedSubUnit {
