@@ -61,7 +61,7 @@ interface StoredArmySummary {
 app.get('/health', (_req: Request, res: Response<HealthResponse>) => {
   res.json({ 
     status: 'ok', 
-    version: '2.7.0',
+    version: '2.8.0',
     timestamp: new Date().toISOString()
   });
 });

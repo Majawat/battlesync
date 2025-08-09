@@ -19,7 +19,12 @@ export class ArmyProcessor {
     // Step 3: Handle Joined units (heroes joining regular units)
     const finalUnits = this.processJoinedUnits(unitsAfterCombining);
     
-    // Step 4: Calculate total army cost
+    // Step 4: Post-process all units to properly handle model upgrades
+    console.log('DEBUG: Starting post-processing...');
+    this.postProcessModelUpgrades(finalUnits, armyForgeData.units);
+    console.log('DEBUG: Post-processing complete');
+    
+    // Step 5: Calculate total army cost
     const totalCost = finalUnits.reduce((sum, unit) => sum + unit.total_cost, 0);
     const totalModels = finalUnits.reduce((sum, unit) => sum + unit.model_count, 0);
 
@@ -172,7 +177,7 @@ export class ArmyProcessor {
     const allWeapons = subUnits.flatMap(unit => unit.weapons);
     const mergedWeapons = this.mergeWeapons(allWeapons);
 
-    return {
+    const mergedUnit = {
       id: baseUnit.id,
       armyforge_unit_id: baseUnit.armyforge_unit_id,
       name: baseUnit.name,
@@ -193,6 +198,8 @@ export class ArmyProcessor {
       models: allModels,
       notes: baseUnit.notes
     };
+
+    return mergedUnit;
   }
 
   /**
@@ -650,9 +657,9 @@ export class ArmyProcessor {
     // Distribute weapons to models
     this.distributeWeaponsToModels(models, unitWeapons, unit);
 
-    // Assign model-specific upgrades and calculate final toughness
-    this.assignModelUpgrades(models, unit);
-
+    // Note: Model upgrade processing moved to after unit merging
+    // This ensures Combined/Joined units get proper upgrade assignment
+    
     return models;
   }
 
@@ -739,17 +746,24 @@ export class ArmyProcessor {
   private static assignModelUpgrades(models: ProcessedModel[], unit: ArmyForgeUnit): void {
     // Determine base toughness for this unit type
     const baseTough = this.determineBaseToughness(unit);
+    console.log(`DEBUG: Processing ${unit.name} - Base tough: ${baseTough}, Models: ${models.length}`);
     
     // Initialize all models with base health and empty upgrades
-    models.forEach(model => {
+    models.forEach((model, index) => {
       model.max_tough = baseTough;
       model.current_tough = baseTough;
       model.upgrades = [];
+      if (index < 3) { // Only log first few
+        console.log(`DEBUG: Model ${index + 1} set to ${baseTough}/${baseTough}`);
+      }
     });
 
     if (!unit.selectedUpgrades || unit.selectedUpgrades.length === 0) {
+      console.log(`DEBUG: No upgrades for ${unit.name}`);
       return;
     }
+
+    console.log(`DEBUG: Processing ${unit.selectedUpgrades.length} upgrades for ${unit.name}`);
 
     // Track which models have been modified by upgrades
     const modifiedModels = new Set<number>();
@@ -757,6 +771,11 @@ export class ArmyProcessor {
     // Process upgrades in order to follow the upgrade path
     unit.selectedUpgrades.forEach(selectedUpgrade => {
       this.processUpgradeApplication(models, selectedUpgrade, modifiedModels);
+    });
+
+    // Debug final state
+    models.slice(0, 3).forEach((model, index) => {
+      console.log(`DEBUG: Final Model ${index + 1}: ${model.current_tough}/${model.max_tough}`);
     });
   }
 
@@ -997,5 +1016,43 @@ export class ArmyProcessor {
 
     // Default to 1 for most troops
     return 1;
+  }
+
+  /**
+   * Post-process all units to handle model upgrades correctly
+   * This runs after all unit merging is complete
+   */
+  private static postProcessModelUpgrades(processedUnits: ProcessedUnit[], originalUnits: any[]): void {
+    console.log(`DEBUG: Post-processing ${processedUnits.length} units with ${originalUnits.length} original units`);
+    
+    processedUnits.forEach(unit => {
+      console.log(`DEBUG: Processing unit ${unit.name} with armyforge_unit_ids: ${unit.armyforge_unit_ids.join(', ')}`);
+      
+      // Get original ArmyForge units for this processed unit
+      const originalArmyForgeUnits = unit.armyforge_unit_ids
+        .map(id => originalUnits.find(ou => ou.id === id))
+        .filter(Boolean);
+
+      console.log(`DEBUG: Found ${originalArmyForgeUnits.length} matching original units`);
+
+      if (originalArmyForgeUnits.length === 0) return;
+
+      // Process each sub-unit
+      unit.sub_units.forEach(subUnit => {
+        console.log(`DEBUG: Processing sub-unit ${subUnit.name} with armyforge_unit_id: ${subUnit.armyforge_unit_id}`);
+        
+        // Find the matching original unit for this sub-unit
+        const matchingOriginal = originalArmyForgeUnits.find(ou => ou.id === subUnit.armyforge_unit_id);
+        if (!matchingOriginal) {
+          console.log(`DEBUG: No matching original unit found for ${subUnit.name}`);
+          return;
+        }
+
+        console.log(`DEBUG: Found matching original unit, processing ${subUnit.models.length} models`);
+        
+        // Now properly process model upgrades for this sub-unit
+        this.assignModelUpgrades(subUnit.models, matchingOriginal);
+      });
+    });
   }
 }
