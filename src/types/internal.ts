@@ -120,58 +120,102 @@ export interface ProcessedArmy {
   raw_armyforge_data: string;
 }
 
-// Battle-specific types
+// Battle system types
 export type UnitAction = 'hold' | 'advance' | 'rush' | 'charge';
 export type DeploymentStatus = 'standard' | 'ambush' | 'scout' | 'embarked';
-export type BattleStatus = 'setup' | 'deployment' | 'active' | 'ended';
+export type BattleStatus = 'setup' | 'deployment' | 'active' | 'completed' | 'abandoned';
+export type UnitStatus = 'normal' | 'shaken' | 'routed';
+export type ParticipantStatus = 'active' | 'conceded' | 'eliminated';
+export type CommandPointMode = 'fixed' | 'growing' | 'temporary' | 'fixed_random' | 'growing_random' | 'temporary_random';
 
-export interface KillRecord {
-  army_id: string;
-  unit_id: string;
-  round: number;
-  turn: number;
-  models_killed?: number;
+export interface Battle {
+  id: number;
+  name: string;
+  description?: string;
+  mission_type: string;
+  game_system: string;
+  points_limit?: number;
+  has_command_points: boolean;
+  command_point_mode: CommandPointMode;
+  has_underdog_bonus: boolean;
+  is_campaign_battle: boolean;
+  status: BattleStatus;
+  current_round: number;
+  current_player_turn?: number;
+  turn_sequence?: number[]; // Array of participant IDs
+  mission_data?: Record<string, any>; // JSON: objectives, deployment zones, special rules
+  command_points?: Record<number, CommandPointState>; // Keyed by participant ID
+  created_at: string;
+  updated_at: string;
+  ended_at?: string;
 }
 
-export interface BattleUnitState {
-  id: string;
-  battle_id: string;
-  source_unit_id: string;
-  
-  // Current state flags
-  is_routed: boolean;
-  is_shaken: boolean;
+export interface CommandPointState {
+  current: number;
+  spent: number;
+  total_earned: number;
+}
+
+export interface BattleParticipant {
+  id: number;
+  battle_id: number;
+  army_id: number;
+  player_name: string;
+  deployment_zone?: Record<string, any>; // JSON coordinates or zone identifier
+  doctrine?: string; // Selected command point doctrine
+  turn_order?: number;
+  underdog_points: number;
+  victory_points: number;
+  status: ParticipantStatus;
+  created_at: string;
+}
+
+export interface UnitBattleState {
+  id: number;
+  battle_id: number;
+  army_id: number;
+  unit_path: string; // JSON path to unit in army data
+  current_health: number;
+  max_health: number;
+  status: UnitStatus;
   is_fatigued: boolean;
-  
-  // Current action
-  current_action?: UnitAction;
-  deployment_status: DeploymentStatus;
-  
-  // Combat tracking
+  spell_tokens: number;
   activated_this_round: boolean;
   participated_in_melee: boolean;
-  
-  // Kill/death tracking
-  kills: KillRecord[];
-  killed_by?: KillRecord;
-}
-
-export interface BattleModelState {
-  id: string;
-  source_model_id: string;
-  current_tough: number;
-  is_alive: boolean;
-  caster_tokens_remaining?: number;
+  position_data?: Record<string, any>; // JSON position/facing
+  deployment_status: DeploymentStatus;
+  current_action?: UnitAction;
+  status_effects?: string[]; // JSON array of temporary effects
+  kills_data?: any[]; // JSON array of kills made
+  updated_at: string;
 }
 
 export interface BattleEvent {
-  id: string;
-  battle_id: string;
+  id: number;
+  battle_id: number;
   round_number: number;
-  turn_number: number;
-  event_order: number;
-  event_type: 'activation' | 'damage' | 'morale' | 'spell' | 'deployment';
-  unit_id?: string;
-  event_data: Record<string, any>;
+  sequence_number: number;
+  event_type: 'unit_action' | 'state_change' | 'phase_change' | 'morale_test' | 'spell_cast';
+  actor_unit_id?: string; // Unit path reference
+  target_unit_id?: string; // Unit path reference  
+  event_data: Record<string, any>; // JSON payload specific to event type
   created_at: string;
+}
+
+export interface CreateBattleRequest {
+  name: string;
+  description?: string;
+  mission_type?: string;
+  game_system?: string;
+  points_limit?: number;
+  has_command_points?: boolean;
+  command_point_mode?: CommandPointMode;
+  has_underdog_bonus?: boolean;
+  is_campaign_battle?: boolean;
+}
+
+export interface AddParticipantRequest {
+  army_id: number;
+  player_name: string;
+  doctrine?: string;
 }

@@ -3,7 +3,15 @@ import cors from 'cors';
 import { Server } from 'http';
 import { db } from './database/db';
 import { ArmyProcessor } from './services/armyProcessor';
-import { ProcessedArmy, ProcessedRule } from './types/internal';
+import { 
+  ProcessedArmy, 
+  ProcessedRule, 
+  Battle, 
+  BattleParticipant, 
+  CreateBattleRequest, 
+  AddParticipantRequest,
+  BattleStatus
+} from './types/internal';
 import { ArmyForgeArmy } from './types/armyforge';
 
 const app = express();
@@ -45,6 +53,31 @@ interface GetArmyResponse {
   error?: string;
 }
 
+interface CreateBattleResponse {
+  success: boolean;
+  battle?: Battle;
+  error?: string;
+}
+
+interface GetBattlesResponse {
+  success: boolean;
+  battles?: Battle[];
+  error?: string;
+}
+
+interface GetBattleResponse {
+  success: boolean;
+  battle?: Battle;
+  participants?: BattleParticipant[];
+  error?: string;
+}
+
+interface AddParticipantResponse {
+  success: boolean;
+  participant?: BattleParticipant;
+  error?: string;
+}
+
 interface StoredArmySummary {
   id: number;
   armyforge_id: string;
@@ -70,7 +103,7 @@ app.get('/health', (_req: Request, res: Response<HealthResponse>) => {
 app.get('/', (_req: Request, res: Response<ApiInfoResponse>) => {
   res.json({ 
     message: 'BattleSync v2 API',
-    version: '2.7.0'
+    version: '2.9.0'
   });
 });
 
@@ -189,6 +222,262 @@ app.get('/api/armies/:id', async (req: Request<{id: string}>, res: Response<GetA
     res.status(500).json({
       success: false,
       error: 'Internal server error while fetching army'
+    });
+  }
+});
+
+// Battle Management Endpoints
+
+// Create new battle
+app.post('/api/battles', async (req: Request<{}, CreateBattleResponse, CreateBattleRequest>, res: Response<CreateBattleResponse>) => {
+  try {
+    const {
+      name,
+      description,
+      mission_type = 'skirmish',
+      game_system = 'grimdark-future',
+      points_limit,
+      has_command_points = false,
+      command_point_mode = 'fixed',
+      has_underdog_bonus = false,
+      is_campaign_battle = false
+    } = req.body;
+
+    if (!name?.trim()) {
+      res.status(400).json({
+        success: false,
+        error: 'Battle name is required'
+      });
+      return;
+    }
+
+    const result = await db.run(`
+      INSERT INTO battles (
+        name, description, mission_type, game_system, points_limit,
+        has_command_points, command_point_mode, has_underdog_bonus, is_campaign_battle
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `, [
+      name.trim(),
+      description?.trim() || null,
+      mission_type,
+      game_system,
+      points_limit || null,
+      has_command_points,
+      command_point_mode,
+      has_underdog_bonus,
+      is_campaign_battle
+    ]);
+
+    if (!result.lastID) {
+      throw new Error('Failed to create battle');
+    }
+
+    const battle = await db.get(`
+      SELECT * FROM battles WHERE id = ?
+    `, [result.lastID]);
+
+    const formattedBattle: Battle = {
+      ...battle,
+      turn_sequence: battle.turn_sequence ? JSON.parse(battle.turn_sequence) : undefined,
+      mission_data: battle.mission_data ? JSON.parse(battle.mission_data) : undefined,
+      command_points: battle.command_points ? JSON.parse(battle.command_points) : undefined
+    };
+
+    res.status(201).json({
+      success: true,
+      battle: formattedBattle
+    });
+
+  } catch (error) {
+    console.error('Error creating battle:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Internal server error while creating battle'
+    });
+  }
+});
+
+// Get all battles
+app.get('/api/battles', async (_req: Request, res: Response<GetBattlesResponse>) => {
+  try {
+    const battles = await db.all(`
+      SELECT * FROM battles ORDER BY created_at DESC
+    `);
+
+    const formattedBattles: Battle[] = battles.map((battle: any) => ({
+      ...battle,
+      turn_sequence: battle.turn_sequence ? JSON.parse(battle.turn_sequence) : undefined,
+      mission_data: battle.mission_data ? JSON.parse(battle.mission_data) : undefined,
+      command_points: battle.command_points ? JSON.parse(battle.command_points) : undefined
+    }));
+
+    res.json({
+      success: true,
+      battles: formattedBattles
+    });
+
+  } catch (error) {
+    console.error('Error fetching battles:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Internal server error while fetching battles'
+    });
+  }
+});
+
+// Get specific battle with participants
+app.get('/api/battles/:id', async (req: Request<{id: string}>, res: Response<GetBattleResponse>) => {
+  try {
+    const battleId = parseInt(req.params.id, 10);
+    
+    if (isNaN(battleId)) {
+      res.status(400).json({
+        success: false,
+        error: 'Invalid battle ID'
+      });
+      return;
+    }
+
+    const battle = await db.get(`
+      SELECT * FROM battles WHERE id = ?
+    `, [battleId]);
+
+    if (!battle) {
+      res.status(404).json({
+        success: false,
+        error: 'Battle not found'
+      });
+      return;
+    }
+
+    const participants = await db.all(`
+      SELECT * FROM battle_participants WHERE battle_id = ? ORDER BY turn_order, id
+    `, [battleId]);
+
+    const formattedBattle: Battle = {
+      ...battle,
+      turn_sequence: battle.turn_sequence ? JSON.parse(battle.turn_sequence) : undefined,
+      mission_data: battle.mission_data ? JSON.parse(battle.mission_data) : undefined,
+      command_points: battle.command_points ? JSON.parse(battle.command_points) : undefined
+    };
+
+    const formattedParticipants: BattleParticipant[] = participants.map((participant: any) => ({
+      ...participant,
+      deployment_zone: participant.deployment_zone ? JSON.parse(participant.deployment_zone) : undefined
+    }));
+
+    res.json({
+      success: true,
+      battle: formattedBattle,
+      participants: formattedParticipants
+    });
+
+  } catch (error) {
+    console.error('Error fetching battle:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Internal server error while fetching battle'
+    });
+  }
+});
+
+// Add participant to battle
+app.post('/api/battles/:id/participants', async (req: Request<{id: string}, AddParticipantResponse, AddParticipantRequest>, res: Response<AddParticipantResponse>) => {
+  try {
+    const battleId = parseInt(req.params.id, 10);
+    const { army_id, player_name, doctrine } = req.body;
+    
+    if (isNaN(battleId)) {
+      res.status(400).json({
+        success: false,
+        error: 'Invalid battle ID'
+      });
+      return;
+    }
+
+    if (!player_name?.trim()) {
+      res.status(400).json({
+        success: false,
+        error: 'Player name is required'
+      });
+      return;
+    }
+
+    // Verify battle exists and is in setup phase
+    const battle = await db.get(`
+      SELECT status FROM battles WHERE id = ?
+    `, [battleId]);
+
+    if (!battle) {
+      res.status(404).json({
+        success: false,
+        error: 'Battle not found'
+      });
+      return;
+    }
+
+    if (battle.status !== 'setup') {
+      res.status(400).json({
+        success: false,
+        error: 'Cannot add participants to battle that is not in setup phase'
+      });
+      return;
+    }
+
+    // Verify army exists
+    const army = await db.get(`
+      SELECT id FROM armies WHERE id = ?
+    `, [army_id]);
+
+    if (!army) {
+      res.status(400).json({
+        success: false,
+        error: 'Army not found'
+      });
+      return;
+    }
+
+    // Check if army already participating
+    const existingParticipant = await db.get(`
+      SELECT id FROM battle_participants WHERE battle_id = ? AND army_id = ?
+    `, [battleId, army_id]);
+
+    if (existingParticipant) {
+      res.status(400).json({
+        success: false,
+        error: 'Army is already participating in this battle'
+      });
+      return;
+    }
+
+    const result = await db.run(`
+      INSERT INTO battle_participants (battle_id, army_id, player_name, doctrine)
+      VALUES (?, ?, ?, ?)
+    `, [battleId, army_id, player_name.trim(), doctrine?.trim() || null]);
+
+    if (!result.lastID) {
+      throw new Error('Failed to add participant');
+    }
+
+    const participant = await db.get(`
+      SELECT * FROM battle_participants WHERE id = ?
+    `, [result.lastID]);
+
+    const formattedParticipant: BattleParticipant = {
+      ...participant,
+      deployment_zone: participant.deployment_zone ? JSON.parse(participant.deployment_zone) : undefined
+    };
+
+    res.status(201).json({
+      success: true,
+      participant: formattedParticipant
+    });
+
+  } catch (error) {
+    console.error('Error adding participant:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Internal server error while adding participant'
     });
   }
 });

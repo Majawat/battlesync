@@ -121,9 +121,16 @@ Previous v1.5.2 implementation is archived at git tag `v1.5.2-final-archive` and
 4. Run `npm run typecheck` to ensure TypeScript compilation
 5. Run `npm test` to ensure all tests pass
 
+### Phase 1.5: Comprehensive Testing (MANDATORY)
+6. **Start server using Docker** (`npm run docker:dev` for development)
+7. **Test all basic functionality** with actual HTTP requests
+8. **Verify all endpoints work** as expected with real data
+9. **Test edge cases** and error conditions
+10. **Confirm all features work end-to-end** before proceeding
+
 ### Phase 2: Version & Documentation Updates  
-6. **Update version numbers** in package.json and code (server.ts response objects)
-7. **Update all documentation** to reflect current state:
+11. **Update version numbers** in package.json and code (server.ts response objects)
+12. **Update all documentation** to reflect current state:
    - Update CLAUDE.md with new features/endpoints
    - Update docs/api.md with new endpoints and examples
    - Update docs/features.md with completed features
@@ -131,22 +138,22 @@ Previous v1.5.2 implementation is archived at git tag `v1.5.2-final-archive` and
    - Update docs/README.md version history
 
 ### Phase 3: Codebase Maintenance
-8. **Clean up technical debt**:
+13. **Clean up technical debt**:
    - Remove temporary/test files (test_*.ts, *.tmp files)
    - Remove unused imports, variables, or functions
    - Remove outdated comments or TODO items
    - Consolidate duplicate code if found
-9. **Update configuration files as needed**:
+14. **Update configuration files as needed**:
    - Add new file patterns to .gitignore if needed
    - Update .dockerignore for new file types
    - Update tsconfig.json if new paths added
 
 ### Phase 4: Final Verification & Commit
-10. **Final checks**:
+15. **Final checks**:
     - Run `npm run typecheck` again after all changes
     - Run `npm test` to ensure all tests still pass
     - Verify documentation accuracy matches implementation
-11. **Git workflow**:
+16. **Git workflow**:
     - Stage all changes with `git add .`
     - Commit with descriptive message using established format
     - Include 🤖 Generated with Claude Code footer
