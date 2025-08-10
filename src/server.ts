@@ -50,6 +50,7 @@ interface StoredArmySummary {
   armyforge_id: string;
   name: string;
   description?: string;
+  validation_errors?: string; // JSON string in database
   points_limit: number;
   list_points: number;
   model_count: number;
@@ -128,9 +129,15 @@ app.get('/api/armies', async (_req: Request, res: Response<GetArmiesResponse>) =
       ORDER BY updated_at DESC
     `);
 
+    // Parse validation_errors from JSON string to array
+    const armiesWithParsedValidation = armies.map(army => ({
+      ...army,
+      validation_errors: JSON.parse(army.validation_errors || '[]')
+    }));
+
     res.json({
       success: true,
-      armies
+      armies: armiesWithParsedValidation
     });
     
   } catch (error) {
