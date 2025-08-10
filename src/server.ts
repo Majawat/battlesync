@@ -61,7 +61,7 @@ interface StoredArmySummary {
 app.get('/health', (_req: Request, res: Response<HealthResponse>) => {
   res.json({ 
     status: 'ok', 
-    version: '2.8.0',
+    version: '2.9.0',
     timestamp: new Date().toISOString()
   });
 });
@@ -122,7 +122,7 @@ app.post('/api/armies/import', async (req: Request<{}, ImportArmyResponse, Impor
 app.get('/api/armies', async (_req: Request, res: Response<GetArmiesResponse>) => {
   try {
     const armies = await db.all<StoredArmySummary>(`
-      SELECT id, armyforge_id, name, description, points_limit, list_points, 
+      SELECT id, armyforge_id, name, description, validation_errors, points_limit, list_points, 
              model_count, activation_count, created_at, updated_at
       FROM armies 
       ORDER BY updated_at DESC
@@ -156,7 +156,7 @@ app.get('/api/armies/:id', async (req: Request<{id: string}>, res: Response<GetA
 
     // Get army basic info
     const army = await db.get(`
-      SELECT id, armyforge_id, name, description, points_limit, list_points, 
+      SELECT id, armyforge_id, name, description, validation_errors, points_limit, list_points, 
              model_count, activation_count, game_system, campaign_mode, raw_armyforge_data
       FROM armies WHERE id = ?
     `, [armyId]);
@@ -267,6 +267,7 @@ async function buildProcessedArmyFromDatabase(armyId: number, armyRow: any): Pro
     armyforge_id: armyRow.armyforge_id,
     name: armyRow.name,
     description: armyRow.description || undefined,
+    validation_errors: JSON.parse(armyRow.validation_errors || '[]'),
     points_limit: armyRow.points_limit,
     list_points: armyRow.list_points,
     model_count: armyRow.model_count,
@@ -283,13 +284,14 @@ async function storeArmyInDatabase(processedArmy: ProcessedArmy, armyForgeData: 
     // First, store the army
     const armyResult = await db.run(`
       INSERT OR REPLACE INTO armies (
-        armyforge_id, name, description, points_limit, list_points, 
+        armyforge_id, name, description, validation_errors, points_limit, list_points, 
         model_count, activation_count, game_system, campaign_mode, raw_armyforge_data
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `, [
       processedArmy.armyforge_id,
       processedArmy.name,
       processedArmy.description || null,
+      JSON.stringify(processedArmy.validation_errors || []),
       processedArmy.points_limit,
       processedArmy.list_points,
       processedArmy.model_count,

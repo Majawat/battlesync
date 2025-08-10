@@ -9,7 +9,7 @@ BattleSync v2 is designed around simplicity and core battle tracking functionali
 - **Focused**: Battle tracking only, avoiding premature features
 - **Mobile**: Mobile-first design with TailwindCSS
 
-## ✅ Current Features (v2.6.1)
+## ✅ Current Features (v2.9.0)
 
 ### Backend Infrastructure
 - [x] **TypeScript Backend** - Fully typed Express.js server with SQLite
@@ -25,6 +25,7 @@ BattleSync v2 is designed around simplicity and core battle tracking functionali
 - [x] **Campaign Support** - XP costs and campaign traits preserved
 - [x] **Army Storage** - Full SQLite storage with relationships
 - [x] **Custom Naming** - "Hero w/ Unit" format for joined units
+- [x] **Validation Handling** - Separate army validation errors from description
 
 ### API Endpoints
 - [x] `GET /` - API information and version

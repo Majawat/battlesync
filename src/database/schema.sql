@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS armies (
     armyforge_id TEXT UNIQUE NOT NULL,
     name TEXT NOT NULL,
     description TEXT,
+    validation_errors TEXT, -- JSON array of validation errors from ArmyForge
     points_limit INTEGER,
     list_points INTEGER,
     model_count INTEGER,

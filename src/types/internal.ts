@@ -105,6 +105,7 @@ export interface ProcessedArmy {
   armyforge_id: string;
   name: string;
   description?: string;
+  validation_errors?: string[]; // Army-level validation issues from ArmyForge
   points_limit: number;
   list_points: number;
   model_count: number;

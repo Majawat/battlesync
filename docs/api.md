@@ -23,7 +23,7 @@ Get API information and version.
 ```json
 {
   "message": "BattleSync v2 API",
-  "version": "2.6.1"
+  "version": "2.9.0"
 }
 ```
 
@@ -34,7 +34,7 @@ Health check endpoint with system status.
 ```json
 {
   "status": "ok",
-  "version": "2.6.1",
+  "version": "2.9.0",
   "timestamp": "2025-08-07T13:22:21.393Z"
 }
 ```
@@ -63,9 +63,14 @@ Import army from ArmyForge by share ID.
     "id": "1",
     "armyforge_id": "IJ1JM_m-jmka",
     "name": "Dev Testerson's Bullshit Army",
-    "list_points": 2730,
-    "model_count": 36,
-    "activation_count": 7,
+    "description": "An army full of bullshit units.",
+    "validation_errors": ["May not bring any single unit worth more than 35% of total points (1045pts)."],
+    "points_limit": 2997,
+    "list_points": 3075,
+    "model_count": 44,
+    "activation_count": 8,
+    "game_system": "gf",
+    "campaign_mode": true,
     "units": [...],
     ...
   }
@@ -90,11 +95,14 @@ List all stored armies.
       "id": 1,
       "armyforge_id": "IJ1JM_m-jmka",
       "name": "Dev Testerson's Bullshit Army",
-      "points_limit": 2500,
-      "list_points": 2730,
-      "model_count": 36,
-      "activation_count": 7,
-      "created_at": "2025-08-07T13:22:21.393Z"
+      "description": "An army full of bullshit units.",
+      "validation_errors": ["May not bring any single unit worth more than 35% of total points (1045pts)."],
+      "points_limit": 2997,
+      "list_points": 3075,
+      "model_count": 44,
+      "activation_count": 8,
+      "created_at": "2025-08-07T13:22:21.393Z",
+      "updated_at": "2025-08-07T13:22:21.393Z"
     }
   ]
 }
