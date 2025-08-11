@@ -1,18 +1,33 @@
-import axios from 'axios';
+import request from 'supertest';
+import { app, startServer } from '../src/server';
+import { Server } from 'http';
 
 describe('Complete Army Import and Conversion Validation', () => {
+  let server: Server;
+  
+  beforeAll(async () => {
+    server = await startServer();
+  });
+
+  afterAll(async () => {
+    if (server) {
+      server.close();
+    }
+  });
+
   test('should import and validate army conversion with specific assertions', async () => {
     try {
       // First, import the Dev Test army (IJ1JM_m-jmka)
       console.log('\n🔄 IMPORTING ARMY FROM ARMYFORGE...');
-      const importResponse = await axios.post('http://localhost:4019/api/armies/import', {
-        armyForgeId: 'IJ1JM_m-jmka'
-      });
+      const importResponse = await request(app)
+        .post('/api/armies/import')
+        .send({ armyForgeId: 'IJ1JM_m-jmka' })
+        .expect(200);
       
-      console.log(`✅ Import successful: ${(importResponse.data as any).army.name}`);
+      console.log(`✅ Import successful: ${importResponse.body.army.name}`);
       
       // Use the army from the import response (it has all the details)
-      const army = (importResponse.data as any).army;
+      const army = importResponse.body.army;
       
       console.log('\n' + '='.repeat(120));
       console.log(`COMPLETE ARMY CONVERSION: ${army.name}`);

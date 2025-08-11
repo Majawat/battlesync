@@ -10,7 +10,11 @@ import {
   BattleParticipant, 
   CreateBattleRequest, 
   AddParticipantRequest,
-  BattleStatus
+  BattleStatus,
+  UnitBattleState,
+  UnitStatus,
+  DeploymentStatus,
+  UnitAction
 } from './types/internal';
 import { ArmyForgeArmy } from './types/armyforge';
 
@@ -78,6 +82,42 @@ interface AddParticipantResponse {
   error?: string;
 }
 
+interface StartBattleRequest {
+  battle_id: number;
+}
+
+interface StartBattleResponse {
+  success: boolean;
+  battle?: Battle;
+  unit_states?: UnitBattleState[];
+  error?: string;
+}
+
+interface UpdateUnitStateRequest {
+  current_health?: number;
+  status?: UnitStatus;
+  is_fatigued?: boolean;
+  spell_tokens?: number;
+  activated_this_round?: boolean;
+  participated_in_melee?: boolean;
+  position_data?: Record<string, any>;
+  deployment_status?: DeploymentStatus;
+  current_action?: UnitAction;
+  status_effects?: string[];
+}
+
+interface UpdateUnitStateResponse {
+  success: boolean;
+  unit_state?: UnitBattleState;
+  error?: string;
+}
+
+interface GetUnitStatesResponse {
+  success: boolean;
+  unit_states?: UnitBattleState[];
+  error?: string;
+}
+
 interface StoredArmySummary {
   id: number;
   armyforge_id: string;
@@ -95,7 +135,7 @@ interface StoredArmySummary {
 app.get('/health', (_req: Request, res: Response<HealthResponse>) => {
   res.json({ 
     status: 'ok', 
-    version: '2.9.0',
+    version: '2.10.0',
     timestamp: new Date().toISOString()
   });
 });
@@ -103,7 +143,7 @@ app.get('/health', (_req: Request, res: Response<HealthResponse>) => {
 app.get('/', (_req: Request, res: Response<ApiInfoResponse>) => {
   res.json({ 
     message: 'BattleSync v2 API',
-    version: '2.9.0'
+    version: '2.10.0'
   });
 });
 
@@ -136,8 +176,12 @@ app.post('/api/armies/import', async (req: Request<{}, ImportArmyResponse, Impor
     // Process army using our ArmyProcessor
     const processedArmy = ArmyProcessor.processArmy(armyForgeData);
     
-    // Store in database
-    await storeArmyInDatabase(processedArmy, armyForgeData);
+    // Store in database  
+    const storedArmyId = await storeArmyInDatabase(processedArmy, armyForgeData);
+    
+    // Get the actual army from database to ensure we have the correct ID
+    const storedArmy = await db.get(`SELECT id FROM armies WHERE armyforge_id = ?`, [processedArmy.armyforge_id]);
+    processedArmy.id = storedArmy.id.toString();
     
     res.json({
       success: true,
@@ -482,6 +526,343 @@ app.post('/api/battles/:id/participants', async (req: Request<{id: string}, AddP
   }
 });
 
+// Start battle and initialize unit states
+app.post('/api/battles/:id/start', async (req: Request<{id: string}, StartBattleResponse, StartBattleRequest>, res: Response<StartBattleResponse>) => {
+  try {
+    const battleId = parseInt(req.params.id, 10);
+    
+    if (isNaN(battleId)) {
+      res.status(400).json({
+        success: false,
+        error: 'Invalid battle ID'
+      });
+      return;
+    }
+
+    // Verify battle exists and is in setup phase
+    const battle = await db.get(`
+      SELECT * FROM battles WHERE id = ?
+    `, [battleId]);
+
+    if (!battle) {
+      res.status(404).json({
+        success: false,
+        error: 'Battle not found'
+      });
+      return;
+    }
+
+    if (battle.status !== 'setup') {
+      res.status(400).json({
+        success: false,
+        error: 'Battle can only be started from setup phase'
+      });
+      return;
+    }
+
+    // Get all participants
+    const participants = await db.all(`
+      SELECT * FROM battle_participants WHERE battle_id = ?
+    `, [battleId]);
+
+    if (participants.length < 2) {
+      res.status(400).json({
+        success: false,
+        error: 'Battle must have at least 2 participants to start'
+      });
+      return;
+    }
+
+    // Initialize unit states for all participating armies
+    const unitStates: UnitBattleState[] = [];
+    
+    for (const participant of participants) {
+      // Get army details to extract all units
+      const processedArmy = await getProcessedArmyById(participant.army_id);
+      
+      if (!processedArmy) {
+        continue; // Skip if army not found
+      }
+
+      // Create unit battle states for each unit in the army
+      for (let unitIndex = 0; unitIndex < processedArmy.units.length; unitIndex++) {
+        const unit = processedArmy.units[unitIndex];
+        if (!unit) continue;
+        
+        const unitPath = `units.${unitIndex}`;
+        
+        // Calculate total health for the unit (sum of all model health)
+        let totalMaxHealth = 0;
+        if (unit.sub_units) {
+          for (const subUnit of unit.sub_units) {
+            if (subUnit.models) {
+              for (const model of subUnit.models) {
+                totalMaxHealth += model.max_tough;
+              }
+            }
+          }
+        }
+
+        const result = await db.run(`
+          INSERT INTO unit_battle_state (
+            battle_id, army_id, unit_path, current_health, max_health, 
+            status, is_fatigued, spell_tokens, activated_this_round, 
+            participated_in_melee, deployment_status
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `, [
+          battleId,
+          participant.army_id,
+          unitPath,
+          totalMaxHealth, // Start at full health
+          totalMaxHealth,
+          'normal',
+          false,
+          0,
+          false,
+          false,
+          'standard'
+        ]);
+
+        if (result.lastID) {
+          const unitState = await db.get(`
+            SELECT * FROM unit_battle_state WHERE id = ?
+          `, [result.lastID]);
+
+          unitStates.push({
+            ...unitState,
+            is_fatigued: Boolean(unitState.is_fatigued),
+            activated_this_round: Boolean(unitState.activated_this_round),
+            participated_in_melee: Boolean(unitState.participated_in_melee),
+            position_data: unitState.position_data ? JSON.parse(unitState.position_data) : undefined,
+            status_effects: unitState.status_effects ? JSON.parse(unitState.status_effects) : undefined,
+            kills_data: unitState.kills_data ? JSON.parse(unitState.kills_data) : undefined
+          });
+        }
+      }
+    }
+
+    // Update battle status to deployment
+    await db.run(`
+      UPDATE battles SET status = 'deployment', updated_at = CURRENT_TIMESTAMP WHERE id = ?
+    `, [battleId]);
+
+    // Get updated battle
+    const updatedBattle = await db.get(`
+      SELECT * FROM battles WHERE id = ?
+    `, [battleId]);
+
+    const formattedBattle: Battle = {
+      ...updatedBattle,
+      turn_sequence: updatedBattle.turn_sequence ? JSON.parse(updatedBattle.turn_sequence) : undefined,
+      mission_data: updatedBattle.mission_data ? JSON.parse(updatedBattle.mission_data) : undefined,
+      command_points: updatedBattle.command_points ? JSON.parse(updatedBattle.command_points) : undefined
+    };
+
+    res.json({
+      success: true,
+      battle: formattedBattle,
+      unit_states: unitStates
+    });
+
+  } catch (error) {
+    console.error('Error starting battle:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Internal server error while starting battle'
+    });
+  }
+});
+
+// Get unit states for a battle
+app.get('/api/battles/:id/units', async (req: Request<{id: string}>, res: Response<GetUnitStatesResponse>) => {
+  try {
+    const battleId = parseInt(req.params.id, 10);
+    
+    if (isNaN(battleId)) {
+      res.status(400).json({
+        success: false,
+        error: 'Invalid battle ID'
+      });
+      return;
+    }
+
+    const unitStates = await db.all(`
+      SELECT * FROM unit_battle_state WHERE battle_id = ? ORDER BY army_id, unit_path
+    `, [battleId]);
+
+    const formattedUnitStates: UnitBattleState[] = unitStates.map((state: any) => ({
+      ...state,
+      is_fatigued: Boolean(state.is_fatigued),
+      activated_this_round: Boolean(state.activated_this_round),
+      participated_in_melee: Boolean(state.participated_in_melee),
+      position_data: state.position_data ? JSON.parse(state.position_data) : undefined,
+      status_effects: state.status_effects ? JSON.parse(state.status_effects) : undefined,
+      kills_data: state.kills_data ? JSON.parse(state.kills_data) : undefined
+    }));
+
+    res.json({
+      success: true,
+      unit_states: formattedUnitStates
+    });
+
+  } catch (error) {
+    console.error('Error fetching unit states:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Internal server error while fetching unit states'
+    });
+  }
+});
+
+// Update unit state
+app.patch('/api/battles/:battleId/units/:unitStateId', async (req: Request<{battleId: string, unitStateId: string}, UpdateUnitStateResponse, UpdateUnitStateRequest>, res: Response<UpdateUnitStateResponse>) => {
+  try {
+    const battleId = parseInt(req.params.battleId, 10);
+    const unitStateId = parseInt(req.params.unitStateId, 10);
+    
+    if (isNaN(battleId) || isNaN(unitStateId)) {
+      res.status(400).json({
+        success: false,
+        error: 'Invalid battle ID or unit state ID'
+      });
+      return;
+    }
+
+    // Verify unit state exists and belongs to this battle
+    const existingState = await db.get(`
+      SELECT * FROM unit_battle_state WHERE id = ? AND battle_id = ?
+    `, [unitStateId, battleId]);
+
+    if (!existingState) {
+      res.status(404).json({
+        success: false,
+        error: 'Unit state not found'
+      });
+      return;
+    }
+
+    // Build update query dynamically based on provided fields
+    const updateFields: string[] = [];
+    const updateValues: any[] = [];
+    
+    const {
+      current_health,
+      status,
+      is_fatigued,
+      spell_tokens,
+      activated_this_round,
+      participated_in_melee,
+      position_data,
+      deployment_status,
+      current_action,
+      status_effects
+    } = req.body;
+
+    if (current_health !== undefined) {
+      updateFields.push('current_health = ?');
+      updateValues.push(current_health);
+    }
+    if (status !== undefined) {
+      updateFields.push('status = ?');
+      updateValues.push(status);
+    }
+    if (is_fatigued !== undefined) {
+      updateFields.push('is_fatigued = ?');
+      updateValues.push(is_fatigued);
+    }
+    if (spell_tokens !== undefined) {
+      updateFields.push('spell_tokens = ?');
+      updateValues.push(spell_tokens);
+    }
+    if (activated_this_round !== undefined) {
+      updateFields.push('activated_this_round = ?');
+      updateValues.push(activated_this_round);
+    }
+    if (participated_in_melee !== undefined) {
+      updateFields.push('participated_in_melee = ?');
+      updateValues.push(participated_in_melee);
+    }
+    if (position_data !== undefined) {
+      updateFields.push('position_data = ?');
+      updateValues.push(JSON.stringify(position_data));
+    }
+    if (deployment_status !== undefined) {
+      updateFields.push('deployment_status = ?');
+      updateValues.push(deployment_status);
+    }
+    if (current_action !== undefined) {
+      updateFields.push('current_action = ?');
+      updateValues.push(current_action);
+    }
+    if (status_effects !== undefined) {
+      updateFields.push('status_effects = ?');
+      updateValues.push(JSON.stringify(status_effects));
+    }
+
+    if (updateFields.length === 0) {
+      res.status(400).json({
+        success: false,
+        error: 'No valid fields provided for update'
+      });
+      return;
+    }
+
+    // Add updated timestamp
+    updateFields.push('updated_at = CURRENT_TIMESTAMP');
+    updateValues.push(unitStateId);
+
+    const updateQuery = `
+      UPDATE unit_battle_state 
+      SET ${updateFields.join(', ')} 
+      WHERE id = ?
+    `;
+
+    await db.run(updateQuery, updateValues);
+
+    // Return updated unit state
+    const updatedState = await db.get(`
+      SELECT * FROM unit_battle_state WHERE id = ?
+    `, [unitStateId]);
+
+    const formattedUnitState: UnitBattleState = {
+      ...updatedState,
+      is_fatigued: Boolean(updatedState.is_fatigued),
+      activated_this_round: Boolean(updatedState.activated_this_round),
+      participated_in_melee: Boolean(updatedState.participated_in_melee),
+      position_data: updatedState.position_data ? JSON.parse(updatedState.position_data) : undefined,
+      status_effects: updatedState.status_effects ? JSON.parse(updatedState.status_effects) : undefined,
+      kills_data: updatedState.kills_data ? JSON.parse(updatedState.kills_data) : undefined
+    };
+
+    res.json({
+      success: true,
+      unit_state: formattedUnitState
+    });
+
+  } catch (error) {
+    console.error('Error updating unit state:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Internal server error while updating unit state'
+    });
+  }
+});
+
+// Helper function to get processed army by ID
+async function getProcessedArmyById(armyId: number): Promise<ProcessedArmy | null> {
+  const armyRow = await db.get(`
+    SELECT id, armyforge_id, name, description, validation_errors, points_limit, list_points, 
+           model_count, activation_count, game_system, campaign_mode, raw_armyforge_data
+    FROM armies WHERE id = ?
+  `, [armyId]);
+
+  if (!armyRow) {
+    return null;
+  }
+
+  return await buildProcessedArmyFromDatabase(armyId, armyRow);
+}
+
 async function buildProcessedArmyFromDatabase(armyId: number, armyRow: any): Promise<ProcessedArmy> {
   // Get all units for this army
   const units = await db.all(`
@@ -575,7 +956,7 @@ async function buildProcessedArmyFromDatabase(armyId: number, armyRow: any): Pro
   };
 }
 
-async function storeArmyInDatabase(processedArmy: ProcessedArmy, armyForgeData: ArmyForgeArmy): Promise<void> {
+async function storeArmyInDatabase(processedArmy: ProcessedArmy, armyForgeData: ArmyForgeArmy): Promise<number> {
   try {
     // First, store the army
     const armyResult = await db.run(`
@@ -684,6 +1065,7 @@ async function storeArmyInDatabase(processedArmy: ProcessedArmy, armyForgeData: 
 
     console.log(`Successfully stored army: ${processedArmy.name} (ID: ${armyId})`);
     
+    return armyId;
   } catch (error) {
     console.error('Error storing army in database:', error);
     throw error;

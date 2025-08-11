@@ -20,7 +20,9 @@ Welcome to the BattleSync v2 documentation! This clean rewrite focuses on simpli
 
 ## 🔄 Version History
 
-- **v2.6.1** - Enhanced development workflow with comprehensive cleanup standards
+- **v2.10.0** - Complete unit battle state tracking system with health, fatigue, tokens, and all OPR mechanics
+- **v2.9.0** - Full battle management system with battle sessions, participants, and comprehensive testing
+- **v2.6.1** - Enhanced development workflow with comprehensive cleanup standards  
 - **v2.6.0** - Army import system with ArmyForge integration and SQLite storage
 - **v2.5.0** - ArmyProcessor with complete OPR unit merging logic  
 - **v2.4.0** - Docker containerization with reliable port 4019

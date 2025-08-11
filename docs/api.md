@@ -23,7 +23,7 @@ Get API information and version.
 ```json
 {
   "message": "BattleSync v2 API",
-  "version": "2.9.0"
+  "version": "2.10.0"
 }
 ```
 
@@ -34,7 +34,7 @@ Health check endpoint with system status.
 ```json
 {
   "status": "ok",
-  "version": "2.9.0",
+  "version": "2.10.0",
   "timestamp": "2025-08-07T13:22:21.393Z"
 }
 ```
@@ -138,24 +138,202 @@ Get specific army with full details including units, sub-units, and models.
 - `404` - Army not found
 - `500` - Server error
 
-## Planned Endpoints
+## Battle Management
 
-### Battle Management *(Coming Soon)*
+### Battle Creation & Management
 
 #### `POST /api/battles`
-Create a new battle session with selected armies.
+Create a new battle session.
+
+**Request Body:**
+```json
+{
+  "name": "Battle Name",
+  "description": "Optional battle description", 
+  "mission_type": "skirmish",
+  "has_command_points": true,
+  "command_point_mode": "fixed",
+  "points_limit": 2000
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "battle": {
+    "id": 1,
+    "name": "Battle Name",
+    "status": "setup",
+    "current_round": 0,
+    "created_at": "2025-08-10T12:00:00Z"
+  }
+}
+```
 
 #### `GET /api/battles`
-List user's battle sessions.
+List all battle sessions.
+
+**Response:**
+```json
+{
+  "success": true,
+  "battles": [
+    {
+      "id": 1,
+      "name": "Battle Name",
+      "status": "setup",
+      "participants": []
+    }
+  ]
+}
+```
 
 #### `GET /api/battles/:id`
-Get specific battle details with current state.
+Get specific battle details with participants.
 
-#### `POST /api/battles/:id/events`
-Add battle event (damage, morale test, etc.).
+**Response:**
+```json
+{
+  "success": true,
+  "battle": {
+    "id": 1,
+    "name": "Battle Name",
+    "status": "setup",
+    "participants": [
+      {
+        "id": 1,
+        "player_name": "Player 1",
+        "army_id": 1
+      }
+    ]
+  }
+}
+```
 
-#### `DELETE /api/battles/:id/events/:eventId`
-Undo battle event for mistake correction.
+#### `POST /api/battles/:id/participants`
+Add participant to battle.
+
+**Request Body:**
+```json
+{
+  "army_id": 1,
+  "player_name": "Player 1",
+  "doctrine": "aggressive"
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "participant": {
+    "id": 1,
+    "battle_id": 1,
+    "army_id": 1,
+    "player_name": "Player 1",
+    "doctrine": "aggressive"
+  }
+}
+```
+
+### Unit Battle State Tracking
+
+#### `POST /api/battles/:id/start`
+Start battle and initialize unit states for all participating armies.
+
+**Request Body:**
+```json
+{}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "battle": {
+    "id": 1,
+    "status": "deployment"
+  },
+  "unit_states": [
+    {
+      "id": 1,
+      "battle_id": 1,
+      "army_id": 1,
+      "unit_path": "units.0",
+      "current_health": 12,
+      "max_health": 12,
+      "status": "normal",
+      "is_fatigued": false,
+      "spell_tokens": 0,
+      "activated_this_round": false,
+      "participated_in_melee": false,
+      "deployment_status": "standard"
+    }
+  ]
+}
+```
+
+#### `GET /api/battles/:id/units`
+Get all unit battle states for a battle.
+
+**Response:**
+```json
+{
+  "success": true,
+  "unit_states": [
+    {
+      "id": 1,
+      "battle_id": 1,
+      "army_id": 1,
+      "unit_path": "units.0",
+      "current_health": 8,
+      "max_health": 12,
+      "status": "shaken",
+      "is_fatigued": true,
+      "spell_tokens": 2,
+      "activated_this_round": true,
+      "participated_in_melee": false,
+      "deployment_status": "standard",
+      "current_action": "advance"
+    }
+  ]
+}
+```
+
+#### `PATCH /api/battles/:battleId/units/:unitStateId`
+Update individual unit state properties.
+
+**Request Body (all fields optional):**
+```json
+{
+  "current_health": 8,
+  "status": "shaken",
+  "is_fatigued": true,
+  "spell_tokens": 2,
+  "activated_this_round": true,
+  "participated_in_melee": false,
+  "deployment_status": "standard",
+  "current_action": "advance",
+  "position_data": {"x": 10, "y": 15, "facing": "north"},
+  "status_effects": ["poison", "stunned"]
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "unit_state": {
+    "id": 1,
+    "current_health": 8,
+    "status": "shaken",
+    "is_fatigued": true,
+    "spell_tokens": 2,
+    "updated_at": "2025-08-10T12:30:00Z"
+  }
+}
+```
 
 ## Error Responses
 

@@ -28,12 +28,14 @@ git ls-tree -r v1.5.2-final-archive | wc -l  # 170+ files
 - **Focused**: Battle tracking only (no premature features)
 - **Mobile**: Built mobile-first with TailwindCSS
 
-## 🚀 Current Status (v2.9.0)
+## 🚀 Current Status (v2.10.0)
 
 ✅ **Army Import System**: Complete ArmyForge integration with OPR unit processing  
+✅ **Battle Management**: Full battle session management with participant tracking  
+✅ **Unit State Tracking**: Complete unit health, status, and battle mechanics tracking  
 ✅ **Backend Complete**: TypeScript Express server with SQLite storage and Docker  
-✅ **Testing**: 17 comprehensive tests covering all functionality  
-📋 **Next**: React frontend and battle tracking features
+✅ **Testing**: 68 comprehensive tests covering all functionality  
+📋 **Next**: Advanced OPR mechanics (morale, fatigue effects) and React frontend
 
 **Server**: http://localhost:4019 (Warhammer 40k themed port!)
 

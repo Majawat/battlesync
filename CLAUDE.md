@@ -15,7 +15,7 @@ BattleSync v2 is a clean rewrite of an OPR (One Page Rules) battle tracker appli
 
 ## Current State
 
-TypeScript backend with Docker containerization, army import system, and SQLite storage implemented. Express server with health endpoints, army import/retrieval API, comprehensive test suite, and full Docker development/production setup. ArmyProcessor handles complex OPR unit merging (Combined/Joined units) with campaign XP cost calculations and model-specific upgrade assignments. Validation errors from ArmyForge are stored separately from army descriptions. All code uses strict TypeScript for type safety.
+TypeScript backend with Docker containerization, army import system, SQLite storage, and comprehensive battle tracking implemented. Express server with health endpoints, army import/retrieval API, complete battle management system, unit health/state tracking, and comprehensive test suite. Full Docker development/production setup. ArmyProcessor handles complex OPR unit merging (Combined/Joined units) with campaign XP cost calculations and model-specific upgrade assignments. Battle system supports unit state tracking with health, fatigue, spell tokens, activation status, and all OPR battle mechanics. Validation errors from ArmyForge are stored separately from army descriptions. All code uses strict TypeScript for type safety.
 
 ## Tech Stack
 
@@ -204,11 +204,25 @@ Co-Authored-By: Claude <noreply@anthropic.com>
 
 ## API Endpoints
 
+### Core API
 - `GET /` - API info and version
 - `GET /health` - Health check endpoint
+
+### Army Management
 - `POST /api/armies/import` - Import army from ArmyForge by ID
 - `GET /api/armies` - List all stored armies
 - `GET /api/armies/:id` - Get specific army with full details
+
+### Battle Management
+- `POST /api/battles` - Create a new battle
+- `GET /api/battles` - List all battles
+- `GET /api/battles/:id` - Get battle details with participants
+- `POST /api/battles/:id/participants` - Add participant to battle
+
+### Unit Battle State Tracking
+- `POST /api/battles/:id/start` - Start battle and initialize all unit states
+- `GET /api/battles/:id/units` - Get all unit battle states for a battle
+- `PATCH /api/battles/:battleId/units/:unitStateId` - Update individual unit state (health, fatigue, tokens, etc.)
 
 ## Project Structure
 
