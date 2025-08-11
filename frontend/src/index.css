@@ -4,57 +4,92 @@
 
 @layer base {
   body {
-    @apply bg-gray-50 text-gray-900;
-    @apply min-h-screen;
+    @apply bg-battle-bg-light dark:bg-battle-bg-dark text-battle-text-primary-light dark:text-battle-text-primary-dark;
+    @apply min-h-screen transition-colors duration-300;
   }
 }
 
 @layer components {
   .btn-primary {
-    @apply bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors;
+    @apply bg-battle-accent-primary-light dark:bg-battle-accent-primary-dark text-white px-4 py-2 rounded-lg;
+    @apply hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-battle-accent-primary-light dark:focus:ring-battle-accent-primary-dark focus:ring-offset-2;
+    @apply focus:ring-offset-battle-bg-light dark:focus:ring-offset-battle-bg-dark transition-all duration-200;
   }
   
   .btn-secondary {
-    @apply bg-gray-100 text-gray-900 px-4 py-2 rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors;
+    @apply bg-battle-surface-light dark:bg-battle-surface-dark text-battle-text-primary-light dark:text-battle-text-primary-dark;
+    @apply border border-battle-border-light dark:border-battle-border-dark px-4 py-2 rounded-lg;
+    @apply hover:bg-battle-border-light dark:hover:bg-battle-border-dark focus:outline-none focus:ring-2 focus:ring-battle-accent-secondary-light dark:focus:ring-battle-accent-secondary-dark focus:ring-offset-2;
+    @apply focus:ring-offset-battle-bg-light dark:focus:ring-offset-battle-bg-dark transition-all duration-200;
   }
   
   .card {
-    @apply bg-white rounded-lg shadow-sm border border-gray-200 p-6;
+    @apply bg-battle-surface-light dark:bg-battle-surface-dark rounded-lg shadow-sm border border-battle-border-light dark:border-battle-border-dark p-6;
+    @apply transition-colors duration-300;
   }
   
   .input-field {
-    @apply w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500;
+    @apply w-full px-3 py-2 border border-battle-border-light dark:border-battle-border-dark rounded-lg;
+    @apply bg-battle-surface-light dark:bg-battle-surface-dark text-battle-text-primary-light dark:text-battle-text-primary-dark;
+    @apply focus:outline-none focus:ring-2 focus:ring-battle-accent-primary-light dark:focus:ring-battle-accent-primary-dark focus:border-transparent;
+    @apply transition-all duration-200 placeholder-battle-text-muted-light dark:placeholder-battle-text-muted-dark;
   }
   
   .unit-card {
-    @apply bg-white border border-gray-200 rounded-lg p-4 shadow-sm;
+    @apply bg-battle-surface-light dark:bg-battle-surface-dark border border-battle-border-light dark:border-battle-border-dark rounded-lg p-4 shadow-sm;
+    @apply transition-colors duration-300;
   }
   
   .unit-status-normal {
-    @apply border-l-4 border-green-500;
+    @apply border-l-4;
+    border-left-color: #10b981; /* battle-status-normal */
   }
   
   .unit-status-shaken {
-    @apply border-l-4 border-yellow-500;
+    @apply border-l-4;
+    border-left-color: #f59e0b; /* battle-status-shaken */
   }
   
   .unit-status-routed {
-    @apply border-l-4 border-red-500;
+    @apply border-l-4;
+    border-left-color: #ef4444; /* battle-status-routed */
   }
   
   .health-bar {
-    @apply w-full bg-gray-200 rounded-full h-3;
+    @apply w-full bg-battle-border-light dark:bg-battle-border-dark rounded-full h-3 overflow-hidden;
   }
   
   .health-bar-fill {
-    @apply h-3 bg-green-500 rounded-full transition-all duration-300;
+    @apply h-3 rounded-full transition-all duration-300;
+    background-color: #10b981; /* battle-status-health-full */
   }
   
   .health-bar-damaged {
-    @apply bg-yellow-500;
+    background-color: #f59e0b !important; /* battle-status-health-damaged */
   }
   
   .health-bar-critical {
-    @apply bg-red-500;
+    background-color: #ef4444 !important; /* battle-status-health-critical */
+  }
+  
+  /* Dark mode toggle button */
+  .dark-mode-toggle {
+    @apply p-2 rounded-lg text-battle-text-secondary-light dark:text-battle-text-secondary-dark;
+    @apply hover:bg-battle-border-light dark:hover:bg-battle-border-dark transition-colors duration-200;
+  }
+  
+  /* Navigation enhancements for dark mode */
+  .nav-link {
+    @apply px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200;
+  }
+  
+  .nav-link-active {
+    @apply text-battle-accent-primary-light dark:text-battle-accent-primary-dark bg-battle-accent-primary-light/10 dark:bg-battle-accent-primary-dark/10;
+  }
+  
+  .nav-link-inactive {
+    @apply text-battle-text-secondary-light dark:text-battle-text-secondary-dark;
+    @apply hover:text-battle-accent-primary-light dark:hover:text-battle-accent-primary-dark;
+    @apply hover:bg-battle-border-light dark:hover:bg-battle-border-dark;
   }
 }

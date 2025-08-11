@@ -11,7 +11,7 @@ export interface Army {
   armyforge_id: string;
   name: string;
   description: string;
-  validation_errors: string | null;
+  validation_errors: string[];
   points_limit: number;
   list_points: number;
   model_count: number;

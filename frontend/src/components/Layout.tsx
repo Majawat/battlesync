@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import type { ReactNode } from 'react';
+import DarkModeToggle from './DarkModeToggle';
 
 interface LayoutProps {
   children: ReactNode;
@@ -14,20 +15,20 @@ export default function Layout({ children }: LayoutProps) {
 
   const navLinkClass = (path: string) => {
     return isActive(path)
-      ? 'text-red-600 bg-red-50 px-3 py-2 rounded-md text-sm font-medium'
-      : 'text-gray-600 hover:text-red-600 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium transition-colors';
+      ? 'nav-link nav-link-active'
+      : 'nav-link nav-link-inactive';
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-battle-bg-light dark:bg-battle-bg-dark transition-colors duration-300">
       {/* Navigation */}
-      <nav className="bg-white shadow-sm border-b border-gray-200">
+      <nav className="bg-battle-surface-light dark:bg-battle-surface-dark shadow-sm border-b border-battle-border-light dark:border-battle-border-dark transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex items-center">
               <Link to="/" className="flex items-center">
-                <span className="text-xl font-bold text-red-600">BattleSync</span>
-                <span className="ml-2 text-sm text-gray-500">v2.10.0</span>
+                <span className="text-xl font-bold text-battle-accent-primary-light dark:text-battle-accent-primary-dark">BattleSync</span>
+                <span className="ml-2 text-sm text-battle-text-muted-light dark:text-battle-text-muted-dark">v2.11.0</span>
               </Link>
             </div>
             
@@ -41,6 +42,9 @@ export default function Layout({ children }: LayoutProps) {
               <Link to="/battles" className={navLinkClass('/battles')}>
                 Battles
               </Link>
+              
+              {/* Dark Mode Toggle */}
+              <DarkModeToggle />
             </div>
           </div>
         </div>
@@ -52,9 +56,9 @@ export default function Layout({ children }: LayoutProps) {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white border-t border-gray-200 mt-12">
+      <footer className="bg-battle-surface-light dark:bg-battle-surface-dark border-t border-battle-border-light dark:border-battle-border-dark mt-12 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="text-center text-sm text-gray-500">
+          <div className="text-center text-sm text-battle-text-muted-light dark:text-battle-text-muted-dark">
             <p>BattleSync v2 - Simple OPR Battle Tracker</p>
             <p className="mt-1">
               Built with React + TypeScript + Express + SQLite

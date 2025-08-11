@@ -9,13 +9,13 @@ BattleSync v2 is designed around simplicity and core battle tracking functionali
 - **Focused**: Battle tracking only, avoiding premature features
 - **Mobile**: Mobile-first design with TailwindCSS
 
-## ✅ Current Features (v2.10.0)
+## ✅ Current Features (v2.11.0)
 
 ### Backend Infrastructure
 - [x] **TypeScript Backend** - Fully typed Express.js server with SQLite
 - [x] **Health Monitoring** - `/health` endpoint with version info
 - [x] **Docker Support** - Production and development containers
-- [x] **Testing Suite** - Jest + Supertest with 68 comprehensive tests
+- [x] **Testing Suite** - Jest + Supertest with comprehensive test coverage
 - [x] **Port 4019** - Warhammer 40k + Horus Heresy themed port
 - [x] **Database Schema** - Complete SQLite schema for army/battle tracking
 
@@ -58,13 +58,21 @@ BattleSync v2 is designed around simplicity and core battle tracking functionali
 - [x] **Status Effects** - Track temporary effects (poison, stunned, etc.)
 - [x] **Deployment States** - Standard, Ambush, Scout, Embarked deployment
 
+### Frontend Application 
+- [x] **React Frontend** - Complete React + Vite frontend application
+- [x] **Dark Mode System** - Battle-optimized dark theme with localStorage persistence
+- [x] **Mobile-First Design** - TailwindCSS responsive design for mobile devices
+- [x] **Army Management UI** - Import, list, and view detailed army information
+- [x] **Battle Management UI** - Create and manage battle sessions
+- [x] **Army Detail Pages** - Comprehensive unit breakdowns with models, weapons, upgrades
+- [x] **Single Port Deployment** - Frontend and API served from single port (4019)
+
 ## 🚧 Planned Features
 
 ### Phase 2: Advanced Battle Mechanics *(Next)*
 - [ ] **Battle Setup** - Create new battles with army selection
 - [ ] **Damage Tracking** - Track unit damage during battles  
 - [ ] **Basic Undo** - Undo last action for mistake correction
-- [ ] **React Frontend** - User interface for battle tracking
 
 ### Phase 2: Enhanced Features  
 - [ ] **Battle History** - View and replay past battles

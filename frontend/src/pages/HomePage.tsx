@@ -31,8 +31,8 @@ export default function HomePage() {
     <div className="space-y-8">
       {/* Header */}
       <div className="text-center">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">
-          Welcome to BattleSync v2
+        <h1 className="text-4xl font-bold text-gray-300 mb-4">
+          Welcome to BattleSync
         </h1>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto">
           Simple OPR battle tracker built for mobile-first gaming. 

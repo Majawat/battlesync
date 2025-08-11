@@ -31,7 +31,7 @@ export default function ArmyListPage() {
     return (
       <div className="space-y-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">My Armies</h1>
+          <h1 className="text-3xl font-bold text-gray-300 mb-4">My Armies</h1>
         </div>
         <div className="card text-center">
           <p className="text-gray-500">Loading armies...</p>
@@ -44,7 +44,7 @@ export default function ArmyListPage() {
     return (
       <div className="space-y-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">My Armies</h1>
+          <h1 className="text-3xl font-bold text-gray-300 mb-4">My Armies</h1>
         </div>
         <div className="card">
           <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
@@ -61,7 +61,7 @@ export default function ArmyListPage() {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">My Armies</h1>
+          <h1 className="text-3xl font-bold text-gray-300 mb-2">My Armies</h1>
           <p className="text-gray-600">
             {armies.length} {armies.length === 1 ? 'army' : 'armies'} imported
           </p>
@@ -91,7 +91,7 @@ export default function ArmyListPage() {
               <div className="space-y-4">
                 {/* Army Header */}
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-1">
+                  <h3 className="text-lg font-semibold text-gray-300 mb-1">
                     {army.name}
                   </h3>
                   {army.description && (
@@ -122,9 +122,9 @@ export default function ArmyListPage() {
                     </span>
                   </div>
                   <div>
-                    <span className="font-medium text-gray-700">Units:</span>
-                    <span className="text-gray-600 ml-1">
-                      {army.units?.length || 'N/A'}
+                    <span className="font-medium text-gray-700">Game System:</span>
+                    <span className="text-gray-600 ml-1 text-xs">
+                      {army.game_system || 'OPR'}
                     </span>
                   </div>
                 </div>

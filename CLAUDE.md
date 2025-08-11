@@ -15,13 +15,13 @@ BattleSync v2 is a clean rewrite of an OPR (One Page Rules) battle tracker appli
 
 ## Current State
 
-Complete full-stack application with TypeScript backend + React frontend. Express server with SQLite storage serves React UI in production mode (single port deployment). Comprehensive army import system, battle management, and unit state tracking. ArmyProcessor handles complex OPR unit merging (Combined/Joined units) with campaign XP cost calculations and model-specific upgrade assignments. Battle system supports unit state tracking with health, fatigue, spell tokens, activation status, and all OPR battle mechanics. React frontend provides mobile-first UI with TailwindCSS for army management, battle creation, and unit visualization. Production deployment serves both frontend and API from single port (4019). All code uses strict TypeScript for type safety.
+Complete full-stack application with TypeScript backend + React frontend. Express server with SQLite storage serves React UI in production mode (single port deployment). Comprehensive army import system, battle management, and unit state tracking. ArmyProcessor handles complex OPR unit merging (Combined/Joined units) with campaign XP cost calculations and model-specific upgrade assignments. Battle system supports unit state tracking with health, fatigue, spell tokens, activation status, and all OPR battle mechanics. React frontend provides mobile-first UI with TailwindCSS and complete dark mode implementation optimized for battle visibility. Army detail pages show comprehensive unit breakdowns with all models, weapons, and upgrades. Production deployment serves both frontend and API from single port (4019). All code uses strict TypeScript for type safety.
 
 ## Tech Stack
 
 - **Backend**: Node.js + Express + SQLite + TypeScript
-- **Frontend**: React + Vite (planned)
-- **Styling**: TailwindCSS (mobile-first, planned)
+- **Frontend**: React + Vite + React Router + dark mode system
+- **Styling**: TailwindCSS v3 (mobile-first, battle-optimized dark theme)
 - **Database**: SQLite (simple, no ORM)
 - **Testing**: Jest + ts-jest + Supertest
 - **Containerization**: Docker + Docker Compose with Node.js 20 LTS
