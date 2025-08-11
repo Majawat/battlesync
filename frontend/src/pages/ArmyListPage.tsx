@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { armyApi } from '../api/client';
 import type { Army } from '../types/api';
+import { formatGameSystem } from '../utils/gameSystem';
 
 export default function ArmyListPage() {
   const [armies, setArmies] = useState<Army[]>([]);
@@ -62,7 +63,7 @@ export default function ArmyListPage() {
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold text-gray-300 mb-2">My Armies</h1>
-          <p className="text-gray-600">
+          <p className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark">
             {armies.length} {armies.length === 1 ? 'army' : 'armies'} imported
           </p>
         </div>
@@ -76,7 +77,7 @@ export default function ArmyListPage() {
         <div className="card text-center">
           <div className="py-12">
             <p className="text-xl text-gray-500 mb-4">No armies imported yet</p>
-            <p className="text-gray-600 mb-6">
+            <p className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark mb-6">
               Import your first army from ArmyForge to get started with battle tracking.
             </p>
             <Link to="/armies/import" className="btn-primary">
@@ -95,7 +96,7 @@ export default function ArmyListPage() {
                     {army.name}
                   </h3>
                   {army.description && (
-                    <p className="text-sm text-gray-600 line-clamp-2">
+                    <p className="text-sm text-battle-text-secondary-light dark:text-battle-text-secondary-dark line-clamp-2">
                       {army.description}
                     </p>
                   )}
@@ -104,27 +105,21 @@ export default function ArmyListPage() {
                 {/* Army Stats */}
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
-                    <span className="font-medium text-gray-700">Points:</span>
-                    <span className="text-gray-600 ml-1">
+                    <span className="font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark">Points:</span>
+                    <span className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark ml-1">
                       {army.list_points}/{army.points_limit}
                     </span>
                   </div>
                   <div>
-                    <span className="font-medium text-gray-700">Models:</span>
-                    <span className="text-gray-600 ml-1">
+                    <span className="font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark">Models:</span>
+                    <span className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark ml-1">
                       {army.model_count}
                     </span>
                   </div>
                   <div>
-                    <span className="font-medium text-gray-700">Activations:</span>
-                    <span className="text-gray-600 ml-1">
+                    <span className="font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark">Activations:</span>
+                    <span className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark ml-1">
                       {army.activation_count}
-                    </span>
-                  </div>
-                  <div>
-                    <span className="font-medium text-gray-700">Game System:</span>
-                    <span className="text-gray-600 ml-1 text-xs">
-                      {army.game_system || 'OPR'}
                     </span>
                   </div>
                 </div>
@@ -132,7 +127,7 @@ export default function ArmyListPage() {
                 {/* Army System */}
                 <div className="flex items-center justify-between">
                   <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                    {army.game_system}
+                    {formatGameSystem(army.game_system)}
                   </span>
                   {army.campaign_mode && (
                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
@@ -143,9 +138,9 @@ export default function ArmyListPage() {
 
                 {/* Validation Warnings */}
                 {army.validation_errors && (
-                  <div className="bg-yellow-50 border border-yellow-200 text-yellow-700 px-3 py-2 rounded-lg text-xs">
-                    <p className="font-medium">Validation Issues</p>
-                    <p className="line-clamp-2">{army.validation_errors}</p>
+                  <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700/50 text-amber-800 dark:text-amber-300 px-3 py-2 rounded-lg text-xs">
+                    <p className="font-medium opacity-90">Validation Issues</p>
+                    <p className="line-clamp-2 opacity-80">{Array.isArray(army.validation_errors) ? army.validation_errors.join(', ') : army.validation_errors}</p>
                   </div>
                 )}
 

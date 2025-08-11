@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { armyApi } from '../api/client';
 import type { Army } from '../types/api';
+import { formatGameSystem } from '../utils/gameSystem';
 
 export default function ArmyDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -79,7 +80,7 @@ export default function ArmyDetailPage() {
           )}
 
           <div className="flex flex-wrap items-center gap-4 text-sm text-battle-text-secondary-light dark:text-battle-text-secondary-dark">
-            <span>Game System: {army.game_system}</span>
+            <span>Game System: {formatGameSystem(army.game_system)}</span>
             <span>•</span>
             <span>Points: {army.list_points}/{army.points_limit}</span>
             <span>•</span>
@@ -107,9 +108,9 @@ export default function ArmyDetailPage() {
 
       {/* Validation Warnings */}
       {army.validation_errors && Array.isArray(army.validation_errors) && army.validation_errors.length > 0 && (
-        <div className="bg-yellow-50 border border-yellow-200 text-yellow-700 px-4 py-3 rounded-lg">
-          <p className="font-medium mb-2">Validation Issues</p>
-          <ul className="text-sm space-y-1">
+        <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700/50 text-amber-800 dark:text-amber-300 px-4 py-3 rounded-lg">
+          <p className="font-medium mb-2 text-sm">Validation Issues</p>
+          <ul className="text-xs space-y-1 opacity-90">
             {army.validation_errors.map((error, index) => (
               <li key={index}>• {error}</li>
             ))}
@@ -122,58 +123,132 @@ export default function ArmyDetailPage() {
         <h2 className="text-xl font-semibold mb-6">Units ({army.units?.length || 0})</h2>
         
         {!army.units || army.units.length === 0 ? (
-          <p className="text-gray-500">No units found in this army.</p>
+          <p className="text-battle-text-muted-light dark:text-battle-text-muted-dark">No units found in this army.</p>
         ) : (
-          <div className="space-y-6">
+          <div className="space-y-8">
             {army.units.map((unit, index) => (
               <div key={unit.id || index} className="unit-card">
-                <div className="flex justify-between items-start mb-3">
-                  <div>
-                    <h3 className="text-lg font-semibold text-battle-text-primary-light dark:text-battle-text-primary-dark">
-                      {unit.name}
-                    </h3>
-                    <div className="flex items-center space-x-4 text-sm text-battle-text-secondary-light dark:text-battle-text-secondary-dark mt-1">
-                      <span>Size: {unit.size}</span>
-                      <span>•</span>
-                      <span>Quality: {unit.quality}+</span>
-                      <span>•</span>
-                      <span>Defense: {unit.defense}+</span>
-                      <span>•</span>
-                      <span className="font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark">{unit.cost} pts</span>
-                    </div>
+                {/* Unit Header */}
+                <div className="mb-4">
+                  <h3 className="text-lg font-semibold text-battle-text-primary-light dark:text-battle-text-primary-dark mb-1">
+                    {unit.name}
+                  </h3>
+                  <div className="flex flex-wrap items-center gap-2 text-sm text-battle-text-secondary-light dark:text-battle-text-secondary-dark">
+                    <span>Size: {unit.model_count}</span>
+                    <span>•</span>
+                    <span>Quality: {unit.quality}+</span>
+                    <span>•</span>
+                    <span>Defense: {unit.defense}+</span>
+                    <span>•</span>
+                    <span className="font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark">{unit.total_cost} pts</span>
                   </div>
                 </div>
 
                 {/* Sub-units */}
                 {unit.sub_units && unit.sub_units.length > 0 && (
-                  <div className="mt-4 space-y-3">
-                    <h4 className="font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark">Sub-units:</h4>
+                  <div className="space-y-6">
                     {unit.sub_units.map((subUnit, subIndex) => (
-                      <div key={subUnit.id || subIndex} className="ml-4 p-3 bg-battle-surface-light dark:bg-battle-surface-dark rounded-lg">
-                        <div className="flex justify-between items-start mb-2">
-                          <h5 className="font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark">{subUnit.name}</h5>
-                          <div className="text-sm text-battle-text-secondary-light dark:text-battle-text-secondary-dark">
-                            Size: {subUnit.size} | Q: {subUnit.quality}+ | D: {subUnit.defense}+
+                      <div key={subUnit.id || subIndex} className="border-l-4 border-battle-accent-light dark:border-battle-accent-dark pl-4">
+                        {/* Sub-unit Header */}
+                        <div className="mb-3">
+                          <div className="flex flex-wrap items-center gap-4 mb-1">
+                            <h4 className="font-semibold text-battle-text-primary-light dark:text-battle-text-primary-dark">
+                              {subUnit.custom_name || subUnit.name}
+                            </h4>
+                            <span className="text-sm font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark">
+                              {subUnit.cost} pts
+                            </span>
                           </div>
+                          <div className="flex flex-wrap items-center gap-2 text-xs text-battle-text-secondary-light dark:text-battle-text-secondary-dark mb-2">
+                            <span>Q: {subUnit.quality}+</span>
+                            <span>•</span>
+                            <span>D: {subUnit.defense}+</span>
+                            {subUnit.base_sizes && (subUnit.base_sizes.round !== 'none' || subUnit.base_sizes.square !== 'none') && (
+                              <>
+                                <span>•</span>
+                                <span>Base: {subUnit.base_sizes.round !== 'none' ? subUnit.base_sizes.round + 'mm' : subUnit.base_sizes.square + 'mm'}</span>
+                              </>
+                            )}
+                          </div>
+                          
+                          {/* Special Rules and Upgrades */}
+                          {(subUnit.rules && subUnit.rules.length > 0) && (
+                            <div className="text-xs text-battle-text-secondary-light dark:text-battle-text-secondary-dark mb-2">
+                              <span className="font-medium">Rules: </span>
+                              {subUnit.rules.map((rule, ruleIndex) => (
+                                <span key={ruleIndex}>
+                                  {rule.name}{rule.rating ? `(${rule.rating})` : ''}
+                                  {ruleIndex < subUnit.rules.length - 1 ? ', ' : ''}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+                          
+                          {/* Sub-unit Notes */}
+                          {subUnit.notes && (
+                            <div className="text-xs text-battle-text-secondary-light dark:text-battle-text-secondary-dark mb-2 italic">
+                              <span className="font-medium">Notes: </span>
+                              {subUnit.notes}
+                            </div>
+                          )}
                         </div>
 
                         {/* Models */}
                         {subUnit.models && subUnit.models.length > 0 && (
-                          <div className="mt-2">
-                            <p className="text-xs text-battle-text-secondary-light dark:text-battle-text-secondary-dark mb-2">Models ({subUnit.models.length}):</p>
-                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
-                              {subUnit.models.map((model, modelIndex) => (
-                                <div key={model.id || modelIndex} className="text-xs bg-battle-bg-light dark:bg-battle-bg-dark p-2 rounded border border-battle-border-light dark:border-battle-border-dark">
-                                  <div className="flex justify-between items-center">
-                                    <span className="font-medium">{model.name}</span>
-                                    <span className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark">{model.cost} pts</span>
-                                  </div>
-                                  <div className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark mt-1">
-                                    Tough: {model.max_tough} | Q: {model.quality}+ | D: {model.defense}+
-                                  </div>
+                          <div className="space-y-3">
+                            {subUnit.models.map((model, modelIndex) => (
+                              <div key={model.model_id || modelIndex} className="bg-battle-surface-light dark:bg-battle-surface-dark p-3 rounded-lg border border-battle-border-light dark:border-battle-border-dark">
+                                {/* Model Header */}
+                                <div className="flex justify-between items-center mb-2">
+                                  <span className="font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark">
+                                    {model.custom_name || model.name}
+                                  </span>
+                                  <span className="text-sm text-battle-text-secondary-light dark:text-battle-text-secondary-dark">
+                                    Tough: {model.max_tough}
+                                  </span>
                                 </div>
-                              ))}
-                            </div>
+
+                                {/* Model Upgrades */}
+                                {model.upgrades && model.upgrades.length > 0 && (
+                                  <div className="text-xs text-battle-text-secondary-light dark:text-battle-text-secondary-dark mb-2">
+                                    {model.upgrades.map((upgrade, upgradeIndex) => (
+                                      <div key={upgradeIndex} className={upgrade.reassignable ? 'text-battle-accent-light dark:text-battle-accent-dark font-medium' : ''}>
+                                        {upgrade.name}{upgrade.reassignable ? ' (reassignable)' : ''}
+                                      </div>
+                                    ))}
+                                  </div>
+                                )}
+
+                                {/* Weapons Table */}
+                                {model.weapons && model.weapons.length > 0 && (
+                                  <div className="mt-2">
+                                    <div className="grid grid-cols-5 gap-2 text-xs font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark mb-1 border-b border-battle-border-light dark:border-battle-border-dark pb-1">
+                                      <span>Weapon</span>
+                                      <span>Range</span>
+                                      <span>Atk</span>
+                                      <span>AP</span>
+                                      <span>Special</span>
+                                    </div>
+                                    {model.weapons.map((weapon, weaponIndex) => (
+                                      <div key={weaponIndex} className="grid grid-cols-5 gap-2 text-xs text-battle-text-secondary-light dark:text-battle-text-secondary-dark py-1">
+                                        <span>{weapon.name}</span>
+                                        <span>{weapon.range === 0 ? '-' : weapon.range + '"'}</span>
+                                        <span>A{weapon.attacks}</span>
+                                        <span>{weapon.ap || '-'}</span>
+                                        <span className="text-xs">
+                                          {weapon.special_rules && weapon.special_rules.length > 0 
+                                            ? weapon.special_rules.map(rule => 
+                                                rule.name + (rule.value ? `(${rule.value})` : '')
+                                              ).join(', ')
+                                            : '-'
+                                          }
+                                        </span>
+                                      </div>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
+                            ))}
                           </div>
                         )}
                       </div>
@@ -183,7 +258,7 @@ export default function ArmyDetailPage() {
 
                 {/* Unit without sub-units - show basic info */}
                 {(!unit.sub_units || unit.sub_units.length === 0) && (
-                  <div className="mt-3 text-sm text-battle-text-secondary-light dark:text-battle-text-secondary-dark">
+                  <div className="mt-3 text-sm text-battle-text-muted-light dark:text-battle-text-muted-dark">
                     <p>Basic unit - no detailed model breakdown available</p>
                   </div>
                 )}

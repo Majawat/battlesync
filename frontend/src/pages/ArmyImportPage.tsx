@@ -56,7 +56,7 @@ export default function ArmyImportPage() {
     <div className="max-w-2xl mx-auto space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-4">
+        <h1 className="text-3xl font-bold text-gray-200 mb-4">
           Import Army from ArmyForge
         </h1>
         <p className="text-gray-600">
@@ -115,17 +115,17 @@ export default function ArmyImportPage() {
         <h3 className="text-lg font-semibold mb-3">How to Import</h3>
         <div className="space-y-4 text-sm text-gray-600">
           <div>
-            <h4 className="font-medium text-gray-900 mb-1">1. Create Army in ArmyForge</h4>
+            <h4 className="font-medium text-gray-300 mb-1">1. Create Army in ArmyForge</h4>
             <p>Visit <a href="https://army-forge.onepagerules.com" target="_blank" rel="noopener noreferrer" className="text-red-600 hover:underline">army-forge.onepagerules.com</a> and build your army list.</p>
           </div>
           
           <div>
-            <h4 className="font-medium text-gray-900 mb-1">2. Share Your Army</h4>
+            <h4 className="font-medium text-gray-300 mb-1">2. Share Your Army</h4>
             <p>Click the "Share" button in ArmyForge to get a shareable URL.</p>
           </div>
           
           <div>
-            <h4 className="font-medium text-gray-900 mb-1">3. Import to BattleSync</h4>
+            <h4 className="font-medium text-gray-300 mb-1">3. Import to BattleSync</h4>
             <p>Paste the full URL or just the ID portion into the field above.</p>
           </div>
         </div>

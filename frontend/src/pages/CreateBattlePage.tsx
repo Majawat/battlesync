@@ -253,7 +253,7 @@ export default function CreateBattlePage() {
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
               {armies.map((army) => (
-                <div key={army.id} className="flex justify-between items-center p-2 bg-gray-50 rounded">
+                <div key={army.id} className="flex justify-between items-center p-2 bg-gray-500rounded">
                   <span className="font-medium">{army.name}</span>
                   <span className="text-gray-600">{army.list_points}pts</span>
                 </div>

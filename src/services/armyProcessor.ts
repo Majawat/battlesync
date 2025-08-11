@@ -25,13 +25,19 @@ export class ArmyProcessor {
     // Step 5: Calculate total army cost
     const totalCost = finalUnits.reduce((sum, unit) => sum + unit.total_cost, 0);
     const totalModels = finalUnits.reduce((sum, unit) => sum + unit.model_count, 0);
+    
+    // Step 6: Validate points limit and add to validation errors
+    const validationErrors = [...(armyForgeData.forceOrgErrors || [])];
+    if (totalCost > armyForgeData.pointsLimit) {
+      validationErrors.push(`Points limit exceeded: ${totalCost}/${armyForgeData.pointsLimit}`);
+    }
 
     return {
       id: '', // Will be set when saving to database
       armyforge_id: armyForgeData.id,
       name: armyForgeData.name,
       description: armyForgeData.description,
-      validation_errors: armyForgeData.forceOrgErrors && armyForgeData.forceOrgErrors.length > 0 ? armyForgeData.forceOrgErrors : undefined,
+      validation_errors: validationErrors.length > 0 ? validationErrors : undefined,
       points_limit: armyForgeData.pointsLimit,
       list_points: totalCost, // Use our calculated total
       model_count: totalModels,
@@ -307,7 +313,7 @@ export class ArmyProcessor {
       is_joined: true,
       has_hero: true,
       has_caster: heroUnit.is_caster || regularUnit.is_caster,
-      sub_units: [regularUnit, heroUnit],
+      sub_units: [heroUnit, regularUnit],
       notes: [regularUnit.notes, heroUnit.notes].filter(Boolean).join('; ') || undefined
     };
   }
@@ -744,8 +750,6 @@ export class ArmyProcessor {
       model.max_tough = baseTough;
       model.current_tough = baseTough;
       model.upgrades = [];
-      if (index < 3) { // Only log first few
-      }
     });
 
     if (!unit.selectedUpgrades || unit.selectedUpgrades.length === 0) {
@@ -902,6 +906,7 @@ export class ArmyProcessor {
 
     // Create model upgrade record
     if (upgradeRules.length > 0 || option.gains?.some((gain: any) => gain.type === 'ArmyBookItem')) {
+      // Determine reassignability based on game rules (ArmyForge logic)
       const reassignable = upgrade.select?.type === 'exactly' && upgrade.select?.value === 1;
       
       const modelUpgrade: ProcessedModelUpgrade = {
@@ -978,31 +983,28 @@ export class ArmyProcessor {
    * Determine base toughness for a unit type (before upgrades)
    */
   private static determineBaseToughness(unit: ArmyForgeUnit): number {
-    // Infantry Squad and similar basic troops ALWAYS start with 1 health
-    // regardless of what unit.rules says (which contains post-upgrade artifacts)
-    if (unit.name === 'Infantry Squad' || 
-        unit.name === 'Minions' ||
-        unit.name === 'Elites') {
-      return 1;
-    }
-
-    // For special units, check for inherent toughness
-    // But be careful - unit.rules might contain upgrade artifacts
-    // Only trust single tough rules for clearly special units
-    if (unit.name === 'Blessed Titan' ||
-        unit.name === 'Grinder Truck' ||
-        unit.name === 'Celestial High Sister') {
-      const baseRules = unit.rules.filter(rule => rule.name === 'Tough');
-      if (baseRules.length >= 1 && baseRules[0]) {
-        const rating = baseRules[0].rating;
-        if (rating) {
-          return parseInt(rating.toString());
+    // Start with default toughness of 1
+    let baseToughness = 1;
+    
+    // Look for Tough rules in the unit's base rules array
+    if (unit.rules && unit.rules.length > 0) {
+      for (const rule of unit.rules) {
+        if (rule.name === 'Tough') {
+          // Found a Tough rule - extract the rating
+          if (rule.rating !== undefined && rule.rating !== null) {
+            const toughValue = typeof rule.rating === 'string' 
+              ? parseInt(rule.rating, 10) 
+              : Number(rule.rating);
+            
+            if (!isNaN(toughValue) && toughValue > 0) {
+              baseToughness = Math.max(baseToughness, toughValue);
+            }
+          }
         }
       }
     }
 
-    // Default to 1 for most troops
-    return 1;
+    return baseToughness;
   }
 
   /**

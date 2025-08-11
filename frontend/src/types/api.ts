@@ -23,31 +23,93 @@ export interface Army {
 
 export interface Unit {
   id: string;
+  army_id: string;
+  armyforge_unit_ids: string[];
   name: string;
-  size: number;
+  custom_name?: string;
   quality: number;
   defense: number;
-  cost: number;
-  sub_units?: SubUnit[];
+  total_cost: number;
+  model_count: number;
+  is_combined: boolean;
+  is_joined: boolean;
+  has_hero: boolean;
+  has_caster: boolean;
+  sub_units: SubUnit[];
+  notes?: string;
 }
 
 export interface SubUnit {
   id: string;
+  armyforge_unit_id: string;
   name: string;
-  size: number;
+  custom_name?: string;
   quality: number;
   defense: number;
-  models?: Model[];
+  size: number;
+  cost: number;
+  is_hero: boolean;
+  is_caster: boolean;
+  caster_rating?: number;
+  xp: number;
+  traits: string[];
+  base_sizes: {
+    round: string;
+    square: string;
+  };
+  weapons: Weapon[];
+  rules: Rule[];
+  items: Item[];
+  models: Model[];
+  notes?: string;
 }
 
 export interface Model {
-  id: string;
+  model_id: string;
   name: string;
+  custom_name?: string;
   max_tough: number;
   current_tough: number;
-  cost: number;
-  quality: number;
-  defense: number;
+  is_hero: boolean;
+  special_rules: any[];
+  weapons: Weapon[];
+  upgrades: Upgrade[];
+}
+
+export interface Weapon {
+  id: string;
+  name: string;
+  count: number;
+  range: number;
+  attacks: number | string;
+  ap: number;
+  special_rules: SpecialRule[];
+}
+
+export interface SpecialRule {
+  name: string;
+  value?: number;
+}
+
+export interface Rule {
+  name: string;
+  type: string;
+  rating?: number;
+  description: string;
+}
+
+export interface Item {
+  name: string;
+  type: string;
+  description: string;
+}
+
+export interface Upgrade {
+  name: string;
+  description: string;
+  rules: Rule[];
+  reassignable: boolean;
+  source: string;
 }
 
 // Battle Types
