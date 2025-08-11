@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gray-50 text-gray-900;
+    @apply min-h-screen;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors;
+  }
+  
+  .btn-secondary {
+    @apply bg-gray-100 text-gray-900 px-4 py-2 rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors;
+  }
+  
+  .card {
+    @apply bg-white rounded-lg shadow-sm border border-gray-200 p-6;
+  }
+  
+  .input-field {
+    @apply w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500;
+  }
+  
+  .unit-card {
+    @apply bg-white border border-gray-200 rounded-lg p-4 shadow-sm;
+  }
+  
+  .unit-status-normal {
+    @apply border-l-4 border-green-500;
+  }
+  
+  .unit-status-shaken {
+    @apply border-l-4 border-yellow-500;
+  }
+  
+  .unit-status-routed {
+    @apply border-l-4 border-red-500;
+  }
+  
+  .health-bar {
+    @apply w-full bg-gray-200 rounded-full h-3;
+  }
+  
+  .health-bar-fill {
+    @apply h-3 bg-green-500 rounded-full transition-all duration-300;
+  }
+  
+  .health-bar-damaged {
+    @apply bg-yellow-500;
+  }
+  
+  .health-bar-critical {
+    @apply bg-red-500;
+  }
+}

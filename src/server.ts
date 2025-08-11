@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
+import path from 'path';
 import { Server } from 'http';
 import { db } from './database/db';
 import { ArmyProcessor } from './services/armyProcessor';
@@ -140,12 +141,15 @@ app.get('/health', (_req: Request, res: Response<HealthResponse>) => {
   });
 });
 
-app.get('/', (_req: Request, res: Response<ApiInfoResponse>) => {
-  res.json({ 
-    message: 'BattleSync v2 API',
-    version: '2.10.0'
+// API Root endpoint (only in non-production mode)
+if (process.env.NODE_ENV !== 'production') {
+  app.get('/', (_req: Request, res: Response<ApiInfoResponse>) => {
+    res.json({ 
+      message: 'BattleSync v2 API',
+      version: '2.10.0'
+    });
   });
-});
+}
 
 app.post('/api/armies/import', async (req: Request<{}, ImportArmyResponse, ImportArmyRequest>, res: Response<ImportArmyResponse>) => {
   try {
@@ -1070,6 +1074,17 @@ async function storeArmyInDatabase(processedArmy: ProcessedArmy, armyForgeData: 
     console.error('Error storing army in database:', error);
     throw error;
   }
+}
+
+// Serve static React build files in production
+if (process.env.NODE_ENV === 'production') {
+  // Serve static files from frontend build
+  app.use(express.static(path.join(__dirname, '../frontend/dist')));
+  
+  // Handle client-side routing - send all non-API requests to React
+  app.get(/^(?!\/api|\/health).*/, (req: Request, res: Response) => {
+    res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+  });
 }
 
 // Initialize database and start server

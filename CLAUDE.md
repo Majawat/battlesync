@@ -15,7 +15,7 @@ BattleSync v2 is a clean rewrite of an OPR (One Page Rules) battle tracker appli
 
 ## Current State
 
-TypeScript backend with Docker containerization, army import system, SQLite storage, and comprehensive battle tracking implemented. Express server with health endpoints, army import/retrieval API, complete battle management system, unit health/state tracking, and comprehensive test suite. Full Docker development/production setup. ArmyProcessor handles complex OPR unit merging (Combined/Joined units) with campaign XP cost calculations and model-specific upgrade assignments. Battle system supports unit state tracking with health, fatigue, spell tokens, activation status, and all OPR battle mechanics. Validation errors from ArmyForge are stored separately from army descriptions. All code uses strict TypeScript for type safety.
+Complete full-stack application with TypeScript backend + React frontend. Express server with SQLite storage serves React UI in production mode (single port deployment). Comprehensive army import system, battle management, and unit state tracking. ArmyProcessor handles complex OPR unit merging (Combined/Joined units) with campaign XP cost calculations and model-specific upgrade assignments. Battle system supports unit state tracking with health, fatigue, spell tokens, activation status, and all OPR battle mechanics. React frontend provides mobile-first UI with TailwindCSS for army management, battle creation, and unit visualization. Production deployment serves both frontend and API from single port (4019). All code uses strict TypeScript for type safety.
 
 ## Tech Stack
 
