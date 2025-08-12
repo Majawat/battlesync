@@ -32,10 +32,10 @@ export default function ArmyListPage() {
     return (
       <div className="space-y-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-300 mb-4">My Armies</h1>
+          <h1 className="text-3xl font-bold text-battle-text-primary-light dark:text-battle-text-primary-dark mb-4">My Armies</h1>
         </div>
         <div className="card text-center">
-          <p className="text-gray-500">Loading armies...</p>
+          <p className="text-battle-text-muted-light dark:text-battle-text-muted-dark">Loading armies...</p>
         </div>
       </div>
     );
@@ -45,10 +45,10 @@ export default function ArmyListPage() {
     return (
       <div className="space-y-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-300 mb-4">My Armies</h1>
+          <h1 className="text-3xl font-bold text-battle-text-primary-light dark:text-battle-text-primary-dark mb-4">My Armies</h1>
         </div>
         <div className="card">
-          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+          <div className="bg-battle-status-routed/10 border border-battle-status-routed/20 text-battle-status-routed px-4 py-3 rounded-lg">
             <p className="font-medium">Error Loading Armies</p>
             <p className="text-sm">{error}</p>
           </div>
@@ -62,7 +62,7 @@ export default function ArmyListPage() {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-300 mb-2">My Armies</h1>
+          <h1 className="text-3xl font-bold text-battle-text-primary-light dark:text-battle-text-primary-dark mb-2">My Armies</h1>
           <p className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark">
             {armies.length} {armies.length === 1 ? 'army' : 'armies'} imported
           </p>
@@ -76,7 +76,7 @@ export default function ArmyListPage() {
       {armies.length === 0 ? (
         <div className="card text-center">
           <div className="py-12">
-            <p className="text-xl text-gray-500 mb-4">No armies imported yet</p>
+            <p className="text-xl text-battle-text-muted-light dark:text-battle-text-muted-dark mb-4">No armies imported yet</p>
             <p className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark mb-6">
               Import your first army from ArmyForge to get started with battle tracking.
             </p>
@@ -92,7 +92,7 @@ export default function ArmyListPage() {
               <div className="space-y-4">
                 {/* Army Header */}
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-300 mb-1">
+                  <h3 className="text-lg font-semibold text-battle-text-primary-light dark:text-battle-text-primary-dark mb-1">
                     {army.name}
                   </h3>
                   {army.description && (

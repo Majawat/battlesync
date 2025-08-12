@@ -31,10 +31,10 @@ export default function HomePage() {
     <div className="space-y-8">
       {/* Header */}
       <div className="text-center">
-        <h1 className="text-4xl font-bold text-gray-300 mb-4">
+        <h1 className="text-4xl font-bold text-battle-text-primary-light dark:text-battle-text-primary-dark mb-4">
           Welcome to BattleSync
         </h1>
-        <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+        <p className="text-xl text-battle-text-secondary-light dark:text-battle-text-secondary-dark max-w-3xl mx-auto">
           Simple OPR battle tracker built for mobile-first gaming. 
           Import armies from ArmyForge and track unit health during battles.
         </p>
@@ -44,19 +44,19 @@ export default function HomePage() {
       <div className="card text-center">
         <h2 className="text-lg font-semibold mb-4">Server Status</h2>
         {loading ? (
-          <p className="text-gray-500">Checking server...</p>
+          <p className="text-battle-text-muted-light dark:text-battle-text-muted-dark">Checking server...</p>
         ) : serverHealth ? (
           <div className="space-y-2">
-            <p className="text-green-600 font-medium">✅ Server Online</p>
-            <p className="text-sm text-gray-600">
+            <p className="text-battle-status-normal font-medium">✅ Server Online</p>
+            <p className="text-sm text-battle-text-secondary-light dark:text-battle-text-secondary-dark">
               Version: {serverHealth.version}
             </p>
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-battle-text-muted-light dark:text-battle-text-muted-dark">
               Last checked: {new Date(serverHealth.timestamp).toLocaleString()}
             </p>
           </div>
         ) : (
-          <p className="text-red-600 font-medium">❌ Server Offline</p>
+          <p className="text-battle-status-routed font-medium">❌ Server Offline</p>
         )}
       </div>
 
@@ -64,7 +64,7 @@ export default function HomePage() {
       <div className="grid md:grid-cols-2 gap-6">
         <div className="card">
           <h3 className="text-lg font-semibold mb-3">Import Army</h3>
-          <p className="text-gray-600 mb-4">
+          <p className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark mb-4">
             Import your army from ArmyForge using a share link or ID.
           </p>
           <Link to="/armies/import" className="btn-primary">
@@ -74,7 +74,7 @@ export default function HomePage() {
 
         <div className="card">
           <h3 className="text-lg font-semibold mb-3">Start Battle</h3>
-          <p className="text-gray-600 mb-4">
+          <p className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark mb-4">
             Create a new battle session and track unit health.
           </p>
           <Link to="/battles/new" className="btn-primary">
@@ -87,7 +87,7 @@ export default function HomePage() {
       <div className="grid md:grid-cols-2 gap-6">
         <div className="card">
           <h3 className="text-lg font-semibold mb-3">My Armies</h3>
-          <p className="text-gray-600 mb-4">
+          <p className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark mb-4">
             View and manage your imported armies.
           </p>
           <Link to="/armies" className="btn-secondary">
@@ -97,7 +97,7 @@ export default function HomePage() {
 
         <div className="card">
           <h3 className="text-lg font-semibold mb-3">Recent Battles</h3>
-          <p className="text-gray-600 mb-4">
+          <p className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark mb-4">
             View your battle history and continue active battles.
           </p>
           <Link to="/battles" className="btn-secondary">
@@ -108,11 +108,11 @@ export default function HomePage() {
 
       {/* Features */}
       <div className="card">
-        <h3 className="text-lg font-semibold mb-4">What's New in v2.10.0</h3>
+        <h3 className="text-lg font-semibold mb-4">What's New in v2.11.0</h3>
         <div className="grid md:grid-cols-3 gap-4 text-sm">
           <div className="space-y-2">
-            <h4 className="font-medium text-gray-900">Battle Tracking</h4>
-            <ul className="text-gray-600 space-y-1">
+            <h4 className="font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark">Battle Tracking</h4>
+            <ul className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark space-y-1">
               <li>• Unit health management</li>
               <li>• Status effects tracking</li>
               <li>• Fatigue from melee</li>
@@ -121,8 +121,8 @@ export default function HomePage() {
           </div>
           
           <div className="space-y-2">
-            <h4 className="font-medium text-gray-900">OPR Integration</h4>
-            <ul className="text-gray-600 space-y-1">
+            <h4 className="font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark">OPR Integration</h4>
+            <ul className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark space-y-1">
               <li>• ArmyForge import</li>
               <li>• Combined unit merging</li>
               <li>• Campaign XP costs</li>
@@ -131,8 +131,8 @@ export default function HomePage() {
           </div>
 
           <div className="space-y-2">
-            <h4 className="font-medium text-gray-900">Mobile Ready</h4>
-            <ul className="text-gray-600 space-y-1">
+            <h4 className="font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark">Mobile Ready</h4>
+            <ul className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark space-y-1">
               <li>• Touch-friendly interface</li>
               <li>• Responsive design</li>
               <li>• Offline capability</li>

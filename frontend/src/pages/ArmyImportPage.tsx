@@ -56,10 +56,10 @@ export default function ArmyImportPage() {
     <div className="max-w-2xl mx-auto space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-200 mb-4">
+        <h1 className="text-3xl font-bold text-battle-text-primary-light dark:text-battle-text-primary-dark mb-4">
           Import Army from ArmyForge
         </h1>
-        <p className="text-gray-600">
+        <p className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark">
           Import your army list from ArmyForge using either a share URL or direct army ID.
         </p>
       </div>
@@ -67,7 +67,7 @@ export default function ArmyImportPage() {
       {/* Import Form */}
       <form onSubmit={handleSubmit} className="card space-y-6">
         <div>
-          <label htmlFor="armyForgeId" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="armyForgeId" className="block text-sm font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark mb-2">
             ArmyForge URL or ID
           </label>
           <input
@@ -80,7 +80,7 @@ export default function ArmyImportPage() {
             required
             disabled={loading}
           />
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="text-xs text-battle-text-muted-light dark:text-battle-text-muted-dark mt-1">
             Paste the full share URL or just the army ID
           </p>
         </div>
@@ -95,14 +95,14 @@ export default function ArmyImportPage() {
 
         {/* Status Messages */}
         {error && (
-          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+          <div className="bg-battle-status-routed/10 border border-battle-status-routed/20 text-battle-status-routed px-4 py-3 rounded-lg">
             <p className="font-medium">Import Failed</p>
             <p className="text-sm">{error}</p>
           </div>
         )}
 
         {success && (
-          <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
+          <div className="bg-battle-status-normal/10 border border-battle-status-normal/20 text-battle-status-normal px-4 py-3 rounded-lg">
             <p className="font-medium">Import Successful!</p>
             <p className="text-sm">{success}</p>
             <p className="text-xs mt-1">Redirecting to armies page...</p>
@@ -113,19 +113,19 @@ export default function ArmyImportPage() {
       {/* Help Section */}
       <div className="card">
         <h3 className="text-lg font-semibold mb-3">How to Import</h3>
-        <div className="space-y-4 text-sm text-gray-600">
+        <div className="space-y-4 text-sm text-battle-text-secondary-light dark:text-battle-text-secondary-dark">
           <div>
-            <h4 className="font-medium text-gray-300 mb-1">1. Create Army in ArmyForge</h4>
-            <p>Visit <a href="https://army-forge.onepagerules.com" target="_blank" rel="noopener noreferrer" className="text-red-600 hover:underline">army-forge.onepagerules.com</a> and build your army list.</p>
+            <h4 className="font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark mb-1">1. Create Army in ArmyForge</h4>
+            <p>Visit <a href="https://army-forge.onepagerules.com" target="_blank" rel="noopener noreferrer" className="text-battle-accent-primary-light dark:text-battle-accent-primary-dark hover:underline">army-forge.onepagerules.com</a> and build your army list.</p>
           </div>
           
           <div>
-            <h4 className="font-medium text-gray-300 mb-1">2. Share Your Army</h4>
+            <h4 className="font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark mb-1">2. Share Your Army</h4>
             <p>Click the "Share" button in ArmyForge to get a shareable URL.</p>
           </div>
           
           <div>
-            <h4 className="font-medium text-gray-300 mb-1">3. Import to BattleSync</h4>
+            <h4 className="font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark mb-1">3. Import to BattleSync</h4>
             <p>Paste the full URL or just the ID portion into the field above.</p>
           </div>
         </div>
@@ -135,10 +135,10 @@ export default function ArmyImportPage() {
       <div className="card">
         <h3 className="text-lg font-semibold mb-3">Test with Sample Armies</h3>
         <div className="space-y-3 text-sm">
-          <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+          <div className="flex justify-between items-center p-3 bg-battle-border-light dark:bg-battle-border-dark rounded-lg">
             <div>
-              <p className="font-medium text-gray-900">Dev Test Army</p>
-              <p className="text-gray-600">Sample army for testing</p>
+              <p className="font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark">Dev Test Army</p>
+              <p className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark">Sample army for testing</p>
             </div>
             <button
               type="button"
@@ -149,10 +149,10 @@ export default function ArmyImportPage() {
             </button>
           </div>
           
-          <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+          <div className="flex justify-between items-center p-3 bg-battle-border-light dark:bg-battle-border-dark rounded-lg">
             <div>
-              <p className="font-medium text-gray-900">The Ashen Pact</p>
-              <p className="text-gray-600">Cody's actual army</p>
+              <p className="font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark">The Ashen Pact</p>
+              <p className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark">Cody's actual army</p>
             </div>
             <button
               type="button"
