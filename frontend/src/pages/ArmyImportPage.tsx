@@ -142,7 +142,7 @@ export default function ArmyImportPage() {
             </div>
             <button
               type="button"
-              onClick={() => setArmyForgeId('IJ1JM_m-jmka')}
+              onClick={() => setArmyForgeId('https://army-forge.onepagerules.com/share?id=IJ1JM_m-jmka')}
               className="btn-secondary text-xs"
             >
               Use This ID
@@ -151,12 +151,12 @@ export default function ArmyImportPage() {
           
           <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
             <div>
-              <p className="font-medium text-gray-900">Cody's Army</p>
-              <p className="text-gray-600">Example OPR army</p>
+              <p className="font-medium text-gray-900">The Ashen Pact</p>
+              <p className="text-gray-600">Cody's actual army</p>
             </div>
             <button
               type="button"
-              onClick={() => setArmyForgeId('vMzljLVC6ZGv')}
+              onClick={() => setArmyForgeId('https://army-forge.onepagerules.com/share?id=vMzljLVC6ZGv')}
               className="btn-secondary text-xs"
             >
               Use This ID
