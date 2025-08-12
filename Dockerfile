@@ -1,4 +1,4 @@
-# Multi-stage build for production deployment
+# Multi-stage build for production deployment - v2.11.0
 FROM node:20-alpine AS builder
 
 # Set working directory
