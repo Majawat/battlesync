@@ -3,7 +3,7 @@ import cors from 'cors';
 import path from 'path';
 import { Server } from 'http';
 import { db } from './database/db';
-import { ArmyProcessor } from './services/armyProcessor';
+import { NewArmyProcessor } from './services/newArmyProcessor';
 import { 
   ProcessedArmy, 
   ProcessedRule, 
@@ -178,7 +178,7 @@ app.post('/api/armies/import', async (req: Request<{}, ImportArmyResponse, Impor
     const armyForgeData = await response.json() as ArmyForgeArmy;
     
     // Process army using our ArmyProcessor
-    const processedArmy = ArmyProcessor.processArmy(armyForgeData);
+    const processedArmy = NewArmyProcessor.processArmy(armyForgeData);
     
     // Store in database  
     const storedArmyId = await storeArmyInDatabase(processedArmy, armyForgeData);
@@ -270,6 +270,48 @@ app.get('/api/armies/:id', async (req: Request<{id: string}>, res: Response<GetA
     res.status(500).json({
       success: false,
       error: 'Internal server error while fetching army'
+    });
+  }
+});
+
+// Delete army by ID
+app.delete('/api/armies/:id', async (req: Request<{id: string}>, res: Response) => {
+  try {
+    const armyId = parseInt(req.params.id, 10);
+    
+    if (isNaN(armyId)) {
+      res.status(400).json({
+        success: false,
+        error: 'Invalid army ID'
+      });
+      return;
+    }
+
+    // Check if army exists
+    const army = await db.get('SELECT id FROM armies WHERE id = ?', [armyId]);
+    
+    if (!army) {
+      res.status(404).json({
+        success: false,
+        error: 'Army not found'
+      });
+      return;
+    }
+
+    // Delete army and related data
+    await db.run('DELETE FROM army_units WHERE army_id = ?', [armyId]);
+    await db.run('DELETE FROM armies WHERE id = ?', [armyId]);
+
+    res.json({
+      success: true,
+      message: 'Army deleted successfully'
+    });
+    
+  } catch (error) {
+    console.error('Error deleting army:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Internal server error while deleting army'
     });
   }
 });
