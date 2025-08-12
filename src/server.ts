@@ -4,6 +4,7 @@ import path from 'path';
 import { Server } from 'http';
 import { db } from './database/db';
 import { NewArmyProcessor } from './services/newArmyProcessor';
+import { VERSION } from './version';
 import { 
   ProcessedArmy, 
   ProcessedRule, 
@@ -136,7 +137,7 @@ interface StoredArmySummary {
 app.get('/health', (_req: Request, res: Response<HealthResponse>) => {
   res.json({ 
     status: 'ok', 
-    version: '2.11.1',
+    version: VERSION,
     timestamp: new Date().toISOString()
   });
 });
@@ -146,7 +147,7 @@ if (process.env.NODE_ENV !== 'production') {
   app.get('/', (_req: Request, res: Response<ApiInfoResponse>) => {
     res.json({ 
       message: 'BattleSync v2 API',
-      version: '2.11.1'
+      version: VERSION
     });
   });
 }
@@ -1136,7 +1137,7 @@ async function startServer(): Promise<Server> {
     console.log('Database initialized successfully');
     
     const server: Server = app.listen(PORT, () => {
-      console.log(`BattleSync v2 server running on port ${PORT}`);
+      console.log(`BattleSync v${VERSION} server running on port ${PORT}`);
     });
     
     return server;

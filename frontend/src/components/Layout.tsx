@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import type { ReactNode } from 'react';
 import DarkModeToggle from './DarkModeToggle';
+import { VERSION } from '../utils/version';
 
 interface LayoutProps {
   children: ReactNode;
@@ -28,7 +29,7 @@ export default function Layout({ children }: LayoutProps) {
             <div className="flex items-center">
               <Link to="/" className="flex items-center">
                 <span className="text-xl font-bold text-battle-accent-primary-light dark:text-battle-accent-primary-dark">BattleSync</span>
-                <span className="ml-2 text-sm text-battle-text-muted-light dark:text-battle-text-muted-dark">v2.11.1</span>
+                <span className="ml-2 text-sm text-battle-text-muted-light dark:text-battle-text-muted-dark">v{VERSION}</span>
               </Link>
             </div>
             

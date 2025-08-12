@@ -122,15 +122,20 @@ Previous v1.5.2 implementation is archived at git tag `v1.5.2-final-archive` and
 5. Run `npm test` to ensure all tests pass
 
 ### Phase 1.5: Comprehensive Testing (MANDATORY)
-6. **Start server using Docker** (`npm run docker:dev` for development)
+6. **Start server using Docker** (`npm run docker:dev` for development, or `docker compose build && docker compose up -d` to restart with fresh changes)
 7. **Test all basic functionality** with actual HTTP requests
 8. **Verify all endpoints work** as expected with real data
 9. **Test edge cases** and error conditions
 10. **Confirm all features work end-to-end** before proceeding
 
 ### Phase 2: Version & Documentation Updates  
-11. **Update version numbers** in package.json and code (server.ts response objects)
-12. **Update all documentation** to reflect current state:
+11. **Update version numbers** in package.json (single source) and tests/constants.ts (for validation)
+12. **Update CHANGELOG.md** with new features, changes, and fixes:
+    - Follow [Keep a Changelog](https://keepachangelog.com/) format
+    - Add entries under "Unreleased" during development
+    - Move to versioned section when releasing
+    - Use categories: Added, Changed, Deprecated, Removed, Fixed, Security
+13. **Update all documentation** to reflect current state:
    - Update CLAUDE.md with new features/endpoints
    - Update docs/api.md with new endpoints and examples
    - Update docs/features.md with completed features
@@ -190,7 +195,7 @@ Co-Authored-By: Claude <noreply@anthropic.com>
 
 ### Documentation Standards  
 - All API endpoints must be documented with request/response examples
-- Version numbers must be consistent across all files
+- Version number managed centrally in package.json (automatically used by all components)
 - Feature documentation must accurately reflect implementation status
 - Include clear examples and usage patterns
 - Remove outdated information promptly
