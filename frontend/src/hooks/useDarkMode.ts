@@ -9,7 +9,7 @@ interface UseDarkModeReturn {
 }
 
 export function useDarkMode(): UseDarkModeReturn {
-  // Check system preference first, then localStorage, default to dark
+  // Dark mode is default - check stored preference first, then system preference
   const getInitialTheme = (): boolean => {
     // Check localStorage first
     const stored = localStorage.getItem('theme') as Theme | null;

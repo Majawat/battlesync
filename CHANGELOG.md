@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - BattlePage.tsx now uses battle theme colors instead of hardcoded gray
 - ArmyDetailPage.tsx validation warnings now use battle theme shaken colors instead of amber
 - ArmyListPage.tsx badge colors now use battle theme colors consistently
+- Dark mode is now the default to prevent white flash on page load while preserving system preference support
 
 ### Added
 - CHANGELOG.md file following Keep a Changelog standard

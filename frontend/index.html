@@ -1,10 +1,22 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/logo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BattleSync</title>
+    <script>
+      // Set dark mode as default immediately to prevent flash
+      // Check stored preference first, then system preference, default to dark
+      const stored = localStorage.getItem('theme');
+      if (stored === 'light') {
+        document.documentElement.classList.remove('dark');
+      } else if (!stored && window.matchMedia && !window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        // No stored preference and system prefers light
+        document.documentElement.classList.remove('dark');
+      }
+      // Otherwise stay dark (default)
+    </script>
   </head>
   <body>
     <div id="root"></div>
