@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Complete dark mode theming implementation across all frontend pages
+- BattleListPage.tsx now uses battle theme colors instead of hardcoded gray
+- CreateBattlePage.tsx now uses battle theme colors instead of hardcoded gray  
+- BattlePage.tsx now uses battle theme colors instead of hardcoded gray
+- ArmyDetailPage.tsx validation warnings now use battle theme shaken colors instead of amber
+- ArmyListPage.tsx badge colors now use battle theme colors consistently
+
 ### Added
 - CHANGELOG.md file following Keep a Changelog standard
 - Test version constants for proper validation (tests/constants.ts)

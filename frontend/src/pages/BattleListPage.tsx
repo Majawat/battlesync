@@ -29,11 +29,11 @@ export default function BattleListPage() {
 
   const getStatusColor = (status: Battle['status']) => {
     switch (status) {
-      case 'setup': return 'bg-blue-100 text-blue-800';
-      case 'deployment': return 'bg-yellow-100 text-yellow-800';
-      case 'active': return 'bg-green-100 text-green-800';
-      case 'finished': return 'bg-gray-100 text-gray-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'setup': return 'bg-battle-accent-primary-light/10 dark:bg-battle-accent-primary-dark/10 text-battle-accent-primary-light dark:text-battle-accent-primary-dark';
+      case 'deployment': return 'bg-battle-status-shaken/10 text-battle-status-shaken';
+      case 'active': return 'bg-battle-status-normal/10 text-battle-status-normal';
+      case 'finished': return 'bg-battle-text-muted-light/10 dark:bg-battle-text-muted-dark/10 text-battle-text-muted-light dark:text-battle-text-muted-dark';
+      default: return 'bg-battle-text-muted-light/10 dark:bg-battle-text-muted-dark/10 text-battle-text-muted-light dark:text-battle-text-muted-dark';
     }
   };
 
@@ -41,10 +41,10 @@ export default function BattleListPage() {
     return (
       <div className="space-y-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">Battle History</h1>
+          <h1 className="text-3xl font-bold text-battle-text-primary-light dark:text-battle-text-primary-dark mb-4">Battle History</h1>
         </div>
         <div className="card text-center">
-          <p className="text-gray-500">Loading battles...</p>
+          <p className="text-battle-text-muted-light dark:text-battle-text-muted-dark">Loading battles...</p>
         </div>
       </div>
     );
@@ -54,10 +54,10 @@ export default function BattleListPage() {
     return (
       <div className="space-y-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">Battle History</h1>
+          <h1 className="text-3xl font-bold text-battle-text-primary-light dark:text-battle-text-primary-dark mb-4">Battle History</h1>
         </div>
         <div className="card">
-          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+          <div className="bg-battle-status-routed/10 border border-battle-status-routed/20 text-battle-status-routed px-4 py-3 rounded-lg">
             <p className="font-medium">Error Loading Battles</p>
             <p className="text-sm">{error}</p>
           </div>
@@ -71,8 +71,8 @@ export default function BattleListPage() {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Battle History</h1>
-          <p className="text-gray-600">
+          <h1 className="text-3xl font-bold text-battle-text-primary-light dark:text-battle-text-primary-dark mb-2">Battle History</h1>
+          <p className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark">
             {battles.length} {battles.length === 1 ? 'battle' : 'battles'} created
           </p>
         </div>
@@ -85,8 +85,8 @@ export default function BattleListPage() {
       {battles.length === 0 ? (
         <div className="card text-center">
           <div className="py-12">
-            <p className="text-xl text-gray-500 mb-4">No battles created yet</p>
-            <p className="text-gray-600 mb-6">
+            <p className="text-xl text-battle-text-muted-light dark:text-battle-text-muted-dark mb-4">No battles created yet</p>
+            <p className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark mb-6">
               Create your first battle to start tracking unit health and battle progress.
             </p>
             <Link to="/battles/new" className="btn-primary">
@@ -102,7 +102,7 @@ export default function BattleListPage() {
                 {/* Battle Info */}
                 <div className="flex-1 space-y-2">
                   <div className="flex items-center space-x-3">
-                    <h3 className="text-lg font-semibold text-gray-900">
+                    <h3 className="text-lg font-semibold text-battle-text-primary-light dark:text-battle-text-primary-dark">
                       {battle.name}
                     </h3>
                     <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(battle.status)}`}>
@@ -111,12 +111,12 @@ export default function BattleListPage() {
                   </div>
 
                   {battle.description && (
-                    <p className="text-gray-600 text-sm">
+                    <p className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark text-sm">
                       {battle.description}
                     </p>
                   )}
 
-                  <div className="flex items-center space-x-4 text-sm text-gray-500">
+                  <div className="flex items-center space-x-4 text-sm text-battle-text-muted-light dark:text-battle-text-muted-dark">
                     <span>Mission: {battle.mission_type}</span>
                     <span>•</span>
                     <span>Points: {battle.points_limit}</span>
@@ -133,12 +133,12 @@ export default function BattleListPage() {
                   {/* Participants */}
                   {battle.participants && battle.participants.length > 0 && (
                     <div className="flex items-center space-x-2">
-                      <span className="text-sm text-gray-700 font-medium">Players:</span>
+                      <span className="text-sm text-battle-text-primary-light dark:text-battle-text-primary-dark font-medium">Players:</span>
                       <div className="flex space-x-2">
                         {battle.participants.map((participant) => (
                           <span 
                             key={participant.id}
-                            className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-gray-100 text-gray-700"
+                            className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-battle-surface-light dark:bg-battle-surface-dark text-battle-text-secondary-light dark:text-battle-text-secondary-dark border border-battle-border-light dark:border-battle-border-dark"
                           >
                             {participant.player_name}
                             {participant.doctrine && ` (${participant.doctrine})`}
@@ -151,7 +151,7 @@ export default function BattleListPage() {
 
                 {/* Battle Actions */}
                 <div className="flex items-center space-x-3">
-                  <div className="text-right text-xs text-gray-500">
+                  <div className="text-right text-xs text-battle-text-muted-light dark:text-battle-text-muted-dark">
                     <p>Created: {new Date(battle.created_at).toLocaleDateString()}</p>
                     <p>Updated: {new Date(battle.updated_at).toLocaleDateString()}</p>
                   </div>

@@ -126,11 +126,11 @@ export default function ArmyListPage() {
 
                 {/* Army System */}
                 <div className="flex items-center justify-between">
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-battle-accent-primary-light/10 dark:bg-battle-accent-primary-dark/10 text-battle-accent-primary-light dark:text-battle-accent-primary-dark">
                     {formatGameSystem(army.game_system)}
                   </span>
                   {army.campaign_mode && (
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-battle-text-muted-light/10 dark:bg-battle-text-muted-dark/10 text-battle-text-muted-light dark:text-battle-text-muted-dark">
                       Campaign
                     </span>
                   )}
@@ -138,7 +138,7 @@ export default function ArmyListPage() {
 
                 {/* Validation Warnings */}
                 {army.validation_errors && Array.isArray(army.validation_errors) && army.validation_errors.length > 0 && (
-                  <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700/50 text-amber-800 dark:text-amber-300 px-4 py-3 rounded-lg">
+                  <div className="bg-battle-status-shaken/10 border border-battle-status-shaken/20 text-battle-status-shaken px-4 py-3 rounded-lg">
                     <p className="font-medium mb-2 text-sm">Validation Issues</p>
                     <ul className="text-xs space-y-1 opacity-90">
                       {army.validation_errors.map((error, index) => (
@@ -165,7 +165,7 @@ export default function ArmyListPage() {
                 </div>
 
                 {/* Army ID for debugging */}
-                <div className="text-xs text-gray-400 border-t pt-2">
+                <div className="text-xs text-battle-text-muted-light dark:text-battle-text-muted-dark border-t border-battle-border-light dark:border-battle-border-dark pt-2">
                   ID: {army.id} | ArmyForge: {army.armyforge_id}
                 </div>
               </div>

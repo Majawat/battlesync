@@ -77,10 +77,10 @@ export default function CreateBattlePage() {
     <div className="max-w-2xl mx-auto space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-4">
+        <h1 className="text-3xl font-bold text-battle-text-primary-light dark:text-battle-text-primary-dark mb-4">
           Create New Battle
         </h1>
-        <p className="text-gray-600">
+        <p className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark">
           Set up a new battle session to track unit health and battle progress.
         </p>
       </div>
@@ -89,7 +89,7 @@ export default function CreateBattlePage() {
       <form onSubmit={handleSubmit} className="card space-y-6">
         {/* Battle Name */}
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="name" className="block text-sm font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark mb-2">
             Battle Name *
           </label>
           <input
@@ -107,7 +107,7 @@ export default function CreateBattlePage() {
 
         {/* Battle Description */}
         <div>
-          <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="description" className="block text-sm font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark mb-2">
             Description
           </label>
           <textarea
@@ -124,7 +124,7 @@ export default function CreateBattlePage() {
 
         {/* Mission Type */}
         <div>
-          <label htmlFor="mission_type" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="mission_type" className="block text-sm font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark mb-2">
             Mission Type
           </label>
           <select
@@ -146,7 +146,7 @@ export default function CreateBattlePage() {
 
         {/* Points Limit */}
         <div>
-          <label htmlFor="points_limit" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="points_limit" className="block text-sm font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark mb-2">
             Points Limit
           </label>
           <input
@@ -185,17 +185,17 @@ export default function CreateBattlePage() {
               name="has_command_points"
               checked={battleData.has_command_points}
               onChange={handleInputChange}
-              className="rounded border-gray-300 text-red-600 focus:ring-red-500"
+              className="rounded border-battle-border-light dark:border-battle-border-dark text-battle-accent-primary-light dark:text-battle-accent-primary-dark focus:ring-battle-accent-primary-light dark:focus:ring-battle-accent-primary-dark"
               disabled={loading}
             />
-            <label htmlFor="has_command_points" className="ml-2 text-sm font-medium text-gray-700">
+            <label htmlFor="has_command_points" className="ml-2 text-sm font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark">
               Use Command Points
             </label>
           </div>
 
           {battleData.has_command_points && (
             <div>
-              <label htmlFor="command_point_mode" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="command_point_mode" className="block text-sm font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark mb-2">
                 Command Point Mode
               </label>
               <select
@@ -224,7 +224,7 @@ export default function CreateBattlePage() {
 
         {/* Error Message */}
         {error && (
-          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+          <div className="bg-battle-status-routed/10 border border-battle-status-routed/20 text-battle-status-routed px-4 py-3 rounded-lg">
             <p className="font-medium">Creation Failed</p>
             <p className="text-sm">{error}</p>
           </div>
@@ -235,11 +235,11 @@ export default function CreateBattlePage() {
       <div className="card">
         <h3 className="text-lg font-semibold mb-3">Available Armies</h3>
         {loadingArmies ? (
-          <p className="text-gray-500">Loading armies...</p>
+          <p className="text-battle-text-muted-light dark:text-battle-text-muted-dark">Loading armies...</p>
         ) : armies.length === 0 ? (
           <div className="text-center py-6">
-            <p className="text-gray-600 mb-4">No armies available</p>
-            <p className="text-sm text-gray-500 mb-4">
+            <p className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark mb-4">No armies available</p>
+            <p className="text-sm text-battle-text-muted-light dark:text-battle-text-muted-dark mb-4">
               You'll need to import armies before you can add participants to battles.
             </p>
             <a href="/armies/import" className="btn-secondary">
@@ -248,14 +248,14 @@ export default function CreateBattlePage() {
           </div>
         ) : (
           <div className="space-y-2">
-            <p className="text-sm text-gray-600 mb-3">
+            <p className="text-sm text-battle-text-secondary-light dark:text-battle-text-secondary-dark mb-3">
               You have {armies.length} armies available to add as battle participants.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
               {armies.map((army) => (
-                <div key={army.id} className="flex justify-between items-center p-2 bg-gray-500rounded">
-                  <span className="font-medium">{army.name}</span>
-                  <span className="text-gray-600">{army.list_points}pts</span>
+                <div key={army.id} className="flex justify-between items-center p-2 bg-battle-surface-light dark:bg-battle-surface-dark rounded border border-battle-border-light dark:border-battle-border-dark">
+                  <span className="font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark">{army.name}</span>
+                  <span className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark">{army.list_points}pts</span>
                 </div>
               ))}
             </div>

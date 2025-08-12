@@ -44,7 +44,7 @@ export default function BattlePage() {
     return (
       <div className="space-y-8">
         <div className="card text-center">
-          <p className="text-gray-500">Loading battle...</p>
+          <p className="text-battle-text-muted-light dark:text-battle-text-muted-dark">Loading battle...</p>
         </div>
       </div>
     );
@@ -54,7 +54,7 @@ export default function BattlePage() {
     return (
       <div className="space-y-8">
         <div className="card">
-          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+          <div className="bg-battle-status-routed/10 border border-battle-status-routed/20 text-battle-status-routed px-4 py-3 rounded-lg">
             <p className="font-medium">Error Loading Battle</p>
             <p className="text-sm">{error || 'Battle not found'}</p>
           </div>
@@ -65,11 +65,11 @@ export default function BattlePage() {
 
   const getStatusColor = (status: Battle['status']) => {
     switch (status) {
-      case 'setup': return 'bg-blue-100 text-blue-800';
-      case 'deployment': return 'bg-yellow-100 text-yellow-800';
-      case 'active': return 'bg-green-100 text-green-800';
-      case 'finished': return 'bg-gray-100 text-gray-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'setup': return 'bg-battle-accent-primary-light/10 dark:bg-battle-accent-primary-dark/10 text-battle-accent-primary-light dark:text-battle-accent-primary-dark';
+      case 'deployment': return 'bg-battle-status-shaken/10 text-battle-status-shaken';
+      case 'active': return 'bg-battle-status-normal/10 text-battle-status-normal';
+      case 'finished': return 'bg-battle-text-muted-light/10 dark:bg-battle-text-muted-dark/10 text-battle-text-muted-light dark:text-battle-text-muted-dark';
+      default: return 'bg-battle-text-muted-light/10 dark:bg-battle-text-muted-dark/10 text-battle-text-muted-light dark:text-battle-text-muted-dark';
     }
   };
 
@@ -80,7 +80,7 @@ export default function BattlePage() {
         <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start space-y-4 lg:space-y-0">
           <div className="flex-1">
             <div className="flex items-center space-x-3 mb-2">
-              <h1 className="text-2xl font-bold text-gray-900">
+              <h1 className="text-2xl font-bold text-battle-text-primary-light dark:text-battle-text-primary-dark">
                 {battle.name}
               </h1>
               <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(battle.status)}`}>
@@ -89,12 +89,12 @@ export default function BattlePage() {
             </div>
 
             {battle.description && (
-              <p className="text-gray-600 mb-3">
+              <p className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark mb-3">
                 {battle.description}
               </p>
             )}
 
-            <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600">
+            <div className="flex flex-wrap items-center gap-4 text-sm text-battle-text-muted-light dark:text-battle-text-muted-dark">
               <span>Mission: {battle.mission_type}</span>
               <span>•</span>
               <span>Points: {battle.points_limit}</span>
@@ -109,7 +109,7 @@ export default function BattlePage() {
             </div>
           </div>
 
-          <div className="text-right text-xs text-gray-500">
+          <div className="text-right text-xs text-battle-text-muted-light dark:text-battle-text-muted-dark">
             <p>Created: {new Date(battle.created_at).toLocaleDateString()}</p>
             <p>Updated: {new Date(battle.updated_at).toLocaleDateString()}</p>
           </div>
@@ -130,7 +130,7 @@ export default function BattlePage() {
       {battle.status === 'deployment' || battle.status === 'active' ? (
         <div className="card">
           <h2 className="text-lg font-semibold mb-4">Battle in Progress</h2>
-          <p className="text-gray-600">
+          <p className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark">
             Battle tracking interface coming soon. Use the API endpoints to manage unit states for now.
           </p>
         </div>
@@ -149,14 +149,14 @@ function BattleSetupPhase({ battle }: { battle: Battle }) {
         {battle.participants && battle.participants.length > 0 ? (
           <div className="space-y-3">
             {battle.participants.map((participant) => (
-              <div key={participant.id} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+              <div key={participant.id} className="flex justify-between items-center p-3 bg-battle-surface-light dark:bg-battle-surface-dark rounded-lg border border-battle-border-light dark:border-battle-border-dark">
                 <div>
-                  <span className="font-medium">{participant.player_name}</span>
+                  <span className="font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark">{participant.player_name}</span>
                   {participant.doctrine && (
-                    <span className="text-gray-600 ml-2">({participant.doctrine})</span>
+                    <span className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark ml-2">({participant.doctrine})</span>
                   )}
                 </div>
-                <div className="text-sm text-gray-600">
+                <div className="text-sm text-battle-text-secondary-light dark:text-battle-text-secondary-dark">
                   Army ID: {participant.army_id}
                 </div>
               </div>
@@ -164,8 +164,8 @@ function BattleSetupPhase({ battle }: { battle: Battle }) {
           </div>
         ) : (
           <div className="text-center py-6">
-            <p className="text-gray-600 mb-4">No participants added yet</p>
-            <p className="text-sm text-gray-500">
+            <p className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark mb-4">No participants added yet</p>
+            <p className="text-sm text-battle-text-muted-light dark:text-battle-text-muted-dark">
               Add armies as battle participants to start the battle.
             </p>
           </div>
@@ -176,12 +176,12 @@ function BattleSetupPhase({ battle }: { battle: Battle }) {
       <div className="card">
         <h2 className="text-lg font-semibold mb-4">Battle Setup</h2>
         <div className="space-y-4">
-          <p className="text-gray-600 text-sm">
+          <p className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark text-sm">
             Battle setup interface coming soon. Current participants: {battle.participants?.length || 0}
           </p>
           
           {battle.participants && battle.participants.length >= 2 && (
-            <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
+            <div className="bg-battle-status-normal/10 border border-battle-status-normal/20 text-battle-status-normal px-4 py-3 rounded-lg">
               <p className="font-medium">Ready to Start!</p>
               <p className="text-sm">This battle has enough participants and can be started.</p>
             </div>
@@ -224,15 +224,15 @@ function UnitStatesDisplay({ unitStates }: { unitStates: UnitBattleState[] }) {
             <div key={unitState.id} className={`unit-card ${getStatusClass(unitState.status)}`}>
               <div className="flex justify-between items-start mb-2">
                 <div>
-                  <h4 className="font-medium text-gray-900">
+                  <h4 className="font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark">
                     Unit {unitState.unit_path} 
-                    <span className="text-sm text-gray-600 ml-2">(Army {unitState.army_id})</span>
+                    <span className="text-sm text-battle-text-secondary-light dark:text-battle-text-secondary-dark ml-2">(Army {unitState.army_id})</span>
                   </h4>
-                  <div className="flex items-center space-x-4 text-sm text-gray-600 mt-1">
+                  <div className="flex items-center space-x-4 text-sm text-battle-text-secondary-light dark:text-battle-text-secondary-dark mt-1">
                     <span>Status: {unitState.status}</span>
-                    {unitState.is_fatigued && <span className="text-yellow-600">Fatigued</span>}
+                    {unitState.is_fatigued && <span className="text-battle-status-shaken">Fatigued</span>}
                     {unitState.spell_tokens > 0 && <span>Tokens: {unitState.spell_tokens}</span>}
-                    {unitState.activated_this_round && <span className="text-blue-600">Activated</span>}
+                    {unitState.activated_this_round && <span className="text-battle-accent-primary-light dark:text-battle-accent-primary-dark">Activated</span>}
                   </div>
                 </div>
                 <div className="text-right text-sm">
@@ -251,7 +251,7 @@ function UnitStatesDisplay({ unitStates }: { unitStates: UnitBattleState[] }) {
               </div>
 
               {/* Additional Info */}
-              <div className="mt-2 flex justify-between items-center text-xs text-gray-500">
+              <div className="mt-2 flex justify-between items-center text-xs text-battle-text-muted-light dark:text-battle-text-muted-dark">
                 <div className="flex space-x-3">
                   <span>Deploy: {unitState.deployment_status}</span>
                   {unitState.current_action && <span>Action: {unitState.current_action}</span>}

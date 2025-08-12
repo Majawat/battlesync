@@ -108,7 +108,7 @@ export default function ArmyDetailPage() {
 
       {/* Validation Warnings */}
       {army.validation_errors && Array.isArray(army.validation_errors) && army.validation_errors.length > 0 && (
-        <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700/50 text-amber-800 dark:text-amber-300 px-4 py-3 rounded-lg">
+        <div className="bg-battle-status-shaken/10 border border-battle-status-shaken/20 text-battle-status-shaken px-4 py-3 rounded-lg">
           <p className="font-medium mb-2 text-sm">Validation Issues</p>
           <ul className="text-xs space-y-1 opacity-90">
             {army.validation_errors.map((error, index) => (
