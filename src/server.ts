@@ -28,6 +28,18 @@ const PORT = process.env.PORT || 4019;
 app.use(cors());
 app.use(express.json());
 
+// Helper function to get base URL from request or environment
+function getBaseUrl(req: Request): string {
+  if (process.env.BASE_URL) {
+    return process.env.BASE_URL;
+  }
+  
+  // Use request host for dynamic base URL
+  const protocol = req.get('x-forwarded-proto') || req.protocol || 'http';
+  const host = req.get('host') || `localhost:${PORT}`;
+  return `${protocol}://${host}`;
+}
+
 interface HealthResponse {
   status: string;
   version: string;
@@ -959,7 +971,7 @@ const upload = multer({
 // BattleAura Firmware Endpoints
 
 // Get latest firmware version
-app.get('/api/battleaura/firmware/latest', async (_req: Request, res: Response<GetLatestFirmwareResponse>) => {
+app.get('/api/battleaura/firmware/latest', async (req: Request, res: Response<GetLatestFirmwareResponse>) => {
   try {
     const firmware = await db.get(`
       SELECT version, filename, changelog, file_size, uploaded_at 
@@ -979,7 +991,7 @@ app.get('/api/battleaura/firmware/latest', async (_req: Request, res: Response<G
       return;
     }
 
-    const baseUrl = process.env.BASE_URL || `http://localhost:${PORT}`;
+    const baseUrl = getBaseUrl(req);
     
     res.json({
       version: firmware.version,
@@ -1070,7 +1082,7 @@ app.post('/api/firmware/upload', upload.single('file'), async (req: Request, res
       throw new Error('Failed to store firmware metadata');
     }
 
-    const baseUrl = process.env.BASE_URL || `http://localhost:${PORT}`;
+    const baseUrl = getBaseUrl(req);
     
     const firmwareInfo: FirmwareInfo = {
       version,
@@ -1101,7 +1113,7 @@ app.post('/api/firmware/upload', upload.single('file'), async (req: Request, res
 });
 
 // Get all firmware versions
-app.get('/api/battleaura/firmware', async (_req: Request, res: Response<GetAllFirmwareResponse>) => {
+app.get('/api/battleaura/firmware', async (req: Request, res: Response<GetAllFirmwareResponse>) => {
   try {
     const firmware = await db.all(`
       SELECT version, filename, changelog, file_size, uploaded_at 
@@ -1109,7 +1121,7 @@ app.get('/api/battleaura/firmware', async (_req: Request, res: Response<GetAllFi
       ORDER BY uploaded_at DESC
     `);
 
-    const baseUrl = process.env.BASE_URL || `http://localhost:${PORT}`;
+    const baseUrl = getBaseUrl(req);
     
     const firmwareList: FirmwareInfo[] = firmware.map((fw: any) => ({
       version: fw.version,
@@ -1161,7 +1173,7 @@ app.get('/api/battleaura/firmware/:version', async (req: Request<{version: strin
       return;
     }
 
-    const baseUrl = process.env.BASE_URL || `http://localhost:${PORT}`;
+    const baseUrl = getBaseUrl(req);
     
     const firmwareInfo: FirmwareInfo = {
       version: firmware.version,
@@ -1181,6 +1193,43 @@ app.get('/api/battleaura/firmware/:version', async (req: Request<{version: strin
     res.status(500).json({
       success: false,
       error: 'Internal server error while fetching firmware version'
+    });
+  }
+});
+
+// Admin endpoint to clear all firmware data (for testing/cleanup)
+app.delete('/api/firmware/admin/clear', async (req: Request, res: Response) => {
+  try {
+    // Delete all firmware files
+    const firmwareDir = path.join(__dirname, '../firmware');
+    try {
+      const files = await fs.readdir(firmwareDir);
+      for (const file of files) {
+        if (file.startsWith('battleaura-') && file.endsWith('.bin')) {
+          await fs.unlink(path.join(firmwareDir, file));
+        }
+        // Also clean up any temp files
+        if (file.startsWith('temp-') && file.endsWith('.bin')) {
+          await fs.unlink(path.join(firmwareDir, file));
+        }
+      }
+    } catch (dirError) {
+      // Directory might not exist or be empty, that's OK
+    }
+
+    // Clear database records
+    await db.run('DELETE FROM firmware');
+
+    res.json({
+      success: true,
+      message: 'All firmware data cleared successfully'
+    });
+
+  } catch (error) {
+    console.error('Error clearing firmware data:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Internal server error while clearing firmware data'
     });
   }
 });
