@@ -237,6 +237,160 @@ Add participant to battle.
 }
 ```
 
+### BattleAura Firmware Management
+
+#### `GET /api/battleaura/firmware/latest`
+Get the latest available firmware version.
+
+**Response:**
+```json
+{
+  "version": "0.16.7",
+  "download_url": "https://battlesync.me/firmware/battleaura-0.16.7.bin",
+  "changelog": "Fix artifact filename typo",
+  "released": "2025-01-15T10:30:00Z",
+  "file_size": 935568
+}
+```
+
+**Error Response (404 when no firmware exists):**
+```json
+{
+  "version": "",
+  "download_url": "",
+  "changelog": "No firmware available",
+  "released": "",
+  "file_size": 0
+}
+```
+
+#### `GET /api/battleaura/firmware`
+List all available firmware versions in reverse chronological order.
+
+**Response:**
+```json
+{
+  "success": true,
+  "firmware": [
+    {
+      "version": "0.16.7",
+      "download_url": "https://battlesync.me/firmware/battleaura-0.16.7.bin",
+      "changelog": "Fix artifact filename typo",
+      "released": "2025-01-15T10:30:00Z",
+      "file_size": 935568
+    },
+    {
+      "version": "0.16.6",
+      "download_url": "https://battlesync.me/firmware/battleaura-0.16.6.bin", 
+      "changelog": "Performance improvements",
+      "released": "2025-01-14T10:30:00Z",
+      "file_size": 934512
+    }
+  ]
+}
+```
+
+#### `GET /api/battleaura/firmware/:version`
+Get information about a specific firmware version.
+
+**Parameters:**
+- `version` (string): Semantic version (e.g., "1.2.3")
+
+**Response:**
+```json
+{
+  "success": true,
+  "firmware": {
+    "version": "0.16.6",
+    "download_url": "https://battlesync.me/firmware/battleaura-0.16.6.bin",
+    "changelog": "Performance improvements",
+    "released": "2025-01-14T10:30:00Z",
+    "file_size": 934512
+  }
+}
+```
+
+**Error Responses:**
+```json
+// 404 - Version not found
+{
+  "success": false,
+  "error": "Firmware version 1.2.3 not found"
+}
+
+// 400 - Invalid version format
+{
+  "success": false,
+  "error": "Invalid version format. Expected semantic version (e.g., 1.2.3)"
+}
+```
+
+#### `POST /api/firmware/upload` 
+Upload new firmware binary (intended for GitHub Actions CI/CD).
+
+**Content-Type:** `multipart/form-data`
+
+**Form Fields:**
+- `file` (binary): The .bin firmware file
+- `version` (string): Semantic version (e.g., "1.2.3" or "v1.2.3")
+- `changelog` (string, optional): Description of changes
+
+**Example using curl:**
+```bash
+curl -F "file=@firmware.bin" \
+     -F "version=v0.16.7" \
+     -F "changelog=Fix critical bug in LED handling" \
+     https://battlesync.me/api/firmware/upload
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "firmware": {
+    "version": "0.16.7",
+    "download_url": "https://battlesync.me/firmware/battleaura-0.16.7.bin",
+    "changelog": "Fix critical bug in LED handling", 
+    "released": "2025-01-15T10:30:00Z",
+    "file_size": 935568
+  }
+}
+```
+
+**Error Responses:**
+```json
+// 400 - No file uploaded
+{
+  "success": false,
+  "error": "No file uploaded"
+}
+
+// 400 - Missing version
+{
+  "success": false,
+  "error": "Version is required"
+}
+
+// 400 - Invalid version format
+{
+  "success": false,
+  "error": "Version must be in semantic version format (e.g., 1.2.3)"
+}
+
+// 409 - Version already exists
+{
+  "success": false,
+  "error": "Version 1.2.3 already exists"
+}
+```
+
+#### `GET /firmware/:filename`
+Download firmware binary files directly.
+
+**Response Headers:**
+- `Content-Type: application/octet-stream`
+- `Content-Disposition: attachment; filename="battleaura-1.2.3.bin"`
+
 ### Unit Battle State Tracking
 
 #### `POST /api/battles/:id/start`

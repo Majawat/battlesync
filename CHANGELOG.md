@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.12.0] - 2025-08-13
+
+### Added
+- BattleAura firmware hosting system for ESP32-C3 device updates
+- `GET /api/battleaura/firmware/latest` - Returns latest firmware version info
+- `GET /api/battleaura/firmware` - Lists all available firmware versions  
+- `GET /api/battleaura/firmware/:version` - Gets specific firmware version info
+- `POST /api/firmware/upload` - Uploads new firmware binaries (for GitHub Actions)
+- Static file serving for firmware downloads with proper MIME types
+- Firmware table in database with version tracking and metadata
+- Comprehensive test suite for all firmware endpoints (18 tests)
+- Firmware binaries stored in `/firmware/` directory (excluded from git)
+- Semantic version validation and duplicate version prevention
+- Support for changelog metadata with each firmware version
+
 ### Fixed
 - Complete dark mode theming implementation across all frontend pages
 - BattleListPage.tsx now uses battle theme colors instead of hardcoded gray

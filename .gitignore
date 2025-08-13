@@ -70,5 +70,8 @@ data/
 test_*.ts
 *.tmp
 
+# Firmware binaries (uploaded via API)
+firmware/*.bin
+
 # Claude Code
 .claude/

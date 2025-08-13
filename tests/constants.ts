@@ -2,4 +2,4 @@
  * Test constants - update when releasing new versions
  * This ensures tests validate against the expected version
  */
-export const EXPECTED_VERSION = '2.11.1';
+export const EXPECTED_VERSION = '2.12.0';

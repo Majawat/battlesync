@@ -229,6 +229,13 @@ Co-Authored-By: Claude <noreply@anthropic.com>
 - `GET /api/battles/:id/units` - Get all unit battle states for a battle
 - `PATCH /api/battles/:battleId/units/:unitStateId` - Update individual unit state (health, fatigue, tokens, etc.)
 
+### BattleAura Firmware Management
+- `GET /api/battleaura/firmware/latest` - Get latest firmware version info
+- `GET /api/battleaura/firmware` - List all available firmware versions
+- `GET /api/battleaura/firmware/:version` - Get specific firmware version info  
+- `POST /api/firmware/upload` - Upload new firmware binary (for GitHub Actions)
+- `GET /firmware/:filename` - Download firmware binary files
+
 ## Project Structure
 
 ```

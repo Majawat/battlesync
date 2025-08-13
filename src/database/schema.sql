@@ -203,6 +203,16 @@ CREATE TABLE IF NOT EXISTS battle_events (
     UNIQUE(battle_id, round_number, sequence_number)
 );
 
+-- BattleAura firmware hosting
+CREATE TABLE IF NOT EXISTS firmware (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    version TEXT UNIQUE NOT NULL,
+    filename TEXT NOT NULL,
+    changelog TEXT,
+    file_size INTEGER NOT NULL,
+    uploaded_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Indexes for performance
 CREATE INDEX IF NOT EXISTS idx_armies_armyforge_id ON armies(armyforge_id);
 CREATE INDEX IF NOT EXISTS idx_units_army_id ON units(army_id);
@@ -212,3 +222,5 @@ CREATE INDEX IF NOT EXISTS idx_battle_participants_battle_id ON battle_participa
 CREATE INDEX IF NOT EXISTS idx_unit_battle_state_battle_id ON unit_battle_state(battle_id);
 CREATE INDEX IF NOT EXISTS idx_battle_events_battle_id ON battle_events(battle_id);
 CREATE INDEX IF NOT EXISTS idx_battle_events_round_sequence ON battle_events(battle_id, round_number, sequence_number);
+CREATE INDEX IF NOT EXISTS idx_firmware_version ON firmware(version);
+CREATE INDEX IF NOT EXISTS idx_firmware_uploaded_at ON firmware(uploaded_at);

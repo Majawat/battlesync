@@ -2,6 +2,8 @@ import express, { Request, Response } from 'express';
 import cors from 'cors';
 import path from 'path';
 import { Server } from 'http';
+import multer from 'multer';
+import { promises as fs } from 'fs';
 import { db } from './database/db';
 import { NewArmyProcessor } from './services/newArmyProcessor';
 import { VERSION } from './version';
@@ -117,6 +119,40 @@ interface UpdateUnitStateResponse {
 interface GetUnitStatesResponse {
   success: boolean;
   unit_states?: UnitBattleState[];
+  error?: string;
+}
+
+interface FirmwareInfo {
+  version: string;
+  download_url: string;
+  changelog?: string;
+  released: string;
+  file_size: number;
+}
+
+interface GetLatestFirmwareResponse {
+  version: string;
+  download_url: string;
+  changelog?: string;
+  released: string;
+  file_size: number;
+}
+
+interface UploadFirmwareResponse {
+  success: boolean;
+  firmware?: FirmwareInfo;
+  error?: string;
+}
+
+interface GetAllFirmwareResponse {
+  success: boolean;
+  firmware?: FirmwareInfo[];
+  error?: string;
+}
+
+interface GetFirmwareResponse {
+  success: boolean;
+  firmware?: FirmwareInfo;
   error?: string;
 }
 
@@ -895,6 +931,260 @@ app.patch('/api/battles/:battleId/units/:unitStateId', async (req: Request<{batt
   }
 });
 
+// Configure multer for firmware uploads
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: './firmware/',
+    filename: (req, file, cb) => {
+      const version = req.body.version?.replace(/^v/, ''); // Remove 'v' prefix if present
+      if (!version) {
+        // Use a temporary filename when version is missing - we'll handle the error in the route
+        return cb(null, `temp-${Date.now()}.bin`);
+      }
+      cb(null, `battleaura-${version}.bin`);
+    }
+  }),
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype === 'application/octet-stream' || file.originalname.endsWith('.bin')) {
+      cb(null, true);
+    } else {
+      cb(new Error('Only .bin files are allowed'));
+    }
+  },
+  limits: {
+    fileSize: 10 * 1024 * 1024 // 10MB limit
+  }
+});
+
+// BattleAura Firmware Endpoints
+
+// Get latest firmware version
+app.get('/api/battleaura/firmware/latest', async (_req: Request, res: Response<GetLatestFirmwareResponse>) => {
+  try {
+    const firmware = await db.get(`
+      SELECT version, filename, changelog, file_size, uploaded_at 
+      FROM firmware 
+      ORDER BY uploaded_at DESC 
+      LIMIT 1
+    `);
+
+    if (!firmware) {
+      res.status(404).json({
+        version: '',
+        download_url: '',
+        changelog: 'No firmware available',
+        released: '',
+        file_size: 0
+      });
+      return;
+    }
+
+    const baseUrl = process.env.BASE_URL || `http://localhost:${PORT}`;
+    
+    res.json({
+      version: firmware.version,
+      download_url: `${baseUrl}/firmware/${firmware.filename}`,
+      changelog: firmware.changelog || '',
+      released: firmware.uploaded_at,
+      file_size: firmware.file_size
+    });
+
+  } catch (error) {
+    console.error('Error fetching latest firmware:', error);
+    res.status(500).json({
+      version: '',
+      download_url: '',
+      changelog: 'Error fetching firmware',
+      released: '',
+      file_size: 0
+    });
+  }
+});
+
+// Upload new firmware
+app.post('/api/firmware/upload', upload.single('file'), async (req: Request, res: Response<UploadFirmwareResponse>) => {
+  try {
+    if (!req.file) {
+      res.status(400).json({
+        success: false,
+        error: 'No file uploaded'
+      });
+      return;
+    }
+
+    const version = req.body.version?.replace(/^v/, ''); // Remove 'v' prefix if present
+    const changelog = req.body.changelog || '';
+
+    if (!version) {
+      // Clean up uploaded file
+      await fs.unlink(req.file.path).catch(() => {});
+      res.status(400).json({
+        success: false,
+        error: 'Version is required'
+      });
+      return;
+    }
+
+    // Validate semantic versioning format
+    if (!/^\d+\.\d+\.\d+$/.test(version)) {
+      await fs.unlink(req.file.path).catch(() => {});
+      res.status(400).json({
+        success: false,
+        error: 'Version must be in semantic version format (e.g., 1.2.3)'
+      });
+      return;
+    }
+
+    // Check if version already exists
+    const existingFirmware = await db.get(`
+      SELECT id FROM firmware WHERE version = ?
+    `, [version]);
+
+    if (existingFirmware) {
+      await fs.unlink(req.file.path).catch(() => {});
+      res.status(409).json({
+        success: false,
+        error: `Version ${version} already exists`
+      });
+      return;
+    }
+
+    // Rename file to proper name if it was uploaded with temp name
+    const properFilename = `battleaura-${version}.bin`;
+    if (req.file.filename !== properFilename) {
+      const oldPath = req.file.path;
+      const newPath = path.join(path.dirname(oldPath), properFilename);
+      await fs.rename(oldPath, newPath);
+      req.file.filename = properFilename;
+      req.file.path = newPath;
+    }
+
+    // Store firmware metadata in database
+    const result = await db.run(`
+      INSERT INTO firmware (version, filename, changelog, file_size)
+      VALUES (?, ?, ?, ?)
+    `, [version, req.file.filename, changelog, req.file.size]);
+
+    if (!result.lastID) {
+      await fs.unlink(req.file.path).catch(() => {});
+      throw new Error('Failed to store firmware metadata');
+    }
+
+    const baseUrl = process.env.BASE_URL || `http://localhost:${PORT}`;
+    
+    const firmwareInfo: FirmwareInfo = {
+      version,
+      download_url: `${baseUrl}/firmware/${req.file.filename}`,
+      changelog,
+      released: new Date().toISOString(),
+      file_size: req.file.size
+    };
+
+    res.status(201).json({
+      success: true,
+      firmware: firmwareInfo
+    });
+
+  } catch (error) {
+    console.error('Error uploading firmware:', error);
+    
+    // Clean up uploaded file on error
+    if (req.file) {
+      await fs.unlink(req.file.path).catch(() => {});
+    }
+    
+    res.status(500).json({
+      success: false,
+      error: 'Internal server error while uploading firmware'
+    });
+  }
+});
+
+// Get all firmware versions
+app.get('/api/battleaura/firmware', async (_req: Request, res: Response<GetAllFirmwareResponse>) => {
+  try {
+    const firmware = await db.all(`
+      SELECT version, filename, changelog, file_size, uploaded_at 
+      FROM firmware 
+      ORDER BY uploaded_at DESC
+    `);
+
+    const baseUrl = process.env.BASE_URL || `http://localhost:${PORT}`;
+    
+    const firmwareList: FirmwareInfo[] = firmware.map((fw: any) => ({
+      version: fw.version,
+      download_url: `${baseUrl}/firmware/${fw.filename}`,
+      changelog: fw.changelog || '',
+      released: fw.uploaded_at,
+      file_size: fw.file_size
+    }));
+
+    res.json({
+      success: true,
+      firmware: firmwareList
+    });
+
+  } catch (error) {
+    console.error('Error fetching firmware list:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Internal server error while fetching firmware list'
+    });
+  }
+});
+
+// Get specific firmware version
+app.get('/api/battleaura/firmware/:version', async (req: Request<{version: string}>, res: Response<GetFirmwareResponse>) => {
+  try {
+    const { version } = req.params;
+    
+    // Validate version format
+    if (!/^\d+\.\d+\.\d+$/.test(version)) {
+      res.status(400).json({
+        success: false,
+        error: 'Invalid version format. Expected semantic version (e.g., 1.2.3)'
+      });
+      return;
+    }
+
+    const firmware = await db.get(`
+      SELECT version, filename, changelog, file_size, uploaded_at 
+      FROM firmware 
+      WHERE version = ?
+    `, [version]);
+
+    if (!firmware) {
+      res.status(404).json({
+        success: false,
+        error: `Firmware version ${version} not found`
+      });
+      return;
+    }
+
+    const baseUrl = process.env.BASE_URL || `http://localhost:${PORT}`;
+    
+    const firmwareInfo: FirmwareInfo = {
+      version: firmware.version,
+      download_url: `${baseUrl}/firmware/${firmware.filename}`,
+      changelog: firmware.changelog || '',
+      released: firmware.uploaded_at,
+      file_size: firmware.file_size
+    };
+
+    res.json({
+      success: true,
+      firmware: firmwareInfo
+    });
+
+  } catch (error) {
+    console.error('Error fetching firmware version:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Internal server error while fetching firmware version'
+    });
+  }
+});
+
 // Helper function to get processed army by ID
 async function getProcessedArmyById(armyId: number): Promise<ProcessedArmy | null> {
   const armyRow = await db.get(`
@@ -1119,13 +1409,23 @@ async function storeArmyInDatabase(processedArmy: ProcessedArmy, armyForgeData: 
   }
 }
 
+// Serve firmware files with proper MIME type
+app.use('/firmware', express.static(path.join(__dirname, '../firmware'), {
+  setHeaders: (res, filePath) => {
+    if (filePath.endsWith('.bin')) {
+      res.set('Content-Type', 'application/octet-stream');
+      res.set('Content-Disposition', `attachment; filename="${path.basename(filePath)}"`);
+    }
+  }
+}));
+
 // Serve static React build files in production
 if (process.env.NODE_ENV === 'production') {
   // Serve static files from frontend build
   app.use(express.static(path.join(__dirname, '../frontend/dist')));
   
   // Handle client-side routing - send all non-API requests to React
-  app.get(/^(?!\/api|\/health).*/, (req: Request, res: Response) => {
+  app.get(/^(?!\/api|\/health|\/firmware).*/, (req: Request, res: Response) => {
     res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
   });
 }
