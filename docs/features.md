@@ -9,7 +9,7 @@ BattleSync v2 is designed around simplicity and core battle tracking functionali
 - **Focused**: Battle tracking only, avoiding premature features
 - **Mobile**: Mobile-first design with TailwindCSS
 
-## ✅ Current Features (v2.12.0)
+## ✅ Current Features (v2.13.0)
 
 ### Backend Infrastructure
 - [x] **TypeScript Backend** - Fully typed Express.js server with SQLite

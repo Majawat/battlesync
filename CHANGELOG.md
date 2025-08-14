@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.13.0] - 2025-08-14
+
 ### Added
 - ESP32 web-based firmware flashing functionality 
 - `/flash` page with complete ESP32 flashing interface using Web Serial API
@@ -17,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Enhanced firmware API endpoints with chip compatibility metadata
 - Flash metadata fields in firmware table (chip_family, flash_size, flash_mode, flash_freq, partition addresses)
 - Firmware download URLs now use consistent `/api/battleaura/firmware/download/*` path structure
-- Navigation integration with "Flash ESP32" link in main menu
+- Navigation integration with "BattleAura" link in main menu
 - Home page quick action card for ESP32 firmware flashing
 
 ### Fixed
