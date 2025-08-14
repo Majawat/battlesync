@@ -1013,8 +1013,8 @@ app.get('/api/battleaura/firmware/latest', async (req: Request, res: Response<Ge
   }
 });
 
-// Upload new firmware
-app.post('/api/firmware/upload', upload.single('file'), async (req: Request, res: Response<UploadFirmwareResponse>) => {
+// Upload new firmware (GitHub Actions endpoint)
+app.post('/api/battleaura/firmware/upload', upload.single('file'), async (req: Request, res: Response<UploadFirmwareResponse>) => {
   try {
     if (!req.file) {
       res.status(400).json({
@@ -1197,8 +1197,9 @@ app.get('/api/battleaura/firmware/:version', async (req: Request<{version: strin
   }
 });
 
+
 // Admin endpoint to clear all firmware data (for testing/cleanup)
-app.delete('/api/firmware/admin/clear', async (req: Request, res: Response) => {
+app.delete('/api/battleaura/firmware/admin/clear', async (req: Request, res: Response) => {
   try {
     // Delete all firmware files
     const firmwareDir = path.join(__dirname, '../firmware');

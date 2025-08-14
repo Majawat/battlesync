@@ -325,7 +325,7 @@ Get information about a specific firmware version.
 }
 ```
 
-#### `POST /api/firmware/upload` 
+#### `POST /api/battleaura/firmware/upload` 
 Upload new firmware binary (intended for GitHub Actions CI/CD).
 
 **Content-Type:** `multipart/form-data`
@@ -340,7 +340,7 @@ Upload new firmware binary (intended for GitHub Actions CI/CD).
 curl -F "file=@firmware.bin" \
      -F "version=v0.16.7" \
      -F "changelog=Fix critical bug in LED handling" \
-     https://battlesync.me/api/firmware/upload
+     https://battlesync.me/api/battleaura/firmware/upload
 ```
 
 **Response:**

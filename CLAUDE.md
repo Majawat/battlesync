@@ -233,7 +233,8 @@ Co-Authored-By: Claude <noreply@anthropic.com>
 - `GET /api/battleaura/firmware/latest` - Get latest firmware version info
 - `GET /api/battleaura/firmware` - List all available firmware versions
 - `GET /api/battleaura/firmware/:version` - Get specific firmware version info  
-- `POST /api/firmware/upload` - Upload new firmware binary (for GitHub Actions)
+- `POST /api/battleaura/firmware/upload` - Upload new firmware binary (for GitHub Actions)
+- `DELETE /api/battleaura/firmware/admin/clear` - Clear all firmware data (admin only)
 - `GET /firmware/:filename` - Download firmware binary files
 
 ## Project Structure
