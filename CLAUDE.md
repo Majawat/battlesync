@@ -87,6 +87,22 @@ Keep database schema simple with maximum 5 tables. Consider tables for:
 - Battle Events/Actions
 - Possibly army units or battle participants
 
+## Army Processing Issues TODO
+
+### Frontend Display Issues
+- [ ] **Display XP values** - XP is stored correctly but not shown in frontend
+- [ ] **Display campaign traits** - Traits (agile, elite, headstrong, etc.) stored but not displayed
+- [ ] **Display weapon counts properly** - Show "2x Hull-Flamers" when count > 1
+
+### Model & Upgrade Processing
+- [ ] **Fix model naming in combined units** - Stop "Infantry Squad 1-10" appearing twice, should be "Infantry Squad 1-20"
+- [ ] **Investigate missing weapon upgrades** - Key issue: some models get weapon upgrades, others don't (sniper rifle, drum rifle, flamer, plasma rifle missing from Bullshit-Squad Crews)
+- [ ] **Base size updates from upgrades** - Combat bike upgrade should change base size from 32mm
+- [ ] **Sorting improvements** - Sort weapons by range (melee first), sort rules alphabetically
+
+### Research Items
+- [ ] **Catalog all possible upgrade effects** - Pull army books to see what other upgrade effects exist beyond current handling
+
 ## Legacy Reference
 
 Previous v1.5.2 implementation is archived at git tag `v1.5.2-final-archive` and can be referenced for feature ideas, but avoid complexity patterns from v1.

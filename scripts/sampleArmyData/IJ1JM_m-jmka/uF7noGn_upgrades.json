@@ -1,0 +1,122 @@
+{
+  "unitId": "uF7noGn",
+  "unitName": "Elites",
+  "upgrades": [
+    {
+      "instanceId": "jiWakcYy2",
+      "upgrade": {
+        "id": "KUqYUz-",
+        "uid": "4jXFc",
+        "label": "Upgrade one model with",
+        "parentPackageUid": "cbIZR",
+        "type": "ArmyBookUpgradeSection",
+        "variant": "upgrade",
+        "model": true,
+        "affects": {
+          "type": "exactly",
+          "value": 1
+        }
+      },
+      "option": {
+        "uid": "h-61J",
+        "cost": 10,
+        "type": "ArmyBookUpgradeOption",
+        "costs": [
+          {
+            "cost": 10,
+            "unitId": "8LCt3JN"
+          },
+          {
+            "cost": 10,
+            "unitId": "uF7noGn"
+          },
+          {
+            "cost": 10,
+            "unitId": "ARMiAVY"
+          }
+        ],
+        "gains": [
+          {
+            "name": "Satellite Backpack",
+            "type": "ArmyBookItem",
+            "label": "Satellite Backpack (Beacon)",
+            "content": [
+              {
+                "id": "rJSSHbaRMID4",
+                "name": "Beacon",
+                "type": "ArmyBookRule",
+                "dependencies": []
+              }
+            ],
+            "count": 1,
+            "dependencies": []
+          }
+        ],
+        "label": "Satellite Backpack (Beacon)",
+        "parentPackageUid": "cbIZR",
+        "parentSectionUid": "4jXFc",
+        "parentSectionId": "4jXFc",
+        "id": "h-61J"
+      }
+    },
+    {
+      "instanceId": "T2-C40JMw",
+      "upgrade": {
+        "id": "NPXaQBM",
+        "uid": "1B_aaB9",
+        "label": "Replace any Energy Rifle",
+        "parentPackageUid": "E1",
+        "type": "ArmyBookUpgradeSection",
+        "variant": "replace",
+        "affects": {
+          "type": "any"
+        },
+        "targets": [
+          "Energy Rifle"
+        ]
+      },
+      "option": {
+        "uid": "ncb2Mwk",
+        "cost": 0,
+        "type": "ArmyBookUpgradeOption",
+        "costs": [
+          {
+            "cost": 0,
+            "unitId": "uF7noGn"
+          }
+        ],
+        "gains": [
+          {
+            "id": "Lnlu85A_",
+            "name": "Shotgun",
+            "type": "ArmyBookWeapon",
+            "range": 12,
+            "attacks": 2,
+            "weaponId": "Lnlu85A_",
+            "specialRules": [
+              {
+                "id": "17crjK7P6_w6",
+                "name": "AP",
+                "rating": 1
+              }
+            ],
+            "attacksMultiplier": null,
+            "label": "Shotgun (12\", A2, AP(1))",
+            "count": 1,
+            "dependencies": []
+          }
+        ],
+        "label": "Shotgun (12\", A2, AP(1))",
+        "parentPackageUid": "E1",
+        "parentSectionUid": "1B_aaB9",
+        "parentSectionId": "1B_aaB9",
+        "id": "ncb2Mwk"
+      }
+    }
+  ],
+  "_metadata": {
+    "armyforgeId": "IJ1JM_m-jmka",
+    "extractedAt": "2025-08-14T21:37:23.123Z",
+    "upgradeCount": 2
+  }
+}

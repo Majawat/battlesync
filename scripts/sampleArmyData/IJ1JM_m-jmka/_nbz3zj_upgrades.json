@@ -1,0 +1,494 @@
+{
+  "unitId": "_nbz3zj",
+  "unitName": "Infantry Squad",
+  "upgrades": [
+    {
+      "instanceId": "TRg_ATDWN",
+      "upgrade": {
+        "id": "lYbNeZp",
+        "uid": "lSdZG",
+        "label": "Replace one Rifle and CCW",
+        "parentPackageUid": "E1",
+        "type": "ArmyBookUpgradeSection",
+        "variant": "replace",
+        "affects": {
+          "type": "exactly",
+          "value": 1
+        },
+        "targets": [
+          "Rifle",
+          "CCW"
+        ]
+      },
+      "option": {
+        "uid": "97PyU",
+        "cost": 45,
+        "type": "ArmyBookUpgradeOption",
+        "costs": [
+          {
+            "cost": 50,
+            "unitId": "_nbz3zj"
+          }
+        ],
+        "gains": [
+          {
+            "name": "Weapon Team",
+            "type": "ArmyBookItem",
+            "label": "Weapon Team (Laser Cannon (36\", A1, AP(3), Deadly(3)), Crew (A2), Tough(3))",
+            "content": [
+              {
+                "id": "-mTDUQJk",
+                "name": "Laser Cannon",
+                "type": "ArmyBookWeapon",
+                "range": 36,
+                "attacks": 1,
+                "weaponId": "-mTDUQJk",
+                "specialRules": [
+                  {
+                    "id": "17crjK7P6_w6",
+                    "name": "AP",
+                    "rating": 3
+                  },
+                  {
+                    "id": "_mrPya5SXSqW",
+                    "name": "Deadly",
+                    "rating": 3
+                  }
+                ],
+                "dependencies": []
+              },
+              {
+                "id": "iPNVsjGB",
+                "name": "Crew",
+                "type": "ArmyBookWeapon",
+                "range": 0,
+                "attacks": 2,
+                "weaponId": "uGIqWrDI",
+                "specialRules": [],
+                "dependencies": []
+              },
+              {
+                "id": "a0YtInGiUDd6",
+                "name": "Tough",
+                "type": "ArmyBookRule",
+                "rating": "3",
+                "dependencies": []
+              }
+            ],
+            "count": 1,
+            "dependencies": []
+          }
+        ],
+        "label": "Weapon Team (Laser Cannon (36\", A1, AP(3), Deadly(3)), Crew (A2), Tough(3))",
+        "parentPackageUid": "E1",
+        "parentSectionUid": "lSdZG",
+        "parentSectionId": "lSdZG",
+        "id": "97PyU"
+      }
+    },
+    {
+      "instanceId": "2P118C67P",
+      "upgrade": {
+        "id": "bPXxBos",
+        "uid": "XkpVk",
+        "label": "Replace one Rifle and CCW",
+        "parentPackageUid": "jzuNw",
+        "type": "ArmyBookUpgradeSection",
+        "variant": "replace",
+        "affects": {
+          "type": "exactly",
+          "value": 1
+        },
+        "targets": [
+          "Rifle",
+          "CCW"
+        ]
+      },
+      "option": {
+        "uid": "1Dlnz",
+        "cost": 0,
+        "type": "ArmyBookUpgradeOption",
+        "costs": [
+          {
+            "cost": 0,
+            "unitId": "_nbz3zj"
+          },
+          {
+            "cost": 0,
+            "unitId": "SScXOqX"
+          }
+        ],
+        "gains": [
+          {
+            "name": "Sgt. Pistol",
+            "type": "ArmyBookWeapon",
+            "count": 1,
+            "range": 12,
+            "attacks": 1,
+            "weaponId": "1HINdgr0",
+            "specialRules": [],
+            "label": "Sgt. Pistol (12\", A1)",
+            "dependencies": [
+              {
+                "upgradeInstanceId": "IQibjK151",
+                "count": 1,
+                "variant": "replace"
+              }
+            ]
+          },
+          {
+            "name": "Sgt. Hand Weapon",
+            "type": "ArmyBookWeapon",
+            "count": 1,
+            "range": 0,
+            "attacks": 2,
+            "weaponId": "c9dTSUKw",
+            "specialRules": [],
+            "label": "Sgt. Hand Weapon (A2)",
+            "dependencies": [
+              {
+                "upgradeInstanceId": "jO6nqJfp0",
+                "count": 1,
+                "variant": "replace"
+              }
+            ]
+          }
+        ],
+        "label": "Sgt. Pistol (12\", A1), Sgt. Hand Weapon (A2)",
+        "parentPackageUid": "jzuNw",
+        "parentSectionUid": "XkpVk",
+        "parentSectionId": "XkpVk",
+        "id": "1Dlnz"
+      }
+    },
+    {
+      "instanceId": "IQibjK151",
+      "upgrade": {
+        "id": "ZGTjJ57",
+        "uid": "RM8JI",
+        "label": "Replace Sgt. Pistol",
+        "parentPackageUid": "jzuNw",
+        "type": "ArmyBookUpgradeSection",
+        "variant": "replace",
+        "targets": [
+          "Sgt. Pistol"
+        ]
+      },
+      "option": {
+        "uid": "TXHsM",
+        "cost": 5,
+        "type": "ArmyBookUpgradeOption",
+        "costs": [
+          {
+            "cost": 5,
+            "unitId": "_nbz3zj"
+          },
+          {
+            "cost": 5,
+            "unitId": "SScXOqX"
+          }
+        ],
+        "gains": [
+          {
+            "name": "Drum Pistol",
+            "type": "ArmyBookWeapon",
+            "count": 1,
+            "range": 9,
+            "attacks": 2,
+            "weaponId": "-ito_25n",
+            "specialRules": [
+              {
+                "id": "cavWDboL4ubs",
+                "name": "Rending"
+              }
+            ],
+            "label": "Drum Pistol (9\", A2, Rending)",
+            "dependencies": []
+          }
+        ],
+        "label": "Drum Pistol (9\", A2, Rending)",
+        "parentPackageUid": "jzuNw",
+        "parentSectionUid": "RM8JI",
+        "parentSectionId": "RM8JI",
+        "id": "TXHsM"
+      }
+    },
+    {
+      "instanceId": "jO6nqJfp0",
+      "upgrade": {
+        "id": "hQMqHNJ",
+        "uid": "qBn-_",
+        "label": "Replace Sgt. Hand Weapon",
+        "parentPackageUid": "jzuNw",
+        "type": "ArmyBookUpgradeSection",
+        "variant": "replace",
+        "targets": [
+          "Sgt. Hand Weapon"
+        ]
+      },
+      "option": {
+        "uid": "vbGzQ",
+        "type": "ArmyBookUpgradeOption",
+        "costs": [
+          {
+            "cost": 10,
+            "unitId": "_nbz3zj"
+          },
+          {
+            "cost": 15,
+            "unitId": "SScXOqX"
+          }
+        ],
+        "gains": [
+          {
+            "name": "Energy Axe",
+            "type": "ArmyBookWeapon",
+            "count": 1,
+            "range": 0,
+            "attacks": 2,
+            "weaponId": "14G8zD-8",
+            "specialRules": [
+              {
+                "id": "17crjK7P6_w6",
+                "name": "AP",
+                "type": "ArmyBookRule",
+                "rating": 4
+              }
+            ],
+            "label": "Energy Axe (A2, AP(4))",
+            "dependencies": []
+          }
+        ],
+        "label": "Energy Axe (A2, AP(4))",
+        "parentSectionId": "qBn-_",
+        "id": "vbGzQ"
+      }
+    },
+    {
+      "instanceId": "dcBn81uUf",
+      "upgrade": {
+        "id": "KI15BvD",
+        "uid": "znb1L",
+        "label": "Upgrade two models with one",
+        "parentPackageUid": "SmJiZ",
+        "type": "ArmyBookUpgradeSection",
+        "variant": "upgrade",
+        "model": true,
+        "affects": {
+          "type": "exactly",
+          "value": 2
+        },
+        "select": {
+          "type": "exactly",
+          "value": 1
+        }
+      },
+      "option": {
+        "uid": "vn9Q1",
+        "cost": 30,
+        "type": "ArmyBookUpgradeOption",
+        "costs": [
+          {
+            "cost": 30,
+            "unitId": "_nbz3zj"
+          },
+          {
+            "cost": 30,
+            "unitId": "SScXOqX"
+          },
+          {
+            "cost": 30,
+            "unitId": "Xuu-drz"
+          }
+        ],
+        "gains": [
+          {
+            "id": "bLVZU4onzi2E",
+            "name": "Medical Training",
+            "type": "ArmyBookRule",
+            "label": "Medical Training",
+            "count": 1,
+            "dependencies": []
+          }
+        ],
+        "label": "Medical Training",
+        "parentPackageUid": "SmJiZ",
+        "parentSectionUid": "znb1L",
+        "parentSectionId": "znb1L",
+        "id": "vn9Q1"
+      }
+    },
+    {
+      "instanceId": "4dSIDopdH",
+      "upgrade": {
+        "id": "KI15BvD",
+        "uid": "znb1L",
+        "label": "Upgrade two models with one",
+        "parentPackageUid": "SmJiZ",
+        "type": "ArmyBookUpgradeSection",
+        "variant": "upgrade",
+        "model": true,
+        "affects": {
+          "type": "exactly",
+          "value": 2
+        },
+        "select": {
+          "type": "exactly",
+          "value": 1
+        }
+      },
+      "option": {
+        "uid": "0WqP6",
+        "cost": 5,
+        "type": "ArmyBookUpgradeOption",
+        "costs": [
+          {
+            "cost": 5,
+            "unitId": "_nbz3zj"
+          },
+          {
+            "cost": 5,
+            "unitId": "SScXOqX"
+          },
+          {
+            "cost": 5,
+            "unitId": "Xuu-drz"
+          }
+        ],
+        "gains": [
+          {
+            "id": "S80uwyiftO7-",
+            "name": "Field Radio",
+            "type": "ArmyBookRule",
+            "label": "Field Radio",
+            "count": 1,
+            "dependencies": []
+          }
+        ],
+        "label": "Field Radio",
+        "parentPackageUid": "SmJiZ",
+        "parentSectionUid": "znb1L",
+        "parentSectionId": "znb1L",
+        "id": "0WqP6"
+      }
+    },
+    {
+      "instanceId": "Pti7uzDUC",
+      "upgrade": {
+        "id": "8Kn_PCr",
+        "uid": "sJKDuFd",
+        "label": "Replace up to two Rifles",
+        "parentPackageUid": "E1",
+        "type": "ArmyBookUpgradeSection",
+        "variant": "replace",
+        "affects": {
+          "type": "up to",
+          "value": 2
+        },
+        "targets": [
+          "Rifles"
+        ]
+      },
+      "option": {
+        "uid": "RCCbE9q",
+        "cost": 10,
+        "type": "ArmyBookUpgradeOption",
+        "costs": [
+          {
+            "cost": 10,
+            "unitId": "_nbz3zj"
+          }
+        ],
+        "gains": [
+          {
+            "id": "ZDqs6wvN",
+            "name": "Drum Rifle",
+            "type": "ArmyBookWeapon",
+            "count": 1,
+            "range": 18,
+            "attacks": 2,
+            "weaponId": "ZDqs6wvN",
+            "specialRules": [
+              {
+                "id": "cavWDboL4ubs",
+                "name": "Rending"
+              }
+            ],
+            "label": "Drum Rifle (18\", A2, Rending)",
+            "dependencies": []
+          }
+        ],
+        "label": "Drum Rifle (18\", A2, Rending)",
+        "parentPackageUid": "E1",
+        "parentSectionUid": "sJKDuFd",
+        "parentSectionId": "sJKDuFd",
+        "id": "RCCbE9q"
+      }
+    },
+    {
+      "instanceId": "Sf3L7OKrz",
+      "upgrade": {
+        "id": "8Kn_PCr",
+        "uid": "sJKDuFd",
+        "label": "Replace up to two Rifles",
+        "parentPackageUid": "E1",
+        "type": "ArmyBookUpgradeSection",
+        "variant": "replace",
+        "affects": {
+          "type": "up to",
+          "value": 2
+        },
+        "targets": [
+          "Rifles"
+        ]
+      },
+      "option": {
+        "uid": "t1--rNw",
+        "cost": 15,
+        "type": "ArmyBookUpgradeOption",
+        "costs": [
+          {
+            "cost": 15,
+            "unitId": "_nbz3zj"
+          }
+        ],
+        "gains": [
+          {
+            "id": "-_T9wTAv",
+            "name": "Flamer",
+            "type": "ArmyBookWeapon",
+            "range": 12,
+            "attacks": 1,
+            "weaponId": "-_T9wTAv",
+            "specialRules": [
+              {
+                "id": "w_vX0mi58KKt",
+                "name": "Blast",
+                "type": "ArmyBookRule",
+                "rating": 3
+              },
+              {
+                "id": "Zx4mWN0SbmK8",
+                "name": "Reliable",
+                "type": "ArmyBookRule"
+              }
+            ],
+            "label": "Flamer (12\", A1, Blast(3), Reliable)",
+            "count": 1,
+            "dependencies": []
+          }
+        ],
+        "label": "Flamer (12\", A1, Blast(3), Reliable)",
+        "parentPackageUid": "E1",
+        "parentSectionUid": "sJKDuFd",
+        "parentSectionId": "sJKDuFd",
+        "id": "t1--rNw"
+      }
+    }
+  ],
+  "_metadata": {
+    "armyforgeId": "IJ1JM_m-jmka",
+    "extractedAt": "2025-08-14T21:37:23.122Z",
+    "upgradeCount": 8
+  }
+}

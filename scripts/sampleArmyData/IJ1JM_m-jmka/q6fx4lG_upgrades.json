@@ -1,0 +1,111 @@
+{
+  "unitId": "q6fx4lG",
+  "unitName": "Grinder Truck",
+  "upgrades": [
+    {
+      "instanceId": "rTh7CTK0L",
+      "upgrade": {
+        "id": "9-n3l_f",
+        "uid": "Q9Msl",
+        "label": "Upgrade with",
+        "parentPackageUid": "D2",
+        "type": "ArmyBookUpgradeSection",
+        "variant": "upgrade"
+      },
+      "option": {
+        "uid": "sPtME",
+        "cost": 25,
+        "type": "ArmyBookUpgradeOption",
+        "costs": [
+          {
+            "cost": 25,
+            "unitId": "q6fx4lG"
+          }
+        ],
+        "gains": [
+          {
+            "name": "Great Grinder",
+            "type": "ArmyBookItem",
+            "bases": null,
+            "label": "Great Grinder (Impact(5))",
+            "content": [
+              {
+                "id": "62-mYKVM9MLd",
+                "name": "Impact",
+                "type": "ArmyBookRule",
+                "rating": 5,
+                "dependencies": []
+              }
+            ],
+            "count": 1,
+            "dependencies": []
+          }
+        ],
+        "label": "Great Grinder (Impact(5))",
+        "parentSectionId": "Q9Msl",
+        "id": "sPtME"
+      }
+    },
+    {
+      "instanceId": "ui4JmBKgm",
+      "upgrade": {
+        "id": "EYT_67n",
+        "uid": "lkbv4rH",
+        "label": "Replace Heavy Quake Cannon",
+        "parentPackageUid": "D2",
+        "type": "ArmyBookUpgradeSection",
+        "variant": "replace",
+        "targets": [
+          "Heavy Quake Cannon"
+        ]
+      },
+      "option": {
+        "uid": "Ijpb1fK",
+        "cost": 25,
+        "type": "ArmyBookUpgradeOption",
+        "costs": [
+          {
+            "cost": 35,
+            "unitId": "q6fx4lG"
+          }
+        ],
+        "gains": [
+          {
+            "name": "Rapid Heavy Mining Laser",
+            "type": "ArmyBookWeapon",
+            "count": 1,
+            "range": 24,
+            "attacks": "2",
+            "weaponId": "usxbIqqy",
+            "specialRules": [
+              {
+                "id": "17crjK7P6_w6",
+                "name": "AP",
+                "type": "ArmyBookRule",
+                "rating": 3
+              },
+              {
+                "id": "_mrPya5SXSqW",
+                "name": "Deadly",
+                "type": "ArmyBookRule",
+                "rating": 3
+              }
+            ],
+            "label": "Rapid Heavy Mining Laser (24\", A2, AP(3), Deadly(3))",
+            "dependencies": []
+          }
+        ],
+        "label": "Rapid Heavy Mining Laser (24\", A2, AP(3), Deadly(3))",
+        "parentPackageUid": "D2",
+        "parentSectionUid": "lkbv4rH",
+        "parentSectionId": "lkbv4rH",
+        "id": "Ijpb1fK"
+      }
+    }
+  ],
+  "_metadata": {
+    "armyforgeId": "IJ1JM_m-jmka",
+    "extractedAt": "2025-08-14T21:37:23.120Z",
+    "upgradeCount": 2
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "unitId": "t2ehUmj",
+  "unitName": "Minions",
+  "upgrades": [
+    {
+      "instanceId": "-tgU35PXp",
+      "upgrade": {
+        "id": "-TRuVVr",
+        "uid": "9sQ0YE5",
+        "label": "Replace up to two Rifles",
+        "parentPackageUid": "D1",
+        "type": "ArmyBookUpgradeSection",
+        "variant": "replace",
+        "affects": {
+          "type": "up to",
+          "value": 2
+        },
+        "targets": [
+          "Rifles"
+        ]
+      },
+      "option": {
+        "uid": "rTg9g-m",
+        "cost": 15,
+        "type": "ArmyBookUpgradeOption",
+        "costs": [
+          {
+            "cost": 15,
+            "unitId": "t2ehUmj"
+          }
+        ],
+        "gains": [
+          {
+            "id": "-_T9wTAv",
+            "name": "Flamer",
+            "type": "ArmyBookWeapon",
+            "range": 12,
+            "attacks": 1,
+            "weaponId": "-_T9wTAv",
+            "specialRules": [
+              {
+                "id": "w_vX0mi58KKt",
+                "name": "Blast",
+                "type": "ArmyBookRule",
+                "rating": 3
+              },
+              {
+                "id": "Zx4mWN0SbmK8",
+                "name": "Reliable",
+                "type": "ArmyBookRule"
+              }
+            ],
+            "label": "Flamer (12\", A1, Blast(3), Reliable)",
+            "count": 1,
+            "dependencies": []
+          }
+        ],
+        "label": "Flamer (12\", A1, Blast(3), Reliable)",
+        "parentPackageUid": "D1",
+        "parentSectionUid": "9sQ0YE5",
+        "parentSectionId": "9sQ0YE5",
+        "id": "rTg9g-m"
+      }
+    },
+    {
+      "instanceId": "rt-4rCdLa",
+      "upgrade": {
+        "id": "-TRuVVr",
+        "uid": "9sQ0YE5",
+        "label": "Replace up to two Rifles",
+        "parentPackageUid": "D1",
+        "type": "ArmyBookUpgradeSection",
+        "variant": "replace",
+        "affects": {
+          "type": "up to",
+          "value": 2
+        },
+        "targets": [
+          "Rifles"
+        ]
+      },
+      "option": {
+        "uid": "LEovUqa",
+        "cost": 10,
+        "type": "ArmyBookUpgradeOption",
+        "costs": [
+          {
+            "cost": 10,
+            "unitId": "t2ehUmj"
+          }
+        ],
+        "gains": [
+          {
+            "name": "Drum Rifle",
+            "type": "ArmyBookWeapon",
+            "count": 1,
+            "range": 18,
+            "attacks": 2,
+            "weaponId": "HGWJuWlP",
+            "specialRules": [
+              {
+                "id": "cavWDboL4ubs",
+                "name": "Rending"
+              }
+            ],
+            "label": "Drum Rifle (18\", A2, Rending)",
+            "dependencies": []
+          }
+        ],
+        "label": "Drum Rifle (18\", A2, Rending)",
+        "parentPackageUid": "D1",
+        "parentSectionUid": "9sQ0YE5",
+        "parentSectionId": "9sQ0YE5",
+        "id": "LEovUqa"
+      }
+    }
+  ],
+  "_metadata": {
+    "armyforgeId": "IJ1JM_m-jmka",
+    "extractedAt": "2025-08-14T21:37:23.121Z",
+    "upgradeCount": 2
+  }
+}

@@ -1,0 +1,265 @@
+{
+  "id": "t2ehUmj",
+  "cost": 115,
+  "name": "Minions",
+  "size": 10,
+  "bases": {
+    "round": "25",
+    "square": "25"
+  },
+  "items": [],
+  "rules": [],
+  "valid": true,
+  "defense": 5,
+  "quality": 5,
+  "weapons": [
+    {
+      "id": "ar_e50-g",
+      "name": "Rifle",
+      "type": "ArmyBookWeapon",
+      "range": 24,
+      "attacks": 1,
+      "weaponId": "ar_e50-g",
+      "specialRules": [],
+      "label": "Rifle (24\", A1)",
+      "count": 10,
+      "originalCount": 10,
+      "dependencies": [
+        {
+          "upgradeInstanceId": "-tgU35PXp",
+          "count": 1,
+          "variant": "replace"
+        },
+        {
+          "upgradeInstanceId": "rt-4rCdLa",
+          "count": 1,
+          "variant": "replace"
+        }
+      ]
+    },
+    {
+      "id": "w4DyLplT",
+      "name": "CCW",
+      "type": "ArmyBookWeapon",
+      "range": 0,
+      "attacks": 1,
+      "weaponId": "4o5CBBZC",
+      "specialRules": [],
+      "label": "CCW (A1)",
+      "count": 10,
+      "originalCount": 10
+    }
+  ],
+  "upgrades": [
+    "D1"
+  ],
+  "hasCustomRule": false,
+  "disabledSections": [],
+  "hasBalanceInvalid": false,
+  "disabledUpgradeSections": [],
+  "armyId": "zz3kp5ry7ks6mxcx",
+  "xp": 0,
+  "notes": null,
+  "traits": [],
+  "combined": false,
+  "joinToUnit": null,
+  "selectionId": "d6RAF",
+  "selectedUpgrades": [
+    {
+      "instanceId": "-tgU35PXp",
+      "upgrade": {
+        "id": "-TRuVVr",
+        "uid": "9sQ0YE5",
+        "label": "Replace up to two Rifles",
+        "parentPackageUid": "D1",
+        "type": "ArmyBookUpgradeSection",
+        "variant": "replace",
+        "affects": {
+          "type": "up to",
+          "value": 2
+        },
+        "targets": [
+          "Rifles"
+        ]
+      },
+      "option": {
+        "uid": "rTg9g-m",
+        "cost": 15,
+        "type": "ArmyBookUpgradeOption",
+        "costs": [
+          {
+            "cost": 15,
+            "unitId": "t2ehUmj"
+          }
+        ],
+        "gains": [
+          {
+            "id": "-_T9wTAv",
+            "name": "Flamer",
+            "type": "ArmyBookWeapon",
+            "range": 12,
+            "attacks": 1,
+            "weaponId": "-_T9wTAv",
+            "specialRules": [
+              {
+                "id": "w_vX0mi58KKt",
+                "name": "Blast",
+                "type": "ArmyBookRule",
+                "rating": 3
+              },
+              {
+                "id": "Zx4mWN0SbmK8",
+                "name": "Reliable",
+                "type": "ArmyBookRule"
+              }
+            ],
+            "label": "Flamer (12\", A1, Blast(3), Reliable)",
+            "count": 1,
+            "dependencies": []
+          }
+        ],
+        "label": "Flamer (12\", A1, Blast(3), Reliable)",
+        "parentPackageUid": "D1",
+        "parentSectionUid": "9sQ0YE5",
+        "parentSectionId": "9sQ0YE5",
+        "id": "rTg9g-m"
+      }
+    },
+    {
+      "instanceId": "rt-4rCdLa",
+      "upgrade": {
+        "id": "-TRuVVr",
+        "uid": "9sQ0YE5",
+        "label": "Replace up to two Rifles",
+        "parentPackageUid": "D1",
+        "type": "ArmyBookUpgradeSection",
+        "variant": "replace",
+        "affects": {
+          "type": "up to",
+          "value": 2
+        },
+        "targets": [
+          "Rifles"
+        ]
+      },
+      "option": {
+        "uid": "LEovUqa",
+        "cost": 10,
+        "type": "ArmyBookUpgradeOption",
+        "costs": [
+          {
+            "cost": 10,
+            "unitId": "t2ehUmj"
+          }
+        ],
+        "gains": [
+          {
+            "name": "Drum Rifle",
+            "type": "ArmyBookWeapon",
+            "count": 1,
+            "range": 18,
+            "attacks": 2,
+            "weaponId": "HGWJuWlP",
+            "specialRules": [
+              {
+                "id": "cavWDboL4ubs",
+                "name": "Rending"
+              }
+            ],
+            "label": "Drum Rifle (18\", A2, Rending)",
+            "dependencies": []
+          }
+        ],
+        "label": "Drum Rifle (18\", A2, Rending)",
+        "parentPackageUid": "D1",
+        "parentSectionUid": "9sQ0YE5",
+        "parentSectionId": "9sQ0YE5",
+        "id": "LEovUqa"
+      }
+    }
+  ],
+  "loadout": [
+    {
+      "id": "ar_e50-g",
+      "name": "Rifle",
+      "type": "ArmyBookWeapon",
+      "range": 24,
+      "attacks": 1,
+      "weaponId": "ar_e50-g",
+      "specialRules": [],
+      "label": "Rifle (24\", A1)",
+      "count": 8,
+      "originalCount": 10,
+      "dependencies": [
+        {
+          "upgradeInstanceId": "-tgU35PXp",
+          "count": 1,
+          "variant": "replace"
+        },
+        {
+          "upgradeInstanceId": "rt-4rCdLa",
+          "count": 1,
+          "variant": "replace"
+        }
+      ]
+    },
+    {
+      "id": "w4DyLplT",
+      "name": "CCW",
+      "type": "ArmyBookWeapon",
+      "range": 0,
+      "attacks": 1,
+      "weaponId": "4o5CBBZC",
+      "specialRules": [],
+      "label": "CCW (A1)",
+      "count": 10,
+      "originalCount": 10
+    },
+    {
+      "id": "-_T9wTAv",
+      "name": "Flamer",
+      "type": "ArmyBookWeapon",
+      "range": 12,
+      "attacks": 1,
+      "weaponId": "-_T9wTAv",
+      "specialRules": [
+        {
+          "id": "w_vX0mi58KKt",
+          "name": "Blast",
+          "type": "ArmyBookRule",
+          "rating": 3
+        },
+        {
+          "id": "Zx4mWN0SbmK8",
+          "name": "Reliable",
+          "type": "ArmyBookRule"
+        }
+      ],
+      "label": "Flamer (12\", A1, Blast(3), Reliable)",
+      "count": 1,
+      "dependencies": []
+    },
+    {
+      "name": "Drum Rifle",
+      "type": "ArmyBookWeapon",
+      "count": 1,
+      "range": 18,
+      "attacks": 2,
+      "weaponId": "HGWJuWlP",
+      "specialRules": [
+        {
+          "id": "cavWDboL4ubs",
+          "name": "Rending"
+        }
+      ],
+      "label": "Drum Rifle (18\", A2, Rending)",
+      "dependencies": []
+    }
+  ],
+  "_metadata": {
+    "armyforgeId": "IJ1JM_m-jmka",
+    "armyName": "Dev Testerson's Bullshit Army",
+    "extractedAt": "2025-08-14T21:37:23.117Z",
+    "unitIndex": 4
+  }
+}

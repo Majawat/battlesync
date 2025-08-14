@@ -1,0 +1,333 @@
+{
+  "id": "1oucreF",
+  "cost": 135,
+  "name": "Destroyer Sisters",
+  "size": 3,
+  "bases": {
+    "round": "40",
+    "square": "40"
+  },
+  "items": [
+    {
+      "id": "Q8WK1",
+      "name": "Combat Shield",
+      "type": "ArmyBookItem",
+      "bases": null,
+      "content": [
+        {
+          "id": "wsqfB0fq69eG",
+          "name": "Shield Wall",
+          "type": "ArmyBookRule"
+        }
+      ],
+      "count": 3
+    }
+  ],
+  "rules": [
+    {
+      "id": "6mJw5IdqSqNC",
+      "name": "Ambush",
+      "label": "Ambush"
+    },
+    {
+      "id": "j_GPMzrugrCj",
+      "name": "Devout",
+      "additional": false,
+      "label": "Devout"
+    },
+    {
+      "id": "a0YtInGiUDd6",
+      "name": "Tough",
+      "rating": 3,
+      "label": "Tough(3)"
+    }
+  ],
+  "valid": true,
+  "defense": 4,
+  "quality": 4,
+  "weapons": [
+    {
+      "id": "1GVQ5U_c",
+      "name": "CCW",
+      "type": "ArmyBookWeapon",
+      "count": 3,
+      "range": 0,
+      "attacks": 3,
+      "weaponId": "tO5jEqMO",
+      "specialRules": [],
+      "label": "CCW (A3)",
+      "originalCount": 3,
+      "dependencies": [
+        {
+          "upgradeInstanceId": "9xFeuEnFJ",
+          "count": 1,
+          "variant": "replace"
+        },
+        {
+          "upgradeInstanceId": "VdQG1J4uM",
+          "count": 1,
+          "variant": "replace"
+        },
+        {
+          "upgradeInstanceId": "MMTz7bqKC",
+          "count": 1,
+          "variant": "replace"
+        }
+      ]
+    }
+  ],
+  "upgrades": [
+    "M1"
+  ],
+  "hasCustomRule": false,
+  "disabledSections": [],
+  "hasBalanceInvalid": false,
+  "disabledUpgradeSections": [],
+  "armyId": "7oi8zeiqfamiur21",
+  "xp": 0,
+  "notes": null,
+  "traits": [],
+  "combined": false,
+  "customName": "Wall of Shame Sisters",
+  "joinToUnit": null,
+  "selectionId": "GRN0e",
+  "selectedUpgrades": [
+    {
+      "instanceId": "9xFeuEnFJ",
+      "upgrade": {
+        "id": "5SJZ5Ol",
+        "uid": "TNUc16_",
+        "label": "Replace any CCW",
+        "parentPackageUid": "M1",
+        "type": "ArmyBookUpgradeSection",
+        "variant": "replace",
+        "affects": {
+          "type": "any"
+        },
+        "targets": [
+          "CCW"
+        ]
+      },
+      "option": {
+        "uid": "0vd07Zg",
+        "cost": 15,
+        "type": "ArmyBookUpgradeOption",
+        "costs": [
+          {
+            "cost": 20,
+            "unitId": "1oucreF"
+          }
+        ],
+        "gains": [
+          {
+            "id": "kuBk4Uc4",
+            "name": "Energy Fist",
+            "type": "ArmyBookWeapon",
+            "range": 0,
+            "attacks": 3,
+            "weaponId": "p2SC0q9O",
+            "specialRules": [
+              {
+                "id": "17crjK7P6_w6",
+                "name": "AP",
+                "type": "ArmyBookRule",
+                "rating": 4
+              }
+            ],
+            "label": "Energy Fist (A3, AP(4))",
+            "count": 1,
+            "dependencies": []
+          }
+        ],
+        "label": "Energy Fist (A3, AP(4))",
+        "parentPackageUid": "M1",
+        "parentSectionUid": "TNUc16_",
+        "parentSectionId": "TNUc16_",
+        "id": "0vd07Zg"
+      }
+    },
+    {
+      "instanceId": "VdQG1J4uM",
+      "upgrade": {
+        "id": "5SJZ5Ol",
+        "uid": "TNUc16_",
+        "label": "Replace any CCW",
+        "parentPackageUid": "M1",
+        "type": "ArmyBookUpgradeSection",
+        "variant": "replace",
+        "affects": {
+          "type": "any"
+        },
+        "targets": [
+          "CCW"
+        ]
+      },
+      "option": {
+        "uid": "0vd07Zg",
+        "cost": 15,
+        "type": "ArmyBookUpgradeOption",
+        "costs": [
+          {
+            "cost": 20,
+            "unitId": "1oucreF"
+          }
+        ],
+        "gains": [
+          {
+            "id": "kuBk4Uc4",
+            "name": "Energy Fist",
+            "type": "ArmyBookWeapon",
+            "range": 0,
+            "attacks": 3,
+            "weaponId": "p2SC0q9O",
+            "specialRules": [
+              {
+                "id": "17crjK7P6_w6",
+                "name": "AP",
+                "type": "ArmyBookRule",
+                "rating": 4
+              }
+            ],
+            "label": "Energy Fist (A3, AP(4))",
+            "count": 1,
+            "dependencies": []
+          }
+        ],
+        "label": "Energy Fist (A3, AP(4))",
+        "parentPackageUid": "M1",
+        "parentSectionUid": "TNUc16_",
+        "parentSectionId": "TNUc16_",
+        "id": "0vd07Zg"
+      }
+    },
+    {
+      "instanceId": "MMTz7bqKC",
+      "upgrade": {
+        "id": "-DbqA7I",
+        "uid": "saRiMbg",
+        "label": "Replace all Combat Shields and CCWS",
+        "parentPackageUid": "M1",
+        "type": "ArmyBookUpgradeSection",
+        "variant": "replace",
+        "affects": {
+          "type": "all"
+        },
+        "targets": [
+          "Combat Shields",
+          "CCWS"
+        ]
+      },
+      "option": {
+        "uid": "21BKIbE",
+        "type": "ArmyBookUpgradeOption",
+        "costs": [
+          {
+            "cost": 35,
+            "unitId": "1oucreF"
+          }
+        ],
+        "gains": [
+          {
+            "id": null,
+            "name": "Dual Energy Claws",
+            "type": "ArmyBookWeapon",
+            "count": 1,
+            "range": 0,
+            "attacks": 4,
+            "weaponId": "gLvu2axn",
+            "specialRules": [
+              {
+                "id": "cavWDboL4ubs",
+                "name": "Rending",
+                "type": "ArmyBookRule"
+              }
+            ],
+            "label": "Dual Energy Claws (A4, Rending)",
+            "dependencies": []
+          }
+        ],
+        "label": "Dual Energy Claws (A4, Rending)",
+        "parentSectionId": "saRiMbg",
+        "id": "21BKIbE"
+      }
+    }
+  ],
+  "loadout": [
+    {
+      "id": "Q8WK1",
+      "name": "Combat Shield",
+      "type": "ArmyBookItem",
+      "bases": null,
+      "content": [
+        {
+          "id": "wsqfB0fq69eG",
+          "name": "Shield Wall",
+          "type": "ArmyBookRule"
+        }
+      ],
+      "count": 2
+    },
+    {
+      "id": "kuBk4Uc4",
+      "name": "Energy Fist",
+      "type": "ArmyBookWeapon",
+      "range": 0,
+      "attacks": 3,
+      "weaponId": "p2SC0q9O",
+      "specialRules": [
+        {
+          "id": "17crjK7P6_w6",
+          "name": "AP",
+          "type": "ArmyBookRule",
+          "rating": 4
+        }
+      ],
+      "label": "Energy Fist (A3, AP(4))",
+      "count": 1,
+      "dependencies": []
+    },
+    {
+      "id": "kuBk4Uc4",
+      "name": "Energy Fist",
+      "type": "ArmyBookWeapon",
+      "range": 0,
+      "attacks": 3,
+      "weaponId": "p2SC0q9O",
+      "specialRules": [
+        {
+          "id": "17crjK7P6_w6",
+          "name": "AP",
+          "type": "ArmyBookRule",
+          "rating": 4
+        }
+      ],
+      "label": "Energy Fist (A3, AP(4))",
+      "count": 1,
+      "dependencies": []
+    },
+    {
+      "id": null,
+      "name": "Dual Energy Claws",
+      "type": "ArmyBookWeapon",
+      "count": 1,
+      "range": 0,
+      "attacks": 4,
+      "weaponId": "gLvu2axn",
+      "specialRules": [
+        {
+          "id": "cavWDboL4ubs",
+          "name": "Rending",
+          "type": "ArmyBookRule"
+        }
+      ],
+      "label": "Dual Energy Claws (A4, Rending)",
+      "dependencies": []
+    }
+  ],
+  "_metadata": {
+    "armyforgeId": "IJ1JM_m-jmka",
+    "armyName": "Dev Testerson's Bullshit Army",
+    "extractedAt": "2025-08-14T21:37:23.119Z",
+    "unitIndex": 8
+  }
+}

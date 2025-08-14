@@ -1,0 +1,116 @@
+{
+  "unitId": "Nzc4pM6",
+  "unitName": "Elite Veteran",
+  "upgrades": [
+    {
+      "instanceId": "NlCWqNrm_",
+      "upgrade": {
+        "id": "xPtAX8A",
+        "uid": "zRNNz",
+        "label": "Upgrade with one",
+        "isHeroUpgrade": true,
+        "parentPackageUid": "ED3ga",
+        "type": "ArmyBookUpgradeSection",
+        "variant": "upgrade",
+        "select": {
+          "type": "exactly",
+          "value": 1
+        }
+      },
+      "option": {
+        "uid": "1Uh3R",
+        "cost": 25,
+        "type": "ArmyBookUpgradeOption",
+        "costs": [
+          {
+            "cost": 25,
+            "unitId": "Nzc4pM6"
+          },
+          {
+            "cost": 25,
+            "unitId": "XhgyXd9"
+          }
+        ],
+        "gains": [
+          {
+            "name": "Pathfinder",
+            "type": "ArmyBookItem",
+            "label": "Pathfinder (Hidden Route)",
+            "content": [
+              {
+                "id": "DaJAAp5VhB9x",
+                "name": "Hidden Route",
+                "type": "ArmyBookRule",
+                "dependencies": []
+              }
+            ],
+            "count": 1,
+            "dependencies": []
+          }
+        ],
+        "label": "Pathfinder (Hidden Route)",
+        "parentPackageUid": "ED3ga",
+        "parentSectionUid": "zRNNz",
+        "parentSectionId": "zRNNz",
+        "id": "1Uh3R"
+      }
+    },
+    {
+      "instanceId": "tDl9VPFwK",
+      "upgrade": {
+        "id": "iBQXz0h",
+        "uid": "gpSDb",
+        "label": "Upgrade with one",
+        "parentPackageUid": "ED3ga",
+        "type": "ArmyBookUpgradeSection",
+        "variant": "upgrade",
+        "select": {
+          "type": "exactly",
+          "value": 1
+        }
+      },
+      "option": {
+        "uid": "LXTMa",
+        "cost": 10,
+        "type": "ArmyBookUpgradeOption",
+        "costs": [
+          {
+            "cost": 10,
+            "unitId": "Nzc4pM6"
+          },
+          {
+            "cost": 10,
+            "unitId": "XhgyXd9"
+          }
+        ],
+        "gains": [
+          {
+            "name": "Satellite Backpack",
+            "type": "ArmyBookItem",
+            "label": "Satellite Backpack (Beacon)",
+            "content": [
+              {
+                "id": "rJSSHbaRMID4",
+                "name": "Beacon",
+                "type": "ArmyBookRule",
+                "dependencies": []
+              }
+            ],
+            "count": 1,
+            "dependencies": []
+          }
+        ],
+        "label": "Satellite Backpack (Beacon)",
+        "parentPackageUid": "ED3ga",
+        "parentSectionUid": "gpSDb",
+        "parentSectionId": "gpSDb",
+        "id": "LXTMa"
+      }
+    }
+  ],
+  "_metadata": {
+    "armyforgeId": "IJ1JM_m-jmka",
+    "extractedAt": "2025-08-14T21:37:23.123Z",
+    "upgradeCount": 2
+  }
+}

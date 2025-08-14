@@ -1,0 +1,316 @@
+{
+  "id": "QaVPlBh",
+  "cost": 905,
+  "name": "Blessed Titan",
+  "size": 1,
+  "bases": {
+    "round": "160x122",
+    "square": "150x100"
+  },
+  "items": [],
+  "rules": [
+    {
+      "id": "j_GPMzrugrCj",
+      "name": "Devout",
+      "label": "Devout"
+    },
+    {
+      "id": "dIQ3SGl2J2Ew",
+      "name": "Fear",
+      "rating": 4,
+      "label": "Fear(4)"
+    },
+    {
+      "id": "2atvlmICQSCV",
+      "name": "Fearless",
+      "label": "Fearless"
+    },
+    {
+      "id": "a0YtInGiUDd6",
+      "name": "Tough",
+      "rating": 24,
+      "label": "Tough(24)"
+    }
+  ],
+  "valid": true,
+  "defense": 2,
+  "quality": 3,
+  "weapons": [
+    {
+      "id": "7ciCW",
+      "name": "Hull-Flamer",
+      "type": "ArmyBookWeapon",
+      "count": 2,
+      "range": 12,
+      "attacks": 1,
+      "weaponId": "Fe7NEOkZ",
+      "specialRules": [
+        {
+          "type": "ArmyBookRule",
+          "id": "17crjK7P6_w6",
+          "name": "AP",
+          "rating": 1,
+          "label": "AP(1)"
+        },
+        {
+          "type": "ArmyBookRule",
+          "id": "w_vX0mi58KKt",
+          "name": "Blast",
+          "rating": 3,
+          "label": "Blast(3)"
+        },
+        {
+          "type": "ArmyBookRule",
+          "id": "Zx4mWN0SbmK8",
+          "name": "Reliable",
+          "label": "Reliable"
+        }
+      ],
+      "label": "2x Hull-Flamer (12\", A1, AP(1), Blast(3), Reliable)",
+      "originalCount": 2
+    },
+    {
+      "id": "hsgmW",
+      "name": "Stomp",
+      "type": "ArmyBookWeapon",
+      "count": 1,
+      "range": 0,
+      "attacks": 8,
+      "weaponId": "OjIL2pMY",
+      "specialRules": [
+        {
+          "type": "ArmyBookRule",
+          "id": "17crjK7P6_w6",
+          "name": "AP",
+          "rating": 2,
+          "label": "AP(2)"
+        }
+      ],
+      "label": "Stomp (A8, AP(2))",
+      "originalCount": 1
+    },
+    {
+      "id": "H7XnK",
+      "name": "Titan Claw",
+      "type": "ArmyBookWeapon",
+      "count": 2,
+      "range": 0,
+      "attacks": 12,
+      "weaponId": "AXVTHWBh",
+      "specialRules": [
+        {
+          "type": "ArmyBookRule",
+          "id": "17crjK7P6_w6",
+          "name": "AP",
+          "rating": 1,
+          "label": "AP(1)"
+        }
+      ],
+      "label": "2x Titan Claw (A12, AP(1))",
+      "originalCount": 2,
+      "dependencies": [
+        {
+          "upgradeInstanceId": "TYXrqpUmo",
+          "count": 1,
+          "variant": "replace"
+        }
+      ]
+    }
+  ],
+  "upgrades": [
+    "whyM8"
+  ],
+  "hasCustomRule": false,
+  "hasBalanceInvalid": false,
+  "disabledUpgradeSections": [],
+  "armyId": "7oi8zeiqfamiur21",
+  "xp": 0,
+  "notes": null,
+  "traits": [],
+  "combined": false,
+  "joinToUnit": null,
+  "selectionId": "LkbIW",
+  "selectedUpgrades": [
+    {
+      "instanceId": "TYXrqpUmo",
+      "upgrade": {
+        "id": "AKTTpfX",
+        "uid": "QaGSd",
+        "label": "Replace any Titan Claw",
+        "parentPackageUid": "whyM8",
+        "type": "ArmyBookUpgradeSection",
+        "variant": "replace",
+        "affects": {
+          "type": "any"
+        },
+        "targets": [
+          "Titan Claw"
+        ]
+      },
+      "option": {
+        "uid": "nbkFK",
+        "cost": 210,
+        "type": "ArmyBookUpgradeOption",
+        "costs": [
+          {
+            "cost": 225,
+            "unitId": "QaVPlBh"
+          }
+        ],
+        "gains": [
+          {
+            "name": "Titan Missile Array",
+            "type": "ArmyBookWeapon",
+            "count": 1,
+            "range": 30,
+            "attacks": "4",
+            "weaponId": "_GqG62CP",
+            "specialRules": [
+              {
+                "id": "17crjK7P6_w6",
+                "name": "AP",
+                "type": "ArmyBookRule",
+                "rating": 2
+              },
+              {
+                "id": "_mrPya5SXSqW",
+                "name": "Deadly",
+                "type": "ArmyBookRule",
+                "rating": 3
+              },
+              {
+                "id": "QXyt-zV_bjpg",
+                "name": "Lock-On",
+                "type": "ArmyBookRule"
+              }
+            ],
+            "label": "Titan Missile Array (30\", A4, AP(2), Deadly(3), Lock-On)",
+            "dependencies": []
+          }
+        ],
+        "label": "Titan Missile Array (30\", A4, AP(2), Deadly(3), Lock-On)",
+        "parentPackageUid": "whyM8",
+        "parentSectionUid": "QaGSd",
+        "parentSectionId": "QaGSd",
+        "id": "nbkFK"
+      }
+    }
+  ],
+  "loadout": [
+    {
+      "id": "7ciCW",
+      "name": "Hull-Flamer",
+      "type": "ArmyBookWeapon",
+      "count": 2,
+      "range": 12,
+      "attacks": 1,
+      "weaponId": "Fe7NEOkZ",
+      "specialRules": [
+        {
+          "type": "ArmyBookRule",
+          "id": "17crjK7P6_w6",
+          "name": "AP",
+          "rating": 1,
+          "label": "AP(1)"
+        },
+        {
+          "type": "ArmyBookRule",
+          "id": "w_vX0mi58KKt",
+          "name": "Blast",
+          "rating": 3,
+          "label": "Blast(3)"
+        },
+        {
+          "type": "ArmyBookRule",
+          "id": "Zx4mWN0SbmK8",
+          "name": "Reliable",
+          "label": "Reliable"
+        }
+      ],
+      "label": "2x Hull-Flamer (12\", A1, AP(1), Blast(3), Reliable)",
+      "originalCount": 2
+    },
+    {
+      "id": "hsgmW",
+      "name": "Stomp",
+      "type": "ArmyBookWeapon",
+      "count": 1,
+      "range": 0,
+      "attacks": 8,
+      "weaponId": "OjIL2pMY",
+      "specialRules": [
+        {
+          "type": "ArmyBookRule",
+          "id": "17crjK7P6_w6",
+          "name": "AP",
+          "rating": 2,
+          "label": "AP(2)"
+        }
+      ],
+      "label": "Stomp (A8, AP(2))",
+      "originalCount": 1
+    },
+    {
+      "id": "H7XnK",
+      "name": "Titan Claw",
+      "type": "ArmyBookWeapon",
+      "count": 1,
+      "range": 0,
+      "attacks": 12,
+      "weaponId": "AXVTHWBh",
+      "specialRules": [
+        {
+          "type": "ArmyBookRule",
+          "id": "17crjK7P6_w6",
+          "name": "AP",
+          "rating": 1,
+          "label": "AP(1)"
+        }
+      ],
+      "label": "2x Titan Claw (A12, AP(1))",
+      "originalCount": 2,
+      "dependencies": [
+        {
+          "upgradeInstanceId": "TYXrqpUmo",
+          "count": 1,
+          "variant": "replace"
+        }
+      ]
+    },
+    {
+      "name": "Titan Missile Array",
+      "type": "ArmyBookWeapon",
+      "count": 1,
+      "range": 30,
+      "attacks": "4",
+      "weaponId": "_GqG62CP",
+      "specialRules": [
+        {
+          "id": "17crjK7P6_w6",
+          "name": "AP",
+          "type": "ArmyBookRule",
+          "rating": 2
+        },
+        {
+          "id": "_mrPya5SXSqW",
+          "name": "Deadly",
+          "type": "ArmyBookRule",
+          "rating": 3
+        },
+        {
+          "id": "QXyt-zV_bjpg",
+          "name": "Lock-On",
+          "type": "ArmyBookRule"
+        }
+      ],
+      "label": "Titan Missile Array (30\", A4, AP(2), Deadly(3), Lock-On)",
+      "dependencies": []
+    }
+  ],
+  "_metadata": {
+    "armyforgeId": "IJ1JM_m-jmka",
+    "armyName": "Dev Testerson's Bullshit Army",
+    "extractedAt": "2025-08-14T21:37:23.115Z",
+    "unitIndex": 2
+  }
+}

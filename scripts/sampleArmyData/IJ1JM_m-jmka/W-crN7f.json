@@ -1,0 +1,322 @@
+{
+  "id": "W-crN7f",
+  "cost": 40,
+  "name": "Celestial High Sister",
+  "size": 1,
+  "bases": {
+    "round": "32",
+    "square": "30"
+  },
+  "items": [
+    {
+      "id": "XPlG-",
+      "name": "Combat Shield",
+      "type": "ArmyBookItem",
+      "bases": null,
+      "content": [
+        {
+          "id": "wsqfB0fq69eG",
+          "name": "Shield Wall",
+          "type": "ArmyBookRule"
+        }
+      ],
+      "count": 1
+    }
+  ],
+  "rules": [
+    {
+      "id": "5fNdzNcQm0Pt",
+      "name": "Celestial Veteran",
+      "label": "Celestial Veteran"
+    },
+    {
+      "id": "j_GPMzrugrCj",
+      "name": "Devout",
+      "additional": false,
+      "label": "Devout"
+    },
+    {
+      "id": "T08VkBuVmNZ_",
+      "name": "Hero",
+      "label": "Hero"
+    },
+    {
+      "id": "a0YtInGiUDd6",
+      "name": "Tough",
+      "rating": 3,
+      "label": "Tough(3)"
+    }
+  ],
+  "valid": true,
+  "defense": 4,
+  "quality": 4,
+  "weapons": [
+    {
+      "id": "A7tbW",
+      "name": "CCW",
+      "type": "ArmyBookWeapon",
+      "count": 1,
+      "range": 0,
+      "attacks": 2,
+      "weaponId": "83nhlNHF",
+      "specialRules": [],
+      "label": "CCW (A2)",
+      "originalCount": 1
+    }
+  ],
+  "upgrades": [
+    "A1",
+    "B1",
+    "C1"
+  ],
+  "hasCustomRule": false,
+  "disabledSections": [],
+  "hasBalanceInvalid": false,
+  "disabledUpgradeSections": [],
+  "armyId": "7oi8zeiqfamiur21",
+  "xp": 5,
+  "notes": "This lady is the bitch's tits, that's how cool she is. \nShe can do stuff like cast. But she can't get campaign traits because it breaks ArmyForge",
+  "traits": [],
+  "combined": false,
+  "customName": "Mrs. Bitchtits",
+  "joinToUnit": "d6RAF",
+  "selectionId": "uBScQ",
+  "selectedUpgrades": [
+    {
+      "instanceId": "b8ZxvoZ73",
+      "upgrade": {
+        "id": "KprqU7D",
+        "uid": "jDPiWW0",
+        "label": "Upgrade with one",
+        "isHeroUpgrade": true,
+        "parentPackageUid": "B1",
+        "type": "ArmyBookUpgradeSection",
+        "variant": "upgrade",
+        "select": {
+          "type": "exactly",
+          "value": 1
+        }
+      },
+      "option": {
+        "uid": "se1bXdC",
+        "cost": 40,
+        "type": "ArmyBookUpgradeOption",
+        "costs": [
+          {
+            "cost": 45,
+            "unitId": "sF4ltO_"
+          },
+          {
+            "cost": 45,
+            "unitId": "W-crN7f"
+          },
+          {
+            "cost": 45,
+            "unitId": "2TXWi3B"
+          },
+          {
+            "cost": 45,
+            "unitId": "_nVdDbE"
+          }
+        ],
+        "gains": [
+          {
+            "name": "Witch",
+            "type": "ArmyBookItem",
+            "label": "Witch (Caster(2))",
+            "content": [
+              {
+                "id": "47CAqf7ySlfc",
+                "name": "Caster",
+                "type": "ArmyBookRule",
+                "rating": 2,
+                "dependencies": []
+              }
+            ],
+            "count": 1,
+            "dependencies": []
+          }
+        ],
+        "label": "Witch (Caster(2))",
+        "parentPackageUid": "B1",
+        "parentSectionUid": "jDPiWW0",
+        "parentSectionId": "jDPiWW0",
+        "id": "se1bXdC"
+      }
+    },
+    {
+      "instanceId": "-bMpH22rf",
+      "upgrade": {
+        "id": "P_QRhPJ",
+        "uid": "5z9UHa0",
+        "label": "Upgrade with one",
+        "parentPackageUid": "C1",
+        "type": "ArmyBookUpgradeSection",
+        "variant": "upgrade",
+        "select": {
+          "type": "exactly",
+          "value": 1
+        }
+      },
+      "option": {
+        "uid": "RpwxB",
+        "cost": 65,
+        "type": "ArmyBookUpgradeOption",
+        "costs": [
+          {
+            "cost": 75,
+            "unitId": "W-crN7f"
+          },
+          {
+            "cost": 70,
+            "unitId": "2TXWi3B"
+          }
+        ],
+        "gains": [
+          {
+            "name": "Combat Bike",
+            "type": "ArmyBookItem",
+            "bases": {
+              "round": "60x35",
+              "square": "50x25"
+            },
+            "label": "Combat Bike (Fast, Tough(3))",
+            "content": [
+              {
+                "id": "KdgwlPb8LuD2",
+                "name": "Fast",
+                "type": "ArmyBookRule",
+                "dependencies": []
+              },
+              {
+                "id": "a0YtInGiUDd6",
+                "name": "Tough",
+                "type": "ArmyBookRule",
+                "rating": 3,
+                "dependencies": []
+              }
+            ],
+            "count": 1,
+            "dependencies": []
+          },
+          {
+            "name": "Twin Heavy Rifle",
+            "type": "ArmyBookWeapon",
+            "count": 1,
+            "range": 24,
+            "attacks": 2,
+            "weaponId": "wbSELVAM",
+            "specialRules": [
+              {
+                "id": "17crjK7P6_w6",
+                "name": "AP",
+                "rating": 1
+              }
+            ],
+            "label": "Twin Heavy Rifle (24\", A2, AP(1))",
+            "dependencies": []
+          }
+        ],
+        "label": "Twin Heavy Rifle (24\", A2, AP(1)), Combat Bike (Fast, Tough(3))",
+        "parentSectionId": "5z9UHa0",
+        "id": "RpwxB"
+      }
+    }
+  ],
+  "loadout": [
+    {
+      "id": "A7tbW",
+      "name": "CCW",
+      "type": "ArmyBookWeapon",
+      "count": 1,
+      "range": 0,
+      "attacks": 2,
+      "weaponId": "83nhlNHF",
+      "specialRules": [],
+      "label": "CCW (A2)",
+      "originalCount": 1
+    },
+    {
+      "id": "XPlG-",
+      "name": "Combat Shield",
+      "type": "ArmyBookItem",
+      "bases": null,
+      "content": [
+        {
+          "id": "wsqfB0fq69eG",
+          "name": "Shield Wall",
+          "type": "ArmyBookRule"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "name": "Witch",
+      "type": "ArmyBookItem",
+      "label": "Witch (Caster(2))",
+      "content": [
+        {
+          "id": "47CAqf7ySlfc",
+          "name": "Caster",
+          "type": "ArmyBookRule",
+          "rating": 2,
+          "dependencies": [],
+          "count": 1
+        }
+      ],
+      "count": 1,
+      "dependencies": []
+    },
+    {
+      "name": "Combat Bike",
+      "type": "ArmyBookItem",
+      "bases": {
+        "round": "60x35",
+        "square": "50x25"
+      },
+      "label": "Combat Bike (Fast, Tough(3))",
+      "content": [
+        {
+          "id": "KdgwlPb8LuD2",
+          "name": "Fast",
+          "type": "ArmyBookRule",
+          "dependencies": [],
+          "count": 1
+        },
+        {
+          "id": "a0YtInGiUDd6",
+          "name": "Tough",
+          "type": "ArmyBookRule",
+          "rating": 3,
+          "dependencies": [],
+          "count": 1
+        }
+      ],
+      "count": 1,
+      "dependencies": []
+    },
+    {
+      "name": "Twin Heavy Rifle",
+      "type": "ArmyBookWeapon",
+      "count": 1,
+      "range": 24,
+      "attacks": 2,
+      "weaponId": "wbSELVAM",
+      "specialRules": [
+        {
+          "id": "17crjK7P6_w6",
+          "name": "AP",
+          "rating": 1
+        }
+      ],
+      "label": "Twin Heavy Rifle (24\", A2, AP(1))",
+      "dependencies": []
+    }
+  ],
+  "_metadata": {
+    "armyforgeId": "IJ1JM_m-jmka",
+    "armyName": "Dev Testerson's Bullshit Army",
+    "extractedAt": "2025-08-14T21:37:23.116Z",
+    "unitIndex": 3
+  }
+}

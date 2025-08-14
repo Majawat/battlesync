@@ -1,0 +1,75 @@
+{
+  "unitId": "QaVPlBh",
+  "unitName": "Blessed Titan",
+  "upgrades": [
+    {
+      "instanceId": "TYXrqpUmo",
+      "upgrade": {
+        "id": "AKTTpfX",
+        "uid": "QaGSd",
+        "label": "Replace any Titan Claw",
+        "parentPackageUid": "whyM8",
+        "type": "ArmyBookUpgradeSection",
+        "variant": "replace",
+        "affects": {
+          "type": "any"
+        },
+        "targets": [
+          "Titan Claw"
+        ]
+      },
+      "option": {
+        "uid": "nbkFK",
+        "cost": 210,
+        "type": "ArmyBookUpgradeOption",
+        "costs": [
+          {
+            "cost": 225,
+            "unitId": "QaVPlBh"
+          }
+        ],
+        "gains": [
+          {
+            "name": "Titan Missile Array",
+            "type": "ArmyBookWeapon",
+            "count": 1,
+            "range": 30,
+            "attacks": "4",
+            "weaponId": "_GqG62CP",
+            "specialRules": [
+              {
+                "id": "17crjK7P6_w6",
+                "name": "AP",
+                "type": "ArmyBookRule",
+                "rating": 2
+              },
+              {
+                "id": "_mrPya5SXSqW",
+                "name": "Deadly",
+                "type": "ArmyBookRule",
+                "rating": 3
+              },
+              {
+                "id": "QXyt-zV_bjpg",
+                "name": "Lock-On",
+                "type": "ArmyBookRule"
+              }
+            ],
+            "label": "Titan Missile Array (30\", A4, AP(2), Deadly(3), Lock-On)",
+            "dependencies": []
+          }
+        ],
+        "label": "Titan Missile Array (30\", A4, AP(2), Deadly(3), Lock-On)",
+        "parentPackageUid": "whyM8",
+        "parentSectionUid": "QaGSd",
+        "parentSectionId": "QaGSd",
+        "id": "nbkFK"
+      }
+    }
+  ],
+  "_metadata": {
+    "armyforgeId": "IJ1JM_m-jmka",
+    "extractedAt": "2025-08-14T21:37:23.120Z",
+    "upgradeCount": 1
+  }
+}

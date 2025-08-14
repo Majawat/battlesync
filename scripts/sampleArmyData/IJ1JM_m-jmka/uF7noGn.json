@@ -1,0 +1,287 @@
+{
+  "id": "uF7noGn",
+  "cost": 130,
+  "name": "Elites",
+  "size": 5,
+  "bases": {
+    "round": "25",
+    "square": "25"
+  },
+  "items": [],
+  "rules": [
+    {
+      "id": "hczirYabftzx",
+      "name": "Carnivore",
+      "additional": false,
+      "label": "Carnivore"
+    },
+    {
+      "id": "H9E9PIWpGRdw",
+      "name": "Relentless",
+      "additional": false,
+      "label": "Relentless"
+    },
+    {
+      "id": "JSKVyurtWIyW",
+      "name": "Strider",
+      "label": "Strider"
+    }
+  ],
+  "valid": true,
+  "defense": 4,
+  "quality": 4,
+  "weapons": [
+    {
+      "id": "uX4Jw7E6",
+      "name": "Energy Rifle",
+      "type": "ArmyBookWeapon",
+      "count": 5,
+      "range": 24,
+      "attacks": 1,
+      "weaponId": "uX4Jw7E6",
+      "specialRules": [
+        {
+          "type": "ArmyBookRule",
+          "id": "17crjK7P6_w6",
+          "name": "AP",
+          "rating": 1,
+          "label": "AP(1)"
+        }
+      ],
+      "label": "Energy Rifle (24\", A1, AP(1))",
+      "originalCount": 5,
+      "dependencies": [
+        {
+          "upgradeInstanceId": "T2-C40JMw",
+          "count": 1,
+          "variant": "replace"
+        }
+      ]
+    },
+    {
+      "id": "h3Dq2wAx",
+      "name": "CCW",
+      "type": "ArmyBookWeapon",
+      "range": 0,
+      "attacks": 1,
+      "weaponId": "4o5CBBZC",
+      "specialRules": [],
+      "attacksMultiplier": null,
+      "label": "CCW (A1)",
+      "count": 5,
+      "originalCount": 5
+    }
+  ],
+  "upgrades": [
+    "E1",
+    "cbIZR"
+  ],
+  "hasCustomRule": false,
+  "disabledSections": [],
+  "hasBalanceInvalid": false,
+  "disabledUpgradeSections": [],
+  "armyId": "BKi_hJaJflN8ZorH",
+  "xp": 0,
+  "notes": null,
+  "traits": [],
+  "combined": false,
+  "customName": "Seal Team 666",
+  "joinToUnit": null,
+  "selectionId": "vLRjN",
+  "selectedUpgrades": [
+    {
+      "instanceId": "jiWakcYy2",
+      "upgrade": {
+        "id": "KUqYUz-",
+        "uid": "4jXFc",
+        "label": "Upgrade one model with",
+        "parentPackageUid": "cbIZR",
+        "type": "ArmyBookUpgradeSection",
+        "variant": "upgrade",
+        "model": true,
+        "affects": {
+          "type": "exactly",
+          "value": 1
+        }
+      },
+      "option": {
+        "uid": "h-61J",
+        "cost": 10,
+        "type": "ArmyBookUpgradeOption",
+        "costs": [
+          {
+            "cost": 10,
+            "unitId": "8LCt3JN"
+          },
+          {
+            "cost": 10,
+            "unitId": "uF7noGn"
+          },
+          {
+            "cost": 10,
+            "unitId": "ARMiAVY"
+          }
+        ],
+        "gains": [
+          {
+            "name": "Satellite Backpack",
+            "type": "ArmyBookItem",
+            "label": "Satellite Backpack (Beacon)",
+            "content": [
+              {
+                "id": "rJSSHbaRMID4",
+                "name": "Beacon",
+                "type": "ArmyBookRule",
+                "dependencies": []
+              }
+            ],
+            "count": 1,
+            "dependencies": []
+          }
+        ],
+        "label": "Satellite Backpack (Beacon)",
+        "parentPackageUid": "cbIZR",
+        "parentSectionUid": "4jXFc",
+        "parentSectionId": "4jXFc",
+        "id": "h-61J"
+      }
+    },
+    {
+      "instanceId": "T2-C40JMw",
+      "upgrade": {
+        "id": "NPXaQBM",
+        "uid": "1B_aaB9",
+        "label": "Replace any Energy Rifle",
+        "parentPackageUid": "E1",
+        "type": "ArmyBookUpgradeSection",
+        "variant": "replace",
+        "affects": {
+          "type": "any"
+        },
+        "targets": [
+          "Energy Rifle"
+        ]
+      },
+      "option": {
+        "uid": "ncb2Mwk",
+        "cost": 0,
+        "type": "ArmyBookUpgradeOption",
+        "costs": [
+          {
+            "cost": 0,
+            "unitId": "uF7noGn"
+          }
+        ],
+        "gains": [
+          {
+            "id": "Lnlu85A_",
+            "name": "Shotgun",
+            "type": "ArmyBookWeapon",
+            "range": 12,
+            "attacks": 2,
+            "weaponId": "Lnlu85A_",
+            "specialRules": [
+              {
+                "id": "17crjK7P6_w6",
+                "name": "AP",
+                "rating": 1
+              }
+            ],
+            "attacksMultiplier": null,
+            "label": "Shotgun (12\", A2, AP(1))",
+            "count": 1,
+            "dependencies": []
+          }
+        ],
+        "label": "Shotgun (12\", A2, AP(1))",
+        "parentPackageUid": "E1",
+        "parentSectionUid": "1B_aaB9",
+        "parentSectionId": "1B_aaB9",
+        "id": "ncb2Mwk"
+      }
+    }
+  ],
+  "loadout": [
+    {
+      "id": "uX4Jw7E6",
+      "name": "Energy Rifle",
+      "type": "ArmyBookWeapon",
+      "count": 4,
+      "range": 24,
+      "attacks": 1,
+      "weaponId": "uX4Jw7E6",
+      "specialRules": [
+        {
+          "type": "ArmyBookRule",
+          "id": "17crjK7P6_w6",
+          "name": "AP",
+          "rating": 1,
+          "label": "AP(1)"
+        }
+      ],
+      "label": "Energy Rifle (24\", A1, AP(1))",
+      "originalCount": 5,
+      "dependencies": [
+        {
+          "upgradeInstanceId": "T2-C40JMw",
+          "count": 1,
+          "variant": "replace"
+        }
+      ]
+    },
+    {
+      "id": "h3Dq2wAx",
+      "name": "CCW",
+      "type": "ArmyBookWeapon",
+      "range": 0,
+      "attacks": 1,
+      "weaponId": "4o5CBBZC",
+      "specialRules": [],
+      "attacksMultiplier": null,
+      "label": "CCW (A1)",
+      "count": 5,
+      "originalCount": 5
+    },
+    {
+      "name": "Satellite Backpack",
+      "type": "ArmyBookItem",
+      "label": "Satellite Backpack (Beacon)",
+      "content": [
+        {
+          "id": "rJSSHbaRMID4",
+          "name": "Beacon",
+          "type": "ArmyBookRule",
+          "dependencies": [],
+          "count": 1
+        }
+      ],
+      "count": 1,
+      "dependencies": []
+    },
+    {
+      "id": "Lnlu85A_",
+      "name": "Shotgun",
+      "type": "ArmyBookWeapon",
+      "range": 12,
+      "attacks": 2,
+      "weaponId": "Lnlu85A_",
+      "specialRules": [
+        {
+          "id": "17crjK7P6_w6",
+          "name": "AP",
+          "rating": 1
+        }
+      ],
+      "attacksMultiplier": null,
+      "label": "Shotgun (12\", A2, AP(1))",
+      "count": 1,
+      "dependencies": []
+    }
+  ],
+  "_metadata": {
+    "armyforgeId": "IJ1JM_m-jmka",
+    "armyName": "Dev Testerson's Bullshit Army",
+    "extractedAt": "2025-08-14T21:37:23.119Z",
+    "unitIndex": 10
+  }
+}

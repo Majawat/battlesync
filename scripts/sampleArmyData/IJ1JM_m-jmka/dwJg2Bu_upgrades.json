@@ -1,0 +1,63 @@
+{
+  "unitId": "dwJg2Bu",
+  "unitName": "Storm Leader",
+  "upgrades": [
+    {
+      "instanceId": "LtD1KUD6N",
+      "upgrade": {
+        "id": "VcP4UgC",
+        "uid": "r5XpHsA",
+        "label": "Upgrade with one",
+        "isHeroUpgrade": true,
+        "parentPackageUid": "C1",
+        "type": "ArmyBookUpgradeSection",
+        "variant": "upgrade",
+        "select": {
+          "type": "exactly",
+          "value": 1
+        }
+      },
+      "option": {
+        "uid": "OZdBEjq",
+        "type": "ArmyBookUpgradeOption",
+        "costs": [
+          {
+            "cost": 40,
+            "unitId": "dwJg2Bu"
+          },
+          {
+            "cost": 40,
+            "unitId": "3Tk4911"
+          }
+        ],
+        "gains": [
+          {
+            "name": "Psy-Hacker",
+            "type": "ArmyBookItem",
+            "bases": null,
+            "label": "Psy-Hacker (Caster(2))",
+            "content": [
+              {
+                "id": "47CAqf7ySlfc",
+                "name": "Caster",
+                "type": "ArmyBookRule",
+                "rating": 2,
+                "dependencies": []
+              }
+            ],
+            "count": 1,
+            "dependencies": []
+          }
+        ],
+        "label": "Psy-Hacker (Caster(2))",
+        "parentSectionId": "r5XpHsA",
+        "id": "OZdBEjq"
+      }
+    }
+  ],
+  "_metadata": {
+    "armyforgeId": "IJ1JM_m-jmka",
+    "extractedAt": "2025-08-14T21:37:23.122Z",
+    "upgradeCount": 1
+  }
+}

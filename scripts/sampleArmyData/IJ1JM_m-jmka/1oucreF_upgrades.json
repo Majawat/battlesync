@@ -1,0 +1,170 @@
+{
+  "unitId": "1oucreF",
+  "unitName": "Destroyer Sisters",
+  "upgrades": [
+    {
+      "instanceId": "9xFeuEnFJ",
+      "upgrade": {
+        "id": "5SJZ5Ol",
+        "uid": "TNUc16_",
+        "label": "Replace any CCW",
+        "parentPackageUid": "M1",
+        "type": "ArmyBookUpgradeSection",
+        "variant": "replace",
+        "affects": {
+          "type": "any"
+        },
+        "targets": [
+          "CCW"
+        ]
+      },
+      "option": {
+        "uid": "0vd07Zg",
+        "cost": 15,
+        "type": "ArmyBookUpgradeOption",
+        "costs": [
+          {
+            "cost": 20,
+            "unitId": "1oucreF"
+          }
+        ],
+        "gains": [
+          {
+            "id": "kuBk4Uc4",
+            "name": "Energy Fist",
+            "type": "ArmyBookWeapon",
+            "range": 0,
+            "attacks": 3,
+            "weaponId": "p2SC0q9O",
+            "specialRules": [
+              {
+                "id": "17crjK7P6_w6",
+                "name": "AP",
+                "type": "ArmyBookRule",
+                "rating": 4
+              }
+            ],
+            "label": "Energy Fist (A3, AP(4))",
+            "count": 1,
+            "dependencies": []
+          }
+        ],
+        "label": "Energy Fist (A3, AP(4))",
+        "parentPackageUid": "M1",
+        "parentSectionUid": "TNUc16_",
+        "parentSectionId": "TNUc16_",
+        "id": "0vd07Zg"
+      }
+    },
+    {
+      "instanceId": "VdQG1J4uM",
+      "upgrade": {
+        "id": "5SJZ5Ol",
+        "uid": "TNUc16_",
+        "label": "Replace any CCW",
+        "parentPackageUid": "M1",
+        "type": "ArmyBookUpgradeSection",
+        "variant": "replace",
+        "affects": {
+          "type": "any"
+        },
+        "targets": [
+          "CCW"
+        ]
+      },
+      "option": {
+        "uid": "0vd07Zg",
+        "cost": 15,
+        "type": "ArmyBookUpgradeOption",
+        "costs": [
+          {
+            "cost": 20,
+            "unitId": "1oucreF"
+          }
+        ],
+        "gains": [
+          {
+            "id": "kuBk4Uc4",
+            "name": "Energy Fist",
+            "type": "ArmyBookWeapon",
+            "range": 0,
+            "attacks": 3,
+            "weaponId": "p2SC0q9O",
+            "specialRules": [
+              {
+                "id": "17crjK7P6_w6",
+                "name": "AP",
+                "type": "ArmyBookRule",
+                "rating": 4
+              }
+            ],
+            "label": "Energy Fist (A3, AP(4))",
+            "count": 1,
+            "dependencies": []
+          }
+        ],
+        "label": "Energy Fist (A3, AP(4))",
+        "parentPackageUid": "M1",
+        "parentSectionUid": "TNUc16_",
+        "parentSectionId": "TNUc16_",
+        "id": "0vd07Zg"
+      }
+    },
+    {
+      "instanceId": "MMTz7bqKC",
+      "upgrade": {
+        "id": "-DbqA7I",
+        "uid": "saRiMbg",
+        "label": "Replace all Combat Shields and CCWS",
+        "parentPackageUid": "M1",
+        "type": "ArmyBookUpgradeSection",
+        "variant": "replace",
+        "affects": {
+          "type": "all"
+        },
+        "targets": [
+          "Combat Shields",
+          "CCWS"
+        ]
+      },
+      "option": {
+        "uid": "21BKIbE",
+        "type": "ArmyBookUpgradeOption",
+        "costs": [
+          {
+            "cost": 35,
+            "unitId": "1oucreF"
+          }
+        ],
+        "gains": [
+          {
+            "id": null,
+            "name": "Dual Energy Claws",
+            "type": "ArmyBookWeapon",
+            "count": 1,
+            "range": 0,
+            "attacks": 4,
+            "weaponId": "gLvu2axn",
+            "specialRules": [
+              {
+                "id": "cavWDboL4ubs",
+                "name": "Rending",
+                "type": "ArmyBookRule"
+              }
+            ],
+            "label": "Dual Energy Claws (A4, Rending)",
+            "dependencies": []
+          }
+        ],
+        "label": "Dual Energy Claws (A4, Rending)",
+        "parentSectionId": "saRiMbg",
+        "id": "21BKIbE"
+      }
+    }
+  ],
+  "_metadata": {
+    "armyforgeId": "IJ1JM_m-jmka",
+    "extractedAt": "2025-08-14T21:37:23.122Z",
+    "upgradeCount": 3
+  }
+}

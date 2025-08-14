@@ -1,0 +1,293 @@
+{
+  "id": "q6fx4lG",
+  "cost": 285,
+  "name": "Grinder Truck",
+  "size": 1,
+  "bases": {
+    "round": "none",
+    "square": "none"
+  },
+  "items": [],
+  "rules": [
+    {
+      "id": "KdgwlPb8LuD2",
+      "name": "Fast",
+      "label": "Fast"
+    },
+    {
+      "id": "62-mYKVM9MLd",
+      "name": "Impact",
+      "rating": 3,
+      "label": "Impact(3)"
+    },
+    {
+      "id": "JSKVyurtWIyW",
+      "name": "Strider",
+      "label": "Strider"
+    },
+    {
+      "id": "a0YtInGiUDd6",
+      "name": "Tough",
+      "rating": 9,
+      "label": "Tough(9)"
+    },
+    {
+      "id": "aogQZcOOQrDI",
+      "name": "Transport",
+      "rating": 6,
+      "label": "Transport(6)"
+    }
+  ],
+  "valid": true,
+  "defense": 2,
+  "quality": 4,
+  "weapons": [
+    {
+      "id": "_OuuPXyd",
+      "name": "Heavy Machinegun",
+      "type": "ArmyBookWeapon",
+      "range": 30,
+      "attacks": 3,
+      "weaponId": "_OuuPXyd",
+      "specialRules": [
+        {
+          "type": "ArmyBookRule",
+          "id": "17crjK7P6_w6",
+          "name": "AP",
+          "rating": 1,
+          "label": "AP(1)"
+        }
+      ],
+      "label": "Heavy Machinegun (30\", A3, AP(1))",
+      "count": 1,
+      "originalCount": 1
+    },
+    {
+      "id": "b15ZGemJ",
+      "name": "Heavy Quake Cannon",
+      "type": "ArmyBookWeapon",
+      "count": 1,
+      "range": 24,
+      "attacks": 2,
+      "weaponId": "uWZ7nsBU",
+      "specialRules": [
+        {
+          "type": "ArmyBookRule",
+          "id": "w_vX0mi58KKt",
+          "name": "Blast",
+          "rating": 3,
+          "label": "Blast(3)"
+        },
+        {
+          "type": "ArmyBookRule",
+          "id": "cavWDboL4ubs",
+          "name": "Rending",
+          "label": "Rending"
+        }
+      ],
+      "label": "Heavy Quake Cannon (24\", A2, Blast(3), Rending)",
+      "originalCount": 1,
+      "dependencies": [
+        {
+          "upgradeInstanceId": "ui4JmBKgm",
+          "count": 1,
+          "variant": "replace"
+        }
+      ]
+    }
+  ],
+  "upgrades": [
+    "D2"
+  ],
+  "hasCustomRule": false,
+  "disabledSections": [],
+  "hasBalanceInvalid": false,
+  "disabledUpgradeSections": [],
+  "armyId": "zz3kp5ry7ks6mxcx",
+  "xp": 5,
+  "notes": null,
+  "traits": [
+    "Agile",
+    "Elite",
+    "Headstrong",
+    "Fast Learner",
+    "Specialist",
+    "Resilient"
+  ],
+  "combined": false,
+  "customName": "Grindr Love Truck",
+  "joinToUnit": null,
+  "selectionId": "Ym0TT",
+  "selectedUpgrades": [
+    {
+      "instanceId": "rTh7CTK0L",
+      "upgrade": {
+        "id": "9-n3l_f",
+        "uid": "Q9Msl",
+        "label": "Upgrade with",
+        "parentPackageUid": "D2",
+        "type": "ArmyBookUpgradeSection",
+        "variant": "upgrade"
+      },
+      "option": {
+        "uid": "sPtME",
+        "cost": 25,
+        "type": "ArmyBookUpgradeOption",
+        "costs": [
+          {
+            "cost": 25,
+            "unitId": "q6fx4lG"
+          }
+        ],
+        "gains": [
+          {
+            "name": "Great Grinder",
+            "type": "ArmyBookItem",
+            "bases": null,
+            "label": "Great Grinder (Impact(5))",
+            "content": [
+              {
+                "id": "62-mYKVM9MLd",
+                "name": "Impact",
+                "type": "ArmyBookRule",
+                "rating": 5,
+                "dependencies": []
+              }
+            ],
+            "count": 1,
+            "dependencies": []
+          }
+        ],
+        "label": "Great Grinder (Impact(5))",
+        "parentSectionId": "Q9Msl",
+        "id": "sPtME"
+      }
+    },
+    {
+      "instanceId": "ui4JmBKgm",
+      "upgrade": {
+        "id": "EYT_67n",
+        "uid": "lkbv4rH",
+        "label": "Replace Heavy Quake Cannon",
+        "parentPackageUid": "D2",
+        "type": "ArmyBookUpgradeSection",
+        "variant": "replace",
+        "targets": [
+          "Heavy Quake Cannon"
+        ]
+      },
+      "option": {
+        "uid": "Ijpb1fK",
+        "cost": 25,
+        "type": "ArmyBookUpgradeOption",
+        "costs": [
+          {
+            "cost": 35,
+            "unitId": "q6fx4lG"
+          }
+        ],
+        "gains": [
+          {
+            "name": "Rapid Heavy Mining Laser",
+            "type": "ArmyBookWeapon",
+            "count": 1,
+            "range": 24,
+            "attacks": "2",
+            "weaponId": "usxbIqqy",
+            "specialRules": [
+              {
+                "id": "17crjK7P6_w6",
+                "name": "AP",
+                "type": "ArmyBookRule",
+                "rating": 3
+              },
+              {
+                "id": "_mrPya5SXSqW",
+                "name": "Deadly",
+                "type": "ArmyBookRule",
+                "rating": 3
+              }
+            ],
+            "label": "Rapid Heavy Mining Laser (24\", A2, AP(3), Deadly(3))",
+            "dependencies": []
+          }
+        ],
+        "label": "Rapid Heavy Mining Laser (24\", A2, AP(3), Deadly(3))",
+        "parentPackageUid": "D2",
+        "parentSectionUid": "lkbv4rH",
+        "parentSectionId": "lkbv4rH",
+        "id": "Ijpb1fK"
+      }
+    }
+  ],
+  "loadout": [
+    {
+      "id": "_OuuPXyd",
+      "name": "Heavy Machinegun",
+      "type": "ArmyBookWeapon",
+      "range": 30,
+      "attacks": 3,
+      "weaponId": "_OuuPXyd",
+      "specialRules": [
+        {
+          "type": "ArmyBookRule",
+          "id": "17crjK7P6_w6",
+          "name": "AP",
+          "rating": 1,
+          "label": "AP(1)"
+        }
+      ],
+      "label": "Heavy Machinegun (30\", A3, AP(1))",
+      "count": 1,
+      "originalCount": 1
+    },
+    {
+      "name": "Great Grinder",
+      "type": "ArmyBookItem",
+      "bases": null,
+      "label": "Great Grinder (Impact(5))",
+      "content": [
+        {
+          "id": "62-mYKVM9MLd",
+          "name": "Impact",
+          "type": "ArmyBookRule",
+          "rating": 5,
+          "dependencies": [],
+          "count": 1
+        }
+      ],
+      "count": 1,
+      "dependencies": []
+    },
+    {
+      "name": "Rapid Heavy Mining Laser",
+      "type": "ArmyBookWeapon",
+      "count": 1,
+      "range": 24,
+      "attacks": "2",
+      "weaponId": "usxbIqqy",
+      "specialRules": [
+        {
+          "id": "17crjK7P6_w6",
+          "name": "AP",
+          "type": "ArmyBookRule",
+          "rating": 3
+        },
+        {
+          "id": "_mrPya5SXSqW",
+          "name": "Deadly",
+          "type": "ArmyBookRule",
+          "rating": 3
+        }
+      ],
+      "label": "Rapid Heavy Mining Laser (24\", A2, AP(3), Deadly(3))",
+      "dependencies": []
+    }
+  ],
+  "_metadata": {
+    "armyforgeId": "IJ1JM_m-jmka",
+    "armyName": "Dev Testerson's Bullshit Army",
+    "extractedAt": "2025-08-14T21:37:23.114Z",
+    "unitIndex": 0
+  }
+}

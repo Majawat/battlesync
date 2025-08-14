@@ -1,0 +1,46 @@
+{
+  "instanceId": "PnzUNcecK",
+  "upgrade": {
+    "id": "fA3BxHK",
+    "uid": "OsXkF",
+    "label": "Upgrade with",
+    "parentPackageUid": "C1",
+    "type": "ArmyBookUpgradeSection",
+    "variant": "upgrade"
+  },
+  "option": {
+    "uid": "EW5tb",
+    "type": "ArmyBookUpgradeOption",
+    "costs": [
+      {
+        "cost": 10,
+        "unitId": "dwJg2Bu"
+      },
+      {
+        "cost": 10,
+        "unitId": "3Tk4911"
+      }
+    ],
+    "gains": [
+      {
+        "name": "Wolf-Dog Companion",
+        "type": "ArmyBookItem",
+        "bases": null,
+        "label": "Wolf-Dog Companion (Warning Cry)",
+        "content": [
+          {
+            "id": "C6MzEy1CnxTs",
+            "name": "Warning Cry",
+            "type": "ArmyBookRule",
+            "dependencies": []
+          }
+        ],
+        "count": 1,
+        "dependencies": []
+      }
+    ],
+    "label": "Wolf-Dog Companion (Warning Cry)",
+    "parentSectionId": "OsXkF",
+    "id": "EW5tb"
+  }
+}

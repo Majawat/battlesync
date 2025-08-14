@@ -1,0 +1,160 @@
+{
+  "unitId": "3Tk4911",
+  "unitName": "Company Leader",
+  "upgrades": [
+    {
+      "instanceId": "RAvIFLVxo",
+      "upgrade": {
+        "id": "CTN_KEV",
+        "uid": "F8Om0",
+        "label": "Upgrade with one",
+        "parentPackageUid": "A1",
+        "type": "ArmyBookUpgradeSection",
+        "variant": "upgrade",
+        "select": {
+          "type": "exactly",
+          "value": 1
+        }
+      },
+      "option": {
+        "uid": "6omIv",
+        "type": "ArmyBookUpgradeOption",
+        "costs": [
+          {
+            "cost": 5,
+            "unitId": "3Tk4911"
+          }
+        ],
+        "gains": [
+          {
+            "name": "Heavy Armor",
+            "type": "ArmyBookItem",
+            "bases": {
+              "round": "32",
+              "square": "25"
+            },
+            "label": "Heavy Armor (Defense(1))",
+            "content": [
+              {
+                "id": "74RjQ1k41DoO",
+                "name": "Defense",
+                "type": "ArmyBookRule",
+                "rating": 1,
+                "dependencies": []
+              }
+            ],
+            "count": 1,
+            "dependencies": []
+          }
+        ],
+        "label": "Heavy Armor (Defense(1))",
+        "parentSectionId": "F8Om0",
+        "id": "6omIv"
+      }
+    },
+    {
+      "instanceId": "-CX0eTW9j",
+      "upgrade": {
+        "id": "kKvrs7C",
+        "uid": "OsXkF",
+        "label": "Upgrade with",
+        "parentPackageUid": "C1",
+        "type": "ArmyBookUpgradeSection",
+        "variant": "upgrade"
+      },
+      "option": {
+        "uid": "EW5tb",
+        "type": "ArmyBookUpgradeOption",
+        "costs": [
+          {
+            "cost": 10,
+            "unitId": "dwJg2Bu"
+          },
+          {
+            "cost": 10,
+            "unitId": "3Tk4911"
+          }
+        ],
+        "gains": [
+          {
+            "name": "Wolf-Dog Companion",
+            "type": "ArmyBookItem",
+            "bases": null,
+            "label": "Wolf-Dog Companion (Warning Cry)",
+            "content": [
+              {
+                "id": "C6MzEy1CnxTs",
+                "name": "Warning Cry",
+                "type": "ArmyBookRule",
+                "dependencies": []
+              }
+            ],
+            "count": 1,
+            "dependencies": []
+          }
+        ],
+        "label": "Wolf-Dog Companion (Warning Cry)",
+        "parentSectionId": "OsXkF",
+        "id": "EW5tb"
+      }
+    },
+    {
+      "instanceId": "ObX6SXzJ-",
+      "upgrade": {
+        "id": "VcP4UgC",
+        "uid": "r5XpHsA",
+        "label": "Upgrade with one",
+        "isHeroUpgrade": true,
+        "parentPackageUid": "C1",
+        "type": "ArmyBookUpgradeSection",
+        "variant": "upgrade",
+        "select": {
+          "type": "exactly",
+          "value": 1
+        }
+      },
+      "option": {
+        "uid": "8reDsp0",
+        "cost": 50,
+        "type": "ArmyBookUpgradeOption",
+        "costs": [
+          {
+            "cost": 45,
+            "unitId": "dwJg2Bu"
+          },
+          {
+            "cost": 45,
+            "unitId": "3Tk4911"
+          }
+        ],
+        "gains": [
+          {
+            "name": "Forward Observer",
+            "type": "ArmyBookItem",
+            "label": "Forward Observer (Take Aim)",
+            "content": [
+              {
+                "id": "KskX8qPX3I8G",
+                "name": "Take Aim",
+                "type": "ArmyBookRule",
+                "dependencies": []
+              }
+            ],
+            "count": 1,
+            "dependencies": []
+          }
+        ],
+        "label": "Forward Observer (Take Aim)",
+        "parentPackageUid": "C1",
+        "parentSectionUid": "r5XpHsA",
+        "parentSectionId": "r5XpHsA",
+        "id": "8reDsp0"
+      }
+    }
+  ],
+  "_metadata": {
+    "armyforgeId": "IJ1JM_m-jmka",
+    "extractedAt": "2025-08-14T21:37:23.120Z",
+    "upgradeCount": 3
+  }
+}
