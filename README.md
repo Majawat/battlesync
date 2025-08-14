@@ -28,7 +28,7 @@ git ls-tree -r v1.5.2-final-archive | wc -l  # 170+ files
 - **Focused**: Battle tracking only (no premature features)
 - **Mobile**: Built mobile-first with TailwindCSS
 
-## 🚀 Current Status (v2.11.0)
+## 🚀 Current Status (v2.12.0)
 
 ✅ **Full-Stack Complete**: React frontend + Express backend in single-port deployment  
 ✅ **Army Import System**: Complete ArmyForge integration with OPR unit processing  
@@ -39,6 +39,8 @@ git ls-tree -r v1.5.2-final-archive | wc -l  # 170+ files
 ✅ **Mobile-First UI**: TailwindCSS responsive design with army/battle visualization  
 ✅ **Production Ready**: Docker deployment serves frontend + API on single port (4019)  
 ✅ **Testing**: Comprehensive test coverage for all functionality  
+✅ **ESP32 Firmware Flashing**: Web-based ESP32 flashing with esptool-js and Web Serial API  
+✅ **BattleAura Integration**: Complete firmware hosting, versioning, and device management system  
 📋 **Next**: Advanced OPR mechanics (morale, fatigue effects) and battle automation
 
 **Server**: http://localhost:4019 (Warhammer 40k themed port!)

@@ -43,6 +43,9 @@ export default function Layout({ children }: LayoutProps) {
               <Link to="/battles" className={navLinkClass('/battles')}>
                 Battles
               </Link>
+              <Link to="/flash" className={navLinkClass('/flash')}>
+                BattleAura
+              </Link>
               
               {/* Dark Mode Toggle */}
               <DarkModeToggle />

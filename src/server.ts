@@ -40,6 +40,26 @@ function getBaseUrl(req: Request): string {
   return `${protocol}://${host}`;
 }
 
+// Helper function to map database firmware record to API response
+function mapFirmwareRecord(firmware: any, baseUrl: string): FirmwareInfo {
+  return {
+    version: firmware.version,
+    download_url: `${baseUrl}/api/battleaura/firmware/download/${firmware.filename}`,
+    changelog: firmware.changelog || '',
+    released: firmware.uploaded_at,
+    file_size: firmware.file_size,
+    // Flash metadata
+    chip_family: firmware.chip_family,
+    flash_size: firmware.flash_size,
+    flash_mode: firmware.flash_mode,
+    flash_freq: firmware.flash_freq,
+    partition_table: firmware.partition_table ? JSON.parse(firmware.partition_table) : undefined,
+    bootloader_addr: firmware.bootloader_addr,
+    partition_addr: firmware.partition_addr,
+    app_addr: firmware.app_addr
+  };
+}
+
 interface HealthResponse {
   status: string;
   version: string;
@@ -140,6 +160,15 @@ interface FirmwareInfo {
   changelog?: string;
   released: string;
   file_size: number;
+  // Flash metadata
+  chip_family?: string;
+  flash_size?: string;
+  flash_mode?: string;
+  flash_freq?: string;
+  partition_table?: any;
+  bootloader_addr?: string;
+  partition_addr?: string;
+  app_addr?: string;
 }
 
 interface GetLatestFirmwareResponse {
@@ -974,7 +1003,9 @@ const upload = multer({
 app.get('/api/battleaura/firmware/latest', async (req: Request, res: Response<GetLatestFirmwareResponse>) => {
   try {
     const firmware = await db.get(`
-      SELECT version, filename, changelog, file_size, uploaded_at 
+      SELECT version, filename, changelog, file_size, uploaded_at,
+             chip_family, flash_size, flash_mode, flash_freq, partition_table,
+             bootloader_addr, partition_addr, app_addr 
       FROM firmware 
       ORDER BY uploaded_at DESC 
       LIMIT 1
@@ -992,14 +1023,9 @@ app.get('/api/battleaura/firmware/latest', async (req: Request, res: Response<Ge
     }
 
     const baseUrl = getBaseUrl(req);
+    const firmwareInfo = mapFirmwareRecord(firmware, baseUrl);
     
-    res.json({
-      version: firmware.version,
-      download_url: `${baseUrl}/api/battleaura/firmware/download/${firmware.filename}`,
-      changelog: firmware.changelog || '',
-      released: firmware.uploaded_at,
-      file_size: firmware.file_size
-    });
+    res.json(firmwareInfo);
 
   } catch (error) {
     console.error('Error fetching latest firmware:', error);
@@ -1026,6 +1052,16 @@ app.post('/api/battleaura/firmware/upload', upload.single('file'), async (req: R
 
     const version = req.body.version?.replace(/^v/, ''); // Remove 'v' prefix if present
     const changelog = req.body.changelog || '';
+    
+    // Flash metadata (with defaults for BattleAura ESP32-C3)
+    const chip_family = req.body.chip_family || 'esp32c3';
+    const flash_size = req.body.flash_size || '4MB';
+    const flash_mode = req.body.flash_mode || 'dio';
+    const flash_freq = req.body.flash_freq || '80m';
+    const partition_table = req.body.partition_table || null;
+    const bootloader_addr = req.body.bootloader_addr || '0x0';
+    const partition_addr = req.body.partition_addr || '0x8000';
+    const app_addr = req.body.app_addr || '0x10000';
 
     if (!version) {
       // Clean up uploaded file
@@ -1073,9 +1109,17 @@ app.post('/api/battleaura/firmware/upload', upload.single('file'), async (req: R
 
     // Store firmware metadata in database
     const result = await db.run(`
-      INSERT INTO firmware (version, filename, changelog, file_size)
-      VALUES (?, ?, ?, ?)
-    `, [version, req.file.filename, changelog, req.file.size]);
+      INSERT INTO firmware (
+        version, filename, changelog, file_size, 
+        chip_family, flash_size, flash_mode, flash_freq, partition_table,
+        bootloader_addr, partition_addr, app_addr
+      )
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `, [
+      version, req.file.filename, changelog, req.file.size,
+      chip_family, flash_size, flash_mode, flash_freq, partition_table,
+      bootloader_addr, partition_addr, app_addr
+    ]);
 
     if (!result.lastID) {
       await fs.unlink(req.file.path).catch(() => {});
@@ -1084,13 +1128,24 @@ app.post('/api/battleaura/firmware/upload', upload.single('file'), async (req: R
 
     const baseUrl = getBaseUrl(req);
     
-    const firmwareInfo: FirmwareInfo = {
+    // Create firmware record for response
+    const firmwareRecord = {
       version,
-      download_url: `${baseUrl}/api/battleaura/firmware/download/${req.file.filename}`,
+      filename: req.file.filename,
       changelog,
-      released: new Date().toISOString(),
-      file_size: req.file.size
+      uploaded_at: new Date().toISOString(),
+      file_size: req.file.size,
+      chip_family,
+      flash_size,
+      flash_mode,
+      flash_freq,
+      partition_table,
+      bootloader_addr,
+      partition_addr,
+      app_addr
     };
+    
+    const firmwareInfo = mapFirmwareRecord(firmwareRecord, baseUrl);
 
     res.status(201).json({
       success: true,
@@ -1116,20 +1171,18 @@ app.post('/api/battleaura/firmware/upload', upload.single('file'), async (req: R
 app.get('/api/battleaura/firmware', async (req: Request, res: Response<GetAllFirmwareResponse>) => {
   try {
     const firmware = await db.all(`
-      SELECT version, filename, changelog, file_size, uploaded_at 
+      SELECT version, filename, changelog, file_size, uploaded_at,
+             chip_family, flash_size, flash_mode, flash_freq, partition_table,
+             bootloader_addr, partition_addr, app_addr 
       FROM firmware 
       ORDER BY uploaded_at DESC
     `);
 
     const baseUrl = getBaseUrl(req);
     
-    const firmwareList: FirmwareInfo[] = firmware.map((fw: any) => ({
-      version: fw.version,
-      download_url: `${baseUrl}/api/battleaura/firmware/download/${fw.filename}`,
-      changelog: fw.changelog || '',
-      released: fw.uploaded_at,
-      file_size: fw.file_size
-    }));
+    const firmwareList: FirmwareInfo[] = firmware.map((fw: any) => 
+      mapFirmwareRecord(fw, baseUrl)
+    );
 
     res.json({
       success: true,
@@ -1160,7 +1213,9 @@ app.get('/api/battleaura/firmware/:version', async (req: Request<{version: strin
     }
 
     const firmware = await db.get(`
-      SELECT version, filename, changelog, file_size, uploaded_at 
+      SELECT version, filename, changelog, file_size, uploaded_at,
+             chip_family, flash_size, flash_mode, flash_freq, partition_table,
+             bootloader_addr, partition_addr, app_addr 
       FROM firmware 
       WHERE version = ?
     `, [version]);
@@ -1174,14 +1229,7 @@ app.get('/api/battleaura/firmware/:version', async (req: Request<{version: strin
     }
 
     const baseUrl = getBaseUrl(req);
-    
-    const firmwareInfo: FirmwareInfo = {
-      version: firmware.version,
-      download_url: `${baseUrl}/api/battleaura/firmware/download/${firmware.filename}`,
-      changelog: firmware.changelog || '',
-      released: firmware.uploaded_at,
-      file_size: firmware.file_size
-    };
+    const firmwareInfo = mapFirmwareRecord(firmware, baseUrl);
 
     res.json({
       success: true,

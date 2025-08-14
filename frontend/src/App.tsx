@@ -7,6 +7,7 @@ import ArmyDetailPage from './pages/ArmyDetailPage';
 import BattleListPage from './pages/BattleListPage';
 import CreateBattlePage from './pages/CreateBattlePage';
 import BattlePage from './pages/BattlePage';
+import FirmwareFlashPage from './pages/FirmwareFlashPage';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/battles" element={<BattleListPage />} />
           <Route path="/battles/new" element={<CreateBattlePage />} />
           <Route path="/battles/:id" element={<BattlePage />} />
+          <Route path="/flash" element={<FirmwareFlashPage />} />
         </Routes>
       </Layout>
     </Router>

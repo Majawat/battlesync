@@ -9,7 +9,7 @@ BattleSync v2 is designed around simplicity and core battle tracking functionali
 - **Focused**: Battle tracking only, avoiding premature features
 - **Mobile**: Mobile-first design with TailwindCSS
 
-## ✅ Current Features (v2.11.0)
+## ✅ Current Features (v2.12.0)
 
 ### Backend Infrastructure
 - [x] **TypeScript Backend** - Fully typed Express.js server with SQLite
@@ -40,6 +40,21 @@ BattleSync v2 is designed around simplicity and core battle tracking functionali
 - [x] `POST /api/battles/:id/start` - Start battle and initialize unit states
 - [x] `GET /api/battles/:id/units` - Get all unit battle states
 - [x] `PATCH /api/battles/:battleId/units/:unitStateId` - Update unit state
+
+### BattleAura Firmware Management
+- [x] **Firmware Hosting System** - Host and serve ESP32 firmware binaries  
+- [x] **Web-based Flashing** - Flash ESP32 devices directly from browser using Web Serial API
+- [x] **Device Detection** - Automatic chip identification and flash memory detection
+- [x] **Progress Tracking** - Real-time progress for download, preparation, flash, and reset stages
+- [x] **Version Management** - Semantic versioning with changelog support
+- [x] **GitHub Actions Integration** - Automated firmware upload via CI/CD
+- [x] **Flash Metadata** - Chip compatibility and flash configuration parameters
+- [x] `GET /api/battleaura/firmware/latest` - Get latest firmware version
+- [x] `GET /api/battleaura/firmware` - List all firmware versions  
+- [x] `GET /api/battleaura/firmware/:version` - Get specific firmware version
+- [x] `POST /api/battleaura/firmware/upload` - Upload firmware binary (CI/CD)
+- [x] `GET /api/battleaura/firmware/download/:filename` - Download firmware files
+- [x] `DELETE /api/battleaura/firmware/admin/clear` - Clear firmware data (admin)
 
 ### Battle Management System
 - [x] **Battle Sessions** - Create and manage battle sessions

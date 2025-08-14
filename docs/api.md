@@ -497,6 +497,134 @@ Update individual unit state properties.
 }
 ```
 
+## BattleAura Firmware Management
+
+### `GET /api/battleaura/firmware/latest`
+Get the latest firmware version information.
+
+**Response:**
+```json
+{
+  "version": "1.2.3",
+  "download_url": "http://localhost:4019/api/battleaura/firmware/download/battleaura-1.2.3.bin",
+  "changelog": "Bug fixes and performance improvements",
+  "released": "2025-08-14T10:30:00Z",
+  "file_size": 1048576,
+  "chip_family": "esp32c3",
+  "flash_size": "4MB",
+  "flash_mode": "dio",
+  "flash_freq": "80m",
+  "bootloader_addr": "0x0",
+  "partition_addr": "0x8000",
+  "app_addr": "0x10000"
+}
+```
+
+### `GET /api/battleaura/firmware`
+List all available firmware versions.
+
+**Response:**
+```json
+{
+  "success": true,
+  "firmware": [
+    {
+      "version": "1.2.3",
+      "download_url": "http://localhost:4019/api/battleaura/firmware/download/battleaura-1.2.3.bin",
+      "changelog": "Bug fixes and performance improvements",
+      "released": "2025-08-14 10:30:00",
+      "file_size": 1048576,
+      "chip_family": "esp32c3",
+      "flash_size": "4MB",
+      "flash_mode": "dio",
+      "flash_freq": "80m",
+      "bootloader_addr": "0x0",
+      "partition_addr": "0x8000",
+      "app_addr": "0x10000"
+    }
+  ]
+}
+```
+
+### `GET /api/battleaura/firmware/:version`
+Get specific firmware version information.
+
+**Parameters:**
+- `version`: Semantic version (e.g., "1.2.3")
+
+**Response:**
+```json
+{
+  "success": true,
+  "firmware": {
+    "version": "1.2.3",
+    "download_url": "http://localhost:4019/api/battleaura/firmware/download/battleaura-1.2.3.bin",
+    "changelog": "Bug fixes and performance improvements",
+    "released": "2025-08-14 10:30:00",
+    "file_size": 1048576,
+    "chip_family": "esp32c3",
+    "flash_size": "4MB",
+    "flash_mode": "dio",
+    "flash_freq": "80m",
+    "bootloader_addr": "0x0",
+    "partition_addr": "0x8000",
+    "app_addr": "0x10000"
+  }
+}
+```
+
+### `POST /api/battleaura/firmware/upload`
+Upload new firmware binary (primarily for GitHub Actions).
+
+**Request:** Multipart form data
+- `file`: Binary firmware file
+- `version`: Semantic version (e.g., "1.2.3")
+- `changelog`: Optional description of changes
+- `chip_family`: Target chip (default: "esp32c3")
+- `flash_size`: Flash memory size (default: "4MB")
+- `flash_mode`: Flash mode (default: "dio")
+- `flash_freq`: Flash frequency (default: "80m")
+
+**Response:**
+```json
+{
+  "success": true,
+  "firmware": {
+    "version": "1.2.3",
+    "download_url": "http://localhost:4019/api/battleaura/firmware/download/battleaura-1.2.3.bin",
+    "changelog": "Bug fixes and performance improvements",
+    "released": "2025-08-14T10:30:00.123Z",
+    "file_size": 1048576,
+    "chip_family": "esp32c3",
+    "flash_size": "4MB",
+    "flash_mode": "dio",
+    "flash_freq": "80m",
+    "bootloader_addr": "0x0",
+    "partition_addr": "0x8000",
+    "app_addr": "0x10000"
+  }
+}
+```
+
+### `GET /api/battleaura/firmware/download/:filename`
+Download firmware binary file.
+
+**Parameters:**
+- `filename`: Firmware filename (e.g., "battleaura-1.2.3.bin")
+
+**Response:** Binary firmware file with appropriate headers.
+
+### `DELETE /api/battleaura/firmware/admin/clear`
+Clear all firmware data (admin endpoint for testing/cleanup).
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "All firmware data cleared successfully"
+}
+```
+
 ## Error Responses
 
 All endpoints return errors in this format:

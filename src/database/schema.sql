@@ -210,6 +210,17 @@ CREATE TABLE IF NOT EXISTS firmware (
     filename TEXT NOT NULL,
     changelog TEXT,
     file_size INTEGER NOT NULL,
+    
+    -- Flash metadata
+    chip_family TEXT DEFAULT 'esp32c3', -- esp32, esp32s2, esp32s3, esp32c3, esp32c6, etc.
+    flash_size TEXT DEFAULT '4MB', -- 2MB, 4MB, 8MB, 16MB
+    flash_mode TEXT DEFAULT 'dio', -- qio, qout, dio, dout
+    flash_freq TEXT DEFAULT '80m', -- 20m, 26m, 40m, 80m
+    partition_table TEXT, -- JSON: partition layout info
+    bootloader_addr TEXT DEFAULT '0x0', -- bootloader address
+    partition_addr TEXT DEFAULT '0x8000', -- partition table address  
+    app_addr TEXT DEFAULT '0x10000', -- application address
+    
     uploaded_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 

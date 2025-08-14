@@ -62,7 +62,7 @@ export default function HomePage() {
       </div>
 
       {/* Quick Actions */}
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid md:grid-cols-3 gap-6">
         <div className="card">
           <h3 className="text-lg font-semibold mb-3">Import Army</h3>
           <p className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark mb-4">
@@ -80,6 +80,16 @@ export default function HomePage() {
           </p>
           <Link to="/battles/new" className="btn-primary">
             New Battle
+          </Link>
+        </div>
+
+        <div className="card">
+          <h3 className="text-lg font-semibold mb-3">BattleAura Firmware</h3>
+          <p className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark mb-4">
+            Flash BattleAura firmware directly to your ESP32 device via USB.
+          </p>
+          <Link to="/flash" className="btn-primary bg-orange-600 hover:bg-orange-700">
+            Flash Firmware
           </Link>
         </div>
       </div>
