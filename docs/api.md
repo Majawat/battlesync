@@ -246,7 +246,7 @@ Get the latest available firmware version.
 ```json
 {
   "version": "0.16.7",
-  "download_url": "https://battlesync.me/firmware/battleaura-0.16.7.bin",
+  "download_url": "https://battlesync.me/api/battleaura/firmware/download/battleaura-0.16.7.bin",
   "changelog": "Fix artifact filename typo",
   "released": "2025-01-15T10:30:00Z",
   "file_size": 935568
@@ -274,14 +274,14 @@ List all available firmware versions in reverse chronological order.
   "firmware": [
     {
       "version": "0.16.7",
-      "download_url": "https://battlesync.me/firmware/battleaura-0.16.7.bin",
+      "download_url": "https://battlesync.me/api/battleaura/firmware/download/battleaura-0.16.7.bin",
       "changelog": "Fix artifact filename typo",
       "released": "2025-01-15T10:30:00Z",
       "file_size": 935568
     },
     {
       "version": "0.16.6",
-      "download_url": "https://battlesync.me/firmware/battleaura-0.16.6.bin", 
+      "download_url": "https://battlesync.me/api/battleaura/firmware/download/battleaura-0.16.6.bin", 
       "changelog": "Performance improvements",
       "released": "2025-01-14T10:30:00Z",
       "file_size": 934512
@@ -302,7 +302,7 @@ Get information about a specific firmware version.
   "success": true,
   "firmware": {
     "version": "0.16.6",
-    "download_url": "https://battlesync.me/firmware/battleaura-0.16.6.bin",
+    "download_url": "https://battlesync.me/api/battleaura/firmware/download/battleaura-0.16.6.bin",
     "changelog": "Performance improvements",
     "released": "2025-01-14T10:30:00Z",
     "file_size": 934512
@@ -349,7 +349,7 @@ curl -F "file=@firmware.bin" \
   "success": true,
   "firmware": {
     "version": "0.16.7",
-    "download_url": "https://battlesync.me/firmware/battleaura-0.16.7.bin",
+    "download_url": "https://battlesync.me/api/battleaura/firmware/download/battleaura-0.16.7.bin",
     "changelog": "Fix critical bug in LED handling", 
     "released": "2025-01-15T10:30:00Z",
     "file_size": 935568
@@ -384,12 +384,20 @@ curl -F "file=@firmware.bin" \
 }
 ```
 
-#### `GET /firmware/:filename`
+#### `GET /api/battleaura/firmware/download/:filename`
 Download firmware binary files directly.
+
+**Parameters:**
+- `filename` (string): The firmware filename (e.g., "battleaura-1.2.3.bin")
 
 **Response Headers:**
 - `Content-Type: application/octet-stream`
 - `Content-Disposition: attachment; filename="battleaura-1.2.3.bin"`
+
+**Example:**
+```
+GET /api/battleaura/firmware/download/battleaura-1.2.3.bin
+```
 
 ### Unit Battle State Tracking
 

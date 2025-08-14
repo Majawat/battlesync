@@ -995,7 +995,7 @@ app.get('/api/battleaura/firmware/latest', async (req: Request, res: Response<Ge
     
     res.json({
       version: firmware.version,
-      download_url: `${baseUrl}/firmware/${firmware.filename}`,
+      download_url: `${baseUrl}/api/battleaura/firmware/download/${firmware.filename}`,
       changelog: firmware.changelog || '',
       released: firmware.uploaded_at,
       file_size: firmware.file_size
@@ -1086,7 +1086,7 @@ app.post('/api/battleaura/firmware/upload', upload.single('file'), async (req: R
     
     const firmwareInfo: FirmwareInfo = {
       version,
-      download_url: `${baseUrl}/firmware/${req.file.filename}`,
+      download_url: `${baseUrl}/api/battleaura/firmware/download/${req.file.filename}`,
       changelog,
       released: new Date().toISOString(),
       file_size: req.file.size
@@ -1125,7 +1125,7 @@ app.get('/api/battleaura/firmware', async (req: Request, res: Response<GetAllFir
     
     const firmwareList: FirmwareInfo[] = firmware.map((fw: any) => ({
       version: fw.version,
-      download_url: `${baseUrl}/firmware/${fw.filename}`,
+      download_url: `${baseUrl}/api/battleaura/firmware/download/${fw.filename}`,
       changelog: fw.changelog || '',
       released: fw.uploaded_at,
       file_size: fw.file_size
@@ -1177,7 +1177,7 @@ app.get('/api/battleaura/firmware/:version', async (req: Request<{version: strin
     
     const firmwareInfo: FirmwareInfo = {
       version: firmware.version,
-      download_url: `${baseUrl}/firmware/${firmware.filename}`,
+      download_url: `${baseUrl}/api/battleaura/firmware/download/${firmware.filename}`,
       changelog: firmware.changelog || '',
       released: firmware.uploaded_at,
       file_size: firmware.file_size
@@ -1459,8 +1459,8 @@ async function storeArmyInDatabase(processedArmy: ProcessedArmy, armyForgeData: 
   }
 }
 
-// Serve firmware files with proper MIME type
-app.use('/firmware', express.static(path.join(__dirname, '../firmware'), {
+// Serve firmware files with proper MIME type (consistent API path)
+app.use('/api/battleaura/firmware/download', express.static(path.join(__dirname, '../firmware'), {
   setHeaders: (res, filePath) => {
     if (filePath.endsWith('.bin')) {
       res.set('Content-Type', 'application/octet-stream');
@@ -1475,7 +1475,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../frontend/dist')));
   
   // Handle client-side routing - send all non-API requests to React
-  app.get(/^(?!\/api|\/health|\/firmware).*/, (req: Request, res: Response) => {
+  app.get(/^(?!\/api|\/health).*/, (req: Request, res: Response) => {
     res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
   });
 }
