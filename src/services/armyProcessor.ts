@@ -3,43 +3,41 @@ import { ProcessedArmy, ProcessedUnit, ProcessedSubUnit, ProcessedWeapon, Proces
 
 export class ArmyProcessor {
   /**
-   * Process raw ArmyForge data into BattleSync internal format
-   * Handles Combined and Joined unit merging according to OPR rules
+   * Process raw ArmyForge data using dependency-based upgrade system
+   * Phase 1: Process each unit individually 
+   * Phase 2: Combine units as needed (Combined/Joined)
    */
   public static processArmy(armyForgeData: ArmyForgeArmy): ProcessedArmy {
-    // Step 1: Process individual units into sub-units, preserving original data
-    const allUnitsWithOriginal = armyForgeData.units.map(unit => ({
-      processed: this.processArmyForgeUnit(unit),
+    // Phase 1: Process each ArmyForge unit individually using new algorithm
+    const processedSubUnits = armyForgeData.units.map(unit => ({
+      processed: this.processArmyForgeUnitNew(unit),
       original: unit
     }));
     
-    // Step 2: Handle Combined units (merge units with same ID and combined=true)
-    const unitsAfterCombining = this.processCombinedUnits(allUnitsWithOriginal);
+    // Phase 2: Handle Combined units (merge units with same ID and combined=true)
+    const unitsAfterCombining = this.processCombinedUnitsNew(processedSubUnits);
     
-    // Step 3: Handle Joined units (heroes joining regular units)
-    const finalUnits = this.processJoinedUnits(unitsAfterCombining);
+    // Phase 3: Handle Joined units (heroes joining regular units)
+    const finalUnits = this.processJoinedUnitsNew(unitsAfterCombining);
     
-    // Step 4: Post-process all units to properly handle model upgrades
-    this.postProcessModelUpgrades(finalUnits, armyForgeData.units);
-    
-    // Step 5: Calculate total army cost
+    // Calculate totals
     const totalCost = finalUnits.reduce((sum, unit) => sum + unit.total_cost, 0);
     const totalModels = finalUnits.reduce((sum, unit) => sum + unit.model_count, 0);
     
-    // Step 6: Validate points limit and add to validation errors
+    // Validation
     const validationErrors = [...(armyForgeData.forceOrgErrors || [])];
     if (totalCost > armyForgeData.pointsLimit) {
       validationErrors.push(`Points limit exceeded: ${totalCost}/${armyForgeData.pointsLimit}`);
     }
 
     return {
-      id: '', // Will be set when saving to database
+      id: '',
       armyforge_id: armyForgeData.id,
       name: armyForgeData.name,
       description: armyForgeData.description,
       validation_errors: validationErrors.length > 0 ? validationErrors : undefined,
       points_limit: armyForgeData.pointsLimit,
-      list_points: totalCost, // Use our calculated total
+      list_points: totalCost,
       model_count: totalModels,
       activation_count: finalUnits.length,
       game_system: armyForgeData.gameSystem,
@@ -50,28 +48,15 @@ export class ArmyProcessor {
   }
 
   /**
-   * Process a single ArmyForge unit into a processed sub-unit
+   * Process individual ArmyForge unit using new dependency-based algorithm
    */
-  private static processArmyForgeUnit(unit: ArmyForgeUnit): ProcessedSubUnit {
+  private static processArmyForgeUnitNew(unit: ArmyForgeUnit): ProcessedSubUnit {
     const isHero = unit.rules.some(rule => rule.name === 'Hero');
-    const isCaster = unit.rules.some(rule => rule.name === 'Caster') || 
-                    unit.items?.some(item => item.content?.some(rule => rule.name === 'Caster')) ||
-                    unit.selectedUpgrades.some(upgrade => 
-                      upgrade.option.label.toLowerCase().includes('caster') ||
-                      upgrade.option.label.toLowerCase().includes('witch')
-                    );
+    const isCaster = this.hasCasterAbility(unit.rules, unit.loadout);
+    const casterRating = this.getCasterRating(unit.rules, unit.loadout);
     
-    const casterRule = unit.rules.find(rule => rule.name === 'Caster') ||
-                      unit.items?.find(item => item.content?.find(rule => rule.name === 'Caster'))?.content?.find(rule => rule.name === 'Caster');
-    
-    const casterRating = casterRule?.rating ? parseInt(casterRule.rating.toString()) : undefined;
-
-    // Check for validation issues from ArmyForge
-    const hasValidationIssues = !unit.valid || unit.hasBalanceInvalid || 
-                               (unit.disabledSections && unit.disabledSections.length > 0) || 
-                               (unit.disabledUpgradeSections && unit.disabledUpgradeSections.length > 0);
-
-    return {
+    // Step 1: Create base unit container
+    const subUnit: ProcessedSubUnit = {
       id: unit.selectionId,
       armyforge_unit_id: unit.id,
       name: unit.name,
@@ -81,57 +66,698 @@ export class ArmyProcessor {
       size: unit.size,
       cost: this.calculateUnitCost(unit),
       is_hero: isHero,
-      is_caster: this.hasCasterAbility(unit.rules, unit.loadout),
-      caster_rating: this.getCasterRating(unit.rules, unit.loadout),
+      is_caster: isCaster,
+      caster_rating: casterRating,
       xp: unit.xp,
       traits: unit.traits,
       base_sizes: unit.bases,
       weapons: this.processLoadoutWeapons(unit.loadout),
       rules: this.processEnhancedRules(unit.rules, unit.loadout),
       items: this.processLoadoutItems(unit.loadout),
-      models: this.generateModelsWithWeapons(unit),
-      notes: hasValidationIssues ? 
-        `${unit.notes || ''}${unit.notes ? ' | ' : ''}VALIDATION: ${!unit.valid ? 'Invalid unit' : ''}${unit.hasBalanceInvalid ? ' Balance invalid' : ''}${unit.disabledSections && unit.disabledSections.length > 0 ? ` Disabled sections: ${unit.disabledSections.join(', ')}` : ''}`.trim() :
-        unit.notes || undefined
+      models: [],
+      notes: this.buildNotesWithValidation(unit)
     };
+    
+    // Step 2: Create individual models and process upgrades using new algorithm
+    subUnit.models = this.generateModelsWithNewUpgradeSystem(unit);
+    
+    return subUnit;
   }
 
   /**
-   * Calculate true unit cost including all upgrades and campaign level costs
-   * Uses unit-specific costs from the costs array
+   * Generate models using new dependency-based upgrade system
    */
+  private static generateModelsWithNewUpgradeSystem(unit: ArmyForgeUnit): ProcessedModel[] {
+    console.log(`\n*** Generating models for unit: ${unit.name} ***`);
+    const models: ProcessedModel[] = [];
+    const isHero = unit.rules.some(rule => rule.name === 'Hero');
+    const baseToughness = this.determineBaseToughness(unit);
+    
+    // Step 1: Create base models
+    for (let i = 0; i < unit.size; i++) {
+      models.push({
+        model_id: `${unit.selectionId}-${i + 1}`,
+        name: unit.size === 1 && unit.customName ? unit.customName : `${unit.name} ${i + 1}`,
+        custom_name: unit.size === 1 && unit.customName ? unit.customName : undefined,
+        max_tough: baseToughness,
+        current_tough: baseToughness,
+        is_hero: isHero && unit.size === 1,
+        special_rules: [],
+        weapons: [],
+        upgrades: []
+      });
+    }
+    
+    // Step 2: Apply base weapons from weapons[] array
+    this.applyBaseWeaponsToModels(models, unit.weapons);
+    
+    // Step 3: Apply base items from items[] array  
+    this.applyBaseItemsToModels(models, unit.items);
+    
+    // Step 4: Process selectedUpgrades in order using dependency tracking
+    this.processUpgradesWithDependencies(models, unit);
+    
+    return models;
+  }
+
+  /**
+   * Apply base weapons to all models
+   */
+  private static applyBaseWeaponsToModels(models: ProcessedModel[], baseWeapons: ArmyForgeWeapon[]): void {
+    baseWeapons.forEach(weapon => {
+      const processedWeapon: ProcessedWeapon = {
+        id: weapon.id || weapon.weaponId || `${weapon.name?.toLowerCase().replace(' ', '_')}_weapon`,
+        name: weapon.name || 'Unknown Weapon',
+        count: weapon.count || 1,
+        range: weapon.range || 0,
+        attacks: weapon.attacks || 1,
+        ap: (weapon.specialRules || []).find((rule: any) => rule.name === 'AP')?.rating as number || 0,
+        special_rules: (weapon.specialRules || []).map((rule: any) => ({
+          name: rule.name,
+          value: rule.rating,
+          type: 'weapon_modifier' as const
+        }))
+      };
+      
+      // Give weapon to all models (each model gets 1 count)
+      models.forEach(model => {
+        model.weapons.push({ ...processedWeapon });
+      });
+    });
+  }
+
+  /**
+   * Apply base items to all models
+   */
+  private static applyBaseItemsToModels(models: ProcessedModel[], baseItems: any[]): void {
+    if (!baseItems || baseItems.length === 0) return;
+    
+    baseItems.forEach(item => {
+      // Create upgrade record for base item
+      const itemUpgrade: ProcessedModelUpgrade = {
+        name: item.name,
+        description: item.label || item.name,
+        rules: this.extractRulesFromItem(item),
+        reassignable: false, // Base items are not reassignable
+        source: 'unit-wide'
+      };
+      
+      // Give item to all models
+      models.forEach(model => {
+        model.upgrades.push({ ...itemUpgrade });
+      });
+    });
+  }
+
+  /**
+   * Process upgrades using dependency tracking system
+   */
+  private static processUpgradesWithDependencies(models: ProcessedModel[], unit: ArmyForgeUnit): void {
+    console.log(`\n--- Processing upgrades for unit: ${unit.name} ---`);
+    if (!unit.selectedUpgrades || unit.selectedUpgrades.length === 0) {
+      console.log(`No upgrades found for ${unit.name}`);
+      return;
+    }
+    
+    console.log(`Found ${unit.selectedUpgrades.length} upgrades for ${unit.name}`);
+    // Process upgrades in order
+    unit.selectedUpgrades.forEach(selectedUpgrade => {
+      this.applyUpgradeWithDependencies(models, selectedUpgrade, unit);
+    });
+  }
+
+  /**
+   * Apply single upgrade using dependency system
+   */
+  private static applyUpgradeWithDependencies(models: ProcessedModel[], selectedUpgrade: any, unit: ArmyForgeUnit): void {
+    const upgrade = selectedUpgrade.upgrade;
+    
+    if (upgrade.variant === 'replace') {
+      this.processReplaceUpgrade(models, selectedUpgrade, unit);
+    } else if (upgrade.variant === 'upgrade') {
+      this.processAddUpgrade(models, selectedUpgrade);
+    }
+  }
+
+  /**
+   * Process "replace" variant upgrades using dependency tracking
+   */
+  private static processReplaceUpgrade(models: ProcessedModel[], selectedUpgrade: any, unit: ArmyForgeUnit): void {
+    const upgrade = selectedUpgrade.upgrade;
+    const option = selectedUpgrade.option;
+    const instanceId = selectedUpgrade.instanceId;
+    const affects = upgrade.affects;
+    
+    // Debug logging for troubleshooting
+    console.log(`\n=== Processing upgrade: ${upgrade.label} (${instanceId}) for unit: ${unit.name} ===`);
+    
+    // Step 1: Find weapons/items that have this upgrade in their dependencies
+    const affectedWeapons = unit.weapons.filter(weapon => 
+      weapon.dependencies?.some(dep => dep.upgradeInstanceId === instanceId)
+    );
+    
+    if (unit.name === 'Destroyer Sisters') {
+      console.log(`Affected weapons:`, affectedWeapons.map(w => ({ name: w.name, id: w.id })));
+      console.log(`Models before upgrade:`, models.map(m => ({ name: m.name, weapons: m.weapons.map(w => ({ name: w.name, id: w.id })) })));
+    }
+    
+    
+    // Step 2: Calculate how many models to affect based on affects type
+    let modelsToAffect: ProcessedModel[] = [];
+    
+    if (affectedWeapons.length > 0) {
+      const affectedWeaponIds = new Set(affectedWeapons.map(w => w.id));
+      if (unit.name === 'Destroyer Sisters') {
+        console.log(`Looking for weapon IDs:`, Array.from(affectedWeaponIds));
+        console.log(`Model weapon IDs:`, models.map(m => m.weapons.map(w => w.id)));
+      }
+      const modelsWithAffectedWeapons = models.filter(model => 
+        model.weapons.some(weapon => affectedWeaponIds.has(weapon.id))
+      );
+      
+      if (affects?.type === 'exactly') {
+        const exactCount = affects.value || 1;
+        modelsToAffect = modelsWithAffectedWeapons.slice(0, exactCount);
+      } else if (affects?.type === 'any') {
+        modelsToAffect = modelsWithAffectedWeapons.slice(0, 1);
+      } else if (affects?.type === 'all') {
+        modelsToAffect = modelsWithAffectedWeapons;
+      } else {
+        modelsToAffect = modelsWithAffectedWeapons.slice(0, 1);
+      }
+    }
+    
+    // Step 3: Apply replacement to selected models
+    if (unit.name === 'Destroyer Sisters') {
+      console.log(`Models to affect: ${modelsToAffect.length}`);
+    }
+    modelsToAffect.forEach(model => {
+      // Remove weapons using dependency-based matching
+      if (affectedWeapons.length > 0) {
+        const affectedWeaponIds = new Set(affectedWeapons.map(w => w.id));
+        if (unit.name === 'Destroyer Sisters') {
+          console.log(`Removing weapons with IDs:`, Array.from(affectedWeaponIds));
+          console.log(`Model ${model.name} weapon IDs before:`, model.weapons.map(w => w.id));
+        }
+        model.weapons = model.weapons.filter(weapon => 
+          !affectedWeaponIds.has(weapon.id)
+        );
+        if (unit.name === 'Destroyer Sisters') {
+          console.log(`Model ${model.name} weapon IDs after:`, model.weapons.map(w => w.id));
+        }
+      }
+      
+      // Add replacement weapons/items
+      this.addGainsToModel(model, option.gains, selectedUpgrade);
+    });
+    
+    if (unit.name === 'Destroyer Sisters') {
+      console.log(`Models after upgrade:`, models.map(m => ({ name: m.name, weapons: m.weapons.map(w => w.name) })));
+    }
+  }
+
+  /**
+   * Process "upgrade" variant upgrades (additive)
+   */
+  private static processAddUpgrade(models: ProcessedModel[], selectedUpgrade: any): void {
+    const upgrade = selectedUpgrade.upgrade;
+    const option = selectedUpgrade.option;
+    const affects = upgrade.affects;
+    
+    // Determine how many models to affect
+    let modelsToAffect: ProcessedModel[] = [];
+    
+    if (affects?.type === 'exactly') {
+      const exactCount = affects.value || 1;
+      modelsToAffect = models.slice(0, exactCount);
+    } else if (affects?.type === 'all') {
+      modelsToAffect = [...models];
+    } else {
+      // Default: affect 1 model
+      modelsToAffect = models.slice(0, 1);
+    }
+    
+    // Add gains to selected models
+    modelsToAffect.forEach(model => {
+      this.addGainsToModel(model, option.gains, selectedUpgrade);
+    });
+  }
+
+  /**
+   * Add gains (weapons, items, rules) to a specific model
+   */
+  private static addGainsToModel(model: ProcessedModel, gains: any[], selectedUpgrade: any): void {
+    const upgrade = selectedUpgrade.upgrade;
+    const option = selectedUpgrade.option;
+    
+    const upgradeRules: ProcessedRule[] = [];
+    const upgradeWeapons: ProcessedWeapon[] = [];
+    
+    gains?.forEach(gain => {
+      if (gain.type === 'ArmyBookWeapon') {
+        // Direct weapon gain
+        const newWeapon: ProcessedWeapon = {
+          id: gain.weaponId || gain.id,
+          name: gain.name,
+          count: gain.count || 1,
+          range: gain.range || 0,
+          attacks: gain.attacks || 1,
+          ap: gain.specialRules?.find((rule: any) => rule.name === 'AP')?.rating || 0,
+          special_rules: gain.specialRules?.map((rule: any) => ({
+            name: rule.name,
+            value: rule.rating,
+            type: 'weapon_modifier' as const
+          })) || []
+        };
+        model.weapons.push(newWeapon);
+        upgradeWeapons.push(newWeapon);
+        
+      } else if (gain.type === 'ArmyBookItem') {
+        // Item with content (weapons and/or rules)
+        if (gain.content) {
+          gain.content.forEach((content: any) => {
+            if (content.type === 'ArmyBookWeapon') {
+              // Weapon within item
+              const newWeapon: ProcessedWeapon = {
+                id: content.weaponId || content.id,
+                name: content.name,
+                count: gain.count || 1,
+                range: content.range || 0,
+                attacks: content.attacks || 1,
+                ap: content.specialRules?.find((rule: any) => rule.name === 'AP')?.rating || 0,
+                special_rules: content.specialRules?.map((rule: any) => ({
+                  name: rule.name,
+                  value: rule.rating,
+                  type: 'weapon_modifier' as const
+                })) || []
+              };
+              model.weapons.push(newWeapon);
+              upgradeWeapons.push(newWeapon);
+              
+            } else if (content.type === 'ArmyBookRule') {
+              // Rule within item
+              upgradeRules.push({
+                name: content.name,
+                type: 'upgrade',
+                rating: content.rating,
+                description: content.name
+              });
+            }
+          });
+        }
+        
+      } else if (gain.type === 'ArmyBookRule') {
+        // Direct rule gain
+        upgradeRules.push({
+          name: gain.name,
+          type: 'upgrade',
+          rating: gain.rating,
+          description: gain.name
+        });
+      }
+    });
+    
+    // Create model upgrade record
+    if (upgradeRules.length > 0 || upgradeWeapons.length > 0) {
+      const reassignable = this.determineReassignability(selectedUpgrade);
+      const source = this.determineUpgradeSource(selectedUpgrade);
+      
+      const modelUpgrade: ProcessedModelUpgrade = {
+        name: option.label || 'Unknown Upgrade',
+        description: option.label || 'Unknown Upgrade',
+        rules: upgradeRules,
+        reassignable,
+        source
+      };
+      
+      model.upgrades.push(modelUpgrade);
+    }
+    
+    // Apply toughness modifications
+    upgradeRules.forEach(rule => {
+      if (rule.name === 'Tough' && rule.rating) {
+        const toughValue = parseInt(rule.rating.toString());
+        
+        if (upgrade.variant === 'replace') {
+          // Replace: set new toughness value
+          model.max_tough = toughValue;
+          model.current_tough = toughValue;
+        } else {
+          // Upgrade: add to existing toughness  
+          model.max_tough += toughValue;
+          model.current_tough += toughValue;
+        }
+      }
+    });
+  }
+
+  /**
+   * Determine if an upgrade is reassignable based on game rules
+   */
+  private static determineReassignability(selectedUpgrade: any): boolean {
+    const upgrade = selectedUpgrade.upgrade;
+    
+    // Reassignable if it's a "select exactly 1" upgrade affecting specific models
+    if (upgrade.select?.type === 'exactly' && upgrade.select?.value === 1) {
+      return true;
+    }
+    
+    // Reassignable if it's a weapon replacement affecting single model  
+    if (upgrade.variant === 'replace' && upgrade.affects?.type === 'any') {
+      return true;
+    }
+    
+    // Not reassignable if it affects all models or is unit-wide
+    return false;
+  }
+
+  /**
+   * Determine upgrade source for categorization
+   */
+  private static determineUpgradeSource(selectedUpgrade: any): 'weapon-team' | 'choose-model' | 'unit-wide' {
+    const upgrade = selectedUpgrade.upgrade;
+    const option = selectedUpgrade.option;
+
+    // Check if it's a weapon team (has weapons and tough in same item)
+    const hasWeaponTeam = option.gains?.some((gain: any) => 
+      gain.type === 'ArmyBookItem' && 
+      gain.content?.some((content: any) => content.type === 'ArmyBookWeapon') &&
+      gain.content?.some((content: any) => content.type === 'ArmyBookRule' && content.name === 'Tough')
+    );
+    
+    if (hasWeaponTeam) {
+      return 'weapon-team';
+    }
+
+    // Check if it affects all models
+    if (upgrade.affects?.type === 'all') {
+      return 'unit-wide';
+    }
+
+    // Default for individual model upgrades
+    return 'choose-model';
+  }
+
+  // Helper methods (reuse from original processor)
   private static calculateUnitCost(unit: ArmyForgeUnit): number {
     const baseCost = unit.cost;
     
     const upgradeCosts = unit.selectedUpgrades
       .map(upgrade => {
-        // Find the cost entry that matches this unit's ID
-        const costEntry = upgrade.option.costs.find(c => c.unitId === unit.id);
+        const costEntry = upgrade.option.costs.find((c: any) => c.unitId === unit.id);
         return costEntry ? costEntry.cost : 0;
       })
       .reduce((sum, cost) => sum + cost, 0);
     
-    // Campaign level costs: 25pts per level for regular units, 55pts for heroes
     const isHero = unit.rules.some(rule => rule.name === 'Hero');
-    const levels = Math.floor(unit.xp / 5); // 5 XP = 1 level
+    const levels = Math.floor(unit.xp / 5);
     const levelCosts = levels * (isHero ? 55 : 25);
     
     return baseCost + upgradeCosts + levelCosts;
   }
 
-  /**
-   * Process Combined units - merge units with same ID and combined=true
-   */
-  private static processCombinedUnits(unitsWithOriginal: { processed: ProcessedSubUnit; original: ArmyForgeUnit }[]): { processed: ProcessedSubUnit; original: ArmyForgeUnit; isCombined?: boolean }[] {
+  private static determineBaseToughness(unit: ArmyForgeUnit): number {
+    let baseToughness = 1;
+    
+    if (unit.rules && unit.rules.length > 0) {
+      for (const rule of unit.rules) {
+        if (rule.name === 'Tough') {
+          if (rule.rating !== undefined && rule.rating !== null) {
+            const toughValue = typeof rule.rating === 'string' 
+              ? parseInt(rule.rating, 10) 
+              : Number(rule.rating);
+            
+            if (!isNaN(toughValue) && toughValue > 0) {
+              baseToughness = Math.max(baseToughness, toughValue);
+            }
+          }
+        }
+      }
+    }
+
+    return baseToughness;
+  }
+
+  private static extractRulesFromItem(item: any): ProcessedRule[] {
+    const rules: ProcessedRule[] = [];
+    
+    if (item.content) {
+      item.content.forEach((content: any) => {
+        if (content.type === 'ArmyBookRule') {
+          rules.push({
+            name: content.name,
+            type: 'upgrade',
+            rating: content.rating,
+            description: content.name
+          });
+        }
+      });
+    }
+    
+    return rules;
+  }
+
+  private static buildNotesWithValidation(unit: ArmyForgeUnit): string | undefined {
+    const hasValidationIssues = !unit.valid || unit.hasBalanceInvalid || 
+                               (unit.disabledSections && unit.disabledSections.length > 0) || 
+                               (unit.disabledUpgradeSections && unit.disabledUpgradeSections.length > 0);
+
+    if (hasValidationIssues) {
+      const issues = [];
+      if (!unit.valid) issues.push('Invalid unit');
+      if (unit.hasBalanceInvalid) issues.push('Balance invalid');
+      if (unit.disabledSections && unit.disabledSections.length > 0) {
+        issues.push(`Disabled sections: ${unit.disabledSections.join(', ')}`);
+      }
+      
+      return `${unit.notes || ''}${unit.notes ? ' | ' : ''}VALIDATION: ${issues.join(' ')}`.trim();
+    }
+    
+    return unit.notes || undefined;
+  }
+
+  // Reuse existing helper methods for consistency
+  private static hasCasterAbility(baseRules: ArmyForgeRule[], loadout: any[]): boolean {
+    const baseCaster = baseRules.some(rule => rule.name.toLowerCase().includes('caster'));
+    const loadoutCaster = loadout.some(item => 
+      item.label && item.label.toLowerCase().includes('caster')
+    );
+    return baseCaster || loadoutCaster;
+  }
+
+  private static getCasterRating(baseRules: ArmyForgeRule[], loadout: any[]): number | undefined {
+    const baseCasterRule = baseRules.find(rule => rule.name.toLowerCase().includes('caster'));
+    if (baseCasterRule?.rating) return typeof baseCasterRule.rating === 'number' ? baseCasterRule.rating : parseInt(baseCasterRule.rating as string);
+    
+    const casterItem = loadout.find(item => 
+      item.label && item.label.toLowerCase().includes('caster')
+    );
+    
+    if (casterItem?.label) {
+      const match = casterItem.label.match(/caster\((\d+)\)/i);
+      return match ? parseInt(match[1]) : undefined;
+    }
+    
+    return undefined;
+  }
+
+  private static calculateAdjustedQuality(baseQuality: number, loadout: any[]): number {
+    let adjustment = 0;
+    
+    loadout.forEach(item => {
+      if (item.type === 'ArmyBookItem' && item.content) {
+        const hasQualityInContent = item.content.some((content: any) => 
+          content.type === 'ArmyBookRule' && content.name === 'Quality'
+        );
+        
+        if (hasQualityInContent) {
+          item.content.forEach((content: any) => {
+            if (content.type === 'ArmyBookRule' && content.name === 'Quality') {
+              const value = typeof content.rating === 'number' ? content.rating : parseInt(content.rating as string);
+              adjustment += value;
+            }
+          });
+        }
+      }
+    });
+    
+    return Math.max(1, baseQuality - adjustment);
+  }
+
+  private static calculateAdjustedDefense(baseDefense: number, loadout: any[]): number {
+    let adjustment = 0;
+    
+    loadout.forEach(item => {
+      if (item.type === 'ArmyBookItem' && item.content) {
+        const hasDefenseInContent = item.content.some((content: any) => 
+          content.type === 'ArmyBookRule' && content.name === 'Defense'
+        );
+        
+        if (hasDefenseInContent) {
+          item.content.forEach((content: any) => {
+            if (content.type === 'ArmyBookRule' && content.name === 'Defense') {
+              const value = typeof content.rating === 'number' ? content.rating : parseInt(content.rating as string);
+              adjustment += value;
+            }
+          });
+        }
+      }
+    });
+    
+    return Math.max(1, baseDefense - adjustment);
+  }
+
+  private static processLoadoutWeapons(loadout: any[]): ProcessedWeapon[] {
+    const weapons = loadout.filter(item => item.type === 'ArmyBookWeapon');
+    const weaponItems = loadout.filter(item => 
+      item.type === 'ArmyBookItem' && 
+      item.content && 
+      item.content.some((c: any) => c.type === 'ArmyBookWeapon')
+    );
+    
+    const regularWeapons = this.processWeapons(weapons);
+    const embeddedWeapons = weaponItems.flatMap(item => this.extractWeaponsFromItem(item));
+    
+    return [...regularWeapons, ...embeddedWeapons];
+  }
+
+  private static processWeapons(weapons: any[]): ProcessedWeapon[] {
+    return weapons.map(weapon => ({
+      id: weapon.id || weapon.weaponId || `${weapon.name?.toLowerCase().replace(' ', '_')}_weapon`,
+      name: weapon.name,
+      count: weapon.count || 1,
+      range: weapon.range,
+      attacks: weapon.attacks,
+      ap: (weapon.specialRules || []).find((rule: any) => rule.name === 'AP')?.rating as number || 0,
+      special_rules: (weapon.specialRules || []).map((rule: any) => ({
+        name: rule.name,
+        value: rule.rating,
+        type: 'weapon_modifier' as const
+      }))
+    }));
+  }
+
+  private static extractWeaponsFromItem(item: any): ProcessedWeapon[] {
+    if (!item.content) return [];
+    
+    const weapons = item.content.filter((content: any) => content.type === 'ArmyBookWeapon');
+    return this.processWeapons(weapons);
+  }
+
+  private static processEnhancedRules(baseRules: ArmyForgeRule[], loadout: any[]): ProcessedRule[] {
+    const processedBaseRules = this.processRules(baseRules);
+    const loadoutRules = this.extractRulesFromLoadout(loadout);
+    
+    return this.mergeAndStackRules(processedBaseRules, loadoutRules);
+  }
+
+  private static processRules(rules: ArmyForgeRule[]): ProcessedRule[] {
+    return rules.map(rule => ({
+      name: rule.name,
+      type: 'ability' as const,
+      rating: rule.rating,
+      description: rule.label
+    }));
+  }
+
+  private static extractRulesFromLoadout(loadout: any[]): ProcessedRule[] {
+    const rules: ProcessedRule[] = [];
+    
+    loadout.forEach(item => {
+      if (item.type === 'ArmyBookItem' && item.label) {
+        // Extract various rule types from labels
+        const patterns = [
+          { name: 'Caster', pattern: /Caster\((\d+)\)/i },
+          { name: 'Tough', pattern: /Tough\((\d+)\)/ },
+          { name: 'Impact', pattern: /Impact\((\d+)\)/ },
+          { name: 'Defense', pattern: /Defense\((\d+)\)/ },
+          { name: 'Quality', pattern: /Quality\((\d+)\)/ }
+        ];
+        
+        patterns.forEach(({ name, pattern }) => {
+          const match = item.label.match(pattern);
+          if (match) {
+            rules.push({
+              name,
+              type: 'ability' as const,
+              rating: parseInt(match[1]),
+              description: `${name}(${match[1]})`
+            });
+          }
+        });
+        
+        // Handle non-rated rules
+        if (item.label.includes('Fast')) {
+          rules.push({
+            name: 'Fast',
+            type: 'ability' as const,
+            rating: undefined,
+            description: 'Fast'
+          });
+        }
+        
+        if (item.name === 'Combat Shield' || (item.content && item.content.some((c: any) => c.name === 'Shield Wall'))) {
+          rules.push({
+            name: 'Shield Wall',
+            type: 'ability' as const,
+            rating: undefined,
+            description: 'Shield Wall'
+          });
+        }
+      }
+    });
+    
+    return rules;
+  }
+
+  private static mergeAndStackRules(baseRules: ProcessedRule[], loadoutRules: ProcessedRule[]): ProcessedRule[] {
+    const ruleMap = new Map<string, ProcessedRule>();
+    
+    baseRules.forEach(rule => {
+      ruleMap.set(rule.name, { ...rule });
+    });
+    
+    loadoutRules.forEach(loadoutRule => {
+      const existing = ruleMap.get(loadoutRule.name);
+      
+      if (existing && existing.rating !== undefined && loadoutRule.rating !== undefined) {
+        if (loadoutRule.name === 'Tough' || loadoutRule.name === 'Impact') {
+          const existingValue = typeof existing.rating === 'number' ? existing.rating : parseInt(existing.rating as string);
+          const loadoutValue = typeof loadoutRule.rating === 'number' ? loadoutRule.rating : parseInt(loadoutRule.rating as string);
+          existing.rating = existingValue + loadoutValue;
+          existing.description = `${loadoutRule.name}(${existing.rating})`;
+        } else {
+          ruleMap.set(loadoutRule.name, { ...loadoutRule });
+        }
+      } else {
+        ruleMap.set(loadoutRule.name, { ...loadoutRule });
+      }
+    });
+    
+    return Array.from(ruleMap.values());
+  }
+
+  private static processLoadoutItems(loadout: any[]): ProcessedRule[] {
+    const items = loadout.filter(item => item.type === 'ArmyBookItem');
+    return items.map(item => ({
+      name: item.name,
+      type: 'upgrade' as const,
+      rating: undefined,
+      description: item.label || item.name
+    }));
+  }
+
+  // Combined and Joined unit processing (reuse existing logic for now)
+  private static processCombinedUnitsNew(unitsWithOriginal: { processed: ProcessedSubUnit; original: ArmyForgeUnit }[]): { processed: ProcessedSubUnit; original: ArmyForgeUnit; isCombined?: boolean }[] {
+    // Reuse existing logic - this part works correctly
     const combinedGroups = new Map<string, { processed: ProcessedSubUnit; original: ArmyForgeUnit }[]>();
     const regularUnits: { processed: ProcessedSubUnit; original: ArmyForgeUnit; isCombined?: boolean }[] = [];
 
     unitsWithOriginal.forEach(unitData => {
       const original = unitData.original;
       
-      // Check if this is part of a combined unit (same armyforge ID and combined flag)
       if (original.combined) {
-        const groupKey = original.id; // Use unit ID as group key
+        const groupKey = original.id;
         if (!combinedGroups.has(groupKey)) {
           combinedGroups.set(groupKey, []);
         }
@@ -141,17 +767,13 @@ export class ArmyProcessor {
       }
     });
 
-    // Merge combined units
-    combinedGroups.forEach((group, groupKey) => {
+    combinedGroups.forEach((group) => {
       if (group.length > 1) {
-        // Multiple units with same ID - merge them
         const mergedProcessed = this.mergeCombinedSubUnits(group.map(g => g.processed));
-        // Mark as combined and store merged unit
-        mergedProcessed.id = mergedProcessed.id + '_combined'; // Ensure unique ID
+        mergedProcessed.id = mergedProcessed.id + '_combined';
         const firstOriginal = group[0]!.original;
         regularUnits.push({ processed: mergedProcessed, original: firstOriginal, isCombined: true });
       } else if (group.length === 1) {
-        // Single unit marked as combined but no duplicates - treat as regular
         regularUnits.push({ ...group[0]!, isCombined: false });
       }
     });
@@ -159,9 +781,6 @@ export class ArmyProcessor {
     return regularUnits;
   }
 
-  /**
-   * Merge multiple sub-units into a single combined unit
-   */
   private static mergeCombinedSubUnits(subUnits: ProcessedSubUnit[]): ProcessedSubUnit {
     if (subUnits.length === 0) throw new Error('Cannot merge empty sub-units array');
     
@@ -171,11 +790,10 @@ export class ArmyProcessor {
     const allModels = subUnits.flatMap(unit => unit.models);
     const totalXp = subUnits.reduce((sum, unit) => sum + unit.xp, 0);
     
-    // Merge weapons from all sub-units
     const allWeapons = subUnits.flatMap(unit => unit.weapons);
     const mergedWeapons = this.mergeWeapons(allWeapons);
 
-    const mergedUnit = {
+    return {
       id: baseUnit.id,
       armyforge_unit_id: baseUnit.armyforge_unit_id,
       name: baseUnit.name,
@@ -196,13 +814,8 @@ export class ArmyProcessor {
       models: allModels,
       notes: baseUnit.notes
     };
-
-    return mergedUnit;
   }
 
-  /**
-   * Merge weapons with same name by combining their counts
-   */
   private static mergeWeapons(weapons: ProcessedWeapon[]): ProcessedWeapon[] {
     const weaponMap = new Map<string, ProcessedWeapon>();
     
@@ -218,42 +831,32 @@ export class ArmyProcessor {
     return Array.from(weaponMap.values());
   }
 
-  /**
-   * Process Joined units - heroes joining regular units
-   */
-  private static processJoinedUnits(unitsWithOriginal: { processed: ProcessedSubUnit; original: ArmyForgeUnit; isCombined?: boolean }[]): ProcessedUnit[] {
+  private static processJoinedUnitsNew(unitsWithOriginal: { processed: ProcessedSubUnit; original: ArmyForgeUnit; isCombined?: boolean }[]): ProcessedUnit[] {
     const processedUnits: ProcessedUnit[] = [];
     const joinedHeroes = new Map<string, { processed: ProcessedSubUnit; original: ArmyForgeUnit; isCombined?: boolean }>(); 
     const joinTargets = new Map<string, { processed: ProcessedSubUnit; original: ArmyForgeUnit; isCombined?: boolean }>();
 
-    // First pass: identify joined units and their targets using original ArmyForge data
     unitsWithOriginal.forEach(unitData => {
       const original = unitData.original;
       
       if (original.joinToUnit) {
-        // This unit joins another unit
         joinedHeroes.set(original.joinToUnit, unitData);
       } else {
-        // Check if this unit is a target for joining (has no joinToUnit but might be referenced)
         joinTargets.set(original.selectionId, unitData);
       }
     });
 
-    // Second pass: create joined units and standalone units
     joinTargets.forEach((targetUnitData, targetSelectionId) => {
       const joiningHero = joinedHeroes.get(targetSelectionId);
       
       if (joiningHero) {
-        // This target unit has a hero joining it
         processedUnits.push(this.createJoinedUnit(targetUnitData.processed, joiningHero.processed));
       } else {
-        // Standalone unit
         const isCombined = targetUnitData.isCombined || false;
         processedUnits.push(this.createStandaloneUnit(targetUnitData.processed, isCombined));
       }
     });
 
-    // Handle any heroes that couldn't find their target (shouldn't happen with valid data)
     joinedHeroes.forEach((heroData, targetId) => {
       if (!joinTargets.has(targetId)) {
         console.warn(`Hero ${heroData.processed.name} trying to join non-existent unit ${targetId}, treating as standalone`);
@@ -264,16 +867,12 @@ export class ArmyProcessor {
     return processedUnits;
   }
 
-  /**
-   * Create a standalone unit (no joining)
-   */
   private static createStandaloneUnit(subUnit: ProcessedSubUnit, isCombined = false): ProcessedUnit {
-    // Always prioritize custom name over regular name
     const displayName = subUnit.custom_name || subUnit.name;
     
     return {
       id: subUnit.id,
-      army_id: '', // Will be set when saving
+      army_id: '',
       armyforge_unit_ids: [subUnit.armyforge_unit_id],
       name: displayName,
       custom_name: subUnit.custom_name,
@@ -290,23 +889,19 @@ export class ArmyProcessor {
     };
   }
 
-  /**
-   * Create a joined unit (hero + regular unit)
-   */
   private static createJoinedUnit(regularUnit: ProcessedSubUnit, heroUnit: ProcessedSubUnit): ProcessedUnit {
-    // Use custom names for display, format as "Hero w/ Unit"
     const heroDisplayName = heroUnit.custom_name || heroUnit.name;
     const unitDisplayName = regularUnit.custom_name || regularUnit.name;
     const joinedName = `${heroDisplayName} w/ ${unitDisplayName}`;
     
     return {
-      id: regularUnit.id, // Use regular unit's ID as primary
-      army_id: '', // Will be set when saving
+      id: regularUnit.id,
+      army_id: '',
       armyforge_unit_ids: [regularUnit.armyforge_unit_id, heroUnit.armyforge_unit_id],
       name: joinedName,
-      custom_name: joinedName, // Use the joined name as custom name
-      quality: heroUnit.quality, // Use hero's quality
-      defense: regularUnit.defense, // Use regular unit's defense
+      custom_name: joinedName,
+      quality: heroUnit.quality,
+      defense: regularUnit.defense,
       total_cost: regularUnit.cost + heroUnit.cost,
       model_count: regularUnit.size + heroUnit.size,
       is_combined: false,
@@ -316,748 +911,5 @@ export class ArmyProcessor {
       sub_units: [heroUnit, regularUnit],
       notes: [regularUnit.notes, heroUnit.notes].filter(Boolean).join('; ') || undefined
     };
-  }
-
-  /**
-   * Process ArmyForge weapons into internal format
-   */
-  private static processWeapons(weapons: any[]): ProcessedWeapon[] {
-    return weapons.map(weapon => ({
-      id: weapon.id || weapon.weaponId || `${weapon.name?.toLowerCase().replace(' ', '_')}_weapon`,
-      name: weapon.name,
-      count: weapon.count || 1,
-      range: weapon.range,
-      attacks: weapon.attacks,
-      ap: (weapon.specialRules || []).find((rule: any) => rule.name === 'AP')?.rating as number || 0,
-      special_rules: (weapon.specialRules || []).map((rule: any) => ({
-        name: rule.name,
-        value: rule.rating
-      }))
-    }));
-  }
-
-  /**
-   * Process weapons from loadout (final equipment after upgrades)
-   */
-  private static processLoadoutWeapons(loadout: any[]): ProcessedWeapon[] {
-    const weapons = loadout.filter(item => item.type === 'ArmyBookWeapon');
-    const weaponItems = loadout.filter(item => 
-      item.type === 'ArmyBookItem' && 
-      item.content && 
-      item.content.some((c: any) => c.type === 'ArmyBookWeapon')
-    );
-    
-    // Process regular weapons
-    const regularWeapons = this.processWeapons(weapons);
-    
-    // Extract weapons from items with weapon content
-    const embeddedWeapons = weaponItems.flatMap(item => this.extractWeaponsFromItem(item));
-    
-    return [...regularWeapons, ...embeddedWeapons];
-  }
-
-  /**
-   * Process enhanced rules combining base rules + loadout item rules
-   */
-  private static processEnhancedRules(baseRules: ArmyForgeRule[], loadout: any[]): ProcessedRule[] {
-    const processedBaseRules = this.processRules(baseRules);
-    const loadoutRules = this.extractRulesFromLoadout(loadout);
-    
-    // Merge and handle rule stacking
-    return this.mergeAndStackRules(processedBaseRules, loadoutRules);
-  }
-
-  /**
-   * Process items from loadout 
-   */
-  private static processLoadoutItems(loadout: any[]): ProcessedRule[] {
-    const items = loadout.filter(item => item.type === 'ArmyBookItem');
-    return items.map(item => ({
-      name: item.name,
-      type: 'upgrade' as const,
-      rating: undefined,
-      description: item.label || item.name
-    }));
-  }
-
-  /**
-   * Check if unit has caster ability from rules or loadout
-   */
-  private static hasCasterAbility(baseRules: ArmyForgeRule[], loadout: any[]): boolean {
-    // Check base rules
-    const baseCaster = baseRules.some(rule => rule.name.toLowerCase().includes('caster'));
-    
-    // Check loadout items
-    const loadoutCaster = loadout.some(item => 
-      item.label && item.label.toLowerCase().includes('caster')
-    );
-    
-    return baseCaster || loadoutCaster;
-  }
-
-  /**
-   * Get caster rating from rules or loadout
-   */
-  private static getCasterRating(baseRules: ArmyForgeRule[], loadout: any[]): number | undefined {
-    // Check base rules first
-    const baseCasterRule = baseRules.find(rule => rule.name.toLowerCase().includes('caster'));
-    if (baseCasterRule?.rating) return typeof baseCasterRule.rating === 'number' ? baseCasterRule.rating : parseInt(baseCasterRule.rating as string);
-    
-    // Check loadout items
-    const casterItem = loadout.find(item => 
-      item.label && item.label.toLowerCase().includes('caster')
-    );
-    
-    if (casterItem?.label) {
-      // Extract rating from label like "Witch (Caster(2))"
-      const match = casterItem.label.match(/caster\((\d+)\)/i);
-      return match ? parseInt(match[1]) : undefined;
-    }
-    
-    return undefined;
-  }
-
-  /**
-   * Extract weapons from complex items like Weapon Team using structured content
-   */
-  private static extractWeaponsFromItem(item: any): ProcessedWeapon[] {
-    if (!item.content) return [];
-    
-    // Extract weapons from the content array
-    const weapons = item.content.filter((content: any) => content.type === 'ArmyBookWeapon');
-    
-    return this.processWeapons(weapons);
-  }
-
-
-  /**
-   * Extract rules from loadout items
-   */
-  private static extractRulesFromLoadout(loadout: any[]): ProcessedRule[] {
-    const rules: ProcessedRule[] = [];
-    
-    loadout.forEach(item => {
-      if (item.type === 'ArmyBookItem' && item.label) {
-        // Extract rules from item labels
-        
-        // Caster rules
-        const casterMatch = item.label.match(/Caster\((\d+)\)/i);
-        if (casterMatch) {
-          rules.push({
-            name: 'Caster',
-            type: 'ability' as const,
-            rating: parseInt(casterMatch[1]),
-            description: `Caster(${casterMatch[1]})`
-          });
-        }
-        
-        // Fast rule
-        if (item.label.includes('Fast')) {
-          rules.push({
-            name: 'Fast',
-            type: 'ability' as const,
-            rating: undefined,
-            description: 'Fast'
-          });
-        }
-        
-        // Tough rules (for stacking)
-        const toughMatch = item.label.match(/Tough\((\d+)\)/);
-        if (toughMatch) {
-          rules.push({
-            name: 'Tough',
-            type: 'ability' as const,
-            rating: parseInt(toughMatch[1]),
-            description: `Tough(${toughMatch[1]})`
-          });
-        }
-        
-        // Impact rules (for stacking like Great Grinder)
-        const impactMatch = item.label.match(/Impact\((\d+)\)/);
-        if (impactMatch) {
-          rules.push({
-            name: 'Impact',
-            type: 'ability' as const,
-            rating: parseInt(impactMatch[1]),
-            description: `Impact(${impactMatch[1]})`
-          });
-        }
-        
-        // Defense rules (for stat improvement - handled separately in calculateAdjustedDefense)
-        const defenseMatch = item.label.match(/Defense\((\d+)\)/);
-        if (defenseMatch) {
-          rules.push({
-            name: 'Defense',
-            type: 'ability' as const,
-            rating: parseInt(defenseMatch[1]),
-            description: `Defense(${defenseMatch[1]})`
-          });
-        }
-        
-        // Quality rules (for stat improvement - handled separately in calculateAdjustedQuality)
-        const qualityMatch = item.label.match(/Quality\((\d+)\)/);
-        if (qualityMatch) {
-          rules.push({
-            name: 'Quality',
-            type: 'ability' as const,
-            rating: parseInt(qualityMatch[1]),
-            description: `Quality(${qualityMatch[1]})`
-          });
-        }
-        
-        // Shield Wall (from Combat Shield content)
-        if (item.name === 'Combat Shield' || (item.content && item.content.some((c: any) => c.name === 'Shield Wall'))) {
-          rules.push({
-            name: 'Shield Wall',
-            type: 'ability' as const,
-            rating: undefined,
-            description: 'Shield Wall'
-          });
-        }
-      }
-    });
-    
-    return rules;
-  }
-
-  /**
-   * Merge base rules with loadout rules, handling stacking
-   */
-  private static mergeAndStackRules(baseRules: ProcessedRule[], loadoutRules: ProcessedRule[]): ProcessedRule[] {
-    const ruleMap = new Map<string, ProcessedRule>();
-    
-    // Add base rules first
-    baseRules.forEach(rule => {
-      ruleMap.set(rule.name, { ...rule });
-    });
-    
-    // Process loadout rules with stacking logic
-    loadoutRules.forEach(loadoutRule => {
-      const existing = ruleMap.get(loadoutRule.name);
-      
-      if (existing && existing.rating !== undefined && loadoutRule.rating !== undefined) {
-        // Stack numeric rules like Tough(3) + Tough(3) = Tough(6) or Impact(3) + Impact(5) = Impact(8)
-        if (loadoutRule.name === 'Tough' || loadoutRule.name === 'Impact') {
-          const existingValue = typeof existing.rating === 'number' ? existing.rating : parseInt(existing.rating as string);
-          const loadoutValue = typeof loadoutRule.rating === 'number' ? loadoutRule.rating : parseInt(loadoutRule.rating as string);
-          existing.rating = existingValue + loadoutValue;
-          existing.description = `${loadoutRule.name}(${existing.rating})`;
-        } else {
-          // For most other rules, loadout overrides base
-          ruleMap.set(loadoutRule.name, { ...loadoutRule });
-        }
-      } else {
-        // Add new rule from loadout
-        ruleMap.set(loadoutRule.name, { ...loadoutRule });
-      }
-    });
-    
-    return Array.from(ruleMap.values());
-  }
-
-  /**
-   * Calculate adjusted Quality from base quality and loadout upgrades
-   * Quality upgrades IMPROVE by lowering the number (Q5+ -> Q4+ is better)
-   */
-  private static calculateAdjustedQuality(baseQuality: number, loadout: any[]): number {
-    let adjustment = 0;
-    
-    // Check loadout items for Quality upgrades
-    loadout.forEach(item => {
-      if (item.type === 'ArmyBookItem' && item.content) {
-        // Check content array for Quality rules (this is the proper way)
-        const hasQualityInContent = item.content.some((content: any) => 
-          content.type === 'ArmyBookRule' && content.name === 'Quality'
-        );
-        
-        if (hasQualityInContent) {
-          item.content.forEach((content: any) => {
-            if (content.type === 'ArmyBookRule' && content.name === 'Quality') {
-              const value = typeof content.rating === 'number' ? content.rating : parseInt(content.rating as string);
-              adjustment += value;
-            }
-          });
-        }
-      }
-    });
-    
-    // Quality upgrades improve by lowering the number
-    return Math.max(1, baseQuality - adjustment); // Minimum Q1+
-  }
-
-  /**
-   * Calculate adjusted Defense from base defense and loadout upgrades  
-   * Defense upgrades IMPROVE by lowering the number (D5+ -> D4+ is better)
-   */
-  private static calculateAdjustedDefense(baseDefense: number, loadout: any[]): number {
-    let adjustment = 0;
-    
-    // Check loadout items for Defense upgrades
-    loadout.forEach(item => {
-      if (item.type === 'ArmyBookItem' && item.content) {
-        // Check content array for Defense rules (this is the proper way)
-        const hasDefenseInContent = item.content.some((content: any) => 
-          content.type === 'ArmyBookRule' && content.name === 'Defense'
-        );
-        
-        if (hasDefenseInContent) {
-          item.content.forEach((content: any) => {
-            if (content.type === 'ArmyBookRule' && content.name === 'Defense') {
-              const value = typeof content.rating === 'number' ? content.rating : parseInt(content.rating as string);
-              adjustment += value;
-            }
-          });
-        }
-      }
-    });
-    
-    // Defense upgrades improve by lowering the number
-    const result = Math.max(1, baseDefense - adjustment);
-    return result;
-  }
-
-  /**
-   * Process ArmyForge rules into internal format
-   */
-  private static processRules(rules: ArmyForgeRule[]): ProcessedRule[] {
-    return rules.map(rule => ({
-      name: rule.name,
-      type: 'ability' as const,
-      rating: rule.rating,
-      description: rule.label
-    }));
-  }
-
-  /**
-   * Generate individual models with weapon distribution
-   */
-  private static generateModelsWithWeapons(unit: ArmyForgeUnit): ProcessedModel[] {
-    const models: ProcessedModel[] = [];
-    const isHero = unit.rules.some(rule => rule.name === 'Hero');
-
-    // Get processed weapons from loadout
-    const unitWeapons = this.processLoadoutWeapons(unit.loadout);
-
-    for (let i = 0; i < unit.size; i++) {
-      models.push({
-        model_id: `${unit.selectionId}-${i + 1}`,
-        name: unit.size === 1 && unit.customName ? unit.customName : `${unit.name} ${i + 1}`,
-        custom_name: unit.size === 1 && unit.customName ? unit.customName : undefined,
-        max_tough: 1, // Base health, will be modified by assignModelUpgrades
-        current_tough: 1, // Base health, will be modified by assignModelUpgrades
-        is_hero: isHero && unit.size === 1, // Only single-model heroes
-        special_rules: [],
-        weapons: [], // Will be populated by distributeWeaponsToModels
-        upgrades: [] // Will be populated by assignModelUpgrades
-      });
-    }
-
-    // Distribute weapons to models
-    this.distributeWeaponsToModels(models, unitWeapons, unit);
-
-    // Note: Model upgrade processing moved to after unit merging
-    // This ensures Combined/Joined units get proper upgrade assignment
-    
-    return models;
-  }
-
-  /**
-   * Distribute weapons from unit loadout to individual models
-   */
-  private static distributeWeaponsToModels(models: ProcessedModel[], weapons: ProcessedWeapon[], unit: ArmyForgeUnit): void {
-    if (models.length === 1) {
-      // Single model gets all weapons
-      if (models[0]) {
-        models[0].weapons = [...weapons];
-      }
-      return;
-    }
-
-    // Multi-model unit - distribute weapons
-    // Create a pool of individual weapon instances
-    const weaponPool: ProcessedWeapon[] = [];
-    
-    weapons.forEach(weapon => {
-      for (let i = 0; i < weapon.count; i++) {
-        weaponPool.push({
-          ...weapon,
-          count: 1 // Each instance is count 1
-        });
-      }
-    });
-
-    // Distribute weapons to models
-    // Priority: melee weapons first, then ranged weapons
-    const meleeWeapons = weaponPool.filter(w => w.range === 0);
-    const rangedWeapons = weaponPool.filter(w => w.range > 0);
-    
-    let modelIndex = 0;
-
-    // Distribute melee weapons first (every model should have a melee weapon if possible)
-    meleeWeapons.forEach(weapon => {
-      if (modelIndex < models.length) {
-        models[modelIndex]?.weapons.push(weapon);
-        modelIndex = (modelIndex + 1) % models.length;
-      }
-    });
-
-    // Reset and distribute ranged weapons
-    modelIndex = 0;
-    rangedWeapons.forEach(weapon => {
-      if (modelIndex < models.length) {
-        models[modelIndex]?.weapons.push(weapon);
-        modelIndex = (modelIndex + 1) % models.length;
-      }
-    });
-
-    // Handle models without weapons (give them a basic weapon if unit has base weapons)
-    models.forEach(model => {
-      if (model.weapons.length === 0) {
-        // Try to give them a basic weapon from the unit's base weapons
-        const baseWeapons = unit.weapons || [];
-        if (baseWeapons.length > 0) {
-          // Give them the first base weapon
-          const baseWeapon = baseWeapons[0];
-          if (baseWeapon) {
-            model.weapons.push({
-              id: baseWeapon.id || `${baseWeapon.name?.toLowerCase().replace(' ', '_')}_weapon`,
-              name: baseWeapon.name || 'Unknown Weapon',
-              count: 1,
-              range: baseWeapon.range || 0,
-              attacks: baseWeapon.attacks || 1,
-              ap: (baseWeapon.specialRules || []).find((rule: any) => rule.name === 'AP')?.rating as number || 0,
-              special_rules: (baseWeapon.specialRules || []).map((rule: any) => ({
-                name: rule.name,
-                value: rule.rating,
-                type: 'weapon_modifier' as const
-              }))
-            });
-          }
-        }
-      }
-    });
-  }
-
-  /**
-   * Assign model-specific upgrades and recalculate toughness
-   */
-  private static assignModelUpgrades(models: ProcessedModel[], unit: ArmyForgeUnit): void {
-    // Determine base toughness for this unit type
-    const baseTough = this.determineBaseToughness(unit);
-    
-    // Initialize all models with base health and empty upgrades
-    models.forEach((model, index) => {
-      model.max_tough = baseTough;
-      model.current_tough = baseTough;
-      model.upgrades = [];
-    });
-
-    if (!unit.selectedUpgrades || unit.selectedUpgrades.length === 0) {
-      return;
-    }
-
-
-    // Track which models have been modified by upgrades
-    const modifiedModels = new Set<number>();
-
-    // Process upgrades in order to follow the upgrade path
-    unit.selectedUpgrades.forEach(selectedUpgrade => {
-      this.processUpgradeApplication(models, selectedUpgrade, modifiedModels, unit);
-    });
-
-    // Debug final state
-    models.slice(0, 3).forEach((model, index) => {
-    });
-  }
-
-  /**
-   * Process upgrade application following the upgrade path
-   */
-  private static processUpgradeApplication(models: ProcessedModel[], selectedUpgrade: any, modifiedModels: Set<number>, unit: ArmyForgeUnit): void {
-    const upgrade = selectedUpgrade.upgrade;
-    const option = selectedUpgrade.option;
-
-    // Determine how many models are affected
-    const affectedCount = upgrade.affects?.value || 1;
-    
-    // Find available models for this upgrade
-    const availableModels = this.findAvailableModelsForUpgrade(models, selectedUpgrade, modifiedModels, affectedCount, unit);
-    
-    availableModels.forEach(modelIndex => {
-      const model = models[modelIndex];
-      if (!model) return;
-
-      // Apply the upgrade to this model
-      this.applyUpgradePathToModel(model, selectedUpgrade, unit);
-      
-      // Mark model as modified if this is a significant change
-      if (upgrade.variant === 'replace' || this.upgradeHasWeapons(selectedUpgrade)) {
-        modifiedModels.add(modelIndex);
-      }
-    });
-  }
-
-  /**
-   * Find the model that should get weapon team upgrades
-   */
-  private static findWeaponTeamModel(models: ProcessedModel[], selectedUpgrade: any): ProcessedModel | undefined {
-    const weaponNames = selectedUpgrade.option.gains
-      ?.find((gain: any) => gain.type === 'ArmyBookItem')
-      ?.content?.filter((content: any) => content.type === 'ArmyBookWeapon')
-      ?.map((weapon: any) => weapon.name) || [];
-
-    return models.find(model => 
-      model.weapons.some(weapon => weaponNames.includes(weapon.name))
-    );
-  }
-
-
-  /**
-   * Find available models for upgrade based on upgrade rules
-   */
-  private static findAvailableModelsForUpgrade(models: ProcessedModel[], selectedUpgrade: any, modifiedModels: Set<number>, affectedCount: number, unit: ArmyForgeUnit): number[] {
-    const upgrade = selectedUpgrade.upgrade;
-    const availableModels: number[] = [];
-
-    if (upgrade.variant === 'replace') {
-      // For replace upgrades, use dependency-based matching
-      const affectedWeapons = unit.weapons?.filter(unitWeapon => 
-        unitWeapon.dependencies?.some(dep => dep.upgradeInstanceId === selectedUpgrade.instanceId)
-      ) || [];
-      
-      if (affectedWeapons.length > 0) {
-        // Find models that have these dependency-matched weapons
-        const affectedWeaponIds = new Set(affectedWeapons.map(w => w.id));
-        
-        for (let i = 0; i < models.length && availableModels.length < affectedCount; i++) {
-          const model = models[i];
-          if (!model) continue;
-
-          // Check if model has weapons that are affected by this upgrade
-          const hasAffectedWeapons = model.weapons.some(weapon => 
-            affectedWeaponIds.has(weapon.id)
-          );
-
-          if (hasAffectedWeapons) {
-            availableModels.push(i);
-          }
-        }
-      } else {
-        // Fallback: if no dependency info, allow any model
-        for (let i = 0; i < models.length && availableModels.length < affectedCount; i++) {
-          if (models[i]) {
-            availableModels.push(i);
-          }
-        }
-      }
-    } else {
-      // For upgrade variants, just take first available models
-      for (let i = 0; i < models.length && availableModels.length < affectedCount; i++) {
-        if (models[i]) {
-          availableModels.push(i);
-        }
-      }
-    }
-
-    return availableModels;
-  }
-
-  /**
-   * Apply upgrade path to specific model
-   */
-  private static applyUpgradePathToModel(model: ProcessedModel, selectedUpgrade: any, unit: ArmyForgeUnit): void {
-    const upgrade = selectedUpgrade.upgrade;
-    const option = selectedUpgrade.option;
-
-    // Process equipment changes using dependency-based matching
-    if (upgrade.variant === 'replace') {
-      // Find weapons that can be replaced by this upgrade using dependencies
-      const affectedWeapons = unit.weapons?.filter(unitWeapon => 
-        unitWeapon.dependencies?.some(dep => dep.upgradeInstanceId === selectedUpgrade.instanceId)
-      ) || [];
-      
-      if (affectedWeapons.length > 0) {
-        // Remove weapons that match the dependency chain
-        const affectedWeaponIds = new Set(affectedWeapons.map(w => w.id));
-        model.weapons = model.weapons.filter(weapon => 
-          !affectedWeaponIds.has(weapon.id)
-        );
-      }
-    }
-
-    // Add new equipment and rules from gains
-    const upgradeRules: ProcessedRule[] = [];
-    option.gains?.forEach((gain: any) => {
-      if (gain.type === 'ArmyBookItem' && gain.content) {
-        gain.content.forEach((content: any) => {
-          if (content.type === 'ArmyBookWeapon') {
-            // Add new weapon
-            const newWeapon: ProcessedWeapon = {
-              id: content.weaponId || content.id,
-              name: content.name,
-              count: gain.count || 1,
-              range: content.range || 0,
-              attacks: content.attacks || 1,
-              ap: content.specialRules?.find((rule: any) => rule.name === 'AP')?.rating || 0,
-              special_rules: content.specialRules?.map((rule: any) => ({
-                name: rule.name,
-                value: rule.rating
-              })) || []
-            };
-            model.weapons.push(newWeapon);
-          } else if (content.type === 'ArmyBookRule') {
-            // Add new rule
-            upgradeRules.push({
-              name: content.name,
-              type: 'upgrade',
-              rating: content.rating,
-              description: content.name
-            });
-          }
-        });
-      } else if (gain.type === 'ArmyBookRule') {
-        // Direct rule gain
-        upgradeRules.push({
-          name: gain.name,
-          type: 'upgrade', 
-          rating: gain.rating,
-          description: gain.name
-        });
-      }
-    });
-
-    // Create model upgrade record
-    if (upgradeRules.length > 0 || option.gains?.some((gain: any) => gain.type === 'ArmyBookItem')) {
-      // Determine reassignability based on game rules (ArmyForge logic)
-      const reassignable = upgrade.select?.type === 'exactly' && upgrade.select?.value === 1;
-      
-      const modelUpgrade: ProcessedModelUpgrade = {
-        name: option.label || 'Unknown Upgrade',
-        description: option.label || 'Unknown Upgrade', 
-        rules: upgradeRules,
-        reassignable,
-        source: this.determineUpgradeSource(selectedUpgrade)
-      };
-
-      model.upgrades.push(modelUpgrade);
-    }
-
-    // Apply toughness modifications
-    upgradeRules.forEach(rule => {
-      if (rule.name === 'Tough' && rule.rating) {
-        const toughValue = parseInt(rule.rating.toString());
-        
-        if (upgrade.variant === 'replace') {
-          // Replace upgrades set new toughness value
-          model.max_tough = toughValue;
-          model.current_tough = toughValue;
-        } else {
-          // Other upgrades add to existing toughness
-          model.max_tough += toughValue;
-          model.current_tough += toughValue;
-        }
-      }
-    });
-  }
-
-  /**
-   * Check if upgrade has weapons
-   */
-  private static upgradeHasWeapons(selectedUpgrade: any): boolean {
-    const option = selectedUpgrade.option;
-    return option.gains?.some((gain: any) => 
-      gain.type === 'ArmyBookItem' && 
-      gain.content?.some((content: any) => content.type === 'ArmyBookWeapon')
-    ) || false;
-  }
-
-  /**
-   * Determine upgrade source for categorization
-   */
-  private static determineUpgradeSource(selectedUpgrade: any): 'weapon-team' | 'choose-model' | 'unit-wide' {
-    const upgrade = selectedUpgrade.upgrade;
-    const option = selectedUpgrade.option;
-
-    // Check if it's a weapon team (replace variant with weapons and tough)
-    if (upgrade.variant === 'replace' && 
-        option.gains?.some((gain: any) => gain.type === 'ArmyBookItem' && 
-        gain.content?.some((content: any) => content.type === 'ArmyBookWeapon')) &&
-        option.gains?.some((gain: any) => gain.type === 'ArmyBookItem' && 
-        gain.content?.some((content: any) => content.type === 'ArmyBookRule' && content.name === 'Tough'))) {
-      return 'weapon-team';
-    }
-
-    // Check if it's a choose-model upgrade (select exactly 1)
-    if (upgrade.select?.type === 'exactly' && upgrade.select?.value === 1) {
-      return 'choose-model';
-    }
-
-    // Check if it affects all models
-    if (upgrade.affects?.type === 'all') {
-      return 'unit-wide';
-    }
-
-    // Default for individual model upgrades
-    return 'choose-model';
-  }
-
-  /**
-   * Determine base toughness for a unit type (before upgrades)
-   */
-  private static determineBaseToughness(unit: ArmyForgeUnit): number {
-    // Start with default toughness of 1
-    let baseToughness = 1;
-    
-    // Look for Tough rules in the unit's base rules array
-    if (unit.rules && unit.rules.length > 0) {
-      for (const rule of unit.rules) {
-        if (rule.name === 'Tough') {
-          // Found a Tough rule - extract the rating
-          if (rule.rating !== undefined && rule.rating !== null) {
-            const toughValue = typeof rule.rating === 'string' 
-              ? parseInt(rule.rating, 10) 
-              : Number(rule.rating);
-            
-            if (!isNaN(toughValue) && toughValue > 0) {
-              baseToughness = Math.max(baseToughness, toughValue);
-            }
-          }
-        }
-      }
-    }
-
-    return baseToughness;
-  }
-
-  /**
-   * Post-process all units to handle model upgrades correctly
-   * This runs after all unit merging is complete
-   */
-  private static postProcessModelUpgrades(processedUnits: ProcessedUnit[], originalUnits: any[]): void {
-    
-    processedUnits.forEach(unit => {
-      
-      // Get original ArmyForge units for this processed unit
-      const originalArmyForgeUnits = unit.armyforge_unit_ids
-        .map(id => originalUnits.find(ou => ou.id === id))
-        .filter(Boolean);
-
-
-      if (originalArmyForgeUnits.length === 0) return;
-
-      // Process each sub-unit
-      unit.sub_units.forEach(subUnit => {
-        
-        // Find the matching original unit for this sub-unit
-        const matchingOriginal = originalArmyForgeUnits.find(ou => ou.id === subUnit.armyforge_unit_id);
-        if (!matchingOriginal) {
-          return;
-        }
-
-        
-        // Now properly process model upgrades for this sub-unit
-        this.assignModelUpgrades(subUnit.models, matchingOriginal);
-      });
-    });
   }
 }

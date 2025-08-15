@@ -5,7 +5,7 @@ import { Server } from 'http';
 import multer from 'multer';
 import { promises as fs } from 'fs';
 import { db } from './database/db';
-import { NewArmyProcessor } from './services/newArmyProcessor';
+import { ArmyProcessor } from './services/armyProcessor';
 import { VERSION } from './version';
 import { 
   ProcessedArmy, 
@@ -256,7 +256,7 @@ app.post('/api/armies/import', async (req: Request<{}, ImportArmyResponse, Impor
     const armyForgeData = await response.json() as ArmyForgeArmy;
     
     // Process army using our ArmyProcessor
-    const processedArmy = NewArmyProcessor.processArmy(armyForgeData);
+    const processedArmy = ArmyProcessor.processArmy(armyForgeData);
     
     // Store in database  
     const storedArmyId = await storeArmyInDatabase(processedArmy, armyForgeData);
