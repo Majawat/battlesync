@@ -15,7 +15,7 @@ BattleSync v2 is a clean rewrite of an OPR (One Page Rules) battle tracker appli
 
 ## Current State
 
-Complete full-stack application with TypeScript backend + React frontend. Express server with SQLite storage serves React UI in production mode (single port deployment). Comprehensive army import system, battle management, and unit state tracking. ArmyProcessor handles complex OPR unit merging (Combined/Joined units) with campaign XP cost calculations and model-specific upgrade assignments. Battle system supports unit state tracking with health, fatigue, spell tokens, activation status, and all OPR battle mechanics. React frontend provides mobile-first UI with TailwindCSS and complete dark mode implementation optimized for battle visibility. Army detail pages show comprehensive unit breakdowns with all models, weapons, and upgrades. Production deployment serves both frontend and API from single port (4019). All code uses strict TypeScript for type safety.
+Complete full-stack application with TypeScript backend + React frontend. Express server with SQLite storage serves React UI in production mode (single port deployment). Comprehensive army import system, battle management, and unit state tracking. ArmyProcessor handles complex OPR unit merging (Combined/Joined units) with campaign XP cost calculations and advanced dependency-based upgrade system that properly processes upgrade chains (e.g., Rifle → Sgt. Pistol → Drum Pistol). Battle system supports unit state tracking with health, fatigue, spell tokens, activation status, and all OPR battle mechanics. React frontend provides mobile-first UI with TailwindCSS and complete dark mode implementation optimized for battle visibility. Army detail pages show comprehensive unit breakdowns with all models, weapons, and upgrades. Production deployment serves both frontend and API from single port (4019). All code uses strict TypeScript for type safety.
 
 ## Tech Stack
 
@@ -67,8 +67,9 @@ BattleSync tracks battles for One Page Rules' Grimdark Future system. Key concep
 - Import via share links (https://army-forge.onepagerules.com/share?id=...)
 - API endpoint: https://army-forge.onepagerules.com/api/tts?id=...
 - ArmyForge handles validation - trust their data structure
-- Handle all upgrade/trait edge cases from their JSON
+- Handle all upgrade/trait edge cases from their JSON using dependency-based upgrade system
 - Combined units appear as 2 separate units with "join to" field - merge carefully as stats differ
+- Upgrade chains (nested upgrades) are fully supported via dependency matching instead of string matching
 - Transport capacity tracking not implemented - users handle manually
 
 ## Core Features to Implement
@@ -97,7 +98,8 @@ Keep database schema simple with maximum 5 tables. Consider tables for:
 ### Model & Upgrade Processing
 - [x] **FIXED: Model naming in combined units** - ~~Stop "Infantry Squad 1-10" appearing twice, should be "Infantry Squad 1-20"~~ - **RESOLVED in v2.15.0**: Moved model naming to final processing stage after all combining/joining operations. Combined units now show proper sequential naming (1-20) instead of duplicate ranges (1-10 twice).
 - [x] **FIXED: Missing weapon upgrades** - ~~Key issue: some models get weapon upgrades, others don't (sniper rifle, drum rifle, flamer, plasma rifle missing from Bullshit-Squad Crews)~~ - **RESOLVED in v2.14.0**: Implemented dependency-based upgrade system using `upgradeInstanceId` matching instead of string matching. Sniper rifles, plasma rifles, and all weapon upgrades now work correctly.
-- [ ] **Base size updates from upgrades** - Combat bike upgrade should change base size from 32mm
+- [x] **FIXED: Upgrade chain processing** - ~~Sgt. Pistol → Drum Pistol and Sgt. Hand Weapon → Energy Axe chains not working~~ - **RESOLVED in v2.16.0**: Enhanced dependency system to search for dependencies in weapons added by previous upgrades, not just base unit weapons. Upgrade chains now process correctly through multiple levels of nested upgrades.
+- [x] **FIXED: Base size updates from upgrades** - ~~Combat bike upgrade should change base size from 32mm~~ - **RESOLVED in v2.17.0**: Added base size processing functionality to ArmyBookItem upgrade system. Combat Bike and other upgrades with `bases` property now correctly update unit base sizes. Mrs. Bitchtits now properly changes from 32mm to 60x35mm base with Combat Bike upgrade.
 - [ ] **Sorting improvements** - Sort weapons by range (melee first), sort rules alphabetically
 
 ### Research Items

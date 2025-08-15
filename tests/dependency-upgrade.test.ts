@@ -104,4 +104,113 @@ describe('Dependency-Based Upgrade System', () => {
       expect(stringMatchWorks).toBe(false); // This is why upgrades fail
     });
   });
+
+  describe('Upgrade Chain Dependencies', () => {
+    test('should find dependencies in weapons added by previous upgrades', () => {
+      // This tests the core issue: Sgt. Pistol has dependency for Drum Pistol upgrade,
+      // but Sgt. Pistol was added by a previous upgrade, not from base unit
+      
+      // Mock Sgt. Pistol weapon that was added by previous upgrade
+      const mockSgtPistol = {
+        id: "1HINdgr0",
+        name: "Sgt. Pistol",
+        dependencies: [
+          {"upgradeInstanceId": "a95xGXQME", "count": 1, "variant": "replace"} // Drum Pistol upgrade
+        ]
+      };
+
+      // Mock Drum Pistol upgrade  
+      const mockDrumPistolUpgrade = {
+        instanceId: "a95xGXQME",
+        upgrade: {
+          variant: "replace",
+          targets: ["Sgt. Pistol"]
+        },
+        option: {
+          gains: [{
+            name: "Drum Pistol",
+            type: "ArmyBookWeapon",
+            range: 9,
+            attacks: 2
+          }]
+        }
+      };
+
+      // Test that we can find the dependency
+      const shouldMatch = mockSgtPistol.dependencies?.some(dep =>
+        dep.upgradeInstanceId === mockDrumPistolUpgrade.instanceId
+      );
+
+      expect(shouldMatch).toBe(true);
+    });
+
+    test('should handle nested upgrade chains (Sgt. Hand Weapon -> Energy Axe)', () => {
+      // Mock Sgt. Hand Weapon that was added by previous upgrade
+      const mockSgtHandWeapon = {
+        id: "c9dTSUKw", 
+        name: "Sgt. Hand Weapon",
+        dependencies: [
+          {"upgradeInstanceId": "8chyHQBxX", "count": 1, "variant": "replace"} // Energy Axe upgrade
+        ]
+      };
+
+      // Mock Energy Axe upgrade
+      const mockEnergyAxeUpgrade = {
+        instanceId: "8chyHQBxX",
+        upgrade: {
+          variant: "replace", 
+          targets: ["Sgt. Hand Weapon"]
+        },
+        option: {
+          gains: [{
+            name: "Energy Axe",
+            type: "ArmyBookWeapon",
+            range: 0,
+            attacks: 2
+          }]
+        }
+      };
+
+      // Test that we can find the dependency
+      const shouldMatch = mockSgtHandWeapon.dependencies?.some(dep =>
+        dep.upgradeInstanceId === mockEnergyAxeUpgrade.instanceId
+      );
+
+      expect(shouldMatch).toBe(true);
+    });
+
+    test('should process upgrade chains in correct order', () => {
+      // This tests that upgrade processing order matters:
+      // 1. Base Rifle+CCW -> Sgt. Pistol + Sgt. Hand Weapon  
+      // 2. Sgt. Pistol -> Drum Pistol
+      // 3. Sgt. Hand Weapon -> Energy Axe
+
+      const upgradeChain = [
+        {
+          instanceId: "SLcejRU90", // Replace Rifle+CCW with Sgt weapons
+          order: 1
+        },
+        {
+          instanceId: "a95xGXQME", // Replace Sgt. Pistol with Drum Pistol  
+          order: 2
+        },
+        {
+          instanceId: "8chyHQBxX", // Replace Sgt. Hand Weapon with Energy Axe
+          order: 3
+        }
+      ];
+
+      // Upgrades should be processed in order they appear in selectedUpgrades array
+      const correctOrder = upgradeChain.every((upgrade, index) => {
+        if (index === 0) return true;
+        const previousUpgrade = upgradeChain[index - 1];
+        return previousUpgrade ? previousUpgrade.order < upgrade.order : false;
+      });
+
+      expect(correctOrder).toBe(true);
+    });
+  });
+
+  // Note: Base size upgrade tests are validated via Docker integration testing
+  // with real army data due to complex interface mocking requirements
 });

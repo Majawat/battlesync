@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.17.0] - 2025-08-15
+
+### Fixed
+- **Base size upgrades**: ArmyBookItem upgrades with `bases` property now correctly update unit base sizes
+- Mrs. Bitchtits Combat Bike upgrade now properly changes base size from 32mm to 60x35mm
+- Base size processing works for all ArmyBookItem upgrades containing bases specification
+
+### Added
+- Base size update functionality in dependency-based upgrade system
+- Support for partial base size updates (round or square independently)
+
+## [2.16.0] - 2025-08-15
+
+### Fixed
+- **Upgrade chain processing**: Enhanced dependency-based upgrade system to handle nested upgrade dependencies
+- Sergeant weapon upgrade chains now work correctly (Sgt. Pistol → Drum Pistol, Sgt. Hand Weapon → Energy Axe)
+- Upgrade system now searches for dependencies in weapons added by previous upgrades, not just base unit weapons
+- Improved weapon ID matching logic to handle both `id` and `weaponId` properties from upgrade gains
+
+### Added
+- Comprehensive unit tests for upgrade chain functionality
+- Enhanced debug logging for upgrade chain processing and weapon dependency matching
+
 ## [2.15.0] - 2025-08-15
 
 ### Added

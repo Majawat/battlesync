@@ -92,7 +92,7 @@ export class ArmyProcessor {
     };
     
     // Step 2: Create individual models and process upgrades using new algorithm
-    subUnit.models = this.generateModelsWithNewUpgradeSystem(unit);
+    subUnit.models = this.generateModelsWithNewUpgradeSystem(unit, subUnit);
     
     return subUnit;
   }
@@ -100,7 +100,7 @@ export class ArmyProcessor {
   /**
    * Generate models using new dependency-based upgrade system
    */
-  private static generateModelsWithNewUpgradeSystem(unit: ArmyForgeUnit): ProcessedModel[] {
+  private static generateModelsWithNewUpgradeSystem(unit: ArmyForgeUnit, subUnit: ProcessedSubUnit): ProcessedModel[] {
     console.log(`\n*** Generating models for unit: ${unit.name} ***`);
     const models: ProcessedModel[] = [];
     const isHero = unit.rules.some(rule => rule.name === 'Hero');
@@ -128,7 +128,7 @@ export class ArmyProcessor {
     this.applyBaseItemsToModels(models, unit.items);
     
     // Step 4: Process selectedUpgrades in order using dependency tracking
-    this.processUpgradesWithDependencies(models, unit);
+    this.processUpgradesWithDependencies(models, unit, subUnit);
     
     return models;
   }
@@ -185,7 +185,7 @@ export class ArmyProcessor {
   /**
    * Process upgrades using dependency tracking system
    */
-  private static processUpgradesWithDependencies(models: ProcessedModel[], unit: ArmyForgeUnit): void {
+  private static processUpgradesWithDependencies(models: ProcessedModel[], unit: ArmyForgeUnit, subUnit: ProcessedSubUnit): void {
     console.log(`\n--- Processing upgrades for unit: ${unit.name} ---`);
     if (!unit.selectedUpgrades || unit.selectedUpgrades.length === 0) {
       console.log(`No upgrades found for ${unit.name}`);
@@ -195,20 +195,20 @@ export class ArmyProcessor {
     console.log(`Found ${unit.selectedUpgrades.length} upgrades for ${unit.name}`);
     // Process upgrades in order
     unit.selectedUpgrades.forEach(selectedUpgrade => {
-      this.applyUpgradeWithDependencies(models, selectedUpgrade, unit);
+      this.applyUpgradeWithDependencies(models, selectedUpgrade, unit, subUnit);
     });
   }
 
   /**
    * Apply single upgrade using dependency system
    */
-  private static applyUpgradeWithDependencies(models: ProcessedModel[], selectedUpgrade: any, unit: ArmyForgeUnit): void {
+  private static applyUpgradeWithDependencies(models: ProcessedModel[], selectedUpgrade: any, unit: ArmyForgeUnit, subUnit: ProcessedSubUnit): void {
     const upgrade = selectedUpgrade.upgrade;
     
     if (upgrade.variant === 'replace') {
       this.processReplaceUpgrade(models, selectedUpgrade, unit);
     } else if (upgrade.variant === 'upgrade') {
-      this.processAddUpgrade(models, selectedUpgrade);
+      this.processAddUpgrade(models, selectedUpgrade, subUnit);
     }
   }
 
@@ -225,9 +225,33 @@ export class ArmyProcessor {
     console.log(`\n=== Processing upgrade: ${upgrade.label} (${instanceId}) for unit: ${unit.name} ===`);
     
     // Step 1: Find weapons/items that have this upgrade in their dependencies
-    const affectedWeapons = unit.weapons.filter(weapon => 
+    // Search in base unit weapons
+    const baseAffectedWeapons = unit.weapons.filter(weapon => 
       weapon.dependencies?.some(dep => dep.upgradeInstanceId === instanceId)
     );
+    
+    // Search in weapons that were added by previous upgrades (upgrade chains)
+    // These weapons are found in the gains of previous selectedUpgrades
+    const upgradeChainWeapons: any[] = [];
+    unit.selectedUpgrades.forEach(prevUpgrade => {
+      if (prevUpgrade.instanceId === instanceId) return; // Skip current upgrade
+      
+      prevUpgrade.option.gains?.forEach((gain: any) => {
+        if (gain.type === 'ArmyBookWeapon' && gain.dependencies?.some((dep: any) => dep.upgradeInstanceId === instanceId)) {
+          upgradeChainWeapons.push(gain);
+        }
+        // Also check weapons inside items
+        if (gain.type === 'ArmyBookItem' && gain.content) {
+          gain.content.forEach((content: any) => {
+            if (content.type === 'ArmyBookWeapon' && content.dependencies?.some((dep: any) => dep.upgradeInstanceId === instanceId)) {
+              upgradeChainWeapons.push(content);
+            }
+          });
+        }
+      });
+    });
+
+    const affectedWeapons = [...baseAffectedWeapons, ...upgradeChainWeapons];
     
     if (unit.name === 'Destroyer Sisters') {
       console.log(`Affected weapons:`, affectedWeapons.map(w => ({ name: w.name, id: w.id })));
@@ -267,14 +291,28 @@ export class ArmyProcessor {
     modelsToAffect.forEach(model => {
       // Remove weapons using dependency-based matching
       if (affectedWeapons.length > 0) {
-        const affectedWeaponIds = new Set(affectedWeapons.map(w => w.id));
+        // Create set of weapon IDs to remove (handle both id and weaponId)
+        const affectedWeaponIds = new Set();
+        affectedWeapons.forEach(weapon => {
+          // Add both id and weaponId to cover all matching scenarios
+          if (weapon.id) affectedWeaponIds.add(weapon.id);
+          if (weapon.weaponId) affectedWeaponIds.add(weapon.weaponId);
+          // For upgrade chain weapons that may only have weaponId
+          if (!weapon.id && weapon.weaponId) {
+            affectedWeaponIds.add(weapon.weaponId);
+          }
+        });
+        
         if (unit.name === 'Destroyer Sisters') {
           console.log(`Removing weapons with IDs:`, Array.from(affectedWeaponIds));
           console.log(`Model ${model.name} weapon IDs before:`, model.weapons.map(w => w.id));
+          console.log(`Affected weapons found:`, affectedWeapons.map(w => ({ name: w.name, id: w.id, weaponId: w.weaponId })));
         }
+        
         model.weapons = model.weapons.filter(weapon => 
           !affectedWeaponIds.has(weapon.id)
         );
+        
         if (unit.name === 'Destroyer Sisters') {
           console.log(`Model ${model.name} weapon IDs after:`, model.weapons.map(w => w.id));
         }
@@ -292,10 +330,13 @@ export class ArmyProcessor {
   /**
    * Process "upgrade" variant upgrades (additive)
    */
-  private static processAddUpgrade(models: ProcessedModel[], selectedUpgrade: any): void {
+  private static processAddUpgrade(models: ProcessedModel[], selectedUpgrade: any, subUnit: ProcessedSubUnit): void {
     const upgrade = selectedUpgrade.upgrade;
     const option = selectedUpgrade.option;
     const affects = upgrade.affects;
+    
+    // Check for base size updates from ArmyBookItem gains
+    this.processBaseSizeUpdates(option.gains, subUnit, selectedUpgrade);
     
     // Determine how many models to affect
     let modelsToAffect: ProcessedModel[] = [];
@@ -313,6 +354,20 @@ export class ArmyProcessor {
     // Add gains to selected models
     modelsToAffect.forEach(model => {
       this.addGainsToModel(model, option.gains, selectedUpgrade);
+    });
+  }
+
+  /**
+   * Process base size updates from ArmyBookItem gains
+   */
+  private static processBaseSizeUpdates(gains: any[], subUnit: ProcessedSubUnit, selectedUpgrade: any): void {
+    if (!gains) return;
+    
+    gains.forEach(gain => {
+      if (gain.type === 'ArmyBookItem' && gain.bases) {
+        // Update the unit's base sizes from the upgrade
+        subUnit.base_sizes = { ...subUnit.base_sizes, ...gain.bases };
+      }
     });
   }
 
