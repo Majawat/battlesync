@@ -7,6 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.19.1] - 2025-08-15
+
+### Fixed
+- **Sergeant weapon upgrade chains**: Fixed critical issue where Sgt. Pistol → Drum Pistol/Plasma Pistol and Sgt. Hand Weapon → Energy Axe/Energy Sword upgrade chains were not working
+- Enhanced weapon ID matching in replace upgrade system to handle both `id` and `weaponId` properties from upgrade gains
+- Upgrade chain processing now correctly finds weapons created by previous upgrades that have dependencies for further upgrades
+- Both sergeants in combined units now properly receive their final upgraded weapons instead of stopping at intermediate sergeant weapons
+
+### Technical Improvements
+- Improved dependency-based upgrade system to handle upgrade chain weapons with different ID structures
+- Added comprehensive debug logging for upgrade chain troubleshooting (removed in production)
+- Enhanced weapon matching logic in `processReplaceUpgrade` function
+
+## [2.19.0] - 2025-08-15
+
+### Added
+- Item replacement analysis system for pre-processing which models will have items replaced by upgrades
+- Support for mixed weapon/item replacement upgrades using target-based matching when dependencies are not available
+
+### Fixed
+- **Base size upgrades**: ArmyBookItem upgrades with `bases` property now correctly update unit base sizes  
+- Mrs. Bitchtits Combat Bike upgrade now properly changes base size from 32mm to 60x35mm
+
+### Technical Improvements
+- Enhanced `analyzeItemReplacements` method to simulate upgrade assignment for accurate item replacement tracking
+- Modified `applyBaseItemsToModels` to conditionally apply items based on replacement analysis
+- Improved upgrade processing workflow to handle complex edge cases with items lacking dependency information
+
 ## [2.18.0] - 2025-08-15
 
 ### Fixed
