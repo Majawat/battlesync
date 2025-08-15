@@ -762,7 +762,7 @@ export class ArmyProcessor {
 
     // Process upgrades in order to follow the upgrade path
     unit.selectedUpgrades.forEach(selectedUpgrade => {
-      this.processUpgradeApplication(models, selectedUpgrade, modifiedModels);
+      this.processUpgradeApplication(models, selectedUpgrade, modifiedModels, unit);
     });
 
     // Debug final state
@@ -773,7 +773,7 @@ export class ArmyProcessor {
   /**
    * Process upgrade application following the upgrade path
    */
-  private static processUpgradeApplication(models: ProcessedModel[], selectedUpgrade: any, modifiedModels: Set<number>): void {
+  private static processUpgradeApplication(models: ProcessedModel[], selectedUpgrade: any, modifiedModels: Set<number>, unit: ArmyForgeUnit): void {
     const upgrade = selectedUpgrade.upgrade;
     const option = selectedUpgrade.option;
 
@@ -781,14 +781,14 @@ export class ArmyProcessor {
     const affectedCount = upgrade.affects?.value || 1;
     
     // Find available models for this upgrade
-    const availableModels = this.findAvailableModelsForUpgrade(models, selectedUpgrade, modifiedModels, affectedCount);
+    const availableModels = this.findAvailableModelsForUpgrade(models, selectedUpgrade, modifiedModels, affectedCount, unit);
     
     availableModels.forEach(modelIndex => {
       const model = models[modelIndex];
       if (!model) return;
 
       // Apply the upgrade to this model
-      this.applyUpgradePathToModel(model, selectedUpgrade);
+      this.applyUpgradePathToModel(model, selectedUpgrade, unit);
       
       // Mark model as modified if this is a significant change
       if (upgrade.variant === 'replace' || this.upgradeHasWeapons(selectedUpgrade)) {
@@ -815,25 +815,39 @@ export class ArmyProcessor {
   /**
    * Find available models for upgrade based on upgrade rules
    */
-  private static findAvailableModelsForUpgrade(models: ProcessedModel[], selectedUpgrade: any, modifiedModels: Set<number>, affectedCount: number): number[] {
+  private static findAvailableModelsForUpgrade(models: ProcessedModel[], selectedUpgrade: any, modifiedModels: Set<number>, affectedCount: number, unit: ArmyForgeUnit): number[] {
     const upgrade = selectedUpgrade.upgrade;
     const availableModels: number[] = [];
 
     if (upgrade.variant === 'replace') {
-      // For replace upgrades, find models that have the target equipment
-      const targets = upgrade.targets || [];
+      // For replace upgrades, use dependency-based matching
+      const affectedWeapons = unit.weapons?.filter(unitWeapon => 
+        unitWeapon.dependencies?.some(dep => dep.upgradeInstanceId === selectedUpgrade.instanceId)
+      ) || [];
       
-      for (let i = 0; i < models.length && availableModels.length < affectedCount; i++) {
-        const model = models[i];
-        if (!model) continue;
+      if (affectedWeapons.length > 0) {
+        // Find models that have these dependency-matched weapons
+        const affectedWeaponIds = new Set(affectedWeapons.map(w => w.id));
+        
+        for (let i = 0; i < models.length && availableModels.length < affectedCount; i++) {
+          const model = models[i];
+          if (!model) continue;
 
-        // Check if model has weapons that match targets
-        const hasTargets = targets.length === 0 || targets.some((target: string) => 
-          model.weapons.some(weapon => weapon.name === target)
-        );
+          // Check if model has weapons that are affected by this upgrade
+          const hasAffectedWeapons = model.weapons.some(weapon => 
+            affectedWeaponIds.has(weapon.id)
+          );
 
-        if (hasTargets) {
-          availableModels.push(i);
+          if (hasAffectedWeapons) {
+            availableModels.push(i);
+          }
+        }
+      } else {
+        // Fallback: if no dependency info, allow any model
+        for (let i = 0; i < models.length && availableModels.length < affectedCount; i++) {
+          if (models[i]) {
+            availableModels.push(i);
+          }
         }
       }
     } else {
@@ -851,16 +865,24 @@ export class ArmyProcessor {
   /**
    * Apply upgrade path to specific model
    */
-  private static applyUpgradePathToModel(model: ProcessedModel, selectedUpgrade: any): void {
+  private static applyUpgradePathToModel(model: ProcessedModel, selectedUpgrade: any, unit: ArmyForgeUnit): void {
     const upgrade = selectedUpgrade.upgrade;
     const option = selectedUpgrade.option;
 
-    // Process equipment changes
-    if (upgrade.variant === 'replace' && upgrade.targets) {
-      // Remove target weapons
-      model.weapons = model.weapons.filter(weapon => 
-        !upgrade.targets.includes(weapon.name)
-      );
+    // Process equipment changes using dependency-based matching
+    if (upgrade.variant === 'replace') {
+      // Find weapons that can be replaced by this upgrade using dependencies
+      const affectedWeapons = unit.weapons?.filter(unitWeapon => 
+        unitWeapon.dependencies?.some(dep => dep.upgradeInstanceId === selectedUpgrade.instanceId)
+      ) || [];
+      
+      if (affectedWeapons.length > 0) {
+        // Remove weapons that match the dependency chain
+        const affectedWeaponIds = new Set(affectedWeapons.map(w => w.id));
+        model.weapons = model.weapons.filter(weapon => 
+          !affectedWeaponIds.has(weapon.id)
+        );
+      }
     }
 
     // Add new equipment and rules from gains

@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.14.0] - 2025-08-15
+
+### Fixed
+- **Weapon upgrade processing**: Replaced string-based upgrade matching with dependency-based system
+- Sniper Rifle and Plasma Rifle upgrades now work correctly on Infantry Squad units
+- Sergeant weapon chain dependencies (Pistol → Plasma Pistol, Hand Weapon → Energy Sword) function properly
+- Combined unit weapon upgrades process correctly with dependency matching
+- Eliminated string matching failures between upgrade targets ("Rifles") and weapon names ("Rifle")
+
+### Changed  
+- Upgrade system now uses `upgradeInstanceId` from weapon dependencies instead of string matching
+- Both `armyProcessor.ts` and `newArmyProcessor.ts` updated to use dependency-based matching
+- Improved reliability and future-proofing of weapon upgrade assignment logic
+
+### Technical Improvements
+- Added comprehensive dependency upgrade test suite
+- Removed all `upgrade.targets` string-based matching from codebase
+- Enhanced army data management with fetch-and-split-army.js script
+- Army data now organized in persistent `/scripts/sampleArmyData/` structure
+
 ## [2.13.0] - 2025-08-14
 
 ### Added
