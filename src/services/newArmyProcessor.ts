@@ -273,23 +273,6 @@ export class NewArmyProcessor {
   }
 
   /**
-   * Find models that have all target weapons/items
-   */
-  private static findModelsWithAllTargets(models: ProcessedModel[], targets: string[]): ProcessedModel[] {
-    if (targets.length === 0) return models; // No targets means all models are valid
-    
-    return models.filter(model => {
-      return targets.every(target => {
-        // Check if model has weapon with this name
-        const hasWeapon = model.weapons.some(weapon => weapon.name === target);
-        // Check if model has item/upgrade with this name
-        const hasItem = model.upgrades.some(upgrade => upgrade.name === target);
-        return hasWeapon || hasItem;
-      });
-    });
-  }
-
-  /**
    * Add gains (weapons, items, rules) to a specific model
    */
   private static addGainsToModel(model: ProcessedModel, gains: any[], selectedUpgrade: any): void {
