@@ -109,104 +109,100 @@ export default function ArmyImportPage() {
         )}
       </form>
 
-      {/* Help Section */}
-      <div className="card">
-        <h3 className="text-lg font-semibold mb-3">How to Import</h3>
-        <div className="space-y-4 text-sm text-battle-text-secondary-light dark:text-battle-text-secondary-dark">
-          <div>
-            <h4 className="font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark mb-1">1. Create Army in ArmyForge</h4>
-            <p>Visit <a href="https://army-forge.onepagerules.com" target="_blank" rel="noopener noreferrer" className="text-battle-accent-primary-light dark:text-battle-accent-primary-dark hover:underline">army-forge.onepagerules.com</a> and build your army list.</p>
-          </div>
-          
-          <div>
-            <h4 className="font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark mb-1">2. Share Your Army</h4>
-            <p>Click the "Share" button in ArmyForge to get a shareable URL.</p>
-          </div>
-          
-          <div>
-            <h4 className="font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark mb-1">3. Import to BattleSync</h4>
-            <p>Paste the full URL or just the ID portion into the field above.</p>
-          </div>
+      {/* Help + Examples Section */}
+      <div className="flex flex-col lg:flex-row gap-6">
+        {/* Help Section */}
+        <div className="card flex-1">
+          <h3 className="text-lg font-semibold mb-3">How to Import</h3>
+          <ol className="space-y-3 text-sm text-battle-text-secondary-light dark:text-battle-text-secondary-dark list-decimal list-inside">
+            <li>
+              <span className="font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark">
+                Create Army in ArmyForge
+              </span>
+              <p>
+                Visit{" "}
+                <a
+                  href="https://army-forge.onepagerules.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-battle-accent-primary-light dark:text-battle-accent-primary-dark hover:underline"
+                >
+                  army-forge.onepagerules.com
+                </a>{" "}
+                and build your army list.
+              </p>
+            </li>
+            <li>
+              <span className="font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark">
+                Share Your Army
+              </span>
+              <p>Click the options menu at the top right, then click Share as Link to get a shareable URL.</p>
+            </li>
+            <li>
+              <span className="font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark">
+                Import to BattleSync
+              </span>
+              <p>Paste the full URL or just the ID portion into the field above.</p>
+            </li>
+          </ol>
         </div>
-      </div>
 
-      {/* Example IDs */}
-      <div className="card">
-        <h3 className="text-lg font-semibold mb-3">Test with Sample Armies</h3>
-        <div className="space-y-3 text-sm">
-          {/* Dev Test Army */}
-          <div className="flex justify-between items-center p-3 bg-battle-border-light dark:bg-battle-border-dark rounded-lg">
-            <div>
-              <p className="font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark">Dev Test Army</p>
-              <p className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark">Sample army for testing</p>
-            </div>
-            <button
-              type="button"
-              onClick={() => setArmyForgeId('https://army-forge.onepagerules.com/share?id=IJ1JM_m-jmka')}
-              className="btn-secondary text-xs"
-            >
-              Use This ID
-            </button>
-          </div>
-          
-          {/* Ashen Pact Army */}
-          <div className="flex justify-between items-center p-3 bg-battle-border-light dark:bg-battle-border-dark rounded-lg">
-            <div>
-              <p className="font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark">The Ashen Pact</p>
-              <p className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark">Cody's actual army</p>
-            </div>
-            <button
-              type="button"
-              onClick={() => setArmyForgeId('https://army-forge.onepagerules.com/share?id=vMzljLVC6ZGv')}
-              className="btn-secondary text-xs"
-            >
-              Use This ID
-            </button>
-          </div>
-
-          {/* van Louen's Roughnecks */}
-          <div className="flex justify-between items-center p-3 bg-battle-border-light dark:bg-battle-border-dark rounded-lg">
-            <div>
-              <p className="font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark">van Louen's Roughnecks</p>
-              <p className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark">Alex's bullshit army</p>
-            </div>
-            <button
-              type="button"
-              onClick={() => setArmyForgeId('https://army-forge.onepagerules.com/share?id=Xo19MAwQPGbs')}
-              className="btn-secondary text-xs"
-            >
-              Use This ID
-            </button>
-          </div>
-
-          {/* Hive Fleet Tarvos */}
-          <div className="flex justify-between items-center p-3 bg-battle-border-light dark:bg-battle-border-dark rounded-lg">
-            <div>
-              <p className="font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark">Hive Fleet Tarvos</p>
-              <p className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark">Claire's army</p>
-            </div>
-            <button
-              type="button"
-              onClick={() => setArmyForgeId('https://army-forge.onepagerules.com/share?id=Un3_pRTu2xBO')}
-              className="btn-secondary text-xs"
-            >
-              Use This ID
-            </button>
-          </div>
-
-          {/* Galdoo'o naahlk wildigitkw */}
-          <div className="flex justify-between items-center p-3 bg-battle-border-light dark:bg-battle-border-dark rounded-lg">
-            <div>
-              <p className="font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark">Galdoo'o naahlk wildigitkw</p>
-              <p className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark">Victoria's army</p>
-            </div>
-            <button
-              type="button"
-              onClick={() => setArmyForgeId('https://army-forge.onepagerules.com/share?id=OKOrilTDQs6P')}
-              className="btn-secondary text-xs"
-            >
-              Use This ID
-            </button>
+        {/* Example IDs */}
+        <div className="card flex-1">
+          <h3 className="text-lg font-semibold mb-3">Test with Sample Armies</h3>
+          <div className="space-y-3 text-sm">
+            {[
+              {
+                name: "Dev Test Army",
+                desc: "Sample army for testing",
+                id: "IJ1JM_m-jmka",
+              },
+              {
+                name: "The Ashen Pact",
+                desc: "Cody's actual army",
+                id: "vMzljLVC6ZGv",
+              },
+              {
+                name: "van Louen's Roughnecks",
+                desc: "Alex's bullshit army",
+                id: "Xo19MAwQPGbs",
+              },
+              {
+                name: "Hive Fleet Tarvos",
+                desc: "Claire's army",
+                id: "Un3_pRTu2xBO",
+              },
+              {
+                name: "Galdoo'o naahlk wildigitkw",
+                desc: "Victoria's army",
+                id: "OKOrilTDQs6P",
+              },
+            ].map((army) => (
+              <div
+                key={army.id}
+                className="flex justify-between items-center p-3 bg-battle-border-light dark:bg-battle-border-dark rounded-lg"
+              >
+                <div>
+                  <p className="font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark">
+                    {army.name}
+                  </p>
+                  <p className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark">
+                    {army.desc}
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setArmyForgeId(
+                      `https://army-forge.onepagerules.com/share?id=${army.id}`
+                    )
+                  }
+                  className="btn-secondary text-xs"
+                >
+                  Use This ID
+                </button>
+              </div>
+            ))}
           </div>
         </div>
       </div>
