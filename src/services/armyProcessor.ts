@@ -186,16 +186,67 @@ export class ArmyProcessor {
    * Process upgrades using dependency tracking system
    */
   private static processUpgradesWithDependencies(models: ProcessedModel[], unit: ArmyForgeUnit, subUnit: ProcessedSubUnit): void {
-    console.log(`\n--- Processing upgrades for unit: ${unit.name} ---`);
     if (!unit.selectedUpgrades || unit.selectedUpgrades.length === 0) {
-      console.log(`No upgrades found for ${unit.name}`);
       return;
     }
     
-    console.log(`Found ${unit.selectedUpgrades.length} upgrades for ${unit.name}`);
-    // Process upgrades in order
+    // Group upgrades by upgrade section (uid) to handle multi-option upgrades correctly
+    const upgradeGroups = new Map<string, any[]>();
+    const singleUpgrades: any[] = [];
+    
     unit.selectedUpgrades.forEach(selectedUpgrade => {
+      const upgradeUid = selectedUpgrade.upgrade.uid;
+      const affects = selectedUpgrade.upgrade.affects;
+      
+      // Check if this is a multi-model upgrade section
+      if (affects?.type === 'exactly' && affects.value > 1) {
+        if (!upgradeGroups.has(upgradeUid)) {
+          upgradeGroups.set(upgradeUid, []);
+        }
+        upgradeGroups.get(upgradeUid)!.push(selectedUpgrade);
+      } else {
+        singleUpgrades.push(selectedUpgrade);
+      }
+    });
+    
+    // Process single upgrades normally
+    singleUpgrades.forEach(selectedUpgrade => {
       this.applyUpgradeWithDependencies(models, selectedUpgrade, unit, subUnit);
+    });
+    
+    // Process grouped upgrades with distribution
+    upgradeGroups.forEach((groupedUpgrades, upgradeUid) => {
+      this.processGroupedUpgrades(models, groupedUpgrades, unit, subUnit);
+    });
+  }
+
+  /**
+   * Process grouped upgrades that should be distributed across multiple models
+   */
+  private static processGroupedUpgrades(models: ProcessedModel[], groupedUpgrades: any[], unit: ArmyForgeUnit, subUnit: ProcessedSubUnit): void {
+    if (groupedUpgrades.length === 0) return;
+    
+    const firstUpgrade = groupedUpgrades[0];
+    const affects = firstUpgrade.upgrade.affects;
+    const numModelsToAffect = affects?.value || 1;
+    
+    // Process grouped upgrade (affects multiple models with distributed options)
+    
+    // Get the models that should be affected
+    const modelsToAffect = models.slice(0, numModelsToAffect);
+    
+    // Distribute the upgrades across the affected models
+    groupedUpgrades.forEach((selectedUpgrade, index) => {
+      if (index < modelsToAffect.length) {
+        const targetModel = modelsToAffect[index];
+        if (targetModel) {
+          // Apply base size updates if needed
+          this.processBaseSizeUpdates(selectedUpgrade.option.gains, subUnit, selectedUpgrade);
+          
+          // Apply gains to the specific model
+          this.addGainsToModel(targetModel, selectedUpgrade.option.gains, selectedUpgrade);
+        }
+      }
     });
   }
 

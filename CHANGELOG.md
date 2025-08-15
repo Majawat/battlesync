@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.18.0] - 2025-08-15
+
+### Fixed
+- **Campaign upgrade duplication**: Multi-model upgrades now distribute options correctly instead of duplicating
+- "Upgrade two models with one" selections (Field Radio, Company Standard, Medical Training) now apply one upgrade per model
+- Fixed upgrade system to group related upgrade options by section UID and distribute across affected models
+- Campaign upgrades like "Medical Training" and "Field Radio" no longer appear on multiple models
+
+### Added
+- Grouped upgrade processing system for handling multi-option upgrade sections
+- Support for distributing different upgrade options across multiple models from same upgrade section
+
 ## [2.17.0] - 2025-08-15
 
 ### Fixed
