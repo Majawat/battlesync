@@ -36,9 +36,10 @@ export default function HomePage() {
           Welcome to BattleSync
         </h1>
         <p className="text-xl text-battle-text-secondary-light dark:text-battle-text-secondary-dark max-w-3xl mx-auto">
-          Simple OPR battle tracker built for mobile-first gaming. 
-          Import armies from ArmyForge and track unit health during battles.
+          Simple OPR battle tracker built for mobile-first gaming.
         </p>
+        <p className="text-xl text-battle-text-secondary-light dark:text-battle-text-secondary-dark max-w-3xl mx-auto">
+        Import armies from ArmyForge and track unit health during battles.</p>
       </div>
 
       {/* Server Status */}
