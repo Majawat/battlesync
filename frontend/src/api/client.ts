@@ -33,6 +33,11 @@ export const armyApi = {
     const response = await api.get(`/api/armies/${id}`);
     return response.data;
   },
+
+  deleteArmy: async (id: string) => {
+    const response = await api.delete(`/api/armies/${id}`);
+    return response.data;
+  },
 };
 
 // Battle API

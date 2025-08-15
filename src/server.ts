@@ -376,8 +376,7 @@ app.delete('/api/armies/:id', async (req: Request<{id: string}>, res: Response) 
       return;
     }
 
-    // Delete army and related data
-    await db.run('DELETE FROM army_units WHERE army_id = ?', [armyId]);
+    // Delete army and related data (CASCADE will handle related tables)
     await db.run('DELETE FROM armies WHERE id = ?', [armyId]);
 
     res.json({

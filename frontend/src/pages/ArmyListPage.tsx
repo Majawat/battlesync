@@ -8,6 +8,8 @@ export default function ArmyListPage() {
   const [armies, setArmies] = useState<Army[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchArmies = async () => {
@@ -27,6 +29,25 @@ export default function ArmyListPage() {
 
     fetchArmies();
   }, []);
+
+  const handleDeleteArmy = async (armyId: string) => {
+    try {
+      setDeletingId(armyId);
+      const response = await armyApi.deleteArmy(armyId) as any;
+      
+      if (response.success) {
+        // Remove army from local state
+        setArmies(prevArmies => prevArmies.filter(army => army.id !== armyId));
+        setConfirmDeleteId(null);
+      } else {
+        throw new Error(response.error || 'Failed to delete army');
+      }
+    } catch (err: any) {
+      setError(err.response?.data?.error || err.message || 'Failed to delete army');
+    } finally {
+      setDeletingId(null);
+    }
+  };
 
   if (loading) {
     return (
@@ -149,19 +170,56 @@ export default function ArmyListPage() {
                 )}
 
                 {/* Actions */}
-                <div className="flex space-x-2">
-                  <Link 
-                    to={`/armies/${army.id}`}
-                    className="btn-secondary flex-1 text-center"
-                  >
-                    View Details
-                  </Link>
-                  <Link 
-                    to={`/battles/new?army=${army.id}`}
-                    className="btn-primary flex-1 text-center"
-                  >
-                    Start Battle
-                  </Link>
+                <div className="space-y-2">
+                  <div className="flex space-x-2">
+                    <Link 
+                      to={`/armies/${army.id}`}
+                      className="btn-secondary flex-1 text-center"
+                    >
+                      View Details
+                    </Link>
+                    <Link 
+                      to={`/battles/new?army=${army.id}`}
+                      className="btn-primary flex-1 text-center"
+                    >
+                      Start Battle
+                    </Link>
+                  </div>
+                  
+                  {/* Delete confirmation */}
+                  {confirmDeleteId === army.id ? (
+                    <div className="bg-battle-status-routed/10 border border-battle-status-routed/20 rounded-lg p-3">
+                      <p className="text-sm text-battle-status-routed font-medium mb-2">
+                        Delete "{army.name}"?
+                      </p>
+                      <p className="text-xs text-battle-text-secondary-light dark:text-battle-text-secondary-dark mb-3">
+                        This action cannot be undone. The army will be permanently removed.
+                      </p>
+                      <div className="flex space-x-2">
+                        <button
+                          onClick={() => handleDeleteArmy(army.id)}
+                          disabled={deletingId === army.id}
+                          className="btn-primary bg-battle-status-routed hover:bg-battle-status-routed/80 flex-1 text-xs"
+                        >
+                          {deletingId === army.id ? 'Deleting...' : 'Yes, Delete'}
+                        </button>
+                        <button
+                          onClick={() => setConfirmDeleteId(null)}
+                          disabled={deletingId === army.id}
+                          className="btn-secondary flex-1 text-xs"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <button
+                      onClick={() => setConfirmDeleteId(army.id)}
+                      className="w-full text-xs text-battle-status-routed hover:text-battle-status-routed/80 py-1 transition-colors"
+                    >
+                      Delete Army
+                    </button>
+                  )}
                 </div>
 
                 {/* Army ID for debugging */}

@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.15.0] - 2025-08-15
+
+### Added
+- Army deletion functionality with confirmation dialog in UI
+- Delete button and confirmation workflow for army management
+
+### Fixed
+- Model naming in combined units - now shows "Infantry Squad 1-20" instead of duplicate "Infantry Squad 1-10" ranges
+- Server-side army deletion endpoint - corrected database table reference from non-existent `army_units` to `units`
+- Model naming logic moved to final processing stage for consistent sequential naming across all unit types
+
+### Changed
+- Model creation now defers naming until after all combining/joining operations complete
+- Army deletion leverages existing CASCADE constraints for proper cleanup
+
 ## [2.14.0] - 2025-08-15
 
 ### Fixed

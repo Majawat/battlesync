@@ -138,6 +138,26 @@ Get specific army with full details including units, sub-units, and models.
 - `404` - Army not found
 - `500` - Server error
 
+#### `DELETE /api/armies/:id`
+Delete an existing army.
+
+**Parameters:**
+- `id` (string, required) - Army ID
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Army deleted successfully"
+}
+```
+
+**Status Codes:**
+- `200` - Army deleted successfully
+- `400` - Invalid army ID
+- `404` - Army not found
+- `500` - Server error
+
 ## Battle Management
 
 ### Battle Creation & Management

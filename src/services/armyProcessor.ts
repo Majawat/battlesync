@@ -20,6 +20,19 @@ export class ArmyProcessor {
     // Phase 3: Handle Joined units (heroes joining regular units)
     const finalUnits = this.processJoinedUnitsNew(unitsAfterCombining);
     
+    // Phase 4: Name all models based on their final position in final units
+    finalUnits.forEach(unit => {
+      unit.sub_units.forEach(subUnit => {
+        subUnit.models.forEach((model, index) => {
+          if (subUnit.size === 1 && subUnit.custom_name) {
+            model.name = subUnit.custom_name;
+          } else {
+            model.name = `${subUnit.name} ${index + 1}`;
+          }
+        });
+      });
+    });
+    
     // Calculate totals
     const totalCost = finalUnits.reduce((sum, unit) => sum + unit.total_cost, 0);
     const totalModels = finalUnits.reduce((sum, unit) => sum + unit.model_count, 0);
@@ -97,7 +110,7 @@ export class ArmyProcessor {
     for (let i = 0; i < unit.size; i++) {
       models.push({
         model_id: `${unit.selectionId}-${i + 1}`,
-        name: unit.size === 1 && unit.customName ? unit.customName : `${unit.name} ${i + 1}`,
+        name: '', // No name during creation, will be named at the end
         custom_name: unit.size === 1 && unit.customName ? unit.customName : undefined,
         max_tough: baseToughness,
         current_tough: baseToughness,

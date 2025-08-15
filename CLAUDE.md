@@ -95,7 +95,7 @@ Keep database schema simple with maximum 5 tables. Consider tables for:
 - [ ] **Display weapon counts properly** - Show "2x Hull-Flamers" when count > 1
 
 ### Model & Upgrade Processing
-- [ ] **Fix model naming in combined units** - Stop "Infantry Squad 1-10" appearing twice, should be "Infantry Squad 1-20"
+- [x] **FIXED: Model naming in combined units** - ~~Stop "Infantry Squad 1-10" appearing twice, should be "Infantry Squad 1-20"~~ - **RESOLVED in v2.15.0**: Moved model naming to final processing stage after all combining/joining operations. Combined units now show proper sequential naming (1-20) instead of duplicate ranges (1-10 twice).
 - [x] **FIXED: Missing weapon upgrades** - ~~Key issue: some models get weapon upgrades, others don't (sniper rifle, drum rifle, flamer, plasma rifle missing from Bullshit-Squad Crews)~~ - **RESOLVED in v2.14.0**: Implemented dependency-based upgrade system using `upgradeInstanceId` matching instead of string matching. Sniper rifles, plasma rifles, and all weapon upgrades now work correctly.
 - [ ] **Base size updates from upgrades** - Combat bike upgrade should change base size from 32mm
 - [ ] **Sorting improvements** - Sort weapons by range (melee first), sort rules alphabetically
