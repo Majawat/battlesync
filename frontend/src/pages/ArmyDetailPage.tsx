@@ -231,7 +231,7 @@ export default function ArmyDetailPage() {
                                     </div>
                                     {model.weapons.map((weapon, weaponIndex) => (
                                       <div key={weaponIndex} className="grid grid-cols-5 gap-2 text-xs text-battle-text-secondary-light dark:text-battle-text-secondary-dark py-1">
-                                        <span>{weapon.name}</span>
+                                        <span>{weapon.count && weapon.count > 1 ? `${weapon.count}x ` : ''}{weapon.name}</span>
                                         <span>{weapon.range === 0 ? '-' : weapon.range + '"'}</span>
                                         <span>A{weapon.attacks}</span>
                                         <span>{weapon.ap || '-'}</span>

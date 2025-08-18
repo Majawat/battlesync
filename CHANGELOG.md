@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.19.3] - 2025-08-18
+
+### Fixed
+- **Weapon count display**: Frontend now properly displays weapon counts for weapons with count > 1 (e.g., "2x Hull-Flamer" instead of showing the weapon twice separately)
+- Improved weapon display formatting in army detail view to show quantities correctly
+
+### Technical Improvements
+- Enhanced frontend weapon rendering logic to check weapon count and format display appropriately
+
 ## [2.19.2] - 2025-08-18
 
 ### Fixed
