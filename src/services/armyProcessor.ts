@@ -124,106 +124,15 @@ export class ArmyProcessor {
     // Step 2: Apply base weapons from weapons[] array
     this.applyBaseWeaponsToModels(models, unit.weapons);
     
-    // Step 3: Pre-analyze which models will have items replaced by upgrades
-    const itemReplacementInfo = this.analyzeItemReplacements(unit);
+    // Step 3: Apply base items from items[] array  
+    this.applyBaseItemsToModels(models, unit.items);
     
-    // Step 4: Apply base items from items[] array (conditionally)
-    this.applyBaseItemsToModels(models, unit.items, itemReplacementInfo);
-    
-    // Step 5: Process selectedUpgrades in order using dependency tracking
+    // Step 4: Process selectedUpgrades in order using dependency tracking
     this.processUpgradesWithDependencies(models, unit, subUnit);
     
     return models;
   }
 
-  /**
-   * Analyze which models will have items replaced by upgrades
-   * Returns a map of modelId -> Set of item names that will be replaced
-   */
-  private static analyzeItemReplacements(unit: ArmyForgeUnit): Map<string, Set<string>> {
-    const modelItemReplacements = new Map<string, Set<string>>();
-    
-    if (unit.name === 'Destroyer Sisters') {
-      console.log(`\n=== Item Replacement Analysis for ${unit.name} ===`);
-    }
-    
-    // Create a temporary model structure to simulate upgrade assignment
-    const tempModels = Array.from({ length: unit.size }, (_, index) => ({
-      id: `temp-${index}`,
-      weapons: [...unit.weapons] // Copy weapons for simulation
-    }));
-    
-    // Look through all replace upgrades that target items
-    unit.selectedUpgrades.forEach(selectedUpgrade => {
-      const upgrade = selectedUpgrade.upgrade;
-      
-      if (upgrade.variant === 'replace' && upgrade.targets) {
-        const instanceId = selectedUpgrade.instanceId;
-        
-        // Find which weapons have dependencies for this upgrade
-        const affectedWeapons = unit.weapons.filter(weapon => 
-          weapon.dependencies?.some(dep => dep.upgradeInstanceId === instanceId)
-        );
-        
-        if (affectedWeapons.length > 0) {
-          // Simulate which models would be affected by this upgrade
-          const affectedWeaponIds = new Set();
-          affectedWeapons.forEach(weapon => {
-            // Add both id and weaponId to cover all matching scenarios
-            if (weapon.id) affectedWeaponIds.add(weapon.id);
-            if (weapon.weaponId) affectedWeaponIds.add(weapon.weaponId);
-          });
-          const modelsWithAffectedWeapons = tempModels.filter(model => 
-            model.weapons.some(weapon => affectedWeaponIds.has(weapon.id))
-          );
-          
-          // Determine how many models to affect based on affects type
-          let modelsToAffect: any[] = [];
-          if (upgrade.affects?.type === 'exactly') {
-            const exactCount = upgrade.affects.value || 1;
-            modelsToAffect = modelsWithAffectedWeapons.slice(0, exactCount);
-          } else if (upgrade.affects?.type === 'any') {
-            modelsToAffect = modelsWithAffectedWeapons.slice(0, 1);
-          } else if (upgrade.affects?.type === 'all') {
-            modelsToAffect = modelsWithAffectedWeapons;
-          } else {
-            modelsToAffect = modelsWithAffectedWeapons.slice(0, 1);
-          }
-          
-          if (unit.name === 'Destroyer Sisters') {
-            console.log(`Upgrade ${upgrade.label} (${instanceId}) affects ${modelsToAffect.length} models`);
-          }
-          
-          // For each affected model, check if targets include items
-          modelsToAffect.forEach(model => {
-            upgrade.targets!.forEach((target: string) => {
-              // Check if any base items match this target
-              const matchingItems = unit.items.filter(item => 
-                item.name === target || item.name === target.replace(/s$/, '') || 
-                target === item.name + 's' // Handle plurals
-              );
-              
-              if (matchingItems.length > 0) {
-                // This model will have these items replaced
-                if (!modelItemReplacements.has(model.id)) {
-                  modelItemReplacements.set(model.id, new Set());
-                }
-                matchingItems.forEach(item => {
-                  modelItemReplacements.get(model.id)!.add(item.name);
-                });
-                
-                if (unit.name === 'Destroyer Sisters') {
-                  console.log(`Model ${model.id} will have items [${matchingItems.map(i => i.name)}] replaced by ${upgrade.label}`);
-                }
-              }
-            });
-          });
-        }
-      }
-    });
-    
-    return modelItemReplacements;
-  }
 
   /**
    * Apply base weapons to all models
@@ -254,7 +163,7 @@ export class ArmyProcessor {
   /**
    * Apply base items to all models
    */
-  private static applyBaseItemsToModels(models: ProcessedModel[], baseItems: any[], itemReplacements: Map<string, Set<string>>): void {
+  private static applyBaseItemsToModels(models: ProcessedModel[], baseItems: any[]): void {
     if (!baseItems || baseItems.length === 0) return;
     
     baseItems.forEach(item => {
@@ -267,15 +176,9 @@ export class ArmyProcessor {
         source: 'unit-wide'
       };
       
-      // Apply to each model, but check if this specific model will have this item replaced
-      models.forEach((model, modelIndex) => {
-        const tempModelId = `temp-${modelIndex}`;
-        const modelReplacements = itemReplacements.get(tempModelId);
-        
-        // Only add the item if this specific model won't have it replaced
-        if (!modelReplacements || !modelReplacements.has(item.name)) {
-          model.upgrades.push({ ...itemUpgrade });
-        }
+      // Give item to all models
+      models.forEach(model => {
+        model.upgrades.push({ ...itemUpgrade });
       });
     });
   }
@@ -296,8 +199,9 @@ export class ArmyProcessor {
       const upgradeUid = selectedUpgrade.upgrade.uid;
       const affects = selectedUpgrade.upgrade.affects;
       
-      // Check if this is a multi-model upgrade section
-      if (affects?.type === 'exactly' && affects.value > 1) {
+      // Check if this is a multi-model upgrade section OR identical upgrades that should distribute
+      if ((affects?.type === 'exactly' && affects.value > 1) || 
+          (affects?.type === 'any' && unit.selectedUpgrades.filter(u => u.upgrade.uid === upgradeUid).length > 1)) {
         if (!upgradeGroups.has(upgradeUid)) {
           upgradeGroups.set(upgradeUid, []);
         }
@@ -326,26 +230,57 @@ export class ArmyProcessor {
     
     const firstUpgrade = groupedUpgrades[0];
     const affects = firstUpgrade.upgrade.affects;
-    const numModelsToAffect = affects?.value || 1;
     
-    // Process grouped upgrade (affects multiple models with distributed options)
-    
-    // Get the models that should be affected
-    const modelsToAffect = models.slice(0, numModelsToAffect);
-    
-    // Distribute the upgrades across the affected models
-    groupedUpgrades.forEach((selectedUpgrade, index) => {
-      if (index < modelsToAffect.length) {
-        const targetModel = modelsToAffect[index];
-        if (targetModel) {
-          // Apply base size updates if needed
-          this.processBaseSizeUpdates(selectedUpgrade.option.gains, subUnit, selectedUpgrade);
+    // For 'any' type upgrades, we want to distribute across models that have the affected weapons
+    if (affects?.type === 'any') {
+      // Find models that have weapons affected by these upgrades
+      const availableModels: ProcessedModel[] = [];
+      
+      groupedUpgrades.forEach(selectedUpgrade => {
+        // Find models that have weapons this upgrade can affect
+        const affectedWeapons = unit.weapons.filter(weapon => 
+          weapon.dependencies?.some(dep => dep.upgradeInstanceId === selectedUpgrade.instanceId)
+        );
+        
+        if (affectedWeapons.length > 0) {
+          const affectedWeaponIds = new Set();
+          affectedWeapons.forEach(weapon => {
+            if (weapon.id) affectedWeaponIds.add(weapon.id);
+            if (weapon.weaponId) affectedWeaponIds.add(weapon.weaponId);
+          });
           
-          // Apply gains to the specific model
-          this.addGainsToModel(targetModel, selectedUpgrade.option.gains, selectedUpgrade);
+          // Find the first available model that hasn't been used yet and has the affected weapon
+          const availableModel = models.find(model => 
+            !availableModels.includes(model) && 
+            model.weapons.some(weapon => affectedWeaponIds.has(weapon.id))
+          );
+          
+          if (availableModel) {
+            availableModels.push(availableModel);
+            // Apply the upgrade to this specific model
+            this.applyUpgradeWithDependencies([availableModel], selectedUpgrade, unit, subUnit);
+          }
         }
-      }
-    });
+      });
+    } else {
+      // Handle 'exactly' type upgrades as before
+      const numModelsToAffect = affects?.value || 1;
+      const modelsToAffect = models.slice(0, numModelsToAffect);
+      
+      // Distribute the upgrades across the affected models
+      groupedUpgrades.forEach((selectedUpgrade, index) => {
+        if (index < modelsToAffect.length) {
+          const targetModel = modelsToAffect[index];
+          if (targetModel) {
+            // Apply base size updates if needed
+            this.processBaseSizeUpdates(selectedUpgrade.option.gains, subUnit, selectedUpgrade);
+            
+            // Apply gains to the specific model
+            this.addGainsToModel(targetModel, selectedUpgrade.option.gains, selectedUpgrade);
+          }
+        }
+      });
+    }
   }
 
   /**
@@ -406,26 +341,11 @@ export class ArmyProcessor {
     });
 
     const affectedWeapons = [...baseAffectedWeapons, ...upgradeChainWeapons];
-    const affectedItems = [...baseAffectedItems];
-    
-    // Handle mixed weapon/item replacements: if we have dependencies for weapons but not items,
-    // and the targets include both, use target matching for items
-    let targetBasedItems: any[] = [];
-    if (affectedWeapons.length > 0 && affectedItems.length === 0 && upgrade.targets) {
-      // Find items that match the target names
-      targetBasedItems = unit.items.filter(item => 
-        upgrade.targets.some((target: string) => 
-          item.name === target || item.name === target.replace(/s$/, '') // Handle plural forms
-        )
-      );
-    }
     
     // Debug logging removed for production
     
     if (unit.name === 'Destroyer Sisters') {
       console.log(`Affected weapons:`, affectedWeapons.map(w => ({ name: w.name, id: w.id })));
-      console.log(`Affected items (dependencies):`, affectedItems.map(i => ({ name: i.name, id: i.id })));
-      console.log(`Target-based items:`, targetBasedItems.map(i => ({ name: i.name, id: i.id })));
       console.log(`Upgrade targets:`, upgrade.targets);
       console.log(`Models before upgrade:`, models.map(m => ({ name: m.name, weapons: m.weapons.map(w => ({ name: w.name, id: w.id })) })));
     }
@@ -434,40 +354,33 @@ export class ArmyProcessor {
     // Step 2: Calculate how many models to affect based on affects type
     let modelsToAffect: ProcessedModel[] = [];
     
-    if (affectedWeapons.length > 0 || targetBasedItems.length > 0) {
+    if (affectedWeapons.length > 0) {
       const affectedWeaponIds = new Set();
       affectedWeapons.forEach(weapon => {
         // Add both id and weaponId to cover all matching scenarios
         if (weapon.id) affectedWeaponIds.add(weapon.id);
         if (weapon.weaponId) affectedWeaponIds.add(weapon.weaponId);
       });
-      const affectedItemIds = new Set([...affectedItems, ...targetBasedItems].map(i => i.id));
       
       if (unit.name === 'Destroyer Sisters') {
         console.log(`Looking for weapon IDs:`, Array.from(affectedWeaponIds));
-        console.log(`Looking for item IDs:`, Array.from(affectedItemIds));
         console.log(`Model weapon IDs:`, models.map(m => m.weapons.map(w => w.id)));
       }
       
-      // Find models that have affected weapons OR items (for mixed replacements)
-      const modelsWithAffectedItems = models.filter(model => {
-        const hasAffectedWeapon = model.weapons.some(weapon => affectedWeaponIds.has(weapon.id));
-        // Note: For items, we need to check the model's upgrades or processed items
-        // For now, assume all models have the base items (this logic may need refinement)
-        const hasAffectedItem = affectedItemIds.size > 0;
-        
-        return hasAffectedWeapon || hasAffectedItem;
-      });
+      // Find models that have affected weapons
+      const modelsWithAffectedWeapons = models.filter(model => 
+        model.weapons.some(weapon => affectedWeaponIds.has(weapon.id))
+      );
       
       if (affects?.type === 'exactly') {
         const exactCount = affects.value || 1;
-        modelsToAffect = modelsWithAffectedItems.slice(0, exactCount);
+        modelsToAffect = modelsWithAffectedWeapons.slice(0, exactCount);
       } else if (affects?.type === 'any') {
-        modelsToAffect = modelsWithAffectedItems.slice(0, 1);
+        modelsToAffect = modelsWithAffectedWeapons.slice(0, 1);
       } else if (affects?.type === 'all') {
-        modelsToAffect = modelsWithAffectedItems;
+        modelsToAffect = modelsWithAffectedWeapons;
       } else {
-        modelsToAffect = modelsWithAffectedItems.slice(0, 1);
+        modelsToAffect = modelsWithAffectedWeapons.slice(0, 1);
       }
     }
     
@@ -496,9 +409,37 @@ export class ArmyProcessor {
           console.log(`Affected weapons found:`, affectedWeapons.map(w => ({ name: w.name, id: w.id, weaponId: w.weaponId })));
         }
         
-        model.weapons = model.weapons.filter(weapon => 
-          !affectedWeaponIds.has(weapon.id)
-        );
+        // Handle partial weapon replacement based on dependency counts
+        model.weapons = model.weapons.map(weapon => {
+          if (affectedWeaponIds.has(weapon.id)) {
+            // Find the dependency count for this weapon
+            let totalCountToRemove = 0;
+            affectedWeapons.forEach(affectedWeapon => {
+              if ((affectedWeapon.id && affectedWeapon.id === weapon.id) || 
+                  (affectedWeapon.weaponId && affectedWeapon.weaponId === weapon.id)) {
+                // Find dependency count from the weapon's dependencies
+                if (affectedWeapon.dependencies) {
+                  affectedWeapon.dependencies.forEach((dep: any) => {
+                    if (dep.variant === 'replace') {
+                      totalCountToRemove += dep.count || 1;
+                    }
+                  });
+                }
+              }
+            });
+            
+            // If we're removing fewer than the total count, reduce the count
+            if (totalCountToRemove > 0 && totalCountToRemove < weapon.count) {
+              return {
+                ...weapon,
+                count: weapon.count - totalCountToRemove
+              };
+            }
+            // If removing all or more than available, return null to filter out
+            return null;
+          }
+          return weapon;
+        }).filter(weapon => weapon !== null);
         
         if (unit.name === 'Destroyer Sisters') {
           console.log(`Model ${model.name} weapon IDs after:`, model.weapons.map(w => w.id));

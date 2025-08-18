@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.19.2] - 2025-08-18
+
+### Fixed
+- **Weapon upgrade distribution**: Fixed issue where multiple identical "any" type weapon replacements (like Stormfang Riders' Explosive Spears) were all being applied to the first model instead of being distributed across available models
+- Enhanced upgrade grouping system to detect and properly distribute identical upgrades with `affects.type === 'any'`
+- Stormfang Riders now correctly have 1 Explosive Spear per model instead of 3 on the first model
+- Preserved existing functionality for `affects.type === 'exactly'` upgrades and single upgrades
+
+### Technical Improvements
+- Improved upgrade processing logic to group similar "any" type upgrades for proper distribution
+- Enhanced `processGroupedUpgrades` method to handle both `exactly` and `any` type upgrade distribution
+- Added model availability tracking during upgrade distribution to prevent duplicate applications
+
 ## [2.19.1] - 2025-08-15
 
 ### Fixed
