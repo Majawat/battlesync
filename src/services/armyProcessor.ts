@@ -618,6 +618,11 @@ export class ArmyProcessor {
       return true;
     }
     
+    // Reassignable if it's an "affects exactly 1" upgrade affecting single model
+    if (upgrade.affects?.type === 'exactly' && upgrade.affects?.value === 1) {
+      return true;
+    }
+    
     // Reassignable if it's a weapon replacement affecting single model  
     if (upgrade.variant === 'replace' && upgrade.affects?.type === 'any') {
       return true;

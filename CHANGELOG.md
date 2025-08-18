@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.19.4] - 2025-08-18
+
+### Fixed
+- **Upgrade reassignability**: Fixed issue where single-model upgrades using `affects.type === 'exactly'` structure (like Satellite Backpack on regular units) were incorrectly marked as non-reassignable
+- Enhanced reassignability logic to treat both `select.exactly` and `affects.exactly` with value=1 as reassignable single-model upgrades
+- Satellite Backpack and similar equipment upgrades are now properly reassignable between models
+
+### Technical Improvements
+- Improved `determineReassignability` function to handle both ArmyForge upgrade structures consistently
+- Added support for `upgrade.affects.type === 'exactly' && upgrade.affects.value === 1` as reassignable condition
+
 ## [2.19.3] - 2025-08-18
 
 ### Fixed
