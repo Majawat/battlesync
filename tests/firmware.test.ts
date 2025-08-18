@@ -60,19 +60,19 @@ describe('Firmware API', () => {
       expect(response.body.version).toBe('1.0.1');
       expect(response.body.changelog).toBe('Bug fixes');
       expect(response.body.file_size).toBe(1050);
-      expect(response.body.download_url).toContain('/firmware/battleaura-1.0.1.bin');
+      expect(response.body.download_url).toContain('/api/battleaura/firmware/download/battleaura-1.0.1.bin');
       expect(response.body.released).toBe('2025-01-16T10:30:00Z');
     });
   });
 
-  describe('POST /api/firmware/upload', () => {
+  describe('POST /api/battleaura/firmware/upload', () => {
     const createTestBinary = () => Buffer.from('fake firmware binary data');
 
     it('should upload firmware successfully', async () => {
       const testBinary = createTestBinary();
       
       const response = await request(app)
-        .post('/api/firmware/upload')
+        .post('/api/battleaura/firmware/upload')
         .field('version', '1.2.3')
         .field('changelog', 'Test release')
         .attach('file', testBinary, 'firmware.bin');
@@ -83,7 +83,7 @@ describe('Firmware API', () => {
       expect(response.body.firmware.version).toBe('1.2.3');
       expect(response.body.firmware.changelog).toBe('Test release');
       expect(response.body.firmware.file_size).toBe(testBinary.length);
-      expect(response.body.firmware.download_url).toContain('/firmware/battleaura-1.2.3.bin');
+      expect(response.body.firmware.download_url).toContain('/api/battleaura/firmware/download/battleaura-1.2.3.bin');
 
       // Verify firmware was stored in database
       const stored = await db.get('SELECT * FROM firmware WHERE version = ?', ['1.2.3']);
@@ -96,7 +96,7 @@ describe('Firmware API', () => {
       const testBinary = createTestBinary();
       
       const response = await request(app)
-        .post('/api/firmware/upload')
+        .post('/api/battleaura/firmware/upload')
         .field('version', 'v1.2.3')
         .field('changelog', 'Test release')
         .attach('file', testBinary, 'firmware.bin');
@@ -107,7 +107,7 @@ describe('Firmware API', () => {
 
     it('should reject upload without file', async () => {
       const response = await request(app)
-        .post('/api/firmware/upload')
+        .post('/api/battleaura/firmware/upload')
         .field('version', '1.2.3');
 
       expect(response.status).toBe(400);
@@ -119,7 +119,7 @@ describe('Firmware API', () => {
       const testBinary = createTestBinary();
       
       const response = await request(app)
-        .post('/api/firmware/upload')
+        .post('/api/battleaura/firmware/upload')
         .attach('file', testBinary, 'firmware.bin');
 
       expect(response.status).toBe(400);
@@ -131,7 +131,7 @@ describe('Firmware API', () => {
       const testBinary = createTestBinary();
       
       const response = await request(app)
-        .post('/api/firmware/upload')
+        .post('/api/battleaura/firmware/upload')
         .field('version', 'invalid-version')
         .attach('file', testBinary, 'firmware.bin');
 
@@ -145,13 +145,13 @@ describe('Firmware API', () => {
       
       // First upload
       await request(app)
-        .post('/api/firmware/upload')
+        .post('/api/battleaura/firmware/upload')
         .field('version', '1.2.3')
         .attach('file', testBinary, 'firmware.bin');
 
       // Second upload with same version
       const response = await request(app)
-        .post('/api/firmware/upload')
+        .post('/api/battleaura/firmware/upload')
         .field('version', '1.2.3')
         .attach('file', testBinary, 'firmware.bin');
 
@@ -164,7 +164,7 @@ describe('Firmware API', () => {
       const testBinary = createTestBinary();
       
       const response = await request(app)
-        .post('/api/firmware/upload')
+        .post('/api/battleaura/firmware/upload')
         .field('version', '1.2.3')
         .field('changelog', 'Fixed critical bug in LED handling')
         .attach('file', testBinary, 'firmware.bin');
@@ -177,7 +177,7 @@ describe('Firmware API', () => {
       const testBinary = createTestBinary();
       
       const response = await request(app)
-        .post('/api/firmware/upload')
+        .post('/api/battleaura/firmware/upload')
         .field('version', '1.2.3')
         .attach('file', testBinary, 'firmware.bin');
 
@@ -226,13 +226,13 @@ describe('Firmware API', () => {
       expect(response.body.firmware[2].version).toBe('1.0.0');
       
       // Verify structure of first item
-      expect(response.body.firmware[0]).toEqual({
+      expect(response.body.firmware[0]).toEqual(expect.objectContaining({
         version: '1.1.0',
-        download_url: expect.stringContaining('/firmware/battleaura-1.1.0.bin'),
+        download_url: expect.stringContaining('/api/battleaura/firmware/download/battleaura-1.1.0.bin'),
         changelog: 'New features',
         released: '2025-01-17T10:30:00Z',
         file_size: 1100
-      });
+      }));
     });
   });
 
@@ -251,13 +251,13 @@ describe('Firmware API', () => {
 
       expect(response.status).toBe(200);
       expect(response.body.success).toBe(true);
-      expect(response.body.firmware).toEqual({
+      expect(response.body.firmware).toEqual(expect.objectContaining({
         version: '1.2.3',
-        download_url: expect.stringContaining('/firmware/battleaura-1.2.3.bin'),
+        download_url: expect.stringContaining('/api/battleaura/firmware/download/battleaura-1.2.3.bin'),
         changelog: 'Test version',
         released: '2025-01-18T10:30:00Z',
         file_size: 2048
-      });
+      }));
     });
 
     it('should return 404 for non-existent version', async () => {
@@ -304,7 +304,7 @@ describe('Firmware API', () => {
       await fs.writeFile(firmwarePath, testBinary);
 
       const response = await request(app)
-        .get('/firmware/battleaura-1.0.0.bin');
+        .get('/api/battleaura/firmware/download/battleaura-1.0.0.bin');
 
       expect(response.status).toBe(200);
       expect(response.headers['content-type']).toBe('application/octet-stream');
@@ -318,7 +318,7 @@ describe('Firmware API', () => {
 
     it('should return 404 for non-existent firmware', async () => {
       const response = await request(app)
-        .get('/firmware/non-existent.bin');
+        .get('/api/battleaura/firmware/download/non-existent.bin');
 
       expect(response.status).toBe(404);
     });

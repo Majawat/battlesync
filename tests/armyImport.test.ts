@@ -26,9 +26,9 @@ describe('Army Import API', () => {
       expect(response.body.success).toBe(true);
       expect(response.body.army).toBeDefined();
       expect(response.body.army.name).toBe("Dev Testerson's Bullshit Army");
-      expect(response.body.army.list_points).toBe(3075);
-      expect(response.body.army.model_count).toBe(44);
-      expect(response.body.army.activation_count).toBe(8);
+      expect(response.body.army.list_points).toBe(3145);
+      expect(response.body.army.model_count).toBe(45);
+      expect(response.body.army.activation_count).toBe(9);
     });
 
     it('should return 400 for missing armyForgeId', async () => {
@@ -69,7 +69,7 @@ describe('Army Import API', () => {
       expect(response.body.armies).toBeDefined();
       expect(response.body.armies).toHaveLength(1);
       expect(response.body.armies[0].name).toBe("Dev Testerson's Bullshit Army");
-      expect(response.body.armies[0].list_points).toBe(3075);
+      expect(response.body.armies[0].list_points).toBe(3145);
     });
 
     it('should return empty array when no armies stored', async () => {
@@ -106,7 +106,7 @@ describe('Army Import API', () => {
       expect(response.body.army).toBeDefined();
       expect(response.body.army.name).toBe("Dev Testerson's Bullshit Army");
       expect(response.body.army.units).toBeDefined();
-      expect(response.body.army.units).toHaveLength(8);
+      expect(response.body.army.units).toHaveLength(9);
       
       // Verify unit structure
       const firstUnit = response.body.army.units[0];

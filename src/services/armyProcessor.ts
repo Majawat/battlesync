@@ -139,24 +139,34 @@ export class ArmyProcessor {
    */
   private static applyBaseWeaponsToModels(models: ProcessedModel[], baseWeapons: ArmyForgeWeapon[]): void {
     baseWeapons.forEach(weapon => {
-      const processedWeapon: ProcessedWeapon = {
-        id: weapon.id || weapon.weaponId || `${weapon.name?.toLowerCase().replace(' ', '_')}_weapon`,
-        name: weapon.name || 'Unknown Weapon',
-        count: weapon.count || 1,
-        range: weapon.range || 0,
-        attacks: weapon.attacks || 1,
-        ap: (weapon.specialRules || []).find((rule: any) => rule.name === 'AP')?.rating as number || 0,
-        special_rules: (weapon.specialRules || []).map((rule: any) => ({
-          name: rule.name,
-          value: rule.rating,
-          type: 'weapon_modifier' as const
-        }))
-      };
+      const weaponCount = weapon.count || 1;
       
-      // Give weapon to all models (each model gets 1 count)
-      models.forEach(model => {
-        model.weapons.push({ ...processedWeapon });
-      });
+      // Distribute weapons across models (1 per model)
+      for (let i = 0; i < weaponCount && i < models.length; i++) {
+        const processedWeapon: ProcessedWeapon = {
+          id: weapon.id || weapon.weaponId || `${weapon.name?.toLowerCase().replace(' ', '_')}_weapon`,
+          name: weapon.name || 'Unknown Weapon',
+          count: 1, // Each model gets count of 1
+          range: weapon.range || 0,
+          attacks: weapon.attacks || 1,
+          ap: (weapon.specialRules || []).find((rule: any) => rule.name === 'AP')?.rating as number || 0,
+          special_rules: (weapon.specialRules || []).map((rule: any) => ({
+            name: rule.name,
+            value: rule.rating,
+            type: 'weapon_modifier' as const
+          }))
+        };
+        
+        // Check if this model already has this weapon (from previous distribution)
+        const existingWeapon = models[i]?.weapons.find(w => w.id === processedWeapon.id);
+        if (existingWeapon) {
+          // Increment count of existing weapon
+          existingWeapon.count += 1;
+        } else {
+          // Add new weapon to model
+          models[i]?.weapons.push(processedWeapon);
+        }
+      }
     });
   }
 
@@ -619,13 +629,14 @@ export class ArmyProcessor {
     }
     
     // Reassignable if it's an "affects exactly 1" upgrade affecting single model
-    if (upgrade.affects?.type === 'exactly' && upgrade.affects?.value === 1) {
+    // BUT NOT if it's a weapon replacement (those should stay with specific models)
+    if (upgrade.affects?.type === 'exactly' && upgrade.affects?.value === 1 && upgrade.variant !== 'replace') {
       return true;
     }
     
-    // Reassignable if it's a weapon replacement affecting single model  
-    if (upgrade.variant === 'replace' && upgrade.affects?.type === 'any') {
-      return true;
+    // Weapon replacements are not reassignable (they modify specific models permanently)
+    if (upgrade.variant === 'replace') {
+      return false;
     }
     
     // Not reassignable if it affects all models or is unit-wide
