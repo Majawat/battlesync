@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.21.0] - 2025-08-19
+
+### Fixed
+- **Infantry Squad upgrade duplication**: Fixed critical issue where paired upgrades (Field Radio, Company Standard, Medical Training) were being duplicated on multiple models instead of being distributed correctly
+- Enhanced upgrade section processing to properly handle multi-option upgrade sections where each selection should go to a different model
+- Fixed upgrade classification to include both ArmyBookItem and ArmyBookRule types for proper grouping
+
+### Added
+- Grouped upgrade processing system for handling upgrade sections with multiple selections
+- Proper distribution logic for upgrades that affect multiple models within the same section
+- Support for upgrade sections where "affects exactly N" determines section capacity rather than individual upgrade application
+
+### Technical Improvements
+- Modified `processUpgradesWithDependencies` to group multi-model non-weapon upgrades by section UID
+- Enhanced `processAddUpgrade` to respect caller-specified model targeting for grouped upgrades
+- Added `processGroupedItemUpgrades` method for handling upgrade section distribution logic
+- Preserved weapon replacement processing order while adding support for grouped item upgrades
+
+### Validation
+- Infantry Squad combined unit now correctly shows: 2 Field Radio, 1 Company Standard, 1 Medical Training
+- All existing upgrade functionality preserved (weapon chains, single upgrades, weapon replacements)
+- Destroyer Sisters and other complex upgrade scenarios continue working correctly
+
 ## [2.20.0] - 2025-08-19
 
 ### Fixed

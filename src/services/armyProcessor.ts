@@ -203,9 +203,64 @@ export class ArmyProcessor {
       return;
     }
     
-    // Process upgrades in the order they appear in the JSON
+    // Group upgrades that are item upgrades affecting multiple models
+    const groupedItemUpgrades = new Map<string, any[]>();
+    const standaloneUpgrades: any[] = [];
+    
     unit.selectedUpgrades.forEach(selectedUpgrade => {
+      const upgrade = selectedUpgrade.upgrade;
+      const affects = upgrade.affects;
+      
+      // Group non-weapon upgrades (not weapon replacements) that affect exactly > 1 model
+      if (upgrade.variant !== 'replace' && 
+          affects?.type === 'exactly' && 
+          affects?.value > 1 &&
+          selectedUpgrade.option.gains?.some((gain: any) => gain.type === 'ArmyBookItem' || gain.type === 'ArmyBookRule')) {
+        
+        const sectionUid = upgrade.uid || upgrade.id;
+        if (!groupedItemUpgrades.has(sectionUid)) {
+          groupedItemUpgrades.set(sectionUid, []);
+        }
+        groupedItemUpgrades.get(sectionUid)!.push(selectedUpgrade);
+      } else {
+        // Process weapon replacements and single-model upgrades individually in JSON order
+        standaloneUpgrades.push(selectedUpgrade);
+      }
+    });
+    
+    // Process standalone upgrades first (preserves weapon replacement order)
+    standaloneUpgrades.forEach(selectedUpgrade => {
       this.applyUpgradeWithDependencies(models, selectedUpgrade, unit, subUnit);
+    });
+    
+    // Process grouped item upgrades (distribute across models properly)
+    groupedItemUpgrades.forEach(groupedUpgrades => {
+      this.processGroupedItemUpgrades(models, groupedUpgrades, unit, subUnit);
+    });
+  }
+
+  /**
+   * Process grouped item upgrades that affect multiple models (like Field Radio, Company Standard)
+   * Each upgrade section can affect N models, and within that section, each selection goes to a different model
+   */
+  private static processGroupedItemUpgrades(models: ProcessedModel[], groupedUpgrades: any[], unit: ArmyForgeUnit, subUnit: ProcessedSubUnit): void {
+    if (groupedUpgrades.length === 0) return;
+    
+    // Each upgrade from this section should go to a different model
+    // The section's "affects exactly N" determines how many models this section can affect total
+    const firstUpgrade = groupedUpgrades[0];
+    const sectionAffects = firstUpgrade.upgrade.affects?.value || groupedUpgrades.length;
+    const availableModels = models.slice(0, Math.min(sectionAffects, models.length, groupedUpgrades.length));
+    
+    // Distribute each upgrade to a different model within the section's scope
+    groupedUpgrades.forEach((selectedUpgrade, upgradeIndex) => {
+      if (upgradeIndex < availableModels.length) {
+        const targetModel = availableModels[upgradeIndex];
+        if (targetModel) {
+          // Apply this upgrade to this specific model only
+          this.applyUpgradeWithDependencies([targetModel], selectedUpgrade, unit, subUnit);
+        }
+      }
     });
   }
 
@@ -455,17 +510,24 @@ export class ArmyProcessor {
     // Check for base size updates from ArmyBookItem gains
     this.processBaseSizeUpdates(option.gains, subUnit, selectedUpgrade);
     
-    // Determine how many models to affect
+    // Use the models array that was passed in (respects caller's targeting decision)
+    // This allows grouped upgrades to override the default affects behavior
     let modelsToAffect: ProcessedModel[] = [];
     
-    if (affects?.type === 'exactly') {
-      const exactCount = affects.value || 1;
-      modelsToAffect = models.slice(0, exactCount);
-    } else if (affects?.type === 'all') {
+    if (models.length === 1) {
+      // Caller specified a single model (e.g., from grouped upgrade processing)
       modelsToAffect = [...models];
     } else {
-      // Default: affect 1 model
-      modelsToAffect = models.slice(0, 1);
+      // Use normal affects logic for standalone upgrades
+      if (affects?.type === 'exactly') {
+        const exactCount = affects.value || 1;
+        modelsToAffect = models.slice(0, exactCount);
+      } else if (affects?.type === 'all') {
+        modelsToAffect = [...models];
+      } else {
+        // Default: affect 1 model
+        modelsToAffect = models.slice(0, 1);
+      }
     }
     
     // Add gains to selected models
