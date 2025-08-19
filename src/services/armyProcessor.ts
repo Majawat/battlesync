@@ -934,8 +934,30 @@ export class ArmyProcessor {
       name: item.name,
       type: 'upgrade' as const,
       rating: undefined,
-      description: item.label || item.name
+      description: item.label || this.generateItemLabel(item)
     }));
+  }
+
+  /**
+   * Generate a display label for items without a label field
+   */
+  private static generateItemLabel(item: any): string {
+    if (!item.content || item.content.length === 0) {
+      return item.name;
+    }
+
+    // Extract rule names from content
+    const ruleNames = item.content
+      .filter((content: any) => content.type === 'ArmyBookRule')
+      .map((rule: any) => rule.name)
+      .filter((name: string) => name); // Filter out empty names
+
+    if (ruleNames.length === 0) {
+      return item.name;
+    }
+
+    // Format as "Item Name (Rule1, Rule2)"
+    return `${item.name} (${ruleNames.join(', ')})`;
   }
 
   // Combined and Joined unit processing (reuse existing logic for now)
