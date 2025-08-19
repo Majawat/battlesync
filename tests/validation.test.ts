@@ -52,10 +52,10 @@ describe('Army Import Validation', () => {
 
       // Core validation assertions
       expect(processed.name).toBe("Dev Testerson's Bullshit Army");
-      expect(processed.list_points).toBe(3075);
-      expect(processed.model_count).toBe(44);
-      expect(processed.activation_count).toBe(8);
-      expect(totalCost).toBe(3075);
+      expect(processed.list_points).toBe(3145);
+      expect(processed.model_count).toBe(45);
+      expect(processed.activation_count).toBe(9);
+      expect(totalCost).toBe(3145);
     });
 
     test('should validate specific OPR mechanics', () => {

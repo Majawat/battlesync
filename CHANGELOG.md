@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.20.0] - 2025-08-19
+
+### Fixed
+- **Base weapon distribution**: Fixed critical issue where multi-count base weapons (like 2x Hull-Flamer on Blessed Titan) were only showing 1x count instead of the correct multiple count
+- **Upgrade processing order**: Fixed major issue where upgrades were processed by type grouping instead of JSON order, causing incorrect weapon distribution in units like Destroyer Sisters
+- **Weapon upgrade chains**: Ensured sequential upgrade processing preserves intended weapon assignment (individual "any" upgrades before "all" upgrades)
+
+### Changed
+- **BREAKING**: Simplified upgrade processing to follow JSON order instead of complex grouping logic, ensuring proper dependency-based weapon distribution
+- Removed upgrade grouping system that was interfering with correct sequential processing
+- Enhanced base weapon distribution logic to properly handle single-model units with multiple weapon copies
+
+### Technical Improvements
+- Refactored `processUpgradesWithDependencies` to process upgrades in the order they appear in ArmyForge JSON
+- Fixed `applyBaseWeaponsToModels` to correctly distribute weapon copies using wrap-around logic for remaining copies
+- Improved weapon count handling for single-model units with multiple copies of the same weapon
+- Enhanced dependency-based upgrade system to naturally limit scope to models with affected weapons
+
+### Validation
+- All comprehensive unit tests now pass with correct weapon distributions
+- Verified proper handling of complex upgrade scenarios (Energy Fist → Dual Energy Claws chains)
+- Confirmed base weapon count accuracy across all unit types
+
 ## [2.19.4] - 2025-08-18
 
 ### Fixed

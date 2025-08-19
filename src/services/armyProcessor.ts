@@ -141,12 +141,14 @@ export class ArmyProcessor {
     baseWeapons.forEach(weapon => {
       const weaponCount = weapon.count || 1;
       
-      // Distribute weapons across models (1 per model)
-      for (let i = 0; i < weaponCount && i < models.length; i++) {
+      // Distribute weapons across models, giving remaining copies to available models
+      for (let i = 0; i < weaponCount; i++) {
+        const modelIndex = i < models.length ? i : i % models.length; // Wrap around to existing models
+        
         const processedWeapon: ProcessedWeapon = {
           id: weapon.id || weapon.weaponId || `${weapon.name?.toLowerCase().replace(' ', '_')}_weapon`,
           name: weapon.name || 'Unknown Weapon',
-          count: 1, // Each model gets count of 1
+          count: 1, // Each weapon copy has count of 1
           range: weapon.range || 0,
           attacks: weapon.attacks || 1,
           ap: (weapon.specialRules || []).find((rule: any) => rule.name === 'AP')?.rating as number || 0,
@@ -158,13 +160,13 @@ export class ArmyProcessor {
         };
         
         // Check if this model already has this weapon (from previous distribution)
-        const existingWeapon = models[i]?.weapons.find(w => w.id === processedWeapon.id);
+        const existingWeapon = models[modelIndex]?.weapons.find(w => w.id === processedWeapon.id);
         if (existingWeapon) {
           // Increment count of existing weapon
           existingWeapon.count += 1;
         } else {
           // Add new weapon to model
-          models[i]?.weapons.push(processedWeapon);
+          models[modelIndex]?.weapons.push(processedWeapon);
         }
       }
     });
@@ -194,41 +196,16 @@ export class ArmyProcessor {
   }
 
   /**
-   * Process upgrades using dependency tracking system
+   * Process upgrades in the order they appear in the JSON to preserve intended sequence
    */
   private static processUpgradesWithDependencies(models: ProcessedModel[], unit: ArmyForgeUnit, subUnit: ProcessedSubUnit): void {
     if (!unit.selectedUpgrades || unit.selectedUpgrades.length === 0) {
       return;
     }
     
-    // Group upgrades by upgrade section (uid) to handle multi-option upgrades correctly
-    const upgradeGroups = new Map<string, any[]>();
-    const singleUpgrades: any[] = [];
-    
+    // Process upgrades in the order they appear in the JSON
     unit.selectedUpgrades.forEach(selectedUpgrade => {
-      const upgradeUid = selectedUpgrade.upgrade.uid;
-      const affects = selectedUpgrade.upgrade.affects;
-      
-      // Check if this is a multi-model upgrade section OR identical upgrades that should distribute
-      if ((affects?.type === 'exactly' && affects.value > 1) || 
-          (affects?.type === 'any' && unit.selectedUpgrades.filter(u => u.upgrade.uid === upgradeUid).length > 1)) {
-        if (!upgradeGroups.has(upgradeUid)) {
-          upgradeGroups.set(upgradeUid, []);
-        }
-        upgradeGroups.get(upgradeUid)!.push(selectedUpgrade);
-      } else {
-        singleUpgrades.push(selectedUpgrade);
-      }
-    });
-    
-    // Process single upgrades normally
-    singleUpgrades.forEach(selectedUpgrade => {
       this.applyUpgradeWithDependencies(models, selectedUpgrade, unit, subUnit);
-    });
-    
-    // Process grouped upgrades with distribution
-    upgradeGroups.forEach((groupedUpgrades, upgradeUid) => {
-      this.processGroupedUpgrades(models, groupedUpgrades, unit, subUnit);
     });
   }
 
@@ -388,6 +365,8 @@ export class ArmyProcessor {
       } else if (affects?.type === 'any') {
         modelsToAffect = modelsWithAffectedWeapons.slice(0, 1);
       } else if (affects?.type === 'all') {
+        // For "all" upgrades, only affect models that still have the affected weapons
+        // The dependency system will naturally handle which models should be affected
         modelsToAffect = modelsWithAffectedWeapons;
       } else {
         modelsToAffect = modelsWithAffectedWeapons.slice(0, 1);

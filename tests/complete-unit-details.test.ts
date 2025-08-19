@@ -159,21 +159,85 @@ describe('Complete Army Import and Conversion Validation', () => {
       // Basic validation assertions
       expect(army).toBeDefined();
       expect(army.name).toBe("Dev Testerson's Bullshit Army");
-      expect(army.list_points).toBe(3075);
-      expect(army.units.length).toBe(8);
-      expect(army.model_count).toBe(44);
+      expect(army.list_points).toBe(3145);
+      expect(army.units.length).toBe(9);
+      expect(army.model_count).toBe(45);
       
-      // Validate Captain Bullshit has D4+ (defense upgrade working)
-      const captainBullshit = army.units.find((u: any) => u.name === 'Captain Bullshit');
-      expect(captainBullshit).toBeDefined();
-      expect(captainBullshit.defense).toBe(4); // Should be 4 from Heavy Armor upgrade
+      // COMPREHENSIVE UNIT VALIDATIONS
       
-      // Validate Grindr Love Truck has Impact(8) from rule stacking
+      // Unit 1: Grindr Love Truck
       const grindr = army.units.find((u: any) => u.custom_name === 'Grindr Love Truck');
       expect(grindr).toBeDefined();
+      expect(grindr.model_count).toBe(1);
+      expect(grindr.total_cost).toBe(370);
+      expect(grindr.defense).toBe(2);
       const impactRule = grindr.sub_units[0].rules.find((r: any) => r.name === 'Impact');
-      expect(impactRule).toBeDefined();
       expect(impactRule.rating).toBe(8); // Base 3 + Great Grinder 5 = 8
+      
+      // Unit 2: Captain Bullshit  
+      const captainBullshit = army.units.find((u: any) => u.custom_name === 'Captain Bullshit');
+      expect(captainBullshit).toBeDefined();
+      expect(captainBullshit.defense).toBe(4); // Should be 4 from Heavy Armor upgrade
+      expect(captainBullshit.has_hero).toBe(true);
+      expect(captainBullshit.model_count).toBe(1);
+      expect(captainBullshit.total_cost).toBe(150);
+      
+      // Unit 3: Blessed Titan - Test for known issues
+      const blessedTitan = army.units.find((u: any) => u.name === 'Blessed Titan');
+      expect(blessedTitan).toBeDefined();
+      expect(blessedTitan.model_count).toBe(1);
+      expect(blessedTitan.total_cost).toBe(1130);
+      const titanModel = blessedTitan.sub_units[0].models[0];
+      // Known issue: Hull-Flamer should be [2x] and Titan Claw should be present
+      const hullFlamer = titanModel.weapons.find((w: any) => w.name === 'Hull-Flamer');
+      expect(hullFlamer).toBeDefined();
+      expect(hullFlamer.count).toBe(2); // Should be 2x Hull-Flamer
+      const titanClaw = titanModel.weapons.find((w: any) => w.name === 'Titan Claw');
+      expect(titanClaw).toBeDefined(); // Should have Titan Claw
+      
+      // Unit 6: Wall of Shame Sisters - Test for known Destroyer Sisters issue
+      const wallOfShame = army.units.find((u: any) => u.custom_name === 'Wall of Shame Sisters');
+      expect(wallOfShame).toBeDefined();
+      expect(wallOfShame.model_count).toBe(3);
+      expect(wallOfShame.total_cost).toBe(210);
+      const destroyerModels = wallOfShame.sub_units[0].models;
+      expect(destroyerModels).toHaveLength(3);
+      
+      // Model 1 & 2: Should have Energy Fist and Combat Shield
+      const model1 = destroyerModels[0];
+      const model2 = destroyerModels[1]; 
+      expect(model1.weapons.find((w: any) => w.name === 'Energy Fist')).toBeDefined();
+      expect(model1.upgrades.find((u: any) => u.name.includes('Combat Shield'))).toBeDefined();
+      expect(model2.weapons.find((w: any) => w.name === 'Energy Fist')).toBeDefined();
+      expect(model2.upgrades.find((u: any) => u.name.includes('Combat Shield'))).toBeDefined();
+      
+      // Model 3: Should have Dual Energy Claw and Combat Shield  
+      const model3 = destroyerModels[2];
+      expect(model3.weapons.find((w: any) => w.name === 'Dual Energy Claws')).toBeDefined();
+      expect(model3.upgrades.find((u: any) => u.name.includes('Combat Shield'))).toBeDefined();
+      
+      // Unit 7: Legless Lt. Dan - Validate Elite Veteran has Goad-spear
+      const leglessLtDan = army.units.find((u: any) => u.custom_name === 'Legless Lt. Dan w/ Seal Team 666');
+      expect(leglessLtDan).toBeDefined();
+      expect(leglessLtDan.has_hero).toBe(true);
+      expect(leglessLtDan.is_joined).toBe(true);
+      expect(leglessLtDan.model_count).toBe(6);
+      const eliteVeteran = leglessLtDan.sub_units.find((s: any) => s.name === 'Elite Veteran');
+      expect(eliteVeteran).toBeDefined();
+      const veteranModel = eliteVeteran.models[0];
+      expect(veteranModel.weapons.find((w: any) => w.name === 'Goad-Spear')).toBeDefined(); // Should be Goad-spear, not Energy Rifle
+      
+      // Unit 9: Bullshit-Squad Crews - Validate combined unit weapon distribution
+      const bullshitSquad = army.units.find((u: any) => u.custom_name === 'Bullshit-Squad Crews');
+      expect(bullshitSquad).toBeDefined();
+      expect(bullshitSquad.is_combined).toBe(true);
+      expect(bullshitSquad.model_count).toBe(20);
+      expect(bullshitSquad.total_cost).toBe(470);
+      
+      // Validate weapon upgrade chains are working (Sergeant weapons)
+      const squadModels = bullshitSquad.sub_units[0].models;
+      const sergeantModel = squadModels.find((m: any) => m.weapons.some((w: any) => w.name === 'Plasma Pistol'));
+      expect(sergeantModel).toBeDefined(); // Should have sergeant weapon upgrade chain working
       
     } catch (error) {
       console.error('❌ Failed to import or validate army:', error);
