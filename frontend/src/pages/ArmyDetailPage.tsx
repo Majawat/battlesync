@@ -175,7 +175,9 @@ export default function ArmyDetailPage() {
                           {(subUnit.rules && subUnit.rules.length > 0) && (
                             <div className="text-xs text-battle-text-secondary-light dark:text-battle-text-secondary-dark mb-2">
                               <span className="font-medium">Rules: </span>
-                              {subUnit.rules.map((rule, ruleIndex) => (
+                              {[...subUnit.rules]
+                                .sort((a, b) => a.name.localeCompare(b.name))
+                                .map((rule, ruleIndex) => (
                                 <span key={ruleIndex}>
                                   {rule.name}{rule.rating ? `(${rule.rating})` : ''}
                                   {ruleIndex < subUnit.rules.length - 1 ? ', ' : ''}
@@ -229,7 +231,14 @@ export default function ArmyDetailPage() {
                                       <span>AP</span>
                                       <span>Special</span>
                                     </div>
-                                    {model.weapons.map((weapon, weaponIndex) => (
+                                    {[...model.weapons]
+                                      .sort((a, b) => {
+                                        // Sort by range: melee (0) first, then by range ascending
+                                        if (a.range === 0 && b.range !== 0) return -1;
+                                        if (a.range !== 0 && b.range === 0) return 1;
+                                        return a.range - b.range;
+                                      })
+                                      .map((weapon, weaponIndex) => (
                                       <div key={weaponIndex} className="grid grid-cols-5 gap-2 text-xs text-battle-text-secondary-light dark:text-battle-text-secondary-dark py-1">
                                         <span>{weapon.count && weapon.count > 1 ? `${weapon.count}x ` : ''}{weapon.name}</span>
                                         <span>{weapon.range === 0 ? '-' : weapon.range + '"'}</span>
@@ -237,9 +246,11 @@ export default function ArmyDetailPage() {
                                         <span>{weapon.ap || '-'}</span>
                                         <span className="text-xs">
                                           {weapon.special_rules && weapon.special_rules.length > 0 
-                                            ? weapon.special_rules.map(rule => 
-                                                rule.name + (rule.value ? `(${rule.value})` : '')
-                                              ).join(', ')
+                                            ? [...weapon.special_rules]
+                                                .sort((a, b) => a.name.localeCompare(b.name))
+                                                .map(rule => 
+                                                  rule.name + (rule.value ? `(${rule.value})` : '')
+                                                ).join(', ')
                                             : '-'
                                           }
                                         </span>
