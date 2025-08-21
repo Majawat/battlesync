@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { armyApi } from '../api/client';
-import type { Army } from '../types/api';
+import type { Army, ReassignUpgradeResponse, RenameModelResponse } from '../types/api';
 import { formatGameSystem } from '../utils/gameSystem';
 
 export default function ArmyDetailPage() {
@@ -9,6 +9,17 @@ export default function ArmyDetailPage() {
   const [army, setArmy] = useState<Army | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [reassignState, setReassignState] = useState<{
+    modelId: string;
+    upgradeIndex: number;
+    subUnitId: string;
+    isReassigning: boolean;
+  } | null>(null);
+  const [renameState, setRenameState] = useState<{
+    modelId: string;
+    currentName: string;
+    isRenaming: boolean;
+  } | null>(null);
 
   useEffect(() => {
     if (!id) return;
@@ -30,6 +41,69 @@ export default function ArmyDetailPage() {
 
     fetchArmy();
   }, [id]);
+
+  const handleReassignUpgrade = async (targetModelId: string) => {
+    if (!reassignState || !army || !id) return;
+    
+    setReassignState(prev => prev ? { ...prev, isReassigning: true } : null);
+    
+    try {
+      const response: ReassignUpgradeResponse = await armyApi.reassignUpgrade(id, {
+        sourceModelId: reassignState.modelId,
+        targetModelId,
+        upgradeIndex: reassignState.upgradeIndex,
+        subUnitId: reassignState.subUnitId
+      });
+      
+      if (response.success && response.army) {
+        setArmy(response.army);
+        setReassignState(null);
+      } else {
+        setError(response.error || 'Failed to reassign upgrade');
+      }
+    } catch (err: any) {
+      setError(err.response?.data?.error || err.message || 'Failed to reassign upgrade');
+    }
+  };
+
+  const getAvailableTargetModels = (subUnitId: string, excludeModelId: string) => {
+    if (!army) return [];
+    
+    for (const unit of army.units) {
+      for (const subUnit of unit.sub_units || []) {
+        if (subUnit.id === subUnitId) {
+          return subUnit.models?.filter(model => 
+            model.model_id !== excludeModelId
+          ) || [];
+        }
+      }
+    }
+    return [];
+  };
+
+  const handleRenameModel = async (newName: string) => {
+    if (!renameState || !army || !id) return;
+    
+    setRenameState(prev => prev ? { ...prev, isRenaming: true } : null);
+    
+    try {
+      const response: RenameModelResponse = await armyApi.renameModel(id, {
+        modelId: renameState.modelId,
+        customName: newName
+      });
+      
+      if (response.success && response.army) {
+        setArmy(response.army);
+        setRenameState(null);
+      } else {
+        setError(response.error || 'Failed to rename model');
+        setRenameState(prev => prev ? { ...prev, isRenaming: false } : null);
+      }
+    } catch (err: any) {
+      setError(err.response?.data?.error || err.message || 'Failed to rename model');
+      setRenameState(prev => prev ? { ...prev, isRenaming: false } : null);
+    }
+  };
 
   if (loading) {
     return (
@@ -202,9 +276,61 @@ export default function ArmyDetailPage() {
                               <div key={model.model_id || modelIndex} className="bg-battle-surface-light dark:bg-battle-surface-dark p-3 rounded-lg border border-battle-border-light dark:border-battle-border-dark">
                                 {/* Model Header */}
                                 <div className="flex justify-between items-center mb-2">
-                                  <span className="font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark">
-                                    {model.custom_name || model.name}
-                                  </span>
+                                  <div className="flex items-center gap-2">
+                                    {renameState?.modelId === model.model_id ? (
+                                      <div className="flex items-center gap-2">
+                                        <input
+                                          type="text"
+                                          defaultValue={model.custom_name || model.name}
+                                          className="text-sm bg-battle-surface-light dark:bg-battle-surface-dark border border-battle-border-light dark:border-battle-border-dark rounded px-2 py-1 font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark"
+                                          onKeyDown={(e) => {
+                                            if (e.key === 'Enter') {
+                                              handleRenameModel(e.currentTarget.value);
+                                            } else if (e.key === 'Escape') {
+                                              setRenameState(null);
+                                            }
+                                          }}
+                                          onBlur={(e) => {
+                                            if (!renameState.isRenaming) {
+                                              handleRenameModel(e.currentTarget.value);
+                                            }
+                                          }}
+                                          autoFocus
+                                          disabled={renameState.isRenaming}
+                                          maxLength={100}
+                                        />
+                                        <button
+                                          onClick={() => setRenameState(null)}
+                                          className="text-xs text-battle-text-muted-light dark:text-battle-text-muted-dark hover:underline"
+                                          disabled={renameState.isRenaming}
+                                        >
+                                          Cancel
+                                        </button>
+                                        {renameState.isRenaming && (
+                                          <span className="text-xs text-battle-text-muted-light dark:text-battle-text-muted-dark">
+                                            Saving...
+                                          </span>
+                                        )}
+                                      </div>
+                                    ) : (
+                                      <>
+                                        <span className="font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark">
+                                          {model.custom_name || model.name}
+                                        </span>
+                                        <button
+                                          onClick={() => setRenameState({
+                                            modelId: model.model_id,
+                                            currentName: model.custom_name || model.name,
+                                            isRenaming: false
+                                          })}
+                                          className="text-xs text-battle-accent-light dark:text-battle-accent-dark hover:underline"
+                                          disabled={reassignState !== null || renameState !== null}
+                                        >
+                                          Rename
+                                        </button>
+                                      </>
+                                    )}
+                                  </div>
                                   <span className="text-sm text-battle-text-secondary-light dark:text-battle-text-secondary-dark">
                                     Tough: {model.max_tough}
                                   </span>
@@ -213,11 +339,71 @@ export default function ArmyDetailPage() {
                                 {/* Model Upgrades */}
                                 {model.upgrades && model.upgrades.length > 0 && (
                                   <div className="text-xs text-battle-text-secondary-light dark:text-battle-text-secondary-dark mb-2">
-                                    {model.upgrades.map((upgrade, upgradeIndex) => (
-                                      <div key={upgradeIndex} className={upgrade.reassignable ? 'text-battle-accent-light dark:text-battle-accent-dark font-medium' : ''}>
-                                        {upgrade.name}{upgrade.reassignable ? ' (reassignable)' : ''}
-                                      </div>
-                                    ))}
+                                    {model.upgrades.map((upgrade, upgradeIndex) => {
+                                      const isActiveReassignment = reassignState?.modelId === model.model_id && 
+                                        reassignState?.upgradeIndex === upgradeIndex;
+                                      const availableTargets = getAvailableTargetModels(subUnit.id, model.model_id);
+                                      
+                                      return (
+                                        <div key={upgradeIndex} className="flex items-center gap-2 py-1">
+                                          <span className={upgrade.reassignable ? 'text-battle-accent-light dark:text-battle-accent-dark font-medium' : ''}>
+                                            {upgrade.name}
+                                          </span>
+                                          
+                                          {upgrade.reassignable && availableTargets.length > 0 && !isActiveReassignment && (
+                                            <button
+                                              onClick={() => setReassignState({
+                                                modelId: model.model_id,
+                                                upgradeIndex,
+                                                subUnitId: subUnit.id,
+                                                isReassigning: false
+                                              })}
+                                              className="text-battle-accent-light dark:text-battle-accent-dark hover:underline text-xs"
+                                              disabled={reassignState !== null}
+                                            >
+                                              Reassign ↓
+                                            </button>
+                                          )}
+                                          
+                                          {isActiveReassignment && (
+                                            <div className="inline-flex items-center gap-2">
+                                              <span className="text-xs text-battle-text-muted-light dark:text-battle-text-muted-dark">
+                                                Move to:
+                                              </span>
+                                              <select
+                                                className="text-xs bg-battle-surface-light dark:bg-battle-surface-dark border border-battle-border-light dark:border-battle-border-dark rounded px-2 py-1"
+                                                defaultValue=""
+                                                onChange={(e) => {
+                                                  if (e.target.value) {
+                                                    handleReassignUpgrade(e.target.value);
+                                                  }
+                                                }}
+                                                disabled={reassignState.isReassigning}
+                                              >
+                                                <option value="">Select model...</option>
+                                                {availableTargets.map((targetModel) => (
+                                                  <option key={targetModel.model_id} value={targetModel.model_id}>
+                                                    {targetModel.custom_name || targetModel.name}
+                                                  </option>
+                                                ))}
+                                              </select>
+                                              <button
+                                                onClick={() => setReassignState(null)}
+                                                className="text-xs text-battle-text-muted-light dark:text-battle-text-muted-dark hover:underline"
+                                                disabled={reassignState.isReassigning}
+                                              >
+                                                Cancel
+                                              </button>
+                                              {reassignState.isReassigning && (
+                                                <span className="text-xs text-battle-text-muted-light dark:text-battle-text-muted-dark">
+                                                  Moving...
+                                                </span>
+                                              )}
+                                            </div>
+                                          )}
+                                        </div>
+                                      );
+                                    })}
                                   </div>
                                 )}
 

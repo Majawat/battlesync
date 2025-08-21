@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.22.0] - 2025-08-20
+
+### Added
+- **Model Renaming System**: Users can now rename individual models (e.g., "Elites 1" → "Jim Bob") using inline editing with Enter/Escape/blur-to-save functionality
+- **Upgrade Reassignment System**: Users can now move reassignable upgrades between models in the same sub-unit using inline dropdown interface
+- New API endpoint `PATCH /api/armies/:id/rename-model` for updating model custom names
+- New API endpoint `PATCH /api/armies/:id/reassign-upgrade` for moving upgrades between models
+- Visual sorting of weapons by range (melee first) and rules alphabetically in frontend display
+- Combat Shield now displays associated rules in parentheses like other items
+
+### Fixed
+- **Upgrade dependency processing**: Enhanced dependency count calculation to only consider current upgrade instance instead of all dependencies, improving weapon replacement accuracy
+- Item label generation for items without explicit labels now shows contained rules (e.g., "Combat Shield (Shield Wall)")
+
+### Changed
+- Army detail view now shows weapons sorted by range and rules sorted alphabetically for better readability
+- Upgrade reassignment only available during army setup phase (not during battles)
+- Model custom names are stored persistently and survive battle state transitions
+
 ## [2.21.0] - 2025-08-19
 
 ### Fixed

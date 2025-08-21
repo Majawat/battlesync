@@ -93,6 +93,30 @@ interface GetArmyResponse {
   error?: string;
 }
 
+interface ReassignUpgradeRequest {
+  sourceModelId: string;
+  targetModelId: string; 
+  upgradeIndex: number;
+  subUnitId: string;
+}
+
+interface ReassignUpgradeResponse {
+  success: boolean;
+  army?: ProcessedArmy;
+  error?: string;
+}
+
+interface RenameModelRequest {
+  modelId: string;
+  customName: string;
+}
+
+interface RenameModelResponse {
+  success: boolean;
+  army?: ProcessedArmy;
+  error?: string;
+}
+
 interface CreateBattleResponse {
   success: boolean;
   battle?: Battle;
@@ -348,6 +372,219 @@ app.get('/api/armies/:id', async (req: Request<{id: string}>, res: Response<GetA
     res.status(500).json({
       success: false,
       error: 'Internal server error while fetching army'
+    });
+  }
+});
+
+// Reassign upgrade between models in the same sub-unit
+app.patch('/api/armies/:id/reassign-upgrade', async (req: Request<{id: string}, any, ReassignUpgradeRequest>, res: Response<ReassignUpgradeResponse>) => {
+  try {
+    const armyId = parseInt(req.params.id, 10);
+    const { sourceModelId, targetModelId, upgradeIndex, subUnitId } = req.body;
+    
+    if (isNaN(armyId)) {
+      res.status(400).json({
+        success: false,
+        error: 'Invalid army ID'
+      });
+      return;
+    }
+
+    // Validate required fields
+    if (!sourceModelId || !targetModelId || upgradeIndex === undefined || !subUnitId) {
+      res.status(400).json({
+        success: false,
+        error: 'Missing required fields: sourceModelId, targetModelId, upgradeIndex, subUnitId'
+      });
+      return;
+    }
+
+    if (sourceModelId === targetModelId) {
+      res.status(400).json({
+        success: false,
+        error: 'Source and target models cannot be the same'
+      });
+      return;
+    }
+
+    // Get army basic info
+    const army = await db.get(`
+      SELECT id, armyforge_id, name, description, validation_errors, points_limit, list_points, 
+             model_count, activation_count, game_system, campaign_mode, raw_armyforge_data
+      FROM armies WHERE id = ?
+    `, [armyId]);
+
+    if (!army) {
+      res.status(404).json({
+        success: false,
+        error: 'Army not found'
+      });
+      return;
+    }
+
+    // Get both models and verify they exist in the same sub-unit
+    const sourceModel = await db.get(`
+      SELECT m.*, su.id as sub_unit_id 
+      FROM models m 
+      JOIN sub_units su ON m.sub_unit_id = su.id 
+      WHERE m.id = ? AND su.id = ?
+    `, [parseInt(sourceModelId, 10), parseInt(subUnitId, 10)]);
+
+    const targetModel = await db.get(`
+      SELECT m.*, su.id as sub_unit_id 
+      FROM models m 
+      JOIN sub_units su ON m.sub_unit_id = su.id 
+      WHERE m.id = ? AND su.id = ?
+    `, [parseInt(targetModelId, 10), parseInt(subUnitId, 10)]);
+
+    if (!sourceModel || !targetModel) {
+      res.status(404).json({
+        success: false,
+        error: 'One or both models not found in the specified sub-unit'
+      });
+      return;
+    }
+
+    // Parse upgrade arrays
+    const sourceUpgrades = JSON.parse(sourceModel.upgrades || '[]');
+    const targetUpgrades = JSON.parse(targetModel.upgrades || '[]');
+
+    // Validate upgrade index and reassignability
+    if (upgradeIndex < 0 || upgradeIndex >= sourceUpgrades.length) {
+      res.status(400).json({
+        success: false,
+        error: 'Invalid upgrade index'
+      });
+      return;
+    }
+
+    const upgradeToMove = sourceUpgrades[upgradeIndex];
+    if (!upgradeToMove.reassignable) {
+      res.status(400).json({
+        success: false,
+        error: 'This upgrade is not reassignable'
+      });
+      return;
+    }
+
+    // Perform the reassignment
+    const movedUpgrade = sourceUpgrades.splice(upgradeIndex, 1)[0];
+    targetUpgrades.push(movedUpgrade);
+
+    // Update both models in database
+    await db.run(`UPDATE models SET upgrades = ? WHERE id = ?`, [
+      JSON.stringify(sourceUpgrades),
+      parseInt(sourceModelId, 10)
+    ]);
+
+    await db.run(`UPDATE models SET upgrades = ? WHERE id = ?`, [
+      JSON.stringify(targetUpgrades), 
+      parseInt(targetModelId, 10)
+    ]);
+
+    // Rebuild and return the updated army
+    const processedArmy = await buildProcessedArmyFromDatabase(armyId, army);
+    
+    res.json({
+      success: true,
+      army: processedArmy
+    });
+    
+  } catch (error) {
+    console.error('Error reassigning upgrade:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Internal server error while reassigning upgrade'
+    });
+  }
+});
+
+// Rename model within an army
+app.patch('/api/armies/:id/rename-model', async (req: Request<{id: string}, any, RenameModelRequest>, res: Response<RenameModelResponse>) => {
+  try {
+    const armyId = parseInt(req.params.id, 10);
+    const { modelId, customName } = req.body;
+    
+    if (isNaN(armyId)) {
+      res.status(400).json({
+        success: false,
+        error: 'Invalid army ID'
+      });
+      return;
+    }
+
+    // Validate required fields
+    if (!modelId || customName === undefined) {
+      res.status(400).json({
+        success: false,
+        error: 'Missing required fields: modelId, customName'
+      });
+      return;
+    }
+
+    // Trim whitespace and validate name length
+    const trimmedName = customName.trim();
+    if (trimmedName.length > 100) {
+      res.status(400).json({
+        success: false,
+        error: 'Custom name must be 100 characters or less'
+      });
+      return;
+    }
+
+    // Get army basic info
+    const army = await db.get(`
+      SELECT id, armyforge_id, name, description, validation_errors, points_limit, list_points, 
+             model_count, activation_count, game_system, campaign_mode, raw_armyforge_data
+      FROM armies WHERE id = ?
+    `, [armyId]);
+
+    if (!army) {
+      res.status(404).json({
+        success: false,
+        error: 'Army not found'
+      });
+      return;
+    }
+
+    // Check if model exists
+    const model = await db.get(`
+      SELECT id, name, custom_name 
+      FROM models 
+      WHERE id = ? AND sub_unit_id IN (
+        SELECT id FROM sub_units WHERE unit_id IN (
+          SELECT id FROM units WHERE army_id = ?
+        )
+      )
+    `, [parseInt(modelId, 10), armyId]);
+
+    if (!model) {
+      res.status(404).json({
+        success: false,
+        error: 'Model not found in this army'
+      });
+      return;
+    }
+
+    // Update the model's custom name
+    await db.run(`UPDATE models SET custom_name = ? WHERE id = ?`, [
+      trimmedName || null, // Store empty string as null
+      parseInt(modelId, 10)
+    ]);
+
+    // Rebuild and return the updated army
+    const processedArmy = await buildProcessedArmyFromDatabase(armyId, army);
+    
+    res.json({
+      success: true,
+      army: processedArmy
+    });
+    
+  } catch (error) {
+    console.error('Error renaming model:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Internal server error while renaming model'
     });
   }
 });

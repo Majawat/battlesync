@@ -414,6 +414,7 @@ export class ArmyProcessor {
         model.weapons.some(weapon => affectedWeaponIds.has(weapon.id))
       );
       
+      
       if (affects?.type === 'exactly') {
         const exactCount = affects.value || 1;
         modelsToAffect = modelsWithAffectedWeapons.slice(0, exactCount);
@@ -426,6 +427,7 @@ export class ArmyProcessor {
       } else {
         modelsToAffect = modelsWithAffectedWeapons.slice(0, 1);
       }
+      
     }
     
     // Step 3: Apply replacement to selected models
@@ -456,15 +458,15 @@ export class ArmyProcessor {
         // Handle partial weapon replacement based on dependency counts
         model.weapons = model.weapons.map(weapon => {
           if (affectedWeaponIds.has(weapon.id)) {
-            // Find the dependency count for this weapon
+            // Find the dependency count for this weapon FOR THE CURRENT UPGRADE ONLY
             let totalCountToRemove = 0;
             affectedWeapons.forEach(affectedWeapon => {
               if ((affectedWeapon.id && affectedWeapon.id === weapon.id) || 
                   (affectedWeapon.weaponId && affectedWeapon.weaponId === weapon.id)) {
-                // Find dependency count from the weapon's dependencies
+                // Find dependency count from the weapon's dependencies, but ONLY for the current instanceId
                 if (affectedWeapon.dependencies) {
                   affectedWeapon.dependencies.forEach((dep: any) => {
-                    if (dep.variant === 'replace') {
+                    if (dep.variant === 'replace' && dep.upgradeInstanceId === instanceId) {
                       totalCountToRemove += dep.count || 1;
                     }
                   });
@@ -779,9 +781,6 @@ export class ArmyProcessor {
       const issues = [];
       if (!unit.valid) issues.push('Invalid unit');
       if (unit.hasBalanceInvalid) issues.push('Balance invalid');
-      if (unit.disabledSections && unit.disabledSections.length > 0) {
-        issues.push(`Disabled sections: ${unit.disabledSections.join(', ')}`);
-      }
       
       return `${unit.notes || ''}${unit.notes ? ' | ' : ''}VALIDATION: ${issues.join(' ')}`.trim();
     }

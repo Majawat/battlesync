@@ -3,7 +3,9 @@ import type {
   ImportArmyRequest,
   CreateBattleRequest,
   AddParticipantRequest,
-  UpdateUnitStateRequest
+  UpdateUnitStateRequest,
+  ReassignUpgradeResponse,
+  RenameModelResponse
 } from '../types/api';
 
 // In production, use same origin. In development, use localhost:4019
@@ -37,6 +39,24 @@ export const armyApi = {
   deleteArmy: async (id: string) => {
     const response = await api.delete(`/api/armies/${id}`);
     return response.data;
+  },
+
+  reassignUpgrade: async (armyId: string, data: {
+    sourceModelId: string;
+    targetModelId: string;
+    upgradeIndex: number;
+    subUnitId: string;
+  }): Promise<ReassignUpgradeResponse> => {
+    const response = await api.patch(`/api/armies/${armyId}/reassign-upgrade`, data);
+    return response.data as ReassignUpgradeResponse;
+  },
+
+  renameModel: async (armyId: string, data: {
+    modelId: string;
+    customName: string;
+  }): Promise<RenameModelResponse> => {
+    const response = await api.patch(`/api/armies/${armyId}/rename-model`, data);
+    return response.data as RenameModelResponse;
   },
 };
 

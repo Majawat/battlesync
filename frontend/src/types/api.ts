@@ -5,6 +5,18 @@ export interface ApiResponse<T = any> {
   error?: string;
 }
 
+export interface ReassignUpgradeResponse {
+  success: boolean;
+  army?: Army;
+  error?: string;
+}
+
+export interface RenameModelResponse {
+  success: boolean;
+  army?: Army;
+  error?: string;
+}
+
 // Army Types
 export interface Army {
   id: string;
