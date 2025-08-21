@@ -234,6 +234,8 @@ export default function ArmyDetailPage() {
                             </span>
                           </div>
                           <div className="flex flex-wrap items-center gap-2 text-xs text-battle-text-secondary-light dark:text-battle-text-secondary-dark mb-2">
+                            <span>XP: {subUnit.xp}</span>
+                            <span>•</span>
                             <span>Q: {subUnit.quality}+</span>
                             <span>•</span>
                             <span>D: {subUnit.defense}+</span>
@@ -255,6 +257,21 @@ export default function ArmyDetailPage() {
                                 <span key={ruleIndex}>
                                   {rule.name}{rule.rating ? `(${rule.rating})` : ''}
                                   {ruleIndex < subUnit.rules.length - 1 ? ', ' : ''}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+
+                          {/* Campaign Traits */}
+                          {(subUnit.traits && subUnit.traits.length > 0) && (
+                            <div className="text-xs text-battle-text-secondary-light dark:text-battle-text-secondary-dark mb-2">
+                              <span className="font-medium">Traits: </span>
+                              {[...subUnit.traits]
+                                .sort((a, b) => a.localeCompare(b))
+                                .map((trait, traitIndex) => (
+                                <span key={traitIndex}>
+                                  {trait}
+                                  {traitIndex < subUnit.traits.length - 1 ? ', ' : ''}
                                 </span>
                               ))}
                             </div>

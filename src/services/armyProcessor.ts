@@ -130,6 +130,11 @@ export class ArmyProcessor {
     // Step 4: Process selectedUpgrades in order using dependency tracking
     this.processUpgradesWithDependencies(models, unit, subUnit);
     
+    // Step 5: Consolidate duplicate weapons by ID on each model
+    models.forEach(model => {
+      model.weapons = this.mergeWeapons(model.weapons);
+    });
+    
     return models;
   }
 
@@ -225,35 +230,28 @@ export class ArmyProcessor {
         groupedItemUpgrades.get(sectionUid)!.push(selectedUpgrade);
       }
       // Group identical weapon replacement upgrades that affect "any" model
-      // Only group if multiple upgrades have the same instanceId (truly identical, not just same option)
+      // Group by upgrade option content (same upgrade.uid + option.id) even if different instanceIds
       else if (upgrade.variant === 'replace' && affects?.type === 'any') {
-        // Check if this is a multi-count upgrade that should be grouped (same instanceId)
-        const existingGroup = Array.from(groupedWeaponUpgrades.values()).find(group =>
-          group.some(existing => existing.instanceId === selectedUpgrade.instanceId)
+        // Create a key based on upgrade option content to group identical upgrades
+        const upgradeKey = `${upgrade.uid || upgrade.id}_${selectedUpgrade.option.id}`;
+        
+        // Check if we should start a new group by looking for other upgrades with same option
+        const sameOptionUpgrades = unit.selectedUpgrades.filter(other => 
+          other.upgrade.variant === 'replace' && 
+          other.upgrade.affects?.type === 'any' &&
+          (other.upgrade.uid || other.upgrade.id) === (upgrade.uid || upgrade.id) &&
+          other.option.id === selectedUpgrade.option.id
         );
         
-        if (existingGroup) {
-          // Add to existing group
-          existingGroup.push(selectedUpgrade);
-        } else {
-          // Check if we should start a new group by looking for other upgrades with same instanceId
-          const sameInstanceUpgrades = unit.selectedUpgrades.filter(other => 
-            other.instanceId === selectedUpgrade.instanceId && 
-            other.upgrade.variant === 'replace' && 
-            other.upgrade.affects?.type === 'any'
-          );
-          
-          if (sameInstanceUpgrades.length > 1) {
-            // This is a multi-count upgrade that should be grouped
-            const upgradeKey = `${upgrade.uid || upgrade.id}_${selectedUpgrade.instanceId}`;
-            if (!groupedWeaponUpgrades.has(upgradeKey)) {
-              groupedWeaponUpgrades.set(upgradeKey, []);
-            }
-            groupedWeaponUpgrades.get(upgradeKey)!.push(selectedUpgrade);
-          } else {
-            // Single upgrade, process individually
-            standaloneUpgrades.push(selectedUpgrade);
+        if (sameOptionUpgrades.length > 1) {
+          // This is a multi-count identical upgrade that should be grouped
+          if (!groupedWeaponUpgrades.has(upgradeKey)) {
+            groupedWeaponUpgrades.set(upgradeKey, []);
           }
+          groupedWeaponUpgrades.get(upgradeKey)!.push(selectedUpgrade);
+        } else {
+          // Single upgrade, process individually
+          standaloneUpgrades.push(selectedUpgrade);
         }
       }
       else {
@@ -850,10 +848,8 @@ export class ArmyProcessor {
   }
 
   private static buildNotesWithValidation(unit: ArmyForgeUnit): string | undefined {
-    const hasValidationIssues = !unit.valid || unit.hasBalanceInvalid || 
-                               (unit.disabledSections && unit.disabledSections.length > 0) || 
-                               (unit.disabledUpgradeSections && unit.disabledUpgradeSections.length > 0);
-
+    const hasValidationIssues = !unit.valid || unit.hasBalanceInvalid;
+    
     if (hasValidationIssues) {
       const issues = [];
       if (!unit.valid) issues.push('Invalid unit');
@@ -1171,11 +1167,11 @@ export class ArmyProcessor {
     const weaponMap = new Map<string, ProcessedWeapon>();
     
     weapons.forEach(weapon => {
-      const existing = weaponMap.get(weapon.name);
+      const existing = weaponMap.get(weapon.id);
       if (existing) {
         existing.count += weapon.count;
       } else {
-        weaponMap.set(weapon.name, { ...weapon });
+        weaponMap.set(weapon.id, { ...weapon });
       }
     });
     

@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.24.0] - 2025-08-21
+
+### Fixed
+- **Weapon consolidation bug**: Fixed issue where identical weapons with same ID (like Brutus's Heavy Machineguns) appeared as separate entries instead of being consolidated with proper count
+- Enhanced weapon merging logic to use weapon.id instead of weapon.name for more reliable consolidation
+- Added model-level weapon consolidation after upgrade processing to handle weapons added by multiple upgrades
+
+### Technical Improvements  
+- Modified `mergeWeapons` function to consolidate by weapon ID rather than name to avoid issues with text variations
+- Added automatic weapon consolidation step in model generation pipeline
+- Improved weapon deduplication logic to handle complex upgrade scenarios like multiple identical weapon upgrade instances
+
+### Added
+- **Campaign Traits Display**: Restored campaign traits display in army detail view with alphabetical sorting
+- Campaign traits now appear in sub-unit information section between rules and notes
+
 ## [2.23.0] - 2025-08-21
 
 ### Fixed
