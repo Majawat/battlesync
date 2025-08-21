@@ -1,6 +1,51 @@
 import { ArmyForgeArmy, ArmyForgeUnit, ArmyForgeWeapon, ArmyForgeRule } from '../types/armyforge';
 import { ProcessedArmy, ProcessedUnit, ProcessedSubUnit, ProcessedWeapon, ProcessedRule, ProcessedModel, ProcessedModelUpgrade } from '../types/internal';
 
+// ArmyForge Rule ID Constants (verified across multiple armies)
+const RULE_IDS = {
+  HERO: 'T08VkBuVmNZ_',
+  CASTER: '47CAqf7ySlfc', 
+  TOUGH: 'a0YtInGiUDd6',
+  AP: '17crjK7P6_w6',
+  FAST: 'KdgwlPb8LuD2',
+  STRIDER: 'JSKVyurtWIyW',
+  BLAST: 'w_vX0mi58KKt',
+  RELIABLE: 'Zx4mWN0SbmK8',
+  DEFENSE: '74RjQ1k41DoO',
+  IMPACT: '62-mYKVM9MLd'
+} as const;
+
+// ID-based rule lookup helper functions
+const RuleLookup = {
+  hasHero: (rules: ArmyForgeRule[]): boolean => rules.some(rule => rule.id === RULE_IDS.HERO),
+  hasCaster: (rules: ArmyForgeRule[]): boolean => rules.some(rule => rule.id === RULE_IDS.CASTER),
+  hasTough: (rules: ArmyForgeRule[]): boolean => rules.some(rule => rule.id === RULE_IDS.TOUGH),
+  
+  findAP: (specialRules: any[]): number => {
+    const apRule = specialRules?.find(rule => rule.id === RULE_IDS.AP);
+    return apRule?.rating || 0;
+  },
+  
+  findTough: (rules: ArmyForgeRule[]): ArmyForgeRule | undefined => 
+    rules.find(rule => rule.id === RULE_IDS.TOUGH),
+    
+  findCaster: (rules: ArmyForgeRule[]): ArmyForgeRule | undefined =>
+    rules.find(rule => rule.id === RULE_IDS.CASTER),
+    
+  // For processed rules (with different structure)
+  findToughInProcessed: (rules: ProcessedRule[]): ProcessedRule | undefined =>
+    rules.find(rule => rule.id === RULE_IDS.TOUGH),
+    
+  findDefense: (rules: any[]): any | undefined => 
+    rules.find(rule => rule.id === RULE_IDS.DEFENSE),
+    
+  findImpact: (rules: any[]): any | undefined => 
+    rules.find(rule => rule.id === RULE_IDS.IMPACT),
+    
+  hasToughInProcessed: (rules: ProcessedRule[]): boolean =>
+    rules.some(rule => rule.id === RULE_IDS.TOUGH)
+};
+
 export class ArmyProcessor {
   /**
    * Process raw ArmyForge data using dependency-based upgrade system
@@ -64,7 +109,7 @@ export class ArmyProcessor {
    * Process individual ArmyForge unit using new dependency-based algorithm
    */
   private static processArmyForgeUnitNew(unit: ArmyForgeUnit): ProcessedSubUnit {
-    const isHero = unit.rules.some(rule => rule.name === 'Hero');
+    const isHero = RuleLookup.hasHero(unit.rules);
     const isCaster = this.hasCasterAbility(unit.rules, unit.loadout);
     const casterRating = this.getCasterRating(unit.rules, unit.loadout);
     
@@ -103,7 +148,7 @@ export class ArmyProcessor {
   private static generateModelsWithNewUpgradeSystem(unit: ArmyForgeUnit, subUnit: ProcessedSubUnit): ProcessedModel[] {
     console.log(`\n*** Generating models for unit: ${unit.name} ***`);
     const models: ProcessedModel[] = [];
-    const isHero = unit.rules.some(rule => rule.name === 'Hero');
+    const isHero = RuleLookup.hasHero(unit.rules);
     const baseToughness = this.determineBaseToughness(unit);
     
     // Step 1: Create base models
@@ -156,7 +201,7 @@ export class ArmyProcessor {
           count: 1, // Each weapon copy has count of 1
           range: weapon.range || 0,
           attacks: weapon.attacks || 1,
-          ap: (weapon.specialRules || []).find((rule: any) => rule.name === 'AP')?.rating as number || 0,
+          ap: RuleLookup.findAP(weapon.specialRules || []),
           special_rules: (weapon.specialRules || []).map((rule: any) => ({
             id: rule.id, // Preserve ArmyForge rule ID
             name: rule.name,
@@ -647,7 +692,7 @@ export class ArmyProcessor {
           count: gain.count || 1,
           range: gain.range || 0,
           attacks: gain.attacks || 1,
-          ap: gain.specialRules?.find((rule: any) => rule.name === 'AP')?.rating || 0,
+          ap: RuleLookup.findAP(gain.specialRules || []),
           special_rules: gain.specialRules?.map((rule: any) => ({
             id: rule.id, // Preserve ArmyForge rule ID
             name: rule.name,
@@ -670,7 +715,7 @@ export class ArmyProcessor {
                 count: gain.count || 1,
                 range: content.range || 0,
                 attacks: content.attacks || 1,
-                ap: content.specialRules?.find((rule: any) => rule.name === 'AP')?.rating || 0,
+                ap: RuleLookup.findAP(content.specialRules || []),
                 special_rules: content.specialRules?.map((rule: any) => ({
                   id: rule.id, // Preserve ArmyForge rule ID
                   name: rule.name,
@@ -722,7 +767,7 @@ export class ArmyProcessor {
     
     // Apply toughness modifications
     upgradeRules.forEach(rule => {
-      if (rule.name === 'Tough' && rule.rating) {
+      if (rule.id === RULE_IDS.TOUGH && rule.rating) {
         const toughValue = parseInt(rule.rating.toString());
         
         if (upgrade.variant === 'replace') {
@@ -775,7 +820,7 @@ export class ArmyProcessor {
     const hasWeaponTeam = option.gains?.some((gain: any) => 
       gain.type === 'ArmyBookItem' && 
       gain.content?.some((content: any) => content.type === 'ArmyBookWeapon') &&
-      gain.content?.some((content: any) => content.type === 'ArmyBookRule' && content.name === 'Tough')
+      gain.content?.some((content: any) => content.type === 'ArmyBookRule' && content.id === RULE_IDS.TOUGH)
     );
     
     if (hasWeaponTeam) {
@@ -802,7 +847,7 @@ export class ArmyProcessor {
       })
       .reduce((sum, cost) => sum + cost, 0);
     
-    const isHero = unit.rules.some(rule => rule.name === 'Hero');
+    const isHero = RuleLookup.hasHero(unit.rules);
     const levels = Math.floor(unit.xp / 5);
     const levelCosts = levels * (isHero ? 55 : 25);
     
@@ -814,7 +859,7 @@ export class ArmyProcessor {
     
     if (unit.rules && unit.rules.length > 0) {
       for (const rule of unit.rules) {
-        if (rule.name === 'Tough') {
+        if (rule.id === RULE_IDS.TOUGH) {
           if (rule.rating !== undefined && rule.rating !== null) {
             const toughValue = typeof rule.rating === 'string' 
               ? parseInt(rule.rating, 10) 
@@ -866,7 +911,7 @@ export class ArmyProcessor {
 
   // Reuse existing helper methods for consistency
   private static hasCasterAbility(baseRules: ArmyForgeRule[], loadout: any[]): boolean {
-    const baseCaster = baseRules.some(rule => rule.name.toLowerCase().includes('caster'));
+    const baseCaster = RuleLookup.hasCaster(baseRules);
     const loadoutCaster = loadout.some(item => 
       item.label && item.label.toLowerCase().includes('caster')
     );
@@ -874,7 +919,7 @@ export class ArmyProcessor {
   }
 
   private static getCasterRating(baseRules: ArmyForgeRule[], loadout: any[]): number | undefined {
-    const baseCasterRule = baseRules.find(rule => rule.name.toLowerCase().includes('caster'));
+    const baseCasterRule = RuleLookup.findCaster(baseRules);
     if (baseCasterRule?.rating) return typeof baseCasterRule.rating === 'number' ? baseCasterRule.rating : parseInt(baseCasterRule.rating as string);
     
     const casterItem = loadout.find(item => 
@@ -918,12 +963,12 @@ export class ArmyProcessor {
     loadout.forEach(item => {
       if (item.type === 'ArmyBookItem' && item.content) {
         const hasDefenseInContent = item.content.some((content: any) => 
-          content.type === 'ArmyBookRule' && content.name === 'Defense'
+          content.type === 'ArmyBookRule' && (content.id === RULE_IDS.DEFENSE || content.name === 'Defense')
         );
         
         if (hasDefenseInContent) {
           item.content.forEach((content: any) => {
-            if (content.type === 'ArmyBookRule' && content.name === 'Defense') {
+            if (content.type === 'ArmyBookRule' && (content.id === RULE_IDS.DEFENSE || content.name === 'Defense')) {
               const value = typeof content.rating === 'number' ? content.rating : parseInt(content.rating as string);
               adjustment += value;
             }
@@ -956,7 +1001,7 @@ export class ArmyProcessor {
       count: weapon.count || 1,
       range: weapon.range,
       attacks: weapon.attacks,
-      ap: (weapon.specialRules || []).find((rule: any) => rule.name === 'AP')?.rating as number || 0,
+      ap: RuleLookup.findAP(weapon.specialRules || []),
       special_rules: (weapon.specialRules || []).map((rule: any) => ({
         id: rule.id, // Preserve ArmyForge rule ID
         name: rule.name,
@@ -994,45 +1039,59 @@ export class ArmyProcessor {
     const rules: ProcessedRule[] = [];
     
     loadout.forEach(item => {
-      if (item.type === 'ArmyBookItem' && item.label) {
-        // Extract various rule types from labels
-        const patterns = [
-          { name: 'Caster', pattern: /Caster\((\d+)\)/i },
-          { name: 'Tough', pattern: /Tough\((\d+)\)/ },
-          { name: 'Impact', pattern: /Impact\((\d+)\)/ },
-          { name: 'Defense', pattern: /Defense\((\d+)\)/ },
-          { name: 'Quality', pattern: /Quality\((\d+)\)/ }
-        ];
-        
-        patterns.forEach(({ name, pattern }) => {
-          const match = item.label.match(pattern);
-          if (match) {
-            rules.push({
-              name,
-              type: 'ability' as const,
-              rating: parseInt(match[1]),
-              description: `${name}(${match[1]})`
-            });
-          }
-        });
-        
-        // Handle non-rated rules
-        if (item.label.includes('Fast')) {
-          rules.push({
-            name: 'Fast',
-            type: 'ability' as const,
-            rating: undefined,
-            description: 'Fast'
+      if (item.type === 'ArmyBookItem') {
+        // First: Process content array for rules with proper IDs
+        if (item.content && Array.isArray(item.content)) {
+          item.content.forEach((content: any) => {
+            if (content.type === 'ArmyBookRule') {
+              rules.push({
+                id: content.id, // Preserve ArmyForge rule ID
+                name: content.name,
+                type: 'ability' as const,
+                rating: content.rating,
+                description: content.label || content.name
+              });
+            }
           });
         }
         
-        if (item.name === 'Combat Shield' || (item.content && item.content.some((c: any) => c.name === 'Shield Wall'))) {
-          rules.push({
-            name: 'Shield Wall',
-            type: 'ability' as const,
-            rating: undefined,
-            description: 'Shield Wall'
-          });
+        // Second: Handle special cases that might not be in content
+        if (item.label) {
+          // Handle Combat Shield -> Shield Wall mapping (legacy support)
+          if (item.name === 'Combat Shield' && !item.content?.some((c: any) => c.name === 'Shield Wall')) {
+            rules.push({
+              name: 'Shield Wall',
+              type: 'ability' as const,
+              rating: undefined,
+              description: 'Shield Wall'
+            });
+          }
+          
+          // Fallback: Parse patterns only if no content rules were found
+          if (!item.content || !item.content.some((c: any) => c.type === 'ArmyBookRule')) {
+            const patterns = [
+              { name: 'Caster', pattern: /Caster\((\d+)\)/i },
+              { name: 'Tough', pattern: /Tough\((\d+)\)/ },
+              { name: 'Impact', pattern: /Impact\((\d+)\)/ },
+              { name: 'Defense', pattern: /Defense\((\d+)\)/ },
+              { name: 'Quality', pattern: /Quality\((\d+)\)/ },
+              { name: 'Fast', pattern: /Fast/i }
+            ];
+            
+            patterns.forEach(({ name, pattern }) => {
+              const match = item.label.match(pattern);
+              if (match) {
+                const rating = match[1] ? parseInt(match[1]) : undefined;
+                rules.push({
+                  // No ID available from text parsing
+                  name,
+                  type: 'ability' as const,
+                  rating,
+                  description: rating ? `${name}(${rating})` : name
+                });
+              }
+            });
+          }
         }
       }
     });
@@ -1044,23 +1103,29 @@ export class ArmyProcessor {
     const ruleMap = new Map<string, ProcessedRule>();
     
     baseRules.forEach(rule => {
-      ruleMap.set(rule.name, { ...rule });
+      // Use ID if available, otherwise fall back to name
+      const key = rule.id || rule.name;
+      ruleMap.set(key, { ...rule });
     });
     
     loadoutRules.forEach(loadoutRule => {
-      const existing = ruleMap.get(loadoutRule.name);
+      // Use ID if available, otherwise fall back to name
+      const key = loadoutRule.id || loadoutRule.name;
+      const existing = ruleMap.get(key);
       
       if (existing && existing.rating !== undefined && loadoutRule.rating !== undefined) {
-        if (loadoutRule.name === 'Tough' || loadoutRule.name === 'Impact') {
+        // Use ID-based comparison for stackable rules, fallback to name for rules without IDs
+        if ((loadoutRule.id && (loadoutRule.id === RULE_IDS.TOUGH || loadoutRule.id === RULE_IDS.IMPACT)) || 
+            (!loadoutRule.id && (loadoutRule.name === 'Tough' || loadoutRule.name === 'Impact'))) {
           const existingValue = typeof existing.rating === 'number' ? existing.rating : parseInt(existing.rating as string);
           const loadoutValue = typeof loadoutRule.rating === 'number' ? loadoutRule.rating : parseInt(loadoutRule.rating as string);
           existing.rating = existingValue + loadoutValue;
           existing.description = `${loadoutRule.name}(${existing.rating})`;
         } else {
-          ruleMap.set(loadoutRule.name, { ...loadoutRule });
+          ruleMap.set(key, { ...loadoutRule });
         }
       } else {
-        ruleMap.set(loadoutRule.name, { ...loadoutRule });
+        ruleMap.set(key, { ...loadoutRule });
       }
     });
     

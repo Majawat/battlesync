@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.25.0] - 2025-08-21
+
+### Enhanced
+- **ID-Based Rule System**: Replaced vulnerable name-based rule comparisons with reliable ID-based lookups using ArmyForge rule IDs
+- Enhanced rule processing to preserve rule IDs from ArmyForge for Hero, Caster, Tough, AP, Fast, Strider, Blast, Reliable, Defense, and Impact rules
+- Updated weapon special rule processing to use ID-based AP detection instead of name matching
+- Modified rule merging system to use ID-based consolidation when IDs are available, falling back to name-based for rules without IDs
+
+### Technical Improvements
+- Added RULE_IDS constants with verified ArmyForge rule IDs across multiple armies (vMzljLVC6ZGv, IJ1JM_m-jmka, Xo19MAwQPGbs, Un3_pRTu2xBO, OKOrilTDQs6P)
+- Created RuleLookup helper functions for ID-based rule detection (hasHero, hasCaster, hasTough, findAP, findCaster, findDefense, findImpact)
+- Enhanced ProcessedRule interface with optional id field for reliable rule identification
+- Updated mergeAndStackRules function to consolidate rules by ID when available, ensuring proper Impact and Tough rule stacking
+- Modified extractRulesFromLoadout to prioritize content arrays with IDs over text parsing fallbacks
+- Enhanced Defense calculation functions to use ID-based rule detection alongside name-based fallbacks
+
+### Security & Reliability
+- **BREAKING**: System now resistant to ArmyForge text changes that could break name-based rule matching
+- Critical game mechanics (Hero detection, AP calculations, Caster abilities, rule stacking) now use reliable ID-based comparisons
+- Preserved backward compatibility with text-parsed rules that lack IDs (Quality from text patterns)
+
 ## [2.24.0] - 2025-08-21
 
 ### Fixed
