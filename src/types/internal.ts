@@ -11,6 +11,7 @@ export interface ProcessedWeapon {
 }
 
 export interface ProcessedRule {
+  id?: string; // ArmyForge rule ID for reliable lookups
   name: string;
   type: 'ability' | 'weapon_modifier' | 'passive' | 'upgrade';
   rating?: number | string;

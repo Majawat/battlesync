@@ -158,6 +158,7 @@ export class ArmyProcessor {
           attacks: weapon.attacks || 1,
           ap: (weapon.specialRules || []).find((rule: any) => rule.name === 'AP')?.rating as number || 0,
           special_rules: (weapon.specialRules || []).map((rule: any) => ({
+            id: rule.id, // Preserve ArmyForge rule ID
             name: rule.name,
             value: rule.rating,
             type: 'weapon_modifier' as const
@@ -648,6 +649,7 @@ export class ArmyProcessor {
           attacks: gain.attacks || 1,
           ap: gain.specialRules?.find((rule: any) => rule.name === 'AP')?.rating || 0,
           special_rules: gain.specialRules?.map((rule: any) => ({
+            id: rule.id, // Preserve ArmyForge rule ID
             name: rule.name,
             value: rule.rating,
             type: 'weapon_modifier' as const
@@ -670,6 +672,7 @@ export class ArmyProcessor {
                 attacks: content.attacks || 1,
                 ap: content.specialRules?.find((rule: any) => rule.name === 'AP')?.rating || 0,
                 special_rules: content.specialRules?.map((rule: any) => ({
+                  id: rule.id, // Preserve ArmyForge rule ID
                   name: rule.name,
                   value: rule.rating,
                   type: 'weapon_modifier' as const
@@ -955,6 +958,7 @@ export class ArmyProcessor {
       attacks: weapon.attacks,
       ap: (weapon.specialRules || []).find((rule: any) => rule.name === 'AP')?.rating as number || 0,
       special_rules: (weapon.specialRules || []).map((rule: any) => ({
+        id: rule.id, // Preserve ArmyForge rule ID
         name: rule.name,
         value: rule.rating,
         type: 'weapon_modifier' as const
@@ -978,6 +982,7 @@ export class ArmyProcessor {
 
   private static processRules(rules: ArmyForgeRule[]): ProcessedRule[] {
     return rules.map(rule => ({
+      id: rule.id, // Preserve ArmyForge rule ID
       name: rule.name,
       type: 'ability' as const,
       rating: rule.rating,
