@@ -203,8 +203,9 @@ export class ArmyProcessor {
       return;
     }
     
-    // Group upgrades that are item upgrades affecting multiple models
+    // Group upgrades that are item upgrades affecting multiple models OR identical weapon replacements
     const groupedItemUpgrades = new Map<string, any[]>();
+    const groupedWeaponUpgrades = new Map<string, any[]>();
     const standaloneUpgrades: any[] = [];
     
     unit.selectedUpgrades.forEach(selectedUpgrade => {
@@ -222,8 +223,41 @@ export class ArmyProcessor {
           groupedItemUpgrades.set(sectionUid, []);
         }
         groupedItemUpgrades.get(sectionUid)!.push(selectedUpgrade);
-      } else {
-        // Process weapon replacements and single-model upgrades individually in JSON order
+      }
+      // Group identical weapon replacement upgrades that affect "any" model
+      // Only group if multiple upgrades have the same instanceId (truly identical, not just same option)
+      else if (upgrade.variant === 'replace' && affects?.type === 'any') {
+        // Check if this is a multi-count upgrade that should be grouped (same instanceId)
+        const existingGroup = Array.from(groupedWeaponUpgrades.values()).find(group =>
+          group.some(existing => existing.instanceId === selectedUpgrade.instanceId)
+        );
+        
+        if (existingGroup) {
+          // Add to existing group
+          existingGroup.push(selectedUpgrade);
+        } else {
+          // Check if we should start a new group by looking for other upgrades with same instanceId
+          const sameInstanceUpgrades = unit.selectedUpgrades.filter(other => 
+            other.instanceId === selectedUpgrade.instanceId && 
+            other.upgrade.variant === 'replace' && 
+            other.upgrade.affects?.type === 'any'
+          );
+          
+          if (sameInstanceUpgrades.length > 1) {
+            // This is a multi-count upgrade that should be grouped
+            const upgradeKey = `${upgrade.uid || upgrade.id}_${selectedUpgrade.instanceId}`;
+            if (!groupedWeaponUpgrades.has(upgradeKey)) {
+              groupedWeaponUpgrades.set(upgradeKey, []);
+            }
+            groupedWeaponUpgrades.get(upgradeKey)!.push(selectedUpgrade);
+          } else {
+            // Single upgrade, process individually
+            standaloneUpgrades.push(selectedUpgrade);
+          }
+        }
+      }
+      else {
+        // Process other weapon replacements and single-model upgrades individually in JSON order
         standaloneUpgrades.push(selectedUpgrade);
       }
     });
@@ -231,6 +265,11 @@ export class ArmyProcessor {
     // Process standalone upgrades first (preserves weapon replacement order)
     standaloneUpgrades.forEach(selectedUpgrade => {
       this.applyUpgradeWithDependencies(models, selectedUpgrade, unit, subUnit);
+    });
+    
+    // Process grouped weapon upgrades (distribute identical weapon replacements across models)
+    groupedWeaponUpgrades.forEach(groupedUpgrades => {
+      this.processGroupedWeaponUpgrades(models, groupedUpgrades, unit, subUnit);
     });
     
     // Process grouped item upgrades (distribute across models properly)
@@ -259,6 +298,44 @@ export class ArmyProcessor {
         if (targetModel) {
           // Apply this upgrade to this specific model only
           this.applyUpgradeWithDependencies([targetModel], selectedUpgrade, unit, subUnit);
+        }
+      }
+    });
+  }
+
+  /**
+   * Process grouped weapon replacement upgrades that should be distributed across multiple models
+   * Each identical weapon replacement upgrade goes to a different model (like Explosive Spear on Beast Riders)
+   */
+  private static processGroupedWeaponUpgrades(models: ProcessedModel[], groupedUpgrades: any[], unit: ArmyForgeUnit, subUnit: ProcessedSubUnit): void {
+    if (groupedUpgrades.length === 0) return;
+    
+    // Find models that have weapons affected by these upgrades
+    const usedModels: ProcessedModel[] = [];
+    
+    groupedUpgrades.forEach(selectedUpgrade => {
+      // Find models that have weapons this upgrade can affect and haven't been used yet
+      const affectedWeapons = unit.weapons.filter(weapon => 
+        weapon.dependencies?.some(dep => dep.upgradeInstanceId === selectedUpgrade.instanceId)
+      );
+      
+      if (affectedWeapons.length > 0) {
+        const affectedWeaponIds = new Set();
+        affectedWeapons.forEach(weapon => {
+          if (weapon.id) affectedWeaponIds.add(weapon.id);
+          if (weapon.weaponId) affectedWeaponIds.add(weapon.weaponId);
+        });
+        
+        // Find the first available model that hasn't been used yet and has the affected weapon
+        const availableModel = models.find(model => 
+          !usedModels.includes(model) && 
+          model.weapons.some(weapon => affectedWeaponIds.has(weapon.id))
+        );
+        
+        if (availableModel) {
+          usedModels.push(availableModel);
+          // Apply the upgrade to this specific model
+          this.applyUpgradeWithDependencies([availableModel], selectedUpgrade, unit, subUnit);
         }
       }
     });

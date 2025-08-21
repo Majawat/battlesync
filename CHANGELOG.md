@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.23.0] - 2025-08-21
+
+### Fixed
+- **Identical weapon replacement upgrade distribution**: Fixed critical issue where multiple identical weapon replacement upgrades (like Beast Riders' Explosive Spear) were all being applied to the first model instead of distributing across different models
+- Enhanced upgrade processing to distinguish between truly identical upgrade instances (same instanceId) that should be distributed versus individual upgrade selections that should be processed separately
+- Preserved existing functionality for individual upgrades like Energy Fist on Destroyer Sisters while fixing distribution for multi-count identical upgrades
+
+### Added
+- New `processGroupedWeaponUpgrades` method for proper distribution of identical weapon replacement upgrades across multiple models
+- Enhanced upgrade grouping logic to detect truly identical upgrades based on instanceId matching
+- Model tracking during grouped upgrade distribution to prevent duplicate applications on the same model
+
+### Technical Improvements
+- Modified upgrade processing workflow to handle both grouped identical upgrades and individual upgrade selections correctly
+- Added sophisticated upgrade categorization logic that preserves JSON processing order while enabling proper distribution
+- Enhanced upgrade system to handle complex edge cases with multiple identical weapon replacements
+
 ## [2.22.0] - 2025-08-20
 
 ### Added
