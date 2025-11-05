@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { armyApi } from '../api/client';
-import type { Army } from '../types/api';
-import { formatGameSystem } from '../utils/gameSystem';
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { armyApi } from "../api/client";
+import type { Army } from "../types/api";
+import { formatGameSystem } from "../utils/gameSystem";
 
 export default function ArmyListPage() {
   const [armies, setArmies] = useState<Army[]>([]);
@@ -14,14 +14,14 @@ export default function ArmyListPage() {
   useEffect(() => {
     const fetchArmies = async () => {
       try {
-        const response = await armyApi.listArmies() as any;
+        const response = (await armyApi.listArmies()) as any;
         if (response.success) {
           setArmies(response.armies || []);
         } else {
-          throw new Error(response.error || 'Failed to fetch armies');
+          throw new Error(response.error || "Failed to fetch armies");
         }
       } catch (err: any) {
-        setError(err.response?.data?.error || err.message || 'Failed to fetch armies');
+        setError(err.response?.data?.error || err.message || "Failed to fetch armies");
       } finally {
         setLoading(false);
       }
@@ -33,17 +33,17 @@ export default function ArmyListPage() {
   const handleDeleteArmy = async (armyId: string) => {
     try {
       setDeletingId(armyId);
-      const response = await armyApi.deleteArmy(armyId) as any;
-      
+      const response = (await armyApi.deleteArmy(armyId)) as any;
+
       if (response.success) {
         // Remove army from local state
-        setArmies(prevArmies => prevArmies.filter(army => army.id !== armyId));
+        setArmies((prevArmies) => prevArmies.filter((army) => army.id !== armyId));
         setConfirmDeleteId(null);
       } else {
-        throw new Error(response.error || 'Failed to delete army');
+        throw new Error(response.error || "Failed to delete army");
       }
     } catch (err: any) {
-      setError(err.response?.data?.error || err.message || 'Failed to delete army');
+      setError(err.response?.data?.error || err.message || "Failed to delete army");
     } finally {
       setDeletingId(null);
     }
@@ -53,10 +53,14 @@ export default function ArmyListPage() {
     return (
       <div className="space-y-8">
         <div>
-          <h1 className="text-3xl font-bold text-battle-text-primary-light dark:text-battle-text-primary-dark mb-4">My Armies</h1>
+          <h1 className="text-3xl font-bold text-battle-text-primary-light dark:text-battle-text-primary-dark mb-4">
+            My Armies
+          </h1>
         </div>
         <div className="card text-center">
-          <p className="text-battle-text-muted-light dark:text-battle-text-muted-dark">Loading armies...</p>
+          <p className="text-battle-text-muted-light dark:text-battle-text-muted-dark">
+            Loading armies...
+          </p>
         </div>
       </div>
     );
@@ -66,7 +70,9 @@ export default function ArmyListPage() {
     return (
       <div className="space-y-8">
         <div>
-          <h1 className="text-3xl font-bold text-battle-text-primary-light dark:text-battle-text-primary-dark mb-4">My Armies</h1>
+          <h1 className="text-3xl font-bold text-battle-text-primary-light dark:text-battle-text-primary-dark mb-4">
+            My Armies
+          </h1>
         </div>
         <div className="card">
           <div className="bg-battle-status-routed/10 border border-battle-status-routed/20 text-battle-status-routed px-4 py-3 rounded-lg">
@@ -83,9 +89,11 @@ export default function ArmyListPage() {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-battle-text-primary-light dark:text-battle-text-primary-dark mb-2">My Armies</h1>
+          <h1 className="text-3xl font-bold text-battle-text-primary-light dark:text-battle-text-primary-dark mb-2">
+            My Armies
+          </h1>
           <p className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark">
-            {armies.length} {armies.length === 1 ? 'army' : 'armies'} imported
+            {armies.length} {armies.length === 1 ? "army" : "armies"} imported
           </p>
         </div>
         <Link to="/armies/import" className="btn-primary">
@@ -97,7 +105,9 @@ export default function ArmyListPage() {
       {armies.length === 0 ? (
         <div className="card text-center">
           <div className="py-12">
-            <p className="text-xl text-battle-text-muted-light dark:text-battle-text-muted-dark mb-4">No armies imported yet</p>
+            <p className="text-xl text-battle-text-muted-light dark:text-battle-text-muted-dark mb-4">
+              No armies imported yet
+            </p>
             <p className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark mb-6">
               Import your first army from ArmyForge to get started with battle tracking.
             </p>
@@ -126,19 +136,25 @@ export default function ArmyListPage() {
                 {/* Army Stats */}
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
-                    <span className="font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark">Points:</span>
+                    <span className="font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark">
+                      Points:
+                    </span>
                     <span className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark ml-1">
                       {army.list_points}/{army.points_limit}
                     </span>
                   </div>
                   <div>
-                    <span className="font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark">Models:</span>
+                    <span className="font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark">
+                      Models:
+                    </span>
                     <span className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark ml-1">
                       {army.model_count}
                     </span>
                   </div>
                   <div>
-                    <span className="font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark">Activations:</span>
+                    <span className="font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark">
+                      Activations:
+                    </span>
                     <span className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark ml-1">
                       {army.activation_count}
                     </span>
@@ -158,34 +174,32 @@ export default function ArmyListPage() {
                 </div>
 
                 {/* Validation Warnings */}
-                {army.validation_errors && Array.isArray(army.validation_errors) && army.validation_errors.length > 0 && (
-                  <div className="bg-battle-status-shaken/10 border border-battle-status-shaken/20 text-battle-status-shaken px-4 py-3 rounded-lg">
-                    <p className="font-medium mb-2 text-sm">Validation Issues</p>
-                    <ul className="text-xs space-y-1 opacity-90">
-                      {army.validation_errors.map((error, index) => (
-                        <li key={index}>• {error}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+                {army.validation_errors &&
+                  Array.isArray(army.validation_errors) &&
+                  army.validation_errors.length > 0 && (
+                    <div className="bg-battle-status-shaken/10 border border-battle-status-shaken/20 text-battle-status-shaken px-4 py-3 rounded-lg">
+                      <p className="font-medium mb-2 text-sm">Validation Issues</p>
+                      <ul className="text-xs space-y-1 opacity-90">
+                        {army.validation_errors.map((error, index) => (
+                          <li key={index}>• {error}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
 
                 {/* Actions */}
                 <div className="space-y-2">
                   <div className="flex space-x-2">
-                    <Link 
-                      to={`/armies/${army.id}`}
-                      className="btn-secondary flex-1 text-center"
-                    >
+                    <Link to={`/armies/${army.id}`} className="btn-secondary flex-1 text-center">
                       View Details
                     </Link>
-                    <Link 
+                    <Link
                       to={`/battles/new?army=${army.id}`}
-                      className="btn-primary flex-1 text-center"
-                    >
+                      className="btn-primary flex-1 text-center">
                       Start Battle
                     </Link>
                   </div>
-                  
+
                   {/* Delete confirmation */}
                   {confirmDeleteId === army.id ? (
                     <div className="bg-battle-status-routed/10 border border-battle-status-routed/20 rounded-lg p-3">
@@ -199,15 +213,13 @@ export default function ArmyListPage() {
                         <button
                           onClick={() => handleDeleteArmy(army.id)}
                           disabled={deletingId === army.id}
-                          className="btn-primary bg-battle-status-routed hover:bg-battle-status-routed/80 flex-1 text-xs"
-                        >
-                          {deletingId === army.id ? 'Deleting...' : 'Yes, Delete'}
+                          className="btn-primary bg-battle-status-routed hover:bg-battle-status-routed/80 flex-1 text-xs">
+                          {deletingId === army.id ? "Deleting..." : "Yes, Delete"}
                         </button>
                         <button
                           onClick={() => setConfirmDeleteId(null)}
                           disabled={deletingId === army.id}
-                          className="btn-secondary flex-1 text-xs"
-                        >
+                          className="btn-secondary flex-1 text-xs">
                           Cancel
                         </button>
                       </div>
@@ -215,8 +227,7 @@ export default function ArmyListPage() {
                   ) : (
                     <button
                       onClick={() => setConfirmDeleteId(army.id)}
-                      className="w-full text-xs text-battle-status-routed hover:text-battle-status-routed/80 py-1 transition-colors"
-                    >
+                      className="w-full text-xs text-battle-status-routed hover:text-battle-status-routed/80 py-1 transition-colors">
                       Delete Army
                     </button>
                   )}
@@ -224,7 +235,10 @@ export default function ArmyListPage() {
 
                 {/* Army ID for debugging */}
                 <div className="text-xs text-battle-text-muted-light dark:text-battle-text-muted-dark border-t border-battle-border-light dark:border-battle-border-dark pt-2">
-                  ID: {army.id} | ArmyForge: {army.armyforge_id}
+                  ID: {army.id} | ArmyForge:{" "}
+                  <a href={`https://army-forge.onepagerules.com/share?id=${army.armyforge_id}`}>
+                    {army.armyforge_id}
+                  </a>
                 </div>
               </div>
             </div>

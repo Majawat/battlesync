@@ -146,7 +146,6 @@ export class ArmyProcessor {
    * Generate models using new dependency-based upgrade system
    */
   private static generateModelsWithNewUpgradeSystem(unit: ArmyForgeUnit, subUnit: ProcessedSubUnit): ProcessedModel[] {
-    console.log(`\n*** Generating models for unit: ${unit.name} ***`);
     const models: ProcessedModel[] = [];
     const isHero = RuleLookup.hasHero(unit.rules);
     const baseToughness = this.determineBaseToughness(unit);
@@ -175,10 +174,11 @@ export class ArmyProcessor {
     // Step 4: Process selectedUpgrades in order using dependency tracking
     this.processUpgradesWithDependencies(models, unit, subUnit);
     
-    // Step 5: Consolidate duplicate weapons by ID on each model
-    models.forEach(model => {
-      model.weapons = this.mergeWeapons(model.weapons);
-    });
+    // Step 5: Consolidate duplicate weapons by name on each model
+    // NOTE: Removed automatic consolidation as it interferes with upgrade dependency tracking
+    // models.forEach(model => {
+    //   model.weapons = this.mergeWeapons(model.weapons);
+    // });
     
     return models;
   }
@@ -254,72 +254,60 @@ export class ArmyProcessor {
       return;
     }
     
-    // Group upgrades that are item upgrades affecting multiple models OR identical weapon replacements
-    const groupedItemUpgrades = new Map<string, any[]>();
-    const groupedWeaponUpgrades = new Map<string, any[]>();
-    const standaloneUpgrades: any[] = [];
-    
-    unit.selectedUpgrades.forEach(selectedUpgrade => {
-      const upgrade = selectedUpgrade.upgrade;
+    // Process upgrades in JSON order, grouping consecutive identical upgrades
+    let i = 0;
+    while (i < unit.selectedUpgrades.length) {
+      const currentUpgrade = unit.selectedUpgrades[i];
+      if (!currentUpgrade) {
+        i++;
+        continue;
+      }
+      
+      const upgrade = currentUpgrade.upgrade;
       const affects = upgrade.affects;
       
-      // Group non-weapon upgrades (not weapon replacements) that affect exactly > 1 model
-      if (upgrade.variant !== 'replace' && 
-          affects?.type === 'exactly' && 
-          affects?.value > 1 &&
-          selectedUpgrade.option.gains?.some((gain: any) => gain.type === 'ArmyBookItem' || gain.type === 'ArmyBookRule')) {
+      // Check if this is the start of a consecutive group of identical upgrades
+      if (upgrade.variant === 'replace' && affects?.type === 'any') {
+        const upgradeKey = `${upgrade.uid || upgrade.id}_${currentUpgrade.option.id}`;
         
-        const sectionUid = upgrade.uid || upgrade.id;
-        if (!groupedItemUpgrades.has(sectionUid)) {
-          groupedItemUpgrades.set(sectionUid, []);
-        }
-        groupedItemUpgrades.get(sectionUid)!.push(selectedUpgrade);
-      }
-      // Group identical weapon replacement upgrades that affect "any" model
-      // Group by upgrade option content (same upgrade.uid + option.id) even if different instanceIds
-      else if (upgrade.variant === 'replace' && affects?.type === 'any') {
-        // Create a key based on upgrade option content to group identical upgrades
-        const upgradeKey = `${upgrade.uid || upgrade.id}_${selectedUpgrade.option.id}`;
+        // Find all consecutive identical upgrades starting from this position
+        const identicalGroup = [currentUpgrade];
+        let j = i + 1;
         
-        // Check if we should start a new group by looking for other upgrades with same option
-        const sameOptionUpgrades = unit.selectedUpgrades.filter(other => 
-          other.upgrade.variant === 'replace' && 
-          other.upgrade.affects?.type === 'any' &&
-          (other.upgrade.uid || other.upgrade.id) === (upgrade.uid || upgrade.id) &&
-          other.option.id === selectedUpgrade.option.id
-        );
-        
-        if (sameOptionUpgrades.length > 1) {
-          // This is a multi-count identical upgrade that should be grouped
-          if (!groupedWeaponUpgrades.has(upgradeKey)) {
-            groupedWeaponUpgrades.set(upgradeKey, []);
+        while (j < unit.selectedUpgrades.length) {
+          const nextUpgrade = unit.selectedUpgrades[j];
+          if (!nextUpgrade) {
+            j++;
+            continue;
           }
-          groupedWeaponUpgrades.get(upgradeKey)!.push(selectedUpgrade);
-        } else {
-          // Single upgrade, process individually
-          standaloneUpgrades.push(selectedUpgrade);
+          
+          const nextKey = `${nextUpgrade.upgrade.uid || nextUpgrade.upgrade.id}_${nextUpgrade.option.id}`;
+          
+          if (nextKey === upgradeKey && 
+              nextUpgrade.upgrade.variant === 'replace' && 
+              nextUpgrade.upgrade.affects?.type === 'any') {
+            identicalGroup.push(nextUpgrade);
+            j++;
+          } else {
+            break; // Stop at first non-matching upgrade
+          }
         }
+        
+        if (identicalGroup.length > 1) {
+          // Process as a group
+          this.processGroupedWeaponUpgrades(models, identicalGroup, unit, subUnit);
+          i = j; // Skip past all processed upgrades
+        } else {
+          // Process single upgrade normally
+          this.applyUpgradeWithDependencies(models, currentUpgrade, unit, subUnit);
+          i++;
+        }
+      } else {
+        // Process individual upgrade
+        this.applyUpgradeWithDependencies(models, currentUpgrade, unit, subUnit);
+        i++;
       }
-      else {
-        // Process other weapon replacements and single-model upgrades individually in JSON order
-        standaloneUpgrades.push(selectedUpgrade);
-      }
-    });
-    
-    // Process standalone upgrades first (preserves weapon replacement order)
-    standaloneUpgrades.forEach(selectedUpgrade => {
-      this.applyUpgradeWithDependencies(models, selectedUpgrade, unit, subUnit);
-    });
-    
-    // Process grouped weapon upgrades (distribute identical weapon replacements across models)
-    groupedWeaponUpgrades.forEach(groupedUpgrades => {
-      this.processGroupedWeaponUpgrades(models, groupedUpgrades, unit, subUnit);
-    });
-    
-    // Process grouped item upgrades (distribute across models properly)
-    groupedItemUpgrades.forEach(groupedUpgrades => {
-      this.processGroupedItemUpgrades(models, groupedUpgrades, unit, subUnit);
-    });
+    }
   }
 
   /**
@@ -468,8 +456,6 @@ export class ArmyProcessor {
     const instanceId = selectedUpgrade.instanceId;
     const affects = upgrade.affects;
     
-    // Debug logging for troubleshooting
-    console.log(`\n=== Processing upgrade: ${upgrade.label} (${instanceId}) for unit: ${unit.name} ===`);
     
     // Step 1: Find weapons/items that have this upgrade in their dependencies
     // Search in base unit weapons
@@ -505,13 +491,6 @@ export class ArmyProcessor {
 
     const affectedWeapons = [...baseAffectedWeapons, ...upgradeChainWeapons];
     
-    // Debug logging removed for production
-    
-    if (unit.name === 'Destroyer Sisters') {
-      console.log(`Affected weapons:`, affectedWeapons.map(w => ({ name: w.name, id: w.id })));
-      console.log(`Upgrade targets:`, upgrade.targets);
-      console.log(`Models before upgrade:`, models.map(m => ({ name: m.name, weapons: m.weapons.map(w => ({ name: w.name, id: w.id })) })));
-    }
     
     
     // Step 2: Calculate how many models to affect based on affects type
@@ -525,10 +504,6 @@ export class ArmyProcessor {
         if (weapon.weaponId) affectedWeaponIds.add(weapon.weaponId);
       });
       
-      if (unit.name === 'Destroyer Sisters') {
-        console.log(`Looking for weapon IDs:`, Array.from(affectedWeaponIds));
-        console.log(`Model weapon IDs:`, models.map(m => m.weapons.map(w => w.id)));
-      }
       
       // Find models that have affected weapons
       const modelsWithAffectedWeapons = models.filter(model => 
@@ -552,9 +527,6 @@ export class ArmyProcessor {
     }
     
     // Step 3: Apply replacement to selected models
-    if (unit.name === 'Destroyer Sisters') {
-      console.log(`Models to affect: ${modelsToAffect.length}`);
-    }
     modelsToAffect.forEach(model => {
       // Remove weapons using dependency-based matching
       if (affectedWeapons.length > 0) {
@@ -570,11 +542,6 @@ export class ArmyProcessor {
           }
         });
         
-        if (unit.name === 'Destroyer Sisters') {
-          console.log(`Removing weapons with IDs:`, Array.from(affectedWeaponIds));
-          console.log(`Model ${model.name} weapon IDs before:`, model.weapons.map(w => w.id));
-          console.log(`Affected weapons found:`, affectedWeapons.map(w => ({ name: w.name, id: w.id, weaponId: w.weaponId })));
-        }
         
         // Handle partial weapon replacement based on dependency counts
         model.weapons = model.weapons.map(weapon => {
@@ -608,18 +575,12 @@ export class ArmyProcessor {
           return weapon;
         }).filter(weapon => weapon !== null);
         
-        if (unit.name === 'Destroyer Sisters') {
-          console.log(`Model ${model.name} weapon IDs after:`, model.weapons.map(w => w.id));
-        }
       }
       
       // Add replacement weapons/items
       this.addGainsToModel(model, option.gains, selectedUpgrade);
     });
     
-    if (unit.name === 'Destroyer Sisters') {
-      console.log(`Models after upgrade:`, models.map(m => ({ name: m.name, weapons: m.weapons.map(w => w.name) })));
-    }
   }
 
   /**
@@ -1237,11 +1198,13 @@ export class ArmyProcessor {
     const weaponMap = new Map<string, ProcessedWeapon>();
     
     weapons.forEach(weapon => {
-      const existing = weaponMap.get(weapon.id);
+      // Use name-based consolidation for upgrade compatibility
+      // This ensures weapons from different upgrade instances can be properly consolidated
+      const existing = weaponMap.get(weapon.name);
       if (existing) {
         existing.count += weapon.count;
       } else {
-        weaponMap.set(weapon.id, { ...weapon });
+        weaponMap.set(weapon.name, { ...weapon });
       }
     });
     
