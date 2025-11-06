@@ -1,0 +1,4603 @@
+{
+  "uid": "lpRj9EBwROpO1um7",
+  "enabledGameSystems": [
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "name": "Ogres",
+  "hint": "",
+  "background": "Ogres are a heavy-set species of humanoids that stand a head above most Humans. Few in number, their sheer size makes them very powerful, allowing them to soak up attacks and crush their foes. \n\nIn ancient times, the Ogres’ knowledge of magic and Voidgates brought them wealth and prosperity that rivalled any Kingdom in eastern Tyria. However, these Voidgates began to tear into the fabric of other planes, causing the Shadow Stalkers to pour into their lands. The surviving Ogres have been driven into exile, forced to abandon their ancient homes, wealth and prosperity for life on the steppes. ",
+  "backgroundFull": "The Ogres come from a land to the west of Tyria, where they founded several kingdoms which came to dominate the region. Here, the Ogres discovered many ancient Voidgates and relics, which allowed them to develop many schools of magic, and grow quite wealthy. The Ogre Shamans were perhaps the most notable of these schools, as they learnt to control and even create new Voidgates. Thanks to the Shamans’ abilities, Ogres could travel anywhere in their realms in an instant, living lives of luxury and leisure, as they could acquire whatever their hearts and stomachs desired. \n\nSoon, the Shamans looked beyond their homelands, to the wealth of other planes. Kings sent traders and armies to seek treasures unattainable on Tyria. While many returned with great wealth, some individuals and even whole caravans disappeared as they went through the Voidgates, never arriving at their destination. As larger groups were targeted, survivors began to return. They spoke of cruel beings who hunted them through the void, which they called Shadow Stalkers, but their stories were dismissed as hallucinations or anomalies. Ogres refused to heed these warning signs, however, as their insatiable desire drove them to seek ever more wealth through the Voidgates.\n\nIt was only when the Voidgates to their realm suddenly stopped working that the Ogres came to realise that something terrible had happened: the Shadow Stalkers had come to Tyria. Soon, Shadow Stalkers poured through every gate which the Ogre Shamans had created, destroying their cities. With Shadow Stalkers lurking in every corner of their land, most Ogres abandoned their old homes. The Shadow Stalkers continued to hunt them, seeking to kill the Ogre Shamans to reopen the Voidgates. \n\nNow the Ogres have come to eastern Tyria in search of a new home. Some Ogres have come as conquerors, carving out petty Kingdoms by attacking the remote western territories of the Empire and its neighbours. Others travel further as traders and mercenaries, selling wares, spells and services in hopes of building a new life. \n\nHow will you restore the lost prosperity of your people?",
+  "units": [
+    {
+      "id": "8tuBG2T",
+      "cost": 60,
+      "name": "Champion",
+      "size": 1,
+      "bases": {
+        "round": "40",
+        "square": "40"
+      },
+      "items": [],
+      "rules": [
+        {
+          "id": "T08VkBuVmNZ_",
+          "name": "Hero",
+          "label": "Hero"
+        },
+        {
+          "id": "a0YtInGiUDd6",
+          "name": "Tough",
+          "rating": 18,
+          "label": "Tough(18)"
+        },
+        {
+          "id": "-7w3e1QuLK47",
+          "name": "Destroyer",
+          "label": "Destroyer"
+        }
+      ],
+      "valid": true,
+      "defense": 6,
+      "quality": 6,
+      "weapons": [
+        {
+          "id": "rQyAkHzV",
+          "name": "Heavy Hand Weapon",
+          "type": "ArmyBookWeapon",
+          "range": 0,
+          "attacks": 4,
+          "weaponId": "WHcr53Ec",
+          "specialRules": [
+            {
+              "type": "ArmyBookRule",
+              "id": "17crjK7P6_w6",
+              "name": "AP",
+              "rating": 1,
+              "label": "AP(1)"
+            }
+          ],
+          "attacksMultiplier": null,
+          "label": "Heavy Hand Weapon (A4, AP(1))",
+          "count": 1,
+          "originalCount": 1
+        }
+      ],
+      "upgrades": [
+        "C1",
+        "7EC0s6n-"
+      ],
+      "hasCustomRule": false,
+      "disabledSections": [],
+      "hasBalanceInvalid": false,
+      "tough": 18,
+      "disabledUpgradeSections": []
+    },
+    {
+      "id": "CSEbbNe",
+      "cost": 70,
+      "name": "Tribe Master",
+      "size": 1,
+      "bases": {
+        "round": "50",
+        "square": "40"
+      },
+      "items": [],
+      "rules": [
+        {
+          "id": "-7w3e1QuLK47",
+          "name": "Destroyer",
+          "label": "Destroyer"
+        },
+        {
+          "id": "T08VkBuVmNZ_",
+          "name": "Hero",
+          "label": "Hero"
+        },
+        {
+          "id": "hnsVQyx3ylMf",
+          "name": "Ravage",
+          "rating": 2,
+          "label": "Ravage(2)"
+        },
+        {
+          "id": "a0YtInGiUDd6",
+          "name": "Tough",
+          "rating": 18,
+          "label": "Tough(18)"
+        }
+      ],
+      "valid": true,
+      "defense": 6,
+      "quality": 6,
+      "weapons": [
+        {
+          "id": "ky2PoV_m",
+          "name": "Heavy Hand Weapon",
+          "type": "ArmyBookWeapon",
+          "range": 0,
+          "attacks": 4,
+          "weaponId": "nA7U2stE",
+          "specialRules": [
+            {
+              "type": "ArmyBookRule",
+              "id": "17crjK7P6_w6",
+              "name": "AP",
+              "rating": 2,
+              "label": "AP(2)"
+            }
+          ],
+          "attacksMultiplier": null,
+          "label": "Heavy Hand Weapon (A4, AP(2))",
+          "count": 1,
+          "originalCount": 1
+        }
+      ],
+      "upgrades": [
+        "A1",
+        "dQ927LD0"
+      ],
+      "hasCustomRule": false,
+      "disabledSections": [],
+      "hasBalanceInvalid": false,
+      "tough": 18,
+      "disabledUpgradeSections": []
+    }
+  ],
+  "upgradePackages": [
+    {
+      "uid": "A1",
+      "hint": "Tribe Master",
+      "sections": [
+        {
+          "id": "EOdIINn",
+          "uid": "6zxRFmG",
+          "label": "Replace Heavy Hand Weapon",
+          "options": [
+            {
+              "uid": "hgQIzEH",
+              "cost": 5,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "unitId": "CSEbbNe",
+                  "cost": 5
+                }
+              ],
+              "gains": [
+                {
+                  "id": "_1rH6ZW5",
+                  "name": "Heavy Halberd",
+                  "type": "ArmyBookWeapon",
+                  "range": 0,
+                  "attacks": 4,
+                  "weaponId": "IOlbUIaQ",
+                  "specialRules": [
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "type": "ArmyBookRule",
+                      "rating": 2
+                    },
+                    {
+                      "id": "cavWDboL4ubs",
+                      "name": "Rending",
+                      "type": "ArmyBookRule"
+                    }
+                  ],
+                  "attacksMultiplier": null,
+                  "label": "Heavy Halberd (A4, AP(2), Rending)",
+                  "count": 1
+                }
+              ],
+              "label": "Heavy Halberd (A4, AP(2), Rending)",
+              "parentPackageUid": "A1",
+              "parentSectionUid": "6zxRFmG",
+              "parentSectionId": "6zxRFmG",
+              "id": "hgQIzEH"
+            },
+            {
+              "uid": "VGPHj2Y",
+              "cost": 10,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "unitId": "CSEbbNe",
+                  "cost": 5
+                }
+              ],
+              "gains": [
+                {
+                  "id": "Qf_921Uv",
+                  "name": "Heavy Great Weapon",
+                  "type": "ArmyBookWeapon",
+                  "range": 0,
+                  "attacks": 4,
+                  "weaponId": "_FOfqfiL",
+                  "specialRules": [
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "type": "ArmyBookRule",
+                      "rating": 4
+                    }
+                  ],
+                  "attacksMultiplier": null,
+                  "label": "Heavy Great Weapon (A4, AP(4))",
+                  "count": 1
+                }
+              ],
+              "label": "Heavy Great Weapon (A4, AP(4))",
+              "parentPackageUid": "A1",
+              "parentSectionUid": "6zxRFmG",
+              "parentSectionId": "6zxRFmG",
+              "id": "VGPHj2Y"
+            },
+            {
+              "uid": "lKJ2le0dLQ",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "unitId": "CSEbbNe",
+                  "cost": 10
+                }
+              ],
+              "gains": [
+                {
+                  "id": null,
+                  "name": "Heavy Lance",
+                  "type": "ArmyBookWeapon",
+                  "count": 1,
+                  "range": 0,
+                  "attacks": 4,
+                  "weaponId": "dKHT6axk",
+                  "specialRules": [
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "rating": 2
+                    },
+                    {
+                      "id": "umbiz4tnEyF8",
+                      "name": "Thrust"
+                    }
+                  ],
+                  "label": "Heavy Lance (A4, AP(2), Thrust)"
+                }
+              ],
+              "label": "Heavy Lance (A4, AP(2), Thrust)",
+              "parentSectionId": "6zxRFmG",
+              "id": "lKJ2le0dLQ"
+            },
+            {
+              "uid": "pYtPEVZ",
+              "cost": 40,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "unitId": "CSEbbNe",
+                  "cost": 15
+                }
+              ],
+              "gains": [
+                {
+                  "id": "h4x0lGxC",
+                  "name": "Dual Heavy Hand Weapons",
+                  "type": "ArmyBookWeapon",
+                  "range": 0,
+                  "attacks": 8,
+                  "weaponId": "-0XnweLV",
+                  "specialRules": [
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "type": "ArmyBookRule",
+                      "rating": 2
+                    }
+                  ],
+                  "attacksMultiplier": null,
+                  "label": "Dual Heavy Hand Weapons (A8, AP(2))",
+                  "count": 1
+                }
+              ],
+              "label": "Dual Heavy Hand Weapons (A8, AP(2))",
+              "parentPackageUid": "A1",
+              "parentSectionUid": "6zxRFmG",
+              "parentSectionId": "6zxRFmG",
+              "id": "pYtPEVZ"
+            }
+          ],
+          "parentPackageUid": "A1",
+          "type": "ArmyBookUpgradeSection",
+          "variant": "replace",
+          "targets": [
+            "Heavy Hand Weapon"
+          ]
+        },
+        {
+          "id": "F42UwHY",
+          "uid": "KVPAsCU",
+          "label": "Upgrade with",
+          "options": [
+            {
+              "uid": "1t17X",
+              "cost": 35,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "unitId": "CSEbbNe",
+                  "cost": 15
+                }
+              ],
+              "gains": [
+                {
+                  "name": "Twin Big Pistols",
+                  "type": "ArmyBookWeapon",
+                  "count": 1,
+                  "range": 9,
+                  "attacks": 6,
+                  "weaponId": "oqcaiTDJ",
+                  "specialRules": [
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "type": "ArmyBookRule",
+                      "rating": 1
+                    }
+                  ],
+                  "label": "Twin Big Pistols (9\", A6, AP(1))"
+                }
+              ],
+              "label": "Twin Big Pistols (9\", A6, AP(1))",
+              "parentPackageUid": "A1",
+              "parentSectionUid": "KVPAsCU",
+              "parentSectionId": "KVPAsCU",
+              "id": "1t17X"
+            }
+          ],
+          "parentPackageUid": "A1",
+          "type": "ArmyBookUpgradeSection",
+          "variant": "upgrade"
+        },
+        {
+          "id": "FuI9AUg",
+          "uid": "dVcH8M1",
+          "label": "Upgrade with one",
+          "options": [
+            {
+              "uid": "xIUWYOghXR",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "unitId": "CSEbbNe",
+                  "cost": 20
+                }
+              ],
+              "gains": [
+                {
+                  "name": "Wall Crusher",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Wall Crusher (Fast, Furious)",
+                  "content": [
+                    {
+                      "id": "KdgwlPb8LuD2",
+                      "name": "Fast",
+                      "type": "ArmyBookRule"
+                    },
+                    {
+                      "id": "JoOCVPx1xT1G",
+                      "name": "Furious",
+                      "type": "ArmyBookRule"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Wall Crusher (Fast, Furious)",
+              "parentSectionId": "dVcH8M1",
+              "id": "xIUWYOghXR"
+            },
+            {
+              "uid": "0qd_pAkWOc",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "unitId": "CSEbbNe",
+                  "cost": 30
+                }
+              ],
+              "gains": [
+                {
+                  "name": "Mountain Strider",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Mountain Strider (Stealth, Strider)",
+                  "content": [
+                    {
+                      "id": "9jyvRoBODD-O",
+                      "name": "Stealth",
+                      "type": "ArmyBookRule"
+                    },
+                    {
+                      "id": "JSKVyurtWIyW",
+                      "name": "Strider",
+                      "type": "ArmyBookRule"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Mountain Strider (Stealth, Strider)",
+              "parentSectionId": "dVcH8M1",
+              "id": "0qd_pAkWOc"
+            },
+            {
+              "uid": "Ap9dM8Rc76",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "unitId": "CSEbbNe",
+                  "cost": 30
+                }
+              ],
+              "gains": [
+                {
+                  "name": "Blood Seeker",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Blood Seeker (Fear(2), Scout)",
+                  "content": [
+                    {
+                      "id": "dIQ3SGl2J2Ew",
+                      "name": "Fear",
+                      "type": "ArmyBookRule",
+                      "rating": 2
+                    },
+                    {
+                      "id": "FAMbscK5vhSu",
+                      "name": "Scout",
+                      "type": "ArmyBookRule"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Blood Seeker (Fear(2), Scout)",
+              "parentSectionId": "dVcH8M1",
+              "id": "Ap9dM8Rc76"
+            },
+            {
+              "uid": "3P4WHKD83B",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "unitId": "CSEbbNe",
+                  "cost": 110
+                }
+              ],
+              "gains": [
+                {
+                  "name": "Death Cheater",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Death Cheater (Fearless, Regeneration)",
+                  "content": [
+                    {
+                      "id": "2atvlmICQSCV",
+                      "name": "Fearless",
+                      "type": "ArmyBookRule"
+                    },
+                    {
+                      "id": "8KujvrTG8k9p",
+                      "name": "Regeneration",
+                      "type": "ArmyBookRule"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Death Cheater (Fearless, Regeneration)",
+              "parentSectionId": "dVcH8M1",
+              "id": "3P4WHKD83B"
+            },
+            {
+              "uid": "nOGnXPk",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "unitId": "CSEbbNe",
+                  "cost": 240
+                }
+              ],
+              "gains": [
+                {
+                  "name": "Fang Beast",
+                  "type": "ArmyBookItem",
+                  "bases": {
+                    "round": "120x92",
+                    "square": "100x60"
+                  },
+                  "label": "Fang Beast (Heavy Jagged Claws (A2, AP(1), Rupture), Armor(3), Fast, Impact(2), Tough(9))",
+                  "content": [
+                    {
+                      "id": "hQmw3XNs",
+                      "name": "Heavy Jagged Claws",
+                      "type": "ArmyBookWeapon",
+                      "count": 1,
+                      "range": 0,
+                      "attacks": 2,
+                      "weaponId": "YJXvbTkW",
+                      "specialRules": [
+                        {
+                          "id": "17crjK7P6_w6",
+                          "name": "AP",
+                          "rating": 1
+                        },
+                        {
+                          "id": "DD6gAWjz801s",
+                          "name": "Rupture"
+                        }
+                      ],
+                      "label": "Heavy Jagged Claws (A2, AP(1), Rupture)"
+                    },
+                    {
+                      "id": "74RjQ1k41DoO",
+                      "name": "Armor",
+                      "type": "ArmyBookRule",
+                      "rating": 3
+                    },
+                    {
+                      "id": "KdgwlPb8LuD2",
+                      "name": "Fast",
+                      "type": "ArmyBookRule"
+                    },
+                    {
+                      "id": "62-mYKVM9MLd",
+                      "name": "Impact",
+                      "type": "ArmyBookRule",
+                      "rating": 2
+                    },
+                    {
+                      "id": "a0YtInGiUDd6",
+                      "name": "Tough",
+                      "type": "ArmyBookRule",
+                      "rating": 9,
+                      "label": "Tough(9)"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Fang Beast (Heavy Jagged Claws (A2, AP(1), Rupture), Armor(3), Fast, Impact(2), Tough(9))",
+              "parentSectionId": "dVcH8M1",
+              "id": "nOGnXPk"
+            },
+            {
+              "uid": "MWNwSj3ve3",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "unitId": "CSEbbNe",
+                  "cost": 675
+                }
+              ],
+              "gains": [
+                {
+                  "name": "Ice Mammoth",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Ice Mammoth (Stomp (A4, AP(1)), Giant Tusks (A2, AP(4), Deadly(3)), Armor(3), Fear(2), Melee Evasion, Tough(36))",
+                  "content": [
+                    {
+                      "id": "7OE8EPgp",
+                      "name": "Stomp",
+                      "type": "ArmyBookWeapon",
+                      "count": 1,
+                      "range": 0,
+                      "attacks": 4,
+                      "weaponId": "l9ncuAr5",
+                      "specialRules": [
+                        {
+                          "id": "17crjK7P6_w6",
+                          "name": "AP",
+                          "type": "ArmyBookRule",
+                          "rating": 1
+                        }
+                      ],
+                      "attacksMultiplier": null,
+                      "label": "Stomp (A4, AP(1))"
+                    },
+                    {
+                      "id": "nsTGRNg7",
+                      "name": "Giant Tusks",
+                      "type": "ArmyBookWeapon",
+                      "count": 1,
+                      "attacks": 2,
+                      "weaponId": "cM5mx47X",
+                      "specialRules": [
+                        {
+                          "id": "17crjK7P6_w6",
+                          "name": "AP",
+                          "rating": 4
+                        },
+                        {
+                          "id": "_mrPya5SXSqW",
+                          "name": "Deadly",
+                          "rating": 3
+                        }
+                      ],
+                      "label": "Giant Tusks (A2, AP(4), Deadly(3))"
+                    },
+                    {
+                      "id": "74RjQ1k41DoO",
+                      "name": "Armor",
+                      "type": "ArmyBookRule",
+                      "rating": 3
+                    },
+                    {
+                      "id": "dIQ3SGl2J2Ew",
+                      "name": "Fear",
+                      "type": "ArmyBookRule",
+                      "rating": 2
+                    },
+                    {
+                      "id": "EgdF_3MSddXR",
+                      "name": "Melee Evasion",
+                      "type": "ArmyBookRule"
+                    },
+                    {
+                      "id": "a0YtInGiUDd6",
+                      "name": "Tough",
+                      "type": "ArmyBookRule",
+                      "rating": 36,
+                      "label": "Tough(36)"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Ice Mammoth (Stomp (A4, AP(1)), Giant Tusks (A2, AP(4), Deadly(3)), Armor(3), Fear(2), Melee Evasion, Tough(36))",
+              "parentSectionId": "dVcH8M1",
+              "id": "MWNwSj3ve3"
+            },
+            {
+              "uid": "HRRefS6VVs",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "unitId": "CSEbbNe",
+                  "cost": 790
+                }
+              ],
+              "gains": [
+                {
+                  "name": "Giant Bison",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Giant Bison (Stomp (A4, AP(1)), Giant Horns (A2, AP(1), Blast(3)), Armor(3), Fear(2), Fortified, Tough(36))",
+                  "content": [
+                    {
+                      "id": "V9x37wWn",
+                      "name": "Stomp",
+                      "type": "ArmyBookWeapon",
+                      "count": 1,
+                      "range": 0,
+                      "attacks": 4,
+                      "weaponId": "l9ncuAr5",
+                      "specialRules": [
+                        {
+                          "id": "17crjK7P6_w6",
+                          "name": "AP",
+                          "type": "ArmyBookRule",
+                          "rating": 1
+                        }
+                      ],
+                      "attacksMultiplier": null,
+                      "label": "Stomp (A4, AP(1))"
+                    },
+                    {
+                      "id": "5P3ATIyD",
+                      "name": "Giant Horns",
+                      "type": "ArmyBookWeapon",
+                      "count": 1,
+                      "attacks": 2,
+                      "weaponId": "x8GjtljH",
+                      "specialRules": [
+                        {
+                          "id": "w_vX0mi58KKt",
+                          "name": "Blast",
+                          "rating": 3
+                        },
+                        {
+                          "id": "17crjK7P6_w6",
+                          "name": "AP",
+                          "rating": 1
+                        }
+                      ],
+                      "label": "Giant Horns (A2, AP(1), Blast(3))"
+                    },
+                    {
+                      "id": "74RjQ1k41DoO",
+                      "name": "Armor",
+                      "type": "ArmyBookRule",
+                      "rating": 3
+                    },
+                    {
+                      "id": "dIQ3SGl2J2Ew",
+                      "name": "Fear",
+                      "type": "ArmyBookRule",
+                      "rating": 2
+                    },
+                    {
+                      "id": "IyLY1212wacW",
+                      "name": "Fortified",
+                      "type": "ArmyBookRule"
+                    },
+                    {
+                      "id": "a0YtInGiUDd6",
+                      "name": "Tough",
+                      "type": "ArmyBookRule",
+                      "rating": 36,
+                      "label": "Tough(36)"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Giant Bison (Stomp (A4, AP(1)), Giant Horns (A2, AP(1), Blast(3)), Armor(3), Fear(2), Fortified, Tough(36))",
+              "parentSectionId": "dVcH8M1",
+              "id": "HRRefS6VVs"
+            }
+          ],
+          "parentPackageUid": "A1",
+          "type": "ArmyBookUpgradeSection",
+          "variant": "upgrade",
+          "select": {
+            "type": "exactly",
+            "value": 1
+          }
+        }
+      ],
+      "calcErrors": false
+    },
+    {
+      "uid": "C1",
+      "hint": "Champion",
+      "sections": [
+        {
+          "id": "OW5FrTz",
+          "uid": "53QDMxS",
+          "label": "Replace Heavy Hand Weapon",
+          "options": [
+            {
+              "uid": "l4gw0Pi",
+              "cost": 5,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "unitId": "8tuBG2T",
+                  "cost": 5
+                }
+              ],
+              "gains": [
+                {
+                  "id": "L4mDvDkN",
+                  "name": "Heavy Halberd",
+                  "type": "ArmyBookWeapon",
+                  "range": 0,
+                  "attacks": 4,
+                  "weaponId": "3Efq2Otd",
+                  "specialRules": [
+                    {
+                      "id": "cavWDboL4ubs",
+                      "name": "Rending",
+                      "type": "ArmyBookRule"
+                    },
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "type": "ArmyBookRule",
+                      "rating": 1
+                    }
+                  ],
+                  "attacksMultiplier": null,
+                  "label": "Heavy Halberd (A4, AP(1), Rending)",
+                  "count": 1
+                }
+              ],
+              "label": "Heavy Halberd (A4, AP(1), Rending)",
+              "parentPackageUid": "C1",
+              "parentSectionUid": "53QDMxS",
+              "parentSectionId": "53QDMxS",
+              "id": "l4gw0Pi"
+            },
+            {
+              "uid": "y6sARvC",
+              "cost": 10,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "unitId": "8tuBG2T",
+                  "cost": 5
+                }
+              ],
+              "gains": [
+                {
+                  "id": "XIr1USFP",
+                  "name": "Heavy Great Weapon",
+                  "type": "ArmyBookWeapon",
+                  "range": 0,
+                  "attacks": 4,
+                  "weaponId": "MyZm7lHh",
+                  "specialRules": [
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "type": "ArmyBookRule",
+                      "rating": 3
+                    }
+                  ],
+                  "attacksMultiplier": null,
+                  "label": "Heavy Great Weapon (A4, AP(3))",
+                  "count": 1
+                }
+              ],
+              "label": "Heavy Great Weapon (A4, AP(3))",
+              "parentPackageUid": "C1",
+              "parentSectionUid": "53QDMxS",
+              "parentSectionId": "53QDMxS",
+              "id": "y6sARvC"
+            },
+            {
+              "uid": "SboB31joN9",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "unitId": "8tuBG2T",
+                  "cost": 10
+                }
+              ],
+              "gains": [
+                {
+                  "id": null,
+                  "name": "Heavy Lance",
+                  "type": "ArmyBookWeapon",
+                  "count": 1,
+                  "range": 0,
+                  "attacks": 4,
+                  "weaponId": "HpwgnNgw",
+                  "specialRules": [
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "rating": 1
+                    },
+                    {
+                      "id": "umbiz4tnEyF8",
+                      "name": "Thrust"
+                    }
+                  ],
+                  "label": "Heavy Lance (A4, AP(1), Thrust)"
+                }
+              ],
+              "label": "Heavy Lance (A4, AP(1), Thrust)",
+              "parentSectionId": "53QDMxS",
+              "id": "SboB31joN9"
+            },
+            {
+              "uid": "IBqRT5g",
+              "cost": 20,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "unitId": "8tuBG2T",
+                  "cost": 15
+                }
+              ],
+              "gains": [
+                {
+                  "id": "RG5xZmJ1",
+                  "name": "Dual Heavy Hand Weapons",
+                  "type": "ArmyBookWeapon",
+                  "range": 0,
+                  "attacks": 8,
+                  "weaponId": "yQ5zddlK",
+                  "specialRules": [
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "type": "ArmyBookRule",
+                      "rating": 1
+                    }
+                  ],
+                  "attacksMultiplier": null,
+                  "label": "Dual Heavy Hand Weapons (A8, AP(1))",
+                  "count": 1
+                }
+              ],
+              "label": "Dual Heavy Hand Weapons (A8, AP(1))",
+              "parentPackageUid": "C1",
+              "parentSectionUid": "53QDMxS",
+              "parentSectionId": "53QDMxS",
+              "id": "IBqRT5g"
+            }
+          ],
+          "parentPackageUid": "C1",
+          "type": "ArmyBookUpgradeSection",
+          "variant": "replace",
+          "targets": [
+            "Heavy Hand Weapon"
+          ]
+        },
+        {
+          "id": "oeFQ8Kw",
+          "uid": "muwWs5m",
+          "label": "Upgrade with one",
+          "options": [
+            {
+              "uid": "zD4UJd-",
+              "cost": 20,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "unitId": "8tuBG2T",
+                  "cost": 10
+                }
+              ],
+              "gains": [
+                {
+                  "id": "lVh4BvwZ",
+                  "name": "Great Javelin",
+                  "type": "ArmyBookWeapon",
+                  "range": 12,
+                  "attacks": 1,
+                  "weaponId": "lVh4BvwZ",
+                  "specialRules": [
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "type": "ArmyBookRule",
+                      "rating": 2
+                    },
+                    {
+                      "id": "_mrPya5SXSqW",
+                      "name": "Deadly",
+                      "type": "ArmyBookRule",
+                      "rating": 3
+                    }
+                  ],
+                  "label": "Great Javelin (12\", A1, AP(2), Deadly(3))",
+                  "count": 1
+                }
+              ],
+              "label": "Great Javelin (12\", A1, AP(2), Deadly(3))",
+              "parentPackageUid": "C1",
+              "parentSectionUid": "muwWs5m",
+              "parentSectionId": "muwWs5m",
+              "id": "zD4UJd-"
+            },
+            {
+              "uid": "-bByccC",
+              "cost": 25,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "unitId": "8tuBG2T",
+                  "cost": 15
+                }
+              ],
+              "gains": [
+                {
+                  "name": "Twin Big Pistols",
+                  "type": "ArmyBookWeapon",
+                  "count": 1,
+                  "range": 9,
+                  "attacks": 6,
+                  "weaponId": "oqcaiTDJ",
+                  "specialRules": [
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "type": "ArmyBookRule",
+                      "rating": 1
+                    }
+                  ],
+                  "label": "Twin Big Pistols (9\", A6, AP(1))"
+                }
+              ],
+              "label": "Twin Big Pistols (9\", A6, AP(1))",
+              "parentPackageUid": "C1",
+              "parentSectionUid": "muwWs5m",
+              "parentSectionId": "muwWs5m",
+              "id": "-bByccC"
+            },
+            {
+              "uid": "0t5514V",
+              "cost": 40,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "unitId": "8tuBG2T",
+                  "cost": 25
+                }
+              ],
+              "gains": [
+                {
+                  "id": "5THFeFnx",
+                  "name": "Harpoon Shooter",
+                  "type": "ArmyBookWeapon",
+                  "range": 24,
+                  "attacks": 1,
+                  "weaponId": "5THFeFnx",
+                  "specialRules": [
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "type": "ArmyBookRule",
+                      "rating": 3
+                    },
+                    {
+                      "id": "_mrPya5SXSqW",
+                      "name": "Deadly",
+                      "type": "ArmyBookRule",
+                      "rating": 3
+                    }
+                  ],
+                  "label": "Harpoon Shooter (24\", A1, AP(3), Deadly(3))",
+                  "count": 1
+                }
+              ],
+              "label": "Harpoon Shooter (24\", A1, AP(3), Deadly(3))",
+              "parentPackageUid": "C1",
+              "parentSectionUid": "muwWs5m",
+              "parentSectionId": "muwWs5m",
+              "id": "0t5514V"
+            }
+          ],
+          "parentPackageUid": "C1",
+          "type": "ArmyBookUpgradeSection",
+          "variant": "upgrade",
+          "select": {
+            "type": "exactly",
+            "value": 1
+          }
+        },
+        {
+          "id": "L3r2sKi",
+          "uid": "CL9ReOZ",
+          "label": "Upgrade with one",
+          "options": [
+            {
+              "uid": "Seu61wz8-_",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "unitId": "8tuBG2T",
+                  "cost": 20
+                }
+              ],
+              "gains": [
+                {
+                  "name": "Hunter",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Hunter (Ambush, Melee Slayer, Strider)",
+                  "content": [
+                    {
+                      "id": "6mJw5IdqSqNC",
+                      "name": "Ambush",
+                      "type": "ArmyBookRule"
+                    },
+                    {
+                      "id": "TTL5RNmwotoh",
+                      "name": "Melee Slayer",
+                      "type": "ArmyBookRule"
+                    },
+                    {
+                      "id": "JSKVyurtWIyW",
+                      "name": "Strider",
+                      "type": "ArmyBookRule"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Hunter (Ambush, Melee Slayer, Strider)",
+              "parentSectionId": "CL9ReOZ",
+              "id": "Seu61wz8-_"
+            },
+            {
+              "uid": "yPZ6vNeiEz",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "unitId": "8tuBG2T",
+                  "cost": 25
+                }
+              ],
+              "gains": [
+                {
+                  "name": "Iron Warrior",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Iron Warrior (Fortified)",
+                  "content": [
+                    {
+                      "id": "IyLY1212wacW",
+                      "name": "Fortified",
+                      "type": "ArmyBookRule"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Iron Warrior (Fortified)",
+              "parentSectionId": "CL9ReOZ",
+              "id": "yPZ6vNeiEz"
+            },
+            {
+              "uid": "0i28sDv",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "unitId": "8tuBG2T",
+                  "cost": 240
+                }
+              ],
+              "gains": [
+                {
+                  "name": "Fang Beast",
+                  "type": "ArmyBookItem",
+                  "bases": {
+                    "round": "120x92",
+                    "square": "100x60"
+                  },
+                  "label": "Fang Beast (Heavy Jagged Claws (A2, AP(1), Rupture), Armor(3), Fast, Impact(2), Tough(9))",
+                  "content": [
+                    {
+                      "id": "V0C-Yy7m",
+                      "name": "Heavy Jagged Claws",
+                      "type": "ArmyBookWeapon",
+                      "count": 1,
+                      "range": 0,
+                      "attacks": 2,
+                      "weaponId": "YJXvbTkW",
+                      "specialRules": [
+                        {
+                          "id": "17crjK7P6_w6",
+                          "name": "AP",
+                          "rating": 1
+                        },
+                        {
+                          "id": "DD6gAWjz801s",
+                          "name": "Rupture"
+                        }
+                      ],
+                      "label": "Heavy Jagged Claws (A2, AP(1), Rupture)"
+                    },
+                    {
+                      "id": "74RjQ1k41DoO",
+                      "name": "Armor",
+                      "type": "ArmyBookRule",
+                      "rating": 3
+                    },
+                    {
+                      "id": "KdgwlPb8LuD2",
+                      "name": "Fast",
+                      "type": "ArmyBookRule"
+                    },
+                    {
+                      "id": "62-mYKVM9MLd",
+                      "name": "Impact",
+                      "type": "ArmyBookRule",
+                      "rating": 2
+                    },
+                    {
+                      "id": "a0YtInGiUDd6",
+                      "name": "Tough",
+                      "type": "ArmyBookRule",
+                      "rating": 9,
+                      "label": "Tough(9)"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Fang Beast (Heavy Jagged Claws (A2, AP(1), Rupture), Armor(3), Fast, Impact(2), Tough(9))",
+              "parentSectionId": "CL9ReOZ",
+              "id": "0i28sDv"
+            },
+            {
+              "uid": "xL8sLwqkXG",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "unitId": "8tuBG2T",
+                  "cost": 675
+                }
+              ],
+              "gains": [
+                {
+                  "name": "Ice Mammoth",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Ice Mammoth (Stomp (A4, AP(1)), Giant Tusks (A2, AP(4), Deadly(3)), Armor(3), Fear(2), Melee Evasion, Tough(36))",
+                  "content": [
+                    {
+                      "id": "JPeiWId2",
+                      "name": "Stomp",
+                      "type": "ArmyBookWeapon",
+                      "count": 1,
+                      "range": 0,
+                      "attacks": 4,
+                      "weaponId": "l9ncuAr5",
+                      "specialRules": [
+                        {
+                          "id": "17crjK7P6_w6",
+                          "name": "AP",
+                          "type": "ArmyBookRule",
+                          "rating": 1
+                        }
+                      ],
+                      "attacksMultiplier": null,
+                      "label": "Stomp (A4, AP(1))"
+                    },
+                    {
+                      "id": "eM79VlsV",
+                      "name": "Giant Tusks",
+                      "type": "ArmyBookWeapon",
+                      "count": 1,
+                      "attacks": 2,
+                      "weaponId": "cM5mx47X",
+                      "specialRules": [
+                        {
+                          "id": "17crjK7P6_w6",
+                          "name": "AP",
+                          "rating": 4
+                        },
+                        {
+                          "id": "_mrPya5SXSqW",
+                          "name": "Deadly",
+                          "rating": 3
+                        }
+                      ],
+                      "label": "Giant Tusks (A2, AP(4), Deadly(3))"
+                    },
+                    {
+                      "id": "74RjQ1k41DoO",
+                      "name": "Armor",
+                      "type": "ArmyBookRule",
+                      "rating": 3
+                    },
+                    {
+                      "id": "dIQ3SGl2J2Ew",
+                      "name": "Fear",
+                      "type": "ArmyBookRule",
+                      "rating": 2
+                    },
+                    {
+                      "id": "EgdF_3MSddXR",
+                      "name": "Melee Evasion",
+                      "type": "ArmyBookRule"
+                    },
+                    {
+                      "id": "a0YtInGiUDd6",
+                      "name": "Tough",
+                      "type": "ArmyBookRule",
+                      "rating": 36,
+                      "label": "Tough(36)"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Ice Mammoth (Stomp (A4, AP(1)), Giant Tusks (A2, AP(4), Deadly(3)), Armor(3), Fear(2), Melee Evasion, Tough(36))",
+              "parentSectionId": "CL9ReOZ",
+              "id": "xL8sLwqkXG"
+            },
+            {
+              "uid": "qdKnCRH9NN",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "unitId": "8tuBG2T",
+                  "cost": 790
+                }
+              ],
+              "gains": [
+                {
+                  "name": "Giant Bison",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Giant Bison (Stomp (A4, AP(1)), Giant Horns (A2, AP(1), Blast(3)), Armor(3), Fear(2), Fortified, Tough(36))",
+                  "content": [
+                    {
+                      "id": "Il8oaAK8",
+                      "name": "Stomp",
+                      "type": "ArmyBookWeapon",
+                      "count": 1,
+                      "range": 0,
+                      "attacks": 4,
+                      "weaponId": "l9ncuAr5",
+                      "specialRules": [
+                        {
+                          "id": "17crjK7P6_w6",
+                          "name": "AP",
+                          "type": "ArmyBookRule",
+                          "rating": 1
+                        }
+                      ],
+                      "attacksMultiplier": null,
+                      "label": "Stomp (A4, AP(1))"
+                    },
+                    {
+                      "id": "ocnNEm_J",
+                      "name": "Giant Horns",
+                      "type": "ArmyBookWeapon",
+                      "count": 1,
+                      "attacks": 2,
+                      "weaponId": "x8GjtljH",
+                      "specialRules": [
+                        {
+                          "id": "w_vX0mi58KKt",
+                          "name": "Blast",
+                          "rating": 3
+                        },
+                        {
+                          "id": "17crjK7P6_w6",
+                          "name": "AP",
+                          "rating": 1
+                        }
+                      ],
+                      "label": "Giant Horns (A2, AP(1), Blast(3))"
+                    },
+                    {
+                      "id": "74RjQ1k41DoO",
+                      "name": "Armor",
+                      "type": "ArmyBookRule",
+                      "rating": 3
+                    },
+                    {
+                      "id": "dIQ3SGl2J2Ew",
+                      "name": "Fear",
+                      "type": "ArmyBookRule",
+                      "rating": 2
+                    },
+                    {
+                      "id": "IyLY1212wacW",
+                      "name": "Fortified",
+                      "type": "ArmyBookRule"
+                    },
+                    {
+                      "id": "a0YtInGiUDd6",
+                      "name": "Tough",
+                      "type": "ArmyBookRule",
+                      "rating": 36,
+                      "label": "Tough(36)"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Giant Bison (Stomp (A4, AP(1)), Giant Horns (A2, AP(1), Blast(3)), Armor(3), Fear(2), Fortified, Tough(36))",
+              "parentSectionId": "CL9ReOZ",
+              "id": "qdKnCRH9NN"
+            }
+          ],
+          "parentPackageUid": "C1",
+          "type": "ArmyBookUpgradeSection",
+          "variant": "upgrade",
+          "select": {
+            "type": "exactly",
+            "value": 1
+          }
+        }
+      ],
+      "calcErrors": false
+    },
+    {
+      "uid": "D1",
+      "hint": "Little Ones",
+      "sections": [
+        {
+          "id": "mljA1n4",
+          "uid": "XCBVtKr",
+          "label": "Upgrade all models with any",
+          "options": [
+            {
+              "uid": "Bt-Am1D",
+              "cost": 10,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [],
+              "gains": [
+                {
+                  "name": "Trapper",
+                  "type": "ArmyBookItem",
+                  "label": "Trapper (Counter-Attack)",
+                  "content": [
+                    {
+                      "id": "5Wpo74lRNhqB",
+                      "name": "Counter-Attack",
+                      "type": "ArmyBookRule"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Trapper (Counter-Attack)",
+              "parentSectionId": "XCBVtKr",
+              "id": "Bt-Am1D"
+            },
+            {
+              "uid": "xRkRDaN",
+              "cost": 25,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [],
+              "gains": [
+                {
+                  "id": "K1jBr5_8",
+                  "name": "Throwing Weapon",
+                  "type": "ArmyBookWeapon",
+                  "range": 12,
+                  "attacks": 1,
+                  "weaponId": "i_dyolKh",
+                  "specialRules": [],
+                  "attacksMultiplier": null,
+                  "label": "Throwing Weapon (12\", A1)",
+                  "count": 1
+                }
+              ],
+              "label": "Throwing Weapon (12\", A1)",
+              "parentPackageUid": "D1",
+              "parentSectionUid": "XCBVtKr",
+              "parentSectionId": "XCBVtKr",
+              "id": "xRkRDaN"
+            }
+          ],
+          "parentPackageUid": "D1",
+          "type": "ArmyBookUpgradeSection",
+          "variant": "upgrade",
+          "model": true,
+          "affects": {
+            "type": "all"
+          },
+          "select": {
+            "type": "any"
+          }
+        }
+      ],
+      "calcErrors": false
+    },
+    {
+      "uid": "E1",
+      "hint": "Command Group",
+      "sections": [
+        {
+          "id": "q1kkreZ",
+          "uid": "-JkQdDI",
+          "label": "Upgrade with one",
+          "options": [
+            {
+              "uid": "54SVBOl",
+              "cost": 15,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [],
+              "gains": [
+                {
+                  "id": "ywXKQKPOLjTF",
+                  "name": "Banner",
+                  "type": "ArmyBookRule",
+                  "label": "Banner",
+                  "count": 1
+                }
+              ],
+              "label": "Banner",
+              "parentPackageUid": "E1",
+              "parentSectionUid": "-JkQdDI",
+              "parentSectionId": "-JkQdDI",
+              "id": "54SVBOl"
+            },
+            {
+              "uid": "kSCmTl_",
+              "cost": 10,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [],
+              "gains": [
+                {
+                  "id": "qrG_DXJez5Dg",
+                  "name": "Musician",
+                  "type": "ArmyBookRule",
+                  "label": "Musician",
+                  "count": 1
+                }
+              ],
+              "label": "Musician",
+              "parentPackageUid": "E1",
+              "parentSectionUid": "-JkQdDI",
+              "parentSectionId": "-JkQdDI",
+              "id": "kSCmTl_"
+            },
+            {
+              "uid": "6AYhq6d",
+              "cost": 10,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [],
+              "gains": [
+                {
+                  "id": "8HWdOwMYcI0p",
+                  "name": "Sergeant",
+                  "type": "ArmyBookRule",
+                  "label": "Sergeant",
+                  "count": 1
+                }
+              ],
+              "label": "Sergeant",
+              "parentPackageUid": "E1",
+              "parentSectionUid": "-JkQdDI",
+              "parentSectionId": "-JkQdDI",
+              "id": "6AYhq6d"
+            }
+          ],
+          "parentPackageUid": "E1",
+          "type": "ArmyBookUpgradeSection",
+          "variant": "upgrade",
+          "select": {
+            "type": "exactly",
+            "value": 1
+          }
+        }
+      ],
+      "calcErrors": false
+    },
+    {
+      "uid": "F1",
+      "hint": "Warriors",
+      "sections": [
+        {
+          "id": "HWBLK1k",
+          "uid": "Y5KePiU",
+          "label": "Replace any Heavy Hand Weapon",
+          "options": [
+            {
+              "uid": "H6PHP1RgdE",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [],
+              "gains": [
+                {
+                  "id": null,
+                  "name": "Heavy Halberd",
+                  "type": "ArmyBookWeapon",
+                  "count": 1,
+                  "range": 0,
+                  "attacks": 2,
+                  "weaponId": "ABJ3l3xm",
+                  "specialRules": [
+                    {
+                      "id": "cavWDboL4ubs",
+                      "name": "Rending",
+                      "type": "ArmyBookRule"
+                    },
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "type": "ArmyBookRule",
+                      "rating": 1
+                    }
+                  ],
+                  "attacksMultiplier": null,
+                  "label": "Heavy Halberd (A2, AP(1), Rending)"
+                }
+              ],
+              "label": "Heavy Halberd (A2, AP(1), Rending)",
+              "parentSectionId": "Y5KePiU",
+              "id": "H6PHP1RgdE"
+            },
+            {
+              "uid": "uyHDo",
+              "cost": 10,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [],
+              "gains": [
+                {
+                  "id": "r-jZ0hPN",
+                  "name": "Dual Heavy Hand Weapons",
+                  "type": "ArmyBookWeapon",
+                  "range": 0,
+                  "attacks": 4,
+                  "weaponId": "Ai9AtHvU",
+                  "specialRules": [
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "type": "ArmyBookRule",
+                      "rating": 1
+                    }
+                  ],
+                  "attacksMultiplier": null,
+                  "label": "Dual Heavy Hand Weapons (A4, AP(1))",
+                  "count": 1
+                }
+              ],
+              "label": "Dual Heavy Hand Weapons (A4, AP(1))",
+              "parentPackageUid": "F1",
+              "parentSectionUid": "Y5KePiU",
+              "parentSectionId": "Y5KePiU",
+              "id": "uyHDo"
+            }
+          ],
+          "parentPackageUid": "F1",
+          "type": "ArmyBookUpgradeSection",
+          "variant": "replace",
+          "affects": {
+            "type": "any"
+          },
+          "targets": [
+            "Heavy Hand Weapon"
+          ]
+        },
+        {
+          "id": "GQ9_1uV",
+          "uid": "5c8YC_We",
+          "label": "Upgrade with",
+          "options": [
+            {
+              "uid": "zvSOdMxV",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [],
+              "gains": [
+                {
+                  "name": "Doom of Kingdoms",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Doom of Kingdoms (Piercing Feat Aura)",
+                  "content": [
+                    {
+                      "id": "0a-E4vMNTbhY",
+                      "name": "Piercing Feat Aura",
+                      "type": "ArmyBookRule"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Doom of Kingdoms (Piercing Feat Aura)",
+              "parentSectionId": "5c8YC_We",
+              "parentPackageUid": "TK1JtyWd",
+              "id": "zvSOdMxV"
+            }
+          ],
+          "parentPackageUid": "TK1JtyWd",
+          "type": "ArmyBookUpgradeSection",
+          "variant": "upgrade"
+        }
+      ],
+      "calcErrors": false
+    },
+    {
+      "uid": "G1",
+      "hint": "Hunters",
+      "sections": [
+        {
+          "id": "XaSg8F5",
+          "uid": "r2GHvch",
+          "label": "Replace Hunting Spear",
+          "options": [
+            {
+              "uid": "0LPBQVO",
+              "cost": 20,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [],
+              "gains": [
+                {
+                  "id": "lVh4BvwZ",
+                  "name": "Great Javelin",
+                  "type": "ArmyBookWeapon",
+                  "range": 12,
+                  "attacks": 1,
+                  "weaponId": "lVh4BvwZ",
+                  "specialRules": [
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "type": "ArmyBookRule",
+                      "rating": 2
+                    },
+                    {
+                      "id": "_mrPya5SXSqW",
+                      "name": "Deadly",
+                      "type": "ArmyBookRule",
+                      "rating": 3
+                    }
+                  ],
+                  "label": "Great Javelin (12\", A1, AP(2), Deadly(3))",
+                  "count": 1
+                },
+                {
+                  "id": "6ij1dfBh",
+                  "name": "Knife",
+                  "type": "ArmyBookWeapon",
+                  "range": 0,
+                  "attacks": 2,
+                  "weaponId": "6ij1dfBh",
+                  "specialRules": [],
+                  "label": "Knife (A2)",
+                  "count": 1
+                }
+              ],
+              "label": "Great Javelin (12\", A1, AP(2), Deadly(3)), Knife (A2)",
+              "parentPackageUid": "G1",
+              "parentSectionUid": "r2GHvch",
+              "parentSectionId": "r2GHvch",
+              "id": "0LPBQVO"
+            }
+          ],
+          "parentPackageUid": "G1",
+          "type": "ArmyBookUpgradeSection",
+          "variant": "replace",
+          "targets": [
+            "Hunting Spear"
+          ]
+        }
+      ],
+      "calcErrors": false
+    },
+    {
+      "uid": "H1",
+      "hint": "Devourers",
+      "sections": [
+        {
+          "id": "J7dKCYn",
+          "uid": "eQTJ6G9",
+          "label": "Replace any Heavy Hand Weapon",
+          "options": [
+            {
+              "uid": "fl2aMiW",
+              "cost": 5,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [],
+              "gains": [
+                {
+                  "id": "9-er2aV-",
+                  "name": "Heavy Great Weapon",
+                  "type": "ArmyBookWeapon",
+                  "range": 0,
+                  "attacks": 2,
+                  "weaponId": "TpbknagG",
+                  "specialRules": [
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "type": "ArmyBookRule",
+                      "rating": 4
+                    }
+                  ],
+                  "attacksMultiplier": null,
+                  "label": "Heavy Great Weapon (A2, AP(4))",
+                  "count": 1
+                }
+              ],
+              "label": "Heavy Great Weapon (A2, AP(4))",
+              "parentPackageUid": "H1",
+              "parentSectionUid": "eQTJ6G9",
+              "parentSectionId": "eQTJ6G9",
+              "id": "fl2aMiW"
+            },
+            {
+              "uid": "FDBZiTB",
+              "cost": 10,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [],
+              "gains": [
+                {
+                  "id": "6ij1dfBh",
+                  "name": "Knife",
+                  "type": "ArmyBookWeapon",
+                  "range": 0,
+                  "attacks": 2,
+                  "weaponId": "6ij1dfBh",
+                  "specialRules": [],
+                  "label": "Knife (A2)",
+                  "count": 1
+                },
+                {
+                  "id": "U8R3pgCh",
+                  "name": "Big Pistol",
+                  "type": "ArmyBookWeapon",
+                  "range": 9,
+                  "attacks": 3,
+                  "weaponId": "U8R3pgCh",
+                  "specialRules": [
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "type": "ArmyBookRule",
+                      "rating": 1
+                    }
+                  ],
+                  "label": "Big Pistol (9\", A3, AP(1))",
+                  "count": 1
+                }
+              ],
+              "label": "Big Pistol (9\", A3, AP(1)), Knife (A2)",
+              "parentPackageUid": "H1",
+              "parentSectionUid": "eQTJ6G9",
+              "parentSectionId": "eQTJ6G9",
+              "id": "FDBZiTB"
+            },
+            {
+              "uid": "SNYBN",
+              "cost": 20,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [],
+              "gains": [
+                {
+                  "id": "PTkm_2rE",
+                  "name": "Dual Heavy Hand Weapons",
+                  "type": "ArmyBookWeapon",
+                  "range": 0,
+                  "attacks": 4,
+                  "weaponId": "ThaPoKad",
+                  "specialRules": [
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "type": "ArmyBookRule",
+                      "rating": 2
+                    }
+                  ],
+                  "attacksMultiplier": null,
+                  "label": "Dual Heavy Hand Weapons (A4, AP(2))",
+                  "count": 1
+                }
+              ],
+              "label": "Dual Heavy Hand Weapons (A4, AP(2))",
+              "parentPackageUid": "H1",
+              "parentSectionUid": "eQTJ6G9",
+              "parentSectionId": "eQTJ6G9",
+              "id": "SNYBN"
+            }
+          ],
+          "parentPackageUid": "H1",
+          "type": "ArmyBookUpgradeSection",
+          "variant": "replace",
+          "affects": {
+            "type": "any"
+          },
+          "targets": [
+            "Heavy Hand Weapon"
+          ]
+        },
+        {
+          "id": "b2-vzR5",
+          "uid": "xU5IRXFD",
+          "label": "Upgrade with one",
+          "options": [
+            {
+              "uid": "0JZK8AWI",
+              "cost": 40,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [],
+              "gains": [
+                {
+                  "name": "Mountain Strider",
+                  "type": "ArmyBookItem",
+                  "label": "Mountain Strider (Stealth, Strider)",
+                  "content": [
+                    {
+                      "id": "9jyvRoBODD-O",
+                      "name": "Stealth",
+                      "type": "ArmyBookRule"
+                    },
+                    {
+                      "id": "JSKVyurtWIyW",
+                      "name": "Strider",
+                      "type": "ArmyBookRule"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Mountain Strider (Stealth, Strider)",
+              "parentSectionId": "xU5IRXFD",
+              "parentPackageUid": "Nld18Ih5",
+              "parentSectionUid": "GPFPB",
+              "id": "0JZK8AWI"
+            },
+            {
+              "uid": "vj4NpwXT",
+              "cost": 30,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [],
+              "gains": [
+                {
+                  "name": "Wall Crusher",
+                  "type": "ArmyBookItem",
+                  "label": "Wall Crusher (Fast, Furious)",
+                  "content": [
+                    {
+                      "id": "KdgwlPb8LuD2",
+                      "name": "Fast",
+                      "type": "ArmyBookRule"
+                    },
+                    {
+                      "id": "JoOCVPx1xT1G",
+                      "name": "Furious",
+                      "type": "ArmyBookRule"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Wall Crusher (Fast, Furious)",
+              "parentSectionId": "xU5IRXFD",
+              "parentPackageUid": "Nld18Ih5",
+              "parentSectionUid": "GPFPB",
+              "id": "vj4NpwXT"
+            },
+            {
+              "uid": "lL6qY-Ct",
+              "cost": 50,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [],
+              "gains": [
+                {
+                  "name": "Death Cheater",
+                  "type": "ArmyBookItem",
+                  "label": "Death Cheater (Fearless, Regeneration)",
+                  "content": [
+                    {
+                      "id": "2atvlmICQSCV",
+                      "name": "Fearless",
+                      "type": "ArmyBookRule"
+                    },
+                    {
+                      "id": "8KujvrTG8k9p",
+                      "name": "Regeneration",
+                      "type": "ArmyBookRule"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Death Cheater (Fearless, Regeneration)",
+              "parentSectionId": "xU5IRXFD",
+              "parentPackageUid": "Nld18Ih5",
+              "parentSectionUid": "GPFPB",
+              "id": "lL6qY-Ct"
+            },
+            {
+              "uid": "OZAAsnu0",
+              "cost": 35,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [],
+              "gains": [
+                {
+                  "name": "Blood Seeker",
+                  "type": "ArmyBookItem",
+                  "label": "Blood Seeker (Fear(1), Scout)",
+                  "content": [
+                    {
+                      "id": "FAMbscK5vhSu",
+                      "name": "Scout",
+                      "type": "ArmyBookRule"
+                    },
+                    {
+                      "id": "dIQ3SGl2J2Ew",
+                      "name": "Fear",
+                      "type": "ArmyBookRule",
+                      "modify": true,
+                      "rating": 1
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Blood Seeker (Fear(1), Scout)",
+              "parentSectionId": "xU5IRXFD",
+              "parentPackageUid": "Nld18Ih5",
+              "parentSectionUid": "GPFPB",
+              "id": "OZAAsnu0"
+            }
+          ],
+          "parentPackageUid": "Nld18Ih5",
+          "type": "ArmyBookUpgradeSection",
+          "variant": "upgrade",
+          "select": {
+            "type": "exactly",
+            "value": 1
+          }
+        },
+        {
+          "id": "HIBJcff",
+          "uid": "TQfKu2vk",
+          "label": "Upgrade with",
+          "options": [
+            {
+              "uid": "__tYBeB0",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [],
+              "gains": [
+                {
+                  "name": "Doom of Kingdoms",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Doom of Kingdoms (Piercing Feat Aura)",
+                  "content": [
+                    {
+                      "id": "0a-E4vMNTbhY",
+                      "name": "Piercing Feat Aura",
+                      "type": "ArmyBookRule"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Doom of Kingdoms (Piercing Feat Aura)",
+              "parentSectionId": "TQfKu2vk",
+              "parentPackageUid": "W3b2VPIn",
+              "id": "__tYBeB0"
+            }
+          ],
+          "parentPackageUid": "W3b2VPIn",
+          "type": "ArmyBookUpgradeSection",
+          "variant": "upgrade"
+        }
+      ],
+      "calcErrors": false
+    },
+    {
+      "uid": "I1",
+      "hint": "Fang-Beast Rider",
+      "sections": [
+        {
+          "id": "iGir_5h",
+          "uid": "vP-wk4T",
+          "label": "Replace Hand Weapon",
+          "options": [
+            {
+              "uid": "_jhQx",
+              "cost": 5,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [],
+              "gains": [
+                {
+                  "name": "Great Weapon",
+                  "type": "ArmyBookWeapon",
+                  "count": 1,
+                  "range": 0,
+                  "attacks": 2,
+                  "weaponId": "L5mi2I4A",
+                  "specialRules": [
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "type": "ArmyBookRule",
+                      "rating": 2
+                    }
+                  ],
+                  "attacksMultiplier": null,
+                  "label": "Great Weapon (A2, AP(2))"
+                }
+              ],
+              "label": "Great Weapon (A2, AP(2))",
+              "parentPackageUid": "I1",
+              "parentSectionUid": "vP-wk4T",
+              "parentSectionId": "vP-wk4T",
+              "id": "_jhQx"
+            },
+            {
+              "uid": "di4qluozbD",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [],
+              "gains": [
+                {
+                  "id": null,
+                  "name": "Heavy Lance",
+                  "type": "ArmyBookWeapon",
+                  "count": 1,
+                  "range": 0,
+                  "attacks": 2,
+                  "weaponId": "Ob-NdP8B",
+                  "specialRules": [
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "type": "ArmyBookRule",
+                      "rating": 1
+                    },
+                    {
+                      "id": "umbiz4tnEyF8",
+                      "name": "Thrust",
+                      "type": "ArmyBookRule"
+                    }
+                  ],
+                  "attacksMultiplier": null,
+                  "label": "Heavy Lance (A2, AP(1), Thrust)"
+                }
+              ],
+              "label": "Heavy Lance (A2, AP(1), Thrust)",
+              "parentSectionId": "vP-wk4T",
+              "id": "di4qluozbD"
+            },
+            {
+              "uid": "yTflX2qW05",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [],
+              "gains": [
+                {
+                  "id": null,
+                  "name": "Dual Hand Weapons",
+                  "type": "ArmyBookWeapon",
+                  "count": 1,
+                  "range": 0,
+                  "attacks": 4,
+                  "weaponId": "aSajfXrE",
+                  "specialRules": [],
+                  "attacksMultiplier": null,
+                  "label": "Dual Hand Weapons (A4)"
+                }
+              ],
+              "label": "Dual Hand Weapons (A4)",
+              "parentSectionId": "vP-wk4T",
+              "id": "yTflX2qW05"
+            }
+          ],
+          "parentPackageUid": "I1",
+          "type": "ArmyBookUpgradeSection",
+          "variant": "replace",
+          "targets": [
+            "Hand Weapon"
+          ]
+        },
+        {
+          "id": "LtPU3Yn",
+          "uid": "9pPjGLIL",
+          "label": "Upgrade with",
+          "options": [
+            {
+              "uid": "HehcelXj",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [],
+              "gains": [
+                {
+                  "name": "Intimidating Maw",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Intimidating Maw (Unwieldy Debuff)",
+                  "content": [
+                    {
+                      "id": "arJNSXC8F_Oa",
+                      "name": "Unwieldy Debuff",
+                      "type": "ArmyBookRule"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Intimidating Maw (Unwieldy Debuff)",
+              "parentSectionId": "9pPjGLIL",
+              "parentPackageUid": "FnG_CMFz",
+              "id": "HehcelXj"
+            }
+          ],
+          "parentPackageUid": "FnG_CMFz",
+          "type": "ArmyBookUpgradeSection",
+          "variant": "upgrade"
+        },
+        {
+          "id": "kqV9Hbq",
+          "uid": "UGQC5fEa",
+          "label": "Upgrade with one",
+          "options": [
+            {
+              "uid": "xp6PwWMz",
+              "cost": 15,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [],
+              "gains": [
+                {
+                  "id": "wixW3wum01ao",
+                  "name": "Great Banner",
+                  "type": "ArmyBookRule",
+                  "label": "Great Banner",
+                  "count": 1
+                }
+              ],
+              "label": "Great Banner",
+              "parentSectionId": "UGQC5fEa",
+              "parentPackageUid": "Kd6pfNMd",
+              "parentSectionUid": "hs6ff",
+              "id": "xp6PwWMz"
+            },
+            {
+              "uid": "IU0l7yjY",
+              "cost": 10,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [],
+              "gains": [
+                {
+                  "id": "oFAQZkhWt9EQ",
+                  "name": "Great Musician",
+                  "type": "ArmyBookRule",
+                  "label": "Great Musician",
+                  "count": 1
+                }
+              ],
+              "label": "Great Musician",
+              "parentSectionId": "UGQC5fEa",
+              "parentPackageUid": "Kd6pfNMd",
+              "parentSectionUid": "hs6ff",
+              "id": "IU0l7yjY"
+            },
+            {
+              "uid": "CFOYhnwk",
+              "cost": 5,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [],
+              "gains": [
+                {
+                  "id": "McQASWqUcMvm",
+                  "name": "Great Sergeant",
+                  "type": "ArmyBookRule",
+                  "label": "Great Sergeant",
+                  "count": 1
+                }
+              ],
+              "label": "Great Sergeant",
+              "parentSectionId": "UGQC5fEa",
+              "parentPackageUid": "Kd6pfNMd",
+              "parentSectionUid": "hs6ff",
+              "id": "CFOYhnwk"
+            }
+          ],
+          "parentPackageUid": "Kd6pfNMd",
+          "type": "ArmyBookUpgradeSection",
+          "variant": "upgrade",
+          "select": {
+            "type": "exactly",
+            "value": 1
+          }
+        }
+      ],
+      "calcErrors": false
+    },
+    {
+      "uid": "J1",
+      "hint": "Monster Crew",
+      "sections": [
+        {
+          "id": "DrY4fqV",
+          "uid": "NU8HNwf",
+          "label": "Replace Crew Attack",
+          "options": [
+            {
+              "uid": "YXMB_",
+              "cost": 60,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [],
+              "gains": [
+                {
+                  "id": "SbjLSMHS",
+                  "name": "Trap-Chain",
+                  "type": "ArmyBookWeapon",
+                  "range": 12,
+                  "attacks": 3,
+                  "weaponId": "SbjLSMHS",
+                  "specialRules": [
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "type": "ArmyBookRule",
+                      "rating": 1
+                    }
+                  ],
+                  "label": "Trap-Chain (12\", A3, AP(1))",
+                  "count": 1
+                },
+                {
+                  "id": "5THFeFnx",
+                  "name": "Harpoon Shooter",
+                  "type": "ArmyBookWeapon",
+                  "range": 24,
+                  "attacks": 1,
+                  "weaponId": "5THFeFnx",
+                  "specialRules": [
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "type": "ArmyBookRule",
+                      "rating": 3
+                    },
+                    {
+                      "id": "_mrPya5SXSqW",
+                      "name": "Deadly",
+                      "type": "ArmyBookRule",
+                      "rating": 3
+                    }
+                  ],
+                  "label": "Harpoon Shooter (24\", A1, AP(3), Deadly(3))",
+                  "count": 1
+                },
+                {
+                  "id": "rHsG7uh5",
+                  "name": "Crew Attacks",
+                  "type": "ArmyBookWeapon",
+                  "range": 0,
+                  "attacks": 3,
+                  "weaponId": "SZjclDnZ",
+                  "specialRules": [],
+                  "attacksMultiplier": null,
+                  "label": "Crew Attacks (A3)",
+                  "count": 1
+                }
+              ],
+              "label": "Harpoon Shooter (24\", A1, AP(3), Deadly(3)), Trap-Chain (12\", A3, AP(1)), Crew Attacks (A3)",
+              "parentPackageUid": "J1",
+              "parentSectionUid": "NU8HNwf",
+              "parentSectionId": "NU8HNwf",
+              "id": "YXMB_"
+            }
+          ],
+          "parentPackageUid": "J1",
+          "type": "ArmyBookUpgradeSection",
+          "variant": "replace",
+          "targets": [
+            "Crew Attack"
+          ]
+        }
+      ],
+      "calcErrors": false
+    },
+    {
+      "uid": "K1",
+      "hint": "Ice Mammoth",
+      "sections": [
+        {
+          "id": "Ntu1IxF",
+          "uid": "FlHimmr",
+          "label": "Replace Great Tusk and Ice Conduit",
+          "options": [
+            {
+              "uid": "Ipu_Um8IdZ",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [],
+              "gains": [
+                {
+                  "id": null,
+                  "name": "Giant Tusks",
+                  "type": "ArmyBookWeapon",
+                  "count": 1,
+                  "attacks": 2,
+                  "weaponId": "cM5mx47X",
+                  "specialRules": [
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "rating": 4
+                    },
+                    {
+                      "id": "_mrPya5SXSqW",
+                      "name": "Deadly",
+                      "rating": 3
+                    }
+                  ],
+                  "label": "Giant Tusks (A2, AP(4), Deadly(3))"
+                }
+              ],
+              "label": "Giant Tusks (A2, AP(4), Deadly(3))",
+              "parentSectionId": "FlHimmr",
+              "id": "Ipu_Um8IdZ"
+            },
+            {
+              "uid": "Bl8Rq",
+              "cost": 50,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [],
+              "gains": [
+                {
+                  "id": "Y03doO98",
+                  "name": "Frost Blast",
+                  "type": "ArmyBookWeapon",
+                  "range": 24,
+                  "attacks": 2,
+                  "weaponId": "Y03doO98",
+                  "specialRules": [
+                    {
+                      "id": "w_vX0mi58KKt",
+                      "name": "Blast",
+                      "type": "ArmyBookRule",
+                      "rating": 3
+                    },
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "type": "ArmyBookRule",
+                      "rating": 1
+                    }
+                  ],
+                  "label": "Frost Blast (24\", A2, AP(1), Blast(3))",
+                  "count": 1
+                },
+                {
+                  "id": "h-sSTEwp",
+                  "name": "Great Tusks",
+                  "type": "ArmyBookWeapon",
+                  "range": 0,
+                  "attacks": 1,
+                  "weaponId": "h-sSTEwp",
+                  "specialRules": [
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "rating": 2
+                    },
+                    {
+                      "id": "_mrPya5SXSqW",
+                      "name": "Deadly",
+                      "rating": 3
+                    }
+                  ],
+                  "label": "Great Tusks (A1, AP(2), Deadly(3))",
+                  "count": 1
+                }
+              ],
+              "label": "Frost Blast (24\", A2, AP(1), Blast(3)), Great Tusks (A1, AP(2), Deadly(3))",
+              "parentPackageUid": "K1",
+              "parentSectionUid": "FlHimmr",
+              "parentSectionId": "FlHimmr",
+              "id": "Bl8Rq"
+            }
+          ],
+          "parentPackageUid": "K1",
+          "type": "ArmyBookUpgradeSection",
+          "variant": "replace",
+          "targets": [
+            "Great Tusk",
+            "Ice Conduit"
+          ]
+        }
+      ],
+      "calcErrors": false
+    },
+    {
+      "uid": "L1",
+      "hint": "Heavy Chariot",
+      "sections": [
+        {
+          "id": "yS06S4-",
+          "uid": "9udtPM4",
+          "label": "Replace Scrap Catapult",
+          "options": [
+            {
+              "uid": "x22wRX_",
+              "cost": 40,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [],
+              "gains": [
+                {
+                  "id": "Wr4ss87i",
+                  "name": "Heavy Cannon",
+                  "type": "ArmyBookWeapon",
+                  "range": 30,
+                  "attacks": 3,
+                  "weaponId": "Wr4ss87i",
+                  "specialRules": [
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "type": "ArmyBookRule",
+                      "rating": 2
+                    },
+                    {
+                      "id": "_mrPya5SXSqW",
+                      "name": "Deadly",
+                      "type": "ArmyBookRule",
+                      "rating": 3
+                    }
+                  ],
+                  "label": "Heavy Cannon (30\", A3, AP(2), Deadly(3))",
+                  "count": 1
+                }
+              ],
+              "label": "Heavy Cannon (30\", A3, AP(2), Deadly(3))",
+              "parentPackageUid": "L1",
+              "parentSectionUid": "9udtPM4",
+              "parentSectionId": "9udtPM4",
+              "id": "x22wRX_"
+            }
+          ],
+          "parentPackageUid": "L1",
+          "type": "ArmyBookUpgradeSection",
+          "variant": "replace",
+          "targets": [
+            "Scrap Catapult"
+          ]
+        },
+        {
+          "id": "DjIjb2g",
+          "uid": "aVgDvPyt",
+          "label": "Upgrade with",
+          "options": [
+            {
+              "uid": "YZAlK27C",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [],
+              "gains": [
+                {
+                  "name": "Doom of Kingdoms",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Doom of Kingdoms (Piercing Feat)",
+                  "content": [
+                    {
+                      "id": "Q5lDzth8JVEb",
+                      "name": "Piercing Feat",
+                      "type": "ArmyBookRule"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Doom of Kingdoms (Piercing Feat)",
+              "parentSectionId": "aVgDvPyt",
+              "parentPackageUid": "MLh-x-Dq",
+              "id": "YZAlK27C"
+            }
+          ],
+          "parentPackageUid": "MLh-x-Dq",
+          "type": "ArmyBookUpgradeSection",
+          "variant": "upgrade"
+        }
+      ],
+      "calcErrors": false
+    },
+    {
+      "uid": "7EC0s6n-",
+      "hint": "Specialists - Champion",
+      "sections": [
+        {
+          "id": "sgkDSlg",
+          "uid": "fkFqV3Kd",
+          "label": "Upgrade with one",
+          "options": [
+            {
+              "uid": "1iJW5lhE",
+              "cost": 30,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "unitId": "8tuBG2T",
+                  "cost": 5
+                }
+              ],
+              "gains": [
+                {
+                  "name": "War Chief",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "War Chief (Courage Aura)",
+                  "content": [
+                    {
+                      "id": "FRVSAjasmFSF",
+                      "name": "Courage Aura",
+                      "type": "ArmyBookRule"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "War Chief (Courage Aura)",
+              "parentSectionId": "fkFqV3Kd",
+              "parentPackageUid": "ebbJ1phU",
+              "parentSectionUid": "36-oV",
+              "id": "1iJW5lhE"
+            },
+            {
+              "uid": "6gNn386T",
+              "cost": 65,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "unitId": "8tuBG2T",
+                  "cost": 15
+                }
+              ],
+              "gains": [
+                {
+                  "name": "Instigator",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Instigator (Unpredictable Fighter Aura)",
+                  "content": [
+                    {
+                      "id": "8zBpM3Wjey08",
+                      "name": "Unpredictable Fighter Aura",
+                      "type": "ArmyBookRule"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Instigator (Unpredictable Fighter Aura)",
+              "parentSectionId": "fkFqV3Kd",
+              "parentPackageUid": "ebbJ1phU",
+              "parentSectionUid": "36-oV",
+              "id": "6gNn386T"
+            },
+            {
+              "uid": "mRvdo405X0",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "unitId": "8tuBG2T",
+                  "cost": 15
+                }
+              ],
+              "gains": [
+                {
+                  "name": "Hunt Master",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Hunt Master (Unstoppable when Shooting Aura)",
+                  "content": [
+                    {
+                      "id": "KTixuuQ9H7tU",
+                      "name": "Unstoppable when Shooting Aura",
+                      "type": "ArmyBookRule"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Hunt Master (Unstoppable when Shooting Aura)",
+              "parentSectionId": "fkFqV3Kd",
+              "id": "mRvdo405X0"
+            },
+            {
+              "uid": "UUh_NEAduZ",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "unitId": "8tuBG2T",
+                  "cost": 15
+                }
+              ],
+              "gains": [
+                {
+                  "name": "Shaman",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Shaman (Caster(1))",
+                  "content": [
+                    {
+                      "id": "47CAqf7ySlfc",
+                      "name": "Caster",
+                      "type": "ArmyBookRule",
+                      "rating": "1",
+                      "label": "Caster(1)"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Shaman (Caster(1))",
+              "parentSectionId": "fkFqV3Kd",
+              "id": "UUh_NEAduZ"
+            },
+            {
+              "uid": "QFfJ6fDeNZ",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "unitId": "8tuBG2T",
+                  "cost": 40
+                }
+              ],
+              "gains": [
+                {
+                  "name": "Great Devourer",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Great Devourer (Destroyer Boost Aura)",
+                  "content": [
+                    {
+                      "id": "39l6ePjLFmcw",
+                      "name": "Destroyer Boost Aura",
+                      "type": "ArmyBookRule"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Great Devourer (Destroyer Boost Aura)",
+              "parentSectionId": "fkFqV3Kd",
+              "id": "QFfJ6fDeNZ"
+            }
+          ],
+          "isHeroUpgrade": true,
+          "parentPackageUid": "ebbJ1phU",
+          "type": "ArmyBookUpgradeSection",
+          "variant": "upgrade",
+          "select": {
+            "type": "exactly",
+            "value": 1
+          }
+        },
+        {
+          "id": "fEdL6Fx",
+          "uid": "Sq65pK7YDg",
+          "label": "Upgrade with",
+          "options": [
+            {
+              "uid": "L6XJwGQtXE",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "unitId": "8tuBG2T",
+                  "cost": 10
+                }
+              ],
+              "gains": [
+                {
+                  "name": "Fire Eater",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Fire Eater (Spit Flames (12\", A3, Blast(3), Limited, Reliable))",
+                  "content": [
+                    {
+                      "id": "erxGHGjQ",
+                      "name": "Spit Flames",
+                      "type": "ArmyBookWeapon",
+                      "count": 1,
+                      "range": 12,
+                      "attacks": 3,
+                      "weaponId": "pPufdL9O",
+                      "specialRules": [
+                        {
+                          "id": "w_vX0mi58KKt",
+                          "name": "Blast",
+                          "type": "ArmyBookRule",
+                          "rating": 3
+                        },
+                        {
+                          "id": "Zx4mWN0SbmK8",
+                          "name": "Reliable",
+                          "type": "ArmyBookRule",
+                          "label": "Precise"
+                        },
+                        {
+                          "id": "9042COVrLCsI",
+                          "name": "Limited",
+                          "type": "ArmyBookRule"
+                        }
+                      ],
+                      "label": "Spit Flames (12\", A3, Blast(3), Limited, Precise)"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Fire Eater (Spit Flames (12\", A3, Blast(3), Limited, Reliable))",
+              "parentSectionId": "Sq65pK7YDg",
+              "id": "L6XJwGQtXE"
+            }
+          ],
+          "parentPackageUid": "7EC0s6n-",
+          "type": "ArmyBookUpgradeSection",
+          "variant": "upgrade"
+        }
+      ],
+      "calcErrors": false
+    },
+    {
+      "uid": "z03KY8c_",
+      "hint": "Yetis",
+      "sections": [
+        {
+          "id": "q7D5v2q",
+          "uid": "2CPspZ9G8w",
+          "label": "Upgrade with any",
+          "options": [
+            {
+              "uid": "AHtDgKojQg",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [],
+              "gains": [
+                {
+                  "name": "Ice Conduit",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Ice Conduit (Melee Evasion Buff)",
+                  "content": [
+                    {
+                      "id": "hh_Xow62BfEf",
+                      "name": "Melee Evasion Buff",
+                      "type": "ArmyBookRule"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Ice Conduit (Melee Evasion Buff)",
+              "parentSectionId": "2CPspZ9G8w",
+              "id": "AHtDgKojQg"
+            },
+            {
+              "uid": "4jqnXnmT9G",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [],
+              "gains": [
+                {
+                  "id": "ulAy_Y5",
+                  "name": "Intimidating Maw",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Intimidating Maw (Unwieldy Debuff)",
+                  "content": [
+                    {
+                      "id": "arJNSXC8F_Oa",
+                      "name": "Unwieldy Debuff",
+                      "type": "ArmyBookRule"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Intimidating Maw (Unwieldy Debuff)",
+              "parentSectionId": "2CPspZ9G8w",
+              "parentPackageUid": "jisrOH3T",
+              "id": "4jqnXnmT9G"
+            }
+          ],
+          "parentPackageUid": "z03KY8c_",
+          "type": "ArmyBookUpgradeSection",
+          "variant": "upgrade",
+          "select": {
+            "type": "any"
+          }
+        }
+      ],
+      "calcErrors": false
+    },
+    {
+      "uid": "OAgsi7In",
+      "hint": "Sabre-Tooths",
+      "sections": [
+        {
+          "id": "Rp3KmO_",
+          "uid": "903Q-WGHzm",
+          "label": "Upgrade with",
+          "options": [
+            {
+              "uid": "d8PE1qVV5b",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [],
+              "gains": [
+                {
+                  "name": "Intimidating Maw",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Intimidating Maw (Unwieldy Debuff)",
+                  "content": [
+                    {
+                      "id": "arJNSXC8F_Oa",
+                      "name": "Unwieldy Debuff",
+                      "type": "ArmyBookRule"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Intimidating Maw (Unwieldy Debuff)",
+              "parentSectionId": "903Q-WGHzm",
+              "id": "d8PE1qVV5b"
+            }
+          ],
+          "parentPackageUid": "OAgsi7In",
+          "type": "ArmyBookUpgradeSection",
+          "variant": "upgrade"
+        }
+      ],
+      "calcErrors": false
+    },
+    {
+      "uid": "74GHqXUP",
+      "hint": "Abomination",
+      "sections": [
+        {
+          "id": "TB2UplC",
+          "uid": "CYcjKjUU",
+          "label": "Upgrade with",
+          "options": [
+            {
+              "uid": "wpkV-xsv",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [],
+              "gains": [
+                {
+                  "name": "Intimidating Maw",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Intimidating Maw (Unwieldy Debuff)",
+                  "content": [
+                    {
+                      "id": "arJNSXC8F_Oa",
+                      "name": "Unwieldy Debuff",
+                      "type": "ArmyBookRule"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Intimidating Maw (Unwieldy Debuff)",
+              "parentSectionId": "CYcjKjUU",
+              "parentPackageUid": "P6Mq3vCI",
+              "id": "wpkV-xsv"
+            }
+          ],
+          "parentPackageUid": "P6Mq3vCI",
+          "type": "ArmyBookUpgradeSection",
+          "variant": "upgrade"
+        }
+      ],
+      "calcErrors": false
+    },
+    {
+      "uid": "jCew8iaC",
+      "hint": "Shooters",
+      "sections": [
+        {
+          "id": "iiOdb32",
+          "uid": "kyJ2LVZLIW",
+          "label": "Upgrade with",
+          "options": [
+            {
+              "uid": "oFp_m7_z41",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [],
+              "gains": [
+                {
+                  "name": "Doom of Kingdoms",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Doom of Kingdoms (Piercing Feat Aura)",
+                  "content": [
+                    {
+                      "id": "0a-E4vMNTbhY",
+                      "name": "Piercing Feat Aura",
+                      "type": "ArmyBookRule"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Doom of Kingdoms (Piercing Feat Aura)",
+              "parentSectionId": "kyJ2LVZLIW",
+              "id": "oFp_m7_z41"
+            }
+          ],
+          "parentPackageUid": "jCew8iaC",
+          "type": "ArmyBookUpgradeSection",
+          "variant": "upgrade"
+        }
+      ],
+      "calcErrors": false
+    },
+    {
+      "uid": "dQ927LD0",
+      "hint": "Specialists - Master",
+      "sections": [
+        {
+          "id": "sgltDl2",
+          "uid": "g-tkvSKs",
+          "label": "Upgrade with one",
+          "options": [
+            {
+              "uid": "kZLkMgQe",
+              "cost": 30,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "unitId": "CSEbbNe",
+                  "cost": 5
+                }
+              ],
+              "gains": [
+                {
+                  "name": "War Chief",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "War Chief (Courage Aura)",
+                  "content": [
+                    {
+                      "id": "FRVSAjasmFSF",
+                      "name": "Courage Aura",
+                      "type": "ArmyBookRule"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "War Chief (Courage Aura)",
+              "parentSectionId": "g-tkvSKs",
+              "parentPackageUid": "VcGBtEbE",
+              "parentSectionUid": "36-oV",
+              "id": "kZLkMgQe"
+            },
+            {
+              "uid": "gvaBwOej",
+              "cost": 25,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "unitId": "CSEbbNe",
+                  "cost": 5
+                }
+              ],
+              "gains": [
+                {
+                  "name": "Blessed One",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Blessed One (Fortified Aura)",
+                  "content": [
+                    {
+                      "id": "B-9jnnFp54f9",
+                      "name": "Fortified Aura",
+                      "type": "ArmyBookRule"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Blessed One (Fortified Aura)",
+              "parentSectionId": "g-tkvSKs",
+              "parentPackageUid": "VcGBtEbE",
+              "parentSectionUid": "36-oV",
+              "id": "gvaBwOej"
+            },
+            {
+              "uid": "lNFIZjiV",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "unitId": "CSEbbNe",
+                  "cost": 15
+                }
+              ],
+              "gains": [
+                {
+                  "name": "Executioner",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Executioner (Takedown Strike)",
+                  "content": [
+                    {
+                      "id": "eyMkgYDVrP7C",
+                      "name": "Takedown Strike",
+                      "type": "ArmyBookRule"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Executioner (Takedown Strike)",
+              "parentSectionId": "g-tkvSKs",
+              "parentPackageUid": "VcGBtEbE",
+              "id": "lNFIZjiV"
+            },
+            {
+              "uid": "Brs69C3U",
+              "cost": 65,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "unitId": "CSEbbNe",
+                  "cost": 15
+                }
+              ],
+              "gains": [
+                {
+                  "name": "Instigator",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Instigator (Unpredictable Fighter Aura)",
+                  "content": [
+                    {
+                      "id": "8zBpM3Wjey08",
+                      "name": "Unpredictable Fighter Aura",
+                      "type": "ArmyBookRule"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Instigator (Unpredictable Fighter Aura)",
+              "parentSectionId": "g-tkvSKs",
+              "parentPackageUid": "VcGBtEbE",
+              "parentSectionUid": "36-oV",
+              "id": "Brs69C3U"
+            },
+            {
+              "uid": "HICqeXnL",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "unitId": "CSEbbNe",
+                  "cost": 30
+                }
+              ],
+              "gains": [
+                {
+                  "name": "Army Standard Bearer",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Army Standard Bearer (Fear(3))",
+                  "content": [
+                    {
+                      "id": "dIQ3SGl2J2Ew",
+                      "name": "Fear",
+                      "type": "ArmyBookRule",
+                      "rating": 3
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Army Standard Bearer (Fear(3))",
+              "parentSectionId": "g-tkvSKs",
+              "parentPackageUid": "VcGBtEbE",
+              "id": "HICqeXnL"
+            },
+            {
+              "uid": "PuoEuAO8",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "unitId": "CSEbbNe",
+                  "cost": 40
+                }
+              ],
+              "gains": [
+                {
+                  "name": "Great Devourer",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Great Devourer (Destroyer Boost Aura)",
+                  "content": [
+                    {
+                      "id": "39l6ePjLFmcw",
+                      "name": "Destroyer Boost Aura",
+                      "type": "ArmyBookRule"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Great Devourer (Destroyer Boost Aura)",
+              "parentSectionId": "g-tkvSKs",
+              "parentPackageUid": "VcGBtEbE",
+              "id": "PuoEuAO8"
+            }
+          ],
+          "isHeroUpgrade": true,
+          "parentPackageUid": "VcGBtEbE",
+          "type": "ArmyBookUpgradeSection",
+          "variant": "upgrade",
+          "select": {
+            "type": "exactly",
+            "value": 1
+          }
+        },
+        {
+          "id": "E6Bj1T8",
+          "uid": "qKdwfBiyx2",
+          "label": "Upgrade with",
+          "options": [
+            {
+              "uid": "Ien8lVK9n9",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "unitId": "CSEbbNe",
+                  "cost": 10
+                }
+              ],
+              "gains": [
+                {
+                  "name": "Fire Eater",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Fire Eater (Spit Flames (12\", A3, Blast(3), Limited, Reliable))",
+                  "content": [
+                    {
+                      "id": "1Ro2sTzG",
+                      "name": "Spit Flames",
+                      "type": "ArmyBookWeapon",
+                      "count": 1,
+                      "range": 12,
+                      "attacks": 3,
+                      "weaponId": "pPufdL9O",
+                      "specialRules": [
+                        {
+                          "id": "w_vX0mi58KKt",
+                          "name": "Blast",
+                          "type": "ArmyBookRule",
+                          "rating": 3
+                        },
+                        {
+                          "id": "Zx4mWN0SbmK8",
+                          "name": "Reliable",
+                          "type": "ArmyBookRule",
+                          "label": "Precise"
+                        },
+                        {
+                          "id": "9042COVrLCsI",
+                          "name": "Limited",
+                          "type": "ArmyBookRule"
+                        }
+                      ],
+                      "label": "Spit Flames (12\", A3, Blast(3), Limited, Precise)"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Fire Eater (Spit Flames (12\", A3, Blast(3), Limited, Reliable))",
+              "parentSectionId": "qKdwfBiyx2",
+              "id": "Ien8lVK9n9"
+            }
+          ],
+          "parentPackageUid": "dQ927LD0",
+          "type": "ArmyBookUpgradeSection",
+          "variant": "upgrade"
+        }
+      ],
+      "calcErrors": false
+    }
+  ],
+  "customRules": [],
+  "customWeapons": [
+    {
+      "id": "08u0Vmwp",
+      "name": "Hunting Spear",
+      "attacks": 3,
+      "specialRules": [
+        {
+          "id": "cavWDboL4ubs"
+        }
+      ]
+    },
+    {
+      "id": "rwAWJnYl",
+      "name": "Hand Cannon",
+      "label": "Hand Cannon (18\", A3, AP(1))",
+      "range": 18,
+      "attacks": 3,
+      "specialRules": [
+        {
+          "id": "17crjK7P6_w6",
+          "name": "AP",
+          "rating": 1
+        }
+      ]
+    },
+    {
+      "id": "YrPxz_Bp",
+      "name": "Vicious Jaws",
+      "attacks": 2,
+      "specialRules": [
+        {
+          "id": "17crjK7P6_w6",
+          "rating": 3
+        }
+      ]
+    },
+    {
+      "id": "cM5mx47X",
+      "name": "Giant Tusks",
+      "label": "Giant Tusks (A2, AP(4), Deadly(3))",
+      "attacks": 2,
+      "specialRules": [
+        {
+          "id": "17crjK7P6_w6",
+          "name": "AP",
+          "rating": 4
+        },
+        {
+          "id": "_mrPya5SXSqW",
+          "name": "Deadly",
+          "rating": 3
+        }
+      ]
+    },
+    {
+      "id": "x8GjtljH",
+      "name": "Giant Horns",
+      "attacks": 2,
+      "specialRules": [
+        {
+          "id": "w_vX0mi58KKt",
+          "rating": 3
+        },
+        {
+          "id": "17crjK7P6_w6",
+          "rating": 1
+        }
+      ]
+    },
+    {
+      "id": "KFpgcIJO",
+      "name": "Horns",
+      "attacks": 2,
+      "specialRules": [
+        {
+          "id": "17crjK7P6_w6",
+          "rating": 1
+        }
+      ]
+    },
+    {
+      "id": "VbecGxKq",
+      "name": "Scrap Catapult",
+      "range": 24,
+      "attacks": 3,
+      "specialRules": [
+        {
+          "id": "w_vX0mi58KKt",
+          "rating": 3
+        },
+        {
+          "id": "8Ck9GAwUK824"
+        }
+      ]
+    },
+    {
+      "id": "U8R3pgCh",
+      "name": "Big Pistol",
+      "label": "Big Pistol (9\", A3, AP(1))",
+      "range": 9,
+      "attacks": 3,
+      "specialRules": [
+        {
+          "id": "17crjK7P6_w6",
+          "name": "AP",
+          "type": "ArmyBookRule",
+          "rating": 1
+        }
+      ]
+    },
+    {
+      "id": "qZSG1MPA",
+      "name": "Tusks",
+      "range": 0,
+      "attacks": 2,
+      "specialRules": [
+        {
+          "id": "17crjK7P6_w6",
+          "type": "ArmyBookRule",
+          "rating": 1
+        }
+      ]
+    },
+    {
+      "id": "lVh4BvwZ",
+      "name": "Great Javelin",
+      "type": "ArmyBookWeapon",
+      "range": 12,
+      "attacks": 1,
+      "specialRules": [
+        {
+          "id": "17crjK7P6_w6",
+          "type": "ArmyBookRule",
+          "rating": 2
+        },
+        {
+          "id": "_mrPya5SXSqW",
+          "type": "ArmyBookRule",
+          "rating": 3
+        }
+      ]
+    },
+    {
+      "id": "5THFeFnx",
+      "name": "Harpoon Shooter",
+      "type": "ArmyBookWeapon",
+      "range": 24,
+      "attacks": 1,
+      "specialRules": [
+        {
+          "id": "17crjK7P6_w6",
+          "type": "ArmyBookRule",
+          "rating": 3
+        },
+        {
+          "id": "_mrPya5SXSqW",
+          "type": "ArmyBookRule",
+          "rating": 3
+        }
+      ]
+    },
+    {
+      "id": "6ij1dfBh",
+      "name": "Knife",
+      "type": "ArmyBookWeapon",
+      "range": 0,
+      "attacks": 2,
+      "specialRules": []
+    },
+    {
+      "id": "SbjLSMHS",
+      "name": "Trap-Chain",
+      "type": "ArmyBookWeapon",
+      "range": 12,
+      "attacks": 3,
+      "specialRules": [
+        {
+          "id": "17crjK7P6_w6",
+          "type": "ArmyBookRule",
+          "rating": 1
+        }
+      ]
+    },
+    {
+      "id": "h-sSTEwp",
+      "name": "Great Tusks",
+      "range": 0,
+      "attacks": 1,
+      "specialRules": [
+        {
+          "id": "17crjK7P6_w6",
+          "rating": 2
+        },
+        {
+          "id": "_mrPya5SXSqW",
+          "rating": 3
+        }
+      ]
+    },
+    {
+      "id": "Y03doO98",
+      "name": "Frost Blast",
+      "type": "ArmyBookWeapon",
+      "range": 24,
+      "attacks": 2,
+      "specialRules": [
+        {
+          "id": "w_vX0mi58KKt",
+          "type": "ArmyBookRule",
+          "rating": 3
+        },
+        {
+          "id": "17crjK7P6_w6",
+          "type": "ArmyBookRule",
+          "rating": 1
+        }
+      ]
+    },
+    {
+      "id": "Wr4ss87i",
+      "name": "Heavy Cannon",
+      "type": "ArmyBookWeapon",
+      "range": 30,
+      "attacks": 3,
+      "specialRules": [
+        {
+          "id": "17crjK7P6_w6",
+          "type": "ArmyBookRule",
+          "rating": 2
+        },
+        {
+          "id": "_mrPya5SXSqW",
+          "type": "ArmyBookRule",
+          "rating": 3
+        }
+      ]
+    },
+    {
+      "id": "oqcaiTDJ",
+      "name": "Twin Big Pistols",
+      "label": "Twin Big Pistols (9\", A6, AP(1))",
+      "range": 9,
+      "attacks": "6",
+      "specialRules": [
+        {
+          "id": "17crjK7P6_w6",
+          "name": "AP",
+          "type": "ArmyBookRule",
+          "rating": 1
+        }
+      ]
+    },
+    {
+      "id": "pPufdL9O",
+      "name": "Spit Flames",
+      "label": "Spit Flames (12\", A3, Blast(3), Limited, Reliable)",
+      "range": 12,
+      "attacks": 3,
+      "specialRules": [
+        {
+          "id": "w_vX0mi58KKt",
+          "name": "Blast",
+          "type": "ArmyBookRule",
+          "rating": 3
+        },
+        {
+          "id": "Zx4mWN0SbmK8",
+          "name": "Reliable",
+          "type": "ArmyBookRule"
+        },
+        {
+          "id": "9042COVrLCsI",
+          "name": "Limited",
+          "type": "ArmyBookRule"
+        }
+      ]
+    },
+    {
+      "id": "Zuy0zV-W",
+      "name": "Spit Flames",
+      "label": "Spit Flames (12\", A2, AP(1), Reliable)",
+      "range": 12,
+      "attacks": "2",
+      "specialRules": [
+        {
+          "id": "17crjK7P6_w6",
+          "name": "AP",
+          "type": "ArmyBookRule",
+          "rating": 1
+        },
+        {
+          "id": "Zx4mWN0SbmK8",
+          "name": "Reliable",
+          "type": "ArmyBookRule"
+        }
+      ]
+    },
+    {
+      "id": "ZxiLsJWU",
+      "name": "Heavy Jagged Claws",
+      "label": "Heavy Jagged Claws (A3, AP(1), Ravage)",
+      "range": 0,
+      "attacks": 3,
+      "specialRules": [
+        {
+          "id": "DD6gAWjz801s",
+          "name": "Ravage"
+        },
+        {
+          "id": "17crjK7P6_w6",
+          "name": "AP",
+          "rating": 1
+        }
+      ]
+    },
+    {
+      "id": "EQoFGffy",
+      "name": "Jagged Claws",
+      "label": "Jagged Claws (A3, Ravage)",
+      "range": 0,
+      "attacks": 3,
+      "specialRules": [
+        {
+          "id": "DD6gAWjz801s",
+          "name": "Ravage"
+        }
+      ]
+    },
+    {
+      "id": "YJXvbTkW",
+      "name": "Heavy Jagged Claws",
+      "label": "Heavy Jagged Claws (A2, AP(1), Ravage)",
+      "range": 0,
+      "attacks": 2,
+      "specialRules": [
+        {
+          "id": "17crjK7P6_w6",
+          "name": "AP",
+          "rating": 1
+        },
+        {
+          "id": "DD6gAWjz801s",
+          "name": "Ravage"
+        }
+      ]
+    },
+    {
+      "id": "LocHJKIh",
+      "name": "Jagged Claws",
+      "label": "Jagged Claws (A4, Ravage)",
+      "range": 0,
+      "attacks": 4,
+      "specialRules": [
+        {
+          "id": "DD6gAWjz801s",
+          "name": "Ravage"
+        }
+      ]
+    },
+    {
+      "id": "HpwgnNgw",
+      "name": "Heavy Lance",
+      "label": "Heavy Lance (A4, AP(1), Thrust)",
+      "range": 0,
+      "attacks": 4,
+      "specialRules": [
+        {
+          "id": "17crjK7P6_w6",
+          "name": "AP",
+          "rating": 1
+        },
+        {
+          "id": "umbiz4tnEyF8",
+          "name": "Thrust"
+        }
+      ]
+    },
+    {
+      "id": "dKHT6axk",
+      "name": "Heavy Lance",
+      "label": "Heavy Lance (A4, AP(2), Thrust)",
+      "range": 0,
+      "attacks": 4,
+      "specialRules": [
+        {
+          "id": "17crjK7P6_w6",
+          "name": "AP",
+          "rating": 2
+        },
+        {
+          "id": "umbiz4tnEyF8",
+          "name": "Thrust"
+        }
+      ]
+    }
+  ],
+  "spells": [
+    {
+      "id": "kk4L4",
+      "name": "Battle Guts",
+      "type": 1,
+      "effect": "Pick one friendly unit within 12\", which gets Resistance once (next time the effect would apply).",
+      "threshold": 1,
+      "generation": {
+        "effect": {
+          "id": "RWnJrrMKAUbg",
+          "parameters": [
+            {
+              "name": "effectDuration",
+              "value": "once (next time the effect would apply)"
+            },
+            {
+              "name": "gets/loses/ignores",
+              "value": "gets"
+            },
+            {
+              "name": "unitRule",
+              "value": {
+                "id": "h-Cj1XrX00JE",
+                "name": "Resistance"
+              }
+            }
+          ]
+        },
+        "assignment": {
+          "id": "9o9ZgMk8pLf5",
+          "parameters": [
+            {
+              "name": "friendly-enemy",
+              "value": "friendly"
+            },
+            {
+              "name": "target",
+              "value": "unit"
+            },
+            {
+              "name": "inRange",
+              "value": "within 12\""
+            },
+            {
+              "name": "numberText",
+              "value": "one"
+            }
+          ]
+        }
+      },
+      "costFormula": [
+        {
+          "type": "ruleCostMultiplier",
+          "value": "{ name: params.effect.unitRule.name, rating: params.effect.unitRule.rating, multiplier: params.multiplier * (params.aura ? this.AuraSize : 1), avgUnit: !params.thisUnit }",
+          "params": {
+            "aura": true,
+            "effect": {
+              "unitRule": {
+                "id": "h-Cj1XrX00JE",
+                "name": "Resistance"
+              },
+              "effectDuration": {
+                "name": "once (next time the effect would apply)"
+              }
+            },
+            "avgUnit": true,
+            "thisUnit": false,
+            "threshold": 1,
+            "assignment": {
+              "inRange": {
+                "name": "within 12\"",
+                "value": 12
+              },
+              "numberText": {
+                "name": "one"
+              },
+              "friendly-enemy": {
+                "name": "friendly"
+              }
+            },
+            "multiplier": 1
+          },
+          "multiplier": 1
+        }
+      ],
+      "spellbookId": "8ACAf",
+      "effectSkirmish": "Pick one friendly unit within 12\", which gets Resistance once (next time the effect would apply)."
+    },
+    {
+      "id": "2dOT_",
+      "name": "Gobble Up",
+      "type": 0,
+      "effect": "Pick one enemy model within 18\", which takes 2 hits with AP(1).",
+      "threshold": 1,
+      "generation": {
+        "effect": {
+          "id": "QFjxWsOHTCSi",
+          "parameters": [
+            {
+              "name": "numberDigit",
+              "value": "2"
+            },
+            {
+              "name": "hits-wounds",
+              "value": "hits"
+            },
+            {
+              "name": "weaponRule1",
+              "value": {
+                "id": "17crjK7P6_w6",
+                "name": "AP",
+                "rating": 1,
+                "hideModifier": true
+              }
+            }
+          ]
+        },
+        "assignment": {
+          "id": "9o9ZgMk8pLf5",
+          "parameters": [
+            {
+              "name": "friendly-enemy",
+              "value": "enemy"
+            },
+            {
+              "name": "target",
+              "value": "model"
+            },
+            {
+              "name": "inRange",
+              "value": "within 18\""
+            },
+            {
+              "name": "numberText",
+              "value": "one"
+            }
+          ]
+        }
+      },
+      "costFormula": [
+        {
+          "type": "cost",
+          "value": "var { weaponRule1, weaponRule2 } = params.effect;\nvar range = params.assignment.inRange?.value ?? 12;\nvar weapon = { attacks: params.effect.numberDigit.value, range, rules: [] };\nif (weaponRule1) {\n  weapon.rules.push(weaponRule1.name);\n  this.applyRating(weapon, weaponRule1);\n}\nif (weaponRule2) {\n  weapon.rules.push(weaponRule2.name);\n  this.applyRating(weapon, weaponRule2);\n}\nvar cost = this.getWeaponCost(weapon, { quality: 6 - (4 - params.threshold) })\nvar multiplier = params.assignment.target?.name === \"model\" ? this.SniperEffect : 1;\nreturn cost * multiplier;",
+          "params": {
+            "aura": false,
+            "effect": {
+              "numberDigit": {
+                "name": "numberDigit",
+                "value": 2
+              },
+              "weaponRule1": {
+                "id": "17crjK7P6_w6",
+                "name": "AP",
+                "rating": 1,
+                "hideModifier": true
+              }
+            },
+            "avgUnit": true,
+            "thisUnit": false,
+            "threshold": 1,
+            "assignment": {
+              "inRange": {
+                "name": "within 18\"",
+                "value": 18
+              },
+              "numberText": {
+                "name": "one"
+              },
+              "friendly-enemy": {
+                "name": "enemy"
+              }
+            },
+            "multiplier": 1.1
+          },
+          "multiplier": 1.1
+        }
+      ],
+      "spellbookId": "QO6Oj",
+      "effectSkirmish": "Pick one enemy model within 18\", which takes 2 hits with AP(1)."
+    },
+    {
+      "id": "TYbaE",
+      "name": "Gorging Feast",
+      "type": 1,
+      "effect": "Pick up to two friendly units within 12\", which get Destroyer Boost once (next time the effect would apply).",
+      "threshold": 2,
+      "generation": {
+        "effect": {
+          "id": "RWnJrrMKAUbg",
+          "parameters": [
+            {
+              "name": "effectDuration",
+              "value": "once (next time the effect would apply)"
+            },
+            {
+              "name": "gets/loses/ignores",
+              "value": "gets"
+            },
+            {
+              "name": "unitRule",
+              "value": {
+                "id": "nNQIbm2XPcnO",
+                "name": "Destroyer Boost"
+              }
+            }
+          ]
+        },
+        "assignment": {
+          "id": "9o9ZgMk8pLf5",
+          "parameters": [
+            {
+              "name": "friendly-enemy",
+              "value": "friendly"
+            },
+            {
+              "name": "target",
+              "value": "unit"
+            },
+            {
+              "name": "inRange",
+              "value": "within 12\""
+            },
+            {
+              "name": "numberText",
+              "value": "up to two"
+            }
+          ]
+        }
+      },
+      "costFormula": [
+        {
+          "type": "ruleCostMultiplier",
+          "value": "{ name: params.effect.unitRule.name, rating: params.effect.unitRule.rating, multiplier: params.multiplier * (params.aura ? this.AuraSize : 1), avgUnit: !params.thisUnit }",
+          "params": {
+            "aura": true,
+            "effect": {
+              "unitRule": {
+                "id": "nNQIbm2XPcnO",
+                "name": "Destroyer Boost"
+              },
+              "effectDuration": {
+                "name": "once (next time the effect would apply)"
+              }
+            },
+            "avgUnit": true,
+            "thisUnit": false,
+            "threshold": 2,
+            "assignment": {
+              "inRange": {
+                "name": "within 12\"",
+                "value": 12
+              },
+              "numberText": {
+                "name": "up to two"
+              },
+              "friendly-enemy": {
+                "name": "friendly"
+              }
+            },
+            "multiplier": 2
+          },
+          "multiplier": 2
+        }
+      ],
+      "spellbookId": "qel4I",
+      "effectSkirmish": "Pick up to two friendly units within 12\", which get Destroyer Boost once (next time the effect would apply)."
+    },
+    {
+      "id": "ccQGP",
+      "name": "Great Trampling",
+      "type": 0,
+      "effect": "Pick up to two enemy units within 12\", which takes 2 hits with AP(1) and Rupture. Roll as many dice as hits to see if \"on rolls of 6\" effects trigger.",
+      "threshold": 2,
+      "generation": {
+        "effect": {
+          "id": "QFjxWsOHTCSi",
+          "parameters": [
+            {
+              "name": "numberDigit",
+              "value": "2"
+            },
+            {
+              "name": "hits-wounds",
+              "value": "hits"
+            },
+            {
+              "name": "weaponRule1",
+              "value": {
+                "id": "17crjK7P6_w6",
+                "name": "AP",
+                "rating": 1,
+                "hideModifier": true
+              }
+            },
+            {
+              "name": "spellHitRoll",
+              "value": "Roll as many dice as hits to see if \"on rolls of 6\" effects trigger."
+            },
+            {
+              "name": "weaponRule2",
+              "value": {
+                "id": "DD6gAWjz801s",
+                "name": "Rupture"
+              }
+            }
+          ]
+        },
+        "assignment": {
+          "id": "9o9ZgMk8pLf5",
+          "parameters": [
+            {
+              "name": "friendly-enemy",
+              "value": "enemy"
+            },
+            {
+              "name": "target",
+              "value": "unit"
+            },
+            {
+              "name": "inRange",
+              "value": "within 12\""
+            },
+            {
+              "name": "numberText",
+              "value": "one"
+            }
+          ]
+        }
+      },
+      "costFormula": [
+        {
+          "type": "cost",
+          "value": "var { weaponRule1, weaponRule2 } = params.effect;\nvar range = params.assignment.inRange?.value ?? 12;\nvar weapon = { attacks: params.effect.numberDigit.value, range, rules: [] };\nif (weaponRule1) {\n  weapon.rules.push(weaponRule1.name);\n  this.applyRating(weapon, weaponRule1);\n}\nif (weaponRule2) {\n  weapon.rules.push(weaponRule2.name);\n  this.applyRating(weapon, weaponRule2);\n}\nvar cost = this.getWeaponCost(weapon, { quality: 6 - (4 - params.threshold) })\nvar multiplier = params.assignment.target?.name === \"model\" ? this.SniperEffect : 1;\nreturn cost * multiplier;",
+          "params": {
+            "aura": false,
+            "effect": {
+              "numberDigit": {
+                "name": "numberDigit",
+                "value": 2
+              },
+              "weaponRule1": {
+                "id": "17crjK7P6_w6",
+                "name": "AP",
+                "rating": 1,
+                "hideModifier": true
+              },
+              "weaponRule2": {
+                "id": "DD6gAWjz801s",
+                "name": "Rupture"
+              },
+              "spellHitRoll": {
+                "name": "Roll as many dice as hits to see if \"on rolls of 6\" effects trigger."
+              }
+            },
+            "avgUnit": true,
+            "thisUnit": false,
+            "threshold": 2,
+            "assignment": {
+              "inRange": {
+                "name": "within 12\"",
+                "value": 12
+              },
+              "numberText": {
+                "name": "one"
+              },
+              "friendly-enemy": {
+                "name": "enemy"
+              }
+            },
+            "multiplier": 1
+          },
+          "multiplier": 1
+        }
+      ],
+      "spellbookId": "6LaIv",
+      "effectSkirmish": "Pick up to two enemy units within 12\", which takes 2 hits with AP(1) and Rupture. Roll as many dice as hits to see if \"on rolls of 6\" effects trigger."
+    },
+    {
+      "id": "EvHxn",
+      "name": "Crack Spirits",
+      "type": 2,
+      "effect": "Pick up to three enemy units within 18\", which get Unwieldy in melee once (next time the effect would apply).",
+      "threshold": 3,
+      "generation": {
+        "effect": {
+          "id": "i1BVqztsr1V6",
+          "parameters": [
+            {
+              "name": "effectDuration",
+              "value": "once (next time the effect would apply)"
+            },
+            {
+              "name": "gets/loses/ignores",
+              "value": "gets"
+            },
+            {
+              "name": "weaponRule",
+              "value": {
+                "id": "GgPKQ4tKFRIC",
+                "name": "Unwieldy"
+              }
+            },
+            {
+              "name": "attackType",
+              "value": "in melee"
+            }
+          ]
+        },
+        "assignment": {
+          "id": "9o9ZgMk8pLf5",
+          "parameters": [
+            {
+              "name": "friendly-enemy",
+              "value": "enemy"
+            },
+            {
+              "name": "target",
+              "value": "unit"
+            },
+            {
+              "name": "inRange",
+              "value": "within 18\""
+            },
+            {
+              "name": "numberText",
+              "value": "up to three"
+            }
+          ]
+        }
+      },
+      "costFormula": [
+        {
+          "type": "modifyWeapons",
+          "value": "if (!params.thisUnit) return;\nvar attackType = params.effect.attackType?.name;\nvar weaponRuleName = params.effect.weaponRule.name;\nvar melee =  attackType == \"in melee\" || attackType == \"when charging\";\nif (melee && !weapon.melee) return;\nif (attackType == \"when shooting\" && !weapon.ranged) return;\nvar hasRule = weapon.rules.includes(weaponRuleName);\nif (weaponRuleName !== \"AP\" || !hasRule) weapon.rules.push(weaponRuleName);\nthis.applyRating(weapon, params.effect.weaponRule);",
+          "params": {
+            "aura": true,
+            "effect": {
+              "attackType": {
+                "name": "in melee",
+                "value": 12
+              },
+              "weaponRule": {
+                "id": "GgPKQ4tKFRIC",
+                "name": "Unwieldy"
+              },
+              "effectDuration": {
+                "name": "once (next time the effect would apply)"
+              }
+            },
+            "avgUnit": true,
+            "thisUnit": false,
+            "threshold": 3,
+            "assignment": {
+              "inRange": {
+                "name": "within 18\"",
+                "value": 18
+              },
+              "numberText": {
+                "name": "up to three"
+              },
+              "friendly-enemy": {
+                "name": "enemy"
+              }
+            },
+            "multiplier": 3.3000000000000003
+          },
+          "multiplier": 3.3000000000000003
+        },
+        {
+          "type": "cost",
+          "value": "if (params.thisUnit) return;\nvar range = params.effect.attackType?.value ?? 24;\nvar weapon = this.copy(range === 12 ? this.avgMeleeWeapon : { ...this.avgRangedWeapon, range });\nweapon.rules.push(params.effect.weaponRule.name);\nvar modifier = { rules: [params.effect.weaponRule.name] }\nthis.applyRating(modifier, params.effect.weaponRule);\nreturn this.getWeaponCostDiff(weapon, this.AverageUnit, ruleName, modifier);",
+          "params": {
+            "aura": true,
+            "effect": {
+              "attackType": {
+                "name": "in melee",
+                "value": 12
+              },
+              "weaponRule": {
+                "id": "GgPKQ4tKFRIC",
+                "name": "Unwieldy"
+              },
+              "effectDuration": {
+                "name": "once (next time the effect would apply)"
+              }
+            },
+            "avgUnit": true,
+            "thisUnit": false,
+            "threshold": 3,
+            "assignment": {
+              "inRange": {
+                "name": "within 18\"",
+                "value": 18
+              },
+              "numberText": {
+                "name": "up to three"
+              },
+              "friendly-enemy": {
+                "name": "enemy"
+              }
+            },
+            "multiplier": 3.3000000000000003
+          },
+          "multiplier": 3.3000000000000003
+        }
+      ],
+      "spellbookId": "EGmug",
+      "effectSkirmish": "Pick up to three enemy units within 18\", which get Unwieldy in melee once (next time the effect would apply)."
+    },
+    {
+      "id": "GVU_x",
+      "name": "Ice Maw",
+      "type": 0,
+      "effect": "Pick up to three enemy units within 12\", which takes 2 hits with AP(2).",
+      "threshold": 3,
+      "generation": {
+        "effect": {
+          "id": "QFjxWsOHTCSi",
+          "parameters": [
+            {
+              "name": "numberDigit",
+              "value": "2"
+            },
+            {
+              "name": "hits-wounds",
+              "value": "hits"
+            },
+            {
+              "name": "weaponRule1",
+              "value": {
+                "id": "17crjK7P6_w6",
+                "name": "AP",
+                "rating": 2,
+                "hideModifier": true
+              }
+            }
+          ]
+        },
+        "assignment": {
+          "id": "9o9ZgMk8pLf5",
+          "parameters": [
+            {
+              "name": "friendly-enemy",
+              "value": "enemy"
+            },
+            {
+              "name": "target",
+              "value": "unit"
+            },
+            {
+              "name": "inRange",
+              "value": "within 12\""
+            },
+            {
+              "name": "numberText",
+              "value": "one"
+            }
+          ]
+        }
+      },
+      "costFormula": [
+        {
+          "type": "cost",
+          "value": "var { weaponRule1, weaponRule2 } = params.effect;\nvar range = params.assignment.inRange?.value ?? 12;\nvar weapon = { attacks: params.effect.numberDigit.value, range, rules: [] };\nif (weaponRule1) {\n  weapon.rules.push(weaponRule1.name);\n  this.applyRating(weapon, weaponRule1);\n}\nif (weaponRule2) {\n  weapon.rules.push(weaponRule2.name);\n  this.applyRating(weapon, weaponRule2);\n}\nvar cost = this.getWeaponCost(weapon, { quality: 6 - (4 - params.threshold) })\nvar multiplier = params.assignment.target?.name === \"model\" ? this.SniperEffect : 1;\nreturn cost * multiplier;",
+          "params": {
+            "aura": false,
+            "effect": {
+              "numberDigit": {
+                "name": "numberDigit",
+                "value": 2
+              },
+              "weaponRule1": {
+                "id": "17crjK7P6_w6",
+                "name": "AP",
+                "rating": 2,
+                "hideModifier": true
+              }
+            },
+            "avgUnit": true,
+            "thisUnit": false,
+            "threshold": 3,
+            "assignment": {
+              "inRange": {
+                "name": "within 12\"",
+                "value": 12
+              },
+              "numberText": {
+                "name": "one"
+              },
+              "friendly-enemy": {
+                "name": "enemy"
+              }
+            },
+            "multiplier": 1
+          },
+          "multiplier": 1
+        }
+      ],
+      "spellbookId": "2R1eh",
+      "effectSkirmish": "Pick up to three enemy units within 12\", which takes 2 hits with AP(2)."
+    }
+  ],
+  "modifiedAt": "2025-11-03T17:25:29.576Z",
+  "editedAt": "2025-11-03T16:53:46.313Z",
+  "official": true,
+  "versionString": "3.5.0",
+  "coverImagePath": "https://af-images.s3.eu-north-1.amazonaws.com/army-books/covers/lpRj9EBwROpO1um7/z-f2oke2M2GL01uQpaJ25.jpg",
+  "coverImageCredit": null,
+  "bannerImagePath": null,
+  "visibility": 1,
+  "factionId": null,
+  "factionName": null,
+  "factionRelation": null,
+  "popularity": 0,
+  "downvotes": 0,
+  "partnerSettings": {
+    "storeLinks": [
+      "https://www.myminifactory.com/users/onepagerules",
+      "https://www.etsy.com/shop/onepagerules"
+    ]
+  },
+  "balanceValid": true,
+  "balanceValidReason": 0,
+  "loreUrl": "https://www.onepagerules.com/factions/ogres",
+  "username": "onepagerules",
+  "voted": null,
+  "armyForgeUrl": "https://army-forge.onepagerules.com/listConfiguration?armyId=lpRj9EBwROpO1um7",
+  "specialRules": [
+    {
+      "id": "IyLY1212wacW",
+      "name": "Fortified",
+      "aliasedRuleId": null,
+      "description": "When units where all models have this rule take hits, those hits count as having AP(-1), to a min. of AP(0).",
+      "hasRating": false,
+      "coreType": null,
+      "targetType": 1
+    },
+    {
+      "id": "8HWdOwMYcI0p",
+      "name": "Sergeant",
+      "aliasedRuleId": null,
+      "description": "When this model attacks, unmodified results of 6 to hit deal 1 extra hit (only the original hit counts as a 6 for special rules).",
+      "hasRating": false,
+      "coreType": 5,
+      "targetType": 1
+    },
+    {
+      "id": "5Wpo74lRNhqB",
+      "name": "Counter-Attack",
+      "aliasedRuleId": null,
+      "description": "Strikes first when charged.",
+      "hasRating": null,
+      "coreType": null,
+      "targetType": 1
+    },
+    {
+      "id": "eyMkgYDVrP7C",
+      "name": "Takedown Strike",
+      "aliasedRuleId": null,
+      "description": "Once per game, when this model attacks in melee, you may pick one model in the unit as its target, and make one attack at Quality 2+ with AP(2) and Deadly(3), which is resolved as if it's a unit of 1.",
+      "hasRating": false,
+      "coreType": null,
+      "targetType": 1
+    },
+    {
+      "id": "39l6ePjLFmcw",
+      "name": "Destroyer Boost Aura",
+      "aliasedRuleId": null,
+      "description": "This model and up to 3 friendly units picked before the start of the game get Destroyer Boost. If this model is killed, picked models that are deployed lose the rule. This effect lasts until the first wave of reinforcements is deployed.",
+      "hasRating": false,
+      "coreType": null,
+      "targetType": 1
+    },
+    {
+      "id": "74RjQ1k41DoO",
+      "name": "Armor",
+      "aliasedRuleId": null,
+      "description": "Counts as having Defense X+.",
+      "hasRating": true,
+      "coreType": 5,
+      "targetType": 1
+    },
+    {
+      "id": "-7w3e1QuLK47",
+      "name": "Destroyer",
+      "aliasedRuleId": "WHJ8A7LzHUR6",
+      "description": "Enemies that roll to block hits from this model's weapons take 1 extra wound for each unmodified result of 1 that they roll.",
+      "hasRating": false,
+      "coreType": null,
+      "targetType": 1
+    },
+    {
+      "id": "TTL5RNmwotoh",
+      "name": "Melee Slayer",
+      "aliasedRuleId": null,
+      "description": "This model's melee weapons get AP(+2) against units where most models have Tough(9) or higher.",
+      "hasRating": false,
+      "coreType": null,
+      "targetType": 1
+    },
+    {
+      "id": "FRVSAjasmFSF",
+      "name": "Courage Aura",
+      "aliasedRuleId": null,
+      "description": "This model and up to 3 friendly units picked before the start of the game get +1 to morale test rolls. If this model is killed, picked models that are deployed lose the rule. This effect lasts until the first wave of reinforcements is deployed.",
+      "hasRating": false,
+      "coreType": null,
+      "targetType": 1
+    },
+    {
+      "id": "Q5lDzth8JVEb",
+      "name": "Piercing Feat",
+      "aliasedRuleId": null,
+      "description": "Once per game, when this unit attacks and all its models have this rule, you may use this rule so that all their weapons get AP(+2).",
+      "hasRating": false,
+      "coreType": null,
+      "targetType": 1
+    },
+    {
+      "id": "EgdF_3MSddXR",
+      "name": "Melee Evasion",
+      "aliasedRuleId": null,
+      "description": "Enemies get -1 to hit rolls in melee when attacking units where all models have this rule.",
+      "hasRating": false,
+      "coreType": null,
+      "targetType": 1
+    },
+    {
+      "id": "0a-E4vMNTbhY",
+      "name": "Piercing Feat Aura",
+      "aliasedRuleId": null,
+      "description": "This model and up to 3 friendly units picked before the start of the game get Piercing Feat. If this model is killed, picked models that are deployed lose the rule. This effect lasts until the first wave of reinforcements is deployed.",
+      "hasRating": false,
+      "coreType": null,
+      "targetType": 1
+    },
+    {
+      "id": "hnsVQyx3ylMf",
+      "name": "Ravage",
+      "aliasedRuleId": null,
+      "description": "When this model attacks in melee, roll X dice. For each 6+ the target takes one wound.",
+      "hasRating": true,
+      "coreType": null,
+      "targetType": 1
+    },
+    {
+      "id": "8zBpM3Wjey08",
+      "name": "Unpredictable Fighter Aura",
+      "aliasedRuleId": null,
+      "description": "This model and up to 3 friendly units picked before the start of the game get Unpredictable Fighter. If this model is killed, picked models that are deployed lose the rule. This effect lasts until the first wave of reinforcements is deployed.",
+      "hasRating": false,
+      "coreType": null,
+      "targetType": 1
+    },
+    {
+      "id": "B-9jnnFp54f9",
+      "name": "Fortified Aura",
+      "aliasedRuleId": null,
+      "description": "This model and up to 3 friendly units picked before the start of the game get Fortified. If this model is killed, picked models that are deployed lose the rule. This effect lasts until the first wave of reinforcements is deployed.",
+      "hasRating": false,
+      "coreType": null,
+      "targetType": 1
+    },
+    {
+      "id": "DD6gAWjz801s",
+      "name": "Rupture",
+      "aliasedRuleId": null,
+      "description": "Ignores Regeneration, and on unmodified results of 6 to hit that aren't blocked, this weapon deals 1 extra wound.",
+      "hasRating": false,
+      "coreType": null,
+      "targetType": 2
+    },
+    {
+      "id": "hh_Xow62BfEf",
+      "name": "Melee Evasion Buff",
+      "aliasedRuleId": null,
+      "description": "Only one use per game. Once per activation, before attacking, pick up to 4 friendly units within 12\", which gets Melee Evasion once (next time the effect would apply).",
+      "hasRating": false,
+      "coreType": null,
+      "targetType": 1
+    },
+    {
+      "id": "McQASWqUcMvm",
+      "name": "Great Sergeant",
+      "aliasedRuleId": null,
+      "description": "When this model attacks, unmodified results of 5-6 to hit deal 1 extra hit (only the original hit counts as a 6 for special rules).",
+      "hasRating": false,
+      "coreType": null,
+      "targetType": 1
+    },
+    {
+      "id": "wixW3wum01ao",
+      "name": "Great Banner",
+      "aliasedRuleId": null,
+      "description": "Only one use per game. Once per activation, before attacking, pick up to 4 friendly units within 12\", which gets +1 to morale test rolls once (next time the effect would apply).",
+      "hasRating": false,
+      "coreType": null,
+      "targetType": 1
+    },
+    {
+      "id": "arJNSXC8F_Oa",
+      "name": "Unwieldy Debuff",
+      "aliasedRuleId": null,
+      "description": "Only one use per game. Once per activation, before attacking, pick up to 4 enemy units within 18\", which gets Unwieldy in melee once (next time the effect would apply).",
+      "hasRating": false,
+      "coreType": null,
+      "targetType": 1
+    },
+    {
+      "id": "KTixuuQ9H7tU",
+      "name": "Unstoppable when Shooting Aura",
+      "aliasedRuleId": null,
+      "description": "This model and up to 3 friendly units picked before the start of the game get Unstoppable when shooting. If this model is killed, picked models that are deployed lose the rule. This effect lasts until the first wave of reinforcements is deployed.",
+      "hasRating": false,
+      "coreType": null,
+      "targetType": 1
+    },
+    {
+      "id": "oFAQZkhWt9EQ",
+      "name": "Great Musician",
+      "aliasedRuleId": null,
+      "description": "Only one use per game. Once per activation, before attacking, pick up to 4 friendly units within 12\", which moves +1\" when using move actions once (next time the effect would apply).",
+      "hasRating": false,
+      "coreType": null,
+      "targetType": 1
+    },
+    {
+      "id": "17crjK7P6_w6",
+      "name": "AP",
+      "aliasedRuleId": null,
+      "description": "Targets get -X to Defense rolls when blocking hits.",
+      "hasRating": true,
+      "coreType": 1,
+      "targetType": 2
+    },
+    {
+      "id": "_mrPya5SXSqW",
+      "name": "Deadly",
+      "aliasedRuleId": null,
+      "description": "Assign each wound to one model, and multiply it by X. Hits from Deadly must be resolved first, and these wounds don’t carry over to other models if the original target is killed.",
+      "hasRating": true,
+      "coreType": 1,
+      "targetType": 2
+    },
+    {
+      "id": "nNQIbm2XPcnO",
+      "name": "Destroyer Boost",
+      "aliasedRuleId": null,
+      "description": "When taking wounds from models with Destroyer in this unit, enemies take extra wounds on failed defense rolls of 1-2 from Destroyer (instead of only on 1).",
+      "hasRating": false,
+      "coreType": null,
+      "targetType": 1
+    },
+    {
+      "id": "s6MgSfmgylXU",
+      "name": "Defense",
+      "aliasedRuleId": null,
+      "description": "This model gets +X to defense rolls.",
+      "hasRating": true,
+      "coreType": 5,
+      "targetType": 1
+    },
+    {
+      "id": "a0YtInGiUDd6",
+      "name": "Tough",
+      "aliasedRuleId": null,
+      "description": "Once a model has taken as many wounds as its Tough value, it is killed (remove from play).",
+      "hasRating": true,
+      "coreType": 1,
+      "targetType": 1
+    },
+    {
+      "id": "DEeVIJcfNfS6",
+      "name": "Unpredictable Fighter",
+      "aliasedRuleId": null,
+      "description": "When in melee, roll one die and apply one effect to all models with this rule: on a 1-3 they get AP(+1), and on a 4-6 they get +1 to hit rolls instead.",
+      "hasRating": false,
+      "coreType": null,
+      "targetType": 1
+    },
+    {
+      "id": "i40cKJoXJ7zm",
+      "name": "Unpredictable",
+      "aliasedRuleId": null,
+      "description": "When attacking, roll one die and apply one effect to all models with this rule: on a 1-3 they get AP(+1), and on a 4-6 they get +1 to hit rolls instead.",
+      "hasRating": false,
+      "coreType": null,
+      "targetType": 1
+    },
+    {
+      "id": "8KujvrTG8k9p",
+      "name": "Regeneration",
+      "aliasedRuleId": null,
+      "description": "When a unit where all models have this rule takes wounds, roll one die for each. On a 5+ it is ignored.",
+      "hasRating": false,
+      "coreType": 1,
+      "targetType": 1
+    },
+    {
+      "id": "0TfnG5G4JEv0",
+      "name": "Ignores Regeneration",
+      "aliasedRuleId": null,
+      "description": "This weapon ignores Regeneration.",
+      "hasRating": null,
+      "coreType": 5,
+      "targetType": 2
+    },
+    {
+      "id": "GgPKQ4tKFRIC",
+      "name": "Unwieldy",
+      "aliasedRuleId": null,
+      "description": "Strikes last when charging.",
+      "hasRating": false,
+      "coreType": null,
+      "targetType": 2
+    },
+    {
+      "id": "QXyt-zV_bjpg",
+      "name": "Unstoppable",
+      "aliasedRuleId": null,
+      "description": "Ignores Regeneration, and ignores all negative modifiers to this weapon.",
+      "hasRating": false,
+      "coreType": 1,
+      "targetType": 2
+    },
+    {
+      "id": "h-Cj1XrX00JE",
+      "name": "Resistance",
+      "aliasedRuleId": null,
+      "description": "When a unit where all models have this rule takes wounds, roll one die for each. On a 6+ it is ignored. If the wounds were from a spell, then they are ignored on a 2+ instead.",
+      "hasRating": false,
+      "coreType": null,
+      "targetType": 1
+    }
+  ],
+  "creator": false,
+  "isCreator": false,
+  "autogenerated": true,
+  "gameSystemId": 7,
+  "gameSystemSlug": "age-of-fantasy-quest",
+  "aberration": "AOFQ",
+  "gameSystemKey": "AOFQ",
+  "flavouredUid": "lpRj9EBwROpO1um7~7"
+}
