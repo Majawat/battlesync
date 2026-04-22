@@ -1,0 +1,47 @@
+name: Archive OPR Rules
+
+on:
+  schedule:
+    # Run on the 1st of every month at midnight UTC
+    - cron: '0 0 1 * *'
+  # Allow manual runs from the GitHub Actions UI — useful for grabbing a
+  # snapshot right before a known OPR balance update
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run archiver
+        run: npm run archive-rules
+
+      - name: Commit new archives (if any)
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add archives/
+          # Only commit if there are staged changes
+          if git diff --staged --quiet; then
+            echo "No new archives — nothing to commit."
+          else
+            CHANGED=$(git diff --staged --name-only archives/ | grep -v manifest | wc -l | tr -d ' ')
+            git commit -m "archive: snapshot OPR rules (${CHANGED} book(s) updated) [skip ci]"
+            git push
+            echo "Pushed ${CHANGED} updated book(s) to archives/."
+          fi
