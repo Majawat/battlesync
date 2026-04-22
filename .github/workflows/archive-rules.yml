@@ -2,10 +2,9 @@ name: Archive OPR Rules
 
 on:
   schedule:
-    # Run on the 1st of every month at midnight UTC
-    - cron: '0 0 1 * *'
-  # Allow manual runs from the GitHub Actions UI — useful for grabbing a
-  # snapshot right before a known OPR balance update
+    # Every Monday at 08:00 UTC — weekly is fine since the script skips
+    # anything already archived at the current version (cheap no-op runs)
+    - cron: '0 8 * * 1'
   workflow_dispatch:
 
 permissions:
@@ -29,19 +28,57 @@ jobs:
         run: npm ci
 
       - name: Run archiver
-        run: npm run archive-rules
+        id: archiver
+        run: |
+          npm run archive-rules 2>&1 | tee /tmp/archive-output.txt
+          echo "output_file=/tmp/archive-output.txt" >> "$GITHUB_OUTPUT"
 
       - name: Commit new archives (if any)
+        id: commit
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add archives/
-          # Only commit if there are staged changes
           if git diff --staged --quiet; then
-            echo "No new archives — nothing to commit."
+            echo "committed=false" >> "$GITHUB_OUTPUT"
+            echo "changed_count=0" >> "$GITHUB_OUTPUT"
           else
-            CHANGED=$(git diff --staged --name-only archives/ | grep -v manifest | wc -l | tr -d ' ')
+            CHANGED=$(git diff --staged --name-only archives/ | grep -v '_index\|_game-system\|manifest' | wc -l | tr -d ' ')
             git commit -m "archive: snapshot OPR rules (${CHANGED} book(s) updated) [skip ci]"
             git push
-            echo "Pushed ${CHANGED} updated book(s) to archives/."
+            echo "committed=true"  >> "$GITHUB_OUTPUT"
+            echo "changed_count=${CHANGED}" >> "$GITHUB_OUTPUT"
           fi
+
+      - name: Write job summary
+        if: always()
+        run: |
+          COMMITTED="${{ steps.commit.outputs.committed }}"
+          CHANGED="${{ steps.commit.outputs.changed_count }}"
+          TRIGGER="${{ github.event_name }}"
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+          {
+            echo "## OPR Rules Archive — $(date -u +'%Y-%m-%d %H:%M UTC')"
+            echo ""
+            echo "| | |"
+            echo "|---|---|"
+            echo "| **Trigger** | ${TRIGGER} |"
+            echo "| **New books archived** | ${CHANGED:-0} |"
+            echo "| **Committed to repo** | ${COMMITTED:-false} |"
+            echo ""
+
+            if [ "${COMMITTED}" = "true" ]; then
+              echo "### ✅ New versions detected and archived"
+              echo "Changed books are now saved under \`archives/\` — see the commit for details."
+            else
+              echo "### ✓ No changes"
+              echo "All game systems are already at the current version. Nothing new to archive."
+            fi
+
+            echo ""
+            echo "### Script output"
+            echo '```'
+            cat /tmp/archive-output.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
