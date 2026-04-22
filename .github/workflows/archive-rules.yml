@@ -1,0 +1,126 @@
+name: Archive OPR Rules
+
+on:
+  schedule:
+    # Every Monday at 08:00 UTC — weekly is fine since the script skips
+    # anything already archived at the current version (cheap no-op runs)
+    - cron: '0 8 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run archiver
+        id: archiver
+        run: |
+          npm run archive-rules 2>&1 | tee /tmp/archive-output.txt
+          echo "output_file=/tmp/archive-output.txt" >> "$GITHUB_OUTPUT"
+
+      - name: Commit new archives (if any)
+        id: commit
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add archives/
+          if git diff --staged --quiet; then
+            echo "committed=false" >> "$GITHUB_OUTPUT"
+            echo "changed_count=0" >> "$GITHUB_OUTPUT"
+          else
+            CHANGED=$(git diff --staged --name-only archives/ | grep -v '_index\|_game-system\|manifest' | wc -l | tr -d ' ')
+            git commit -m "archive: snapshot OPR rules (${CHANGED} book(s) updated) [skip ci]"
+            git push
+            echo "committed=true"  >> "$GITHUB_OUTPUT"
+            echo "changed_count=${CHANGED}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Write job summary
+        if: always()
+        run: |
+          COMMITTED="${{ steps.commit.outputs.committed }}"
+          CHANGED="${{ steps.commit.outputs.changed_count }}"
+          TRIGGER="${{ github.event_name }}"
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+          {
+            echo "## OPR Rules Archive — $(date -u +'%Y-%m-%d %H:%M UTC')"
+            echo ""
+            echo "| | |"
+            echo "|---|---|"
+            echo "| **Trigger** | ${TRIGGER} |"
+            echo "| **New books archived** | ${CHANGED:-0} |"
+            echo "| **Committed to repo** | ${COMMITTED:-false} |"
+            echo ""
+
+            if [ "${COMMITTED}" = "true" ]; then
+              echo "### ✅ New versions detected and archived"
+              echo "Changed books are now saved under \`archives/\` — see the commit for details."
+            else
+              echo "### ✓ No changes"
+              echo "All game systems are already at the current version. Nothing new to archive."
+            fi
+
+            echo ""
+            echo "### Script output"
+            echo '```'
+            cat /tmp/archive-output.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Notify Discord
+        if: always() && secrets.DISCORD_WEBHOOK_URL != ''
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          COMMITTED: ${{ steps.commit.outputs.committed }}
+          CHANGED: ${{ steps.commit.outputs.changed_count }}
+          JOB_STATUS: ${{ job.status }}
+        run: |
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          TRIGGER="${{ github.event_name }}"
+
+          if [ "$JOB_STATUS" = "failure" ]; then
+            COLOR=15158332   # red
+            TITLE="❌ OPR Archive failed"
+            DESCRIPTION="The archiver encountered an error. Check the run for details."
+          elif [ "$COMMITTED" = "true" ]; then
+            COLOR=3066993    # green
+            TITLE="✅ OPR rules updated — ${CHANGED} book(s) archived"
+            DESCRIPTION="New versions were detected and saved to \`archives/\`. Check the repo for what changed."
+          else
+            COLOR=8421504    # grey
+            TITLE="✓ OPR Archive — no changes"
+            DESCRIPTION="All game systems are already at the current version. Nothing new to save."
+          fi
+
+          curl -s -X POST "$DISCORD_WEBHOOK_URL" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"embeds\": [{
+                \"title\": \"${TITLE}\",
+                \"description\": \"${DESCRIPTION}\",
+                \"color\": ${COLOR},
+                \"fields\": [
+                  { \"name\": \"Trigger\", \"value\": \"${TRIGGER}\", \"inline\": true },
+                  { \"name\": \"Books changed\", \"value\": \"${CHANGED:-0}\", \"inline\": true }
+                ],
+                \"footer\": { \"text\": \"BattleSync OPR Archiver\" },
+                \"timestamp\": \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",
+                \"url\": \"${RUN_URL}\"
+              }]
+            }"
