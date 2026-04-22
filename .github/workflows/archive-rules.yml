@@ -84,13 +84,15 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Notify Discord
-        if: always() && secrets.DISCORD_WEBHOOK_URL != ''
+        if: always()
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           COMMITTED: ${{ steps.commit.outputs.committed }}
           CHANGED: ${{ steps.commit.outputs.changed_count }}
           JOB_STATUS: ${{ job.status }}
         run: |
+          [ -z "$DISCORD_WEBHOOK_URL" ] && echo "No webhook configured, skipping." && exit 0
+
           RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           TRIGGER="${{ github.event_name }}"
 
