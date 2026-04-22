@@ -82,3 +82,45 @@ jobs:
             cat /tmp/archive-output.txt
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Notify Discord
+        if: always() && secrets.DISCORD_WEBHOOK_URL != ''
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          COMMITTED: ${{ steps.commit.outputs.committed }}
+          CHANGED: ${{ steps.commit.outputs.changed_count }}
+          JOB_STATUS: ${{ job.status }}
+        run: |
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          TRIGGER="${{ github.event_name }}"
+
+          if [ "$JOB_STATUS" = "failure" ]; then
+            COLOR=15158332   # red
+            TITLE="❌ OPR Archive failed"
+            DESCRIPTION="The archiver encountered an error. Check the run for details."
+          elif [ "$COMMITTED" = "true" ]; then
+            COLOR=3066993    # green
+            TITLE="✅ OPR rules updated — ${CHANGED} book(s) archived"
+            DESCRIPTION="New versions were detected and saved to \`archives/\`. Check the repo for what changed."
+          else
+            COLOR=8421504    # grey
+            TITLE="✓ OPR Archive — no changes"
+            DESCRIPTION="All game systems are already at the current version. Nothing new to save."
+          fi
+
+          curl -s -X POST "$DISCORD_WEBHOOK_URL" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"embeds\": [{
+                \"title\": \"${TITLE}\",
+                \"description\": \"${DESCRIPTION}\",
+                \"color\": ${COLOR},
+                \"fields\": [
+                  { \"name\": \"Trigger\", \"value\": \"${TRIGGER}\", \"inline\": true },
+                  { \"name\": \"Books changed\", \"value\": \"${CHANGED:-0}\", \"inline\": true }
+                ],
+                \"footer\": { \"text\": \"BattleSync OPR Archiver\" },
+                \"timestamp\": \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",
+                \"url\": \"${RUN_URL}\"
+              }]
+            }"
