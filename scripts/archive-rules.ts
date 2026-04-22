@@ -1,39 +1,43 @@
 /**
  * OPR Rules Archiver
  *
- * Fetches all official game systems and army books from the ArmyForge API
- * and saves them as versioned JSON snapshots under archives/.
+ * Fetches all official army books from the ArmyForge API and saves them as
+ * versioned JSON snapshots under archives/.
  *
- * Folders are named by game system version (e.g. archives/grimdark-future/v3.1/)
- * so old rule sets are always preserved when OPR releases updates.
+ * Folders are named by the version string found in the API response
+ * (e.g. archives/grimdark-future/v3.1/). When no version is available the
+ * archive date is used as the folder name instead.
  *
- * Only downloads data that has changed since the last run, determined by
- * comparing game system versions against archives/manifest.json.
+ * Change detection: the army books index for each game system is hashed on
+ * every run. Only when the hash differs from the stored manifest value are
+ * the full books re-fetched and saved. This keeps no-op runs cheap.
  *
  * Run manually:  npm run archive-rules
  * Run in CI:     see .github/workflows/archive-rules.yml
  */
 
 import axios from 'axios';
+import { createHash } from 'crypto';
 import * as fs from 'fs';
 import * as path from 'path';
 
 const API_BASE = 'https://army-forge.onepagerules.com/api';
 const ARCHIVES_DIR = path.join(__dirname, '..', 'archives');
 
-// Maps the game system code returned by /game-systems to the slug used
-// by /army-books?gameSystemSlug= and to the numeric ID used by
-// /army-books/{uid}?gameSystem= (OPR's internal DB identifier).
-// Update the numeric IDs here if the endpoint starts returning 404s.
-const GAME_SYSTEM_META: Record<string, { slug: string; numericId: number }> = {
-  gf:   { slug: 'grimdark-future',            numericId: 1 },
-  aof:  { slug: 'age-of-fantasy',              numericId: 2 },
-  ff:   { slug: 'grimdark-future-firefight',   numericId: 3 },
-  wftl: { slug: 'grimdark-future-warfleet',    numericId: 4 },
-};
+// Known game systems — the /game-systems endpoint returns 404 publicly,
+// so we enumerate slugs directly. numericId is passed as ?gameSystem= when
+// fetching full army books (OPR's internal identifier).
+const GAME_SYSTEMS = [
+  { slug: 'grimdark-future',          numericId: 1 },
+  { slug: 'age-of-fantasy',           numericId: 2 },
+  { slug: 'grimdark-future-firefight',numericId: 3 },
+  { slug: 'grimdark-future-warfleet', numericId: 4 },
+];
 
 interface ManifestEntry {
-  version: string;
+  fingerprint: string;   // SHA-256 hash of the index response (change detection)
+  version: string;       // version string from API, or archive date as fallback
+  archivePath: string;   // relative path where this version is stored
   archivedAt: string;
   bookCount: number;
 }
@@ -70,7 +74,6 @@ function writeJson(filePath: string, data: unknown) {
   fs.writeFileSync(filePath, JSON.stringify(data, null, 2) + '\n', 'utf-8');
 }
 
-/** Slugify a book name for use as a filename */
 function toFilename(name: string): string {
   return name
     .toLowerCase()
@@ -78,18 +81,40 @@ function toFilename(name: string): string {
     .replace(/^-+|-+$/g, '');
 }
 
-/** Sanitize a version string for use in a directory name */
-function toVersionDir(version: string): string {
-  return `v${version.replace(/[^a-z0-9._-]/gi, '-')}`;
+/** SHA-256 of the index (sorted by uid for stability) truncated to 8 chars */
+function fingerprint(books: any[]): string {
+  const stable = [...books].sort((a, b) =>
+    String(a.uid ?? '').localeCompare(String(b.uid ?? '')),
+  );
+  return createHash('sha256')
+    .update(JSON.stringify(stable))
+    .digest('hex')
+    .slice(0, 8);
+}
+
+/**
+ * Try to extract a human-readable version string from the index response.
+ * OPR may expose this as versionString, version, gameSystemVersion, etc.
+ * Falls back to today's date so folders are always meaningful.
+ */
+function extractVersion(books: any[]): string {
+  const first = books[0] ?? {};
+  const candidate =
+    first.versionString ??
+    first.gameSystemVersion ??
+    first.version ??
+    first.gameVersion ??
+    '';
+  if (candidate && String(candidate).trim()) return String(candidate).trim();
+  // Fallback: use archive date
+  return new Date().toISOString().slice(0, 10);
 }
 
 // ── Manifest ─────────────────────────────────────────────────────────────────
 
 function loadManifest(): Manifest {
   const p = path.join(ARCHIVES_DIR, 'manifest.json');
-  if (fs.existsSync(p)) {
-    return JSON.parse(fs.readFileSync(p, 'utf-8'));
-  }
+  if (fs.existsSync(p)) return JSON.parse(fs.readFileSync(p, 'utf-8'));
   return { lastChecked: '', systems: {} };
 }
 
@@ -99,38 +124,21 @@ function saveManifest(manifest: Manifest) {
 
 // ── Core archiver ─────────────────────────────────────────────────────────────
 
-async function archiveGameSystem(
-  code: string,
+async function archiveSystem(
   slug: string,
+  numericId: number,
+  books: any[],
   version: string,
-  gameSystemMeta: any,
 ): Promise<number> {
-  const versionDir = toVersionDir(version);
-  const dir = path.join(ARCHIVES_DIR, slug, versionDir);
+  const folderName = `v${version}`.replace(/[^a-z0-9._-]/gi, '-');
+  const dir = path.join(ARCHIVES_DIR, slug, folderName);
 
-  if (fs.existsSync(dir)) {
-    console.log(`  Already on disk at ${slug}/${versionDir} — skipping fetch.`);
-    return 0;
-  }
+  fs.mkdirSync(dir, { recursive: true });
 
-  // Save game system metadata
-  writeJson(path.join(dir, '_game-system.json'), gameSystemMeta);
-
-  // Fetch the full army books index for this game system
-  console.log(`  Fetching army books index...`);
-  const books: any[] = await get(
-    `${API_BASE}/army-books?filters=official&gameSystemSlug=${slug}`,
-  );
-
-  if (!Array.isArray(books) || books.length === 0) {
-    console.warn(`  No books returned for ${slug} — check slug or API.`);
-    return 0;
-  }
-
+  // Save the raw index
   writeJson(path.join(dir, '_index.json'), books);
-  console.log(`  Index saved: ${books.length} books`);
+  console.log(`  Saved index: ${books.length} books → ${slug}/${folderName}/`);
 
-  const numericId = GAME_SYSTEM_META[code]?.numericId;
   let saved = 0;
 
   for (const book of books) {
@@ -139,14 +147,11 @@ async function archiveGameSystem(
       continue;
     }
 
-    await sleep(400); // polite pacing — don't hammer OPR's API
+    await sleep(400); // polite pacing
 
     try {
-      const bookUrl = numericId
-        ? `${API_BASE}/army-books/${book.uid}?gameSystem=${numericId}`
-        : `${API_BASE}/army-books/${book.uid}`;
-
-      const fullBook = await get(bookUrl);
+      const url = `${API_BASE}/army-books/${book.uid}?gameSystem=${numericId}`;
+      const fullBook = await get(url);
       const filename = toFilename(book.name ?? book.uid) + '.json';
       writeJson(path.join(dir, filename), fullBook);
       saved++;
@@ -167,64 +172,66 @@ async function main() {
   const manifest = loadManifest();
   manifest.lastChecked = new Date().toISOString();
 
-  console.log('Fetching game systems from ArmyForge API...');
-  const raw = await get(`${API_BASE}/game-systems`);
-
-  // ArmyForge wraps some responses in { success, data } and returns others as
-  // a direct array — handle both defensively.
-  const gameSystems: any[] = Array.isArray(raw) ? raw : (raw?.data ?? []);
-
-  if (gameSystems.length === 0) {
-    console.error('No game systems returned — check API connectivity.');
-    process.exit(1);
-  }
-
-  console.log(`Found ${gameSystems.length} game system(s).\n`);
-
   let changed = 0;
+  let errors = 0;
 
-  for (const gs of gameSystems) {
-    // The API may use different field names — try the known ones
-    const code: string = gs.gameSystemId ?? gs.id ?? gs.slug ?? '';
-    const version: string = gs.version ?? gs.currentVersion ?? '';
-    const meta = GAME_SYSTEM_META[code];
-    const slug = meta?.slug ?? code;
+  for (const gs of GAME_SYSTEMS) {
+    const { slug, numericId } = gs;
 
-    if (!version) {
-      console.log(`${slug}: no version field in API response — skipping.`);
-      continue;
+    try {
+      console.log(`\nChecking ${slug}...`);
+      const books: any[] = await get(
+        `${API_BASE}/army-books?filters=official&gameSystemSlug=${slug}`,
+      );
+
+      if (!Array.isArray(books) || books.length === 0) {
+        console.warn(`  No books returned — skipping.`);
+        continue;
+      }
+
+      const fp = fingerprint(books);
+      const known = manifest.systems[slug];
+
+      if (known?.fingerprint === fp) {
+        console.log(`  No changes (fingerprint ${fp} matches stored).`);
+        continue;
+      }
+
+      const version = extractVersion(books);
+      const reason = known
+        ? `fingerprint changed (${known.fingerprint} → ${fp})`
+        : `first archive`;
+
+      console.log(`  ${reason} — version: ${version}`);
+
+      const bookCount = await archiveSystem(slug, numericId, books, version);
+      const folderName = `v${version}`.replace(/[^a-z0-9._-]/gi, '-');
+
+      manifest.systems[slug] = {
+        fingerprint: fp,
+        version,
+        archivePath: `${slug}/${folderName}`,
+        archivedAt: new Date().toISOString(),
+        bookCount,
+      };
+      changed++;
+    } catch (err: any) {
+      console.error(`  Error processing ${slug}: ${err.message}`);
+      errors++;
     }
-
-    const known = manifest.systems[slug]?.version;
-
-    if (known === version) {
-      console.log(`${slug}: v${version} — up to date, no changes.`);
-      continue;
-    }
-
-    const reason = known
-      ? `updated from v${known} → v${version}`
-      : `first archive at v${version}`;
-
-    console.log(`\n${slug}: ${reason}`);
-
-    const bookCount = await archiveGameSystem(code, slug, version, gs);
-
-    manifest.systems[slug] = {
-      version,
-      archivedAt: new Date().toISOString(),
-      bookCount,
-    };
-    changed++;
   }
 
   saveManifest(manifest);
   console.log('\nManifest updated.');
 
-  if (changed === 0) {
+  if (changed === 0 && errors === 0) {
     console.log('\nAll game systems are up to date — nothing new to archive.');
   } else {
-    console.log(`\n✓ Archived ${changed} updated game system(s).`);
+    if (changed > 0) console.log(`\n✓ Archived ${changed} updated game system(s).`);
+    if (errors > 0) {
+      console.error(`\n✗ ${errors} game system(s) failed.`);
+      process.exit(1);
+    }
   }
 }
 
