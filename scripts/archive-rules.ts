@@ -26,15 +26,24 @@ const ARCHIVES_DIR = path.join(__dirname, '..', 'archives');
 
 // Known game systems — the /game-systems endpoint returns 404 publicly,
 // so we enumerate slugs directly.
+// Confirmed slugs are verified from gameSystemSlug fields in archived book data.
+// Guessed slugs follow OPR naming conventions — if wrong the index returns
+// empty and the system is silently skipped.
 // The ?gameSystem= parameter for full book fetches is taken from each book's
 // own enabledGameSystems[0] field, so no hardcoded numeric IDs are needed.
 const GAME_SYSTEMS = [
-  { slug: 'grimdark-future' },
-  { slug: 'grimdark-future-firefight' },
-  { slug: 'age-of-fantasy' },
-  { slug: 'age-of-fantasy-skirmish' },
-  { slug: 'age-of-fantasy-regiments' },
-  { slug: 'grimdark-future-warfleet' },
+  // Grimdark Future — IDs 2, 3, 9, 10 (slugs for 9 & 10 unconfirmed)
+  { slug: 'grimdark-future' },            // ID 2, key GF  — confirmed
+  { slug: 'grimdark-future-firefight' },  // ID 3, key GFF — confirmed
+  { slug: 'grimdark-future-warfleet' },   // confirmed
+  { slug: 'grimdark-future-epic' },       // ID 9 or 10 — guessed
+  { slug: 'grimdark-future-conquest' },   // ID 9 or 10 — guessed
+  // Age of Fantasy — IDs 4, 5, 6, 7, 8 (slugs for 6 & 8 unconfirmed)
+  { slug: 'age-of-fantasy' },             // ID 4, key AOF  — confirmed
+  { slug: 'age-of-fantasy-skirmish' },    // ID 5, key AOFS — confirmed
+  { slug: 'age-of-fantasy-quest' },       // ID 7, key AOFQ — confirmed
+  { slug: 'age-of-fantasy-regiments' },   // ID 6 or 8 — guessed
+  { slug: 'age-of-fantasy-epic' },        // ID 6 or 8 — guessed
 ];
 
 interface ManifestEntry {
