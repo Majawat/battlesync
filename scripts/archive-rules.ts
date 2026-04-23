@@ -25,13 +25,14 @@ const API_BASE = 'https://army-forge.onepagerules.com/api';
 const ARCHIVES_DIR = path.join(__dirname, '..', 'archives');
 
 // Known game systems — the /game-systems endpoint returns 404 publicly,
-// so we enumerate slugs directly. numericId is passed as ?gameSystem= when
-// fetching full army books (OPR's internal identifier).
+// so we enumerate slugs directly.
+// The ?gameSystem= parameter for full book fetches is taken from each book's
+// own enabledGameSystems[0] field, so no hardcoded numeric IDs are needed.
 const GAME_SYSTEMS = [
-  { slug: 'grimdark-future',          numericId: 1 },
-  { slug: 'age-of-fantasy',           numericId: 2 },
-  { slug: 'grimdark-future-firefight',numericId: 3 },
-  { slug: 'grimdark-future-warfleet', numericId: 4 },
+  { slug: 'grimdark-future' },
+  { slug: 'age-of-fantasy' },
+  { slug: 'grimdark-future-firefight' },
+  { slug: 'grimdark-future-warfleet' },
 ];
 
 interface ManifestEntry {
@@ -126,7 +127,6 @@ function saveManifest(manifest: Manifest) {
 
 async function archiveSystem(
   slug: string,
-  numericId: number,
   books: any[],
   version: string,
 ): Promise<number> {
@@ -150,7 +150,10 @@ async function archiveSystem(
     await sleep(400); // polite pacing
 
     try {
-      const url = `${API_BASE}/army-books/${book.uid}?gameSystem=${numericId}`;
+      // Use the book's own enabledGameSystems[0] — the API returns this field
+      // so we never have to guess the numeric game system ID.
+      const gameSystemId = book.enabledGameSystems?.[0] ?? 2;
+      const url = `${API_BASE}/army-books/${book.uid}?gameSystem=${gameSystemId}`;
       const fullBook = await get(url);
       const filename = toFilename(book.name ?? book.uid) + '.json';
       writeJson(path.join(dir, filename), fullBook);
@@ -176,7 +179,7 @@ async function main() {
   let errors = 0;
 
   for (const gs of GAME_SYSTEMS) {
-    const { slug, numericId } = gs;
+    const { slug } = gs;
 
     try {
       console.log(`\nChecking ${slug}...`);
@@ -204,7 +207,7 @@ async function main() {
 
       console.log(`  ${reason} — version: ${version}`);
 
-      const bookCount = await archiveSystem(slug, numericId, books, version);
+      const bookCount = await archiveSystem(slug, books, version);
       const folderName = `v${version}`.replace(/[^a-z0-9._-]/gi, '-');
 
       manifest.systems[slug] = {
