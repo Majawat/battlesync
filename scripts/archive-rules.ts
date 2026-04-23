@@ -30,8 +30,10 @@ const ARCHIVES_DIR = path.join(__dirname, '..', 'archives');
 // own enabledGameSystems[0] field, so no hardcoded numeric IDs are needed.
 const GAME_SYSTEMS = [
   { slug: 'grimdark-future' },
-  { slug: 'age-of-fantasy' },
   { slug: 'grimdark-future-firefight' },
+  { slug: 'age-of-fantasy' },
+  { slug: 'age-of-fantasy-skirmish' },
+  { slug: 'age-of-fantasy-regiments' },
   { slug: 'grimdark-future-warfleet' },
 ];
 
