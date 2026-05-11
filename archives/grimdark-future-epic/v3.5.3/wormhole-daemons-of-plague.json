@@ -225,7 +225,7 @@
     },
     {
       "id": "lSeIem7k3",
-      "cost": 125,
+      "cost": 120,
       "name": "Harbinger of Plague",
       "size": 1,
       "sync": {
@@ -529,7 +529,7 @@
     },
     {
       "id": "OIUBTkh5N",
-      "cost": 115,
+      "cost": 110,
       "name": "Plague Harvester",
       "size": 1,
       "sync": {
@@ -903,7 +903,7 @@
     },
     {
       "id": "Vl6-oaKYS",
-      "cost": 105,
+      "cost": 100,
       "name": "Plague Swarms",
       "size": 3,
       "sync": {
@@ -1134,7 +1134,7 @@
     },
     {
       "id": "xr2EPk3Mt",
-      "cost": 135,
+      "cost": 130,
       "name": "Plague Beast",
       "size": 1,
       "sync": {
@@ -1436,7 +1436,7 @@
     },
     {
       "id": "PouVdwT",
-      "cost": 170,
+      "cost": 165,
       "name": "Poisonzeal",
       "size": 1,
       "type": 1,
@@ -1554,7 +1554,7 @@
     },
     {
       "id": "qwp4bnI",
-      "cost": 105,
+      "cost": 100,
       "name": "Fungusfester",
       "size": 1,
       "type": 1,
@@ -1678,7 +1678,7 @@
       "sync": "vJuokTQpJWj3_MrJ",
       "sections": [
         {
-          "id": "2HsFNdN",
+          "id": "VRi6nlD",
           "uid": "TH4I5Iv",
           "label": "Replace any Exalted Plague Hammer",
           "options": [
@@ -1720,7 +1720,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 45,
+                  "cost": 40,
                   "unitId": "P_WQRMzfm"
                 }
               ],
@@ -1795,11 +1795,47 @@
               "id": "jfiui"
             },
             {
+              "uid": "JPm-HhH",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "cost": 50,
+                  "unitId": "P_WQRMzfm"
+                }
+              ],
+              "gains": [
+                {
+                  "id": "I5Bcfu3i",
+                  "name": "Exalted Plague Sword",
+                  "type": "ArmyBookWeapon",
+                  "count": 1,
+                  "range": null,
+                  "attacks": 9,
+                  "weaponId": "NaoXAqrH",
+                  "specialRules": [
+                    {
+                      "id": "Naqc5mga9Uha",
+                      "name": "Bane"
+                    },
+                    {
+                      "id": "cavWDboL4ubs",
+                      "name": "Rending"
+                    }
+                  ],
+                  "attacksMultiplier": 1,
+                  "label": "Exalted Plague Sword (A9, Rending, Bane)"
+                }
+              ],
+              "label": "Exalted Plague Sword (A9, Rending, Bane)",
+              "parentSectionId": "TH4I5Iv",
+              "id": "JPm-HhH"
+            },
+            {
               "uid": "7x50WcpjAE",
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 65,
+                  "cost": 60,
                   "unitId": "P_WQRMzfm"
                 }
               ],
@@ -1832,48 +1868,12 @@
               "id": "7x50WcpjAE"
             },
             {
-              "uid": "JPm-HhH",
-              "type": "ArmyBookUpgradeOption",
-              "costs": [
-                {
-                  "cost": 80,
-                  "unitId": "P_WQRMzfm"
-                }
-              ],
-              "gains": [
-                {
-                  "id": "I5Bcfu3i",
-                  "name": "Exalted Plague Sword",
-                  "type": "ArmyBookWeapon",
-                  "count": 1,
-                  "range": null,
-                  "attacks": 9,
-                  "weaponId": "NaoXAqrH",
-                  "specialRules": [
-                    {
-                      "id": "Naqc5mga9Uha",
-                      "name": "Bane"
-                    },
-                    {
-                      "id": "cavWDboL4ubs",
-                      "name": "Rending"
-                    }
-                  ],
-                  "attacksMultiplier": 1,
-                  "label": "Exalted Plague Sword (A9, Rending, Bane)"
-                }
-              ],
-              "label": "Exalted Plague Sword (A9, Rending, Bane)",
-              "parentSectionId": "TH4I5Iv",
-              "id": "JPm-HhH"
-            },
-            {
               "uid": "gc6Y7BW",
               "cost": 65,
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 180,
+                  "cost": 125,
                   "unitId": "P_WQRMzfm"
                 }
               ],
@@ -1919,7 +1919,7 @@
           ]
         },
         {
-          "id": "Q_LpESd",
+          "id": "R10pBLI",
           "uid": "4nnQq55A",
           "label": "Upgrade with",
           "options": [
@@ -1967,7 +1967,7 @@
       "sync": "vJuokTQpJWj3_MrJ",
       "sections": [
         {
-          "id": "A1svYwJ",
+          "id": "jmnVlnc",
           "uid": "fDjCbyq",
           "label": "Replace any Great Plague Hammer",
           "options": [
@@ -2011,7 +2011,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 20,
+                  "cost": 15,
                   "unitId": "L-UTn5kSl"
                 }
               ],
@@ -2056,7 +2056,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 25,
+                  "cost": 20,
                   "unitId": "L-UTn5kSl"
                 }
               ],
@@ -2090,7 +2090,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 30,
+                  "cost": 25,
                   "unitId": "L-UTn5kSl"
                 }
               ],
@@ -2127,7 +2127,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 45,
+                  "cost": 25,
                   "unitId": "L-UTn5kSl"
                 }
               ],
@@ -2164,7 +2164,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 80,
+                  "cost": 55,
                   "unitId": "L-UTn5kSl"
                 }
               ],
@@ -2210,7 +2210,7 @@
           ]
         },
         {
-          "id": "BQRCnCO",
+          "id": "-GmmylC",
           "uid": "z-8QbcOf",
           "label": "Upgrade with",
           "options": [
@@ -2258,7 +2258,7 @@
       "sync": "vJuokTQpJWj3_MrJ",
       "sections": [
         {
-          "id": "Zy6gKXC",
+          "id": "IHQEaez",
           "uid": "YXfsx",
           "label": "Replace any Plague Hammer",
           "options": [
@@ -2372,7 +2372,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 20,
+                  "cost": 15,
                   "unitId": "lSeIem7k3"
                 }
               ],
@@ -2409,7 +2409,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 20,
+                  "cost": 15,
                   "unitId": "lSeIem7k3"
                 }
               ],
@@ -2453,7 +2453,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 40,
+                  "cost": 30,
                   "unitId": "lSeIem7k3"
                 }
               ],
@@ -2498,7 +2498,7 @@
           ]
         },
         {
-          "id": "fSeehYZ",
+          "id": "FnjZjC7",
           "uid": "A8Q5M",
           "label": "Upgrade with one",
           "options": [
@@ -2646,7 +2646,7 @@
       "sync": "vJuokTQpJWj3_MrJ",
       "sections": [
         {
-          "id": "jG2yl5A",
+          "id": "YSK9_59",
           "uid": "9txt0",
           "label": "Replace Sword and Plague Hammer",
           "options": [
@@ -2737,7 +2737,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 15,
+                  "cost": 10,
                   "unitId": "OH_Og3K-F"
                 }
               ],
@@ -2855,7 +2855,7 @@
           ]
         },
         {
-          "id": "X8B2oH2",
+          "id": "5pygKTr",
           "uid": "9eW-I",
           "label": "Replace any Infected Sword",
           "options": [
@@ -2903,7 +2903,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 10,
+                  "cost": 5,
                   "unitId": "OH_Og3K-F"
                 }
               ],
@@ -2948,7 +2948,7 @@
           ]
         },
         {
-          "id": "PUHsoxe",
+          "id": "EjY0Nei",
           "uid": "H5nRE",
           "label": "Upgrade with one",
           "options": [
@@ -3068,7 +3068,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 95,
+                  "cost": 90,
                   "unitId": "OH_Og3K-F"
                 }
               ],
@@ -3140,7 +3140,7 @@
       "sync": "vJuokTQpJWj3_MrJ",
       "sections": [
         {
-          "id": "KNfu46w",
+          "id": "6Bnppz9",
           "uid": "fpyuQ",
           "label": "Replace all Infected Claws",
           "options": [
@@ -3149,7 +3149,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 20,
+                  "cost": 15,
                   "unitId": "lUNJcJdiv"
                 }
               ],
@@ -3188,7 +3188,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 55,
+                  "cost": 25,
                   "unitId": "lUNJcJdiv"
                 }
               ],
@@ -3239,7 +3239,7 @@
       "sync": "vJuokTQpJWj3_MrJ",
       "sections": [
         {
-          "id": "nFgg17a",
+          "id": "kkb-DzY",
           "uid": "6VwJPph",
           "label": "Upgrade up to three models with one",
           "options": [
@@ -3365,7 +3365,7 @@
       "sync": "vJuokTQpJWj3_MrJ",
       "sections": [
         {
-          "id": "TLvJKbM",
+          "id": "vm4eOAa",
           "uid": "97DeS-1",
           "label": "Replace all Infected Swords",
           "options": [
@@ -3402,12 +3402,51 @@
               "id": "6nxW3c887Q"
             },
             {
+              "uid": "cFcMLkc",
+              "cost": 10,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "cost": 15,
+                  "unitId": "_OxfOEtOE"
+                }
+              ],
+              "gains": [
+                {
+                  "id": "ltqkmldU",
+                  "name": "Halberd",
+                  "type": "ArmyBookWeapon",
+                  "range": null,
+                  "attacks": 1,
+                  "weaponId": "ltqkmldU",
+                  "specialRules": [
+                    {
+                      "id": "Naqc5mga9Uha",
+                      "name": "Bane"
+                    },
+                    {
+                      "id": "cavWDboL4ubs",
+                      "name": "Rending"
+                    }
+                  ],
+                  "attacksMultiplier": 1,
+                  "label": "Halberd (A1, Rending, Bane)",
+                  "count": 1
+                }
+              ],
+              "label": "Halberd (A1, Rending, Bane)",
+              "parentPackageUid": "E1",
+              "parentSectionUid": "97DeS-1",
+              "parentSectionId": "97DeS-1",
+              "id": "cFcMLkc"
+            },
+            {
               "uid": "cYLog-U",
               "cost": 25,
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 25,
+                  "cost": 20,
                   "unitId": "_OxfOEtOE"
                 }
               ],
@@ -3476,51 +3515,12 @@
               "id": "iE4pWv4"
             },
             {
-              "uid": "cFcMLkc",
-              "cost": 10,
-              "type": "ArmyBookUpgradeOption",
-              "costs": [
-                {
-                  "cost": 30,
-                  "unitId": "_OxfOEtOE"
-                }
-              ],
-              "gains": [
-                {
-                  "id": "ltqkmldU",
-                  "name": "Halberd",
-                  "type": "ArmyBookWeapon",
-                  "range": null,
-                  "attacks": 1,
-                  "weaponId": "ltqkmldU",
-                  "specialRules": [
-                    {
-                      "id": "Naqc5mga9Uha",
-                      "name": "Bane"
-                    },
-                    {
-                      "id": "cavWDboL4ubs",
-                      "name": "Rending"
-                    }
-                  ],
-                  "attacksMultiplier": 1,
-                  "label": "Halberd (A1, Rending, Bane)",
-                  "count": 1
-                }
-              ],
-              "label": "Halberd (A1, Rending, Bane)",
-              "parentPackageUid": "E1",
-              "parentSectionUid": "97DeS-1",
-              "parentSectionId": "97DeS-1",
-              "id": "cFcMLkc"
-            },
-            {
               "uid": "1i_Y1yi",
               "cost": 20,
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 30,
+                  "cost": 25,
                   "unitId": "_OxfOEtOE"
                 }
               ],
@@ -3566,7 +3566,7 @@
           ]
         },
         {
-          "id": "dW-496m",
+          "id": "LMXqP-N",
           "uid": "2KxLhuHf",
           "label": "Upgrade all models with",
           "options": [
@@ -3611,7 +3611,7 @@
           }
         },
         {
-          "id": "xkMzaCn",
+          "id": "F1km7yE",
           "uid": "HT8ocIZ",
           "label": "Upgrade one model with",
           "options": [
@@ -3665,7 +3665,7 @@
       "sync": "vJuokTQpJWj3_MrJ",
       "sections": [
         {
-          "id": "C3czLCS",
+          "id": "blVSN4k",
           "uid": "qO9zQ",
           "label": "Replace all Hand Weapons",
           "options": [
@@ -3715,7 +3715,7 @@
           ]
         },
         {
-          "id": "mBjF7kT",
+          "id": "B-FSKim",
           "uid": "QJ9Phbz",
           "label": "Replace all Stingers",
           "options": [
@@ -3725,7 +3725,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 15,
+                  "cost": 10,
                   "unitId": "IPbePewVl"
                 }
               ],
@@ -3771,7 +3771,7 @@
           ]
         },
         {
-          "id": "-FgYkoK",
+          "id": "8mlQ_XC",
           "uid": "dEZjAIW",
           "label": "Upgrade all models with any",
           "options": [
@@ -3813,7 +3813,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 45,
+                  "cost": 40,
                   "unitId": "IPbePewVl"
                 }
               ],
@@ -3863,7 +3863,7 @@
       "sync": "vJuokTQpJWj3_MrJ",
       "sections": [
         {
-          "id": "JdNaNpn",
+          "id": "bHQg9JO",
           "uid": "kgeRgpX",
           "label": "Replace Giant Infected Sword",
           "options": [
@@ -3872,7 +3872,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 20,
+                  "cost": 15,
                   "unitId": "QZjOFh3xk"
                 }
               ],
@@ -3904,7 +3904,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 65,
+                  "cost": 45,
                   "unitId": "QZjOFh3xk"
                 }
               ],
@@ -3945,50 +3945,16 @@
           ]
         },
         {
-          "id": "fDS51iP",
+          "id": "OLWk3ye",
           "uid": "DsmRkh0",
           "label": "Replace Plague Cannon",
           "options": [
-            {
-              "uid": "nqGoY",
-              "type": "ArmyBookUpgradeOption",
-              "costs": [
-                {
-                  "cost": 30,
-                  "unitId": "QZjOFh3xk"
-                }
-              ],
-              "gains": [
-                {
-                  "id": null,
-                  "name": "Infected Cannon",
-                  "type": "ArmyBookWeapon",
-                  "count": 1,
-                  "range": 18,
-                  "attacks": 18,
-                  "weaponId": "CNVFygA6",
-                  "specialRules": [
-                    {
-                      "id": "5v6oaGfrdf29",
-                      "name": "Surge"
-                    }
-                  ],
-                  "attacksMultiplier": 1,
-                  "label": "Infected Cannon (18\", A18, Surge)"
-                }
-              ],
-              "label": "Infected Cannon (18\", A18, Surge)",
-              "parentPackageUid": "G1",
-              "parentSectionUid": "DsmRkh0",
-              "parentSectionId": "DsmRkh0",
-              "id": "nqGoY"
-            },
             {
               "uid": "OwGAJvd",
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 45,
+                  "cost": 30,
                   "unitId": "QZjOFh3xk"
                 }
               ],
@@ -4019,6 +3985,40 @@
               "label": "Heavy Plague Cannon (24\", A6, AP(2), Bane)",
               "parentSectionId": "DsmRkh0",
               "id": "OwGAJvd"
+            },
+            {
+              "uid": "nqGoY",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "cost": 35,
+                  "unitId": "QZjOFh3xk"
+                }
+              ],
+              "gains": [
+                {
+                  "id": null,
+                  "name": "Infected Cannon",
+                  "type": "ArmyBookWeapon",
+                  "count": 1,
+                  "range": 18,
+                  "attacks": 18,
+                  "weaponId": "CNVFygA6",
+                  "specialRules": [
+                    {
+                      "id": "5v6oaGfrdf29",
+                      "name": "Surge"
+                    }
+                  ],
+                  "attacksMultiplier": 1,
+                  "label": "Infected Cannon (18\", A18, Surge)"
+                }
+              ],
+              "label": "Infected Cannon (18\", A18, Surge)",
+              "parentPackageUid": "G1",
+              "parentSectionUid": "DsmRkh0",
+              "parentSectionId": "DsmRkh0",
+              "id": "nqGoY"
             }
           ],
           "parentPackageUid": "G1",
@@ -4037,7 +4037,7 @@
       "sync": "vJuokTQpJWj3_MrJ",
       "sections": [
         {
-          "id": "UgQtDz_",
+          "id": "GsmC8mR",
           "uid": "RDNe3",
           "label": "Replace all Mutated Infected Claws",
           "options": [
@@ -4046,7 +4046,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 10,
+                  "cost": 5,
                   "unitId": "XKdzOLrZN"
                 }
               ],
@@ -4078,7 +4078,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 45,
+                  "cost": 15,
                   "unitId": "XKdzOLrZN"
                 }
               ],
@@ -4129,7 +4129,7 @@
       "sync": "vJuokTQpJWj3_MrJ",
       "sections": [
         {
-          "id": "38bdqJ5",
+          "id": "dHWrs54",
           "uid": "rhph_",
           "label": "Replace Sword and Plague Hammer",
           "options": [
@@ -4340,7 +4340,7 @@
           ]
         },
         {
-          "id": "uDMKCyP",
+          "id": "4VEp8Nc",
           "uid": "vZMlo",
           "label": "Replace any Infected Sword",
           "options": [
@@ -4388,7 +4388,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 10,
+                  "cost": 5,
                   "unitId": "Gyc8X7kHv"
                 }
               ],
@@ -4441,7 +4441,7 @@
       "sync": "vJuokTQpJWj3_MrJ",
       "sections": [
         {
-          "id": "MyzUJr-",
+          "id": "wU7lrna",
           "uid": "wBhze",
           "label": "Upgrade with one",
           "options": [
@@ -4652,7 +4652,7 @@
       "sync": "vJuokTQpJWj3_MrJ",
       "sections": [
         {
-          "id": "FK2-NOX",
+          "id": "o3tzq2y",
           "uid": "Pvjn7YT0",
           "label": "Replace all Scatter-Slings",
           "options": [
@@ -4706,7 +4706,7 @@
           ]
         },
         {
-          "id": "RYySQGs",
+          "id": "ZYvUMo1",
           "uid": "tY_yT",
           "label": "Upgrade all models with",
           "options": [
@@ -4759,7 +4759,7 @@
       "sync": "vJuokTQpJWj3_MrJ",
       "sections": [
         {
-          "id": "KvUxheZ",
+          "id": "RL7aPCY",
           "uid": "X-k61",
           "label": "Upgrade with",
           "options": [
@@ -4813,7 +4813,7 @@
       "sync": "vJuokTQpJWj3_MrJ",
       "sections": [
         {
-          "id": "P_ozFku",
+          "id": "OjUkzz2",
           "uid": "5m7d0Sdu",
           "label": "Upgrade with",
           "options": [
@@ -4862,7 +4862,7 @@
       "sync": "vJuokTQpJWj3_MrJ",
       "sections": [
         {
-          "id": "WDNLv2x",
+          "id": "20tN3iA",
           "uid": "_67V3vG8Sd",
           "label": "Replace all Scatter-Slings",
           "options": [
@@ -4923,7 +4923,7 @@
       "sync": "vJuokTQpJWj3_MrJ",
       "sections": [
         {
-          "id": "tAqr9ox",
+          "id": "6k3AQ6n",
           "uid": "uwtuNI80em",
           "label": "Upgrade with one",
           "options": [
@@ -5027,7 +5027,7 @@
       "sync": "vJuokTQpJWj3_MrJ",
       "sections": [
         {
-          "id": "w-hegKY",
+          "id": "Tjq6WAD",
           "uid": "iMgqdcuO",
           "label": "Upgrade with one",
           "options": [
@@ -5093,6 +5093,37 @@
               "id": "dMOSnQL-"
             },
             {
+              "uid": "AMflaRzq",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "cost": 55,
+                  "unitId": "P_WQRMzfm"
+                }
+              ],
+              "gains": [
+                {
+                  "name": "Envoy of Plague",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Envoy of Plague (Rending in Melee)",
+                  "content": [
+                    {
+                      "id": "nstknew-_RL_",
+                      "name": "Rending in Melee",
+                      "type": "ArmyBookRule"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Envoy of Plague (Rending in Melee)",
+              "parentSectionId": "iMgqdcuO",
+              "parentPackageUid": "ZtP8rGkf",
+              "parentSectionUid": "wBhze",
+              "id": "AMflaRzq"
+            },
+            {
               "uid": "GIdUquAu",
               "type": "ArmyBookUpgradeOption",
               "costs": [
@@ -5122,37 +5153,6 @@
               "parentPackageUid": "ZtP8rGkf",
               "parentSectionUid": "wBhze",
               "id": "GIdUquAu"
-            },
-            {
-              "uid": "AMflaRzq",
-              "type": "ArmyBookUpgradeOption",
-              "costs": [
-                {
-                  "cost": 100,
-                  "unitId": "P_WQRMzfm"
-                }
-              ],
-              "gains": [
-                {
-                  "name": "Envoy of Plague",
-                  "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Envoy of Plague (Rending in Melee)",
-                  "content": [
-                    {
-                      "id": "nstknew-_RL_",
-                      "name": "Rending in Melee",
-                      "type": "ArmyBookRule"
-                    }
-                  ],
-                  "count": 1
-                }
-              ],
-              "label": "Envoy of Plague (Rending in Melee)",
-              "parentSectionId": "iMgqdcuO",
-              "parentPackageUid": "ZtP8rGkf",
-              "parentSectionUid": "wBhze",
-              "id": "AMflaRzq"
             },
             {
               "uid": "-wpoMGra",
@@ -5205,7 +5205,7 @@
       "sync": "vJuokTQpJWj3_MrJ",
       "sections": [
         {
-          "id": "8Kcq2vp",
+          "id": "HsNnqeg",
           "uid": "LioIErI_",
           "label": "Upgrade with one",
           "options": [
@@ -5383,7 +5383,7 @@
       "sync": "vJuokTQpJWj3_MrJ",
       "sections": [
         {
-          "id": "3FsiY1C",
+          "id": "Xleoy4c",
           "uid": "TzynHYY2",
           "label": "Upgrade with one",
           "options": [
@@ -5562,7 +5562,7 @@
       "sync": "vJuokTQpJWj3_MrJ",
       "sections": [
         {
-          "id": "ktgGwye",
+          "id": "i4QP9V9",
           "uid": "vu8Exo4S",
           "label": "Upgrade with one",
           "options": [
@@ -6264,7 +6264,7 @@
       "effectSkirmish": ""
     }
   ],
-  "modifiedAt": "2026-05-04T09:54:31.695Z",
+  "modifiedAt": "2026-05-05T08:03:20.578Z",
   "editedAt": "2026-01-31T07:30:55.882Z",
   "official": true,
   "versionString": "3.5.3",

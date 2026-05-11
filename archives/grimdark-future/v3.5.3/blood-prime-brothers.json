@@ -2548,6 +2548,7 @@
         {
           "id": "A3AHPWe8",
           "name": "Heavy Anti-Gravity Cannon",
+          "type": "ArmyBookWeapon",
           "count": 1,
           "range": 24,
           "attacks": 6,
@@ -2560,9 +2561,9 @@
               "label": "Shatter"
             }
           ],
+          "attacksMultiplier": 1,
           "label": "Heavy Anti-Gravity Cannon (24\", A6, Shatter)",
-          "originalCount": 1,
-          "type": "ArmyBookWeapon"
+          "originalCount": 1
         },
         {
           "id": "2WqY4mH8",
@@ -3088,7 +3089,7 @@
       "sync": "oqnnu0gk8q6hyyny",
       "sections": [
         {
-          "id": "CQL2zSX",
+          "id": "70U7-uI",
           "uid": "UP4gFw_bcY",
           "label": "Replace Combat Shield and CCW",
           "options": [
@@ -3153,7 +3154,7 @@
           ]
         },
         {
-          "id": "Vn4a-Ev",
+          "id": "jCFmC8h",
           "uid": "5vRO_TO",
           "label": "Replace Flamer Pistol",
           "options": [
@@ -3407,7 +3408,7 @@
           ]
         },
         {
-          "id": "tle3Ffx",
+          "id": "MSBcll-",
           "uid": "T8n6CvTf6w",
           "label": "Upgrade Master Marksman Carbine with",
           "options": [
@@ -3449,7 +3450,7 @@
           ]
         },
         {
-          "id": "260iSpU",
+          "id": "IRgsdjR",
           "uid": "MovgoCq",
           "label": "Replace CCW",
           "options": [
@@ -3623,7 +3624,7 @@
       "sync": "oqnnu0gk8q6hyyny",
       "sections": [
         {
-          "id": "s6cwCUY",
+          "id": "D3gCmBi",
           "uid": "80QB0Hq",
           "label": "Upgrade with one",
           "options": [
@@ -3743,7 +3744,7 @@
       "sync": "oqnnu0gk8q6hyyny",
       "sections": [
         {
-          "id": "DXo4E5f",
+          "id": "Qtge0hj",
           "uid": "BCvkhSe",
           "label": "Upgrade with one",
           "options": [
@@ -3821,11 +3822,11 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 20,
+                  "cost": 15,
                   "unitId": "i3BGi5H09"
                 },
                 {
-                  "cost": 20,
+                  "cost": 15,
                   "unitId": "h4lgMlfD6"
                 }
               ],
@@ -3887,11 +3888,11 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 30,
+                  "cost": 25,
                   "unitId": "i3BGi5H09"
                 },
                 {
-                  "cost": 30,
+                  "cost": 25,
                   "unitId": "h4lgMlfD6"
                 }
               ],
@@ -4074,7 +4075,7 @@
       "sync": "oqnnu0gk8q6hyyny",
       "sections": [
         {
-          "id": "FpUGXF_",
+          "id": "huuh91m",
           "uid": "vIcBJVF",
           "label": "Upgrade one model with one",
           "options": [
@@ -4238,7 +4239,7 @@
       "sync": "oqnnu0gk8q6hyyny",
       "sections": [
         {
-          "id": "OTZYCI_",
+          "id": "iD0cdlF",
           "uid": "rzMUbRy",
           "label": "Replace one Heavy Pistol and CCW",
           "options": [
@@ -4507,7 +4508,7 @@
           ]
         },
         {
-          "id": "MU5CNcG",
+          "id": "6ZYd3mS",
           "uid": "SAoz8yC",
           "label": "Upgrade all models with",
           "options": [
@@ -4560,7 +4561,7 @@
       "sync": "oqnnu0gk8q6hyyny",
       "sections": [
         {
-          "id": "chCQCMg",
+          "id": "c_q6zU6",
           "uid": "yUrGsDr",
           "label": "Upgrade all Marksman Carbines with",
           "options": [
@@ -4616,7 +4617,7 @@
       "sync": "oqnnu0gk8q6hyyny",
       "sections": [
         {
-          "id": "0mdPLWQ",
+          "id": "K4wTQAg",
           "uid": "VASDOu7",
           "label": "Replace one Heavy Pistol",
           "options": [
@@ -4710,7 +4711,7 @@
           ]
         },
         {
-          "id": "T7MQceS",
+          "id": "MBrjPyE",
           "uid": "8l4r8",
           "label": "Replace one Heavy CCW",
           "options": [
@@ -4879,7 +4880,7 @@
           ]
         },
         {
-          "id": "64jyf3G",
+          "id": "rQcE5BB",
           "uid": "qDSztwg",
           "label": "Upgrade all models with",
           "options": [
@@ -4937,7 +4938,7 @@
       "sync": "oqnnu0gk8q6hyyny",
       "sections": [
         {
-          "id": "bMpPSfn",
+          "id": "lfpKRa2",
           "uid": "AftE6Iv",
           "label": "Replace any Precision Rifle",
           "options": [
@@ -5016,7 +5017,7 @@
           ]
         },
         {
-          "id": "EMcFyaX",
+          "id": "6F1LoBk",
           "uid": "WoWa7c8",
           "label": "Replace one Precision Rifle",
           "options": [
@@ -5223,7 +5224,7 @@
           ]
         },
         {
-          "id": "_55MJCa",
+          "id": "CTHco4l",
           "uid": "NsqEp",
           "label": "Take one Heavy Rifle attachment",
           "options": [
@@ -5280,7 +5281,7 @@
           ]
         },
         {
-          "id": "yV5S-ra",
+          "id": "8sxY5ia",
           "uid": "PE4ChgC2",
           "label": "Replace one Precision Rifle and CCW",
           "options": [
@@ -5359,7 +5360,7 @@
           ]
         },
         {
-          "id": "2Dj7eXN",
+          "id": "8APOh5G",
           "uid": "4N5dt28g",
           "label": "Replace Sgt. Heavy Pistol",
           "options": [
@@ -5442,7 +5443,7 @@
           ]
         },
         {
-          "id": "dYlhTm7",
+          "id": "2FSv82B",
           "uid": "L9LKoLZy",
           "label": "Replace Energy Sword",
           "options": [
@@ -5500,7 +5501,7 @@
       "sync": "oqnnu0gk8q6hyyny",
       "sections": [
         {
-          "id": "W5k4Bf_",
+          "id": "z1Jomt4",
           "uid": "dfgdCiC",
           "label": "Replace any Plasma Rifle",
           "options": [
@@ -5597,7 +5598,7 @@
       "sync": "oqnnu0gk8q6hyyny",
       "sections": [
         {
-          "id": "HXzH8BI",
+          "id": "mPgLHyq",
           "uid": "tbNwc",
           "label": "Replace any HE-Launcher",
           "options": [
@@ -5653,7 +5654,7 @@
           ]
         },
         {
-          "id": "SxYvzIu",
+          "id": "R_5GtNH",
           "uid": "ar5sR",
           "label": "Replace one HE-Launcher",
           "options": [
@@ -5751,7 +5752,7 @@
           ]
         },
         {
-          "id": "cmyfGI2",
+          "id": "QpPPulm",
           "uid": "Fyjqd",
           "label": "Upgrade all models with",
           "options": [
@@ -5812,7 +5813,7 @@
       "sync": "oqnnu0gk8q6hyyny",
       "sections": [
         {
-          "id": "UMyHSmX",
+          "id": "XsCD-Ix",
           "uid": "rH5Mlxw",
           "label": "Replace any Sniper Rifle",
           "options": [
@@ -5889,7 +5890,7 @@
       "sync": "oqnnu0gk8q6hyyny",
       "sections": [
         {
-          "id": "5HvoHSx",
+          "id": "JeLN3DM",
           "uid": "gGqAKyF",
           "label": "Replace any Fusion Rifle",
           "options": [
@@ -5945,7 +5946,7 @@
           ]
         },
         {
-          "id": "nfEd_nf",
+          "id": "lvrsRiX",
           "uid": "6aBjP",
           "label": "Replace one Fusion Rifle",
           "options": [
@@ -6010,7 +6011,7 @@
       "sync": "oqnnu0gk8q6hyyny",
       "sections": [
         {
-          "id": "vYFiJ5a",
+          "id": "hLFJUne",
           "uid": "YkWwO",
           "label": "Replace any Grave Precision Rifle",
           "options": [
@@ -6092,7 +6093,7 @@
           ]
         },
         {
-          "id": "5AnIqsO",
+          "id": "thu4Kec",
           "uid": "OVsGa",
           "label": "Replace one Grave Precision Rifle",
           "options": [
@@ -6154,7 +6155,7 @@
       "sync": "oqnnu0gk8q6hyyny",
       "sections": [
         {
-          "id": "hTWjF2T",
+          "id": "UAUsWLG",
           "uid": "3jlTOZs",
           "label": "Replace all Twin Assault Blasters",
           "options": [
@@ -6215,7 +6216,7 @@
       "sync": "oqnnu0gk8q6hyyny",
       "sections": [
         {
-          "id": "0W2lAcI",
+          "id": "K0SxZLC",
           "uid": "SVNGXyF",
           "label": "Replace any Twin Fist-Flamer",
           "options": [
@@ -6258,7 +6259,7 @@
           ]
         },
         {
-          "id": "AHrtEv3",
+          "id": "i74C2v7",
           "uid": "9XIw9Wk",
           "label": "Upgrade all models with",
           "options": [
@@ -6316,7 +6317,7 @@
       "sync": "oqnnu0gk8q6hyyny",
       "sections": [
         {
-          "id": "NItt1ZO",
+          "id": "ey8YPix",
           "uid": "WCoSz98",
           "label": "Replace Gatling Gun",
           "options": [
@@ -6378,7 +6379,7 @@
       "sync": "oqnnu0gk8q6hyyny",
       "sections": [
         {
-          "id": "ERHUxbn",
+          "id": "XWGDrk7",
           "uid": "TxyRMm2",
           "label": "Replace Twin Frag-GLs",
           "options": [
@@ -6428,7 +6429,7 @@
           ]
         },
         {
-          "id": "uPpMB1_",
+          "id": "nD0NLBB",
           "uid": "21Tkd6U",
           "label": "Upgrade with one",
           "options": [
@@ -6614,7 +6615,7 @@
       "sync": "oqnnu0gk8q6hyyny",
       "sections": [
         {
-          "id": "E4BgaBH",
+          "id": "cLkdpKT",
           "uid": "TCq-Ytc",
           "label": "Replace Twin Light Gatling Gun",
           "options": [
@@ -6703,7 +6704,7 @@
           ]
         },
         {
-          "id": "cslDpTE",
+          "id": "BWrtUOj",
           "uid": "lnpmNOq",
           "label": "Replace Twin Frag-GLs",
           "options": [
@@ -6831,7 +6832,7 @@
           ]
         },
         {
-          "id": "KV42K7O",
+          "id": "KcTLez6",
           "uid": "qKyELBx",
           "label": "Upgrade with one",
           "options": [
@@ -6929,7 +6930,7 @@
       "sync": "oqnnu0gk8q6hyyny",
       "sections": [
         {
-          "id": "Uab7Xpj",
+          "id": "hZTRBSN",
           "uid": "WYGUnSj",
           "label": "Replace Heavy Gatling Gun",
           "options": [
@@ -6981,7 +6982,7 @@
           ]
         },
         {
-          "id": "SMDZmp4",
+          "id": "jAcJqSV",
           "uid": "AM_0KrX",
           "label": "Replace Twin Heavy Machinegun",
           "options": [
@@ -7047,7 +7048,7 @@
       "sync": "oqnnu0gk8q6hyyny",
       "sections": [
         {
-          "id": "AYz7jJ6",
+          "id": "m2B5GHz",
           "uid": "uTKvirx",
           "label": "Replace Gatling Gun",
           "options": [
@@ -7136,7 +7137,7 @@
           ]
         },
         {
-          "id": "KN8FleK",
+          "id": "mi0F63J",
           "uid": "fPw2OGw",
           "label": "Replace Strike Missile",
           "options": [
@@ -7223,7 +7224,7 @@
           ]
         },
         {
-          "id": "TUIjZZ_",
+          "id": "Rv0I-tR",
           "uid": "4MZOYn7",
           "label": "Upgrade with one",
           "options": [
@@ -7358,7 +7359,7 @@
       "sync": "oqnnu0gk8q6hyyny",
       "sections": [
         {
-          "id": "tjGUTrF",
+          "id": "3MD9jA4",
           "uid": "Z5n2Qh7",
           "label": "Replace Incendiary Cannon",
           "options": [
@@ -7407,7 +7408,7 @@
           ]
         },
         {
-          "id": "JAceEYy",
+          "id": "Zghm5JG",
           "uid": "qsoOx",
           "label": "Replace Walker Pistol",
           "options": [
@@ -7453,7 +7454,7 @@
           ]
         },
         {
-          "id": "EP1SdnQ",
+          "id": "juNcVJB",
           "uid": "u_zsC-z",
           "label": "Upgrade with one",
           "options": [
@@ -7548,7 +7549,7 @@
       "sync": "oqnnu0gk8q6hyyny",
       "sections": [
         {
-          "id": "zVm41BE",
+          "id": "ko_uID1",
           "uid": "SN_jiM0",
           "label": "Replace one Walker Claw",
           "options": [
@@ -7778,7 +7779,7 @@
           ]
         },
         {
-          "id": "PB4TYa7",
+          "id": "gXlUAmq",
           "uid": "CLlyw",
           "label": "Replace one Walker Claw",
           "options": [
@@ -7900,7 +7901,7 @@
           ]
         },
         {
-          "id": "jnVvXbm",
+          "id": "ceE2Gp2",
           "uid": "MTdONEm",
           "label": "Replace any Heavy Flamer",
           "options": [
@@ -7981,7 +7982,7 @@
           ]
         },
         {
-          "id": "_OT0QWB",
+          "id": "uE8Isvz",
           "uid": "fkzOFG1",
           "label": "Replace Chest-GL",
           "options": [
@@ -8107,7 +8108,7 @@
           ]
         },
         {
-          "id": "Ei1qsyK",
+          "id": "P194vRy",
           "uid": "OjUF6b2",
           "label": "Upgrade with one",
           "options": [
@@ -8209,7 +8210,7 @@
       "sync": "oqnnu0gk8q6hyyny",
       "sections": [
         {
-          "id": "TGpBbYE",
+          "id": "2MADrda",
           "uid": "V5yZwRi",
           "label": "Replace Twin Thunder Cannon",
           "options": [
@@ -8332,7 +8333,7 @@
           ]
         },
         {
-          "id": "JcJb_jx",
+          "id": "_Jz7kWR",
           "uid": "8gqH4qqN",
           "label": "Upgrade with",
           "options": [
@@ -8381,7 +8382,7 @@
       "sync": "oqnnu0gk8q6hyyny",
       "sections": [
         {
-          "id": "PojbCd3",
+          "id": "Nd8JLJB",
           "uid": "5ZMl2",
           "label": "Upgrade with one",
           "options": [
@@ -8469,7 +8470,7 @@
       "sync": "oqnnu0gk8q6hyyny",
       "sections": [
         {
-          "id": "8R0pAA0",
+          "id": "g6YyBUv",
           "uid": "xmaE_",
           "label": "Replace Heavy Anti-Gravity Cannon",
           "options": [
@@ -8572,7 +8573,7 @@
       "sync": "oqnnu0gk8q6hyyny",
       "sections": [
         {
-          "id": "WYx3oJB",
+          "id": "1DIlthM",
           "uid": "XB-qi",
           "label": "Replace Combat Shield and CCW",
           "options": [
@@ -8829,7 +8830,7 @@
           ]
         },
         {
-          "id": "dlH9Vgy",
+          "id": "2PeqqUL",
           "uid": "uKRz7AekDo",
           "label": "Replace Master Grave Heavy Pistol",
           "options": [
@@ -8967,7 +8968,7 @@
           ]
         },
         {
-          "id": "8YBS5gq",
+          "id": "YxuPYCJ",
           "uid": "xGk3q",
           "label": "Replace CCW",
           "options": [
@@ -9125,7 +9126,7 @@
           ]
         },
         {
-          "id": "PjGE7CC",
+          "id": "sRZEAKc",
           "uid": "38xUdb7I_t",
           "label": "Upgrade with one",
           "options": [
@@ -9299,7 +9300,7 @@
       "sync": "oqnnu0gk8q6hyyny",
       "sections": [
         {
-          "id": "rsCmf6a",
+          "id": "rv8wK4Q",
           "uid": "X4qxZUUne5",
           "label": "Replace all Relic Swords and Combat Shields",
           "options": [
@@ -9353,7 +9354,7 @@
           ]
         },
         {
-          "id": "2VNVnXZ",
+          "id": "-11lky-",
           "uid": "xK8xM",
           "label": "Replace any Relic Sword",
           "options": [
@@ -9408,7 +9409,7 @@
           ]
         },
         {
-          "id": "6sjXQ6n",
+          "id": "uGRwS64",
           "uid": "eio-s2CcfB",
           "label": "Replace any Heavy Pistol",
           "options": [
@@ -9457,7 +9458,7 @@
           ]
         },
         {
-          "id": "RFVIPR1",
+          "id": "IZDzBVa",
           "uid": "0VrF2D8c5u",
           "label": "Replace all Xenos Hunters",
           "options": [
@@ -9541,7 +9542,7 @@
       "sync": "oqnnu0gk8q6hyyny",
       "sections": [
         {
-          "id": "JVQKNha",
+          "id": "vQp24F1",
           "uid": "XyBs1",
           "label": "Replace any Anti-Gravity Rifle",
           "options": [
@@ -9652,7 +9653,7 @@
           ]
         },
         {
-          "id": "TYPUpba",
+          "id": "tL7yKCU",
           "uid": "boosD",
           "label": "Replace any Anti-Gravity Rifle",
           "options": [
@@ -9869,7 +9870,7 @@
           ]
         },
         {
-          "id": "79PRu6e",
+          "id": "efb0SRK",
           "uid": "xiAxH",
           "label": "Any model may take one Heavy Rifle attachment",
           "options": [
@@ -10101,7 +10102,7 @@
           ]
         },
         {
-          "id": "AgrIrng",
+          "id": "QmcgGwl",
           "uid": "wdsZnMi6",
           "label": "Replace one Anti-Gravity Rifle and CCW",
           "options": [
@@ -10180,7 +10181,7 @@
           ]
         },
         {
-          "id": "NX4NTTs",
+          "id": "1PCu7BX",
           "uid": "21Elo16g",
           "label": "Replace Sgt. Heavy Pistol",
           "options": [
@@ -10263,7 +10264,7 @@
           ]
         },
         {
-          "id": "gi2kkmS",
+          "id": "cseVveQ",
           "uid": "mMD25J2v",
           "label": "Replace Energy Sword",
           "options": [
@@ -10321,7 +10322,7 @@
       "sync": "oqnnu0gk8q6hyyny",
       "sections": [
         {
-          "id": "wpqDug1",
+          "id": "zKWq4eN",
           "uid": "_84wlF9Fbo",
           "label": "Replace any Heavy Pistol and Combat Shield",
           "options": [
@@ -10502,7 +10503,7 @@
           ]
         },
         {
-          "id": "rAQ2pCJ",
+          "id": "6tGmR9w",
           "uid": "ewy_4",
           "label": "Replace any Heavy Pistol",
           "options": [
@@ -10628,7 +10629,7 @@
           ]
         },
         {
-          "id": "AjNQMQ_",
+          "id": "lwhz2P5",
           "uid": "XFwqW",
           "label": "Replace any Energy Hammer",
           "options": [
@@ -10798,7 +10799,7 @@
           ]
         },
         {
-          "id": "4qFDYEs",
+          "id": "_smKLWc",
           "uid": "3WRYt",
           "label": "Upgrade all models with",
           "options": [
@@ -10857,7 +10858,7 @@
       "sync": "oqnnu0gk8q6hyyny",
       "sections": [
         {
-          "id": "jhU3djf",
+          "id": "nyRu6j0",
           "uid": "g0B9izB5OL",
           "label": "Replace all Combat Shields and CCWS",
           "options": [
@@ -10952,7 +10953,7 @@
           ]
         },
         {
-          "id": "L8cYxCi",
+          "id": "sNnmPEB",
           "uid": "WV5n0LORZv",
           "label": "Replace one Storm Rifle",
           "options": [
@@ -11106,7 +11107,7 @@
           ]
         },
         {
-          "id": "iN6JFbb",
+          "id": "uMiXIAU",
           "uid": "jR_61Ibm1V",
           "label": "Replace any CCW",
           "options": [
@@ -11274,7 +11275,7 @@
       "sync": "oqnnu0gk8q6hyyny",
       "sections": [
         {
-          "id": "mnSiEbn",
+          "id": "KxJ9Se3",
           "uid": "zqeFSXVL",
           "label": "Upgrade with one",
           "options": [
@@ -11313,7 +11314,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 20,
+                  "cost": 15,
                   "unitId": "iy5ufzEhh"
                 }
               ],
@@ -11342,7 +11343,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 30,
+                  "cost": 25,
                   "unitId": "iy5ufzEhh"
                 }
               ],
@@ -11445,7 +11446,7 @@
       "sync": "oqnnu0gk8q6hyyny",
       "sections": [
         {
-          "id": "QZx-0NN",
+          "id": "xDEMS2p",
           "uid": "BJyFZ_Vj",
           "label": "Upgrade with one",
           "options": [
@@ -11486,7 +11487,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 20,
+                  "cost": 15,
                   "unitId": "QwJGn4zzz"
                 }
               ],
@@ -11546,7 +11547,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 30,
+                  "cost": 25,
                   "unitId": "QwJGn4zzz"
                 }
               ],
@@ -11683,7 +11684,7 @@
       "sync": "oqnnu0gk8q6hyyny",
       "sections": [
         {
-          "id": "YPmqc0g",
+          "id": "BoEtrMS",
           "uid": "uRIaNYVw",
           "label": "Replace Flamer Pistol",
           "options": [
@@ -11938,7 +11939,7 @@
           ]
         },
         {
-          "id": "7bZ0G1w",
+          "id": "sFCMeqK",
           "uid": "_gCt332a",
           "label": "Upgrade Master Marksman Carbine with",
           "options": [
@@ -11981,7 +11982,7 @@
           ]
         },
         {
-          "id": "jDxqkCT",
+          "id": "TLPP-Wh",
           "uid": "cnQtNTO9",
           "label": "Replace CCW",
           "options": [
@@ -12147,7 +12148,7 @@
           ]
         },
         {
-          "id": "D3_2RTm",
+          "id": "-G50yDx",
           "uid": "e257zOHa",
           "label": "Upgrade with one",
           "options": [
@@ -12231,7 +12232,7 @@
       "sync": "oqnnu0gk8q6hyyny",
       "sections": [
         {
-          "id": "qrOwdV3",
+          "id": "gQLCzFo",
           "uid": "3Fkpxf-g",
           "label": "Replace Combat Shield and CCW",
           "options": [
@@ -12427,7 +12428,7 @@
           ]
         },
         {
-          "id": "TPcMdPp",
+          "id": "ybiOpfc",
           "uid": "2ru0RtZ5",
           "label": "Replace Flamer Pistol",
           "options": [
@@ -12682,7 +12683,7 @@
           ]
         },
         {
-          "id": "NbN0_J2",
+          "id": "FF9Q98r",
           "uid": "n9kp_AO6",
           "label": "Upgrade Master Marksman Carbine with",
           "options": [
@@ -12725,7 +12726,7 @@
           ]
         },
         {
-          "id": "l3wqLym",
+          "id": "NdpKk3O",
           "uid": "GUxtD7eo",
           "label": "Replace CCW",
           "options": [
@@ -12899,7 +12900,7 @@
       "sync": "oqnnu0gk8q6hyyny",
       "sections": [
         {
-          "id": "Ny7gDku",
+          "id": "s7RZs5T",
           "uid": "yLXKDa8uru",
           "label": "Replace Death Launcher",
           "options": [
@@ -12953,7 +12954,7 @@
       "sync": "oqnnu0gk8q6hyyny",
       "sections": [
         {
-          "id": "kDW3Vev",
+          "id": "xpUizop",
           "uid": "yGpcKtN3",
           "label": "Upgrade with",
           "options": [
@@ -13586,7 +13587,7 @@
       "effectSkirmish": ""
     }
   ],
-  "modifiedAt": "2026-05-04T09:50:57.933Z",
+  "modifiedAt": "2026-05-05T08:01:51.255Z",
   "editedAt": "2025-12-02T11:37:26.940Z",
   "official": true,
   "versionString": "3.5.3",

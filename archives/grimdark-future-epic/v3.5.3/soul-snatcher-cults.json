@@ -1563,7 +1563,7 @@
       "hint": "Cult Leader",
       "sections": [
         {
-          "id": "IXB6Uvs",
+          "id": "4LR8p2x",
           "uid": "X4x98aW",
           "label": "Replace Dual Sharp Claw",
           "options": [
@@ -1739,7 +1739,7 @@
           ]
         },
         {
-          "id": "FuqKGht",
+          "id": "E2s-gsI",
           "uid": "JgKBk",
           "label": "Replace Cult Pistol",
           "options": [
@@ -1887,7 +1887,7 @@
           ]
         },
         {
-          "id": "KpwtbGH",
+          "id": "dAq5D32",
           "uid": "vN3el",
           "label": "Upgrade with one",
           "options": [
@@ -1972,7 +1972,7 @@
       "hint": "Cult Hitman",
       "sections": [
         {
-          "id": "N4qQTMX",
+          "id": "Gj5SLEP",
           "uid": "RoH-xaG",
           "label": "Replace Cult Pistol",
           "options": [
@@ -2058,10 +2058,50 @@
           ]
         },
         {
-          "id": "v51sIJ8",
+          "id": "VieaeTp",
           "uid": "AE8iAT2",
           "label": "Replace Cult Pistol and CCW",
           "options": [
+            {
+              "uid": "iaYBroJ",
+              "cost": 10,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "cost": 5,
+                  "unitId": "QVwQQXN"
+                }
+              ],
+              "gains": [
+                {
+                  "id": "qFNiuv8I",
+                  "name": "Toxin Blades",
+                  "type": "ArmyBookWeapon",
+                  "range": null,
+                  "attacks": 4,
+                  "weaponId": "qFNiuv8I",
+                  "specialRules": [
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "rating": 1
+                    },
+                    {
+                      "id": "Naqc5mga9Uha",
+                      "name": "Bane"
+                    }
+                  ],
+                  "attacksMultiplier": 1,
+                  "label": "Toxin Blades (A4, AP(1), Bane)",
+                  "count": 1
+                }
+              ],
+              "label": "Toxin Blades (A4, AP(1), Bane)",
+              "parentPackageUid": "C1",
+              "parentSectionUid": "AE8iAT2",
+              "parentSectionId": "AE8iAT2",
+              "id": "iaYBroJ"
+            },
             {
               "uid": "OLB347p",
               "cost": 15,
@@ -2103,46 +2143,6 @@
               "parentSectionUid": "AE8iAT2",
               "parentSectionId": "AE8iAT2",
               "id": "OLB347p"
-            },
-            {
-              "uid": "iaYBroJ",
-              "cost": 10,
-              "type": "ArmyBookUpgradeOption",
-              "costs": [
-                {
-                  "cost": 10,
-                  "unitId": "QVwQQXN"
-                }
-              ],
-              "gains": [
-                {
-                  "id": "qFNiuv8I",
-                  "name": "Toxin Blades",
-                  "type": "ArmyBookWeapon",
-                  "range": null,
-                  "attacks": 4,
-                  "weaponId": "qFNiuv8I",
-                  "specialRules": [
-                    {
-                      "id": "17crjK7P6_w6",
-                      "name": "AP",
-                      "rating": 1
-                    },
-                    {
-                      "id": "Naqc5mga9Uha",
-                      "name": "Bane"
-                    }
-                  ],
-                  "attacksMultiplier": 1,
-                  "label": "Toxin Blades (A4, AP(1), Bane)",
-                  "count": 1
-                }
-              ],
-              "label": "Toxin Blades (A4, AP(1), Bane)",
-              "parentPackageUid": "C1",
-              "parentSectionUid": "AE8iAT2",
-              "parentSectionId": "AE8iAT2",
-              "id": "iaYBroJ"
             }
           ],
           "parentPackageUid": "C1",
@@ -2154,7 +2154,7 @@
           ]
         },
         {
-          "id": "powr9Gg",
+          "id": "UnYnjdJ",
           "uid": "DJR-GUH75J",
           "label": "Upgrade with one",
           "options": [
@@ -2236,7 +2236,7 @@
       "hint": "Minions",
       "sections": [
         {
-          "id": "s0PYED7",
+          "id": "KjIqjqS",
           "uid": "9sQ0YE5",
           "label": "Replace up to two Rifles",
           "options": [
@@ -2442,7 +2442,7 @@
           ]
         },
         {
-          "id": "goKsdrL",
+          "id": "lpypI-C",
           "uid": "YtLprT46",
           "label": "Upgrade one model with",
           "options": [
@@ -2494,7 +2494,7 @@
       "hint": "Minion Weapon Teams",
       "sections": [
         {
-          "id": "cg8tWGp",
+          "id": "TgT9fNr",
           "uid": "vF0Tiea",
           "label": "Replace any Mortar",
           "options": [
@@ -2676,7 +2676,7 @@
       "hint": "Neophytes",
       "sections": [
         {
-          "id": "mr4eVCm",
+          "id": "pb1I7pA",
           "uid": "7QqxwDt",
           "label": "Replace any Rifle",
           "options": [
@@ -2728,7 +2728,7 @@
           ]
         },
         {
-          "id": "gNM_DuV",
+          "id": "AB2A91k",
           "uid": "pt9e8V0",
           "label": "Replace one Rifle",
           "options": [
@@ -3023,7 +3023,7 @@
           ]
         },
         {
-          "id": "lIdRImq",
+          "id": "gY-eLDJ",
           "uid": "3B10Sllq",
           "label": "Upgrade one model with",
           "options": [
@@ -3068,7 +3068,7 @@
           }
         },
         {
-          "id": "JwoyGBp",
+          "id": "tPvcneW",
           "uid": "opqI_EA",
           "label": "Replace one Rifle and CCW",
           "options": [
@@ -3175,7 +3175,7 @@
           ]
         },
         {
-          "id": "kN4EaBf",
+          "id": "BO6Nl6v",
           "uid": "0i8pABP",
           "label": "Replace one CCW",
           "options": [
@@ -3312,7 +3312,7 @@
       "hint": "Acolytes",
       "sections": [
         {
-          "id": "FELxZe5",
+          "id": "jM5iCZQ",
           "uid": "b5fiPg0",
           "label": "Replace one Pistol",
           "options": [
@@ -3371,7 +3371,7 @@
           ]
         },
         {
-          "id": "v9mfBzQ",
+          "id": "9oVFy4I",
           "uid": "CIJ-Kir",
           "label": "Replace one Pistol and Mutant Claws",
           "options": [
@@ -3542,7 +3542,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 25,
+                  "cost": 15,
                   "unitId": "USqMvAJ"
                 }
               ],
@@ -3597,7 +3597,7 @@
           ]
         },
         {
-          "id": "IQUGvlR",
+          "id": "PrnsNmz",
           "uid": "SX6S8wCH",
           "label": "Upgrade one model with",
           "options": [
@@ -3642,7 +3642,7 @@
           }
         },
         {
-          "id": "l0SkAXe",
+          "id": "uBHWPqN",
           "uid": "CFnFx",
           "label": "Replace one Pistol and Mutant Claw",
           "options": [
@@ -3707,7 +3707,7 @@
           ]
         },
         {
-          "id": "ByAzbB6",
+          "id": "fyDSQpP",
           "uid": "QO9mEQd",
           "label": "Replace Sharp Claw",
           "options": [
@@ -3805,7 +3805,7 @@
       "hint": "Mutant Brutes",
       "sections": [
         {
-          "id": "sdDWZGT",
+          "id": "y6kwNbR",
           "uid": "G5po4_b",
           "label": "Replace one Heavy Pick",
           "options": [
@@ -3948,7 +3948,7 @@
       "hint": "Soul-Snatchers",
       "sections": [
         {
-          "id": "f8h_ll5",
+          "id": "P_kCeew",
           "uid": "DO2LaKMgYb",
           "label": "Replace all Adrenaline Fueleds",
           "options": [
@@ -3993,7 +3993,7 @@
           ]
         },
         {
-          "id": "YKuiU49",
+          "id": "SSXbs-_",
           "uid": "8Js-iCM",
           "label": "Upgrade one model with",
           "options": [
@@ -4048,7 +4048,7 @@
       "hint": "Neophyte Bikers",
       "sections": [
         {
-          "id": "XnzWxVX",
+          "id": "0jX_wkW",
           "uid": "zyFbueh",
           "label": "Replace any Rifle",
           "options": [
@@ -4162,7 +4162,7 @@
           ]
         },
         {
-          "id": "hkPWJuZ",
+          "id": "9kI7u8D",
           "uid": "eE3WCng",
           "label": "Replace one CCW",
           "options": [
@@ -4376,7 +4376,7 @@
       "hint": "Neophyte Quadbike",
       "sections": [
         {
-          "id": "bVWfBVb",
+          "id": "rlfDgWu",
           "uid": "eEF9iPx",
           "label": "Replace Heavy Flamer",
           "options": [
@@ -4465,7 +4465,7 @@
           ]
         },
         {
-          "id": "gioO266",
+          "id": "BdSFvuE",
           "uid": "I8b2m3FN",
           "label": "Upgrade with",
           "options": [
@@ -4513,7 +4513,7 @@
       "hint": "Attack Vehicle",
       "sections": [
         {
-          "id": "OBeWVJT",
+          "id": "KLlwvYy",
           "uid": "fYyXk8J",
           "label": "Replace Heavy Mining Laser",
           "options": [
@@ -4574,7 +4574,7 @@
           ]
         },
         {
-          "id": "aLYifL5",
+          "id": "ZiSTyJo",
           "uid": "l66ATpl",
           "label": "Upgrade with one",
           "options": [
@@ -4682,7 +4682,7 @@
       "hint": "Vehicle Upgrades",
       "sections": [
         {
-          "id": "5eALTge",
+          "id": "iNB5PzS",
           "uid": "qtw163T",
           "label": "Upgrade with any",
           "options": [
@@ -4765,7 +4765,7 @@
           }
         },
         {
-          "id": "NVRH2iu",
+          "id": "G0dAixi",
           "uid": "Boe17pa",
           "label": "Upgrade with",
           "options": [
@@ -4838,7 +4838,7 @@
       "hint": "Light APC",
       "sections": [
         {
-          "id": "6a-vtLT",
+          "id": "i2MXILn",
           "uid": "ln8ECJY",
           "label": "Replace any Heavy Flamer",
           "options": [
@@ -4890,7 +4890,7 @@
           ]
         },
         {
-          "id": "-rpHQsG",
+          "id": "7KMgWoV",
           "uid": "fkuHFh4",
           "label": "Replace one Heavy Flamer",
           "options": [
@@ -4944,7 +4944,7 @@
           ]
         },
         {
-          "id": "TmqVeyB",
+          "id": "YPaHlh7",
           "uid": "UvCCl",
           "label": "Upgrade with",
           "options": [
@@ -4996,7 +4996,7 @@
       "hint": "Grinder Truck",
       "sections": [
         {
-          "id": "09bwQ8r",
+          "id": "SFpbeoQ",
           "uid": "lkbv4rH",
           "label": "Replace Heavy Quake Cannon",
           "options": [
@@ -5096,7 +5096,7 @@
           ]
         },
         {
-          "id": "z64BGFd",
+          "id": "DN0grG-",
           "uid": "Q9Msl",
           "label": "Upgrade with",
           "options": [
@@ -5144,7 +5144,7 @@
       "hint": "Battle Tank",
       "sections": [
         {
-          "id": "I263rCc",
+          "id": "2rYHwpU",
           "uid": "CXlkbRN",
           "label": "Replace Nova Cannon",
           "options": [
@@ -5397,7 +5397,7 @@
           ]
         },
         {
-          "id": "at5H0a8",
+          "id": "34oFvwS",
           "uid": "89fkyYs",
           "label": "Replace Twin Heavy Flamer",
           "options": [
@@ -5527,7 +5527,7 @@
           ]
         },
         {
-          "id": "w_kI5Eu",
+          "id": "FhYnLI7",
           "uid": "OTm1CEX",
           "label": "Upgrade with one",
           "options": [
@@ -5672,7 +5672,7 @@
       "hint": "Light Walker",
       "sections": [
         {
-          "id": "KYyAspv",
+          "id": "Sf438Pp",
           "uid": "0kao5kx",
           "label": "Replace Twin Heavy Flamer",
           "options": [
@@ -5931,7 +5931,7 @@
       "hint": "Specialists - Cult Leader",
       "sections": [
         {
-          "id": "MUXZOmI",
+          "id": "UCxNrY4",
           "uid": "GSysU",
           "label": "Upgrade with one",
           "options": [
@@ -6137,7 +6137,7 @@
       "hint": "Mining Truck",
       "sections": [
         {
-          "id": "g-w-hlJ",
+          "id": "AcvNgvj",
           "uid": "YtxZe",
           "label": "Upgrade with",
           "options": [
@@ -6185,7 +6185,7 @@
       "hint": "Brute Champion",
       "sections": [
         {
-          "id": "OOQbWh-",
+          "id": "AdQrjx2",
           "uid": "dUpN0gs0U_",
           "label": "Replace Massive Heavy Pick",
           "options": [
@@ -6307,7 +6307,7 @@
           ]
         },
         {
-          "id": "tUqCfhM",
+          "id": "DG46jTD",
           "uid": "atkcq6xX",
           "label": "Upgrade with",
           "options": [
@@ -6355,7 +6355,7 @@
       "hint": "Supreme Leader",
       "sections": [
         {
-          "id": "xJiwV_Y",
+          "id": "YbFLxsv",
           "uid": "4sZF8B7Qca",
           "label": "Replace Sharp Claw",
           "options": [
@@ -6405,7 +6405,7 @@
           ]
         },
         {
-          "id": "jfIibnV",
+          "id": "CZBRn7E",
           "uid": "WtsENy59",
           "label": "Upgrade with",
           "options": [
@@ -6446,7 +6446,7 @@
           "variant": "upgrade"
         },
         {
-          "id": "kj5SjZi",
+          "id": "6ef_VZy",
           "uid": "K6NVek03qF",
           "label": "Replace Adrenaline Fueled",
           "options": [
@@ -6568,7 +6568,7 @@
       "hint": "Specialists - Supreme Leader",
       "sections": [
         {
-          "id": "d-QdxNq",
+          "id": "VPAcYvN",
           "uid": "x6iwN-4R",
           "label": "Upgrade with one",
           "options": [
@@ -6771,7 +6771,7 @@
       "hint": "Specialists - Brute",
       "sections": [
         {
-          "id": "pXNw7U6",
+          "id": "KffnHLb",
           "uid": "0-cmWeW_",
           "label": "Upgrade with one",
           "options": [
@@ -6915,7 +6915,7 @@
       "hint": "Mutant Soul-Snatchers",
       "sections": [
         {
-          "id": "CDgsSE-",
+          "id": "kyU6Duy",
           "uid": "uTstZTqH",
           "label": "Replace all Displacer Glands",
           "options": [
@@ -6961,7 +6961,7 @@
           ]
         },
         {
-          "id": "crUfKfJ",
+          "id": "jTqFK4n",
           "uid": "0usff1jb",
           "label": "Upgrade one model with",
           "options": [
@@ -7639,7 +7639,7 @@
       "effectSkirmish": ""
     }
   ],
-  "modifiedAt": "2026-05-04T09:53:47.001Z",
+  "modifiedAt": "2026-05-05T08:03:02.660Z",
   "editedAt": "2026-04-28T18:27:11.876Z",
   "official": true,
   "versionString": "3.5.3",

@@ -864,7 +864,7 @@
       "hint": "Magma Champion",
       "sections": [
         {
-          "id": "ITzUTlQ",
+          "id": "6GvH3yk",
           "uid": "C8uw9MG",
           "label": "Replace Heavy Hand Weapon",
           "options": [
@@ -1030,7 +1030,7 @@
           ]
         },
         {
-          "id": "bYniNSY",
+          "id": "OVArXuN",
           "uid": "xBdCrYI",
           "label": "Upgrade with one",
           "options": [
@@ -1184,7 +1184,7 @@
           }
         },
         {
-          "id": "Ol5ndam",
+          "id": "38OplZG",
           "uid": "_jenN1wN",
           "label": "Upgrade with",
           "options": [
@@ -1224,7 +1224,7 @@
           "variant": "upgrade"
         },
         {
-          "id": "M9s034a",
+          "id": "4RK95S8",
           "uid": "fX2JnxU",
           "label": "Upgrade with one",
           "options": [
@@ -1373,7 +1373,7 @@
       "hint": "Command Group",
       "sections": [
         {
-          "id": "5XlTOeF",
+          "id": "hL5cFbh",
           "uid": "UkxBvgO",
           "label": "Upgrade up to three models with one",
           "options": [
@@ -1498,7 +1498,7 @@
       "hint": "Shield Berserkers",
       "sections": [
         {
-          "id": "2tE2pKT",
+          "id": "KV_FY1d",
           "uid": "899dra9",
           "label": "Replace all Hand Weapons",
           "options": [
@@ -1508,7 +1508,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 25,
+                  "cost": 30,
                   "unitId": "uOrMraA"
                 }
               ],
@@ -1549,7 +1549,7 @@
           ]
         },
         {
-          "id": "AL4pCXD",
+          "id": "pJ7uNOW",
           "uid": "L5cHI-NG",
           "label": "Upgrade one model with",
           "options": [
@@ -1601,7 +1601,7 @@
       "hint": "Auric Marksmen",
       "sections": [
         {
-          "id": "CQ26T2U",
+          "id": "CMc6OhK",
           "uid": "9fpVdqy",
           "label": "Replace all Lava Long-Shooters",
           "options": [
@@ -1652,7 +1652,7 @@
           ]
         },
         {
-          "id": "4LQajiv",
+          "id": "MT-p1mW",
           "uid": "s2ww_Nk",
           "label": "Replace one Lava Long-Shooter",
           "options": [
@@ -1742,7 +1742,7 @@
           ]
         },
         {
-          "id": "jip74he",
+          "id": "N-ZkqmR",
           "uid": "G5Yn46IT",
           "label": "Upgrade one model with any",
           "options": [
@@ -1828,7 +1828,7 @@
       "hint": "Volcanic Leader",
       "sections": [
         {
-          "id": "onT_4RH",
+          "id": "Ybbl71f",
           "uid": "RXMUz",
           "label": "Replace Hand Weapon",
           "options": [
@@ -1860,6 +1860,39 @@
               "parentSectionUid": "RXMUz",
               "parentSectionId": "RXMUz",
               "id": "h3Xmi"
+            },
+            {
+              "uid": "D5BbhR8ZM9",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "cost": 5,
+                  "unitId": "v2vdu9x"
+                }
+              ],
+              "gains": [
+                {
+                  "id": null,
+                  "name": "Spear",
+                  "type": "ArmyBookWeapon",
+                  "count": 1,
+                  "range": 0,
+                  "attacks": 3,
+                  "weaponId": "qKaeLN8E",
+                  "specialRules": [
+                    {
+                      "id": "c45Fw0D2oGOk",
+                      "name": "Counter",
+                      "type": "ArmyBookRule"
+                    }
+                  ],
+                  "attacksMultiplier": 1,
+                  "label": "Spear (A3, Counter)"
+                }
+              ],
+              "label": "Spear (A3, Counter)",
+              "parentSectionId": "RXMUz",
+              "id": "D5BbhR8ZM9"
             },
             {
               "uid": "jwnqa",
@@ -1896,39 +1929,6 @@
               "parentSectionUid": "RXMUz",
               "parentSectionId": "RXMUz",
               "id": "jwnqa"
-            },
-            {
-              "uid": "D5BbhR8ZM9",
-              "type": "ArmyBookUpgradeOption",
-              "costs": [
-                {
-                  "cost": 10,
-                  "unitId": "v2vdu9x"
-                }
-              ],
-              "gains": [
-                {
-                  "id": null,
-                  "name": "Spear",
-                  "type": "ArmyBookWeapon",
-                  "count": 1,
-                  "range": 0,
-                  "attacks": 3,
-                  "weaponId": "qKaeLN8E",
-                  "specialRules": [
-                    {
-                      "id": "c45Fw0D2oGOk",
-                      "name": "Counter",
-                      "type": "ArmyBookRule"
-                    }
-                  ],
-                  "attacksMultiplier": 1,
-                  "label": "Spear (A3, Counter)"
-                }
-              ],
-              "label": "Spear (A3, Counter)",
-              "parentSectionId": "RXMUz",
-              "id": "D5BbhR8ZM9"
             },
             {
               "uid": "cdV1l",
@@ -2017,7 +2017,7 @@
           ]
         },
         {
-          "id": "_syM3oV",
+          "id": "IdBSkul",
           "uid": "EgRgr",
           "label": "Upgrade with one",
           "options": [
@@ -2130,7 +2130,7 @@
           }
         },
         {
-          "id": "QwrRuMl",
+          "id": "kqmGK5t",
           "uid": "RMf1cXfd",
           "label": "Upgrade with",
           "options": [
@@ -2170,7 +2170,7 @@
           "variant": "upgrade"
         },
         {
-          "id": "9YxDQsJ",
+          "id": "eL6FQz1",
           "uid": "28UXeAqdEg",
           "label": "Upgrade with one",
           "options": [
@@ -2299,7 +2299,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 380,
+                  "cost": 385,
                   "unitId": "v2vdu9x"
                 }
               ],
@@ -2407,7 +2407,7 @@
       "hint": "Doom Call",
       "sections": [
         {
-          "id": "F34-rfV",
+          "id": "ekzE-rb",
           "uid": "ODOKfbZGDd",
           "label": "Upgrade with",
           "options": [
@@ -2458,7 +2458,7 @@
       "hint": "Volcanic Berserkers",
       "sections": [
         {
-          "id": "OtPf5Z_",
+          "id": "V6KstZ_",
           "uid": "qc3b9uoEo4",
           "label": "Upgrade one model with any",
           "options": [
@@ -2543,7 +2543,7 @@
       "hint": "Volcanic Lizard",
       "sections": [
         {
-          "id": "BHTO01N",
+          "id": "qP5-DqL",
           "uid": "PFttWdrdQT",
           "label": "Replace Spit Lava",
           "options": [
@@ -2602,7 +2602,7 @@
       "hint": "Specialists - Leader",
       "sections": [
         {
-          "id": "fMnKngz",
+          "id": "PXHdUdt",
           "uid": "pWVmRL-Q",
           "label": "Upgrade with one",
           "options": [
@@ -2778,7 +2778,7 @@
       "hint": "Berserker Throwers",
       "sections": [
         {
-          "id": "489P6rB",
+          "id": "55rE78E",
           "uid": "taqnmDVr",
           "label": "Upgrade all models with",
           "options": [
@@ -2822,7 +2822,7 @@
           }
         },
         {
-          "id": "9KabBgR",
+          "id": "0O-9ui8",
           "uid": "5HXbLxF6",
           "label": "Upgrade one model with",
           "options": [
@@ -2874,7 +2874,7 @@
       "hint": "Specialists - Champion",
       "sections": [
         {
-          "id": "bcP0G8J",
+          "id": "SazV0D6",
           "uid": "J0HqF1rw",
           "label": "Upgrade with one",
           "options": [
@@ -3082,7 +3082,7 @@
       "hint": "Berserker Guards",
       "sections": [
         {
-          "id": "6qSeMzs",
+          "id": "qirMiUo",
           "uid": "inbQ23gjQz",
           "label": "Replace all Spears",
           "options": [
@@ -3131,7 +3131,7 @@
           ]
         },
         {
-          "id": "GDfGshs",
+          "id": "R-V6F8s",
           "uid": "rgKAGnRP",
           "label": "Upgrade all models with",
           "options": [
@@ -3175,7 +3175,7 @@
           }
         },
         {
-          "id": "WTzD9ce",
+          "id": "I2yGShV",
           "uid": "s4M7CW8b",
           "label": "Upgrade one model with",
           "options": [
@@ -3782,7 +3782,7 @@
       "effectSkirmish": ""
     }
   ],
-  "modifiedAt": "2026-05-04T09:54:06.353Z",
+  "modifiedAt": "2026-05-05T08:03:10.560Z",
   "editedAt": "2026-04-02T12:26:01.767Z",
   "official": true,
   "versionString": "3.5.3",

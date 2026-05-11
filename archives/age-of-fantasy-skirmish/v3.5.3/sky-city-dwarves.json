@@ -714,7 +714,7 @@
     },
     {
       "id": "zhS4dQT",
-      "cost": 155,
+      "cost": 165,
       "name": "Sky-Gunboat",
       "size": 1,
       "bases": {
@@ -844,7 +844,7 @@
     },
     {
       "id": "BBcwECv",
-      "cost": 230,
+      "cost": 245,
       "name": "Sky-Frigate",
       "size": 1,
       "bases": {
@@ -974,7 +974,7 @@
     },
     {
       "id": "wBqS9bm",
-      "cost": 340,
+      "cost": 365,
       "name": "Sky-Ironclad",
       "size": 1,
       "bases": {
@@ -1109,7 +1109,7 @@
       "hint": "Sky-Captain",
       "sections": [
         {
-          "id": "mDNTlob",
+          "id": "vRyuasG",
           "uid": "WjqeBx8",
           "label": "Replace Hand Weapon",
           "options": [
@@ -1199,7 +1199,7 @@
           ]
         },
         {
-          "id": "VzcK5g6",
+          "id": "84uS6U9",
           "uid": "s2J9-lm",
           "label": "Replace Flame Pistol",
           "options": [
@@ -1328,7 +1328,7 @@
       "hint": "Balloon Master",
       "sections": [
         {
-          "id": "C6__u4P",
+          "id": "wFi_GtS",
           "uid": "I5OEqqH",
           "label": "Replace Twin Sky-Pistol",
           "options": [
@@ -1376,7 +1376,7 @@
           ]
         },
         {
-          "id": "S9dv4Rf",
+          "id": "k5YPQ0Q",
           "uid": "KIFxcya",
           "label": "Replace Chain-Sword",
           "options": [
@@ -1425,7 +1425,7 @@
           ]
         },
         {
-          "id": "i_zPWem",
+          "id": "hl1Ro1M",
           "uid": "ucy-lCHVpa",
           "label": "Replace Cannon-Gun",
           "options": [
@@ -1477,7 +1477,7 @@
       "hint": "Crew",
       "sections": [
         {
-          "id": "sBHNn0V",
+          "id": "4kdJ2Bc",
           "uid": "7JOZWl_",
           "label": "Replace one Sky-Pistol and Hand Weapon",
           "options": [
@@ -1531,7 +1531,7 @@
           ]
         },
         {
-          "id": "xd7RSOh",
+          "id": "V2k7DBX",
           "uid": "ZzFOs4A",
           "label": "Replace one Sky-Pistol",
           "options": [
@@ -1621,7 +1621,7 @@
           ]
         },
         {
-          "id": "nSXrGJs",
+          "id": "mC5mfyu",
           "uid": "UXkgkD2",
           "label": "Replace one Sky-Pistol",
           "options": [
@@ -1716,7 +1716,7 @@
           ]
         },
         {
-          "id": "VlvrAiB",
+          "id": "-Cvuqyy",
           "uid": "2vqaepYO",
           "label": "Upgrade all models with",
           "options": [
@@ -1767,7 +1767,7 @@
       "hint": "Gunners",
       "sections": [
         {
-          "id": "J5UqDLX",
+          "id": "7yV0jlm",
           "uid": "uqWLpcm",
           "label": "Replace one Sky-Rifle",
           "options": [
@@ -1859,7 +1859,7 @@
       "hint": "Balloon Wardens",
       "sections": [
         {
-          "id": "PYEhThT",
+          "id": "Avx6Cmk",
           "uid": "bwsJF0f",
           "label": "Replace one Twin Sky-Pistol and Sky-Pike",
           "options": [
@@ -2091,7 +2091,7 @@
           ]
         },
         {
-          "id": "GvznhhJ",
+          "id": "0tQoIP3",
           "uid": "_qP8yWY",
           "label": "Replace one Twin Sky-Pistol",
           "options": [
@@ -2156,7 +2156,7 @@
           ]
         },
         {
-          "id": "ioL_hpp",
+          "id": "SHCbGF6",
           "uid": "H80ZVwv",
           "label": "Upgrade one model with",
           "options": [
@@ -2208,7 +2208,7 @@
       "hint": "Balloon Riggers",
       "sections": [
         {
-          "id": "3t0QE3d",
+          "id": "y59RGik",
           "uid": "d1erjdr",
           "label": "Replace one Rivet Gun and Chain-Sword",
           "options": [
@@ -2440,7 +2440,7 @@
           ]
         },
         {
-          "id": "ohij-v6",
+          "id": "ZAalCy1",
           "uid": "TWzJDPU3",
           "label": "Upgrade all models with",
           "options": [
@@ -2484,7 +2484,7 @@
           }
         },
         {
-          "id": "UIje1Zf",
+          "id": "O-YEaGo",
           "uid": "ELi4mg-",
           "label": "Upgrade one model with",
           "options": [
@@ -2537,7 +2537,7 @@
       "hint": "Sky-Gunboat",
       "sections": [
         {
-          "id": "joEIVBs",
+          "id": "YcN_At3",
           "uid": "RXBKv8P",
           "label": "Replace Deck Gun and Drop Bombs",
           "options": [
@@ -2547,7 +2547,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 15,
+                  "cost": 10,
                   "unitId": "zhS4dQT"
                 }
               ],
@@ -2588,7 +2588,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 35,
+                  "cost": 25,
                   "unitId": "zhS4dQT"
                 }
               ],
@@ -2628,7 +2628,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 40,
+                  "cost": 35,
                   "unitId": "zhS4dQT"
                 }
               ],
@@ -2665,7 +2665,7 @@
           ]
         },
         {
-          "id": "4TOytON",
+          "id": "Y8mWTZc",
           "uid": "OQ8aM0wl",
           "label": "Replace Sky-Barrage",
           "options": [
@@ -2674,7 +2674,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 20,
+                  "cost": 15,
                   "unitId": "zhS4dQT"
                 }
               ],
@@ -2716,7 +2716,7 @@
       "hint": "Sky-Frigate",
       "sections": [
         {
-          "id": "LRrpxSQ",
+          "id": "0lvxeFc",
           "uid": "FjkOkby",
           "label": "Replace Drop Bombs",
           "options": [
@@ -2725,7 +2725,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 50,
+                  "cost": 35,
                   "unitId": "BBcwECv"
                 }
               ],
@@ -2758,7 +2758,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 60,
+                  "cost": 45,
                   "unitId": "BBcwECv"
                 }
               ],
@@ -2799,7 +2799,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 65,
+                  "cost": 50,
                   "unitId": "BBcwECv"
                 }
               ],
@@ -2843,7 +2843,7 @@
           ]
         },
         {
-          "id": "sk0N4M_",
+          "id": "b34KvJ2",
           "uid": "iuK2ZJ2E",
           "label": "Replace Sky-Barrage",
           "options": [
@@ -2852,7 +2852,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 35,
+                  "cost": 30,
                   "unitId": "BBcwECv"
                 }
               ],
@@ -2894,7 +2894,7 @@
       "hint": "Sky-Ironclad",
       "sections": [
         {
-          "id": "mDQ1yLw",
+          "id": "zvEusvR",
           "uid": "NytG3Ar",
           "label": "Replace Drop Bombs",
           "options": [
@@ -2904,7 +2904,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 20,
+                  "cost": 0,
                   "unitId": "wBqS9bm"
                 }
               ],
@@ -2940,7 +2940,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 45,
+                  "cost": 25,
                   "unitId": "wBqS9bm"
                 }
               ],
@@ -2978,7 +2978,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 90,
+                  "cost": 65,
                   "unitId": "wBqS9bm"
                 }
               ],
@@ -3022,7 +3022,7 @@
           ]
         },
         {
-          "id": "dk_ShTI",
+          "id": "VA9yC_S",
           "uid": "1yvUpFuP",
           "label": "Replace Sky-Barrage",
           "options": [
@@ -3031,7 +3031,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 50,
+                  "cost": 40,
                   "unitId": "wBqS9bm"
                 }
               ],
@@ -3073,7 +3073,7 @@
       "hint": "Heavy Gunners",
       "sections": [
         {
-          "id": "rjfe8us",
+          "id": "J-3x6vr",
           "uid": "2RGFC",
           "label": "Replace any Flame-Gun",
           "options": [
@@ -3245,7 +3245,7 @@
       "hint": "Specialists - Captain",
       "sections": [
         {
-          "id": "ZeT9S7S",
+          "id": "_C2hqGq",
           "uid": "a-6XqPOW",
           "label": "Upgrade with one",
           "options": [
@@ -3451,7 +3451,7 @@
           }
         },
         {
-          "id": "fvk90BZ",
+          "id": "OfqOo4F",
           "uid": "KotRNFDE",
           "label": "Upgrade with",
           "options": [
@@ -3498,7 +3498,7 @@
       "hint": "Specialists - Balloon Master",
       "sections": [
         {
-          "id": "OByMH-Z",
+          "id": "NMuEMzG",
           "uid": "fwdDVxjl",
           "label": "Upgrade with one",
           "options": [
@@ -3670,7 +3670,7 @@
           }
         },
         {
-          "id": "kTCkjc1",
+          "id": "2SYO67L",
           "uid": "jh3a10jL",
           "label": "Upgrade with",
           "options": [
@@ -3717,7 +3717,7 @@
       "hint": "Balloon Hunters",
       "sections": [
         {
-          "id": "sBplRVP",
+          "id": "revZUCo",
           "uid": "pzIgfXI6",
           "label": "Upgrade one model with one",
           "options": [
@@ -3817,7 +3817,7 @@
           }
         },
         {
-          "id": "3tXqQT4",
+          "id": "FYiVlsS",
           "uid": "k3jRU67N",
           "label": "Upgrade all models with",
           "options": [
@@ -3868,7 +3868,7 @@
       "hint": "Aether-Cloud Generator",
       "sections": [
         {
-          "id": "aUTC-J5",
+          "id": "a5G_joV",
           "uid": "rGM4oT54",
           "label": "Upgrade with",
           "options": [
@@ -4504,7 +4504,7 @@
       "effectSkirmish": ""
     }
   ],
-  "modifiedAt": "2026-05-04T09:53:45.264Z",
+  "modifiedAt": "2026-05-05T08:03:01.892Z",
   "editedAt": "2026-04-13T15:59:02.994Z",
   "official": true,
   "versionString": "3.5.3",

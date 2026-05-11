@@ -357,7 +357,7 @@
     },
     {
       "id": "A_o3aHw",
-      "cost": 225,
+      "cost": 215,
       "name": "Pranksters",
       "size": 5,
       "bases": {
@@ -629,7 +629,7 @@
     },
     {
       "id": "cZ2fRIl",
-      "cost": 255,
+      "cost": 250,
       "name": "Heavy Jetbike",
       "size": 1,
       "bases": {
@@ -744,7 +744,7 @@
       "hint": "Jesters",
       "sections": [
         {
-          "id": "cGh67b7",
+          "id": "RlBWyrn",
           "uid": "6vXdYYK",
           "label": "Replace any Fragment Pistol",
           "options": [
@@ -795,7 +795,7 @@
           ]
         },
         {
-          "id": "hGlkEUI",
+          "id": "mW9_dfY",
           "uid": "ziNSA",
           "label": "Replace one Fragment Pistol",
           "options": [
@@ -854,7 +854,7 @@
           ]
         },
         {
-          "id": "8h_8z49",
+          "id": "F_q83W5",
           "uid": "l5O6jLf",
           "label": "Replace any CCW",
           "options": [
@@ -949,7 +949,7 @@
           ]
         },
         {
-          "id": "DgBCCeE",
+          "id": "nCnYvR_",
           "uid": "cTmvWaJ",
           "label": "Replace one CCW",
           "options": [
@@ -1048,7 +1048,7 @@
       "hint": "Jetbikes",
       "sections": [
         {
-          "id": "t_q7Z9S",
+          "id": "ml9tS72",
           "uid": "YE_-3l9",
           "label": "Replace any Exploding Bolas",
           "options": [
@@ -1057,7 +1057,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 15,
+                  "cost": 10,
                   "unitId": "cek8t2a"
                 }
               ],
@@ -1179,7 +1179,7 @@
       "hint": "Heavy Jetbike",
       "sections": [
         {
-          "id": "ZUathZj",
+          "id": "B3wVPtB",
           "uid": "iKzVxfR_5A",
           "label": "Replace Energy Glaive",
           "options": [
@@ -1188,7 +1188,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 5,
+                  "cost": 15,
                   "unitId": "cZ2fRIl"
                 }
               ],
@@ -1229,7 +1229,7 @@
           ]
         },
         {
-          "id": "BJlYmWN",
+          "id": "rD_uYLZ",
           "uid": "Wj6VmOLxrL",
           "label": "Replace Twin Fragment Pistol",
           "options": [
@@ -1353,7 +1353,7 @@
           ]
         },
         {
-          "id": "0CynoqD",
+          "id": "u55ylN9",
           "uid": "CWRP2Ny3fj",
           "label": "Upgrade with any",
           "options": [
@@ -1434,7 +1434,7 @@
       "hint": "Master Jester",
       "sections": [
         {
-          "id": "cwUKcZW",
+          "id": "PpERYag",
           "uid": "2n3r-",
           "label": "Replace Master Fragment Pistol",
           "options": [
@@ -1603,7 +1603,7 @@
           ]
         },
         {
-          "id": "swaSAD8",
+          "id": "sUWn2hi",
           "uid": "lhAyM",
           "label": "Replace Dagger and Deathly Touch",
           "options": [
@@ -1693,7 +1693,7 @@
           ]
         },
         {
-          "id": "X_lI1_d",
+          "id": "qyuyHB_",
           "uid": "DRM2W",
           "label": "Replace any CCW",
           "options": [
@@ -1788,7 +1788,7 @@
           ]
         },
         {
-          "id": "kSaNO8u",
+          "id": "YAkqrq0",
           "uid": "QknvZyHG",
           "label": "Upgrade with",
           "options": [
@@ -1828,7 +1828,7 @@
           "variant": "upgrade"
         },
         {
-          "id": "flrudl1",
+          "id": "PEhMTSB",
           "uid": "XMA4o",
           "label": "Upgrade with one",
           "options": [
@@ -1981,7 +1981,7 @@
       "hint": "Specialists - Jester",
       "sections": [
         {
-          "id": "sXYl8u2",
+          "id": "Gl9OEqg",
           "uid": "0itSx",
           "label": "Upgrade with one",
           "options": [
@@ -2216,7 +2216,7 @@
       "hint": "Twisted Illusion",
       "sections": [
         {
-          "id": "bAE6yMQ",
+          "id": "O2NL_cz",
           "uid": "PSN1w",
           "label": "Upgrade all models with",
           "options": [
@@ -2274,7 +2274,7 @@
       "hint": "Specialists - Fool",
       "sections": [
         {
-          "id": "Myoprtw",
+          "id": "t48MBH_",
           "uid": "nC2C_oFp",
           "label": "Upgrade with one",
           "options": [
@@ -3021,7 +3021,7 @@
       "effectSkirmish": ""
     }
   ],
-  "modifiedAt": "2026-05-04T09:51:39.974Z",
+  "modifiedAt": "2026-05-05T08:02:08.475Z",
   "editedAt": "2026-04-26T21:11:12.684Z",
   "official": true,
   "versionString": "3.5.3",

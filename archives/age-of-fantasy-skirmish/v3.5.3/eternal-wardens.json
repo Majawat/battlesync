@@ -247,7 +247,7 @@
       "hint": "Eternal Lord",
       "sections": [
         {
-          "id": "NSBf2ji",
+          "id": "d5WULjk",
           "uid": "c7zTUJT",
           "label": "Replace Heavy Hand Weapon",
           "options": [
@@ -293,43 +293,6 @@
               "id": "IvhRA-N"
             },
             {
-              "uid": "pPXGzhA",
-              "cost": 10,
-              "type": "ArmyBookUpgradeOption",
-              "costs": [
-                {
-                  "unitId": "afr8Kxs",
-                  "cost": 5
-                }
-              ],
-              "gains": [
-                {
-                  "id": "YuAuN0um",
-                  "name": "Heavy Great Weapon",
-                  "type": "ArmyBookWeapon",
-                  "range": 0,
-                  "attacks": 4,
-                  "weaponId": "_FOfqfiL",
-                  "specialRules": [
-                    {
-                      "id": "17crjK7P6_w6",
-                      "name": "AP",
-                      "type": "ArmyBookRule",
-                      "rating": 4
-                    }
-                  ],
-                  "attacksMultiplier": 1,
-                  "label": "Heavy Great Weapon (A4, AP(4))",
-                  "count": 1
-                }
-              ],
-              "label": "Heavy Great Weapon (A4, AP(4))",
-              "parentPackageUid": "A1",
-              "parentSectionUid": "c7zTUJT",
-              "parentSectionId": "c7zTUJT",
-              "id": "pPXGzhA"
-            },
-            {
               "uid": "1Z0h6x7ASu",
               "type": "ArmyBookUpgradeOption",
               "costs": [
@@ -370,6 +333,43 @@
               "label": "Great Thunder Mace (A2, AP(2), Blast(3), Lacerate)",
               "parentSectionId": "c7zTUJT",
               "id": "1Z0h6x7ASu"
+            },
+            {
+              "uid": "pPXGzhA",
+              "cost": 10,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "unitId": "afr8Kxs",
+                  "cost": 5
+                }
+              ],
+              "gains": [
+                {
+                  "id": "YuAuN0um",
+                  "name": "Heavy Great Weapon",
+                  "type": "ArmyBookWeapon",
+                  "range": 0,
+                  "attacks": 4,
+                  "weaponId": "_FOfqfiL",
+                  "specialRules": [
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "type": "ArmyBookRule",
+                      "rating": 4
+                    }
+                  ],
+                  "attacksMultiplier": 1,
+                  "label": "Heavy Great Weapon (A4, AP(4))",
+                  "count": 1
+                }
+              ],
+              "label": "Heavy Great Weapon (A4, AP(4))",
+              "parentPackageUid": "A1",
+              "parentSectionUid": "c7zTUJT",
+              "parentSectionId": "c7zTUJT",
+              "id": "pPXGzhA"
             },
             {
               "uid": "B_ft2",
@@ -457,7 +457,7 @@
           ]
         },
         {
-          "id": "1YERZVF",
+          "id": "695XPRr",
           "uid": "1C1GbIV",
           "label": "Upgrade with one",
           "options": [
@@ -767,7 +767,7 @@
       "hint": "Guardian Elite",
       "sections": [
         {
-          "id": "Z-2xCM7",
+          "id": "m18ToPR",
           "uid": "gzf-hi-",
           "label": "Replace Heavy Hand Weapon",
           "options": [
@@ -934,7 +934,7 @@
           ]
         },
         {
-          "id": "4xBMSYy",
+          "id": "q81Kq4Z",
           "uid": "G_gj_BS",
           "label": "Upgrade with",
           "options": [
@@ -1011,7 +1011,7 @@
       "hint": "Command Group",
       "sections": [
         {
-          "id": "BA-jaHd",
+          "id": "QCVGP5i",
           "uid": "4hH8jUe",
           "label": "Upgrade with one",
           "options": [
@@ -1092,7 +1092,7 @@
       "hint": "Guardians",
       "sections": [
         {
-          "id": "cdU9QEJ",
+          "id": "Z35Ap-Y",
           "uid": "nIMmVsU",
           "label": "Replace Heavy Halberd",
           "options": [
@@ -1181,7 +1181,7 @@
       "hint": "Paladins",
       "sections": [
         {
-          "id": "3oP7k0Y",
+          "id": "xpeUEew",
           "uid": "UA2w8zT",
           "label": "Replace Sword & Staff",
           "options": [
@@ -1250,42 +1250,10 @@
           ]
         },
         {
-          "id": "_c6tEKe",
+          "id": "E1Mgvud",
           "uid": "wQ00JHh",
           "label": "Replace Hand Weapon",
           "options": [
-            {
-              "uid": "CwUmEIC",
-              "cost": 10,
-              "type": "ArmyBookUpgradeOption",
-              "costs": [],
-              "gains": [
-                {
-                  "id": "6njl0O1i",
-                  "name": "Great Weapon",
-                  "type": "ArmyBookWeapon",
-                  "range": 0,
-                  "attacks": 3,
-                  "weaponId": "u1hn0c_y",
-                  "specialRules": [
-                    {
-                      "id": "17crjK7P6_w6",
-                      "name": "AP",
-                      "type": "ArmyBookRule",
-                      "rating": 2
-                    }
-                  ],
-                  "attacksMultiplier": 1,
-                  "label": "Great Weapon (A3, AP(2))",
-                  "count": 1
-                }
-              ],
-              "label": "Great Weapon (A3, AP(2))",
-              "parentPackageUid": "G1",
-              "parentSectionUid": "wQ00JHh",
-              "parentSectionId": "wQ00JHh",
-              "id": "CwUmEIC"
-            },
             {
               "uid": "bsJOxus7SU",
               "type": "ArmyBookUpgradeOption",
@@ -1322,6 +1290,38 @@
               "label": "Thunder Mace (A1, AP(2), Blast(3), Lacerate)",
               "parentSectionId": "wQ00JHh",
               "id": "bsJOxus7SU"
+            },
+            {
+              "uid": "CwUmEIC",
+              "cost": 10,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [],
+              "gains": [
+                {
+                  "id": "6njl0O1i",
+                  "name": "Great Weapon",
+                  "type": "ArmyBookWeapon",
+                  "range": 0,
+                  "attacks": 3,
+                  "weaponId": "u1hn0c_y",
+                  "specialRules": [
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "type": "ArmyBookRule",
+                      "rating": 2
+                    }
+                  ],
+                  "attacksMultiplier": 1,
+                  "label": "Great Weapon (A3, AP(2))",
+                  "count": 1
+                }
+              ],
+              "label": "Great Weapon (A3, AP(2))",
+              "parentPackageUid": "G1",
+              "parentSectionUid": "wQ00JHh",
+              "parentSectionId": "wQ00JHh",
+              "id": "CwUmEIC"
             }
           ],
           "parentPackageUid": "G1",
@@ -1332,7 +1332,7 @@
           ]
         },
         {
-          "id": "jRwuD1v",
+          "id": "nf9BNvf",
           "uid": "0P_vgRi",
           "label": "Upgrade with",
           "options": [
@@ -1377,7 +1377,7 @@
       "hint": "Wardens",
       "sections": [
         {
-          "id": "rbVv8g9",
+          "id": "cA1C1GZ",
           "uid": "j-OMKPM",
           "label": "Replace Heavy Hand Weapon",
           "options": [
@@ -1498,7 +1498,7 @@
       "hint": "Eternals",
       "sections": [
         {
-          "id": "EnmRRiK",
+          "id": "7cdDxzX",
           "uid": "G8FIwsX",
           "label": "Replace Great Glaive",
           "options": [
@@ -1648,7 +1648,7 @@
       "hint": "Destroyers",
       "sections": [
         {
-          "id": "KADR-fX",
+          "id": "hXB0ujG",
           "uid": "bNvRTCH",
           "label": "Replace Meteor Hammer",
           "options": [
@@ -1741,7 +1741,7 @@
       "hint": "Warden Shooters",
       "sections": [
         {
-          "id": "k4kJHFK",
+          "id": "r6F2dbK",
           "uid": "i9CtNIi",
           "label": "Replace Bow",
           "options": [
@@ -1873,7 +1873,7 @@
       "hint": "Winged Wardens",
       "sections": [
         {
-          "id": "OHq_rgK",
+          "id": "kSl6zqK",
           "uid": "hy4fkkm",
           "label": "Replace Heavy Hand Weapon",
           "options": [
@@ -2030,7 +2030,7 @@
           ]
         },
         {
-          "id": "xRzZn6L",
+          "id": "ML_-6NM",
           "uid": "rAAUQro",
           "label": "Replace Javelin",
           "options": [
@@ -2079,7 +2079,7 @@
           ]
         },
         {
-          "id": "nOXEeea",
+          "id": "qq7lRXo",
           "uid": "JUCT5",
           "label": "Upgrade with",
           "options": [
@@ -2122,7 +2122,7 @@
       "hint": "Warden Marskmen",
       "sections": [
         {
-          "id": "ELrIFh9",
+          "id": "Kqcarng",
           "uid": "w4Ise99",
           "label": "Replace Cyclone Crossbow",
           "options": [
@@ -2181,7 +2181,7 @@
       "hint": "Gryph Hunters",
       "sections": [
         {
-          "id": "mH3a54p",
+          "id": "JZWr_z5",
           "uid": "RfW_UA6",
           "label": "Replace Hand Weapon",
           "options": [
@@ -2314,7 +2314,7 @@
       "hint": "Drake-Lion Paladins",
       "sections": [
         {
-          "id": "yJfcoQ9",
+          "id": "EIQMFXN",
           "uid": "uoue6h-",
           "label": "Replace any Sword & Staff",
           "options": [
@@ -2362,7 +2362,7 @@
           ]
         },
         {
-          "id": "fiifqGp",
+          "id": "jCdhsFO",
           "uid": "e-1wv1X",
           "label": "Upgrade with",
           "options": [
@@ -2407,7 +2407,7 @@
       "hint": "Drake Eternal",
       "sections": [
         {
-          "id": "ASbeuM1",
+          "id": "rzWZ0lr",
           "uid": "kxEN88Y",
           "label": "Replace Thunder Mace",
           "options": [
@@ -2572,7 +2572,7 @@
       "hint": "Dragon Eternal",
       "sections": [
         {
-          "id": "lgjYTc2",
+          "id": "OZSEfyJ",
           "uid": "lSsY6bP",
           "label": "Replace Heavy Lance",
           "options": [
@@ -2661,7 +2661,7 @@
       "hint": "Storm Chariot",
       "sections": [
         {
-          "id": "xcfIMuF",
+          "id": "Ugh0Dlo",
           "uid": "iQKP3SW",
           "label": "Replace Spear Crew",
           "options": [
@@ -2711,7 +2711,7 @@
       "hint": "Eternal Artillery",
       "sections": [
         {
-          "id": "IyihsGA",
+          "id": "S4PNAKC",
           "uid": "87rw34B",
           "label": "Replace Celestial Bolt Ballista",
           "options": [
@@ -2798,7 +2798,7 @@
       "hint": "Warden Knight",
       "sections": [
         {
-          "id": "uB0CYRO",
+          "id": "z0ukYcy",
           "uid": "Hv2za",
           "label": "Replace Sword & Staff",
           "options": [
@@ -3000,7 +3000,7 @@
           ]
         },
         {
-          "id": "waFkzUA",
+          "id": "QRq052r",
           "uid": "KmLjS",
           "label": "Upgrade with one",
           "options": [
@@ -3091,7 +3091,7 @@
           }
         },
         {
-          "id": "v7T5ZFF",
+          "id": "zfAK7Nh",
           "uid": "TSOKz",
           "label": "Upgrade with",
           "options": [
@@ -3133,7 +3133,7 @@
           "variant": "upgrade"
         },
         {
-          "id": "f3atgQD",
+          "id": "ePrM82s",
           "uid": "g7KKf",
           "label": "Upgrade with one",
           "options": [
@@ -3356,7 +3356,7 @@
       "hint": "Specialists - Knight",
       "sections": [
         {
-          "id": "OtOqxIQ",
+          "id": "pSA5M1i",
           "uid": "IoN9d3fg",
           "label": "Upgrade with one",
           "options": [
@@ -3393,6 +3393,38 @@
               "id": "_fqZRq5q"
             },
             {
+              "uid": "jZq4QuEH",
+              "cost": 50,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "unitId": "IDLyyFy",
+                  "cost": 10
+                }
+              ],
+              "gains": [
+                {
+                  "name": "Soul Collector",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Soul Collector (Bane when Shooting Aura)",
+                  "content": [
+                    {
+                      "id": "ba6LlbpoLkSu",
+                      "name": "Bane when Shooting Aura",
+                      "type": "ArmyBookRule"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Soul Collector (Bane when Shooting Aura)",
+              "parentSectionId": "IoN9d3fg",
+              "parentPackageUid": "W6y9T1x6",
+              "parentSectionUid": "BS47S",
+              "id": "jZq4QuEH"
+            },
+            {
               "uid": "prYq5BFo",
               "type": "ArmyBookUpgradeOption",
               "costs": [
@@ -3423,38 +3455,6 @@
               "parentSectionId": "IoN9d3fg",
               "parentPackageUid": "W6y9T1x6",
               "id": "prYq5BFo"
-            },
-            {
-              "uid": "jZq4QuEH",
-              "cost": 50,
-              "type": "ArmyBookUpgradeOption",
-              "costs": [
-                {
-                  "unitId": "IDLyyFy",
-                  "cost": 15
-                }
-              ],
-              "gains": [
-                {
-                  "name": "Soul Collector",
-                  "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Soul Collector (Bane when Shooting Aura)",
-                  "content": [
-                    {
-                      "id": "ba6LlbpoLkSu",
-                      "name": "Bane when Shooting Aura",
-                      "type": "ArmyBookRule"
-                    }
-                  ],
-                  "count": 1
-                }
-              ],
-              "label": "Soul Collector (Bane when Shooting Aura)",
-              "parentSectionId": "IoN9d3fg",
-              "parentPackageUid": "W6y9T1x6",
-              "parentSectionUid": "BS47S",
-              "id": "jZq4QuEH"
             },
             {
               "uid": "mD7S8OG8DL",
@@ -3533,7 +3533,7 @@
       "hint": "Beast-Hounds",
       "sections": [
         {
-          "id": "f7U-Ndo",
+          "id": "wfvvBjB",
           "uid": "Bk1hdYwYNz",
           "label": "Replace Hunting Hound",
           "options": [
@@ -3577,7 +3577,7 @@
       "hint": "Specialists - Guardian",
       "sections": [
         {
-          "id": "nbBzYSn",
+          "id": "JVHMWx4",
           "uid": "1nV-5JBu",
           "label": "Upgrade with one",
           "options": [
@@ -3620,7 +3620,7 @@
               "costs": [
                 {
                   "unitId": "h0ceTgP",
-                  "cost": 15
+                  "cost": 10
                 }
               ],
               "gains": [
@@ -3723,7 +3723,7 @@
       "hint": "Specialists - Lord",
       "sections": [
         {
-          "id": "mLj2Zw0",
+          "id": "voss4Im",
           "uid": "Caq-SkYw",
           "label": "Upgrade with one",
           "options": [
@@ -3899,7 +3899,7 @@
       "hint": "Lightning Beacon",
       "sections": [
         {
-          "id": "ETXU77v",
+          "id": "RGb-J3T",
           "uid": "bIvmbbtZ",
           "label": "Upgrade with",
           "options": [
@@ -3942,7 +3942,7 @@
       "hint": "Storm Caller",
       "sections": [
         {
-          "id": "NhV-8bN",
+          "id": "wfxpNQ5",
           "uid": "8F43SUjJ",
           "label": "Upgrade with",
           "options": [
@@ -4544,7 +4544,7 @@
       "effectSkirmish": ""
     }
   ],
-  "modifiedAt": "2026-05-04T09:51:43.467Z",
+  "modifiedAt": "2026-05-05T08:02:10.149Z",
   "editedAt": "2026-05-04T01:00:32.371Z",
   "official": true,
   "versionString": "3.5.3",

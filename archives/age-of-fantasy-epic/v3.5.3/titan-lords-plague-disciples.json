@@ -1165,7 +1165,7 @@
       "sync": "3j10zage1lddt6sr",
       "sections": [
         {
-          "id": "1h1WbKN",
+          "id": "5xzqb0V",
           "uid": "mwtk5oT",
           "label": "Upgrade with one",
           "options": [
@@ -1320,7 +1320,7 @@
           }
         },
         {
-          "id": "nx9VeHs",
+          "id": "nhb7Amf",
           "uid": "qwPhMIc",
           "label": "Upgrade with any",
           "options": [
@@ -1500,7 +1500,7 @@
       "sync": "3j10zage1lddt6sr",
       "sections": [
         {
-          "id": "iguZTR5",
+          "id": "H9Jk2cb",
           "uid": "-8TYPq3",
           "label": "Replace any Hull-Fuser",
           "options": [
@@ -1560,7 +1560,7 @@
           ]
         },
         {
-          "id": "pwfU7fK",
+          "id": "XtB917u",
           "uid": "RP1p4",
           "label": "Upgrade with one",
           "options": [
@@ -1719,7 +1719,7 @@
           }
         },
         {
-          "id": "GRkhJDa",
+          "id": "8nDrFES",
           "uid": "qAqTz8z",
           "label": "Upgrade with any",
           "options": [
@@ -1894,7 +1894,7 @@
       "sync": "3j10zage1lddt6sr",
       "sections": [
         {
-          "id": "fPVXG8H",
+          "id": "OkmrVZN",
           "uid": "8aKZr",
           "label": "Replace any Titan Harpoon Cannon",
           "options": [
@@ -2036,7 +2036,7 @@
           ]
         },
         {
-          "id": "hN48UDD",
+          "id": "Kga0FjF",
           "uid": "U8Jid8v",
           "label": "Replace any Twin Shoulder-Cannons",
           "options": [
@@ -2093,7 +2093,7 @@
           ]
         },
         {
-          "id": "vHXQyDt",
+          "id": "e27g2x0",
           "uid": "QzoW2jQ",
           "label": "Upgrade with one",
           "options": [
@@ -2189,7 +2189,7 @@
           }
         },
         {
-          "id": "bce67un",
+          "id": "r7MT-aC",
           "uid": "nl7LwjE",
           "label": "Upgrade with any",
           "options": [
@@ -2332,7 +2332,7 @@
       "sync": "3j10zage1lddt6sr",
       "sections": [
         {
-          "id": "dOF7WC4",
+          "id": "xxUH1Kt",
           "uid": "9f2pT",
           "label": "Replace any Heavy Hammer",
           "options": [
@@ -2384,6 +2384,44 @@
               "id": "fgUpF"
             },
             {
+              "uid": "UnQgw",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "cost": 15,
+                  "unitId": "03ko_zNcQ"
+                },
+                {
+                  "cost": 15,
+                  "unitId": "0eVd3GhQg"
+                }
+              ],
+              "gains": [
+                {
+                  "id": null,
+                  "name": "Heavy Lance",
+                  "type": "ArmyBookWeapon",
+                  "count": 1,
+                  "range": 0,
+                  "attacks": 6,
+                  "weaponId": "YwjVl4QQ",
+                  "specialRules": [
+                    {
+                      "id": "umbiz4tnEyF8",
+                      "name": "Thrust"
+                    }
+                  ],
+                  "attacksMultiplier": 1,
+                  "label": "Heavy Lance (A6, Thrust)"
+                }
+              ],
+              "label": "Heavy Lance (A6, Thrust)",
+              "parentPackageUid": "FkW7e",
+              "parentSectionUid": "9f2pT",
+              "parentSectionId": "9f2pT",
+              "id": "UnQgw"
+            },
+            {
               "uid": "z-vHs",
               "cost": 35,
               "type": "ArmyBookUpgradeOption",
@@ -2422,44 +2460,6 @@
               "parentSectionUid": "9f2pT",
               "parentSectionId": "9f2pT",
               "id": "z-vHs"
-            },
-            {
-              "uid": "UnQgw",
-              "type": "ArmyBookUpgradeOption",
-              "costs": [
-                {
-                  "cost": 20,
-                  "unitId": "03ko_zNcQ"
-                },
-                {
-                  "cost": 15,
-                  "unitId": "0eVd3GhQg"
-                }
-              ],
-              "gains": [
-                {
-                  "id": null,
-                  "name": "Heavy Lance",
-                  "type": "ArmyBookWeapon",
-                  "count": 1,
-                  "range": 0,
-                  "attacks": 6,
-                  "weaponId": "YwjVl4QQ",
-                  "specialRules": [
-                    {
-                      "id": "umbiz4tnEyF8",
-                      "name": "Thrust"
-                    }
-                  ],
-                  "attacksMultiplier": 1,
-                  "label": "Heavy Lance (A6, Thrust)"
-                }
-              ],
-              "label": "Heavy Lance (A6, Thrust)",
-              "parentPackageUid": "FkW7e",
-              "parentSectionUid": "9f2pT",
-              "parentSectionId": "9f2pT",
-              "id": "UnQgw"
             },
             {
               "uid": "OwfwV",
@@ -2606,7 +2606,7 @@
           ]
         },
         {
-          "id": "su4Hp0r",
+          "id": "ObBErty",
           "uid": "sfpHi",
           "label": "Replace Titan Shield",
           "options": [
@@ -2671,7 +2671,7 @@
       "sync": "3j10zage1lddt6sr",
       "sections": [
         {
-          "id": "E3CNJ9L",
+          "id": "6kqip08",
           "uid": "qYV-K",
           "label": "Replace any Fusion Blaster",
           "options": [
@@ -2779,7 +2779,7 @@
       "sync": "3j10zage1lddt6sr",
       "sections": [
         {
-          "id": "C5oeP8s",
+          "id": "knoKPt_",
           "uid": "2c80N",
           "label": "Replace any Titan Hammer",
           "options": [
@@ -2833,7 +2833,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 40,
+                  "cost": 30,
                   "unitId": "YetjuXFnh"
                 },
                 {
@@ -2872,7 +2872,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 50,
+                  "cost": 55,
                   "unitId": "YetjuXFnh"
                 },
                 {
@@ -2956,7 +2956,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 55,
+                  "cost": 60,
                   "unitId": "YetjuXFnh"
                 },
                 {
@@ -3049,7 +3049,7 @@
           ]
         },
         {
-          "id": "-_4v0-Q",
+          "id": "YBge7m-",
           "uid": "2Ff7H",
           "label": "Replace Titan Shield",
           "options": [
@@ -3114,7 +3114,7 @@
       "sync": "3j10zage1lddt6sr",
       "sections": [
         {
-          "id": "VtvECxU",
+          "id": "0qdczSb",
           "uid": "BZ-ZR",
           "label": "Replace any Titan Fusion Cannon",
           "options": [
@@ -3399,7 +3399,7 @@
       "sync": "3j10zage1lddt6sr",
       "sections": [
         {
-          "id": "jNEAyFA",
+          "id": "mm12-lk",
           "uid": "8FX7HE_h",
           "label": "Replace Titan Shield",
           "options": [
@@ -3451,7 +3451,7 @@
           ]
         },
         {
-          "id": "oer-oxX",
+          "id": "0NZVyWW",
           "uid": "oPrDPpb9",
           "label": "Replace any Heavy Hammer",
           "options": [
@@ -3697,7 +3697,7 @@
           ]
         },
         {
-          "id": "wcTrRZU",
+          "id": "PI7UgkY",
           "uid": "2MCfLgQz",
           "label": "Replace one Heavy Hammer",
           "options": [
@@ -3831,7 +3831,7 @@
           ]
         },
         {
-          "id": "30VYqxD",
+          "id": "Hhg2A0M",
           "uid": "bhclT2Ai",
           "label": "Upgrade with any",
           "options": [
@@ -3977,7 +3977,7 @@
       "sync": "3j10zage1lddt6sr",
       "sections": [
         {
-          "id": "sX8AE16",
+          "id": "i1Hi01z",
           "uid": "stm0U-Uj",
           "label": "Replace Titan Shield",
           "options": [
@@ -4029,7 +4029,7 @@
           ]
         },
         {
-          "id": "NLUvWsm",
+          "id": "2iBFO3s",
           "uid": "wipc3iGd",
           "label": "Replace any Heavy Hammer",
           "options": [
@@ -4275,7 +4275,7 @@
           ]
         },
         {
-          "id": "pI5r4Jt",
+          "id": "_-WXscw",
           "uid": "U3TkglOG",
           "label": "Replace one Heavy Hammer",
           "options": [
@@ -4446,7 +4446,7 @@
           ]
         },
         {
-          "id": "vWIf2JB",
+          "id": "Cugk_RW",
           "uid": "r6nRIwZ5Nc",
           "label": "Replace Hull-Fuser",
           "options": [
@@ -4492,7 +4492,7 @@
           ]
         },
         {
-          "id": "BOu0ey9",
+          "id": "_Ypxb5h",
           "uid": "PfcBzgWy",
           "label": "Upgrade with any",
           "options": [
@@ -5181,7 +5181,7 @@
       "effectSkirmish": ""
     }
   ],
-  "modifiedAt": "2026-05-04T09:53:55.338Z",
+  "modifiedAt": "2026-05-05T08:03:06.633Z",
   "editedAt": "2026-04-10T15:53:41.357Z",
   "official": true,
   "versionString": "3.5.2",

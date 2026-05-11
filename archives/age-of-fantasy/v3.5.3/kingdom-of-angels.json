@@ -561,7 +561,7 @@
     },
     {
       "id": "rJxE8Vl",
-      "cost": 210,
+      "cost": 205,
       "name": "Burning Angels",
       "size": 3,
       "bases": {
@@ -1427,10 +1427,48 @@
       "hint": "High Angel",
       "sections": [
         {
-          "id": "ZR4l-af",
+          "id": "kyV6zwB",
           "uid": "m5PBHz-",
           "label": "Replace Heavy Blessed Greatsword",
           "options": [
+            {
+              "uid": "-MqFiOC",
+              "cost": 25,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "cost": 0,
+                  "unitId": "r4Z1aBG"
+                }
+              ],
+              "gains": [
+                {
+                  "id": null,
+                  "name": "Heavy Flame Sword",
+                  "type": "ArmyBookWeapon",
+                  "count": 1,
+                  "range": null,
+                  "attacks": 6,
+                  "weaponId": "PO_k22Lq",
+                  "specialRules": [
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "rating": 1
+                    },
+                    {
+                      "id": "Naqc5mga9Uha",
+                      "name": "Bane"
+                    }
+                  ],
+                  "attacksMultiplier": 1,
+                  "label": "Heavy Flame Sword (A6, AP(1), Bane)"
+                }
+              ],
+              "label": "Heavy Flame Sword (A6, AP(1), Bane)",
+              "parentSectionId": "m5PBHz-",
+              "id": "-MqFiOC"
+            },
             {
               "uid": "NbEtlWfQ8k",
               "type": "ArmyBookUpgradeOption",
@@ -1538,44 +1576,6 @@
               "label": "Great Weapon (A6, AP(2))",
               "parentSectionId": "m5PBHz-",
               "id": "p1Bv-otH_r"
-            },
-            {
-              "uid": "-MqFiOC",
-              "cost": 25,
-              "type": "ArmyBookUpgradeOption",
-              "costs": [
-                {
-                  "cost": 5,
-                  "unitId": "r4Z1aBG"
-                }
-              ],
-              "gains": [
-                {
-                  "id": null,
-                  "name": "Heavy Flame Sword",
-                  "type": "ArmyBookWeapon",
-                  "count": 1,
-                  "range": null,
-                  "attacks": 6,
-                  "weaponId": "PO_k22Lq",
-                  "specialRules": [
-                    {
-                      "id": "17crjK7P6_w6",
-                      "name": "AP",
-                      "rating": 1
-                    },
-                    {
-                      "id": "Naqc5mga9Uha",
-                      "name": "Bane"
-                    }
-                  ],
-                  "attacksMultiplier": 1,
-                  "label": "Heavy Flame Sword (A6, AP(1), Bane)"
-                }
-              ],
-              "label": "Heavy Flame Sword (A6, AP(1), Bane)",
-              "parentSectionId": "m5PBHz-",
-              "id": "-MqFiOC"
             },
             {
               "uid": "rkD2UnlSkG",
@@ -1724,7 +1724,7 @@
           ]
         },
         {
-          "id": "IdSR0gT",
+          "id": "8S3TSfq",
           "uid": "D0OONUDx9n",
           "label": "Upgrade with one",
           "options": [
@@ -1817,7 +1817,7 @@
           }
         },
         {
-          "id": "yG9x6O5",
+          "id": "yL5Ibno",
           "uid": "FtjrcXlm",
           "label": "Upgrade with one",
           "options": [
@@ -1898,7 +1898,7 @@
       "hint": "Champion",
       "sections": [
         {
-          "id": "StcV-fo",
+          "id": "Tu09dd_",
           "uid": "5WtRrTd",
           "label": "Replace Heavy Hand Weapon",
           "options": [
@@ -2113,7 +2113,7 @@
           ]
         },
         {
-          "id": "miicwR3",
+          "id": "-9XyrBY",
           "uid": "KPs1q0VH6B",
           "label": "Upgrade with",
           "options": [
@@ -2156,7 +2156,7 @@
           "variant": "upgrade"
         },
         {
-          "id": "Sn2xCm3",
+          "id": "KZVZnOh",
           "uid": "fiKmlZM",
           "label": "Upgrade with one",
           "options": [
@@ -2439,7 +2439,7 @@
       "hint": "Specialists - Champion",
       "sections": [
         {
-          "id": "7imxH72",
+          "id": "CzoJWO1",
           "uid": "-8FL3Mz",
           "label": "Upgrade with one",
           "options": [
@@ -2648,7 +2648,7 @@
       "hint": "Command Group",
       "sections": [
         {
-          "id": "3xkWlbH",
+          "id": "FwC8YvY",
           "uid": "pPweu7S",
           "label": "Upgrade up to three models with one",
           "options": [
@@ -2845,7 +2845,7 @@
       "hint": "Infantry",
       "sections": [
         {
-          "id": "QahXanE",
+          "id": "UoTjwRH",
           "uid": "tVELJ2O",
           "label": "Replace all Hand Weapons",
           "options": [
@@ -2939,7 +2939,7 @@
       "hint": "Angelic Artillery",
       "sections": [
         {
-          "id": "HJibCUR",
+          "id": "DOrtJZs",
           "uid": "VNph7Np",
           "label": "Replace Light Bolt Thrower",
           "options": [
@@ -2993,7 +2993,7 @@
       "hint": "Abbess",
       "sections": [
         {
-          "id": "hIkY4r2",
+          "id": "FG_z0Yf",
           "uid": "jNdSQ",
           "label": "Replace Heavy Blessed Glaive",
           "options": [
@@ -3081,7 +3081,7 @@
           ]
         },
         {
-          "id": "tplOGbm",
+          "id": "g-DIJtc",
           "uid": "xYE8NSTRU6",
           "label": "Upgrade with",
           "options": [
@@ -3118,7 +3118,7 @@
           "variant": "upgrade"
         },
         {
-          "id": "Z30k95C",
+          "id": "10gop83",
           "uid": "v5q6V",
           "label": "Upgrade with one",
           "options": [
@@ -3281,7 +3281,7 @@
       "hint": "Burning Angels",
       "sections": [
         {
-          "id": "y3Cqd5j",
+          "id": "zHysfC2",
           "uid": "Fl8YGOdIn1",
           "label": "Replace all Flame Swords",
           "options": [
@@ -3333,7 +3333,7 @@
           ]
         },
         {
-          "id": "JlEFUzZ",
+          "id": "9DCt9y1",
           "uid": "YQx_MLJiX_",
           "label": "Upgrade all models with",
           "options": [
@@ -3404,7 +3404,7 @@
       "hint": "Frozen Angels",
       "sections": [
         {
-          "id": "fncJU0S",
+          "id": "eCxi3x0",
           "uid": "LFJ-h1xlga",
           "label": "Replace all Ice Halberds",
           "options": [
@@ -3457,7 +3457,7 @@
           ]
         },
         {
-          "id": "WDGORgA",
+          "id": "Xghyz8D",
           "uid": "OvcrWYj3VZ",
           "label": "Upgrade one model with",
           "options": [
@@ -3508,7 +3508,7 @@
       "hint": "Panther Chariot",
       "sections": [
         {
-          "id": "Kp6lemQ",
+          "id": "OLA0SBh",
           "uid": "e9RPj2dtEO",
           "label": "Replace Halberd Crew",
           "options": [
@@ -3592,7 +3592,7 @@
       "hint": "Palace Guard",
       "sections": [
         {
-          "id": "AHEtS6h",
+          "id": "lz7ZH0-",
           "uid": "_BVhaZqC5i",
           "label": "Replace all Blessed Greatswords",
           "options": [
@@ -3688,7 +3688,7 @@
       "hint": "Paladins",
       "sections": [
         {
-          "id": "Mqt8Kgu",
+          "id": "V6jjbuc",
           "uid": "h-pg5GAZel",
           "label": "Replace one Great Weapon",
           "options": [
@@ -3749,7 +3749,7 @@
       "hint": "Battle Angels",
       "sections": [
         {
-          "id": "FELTKnY",
+          "id": "rijKVbq",
           "uid": "qGrgz26AEK",
           "label": "Replace all Blessed Greatswords",
           "options": [
@@ -3901,7 +3901,7 @@
           ]
         },
         {
-          "id": "icmY_5f",
+          "id": "0p91_qO",
           "uid": "dUy76son",
           "label": "Upgrade one model with one",
           "options": [
@@ -3987,7 +3987,7 @@
       "hint": "Panther Riders",
       "sections": [
         {
-          "id": "M1v3Slp",
+          "id": "sQIyjDp",
           "uid": "R6K-BxUCsW",
           "label": "Replace all Shortbows",
           "options": [
@@ -4075,7 +4075,7 @@
       "hint": "Penitents",
       "sections": [
         {
-          "id": "o48itwP",
+          "id": "sNfWEMs",
           "uid": "yS6eRCjpiU",
           "label": "Upgrade all models with",
           "options": [
@@ -4126,7 +4126,7 @@
       "hint": "Paladin Knights",
       "sections": [
         {
-          "id": "3fKkbMi",
+          "id": "hr2qV4t",
           "uid": "tFoJacJ6Os",
           "label": "Replace all Lances",
           "options": [
@@ -4175,7 +4175,7 @@
           ]
         },
         {
-          "id": "a-hpbXQ",
+          "id": "4uboIqR",
           "uid": "1MCGaCaDLO",
           "label": "Replace one Great Weapon",
           "options": [
@@ -4236,7 +4236,7 @@
       "hint": "Specialists - Angel",
       "sections": [
         {
-          "id": "iCt30K1",
+          "id": "BG1ecn7",
           "uid": "Uxv1lPvU",
           "label": "Upgrade with one",
           "options": [
@@ -4440,7 +4440,7 @@
       "hint": "Specialists - Abbess",
       "sections": [
         {
-          "id": "70YPY6i",
+          "id": "yD93F1g",
           "uid": "LxCeB3dC",
           "label": "Upgrade with one",
           "options": [
@@ -4616,7 +4616,7 @@
       "hint": "Smite the Heretic",
       "sections": [
         {
-          "id": "TUJH4PI",
+          "id": "O0JiDPs",
           "uid": "StvWZbyH",
           "label": "Upgrade with",
           "options": [
@@ -5223,7 +5223,7 @@
       "effectSkirmish": ""
     }
   ],
-  "modifiedAt": "2026-05-04T09:52:33.412Z",
+  "modifiedAt": "2026-05-05T08:02:30.365Z",
   "editedAt": "2026-04-23T11:23:20.504Z",
   "official": true,
   "versionString": "3.5.3",

@@ -395,7 +395,7 @@
     },
     {
       "id": "b29Jcwm",
-      "cost": 55,
+      "cost": 50,
       "name": "Monks",
       "size": 5,
       "bases": {
@@ -771,7 +771,7 @@
     },
     {
       "id": "UmMDMd0",
-      "cost": 140,
+      "cost": 145,
       "name": "Rat Ogres",
       "size": 3,
       "bases": {
@@ -1493,7 +1493,7 @@
     },
     {
       "id": "YCqSF5j",
-      "cost": 90,
+      "cost": 85,
       "name": "Brother Hepalit",
       "size": 1,
       "type": 1,
@@ -1794,7 +1794,7 @@
       "hint": "Battle Master",
       "sections": [
         {
-          "id": "TfDWJao",
+          "id": "YYHC1Ff",
           "uid": "EqmxUyv",
           "label": "Replace Heavy Hand Weapon",
           "options": [
@@ -1964,7 +1964,7 @@
           ]
         },
         {
-          "id": "U3k2PME",
+          "id": "H-TQmgB",
           "uid": "uf6HcFD",
           "label": "Upgrade with one",
           "options": [
@@ -2290,7 +2290,7 @@
       "hint": "Champion",
       "sections": [
         {
-          "id": "b47FH50",
+          "id": "haRoK5p",
           "uid": "pidfdEj",
           "label": "Replace Hand Weapon",
           "options": [
@@ -2480,7 +2480,7 @@
           ]
         },
         {
-          "id": "7U3mLgQ",
+          "id": "tpLi9D5",
           "uid": "i2fLp",
           "label": "Upgrade with one",
           "options": [
@@ -2752,7 +2752,7 @@
           }
         },
         {
-          "id": "X8vVu_G",
+          "id": "l9_ah5j",
           "uid": "1Q2ocFid",
           "label": "Upgrade with",
           "options": [
@@ -2799,7 +2799,7 @@
       "hint": "Command Group",
       "sections": [
         {
-          "id": "sImLZVt",
+          "id": "hNJW_3a",
           "uid": "8WqtKtU",
           "label": "Upgrade up to three models with one",
           "options": [
@@ -2924,7 +2924,7 @@
       "hint": "Warriors",
       "sections": [
         {
-          "id": "ZWEqoMf",
+          "id": "g-PfpgF",
           "uid": "IbwdvTo",
           "label": "Replace all Hand Weapons",
           "options": [
@@ -3011,7 +3011,7 @@
           ]
         },
         {
-          "id": "G1nbos8",
+          "id": "rMX0aZM",
           "uid": "uL69Z",
           "label": "Replace one Hand Weapon",
           "options": [
@@ -3148,7 +3148,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 35,
+                  "cost": 30,
                   "unitId": "BUbrjeh"
                 }
               ],
@@ -3406,7 +3406,7 @@
       "hint": "Weapon Teams",
       "sections": [
         {
-          "id": "i_LJ9hF",
+          "id": "R9QOLTD",
           "uid": "MwsXsbn",
           "label": "Replace any Heavy Drill",
           "options": [
@@ -3620,7 +3620,7 @@
       "hint": "Storm Veterans",
       "sections": [
         {
-          "id": "n5PDwxn",
+          "id": "TDxI0Dn",
           "uid": "id2O4yN",
           "label": "Replace all Heavy Halberds",
           "options": [
@@ -3680,7 +3680,7 @@
       "hint": "Night Scouts",
       "sections": [
         {
-          "id": "-4XN8Td",
+          "id": "lL7diRZ",
           "uid": "O0mg6",
           "label": "Replace all Dual Hand Weapons",
           "options": [
@@ -3738,7 +3738,7 @@
           ]
         },
         {
-          "id": "_cbogl4",
+          "id": "CFDieR9",
           "uid": "eM3wrCi",
           "label": "Upgrade all models with",
           "options": [
@@ -3783,7 +3783,7 @@
           }
         },
         {
-          "id": "BmdZLId",
+          "id": "SNYK0SL",
           "uid": "ivnLtbMhyM",
           "label": "Upgrade one model with",
           "options": [
@@ -3834,7 +3834,7 @@
       "hint": "Monks",
       "sections": [
         {
-          "id": "g_81OfX",
+          "id": "IvbBsU-",
           "uid": "9M_V_-G",
           "label": "Replace all Censer Flails",
           "options": [
@@ -3884,7 +3884,7 @@
       "hint": "Rat Master",
       "sections": [
         {
-          "id": "lKcLG9r",
+          "id": "vB4H2WX",
           "uid": "b56i15q",
           "label": "Upgrade all models with one",
           "options": [
@@ -3984,7 +3984,7 @@
       "hint": "Storm Ogres",
       "sections": [
         {
-          "id": "7BocIXf",
+          "id": "YrOk340",
           "uid": "kzBI-P6",
           "label": "Replace any Flame-Fist and Bash",
           "options": [
@@ -4220,7 +4220,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 40,
+                  "cost": 30,
                   "unitId": "h2V8ceV"
                 }
               ],
@@ -4273,7 +4273,7 @@
       "hint": "Blessed Platform",
       "sections": [
         {
-          "id": "yuEV8jt",
+          "id": "tGT8uqP",
           "uid": "mK7Brf4",
           "label": "Replace Giant Censer and Crew Attack",
           "options": [
@@ -4283,7 +4283,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 10,
+                  "cost": 15,
                   "unitId": "bIbOg6H"
                 }
               ],
@@ -4378,7 +4378,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 35,
+                  "cost": 40,
                   "unitId": "bIbOg6H"
                 }
               ],
@@ -4428,7 +4428,7 @@
           ]
         },
         {
-          "id": "3BY-_bM",
+          "id": "ArEEH_c",
           "uid": "H7tDzF6",
           "label": "Upgrade with any",
           "options": [
@@ -4510,7 +4510,7 @@
       "hint": "Great Death Roller",
       "sections": [
         {
-          "id": "j3SMj8e",
+          "id": "1TZD1M8",
           "uid": "hpnKLMu",
           "label": "Replace Twin Gatling Guns and Heavy Wheels",
           "options": [
@@ -4653,7 +4653,7 @@
           ]
         },
         {
-          "id": "owDRpEB",
+          "id": "tX9jZv0",
           "uid": "QaR1Pb0F",
           "label": "Upgrade with",
           "options": [
@@ -4701,7 +4701,7 @@
       "hint": "Ratmen Artillery",
       "sections": [
         {
-          "id": "J_njy43",
+          "id": "hIcDHjc",
           "uid": "DrraBi7",
           "label": "Replace Overtuned Cannon",
           "options": [
@@ -4776,7 +4776,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 20,
+                  "cost": 15,
                   "unitId": "vbIWL9u"
                 }
               ],
@@ -4870,7 +4870,7 @@
       "hint": "Giant Beast",
       "sections": [
         {
-          "id": "-kKSmAI",
+          "id": "67k2D7X",
           "uid": "OIrxB",
           "label": "Upgrade with",
           "options": [
@@ -4919,7 +4919,7 @@
       "hint": "Grenadiers",
       "sections": [
         {
-          "id": "VyG2F0r",
+          "id": "0QW2bG9",
           "uid": "-q66o",
           "label": "Replace all Toxin Bombs",
           "options": [
@@ -4928,7 +4928,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 5,
+                  "cost": 10,
                   "unitId": "ePqfxCc"
                 }
               ],
@@ -4964,7 +4964,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 15,
+                  "cost": 20,
                   "unitId": "ePqfxCc"
                 }
               ],
@@ -5014,7 +5014,7 @@
       "hint": "Rat Ogres",
       "sections": [
         {
-          "id": "EQXOfRL",
+          "id": "AXFPXk_",
           "uid": "7lJr6",
           "label": "Replace all Rending Claws",
           "options": [
@@ -5067,7 +5067,7 @@
           ]
         },
         {
-          "id": "FVJa9xk",
+          "id": "l7di9Th",
           "uid": "DyM55",
           "label": "Upgrade one model with",
           "options": [
@@ -5132,7 +5132,7 @@
       "hint": "Giant Blessed Beast",
       "sections": [
         {
-          "id": "owU3_I1",
+          "id": "S107W6n",
           "uid": "4Zz6D",
           "label": "Replace Giant Rat Ogre",
           "options": [
@@ -5191,7 +5191,7 @@
       "hint": "Specialists - Champion",
       "sections": [
         {
-          "id": "pMWlJkE",
+          "id": "NQ_NPO9",
           "uid": "9yrnNpKY",
           "label": "Upgrade with one",
           "options": [
@@ -5230,7 +5230,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 30,
+                  "cost": 25,
                   "unitId": "IDU9HOb"
                 }
               ],
@@ -5395,7 +5395,7 @@
       "hint": "Horde of Rats",
       "sections": [
         {
-          "id": "hXqpWa2",
+          "id": "I_ibIM_",
           "uid": "ZVCi5_ufOx",
           "label": "Upgrade all models with",
           "options": [
@@ -5454,7 +5454,7 @@
       "hint": "Snipers",
       "sections": [
         {
-          "id": "gOtOeyw",
+          "id": "iOP3V_K",
           "uid": "fEYsY1C8QA",
           "label": "Replace all Sniper Rifles",
           "options": [
@@ -5510,7 +5510,7 @@
           ]
         },
         {
-          "id": "OJAr5sc",
+          "id": "NJGWY7G",
           "uid": "WbgY51VFak",
           "label": "Upgrade all models with",
           "options": [
@@ -5565,7 +5565,7 @@
       "hint": "Specialists - Master",
       "sections": [
         {
-          "id": "GQFgyXg",
+          "id": "daoQeTy",
           "uid": "Ua-AGMEW",
           "label": "Upgrade with one",
           "options": [
@@ -6313,7 +6313,7 @@
       "effectSkirmish": ""
     }
   ],
-  "modifiedAt": "2026-05-04T09:53:14.400Z",
+  "modifiedAt": "2026-05-05T08:02:49.811Z",
   "editedAt": "2026-04-28T09:17:48.116Z",
   "official": true,
   "versionString": "3.5.3",

@@ -504,7 +504,7 @@
     },
     {
       "id": "LYpysCo",
-      "cost": 80,
+      "cost": 75,
       "name": "True Witches",
       "size": 3,
       "bases": {
@@ -639,7 +639,7 @@
     },
     {
       "id": "Muarpbv",
-      "cost": 135,
+      "cost": 130,
       "name": "Court Henchmen",
       "size": 3,
       "bases": {
@@ -1260,7 +1260,7 @@
     },
     {
       "id": "ysAV--C",
-      "cost": 95,
+      "cost": 90,
       "name": "Blood Hounds",
       "size": 5,
       "bases": {
@@ -1379,7 +1379,7 @@
     },
     {
       "id": "j4WPNPP",
-      "cost": 170,
+      "cost": 165,
       "name": "Leech Engine",
       "size": 1,
       "bases": {
@@ -1581,7 +1581,7 @@
     },
     {
       "id": "DxDArd8",
-      "cost": 180,
+      "cost": 175,
       "name": "Heavy Jetbike",
       "size": 1,
       "bases": {
@@ -1755,7 +1755,7 @@
     },
     {
       "id": "fmxy-Cm",
-      "cost": 340,
+      "cost": 335,
       "name": "Heavy Skimmer",
       "size": 1,
       "bases": {
@@ -1829,7 +1829,7 @@
     },
     {
       "id": "y6RfkiV",
-      "cost": 310,
+      "cost": 320,
       "name": "Raven Bomber",
       "size": 1,
       "bases": {
@@ -2066,7 +2066,7 @@
       "hint": "Leader Weapons",
       "sections": [
         {
-          "id": "6MruRry",
+          "id": "DxKiTwy",
           "uid": "90r5Tcm",
           "label": "Replace Elite Barb Pistol",
           "options": [
@@ -2251,7 +2251,7 @@
           ]
         },
         {
-          "id": "p2SsXcn",
+          "id": "z9O3a6_",
           "uid": "8OiFmUB",
           "label": "Replace CCW",
           "options": [
@@ -2414,7 +2414,7 @@
       "hint": "Witch Leader Weapons",
       "sections": [
         {
-          "id": "ETaENBh",
+          "id": "Fi0Pbjk",
           "uid": "ZnxEnT_",
           "label": "Replace Elite Barb Pistol and CCW",
           "options": [
@@ -2424,11 +2424,11 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 0,
+                  "cost": 5,
                   "unitId": "iDd34YF"
                 },
                 {
-                  "cost": 0,
+                  "cost": 5,
                   "unitId": "YmQxy0f"
                 }
               ],
@@ -2473,7 +2473,7 @@
                   "unitId": "iDd34YF"
                 },
                 {
-                  "cost": 0,
+                  "cost": 5,
                   "unitId": "YmQxy0f"
                 }
               ],
@@ -2508,7 +2508,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 5,
+                  "cost": 10,
                   "unitId": "iDd34YF"
                 },
                 {
@@ -2598,7 +2598,7 @@
       "hint": "Gene-Tech Master",
       "sections": [
         {
-          "id": "BBF4nPv",
+          "id": "o95DtY5",
           "uid": "hbkM5",
           "label": "Replace Dual CCW",
           "options": [
@@ -2656,7 +2656,7 @@
           ]
         },
         {
-          "id": "SKebJUr",
+          "id": "HZENYUA",
           "uid": "0GGC-IF",
           "label": "Replace Syringe Pistol",
           "options": [
@@ -2793,7 +2793,7 @@
           ]
         },
         {
-          "id": "gZRNiO3",
+          "id": "Ze6zkbY",
           "uid": "sWnWgZD",
           "label": "Replace CCW",
           "options": [
@@ -3044,7 +3044,7 @@
       "hint": "Court Henchman",
       "sections": [
         {
-          "id": "RD7Jz8S",
+          "id": "TjJCM6V",
           "uid": "Ax1wK4L",
           "label": "Replace any Courtesan's Sword",
           "options": [
@@ -3204,7 +3204,7 @@
       "hint": "Gene-Brutes",
       "sections": [
         {
-          "id": "7-FiYKv",
+          "id": "8co7xvF",
           "uid": "pBhUz_6",
           "label": "Replace any Acid Gun and Scissor Claw",
           "options": [
@@ -3263,7 +3263,7 @@
       "hint": "Warriors",
       "sections": [
         {
-          "id": "53mbheg",
+          "id": "Q5MfyVR",
           "uid": "XlpM537",
           "label": "Replace one Barb Rifle",
           "options": [
@@ -3350,7 +3350,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 10,
+                  "cost": 15,
                   "unitId": "BFjYmT3"
                 }
               ],
@@ -3509,7 +3509,7 @@
           ]
         },
         {
-          "id": "PjF7u0w",
+          "id": "S2EniaW",
           "uid": "SExiC3zc",
           "label": "Replace one Barb Rifle and CCW",
           "options": [
@@ -3586,7 +3586,7 @@
           ]
         },
         {
-          "id": "a2NqnB0",
+          "id": "R0voREJ",
           "uid": "Ct_D168f",
           "label": "Replace Sgt. Barb Pistol",
           "options": [
@@ -3675,7 +3675,7 @@
       "hint": "Winged Warriors",
       "sections": [
         {
-          "id": "L7RN2e9",
+          "id": "C5KDt-w",
           "uid": "5CEqmJb",
           "label": "Replace one Barb Carbine",
           "options": [
@@ -3922,7 +3922,7 @@
           ]
         },
         {
-          "id": "21mLz-6",
+          "id": "9w5qrjx",
           "uid": "0MVOboFG",
           "label": "Replace one Barb Carbine and CCW",
           "options": [
@@ -3999,7 +3999,7 @@
           ]
         },
         {
-          "id": "mRTNEhd",
+          "id": "M-4qa3U",
           "uid": "GMOM34iB",
           "label": "Replace Sgt. Barb Pistol",
           "options": [
@@ -4088,7 +4088,7 @@
       "hint": "Jetbike Riders",
       "sections": [
         {
-          "id": "1o3h3FT",
+          "id": "SAoDhqS",
           "uid": "gPP4fYq",
           "label": "Replace one Twin Barb Rifle",
           "options": [
@@ -4098,7 +4098,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 10,
+                  "cost": 15,
                   "unitId": "sLG6U97"
                 }
               ],
@@ -4176,7 +4176,7 @@
           ]
         },
         {
-          "id": "X8eka3J",
+          "id": "JYLTMVS",
           "uid": "rmOxClb",
           "label": "Replace one CCW",
           "options": [
@@ -4270,7 +4270,7 @@
       "hint": "Heavy Jetbike",
       "sections": [
         {
-          "id": "NiYhAtd",
+          "id": "JwgWDCT",
           "uid": "Zr-TyJs",
           "label": "Replace Twin Barb Rifle",
           "options": [
@@ -4358,7 +4358,7 @@
           ]
         },
         {
-          "id": "-NjV5_g",
+          "id": "ncBRouw",
           "uid": "NULMlxMuZR",
           "label": "Upgrade with any",
           "options": [
@@ -4496,7 +4496,7 @@
       "hint": "Hoverboard Riders",
       "sections": [
         {
-          "id": "C5yussX",
+          "id": "iiyiJkL",
           "uid": "_956Uoo",
           "label": "Replace one Glaive",
           "options": [
@@ -4623,7 +4623,7 @@
           ]
         },
         {
-          "id": "MeWcebm",
+          "id": "7dbogVm",
           "uid": "dhLYALm",
           "label": "Replace one Twin Barb-Pod",
           "options": [
@@ -4633,7 +4633,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 5,
+                  "cost": 10,
                   "unitId": "vk5kw2R"
                 }
               ],
@@ -4696,7 +4696,7 @@
       "hint": "Beast Handler",
       "sections": [
         {
-          "id": "IsoShsv",
+          "id": "H17zXQK",
           "uid": "g-biHxm",
           "label": "Upgrade all models with one",
           "options": [
@@ -4795,7 +4795,7 @@
       "hint": "Vehicle Upgrades",
       "sections": [
         {
-          "id": "KbP53-V",
+          "id": "fsd2V6r",
           "uid": "Z1c7gxS",
           "label": "Upgrade with any",
           "options": [
@@ -4961,7 +4961,7 @@
       "hint": "Leech Engine",
       "sections": [
         {
-          "id": "4EUPq6u",
+          "id": "yNNMJDx",
           "uid": "Z0J6E",
           "label": "Replace Soul Syphon",
           "options": [
@@ -5012,7 +5012,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 30,
+                  "cost": 25,
                   "unitId": "j4WPNPP"
                 }
               ],
@@ -5058,7 +5058,7 @@
           ]
         },
         {
-          "id": "TNzJ1sq",
+          "id": "X2706fB",
           "uid": "HoQXGzD",
           "label": "Upgrade with any",
           "options": [
@@ -5138,7 +5138,7 @@
       "hint": "Engine of Suffering",
       "sections": [
         {
-          "id": "QwIjanD",
+          "id": "ejradn7",
           "uid": "lpd5RU7",
           "label": "Replace one Acid Spewer",
           "options": [
@@ -5299,7 +5299,7 @@
           ]
         },
         {
-          "id": "hNsAVeP",
+          "id": "oAHL5Ru",
           "uid": "GY4bKcL",
           "label": "Replace one Acid Spewer",
           "options": [
@@ -5421,7 +5421,7 @@
           ]
         },
         {
-          "id": "UkXr24J",
+          "id": "Sl2KUE3",
           "uid": "9hVO7cIe4J",
           "label": "Upgrade with any",
           "options": [
@@ -5501,7 +5501,7 @@
       "hint": "Raven Bomber",
       "sections": [
         {
-          "id": "Ut5Km-v",
+          "id": "VjgPEVL",
           "uid": "TgNIrpC",
           "label": "Replace Shatter Missiles",
           "options": [
@@ -5562,7 +5562,7 @@
       "hint": "Razor Fighter",
       "sections": [
         {
-          "id": "jfCA7Vg",
+          "id": "hTvbDsp",
           "uid": "2TNBp3x",
           "label": "Replace Twin Barb Rifle",
           "options": [
@@ -5610,7 +5610,7 @@
           ]
         },
         {
-          "id": "c1t9lev",
+          "id": "hlvE3us",
           "uid": "jzDMgUa",
           "label": "Replace Laser Cannon",
           "options": [
@@ -5660,7 +5660,7 @@
           ]
         },
         {
-          "id": "d9DHUDL",
+          "id": "rh6v-jb",
           "uid": "uUzonwx",
           "label": "Replace Toxin Missiles",
           "options": [
@@ -5756,7 +5756,7 @@
       "hint": "Gene-Warriors",
       "sections": [
         {
-          "id": "epaN0N1",
+          "id": "9EciiiY",
           "uid": "3AYA_",
           "label": "Replace up to two Dual CCWS",
           "options": [
@@ -5818,7 +5818,7 @@
           ]
         },
         {
-          "id": "Mm7DYRP",
+          "id": "Pg9mmxI",
           "uid": "jyrdb",
           "label": "Replace one Barb Pistol",
           "options": [
@@ -5915,7 +5915,7 @@
           ]
         },
         {
-          "id": "Lq-L2Tt",
+          "id": "m_278wr",
           "uid": "hNcFg",
           "label": "Replace one Barb Pistol",
           "options": [
@@ -6011,7 +6011,7 @@
           ]
         },
         {
-          "id": "qn8-kNO",
+          "id": "Ea5CHEC",
           "uid": "iT3-1",
           "label": "Replace one CCW",
           "options": [
@@ -6266,7 +6266,7 @@
       "hint": "Witches",
       "sections": [
         {
-          "id": "a0mjZQ3",
+          "id": "oDjiodg",
           "uid": "11TlG",
           "label": "Replace one Barb Pistol and CCW",
           "options": [
@@ -6431,7 +6431,7 @@
           ]
         },
         {
-          "id": "AzK_drv",
+          "id": "cKbU-F7",
           "uid": "bousrIHq",
           "label": "Replace one Barb Pistol and CCW",
           "options": [
@@ -6508,7 +6508,7 @@
           ]
         },
         {
-          "id": "M-xQD43",
+          "id": "mcxPaWb",
           "uid": "-10D7tZl",
           "label": "Replace Sgt. Barb Pistol",
           "options": [
@@ -6597,7 +6597,7 @@
       "hint": "True Witches",
       "sections": [
         {
-          "id": "DyFVfjB",
+          "id": "7vrpaX2",
           "uid": "XPl35",
           "label": "Replace any Barb Pistol and CCW",
           "options": [
@@ -6761,7 +6761,7 @@
           ]
         },
         {
-          "id": "xAz8m8Z",
+          "id": "vQQJ691",
           "uid": "m8T1g0Es",
           "label": "Replace one Barb Pistol and CCW",
           "options": [
@@ -6838,7 +6838,7 @@
           ]
         },
         {
-          "id": "Axsx6ox",
+          "id": "6dH6jez",
           "uid": "1h5tKxyp",
           "label": "Replace Sgt. Barb Pistol",
           "options": [
@@ -6882,7 +6882,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 5,
+                  "cost": 10,
                   "unitId": "LYpysCo"
                 }
               ],
@@ -6927,7 +6927,7 @@
       "hint": "True Warriors",
       "sections": [
         {
-          "id": "8kVUIOM",
+          "id": "__uvIqt",
           "uid": "aTmC_",
           "label": "Replace any Barb Rifle",
           "options": [
@@ -7049,6 +7049,41 @@
               "id": "Aj_ct"
             },
             {
+              "uid": "_wsTN",
+              "cost": 20,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "cost": 25,
+                  "unitId": "QTD5frn"
+                }
+              ],
+              "gains": [
+                {
+                  "id": "_y6-zQlq",
+                  "name": "Barb Cannon",
+                  "type": "ArmyBookWeapon",
+                  "range": 30,
+                  "attacks": 3,
+                  "weaponId": "CjYx1p4D",
+                  "specialRules": [
+                    {
+                      "id": "WcOMD7QgPYXZ",
+                      "name": "Lacerate"
+                    }
+                  ],
+                  "attacksMultiplier": 1,
+                  "label": "Barb Cannon (30\", A3, Lacerate)",
+                  "count": 1
+                }
+              ],
+              "label": "Barb Cannon (30\", A3, Lacerate)",
+              "parentPackageUid": "oicrO",
+              "parentSectionUid": "aTmC_",
+              "parentSectionId": "aTmC_",
+              "id": "_wsTN"
+            },
+            {
               "uid": "mzzzX",
               "cost": 20,
               "type": "ArmyBookUpgradeOption",
@@ -7083,41 +7118,6 @@
               "parentSectionUid": "aTmC_",
               "parentSectionId": "aTmC_",
               "id": "mzzzX"
-            },
-            {
-              "uid": "_wsTN",
-              "cost": 20,
-              "type": "ArmyBookUpgradeOption",
-              "costs": [
-                {
-                  "cost": 30,
-                  "unitId": "QTD5frn"
-                }
-              ],
-              "gains": [
-                {
-                  "id": "_y6-zQlq",
-                  "name": "Barb Cannon",
-                  "type": "ArmyBookWeapon",
-                  "range": 30,
-                  "attacks": 3,
-                  "weaponId": "CjYx1p4D",
-                  "specialRules": [
-                    {
-                      "id": "WcOMD7QgPYXZ",
-                      "name": "Lacerate"
-                    }
-                  ],
-                  "attacksMultiplier": 1,
-                  "label": "Barb Cannon (30\", A3, Lacerate)",
-                  "count": 1
-                }
-              ],
-              "label": "Barb Cannon (30\", A3, Lacerate)",
-              "parentPackageUid": "oicrO",
-              "parentSectionUid": "aTmC_",
-              "parentSectionId": "aTmC_",
-              "id": "_wsTN"
             },
             {
               "uid": "5E7v-",
@@ -7172,7 +7172,7 @@
           ]
         },
         {
-          "id": "p10iW7r",
+          "id": "URanslD",
           "uid": "yKUoi0WI",
           "label": "Replace one Barb Rifle and CCW",
           "options": [
@@ -7249,7 +7249,7 @@
           ]
         },
         {
-          "id": "0lOMbEw",
+          "id": "VlWViiI",
           "uid": "Ddx4n643",
           "label": "Replace Sgt. Barb Pistol",
           "options": [
@@ -7293,7 +7293,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 5,
+                  "cost": 10,
                   "unitId": "QTD5frn"
                 }
               ],
@@ -7338,7 +7338,7 @@
       "hint": "Specialists - Lord",
       "sections": [
         {
-          "id": "YMdagxc",
+          "id": "cF0qgzT",
           "uid": "f3b7N",
           "label": "Upgrade with one",
           "options": [
@@ -7478,7 +7478,7 @@
       "hint": "Expert Raider",
       "sections": [
         {
-          "id": "Ci6eWkT",
+          "id": "AETIebY",
           "uid": "Du7Mz",
           "label": "Upgrade all models with",
           "options": [
@@ -7499,7 +7499,7 @@
                   "unitId": "LYpysCo"
                 },
                 {
-                  "cost": 15,
+                  "cost": 10,
                   "unitId": "QTD5frn"
                 },
                 {
@@ -7507,7 +7507,7 @@
                   "unitId": "vk5kw2R"
                 },
                 {
-                  "cost": 25,
+                  "cost": 20,
                   "unitId": "tH89B8Y"
                 }
               ],
@@ -7548,7 +7548,7 @@
       "hint": "Light Skimmer",
       "sections": [
         {
-          "id": "qJ13AVt",
+          "id": "83Ngduv",
           "uid": "pPpiONNz",
           "label": "Replace Twin Barb Rifle",
           "options": [
@@ -7675,7 +7675,7 @@
       "hint": "Heavy Skimmer",
       "sections": [
         {
-          "id": "PVnBbpI",
+          "id": "Fw87yLS",
           "uid": "tjnvgxHL",
           "label": "Replace any Barb Cannon",
           "options": [
@@ -7685,7 +7685,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 30,
+                  "cost": 35,
                   "unitId": "fmxy-Cm"
                 }
               ],
@@ -7773,7 +7773,7 @@
       "hint": "Leader Upgrades",
       "sections": [
         {
-          "id": "xOjDXeu",
+          "id": "WTDGF-f",
           "uid": "pqUaY-7Z",
           "label": "Upgrade with one",
           "options": [
@@ -8020,7 +8020,7 @@
       "hint": "Specialists - Raider",
       "sections": [
         {
-          "id": "85YrVxF",
+          "id": "tyyHWKf",
           "uid": "1ZmAPZZN",
           "label": "Upgrade with one",
           "options": [
@@ -8178,7 +8178,7 @@
       "hint": "Specialists - Gene-Tech",
       "sections": [
         {
-          "id": "5cVKunY",
+          "id": "X1gW4DH",
           "uid": "LCqbVas7",
           "label": "Upgrade with one",
           "options": [
@@ -8385,7 +8385,7 @@
       "hint": "Leader Upgrades - Dark Lord",
       "sections": [
         {
-          "id": "cvdvTis",
+          "id": "_gx8LFg",
           "uid": "r_KQNbYa",
           "label": "Upgrade with one",
           "options": [
@@ -9179,7 +9179,7 @@
       "effectSkirmish": ""
     }
   ],
-  "modifiedAt": "2026-05-04T09:51:22.441Z",
+  "modifiedAt": "2026-05-05T08:02:00.987Z",
   "editedAt": "2026-04-27T16:55:56.062Z",
   "official": true,
   "versionString": "3.5.3",
@@ -9293,15 +9293,6 @@
       "targetType": 2
     },
     {
-      "id": "Hdm9ry6kJvzb",
-      "name": "Strafing",
-      "aliasedRuleId": null,
-      "description": "Once per activation, when this model moves through enemy units, pick one of them and attack it with this weapon as if it was shooting. This weapon may only be used in this way.",
-      "hasRating": false,
-      "coreType": null,
-      "targetType": 2
-    },
-    {
       "id": "RUS7R0SwaBUj",
       "name": "Harassing Boost Aura",
       "aliasedRuleId": null,
@@ -9309,6 +9300,15 @@
       "hasRating": false,
       "coreType": null,
       "targetType": 1
+    },
+    {
+      "id": "Hdm9ry6kJvzb",
+      "name": "Strafing",
+      "aliasedRuleId": null,
+      "description": "Once per activation, when this model moves through enemy units, pick one of them and attack it with this weapon as if it was shooting. This weapon may only be used in this way.",
+      "hasRating": false,
+      "coreType": null,
+      "targetType": 2
     },
     {
       "id": "kQVze0GRY3R9",

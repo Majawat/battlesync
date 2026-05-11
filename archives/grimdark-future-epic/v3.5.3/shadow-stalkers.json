@@ -1849,7 +1849,7 @@
       "hint": "Scourge Champion",
       "sections": [
         {
-          "id": "f4HPpzR",
+          "id": "s4UWHes",
           "uid": "LOgjMcD",
           "label": "Replace Heavy Hand Weapon",
           "options": [
@@ -2019,7 +2019,7 @@
           ]
         },
         {
-          "id": "DT7hW-P",
+          "id": "D9ow6qf",
           "uid": "4Mp2w",
           "label": "Upgrade with",
           "options": [
@@ -2096,7 +2096,7 @@
       "hint": "Scourges",
       "sections": [
         {
-          "id": "LCC7rCy",
+          "id": "9MlxVWn",
           "uid": "aFNgEzy",
           "label": "Replace all Hand Weapons",
           "options": [
@@ -2190,7 +2190,7 @@
       "hint": "Shadow Hounds",
       "sections": [
         {
-          "id": "b2vnXH2",
+          "id": "XzG6ymt",
           "uid": "pT5GuGb",
           "label": "Upgrade all models with",
           "options": [
@@ -2199,7 +2199,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 10,
+                  "cost": 5,
                   "unitId": "taTBkkm"
                 }
               ],
@@ -2233,7 +2233,7 @@
           }
         },
         {
-          "id": "6-h5exA",
+          "id": "tS0Qx1q",
           "uid": "hmLlwL5Dui",
           "label": "Replace all Leaping Advances",
           "options": [
@@ -2289,10 +2289,39 @@
       "hint": "Fang Swarms",
       "sections": [
         {
-          "id": "6nqEiFM",
+          "id": "Pgyu6ZE",
           "uid": "Flsc9SA9yL",
           "label": "Upgrade all models with one",
           "options": [
+            {
+              "uid": "eC9b_Acam6",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "cost": 10,
+                  "unitId": "PBz81Cw"
+                }
+              ],
+              "gains": [
+                {
+                  "name": "Vicious Maw",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Vicious Maw (Bane in Melee)",
+                  "content": [
+                    {
+                      "id": "7d9yvTiP6UR5",
+                      "name": "Bane in Melee",
+                      "type": "ArmyBookRule"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Vicious Maw (Bane in Melee)",
+              "parentSectionId": "Flsc9SA9yL",
+              "id": "eC9b_Acam6"
+            },
             {
               "uid": "HqKJ_yvSPQ",
               "type": "ArmyBookUpgradeOption",
@@ -2356,35 +2385,6 @@
               "label": "Venom Spitters (12\", A3, Bane)",
               "parentSectionId": "Flsc9SA9yL",
               "id": "EqWtvEXaUl"
-            },
-            {
-              "uid": "eC9b_Acam6",
-              "type": "ArmyBookUpgradeOption",
-              "costs": [
-                {
-                  "cost": 35,
-                  "unitId": "PBz81Cw"
-                }
-              ],
-              "gains": [
-                {
-                  "name": "Vicious Maw",
-                  "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Vicious Maw (Bane in Melee)",
-                  "content": [
-                    {
-                      "id": "7d9yvTiP6UR5",
-                      "name": "Bane in Melee",
-                      "type": "ArmyBookRule"
-                    }
-                  ],
-                  "count": 1
-                }
-              ],
-              "label": "Vicious Maw (Bane in Melee)",
-              "parentSectionId": "Flsc9SA9yL",
-              "id": "eC9b_Acam6"
             }
           ],
           "parentPackageUid": "E1",
@@ -2407,7 +2407,7 @@
       "hint": "Butchers",
       "sections": [
         {
-          "id": "2D8wHlQ",
+          "id": "x-fEV9U",
           "uid": "PR_bK8j",
           "label": "Replace all Butcher Blades",
           "options": [
@@ -2511,7 +2511,7 @@
       "hint": "Butcher Champion",
       "sections": [
         {
-          "id": "CzqVtvb",
+          "id": "qdITJFM",
           "uid": "D8vyf",
           "label": "Replace Butcher Blade",
           "options": [
@@ -2609,7 +2609,7 @@
       "hint": "Command Group",
       "sections": [
         {
-          "id": "GzaAqhl",
+          "id": "tYemieF",
           "uid": "wS6BD",
           "label": "Upgrade up to three models with one",
           "options": [
@@ -2734,7 +2734,7 @@
       "hint": "Spectre Champion",
       "sections": [
         {
-          "id": "xbBgKTZ",
+          "id": "hUbp9zf",
           "uid": "t4IzS",
           "label": "Replace Champion Stalker Staff",
           "options": [
@@ -2854,7 +2854,7 @@
       "hint": "Spectres",
       "sections": [
         {
-          "id": "6heyphQ",
+          "id": "GyGdVun",
           "uid": "hCmBX",
           "label": "Replace all Stalker Wands",
           "options": [
@@ -2982,7 +2982,7 @@
       "hint": "Reaper Champion",
       "sections": [
         {
-          "id": "355xyhg",
+          "id": "CYUjLEy",
           "uid": "A4vwo",
           "label": "Upgrade with one",
           "options": [
@@ -3163,7 +3163,7 @@
       "hint": "Flayer Cavalry",
       "sections": [
         {
-          "id": "p4JVGHx",
+          "id": "JllSW0q",
           "uid": "FGMuH",
           "label": "Replace all Great Weapons",
           "options": [
@@ -3219,7 +3219,7 @@
       "hint": "Tormentors",
       "sections": [
         {
-          "id": "Kp2Ulqd",
+          "id": "08C3CfK",
           "uid": "o4NcP",
           "label": "Upgrade all models with",
           "options": [
@@ -3279,7 +3279,7 @@
       "hint": "Blind Behemoth",
       "sections": [
         {
-          "id": "EHrPnqM",
+          "id": "lOb7IbD",
           "uid": "pUb68",
           "label": "Replace Great Flail",
           "options": [
@@ -3334,7 +3334,7 @@
       "hint": "Fiends",
       "sections": [
         {
-          "id": "BN3Ge95",
+          "id": "2Xr_jYT",
           "uid": "w4W10",
           "label": "Upgrade all models with one",
           "options": [
@@ -3344,7 +3344,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 45,
+                  "cost": 40,
                   "unitId": "fjKxvmF"
                 }
               ],
@@ -3425,7 +3425,7 @@
       "hint": "Great Fiend",
       "sections": [
         {
-          "id": "uK5MIoT",
+          "id": "vRSq7v1",
           "uid": "HV0YE",
           "label": "Upgrade with one",
           "options": [
@@ -3512,7 +3512,7 @@
       "hint": "Ascended Fiend",
       "sections": [
         {
-          "id": "_5e9g9d",
+          "id": "0tP8lKZ",
           "uid": "RcmJg",
           "label": "Upgrade with one",
           "options": [
@@ -3597,7 +3597,7 @@
       "hint": "Great Screecher",
       "sections": [
         {
-          "id": "wF-Btl8",
+          "id": "X3OghaG",
           "uid": "FYEmW",
           "label": "Upgrade with one",
           "options": [
@@ -3693,7 +3693,7 @@
       "hint": "Reapers",
       "sections": [
         {
-          "id": "5s31KBd",
+          "id": "AjDtrXL",
           "uid": "zisrT",
           "label": "Replace all Halberds",
           "options": [
@@ -3749,7 +3749,7 @@
       "hint": "Phantoms",
       "sections": [
         {
-          "id": "lLiNdMX",
+          "id": "7IwXhvv",
           "uid": "06FL3",
           "label": "Replace all Throwing Spears and Hand Weapons",
           "options": [
@@ -3804,7 +3804,7 @@
       "hint": "Phantom Champion",
       "sections": [
         {
-          "id": "cQzdLJu",
+          "id": "JPW8Wjo",
           "uid": "hdE__",
           "label": "Replace Throwing Spear and Hand Weapon",
           "options": [
@@ -3863,7 +3863,7 @@
       "hint": "Terror Beast",
       "sections": [
         {
-          "id": "07OR_89",
+          "id": "FsyUo-L",
           "uid": "qxR65",
           "label": "Upgrade with one",
           "options": [
@@ -3956,7 +3956,7 @@
       "hint": "Specialists - Spectre/Phantom",
       "sections": [
         {
-          "id": "5mRG6j-",
+          "id": "Eqse9uJ",
           "uid": "VeLxEIRT",
           "label": "Upgrade with one",
           "options": [
@@ -4151,7 +4151,7 @@
       "hint": "Specialists - Butcher",
       "sections": [
         {
-          "id": "fK9fR4R",
+          "id": "dsTFO5L",
           "uid": "YbcHJ2TB",
           "label": "Upgrade with one",
           "options": [
@@ -4297,7 +4297,7 @@
       "hint": "Specialists - Scourge/Reaper",
       "sections": [
         {
-          "id": "9EhnDex",
+          "id": "47HOqPh",
           "uid": "3FmPlCWR",
           "label": "Upgrade with one",
           "options": [
@@ -4493,7 +4493,7 @@
       "hint": "Shadow Censer (One Model)",
       "sections": [
         {
-          "id": "JfQft9e",
+          "id": "q1tEn7m",
           "uid": "1upjsgPf",
           "label": "Upgrade with",
           "options": [
@@ -4567,7 +4567,7 @@
       "hint": "Scourging Censer",
       "sections": [
         {
-          "id": "MBRFlld",
+          "id": "H44vP9L",
           "uid": "JPmynOit",
           "label": "Upgrade one model with",
           "options": [
@@ -4624,7 +4624,7 @@
       "hint": "Shadow Censer",
       "sections": [
         {
-          "id": "3xB1S64",
+          "id": "r_zesn7",
           "uid": "db7hVyco",
           "label": "Upgrade one model with",
           "options": [
@@ -4691,7 +4691,7 @@
       "hint": "Soul-Hunter Censer",
       "sections": [
         {
-          "id": "AWdX5eS",
+          "id": "aKqmwwT",
           "uid": "f-Q__Tjh",
           "label": "Upgrade one model with",
           "options": [
@@ -4757,7 +4757,7 @@
       "hint": "Scourging Censer (One Model)",
       "sections": [
         {
-          "id": "Rl6Ilxb",
+          "id": "tl5laPs",
           "uid": "eSYJC38K",
           "label": "Upgrade with",
           "options": [
@@ -4809,7 +4809,7 @@
       "hint": "Labyrinthian Censer (One Model)",
       "sections": [
         {
-          "id": "MZRmK76",
+          "id": "yFGsLxJ",
           "uid": "DXcepnYd",
           "label": "Upgrade with",
           "options": [
@@ -5476,7 +5476,7 @@
       "effectSkirmish": ""
     }
   ],
-  "modifiedAt": "2026-05-04T09:53:40.045Z",
+  "modifiedAt": "2026-05-05T08:02:59.588Z",
   "editedAt": "2026-04-28T09:31:46.019Z",
   "official": true,
   "versionString": "3.5.3",

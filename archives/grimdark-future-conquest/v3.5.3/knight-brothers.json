@@ -1618,7 +1618,7 @@
       "hint": "Knight Master Type",
       "sections": [
         {
-          "id": "mUkHWwS",
+          "id": "LGsCUjd",
           "uid": "tDkPO",
           "label": "Upgrade with one",
           "options": [
@@ -1743,7 +1743,7 @@
       "hint": "Squad Psychic",
       "sections": [
         {
-          "id": "dg5Pe3D",
+          "id": "ZclsBDi",
           "uid": "cqjBI",
           "label": "Upgrade one model with",
           "options": [
@@ -1810,7 +1810,7 @@
       "hint": "Purgation Brothers",
       "sections": [
         {
-          "id": "SbKSfIP",
+          "id": "B9oX9Cu",
           "uid": "Z-SWf",
           "label": "Replace any Incinerator",
           "options": [
@@ -1908,7 +1908,7 @@
       "hint": "Knight Destroyers",
       "sections": [
         {
-          "id": "K3vbD2U",
+          "id": "cIWEWTi",
           "uid": "8pvms",
           "label": "Replace one Storm Rifle",
           "options": [
@@ -2045,10 +2045,50 @@
           ]
         },
         {
-          "id": "cM_zpP1",
+          "id": "RINxmYC",
           "uid": "a7zkE",
           "label": "Replace any CCW",
           "options": [
+            {
+              "uid": "LQ6zO",
+              "cost": 20,
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "cost": 25,
+                  "unitId": "lpZy6VF"
+                }
+              ],
+              "gains": [
+                {
+                  "id": "3t1MsjUA",
+                  "name": "Energy Staff",
+                  "type": "ArmyBookWeapon",
+                  "range": 0,
+                  "attacks": 4,
+                  "weaponId": "3t1MsjUA",
+                  "specialRules": [
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "rating": 1
+                    },
+                    {
+                      "id": "Naqc5mga9Uha",
+                      "name": "Bane"
+                    }
+                  ],
+                  "attacksMultiplier": 1,
+                  "label": "Energy Staff (A4, AP(1), Bane)",
+                  "count": 1
+                }
+              ],
+              "label": "Energy Staff (A4, AP(1), Bane)",
+              "parentPackageUid": "7se04",
+              "parentSectionUid": "a7zkE",
+              "parentSectionId": "a7zkE",
+              "id": "LQ6zO"
+            },
             {
               "uid": "X14ro",
               "cost": 25,
@@ -2090,46 +2130,6 @@
               "parentSectionUid": "a7zkE",
               "parentSectionId": "a7zkE",
               "id": "X14ro"
-            },
-            {
-              "uid": "LQ6zO",
-              "cost": 20,
-              "type": "ArmyBookUpgradeOption",
-              "costs": [
-                {
-                  "cost": 30,
-                  "unitId": "lpZy6VF"
-                }
-              ],
-              "gains": [
-                {
-                  "id": "3t1MsjUA",
-                  "name": "Energy Staff",
-                  "type": "ArmyBookWeapon",
-                  "range": 0,
-                  "attacks": 4,
-                  "weaponId": "3t1MsjUA",
-                  "specialRules": [
-                    {
-                      "id": "17crjK7P6_w6",
-                      "name": "AP",
-                      "rating": 1
-                    },
-                    {
-                      "id": "Naqc5mga9Uha",
-                      "name": "Bane"
-                    }
-                  ],
-                  "attacksMultiplier": 1,
-                  "label": "Energy Staff (A4, AP(1), Bane)",
-                  "count": 1
-                }
-              ],
-              "label": "Energy Staff (A4, AP(1), Bane)",
-              "parentPackageUid": "7se04",
-              "parentSectionUid": "a7zkE",
-              "parentSectionId": "a7zkE",
-              "id": "LQ6zO"
             },
             {
               "uid": "g26n6hc",
@@ -2182,7 +2182,7 @@
           ]
         },
         {
-          "id": "6llQD9l",
+          "id": "QConYBs",
           "uid": "6Jg_L",
           "label": "Replace one CCW",
           "options": [
@@ -2277,7 +2277,7 @@
           ]
         },
         {
-          "id": "U075DmU",
+          "id": "v55sOaQ",
           "uid": "o3ZyH",
           "label": "Upgrade all models with",
           "options": [
@@ -2328,7 +2328,7 @@
       "hint": "Knight Nemesis Walker",
       "sections": [
         {
-          "id": "-9mR72r",
+          "id": "TdPUPca",
           "uid": "lXJfB",
           "label": "Replace any Super-Heavy Incinerator",
           "options": [
@@ -2417,7 +2417,7 @@
           ]
         },
         {
-          "id": "oGVCPYc",
+          "id": "_KcPGyJ",
           "uid": "ic9Hl",
           "label": "Replace one Nemesis Fist",
           "options": [
@@ -2518,7 +2518,7 @@
           ]
         },
         {
-          "id": "q-WDRXL",
+          "id": "2I_HdoD",
           "uid": "NXL4T",
           "label": "Upgrade with any",
           "options": [
@@ -2598,7 +2598,7 @@
       "hint": "Knight Brothers",
       "sections": [
         {
-          "id": "-E1MzeF",
+          "id": "c0-VTbb",
           "uid": "KIvpC",
           "label": "Replace one Assault Storm Rifle",
           "options": [
@@ -2735,7 +2735,7 @@
           ]
         },
         {
-          "id": "3KQXdZ9",
+          "id": "an1eXtf",
           "uid": "_g065",
           "label": "Replace any CCW",
           "options": [
@@ -2870,7 +2870,7 @@
           ]
         },
         {
-          "id": "Io9vV3M",
+          "id": "TF2L1i1",
           "uid": "sOsIU",
           "label": "Replace one CCW",
           "options": [
@@ -2965,7 +2965,7 @@
           ]
         },
         {
-          "id": "wvMpF8u",
+          "id": "bf1Hxc6",
           "uid": "l3w42",
           "label": "Upgrade all models with one",
           "options": [
@@ -3083,7 +3083,7 @@
       "sync": "78qp9l5alslt6yj8",
       "sections": [
         {
-          "id": "TLpGt8g",
+          "id": "N1cWvkK",
           "uid": "1AhPd",
           "label": "Replace Combat Shield and CCW",
           "options": [
@@ -3209,7 +3209,7 @@
           ]
         },
         {
-          "id": "kg3HSHO",
+          "id": "nutekfo",
           "uid": "U5iFb",
           "label": "Replace CCW",
           "options": [
@@ -3248,6 +3248,44 @@
               "parentSectionUid": "U5iFb",
               "parentSectionId": "U5iFb",
               "id": "qF-t4"
+            },
+            {
+              "uid": "ggRn1H4",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "cost": 15,
+                  "unitId": "Yta_jhYaB"
+                }
+              ],
+              "gains": [
+                {
+                  "name": "Energy Staff",
+                  "type": "ArmyBookWeapon",
+                  "count": 1,
+                  "label": "Energy Staff (A4, AP(1), Bane)",
+                  "range": 0,
+                  "attacks": 4,
+                  "weaponId": "3t1MsjUA",
+                  "newWeapon": false,
+                  "specialRules": [
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "type": "ArmyBookRule",
+                      "rating": "1"
+                    },
+                    {
+                      "id": "Naqc5mga9Uha",
+                      "name": "Bane",
+                      "type": "ArmyBookRule"
+                    }
+                  ]
+                }
+              ],
+              "label": "Energy Staff (A4, AP(1), Bane)",
+              "parentSectionId": "U5iFb",
+              "id": "ggRn1H4"
             },
             {
               "uid": "90LRn",
@@ -3290,44 +3328,6 @@
               "parentSectionUid": "U5iFb",
               "parentSectionId": "U5iFb",
               "id": "90LRn"
-            },
-            {
-              "uid": "ggRn1H4",
-              "type": "ArmyBookUpgradeOption",
-              "costs": [
-                {
-                  "cost": 20,
-                  "unitId": "Yta_jhYaB"
-                }
-              ],
-              "gains": [
-                {
-                  "name": "Energy Staff",
-                  "type": "ArmyBookWeapon",
-                  "count": 1,
-                  "label": "Energy Staff (A4, AP(1), Bane)",
-                  "range": 0,
-                  "attacks": 4,
-                  "weaponId": "3t1MsjUA",
-                  "newWeapon": false,
-                  "specialRules": [
-                    {
-                      "id": "17crjK7P6_w6",
-                      "name": "AP",
-                      "type": "ArmyBookRule",
-                      "rating": "1"
-                    },
-                    {
-                      "id": "Naqc5mga9Uha",
-                      "name": "Bane",
-                      "type": "ArmyBookRule"
-                    }
-                  ]
-                }
-              ],
-              "label": "Energy Staff (A4, AP(1), Bane)",
-              "parentSectionId": "U5iFb",
-              "id": "ggRn1H4"
             },
             {
               "uid": "jhwD8bO",
@@ -3508,7 +3508,7 @@
       "sync": "78qp9l5alslt6yj8",
       "sections": [
         {
-          "id": "R469mZ7",
+          "id": "GKYVERI",
           "uid": "wwjZVUq",
           "label": "Replace Gravity Pistol and CCW",
           "options": [
@@ -3626,7 +3626,7 @@
           ]
         },
         {
-          "id": "pYXy_dm",
+          "id": "9cb8djs",
           "uid": "C3M0Prp",
           "label": "Replace Flamer Pistol",
           "options": [
@@ -3711,7 +3711,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 10,
+                  "cost": 5,
                   "unitId": "wOdTTeKoD"
                 }
               ],
@@ -3865,7 +3865,7 @@
           ]
         },
         {
-          "id": "Lo02pUr",
+          "id": "QxHwFjk",
           "uid": "CPoQHGT",
           "label": "Take one Master Heavy Rifle attachment",
           "options": [
@@ -4066,7 +4066,7 @@
           ]
         },
         {
-          "id": "HUhu3G7",
+          "id": "UAXSbE6",
           "uid": "3LJ6Wjx",
           "label": "Replace CCW",
           "options": [
@@ -4359,7 +4359,7 @@
       "sync": "78qp9l5alslt6yj8",
       "sections": [
         {
-          "id": "p-WzUq-",
+          "id": "M2-6QL5",
           "uid": "NearFSC",
           "label": "Upgrade with one",
           "options": [
@@ -4480,7 +4480,7 @@
       "sync": "78qp9l5alslt6yj8",
       "sections": [
         {
-          "id": "JuYVeDT",
+          "id": "FxRsBpY",
           "uid": "IM9nknz",
           "label": "Upgrade with one",
           "options": [
@@ -4578,7 +4578,7 @@
           }
         },
         {
-          "id": "-bCXYlN",
+          "id": "C48-7AR",
           "uid": "-7UIi",
           "label": "Upgrade with any",
           "options": [
@@ -4690,7 +4690,7 @@
       "sync": "78qp9l5alslt6yj8",
       "sections": [
         {
-          "id": "ueQfSti",
+          "id": "R9wHSMs",
           "uid": "hHcZXLK",
           "label": "Replace Twin Heavy Flamer",
           "options": [
@@ -4875,7 +4875,7 @@
           ]
         },
         {
-          "id": "yAmoIki",
+          "id": "mBWFMLT",
           "uid": "fO1Z8",
           "label": "Upgrade with",
           "options": [
@@ -4924,7 +4924,7 @@
       "sync": "78qp9l5alslt6yj8",
       "sections": [
         {
-          "id": "wEdeZxv",
+          "id": "phV3E8i",
           "uid": "rQkNEKS",
           "label": "Replace Quad Flamer Cannon",
           "options": [
@@ -5014,7 +5014,7 @@
           ]
         },
         {
-          "id": "xICt3vU",
+          "id": "bZfvOFB",
           "uid": "7B9L19M",
           "label": "Replace Twin Heavy Machinegun",
           "options": [
@@ -5071,7 +5071,7 @@
       "sync": "78qp9l5alslt6yj8",
       "sections": [
         {
-          "id": "6RI57qM",
+          "id": "nYJS0Gy",
           "uid": "72MR6oT",
           "label": "Replace one Walker Fist",
           "options": [
@@ -5395,7 +5395,7 @@
           ]
         },
         {
-          "id": "10PNIGV",
+          "id": "WE40_SW",
           "uid": "e8udYuz",
           "label": "Replace one Walker Fist",
           "options": [
@@ -5496,7 +5496,7 @@
           ]
         },
         {
-          "id": "qMCO_rD",
+          "id": "L8N9giW",
           "uid": "8cG2vbh",
           "label": "Upgrade any Walker Fist with one",
           "options": [
@@ -5660,7 +5660,7 @@
       "sync": "78qp9l5alslt6yj8",
       "sections": [
         {
-          "id": "IYtXTTP",
+          "id": "sMwGZoK",
           "uid": "AFtah63",
           "label": "Upgrade with one",
           "options": [
@@ -5750,7 +5750,7 @@
           }
         },
         {
-          "id": "b12FyUC",
+          "id": "HFOq2g7",
           "uid": "TNz9N_Q",
           "label": "Replace Twin Typhoon Missiles",
           "options": [
@@ -5893,7 +5893,7 @@
       "sync": "78qp9l5alslt6yj8",
       "sections": [
         {
-          "id": "gmd4w0O",
+          "id": "AMtT1BA",
           "uid": "TgjKSM6",
           "label": "Replace Twin Minigun",
           "options": [
@@ -5988,7 +5988,7 @@
           ]
         },
         {
-          "id": "rv9RDX1",
+          "id": "WzRNPZo",
           "uid": "wibp_uc",
           "label": "Replace Typhoon Missiles",
           "options": [
@@ -6085,7 +6085,7 @@
       "hint": "Master Destroyer Type",
       "sections": [
         {
-          "id": "Ukk3dSd",
+          "id": "nZgQJc0",
           "uid": "xoJaV",
           "label": "Upgrade with",
           "options": [
@@ -6132,7 +6132,7 @@
       "hint": "Veteran Knight Brothers",
       "sections": [
         {
-          "id": "h-1mL97",
+          "id": "oV9rOAw",
           "uid": "ImIsF",
           "label": "Replace any Incinerator",
           "options": [
@@ -6257,7 +6257,7 @@
           ]
         },
         {
-          "id": "nofIGuM",
+          "id": "3TU2F_U",
           "uid": "02rFI",
           "label": "Replace any CCW",
           "options": [
@@ -6309,7 +6309,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 20,
+                  "cost": 15,
                   "unitId": "er4pfLo"
                 }
               ],
@@ -6471,7 +6471,7 @@
           ]
         },
         {
-          "id": "iUfYdzS",
+          "id": "-U9h5o1",
           "uid": "dnetP",
           "label": "Upgrade all models with one",
           "options": [
@@ -6591,7 +6591,7 @@
       "hint": "Squad Upgrades",
       "sections": [
         {
-          "id": "-ifafLn",
+          "id": "3jXR3R_",
           "uid": "eefdM",
           "label": "Upgrade one model with one",
           "options": [
@@ -6730,7 +6730,7 @@
       "hint": "Targeting Array",
       "sections": [
         {
-          "id": "IpJtiNQ",
+          "id": "oMmSCmH",
           "uid": "VaPoV7uW",
           "label": "Upgrade one model with",
           "options": [
@@ -6789,7 +6789,7 @@
       "sync": "78qp9l5alslt6yj8",
       "sections": [
         {
-          "id": "dl8wSQh",
+          "id": "5Gvpt5p",
           "uid": "HPEjYH-V",
           "label": "Upgrade with one",
           "options": [
@@ -6828,7 +6828,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 20,
+                  "cost": 15,
                   "unitId": "Yta_jhYaB"
                 }
               ],
@@ -6887,7 +6887,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 30,
+                  "cost": 25,
                   "unitId": "Yta_jhYaB"
                 }
               ],
@@ -7024,7 +7024,7 @@
       "sync": "78qp9l5alslt6yj8",
       "sections": [
         {
-          "id": "Rp_B2cS",
+          "id": "0jPW2VS",
           "uid": "5E4zYzbg",
           "label": "Upgrade with one",
           "options": [
@@ -7066,11 +7066,11 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 20,
+                  "cost": 15,
                   "unitId": "IjggYiVCq"
                 },
                 {
-                  "cost": 20,
+                  "cost": 15,
                   "unitId": "wOdTTeKoD"
                 }
               ],
@@ -7134,11 +7134,11 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 30,
+                  "cost": 25,
                   "unitId": "IjggYiVCq"
                 },
                 {
-                  "cost": 30,
+                  "cost": 25,
                   "unitId": "wOdTTeKoD"
                 }
               ],
@@ -7355,7 +7355,7 @@
       "sync": "78qp9l5alslt6yj8",
       "sections": [
         {
-          "id": "UvazWde",
+          "id": "x_QQJCv",
           "uid": "2bQaElLx",
           "label": "Replace Combat Shield and CCW",
           "options": [
@@ -7556,7 +7556,7 @@
           ]
         },
         {
-          "id": "MPWkW_y",
+          "id": "knn7tew",
           "uid": "4vBnND6n",
           "label": "Replace Flamer Pistol",
           "options": [
@@ -7799,7 +7799,7 @@
           ]
         },
         {
-          "id": "Ch0VhGZ",
+          "id": "Xrg9Nk9",
           "uid": "gnlXo9kG",
           "label": "Take one Master Heavy Rifle attachment",
           "options": [
@@ -8000,7 +8000,7 @@
           ]
         },
         {
-          "id": "ZxsuvQh",
+          "id": "LeiXKXl",
           "uid": "7B1UqQX8",
           "label": "Replace CCW",
           "options": [
@@ -8175,7 +8175,7 @@
       "sync": "78qp9l5alslt6yj8",
       "sections": [
         {
-          "id": "1ZG0CDR",
+          "id": "nhotbZV",
           "uid": "1DbfzHx",
           "label": "Replace Heavy Gatling Cannon",
           "options": [
@@ -8953,7 +8953,7 @@
       "effectSkirmish": ""
     }
   ],
-  "modifiedAt": "2026-05-04T09:52:35.605Z",
+  "modifiedAt": "2026-05-05T08:02:31.426Z",
   "editedAt": "2026-04-07T15:50:41.149Z",
   "official": true,
   "versionString": "3.5.3",
