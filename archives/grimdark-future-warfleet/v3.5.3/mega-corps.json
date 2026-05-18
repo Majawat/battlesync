@@ -808,7 +808,7 @@
       "hint": "Leader",
       "sections": [
         {
-          "id": "jBDlimO",
+          "id": "CY6Ogm5",
           "uid": "0j7ey",
           "label": "Replace Combat Shield and CCW",
           "options": [
@@ -995,7 +995,7 @@
           ]
         },
         {
-          "id": "T0fCMXO",
+          "id": "a05FSLX",
           "uid": "r08ZQ",
           "label": "Replace any Heavy Pistol",
           "options": [
@@ -1047,7 +1047,7 @@
           ]
         },
         {
-          "id": "qjlhfUb",
+          "id": "K4Wovu9",
           "uid": "_z0Ag",
           "label": "Replace Heavy Pistol",
           "options": [
@@ -1351,7 +1351,7 @@
           ]
         },
         {
-          "id": "fsmz19k",
+          "id": "Due6Gy5",
           "uid": "TXGoU",
           "label": "Take one Master Heavy Rifle attachment",
           "options": [
@@ -1580,7 +1580,7 @@
           ]
         },
         {
-          "id": "Ebw7WLS",
+          "id": "ffKj6Tf",
           "uid": "PrBZ3",
           "label": "Replace any CCW",
           "options": [
@@ -1709,7 +1709,7 @@
           ]
         },
         {
-          "id": "SD-2dDB",
+          "id": "hKC9wF9",
           "uid": "tF0Lutz2",
           "label": "Upgrade with one",
           "options": [
@@ -1839,6 +1839,66 @@
               "parentSectionId": "tF0Lutz2",
               "parentPackageUid": "dbOfJNh2",
               "id": "2F2owqIb"
+            },
+            {
+              "uid": "3IFkgthL",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "unitId": "Vw3Vvws",
+                  "cost": 100
+                }
+              ],
+              "gains": [
+                {
+                  "name": "Heavy Spider-Suit",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Heavy Spider-Suit (Heavy Spider-Arm (A3, AP(3)), Armor(2), Strider, Tough(3))",
+                  "content": [
+                    {
+                      "id": "hnNKQAJC",
+                      "name": "Heavy Spider-Arm",
+                      "type": "ArmyBookWeapon",
+                      "count": 1,
+                      "range": 0,
+                      "attacks": 3,
+                      "weaponId": "5SzfyghA",
+                      "specialRules": [
+                        {
+                          "id": "17crjK7P6_w6",
+                          "name": "AP",
+                          "rating": 3
+                        }
+                      ],
+                      "attacksMultiplier": 3,
+                      "label": "Heavy Spider-Arm (A3, AP(3))"
+                    },
+                    {
+                      "id": "74RjQ1k41DoO",
+                      "name": "Armor",
+                      "type": "ArmyBookRule",
+                      "rating": 2
+                    },
+                    {
+                      "id": "JSKVyurtWIyW",
+                      "name": "Strider",
+                      "type": "ArmyBookRule"
+                    },
+                    {
+                      "id": "a0YtInGiUDd6",
+                      "name": "Tough",
+                      "type": "ArmyBookRule",
+                      "rating": 3
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Heavy Spider-Suit (Heavy Spider-Arm (A3, AP(3)), Armor(2), Strider, Tough(3))",
+              "parentSectionId": "tF0Lutz2",
+              "parentPackageUid": "dbOfJNh2",
+              "id": "3IFkgthL"
             }
           ],
           "parentPackageUid": "dbOfJNh2",
@@ -1857,7 +1917,7 @@
       "hint": "Veteran Fighters",
       "sections": [
         {
-          "id": "S6BNeup",
+          "id": "tEpPddA",
           "uid": "spZWF",
           "label": "Replace any 2x CCW",
           "options": [
@@ -2067,7 +2127,7 @@
           ]
         },
         {
-          "id": "T-Xvvnz",
+          "id": "p0emPSn",
           "uid": "kpibf",
           "label": "Replace any Heavy Pistol",
           "options": [
@@ -2187,7 +2247,7 @@
           ]
         },
         {
-          "id": "1ImTa3s",
+          "id": "8aBZ4wD",
           "uid": "-PdAR",
           "label": "Replace one Heavy Pistol",
           "options": [
@@ -2321,7 +2381,7 @@
           ]
         },
         {
-          "id": "b5KMm86",
+          "id": "VvrPVQh",
           "uid": "3iZWe",
           "label": "Replace any Hand Weapon",
           "options": [
@@ -2446,7 +2506,7 @@
           ]
         },
         {
-          "id": "6TwFr0g",
+          "id": "j2eYOZ5",
           "uid": "HKNxf",
           "label": "Replace any CCW",
           "options": [
@@ -2578,7 +2638,7 @@
       "hint": "Veteran Gunners",
       "sections": [
         {
-          "id": "3jHn3dr",
+          "id": "tHuMitQ",
           "uid": "F37T4",
           "label": "Replace Heavy Rifle",
           "options": [
@@ -2940,7 +3000,7 @@
           ]
         },
         {
-          "id": "ygzfaIN",
+          "id": "gdaap7P",
           "uid": "X-DN_",
           "label": "Take one Heavy Rifle attachment",
           "options": [
@@ -3170,7 +3230,7 @@
       "hint": "Fighters",
       "sections": [
         {
-          "id": "ir2DAvJ",
+          "id": "zzNWpEp",
           "uid": "XyVnQ",
           "label": "Replace any 2x CCW",
           "options": [
@@ -3361,7 +3421,7 @@
           ]
         },
         {
-          "id": "Tsf7KKU",
+          "id": "z8g48sv",
           "uid": "kdAV2",
           "label": "Replace one Pistols",
           "options": [
@@ -3483,7 +3543,7 @@
           ]
         },
         {
-          "id": "TUUi--Y",
+          "id": "tneNLo8",
           "uid": "b_a8d",
           "label": "Replace any Hand Weapon",
           "options": [
@@ -3606,7 +3666,7 @@
           ]
         },
         {
-          "id": "GaH7QPw",
+          "id": "Dlbr22Q",
           "uid": "XoOJw",
           "label": "Replace any CCW",
           "options": [
@@ -3735,7 +3795,7 @@
       "hint": "Gunners",
       "sections": [
         {
-          "id": "BgBWgO4",
+          "id": "tEV8_pD",
           "uid": "hcsQa",
           "label": "Replace one Rifles",
           "options": [
@@ -4008,7 +4068,7 @@
       "hint": "Champion",
       "sections": [
         {
-          "id": "AC0O8Ka",
+          "id": "IIo5xBN",
           "uid": "oRjXn",
           "label": "Replace Pistol and CCW",
           "options": [
@@ -4179,7 +4239,7 @@
           ]
         },
         {
-          "id": "yqeY3CA",
+          "id": "bnt5v6x",
           "uid": "2jIef",
           "label": "Replace any Pistol",
           "options": [
@@ -4231,7 +4291,7 @@
           ]
         },
         {
-          "id": "MlMbtQH",
+          "id": "SiKJGiV",
           "uid": "s3ghA",
           "label": "Replace Pistol",
           "options": [
@@ -4461,7 +4521,7 @@
           ]
         },
         {
-          "id": "Q04PKJI",
+          "id": "2Xfj0uf",
           "uid": "-hFlY",
           "label": "Replace any CCW",
           "options": [
@@ -4588,7 +4648,7 @@
           ]
         },
         {
-          "id": "OGS68NL",
+          "id": "TwxABuk",
           "uid": "Up4YDVig",
           "label": "Upgrade with one",
           "options": [
@@ -4736,7 +4796,7 @@
       "hint": "Specialists - Leader",
       "sections": [
         {
-          "id": "AUB7rt2",
+          "id": "hTAiyQV",
           "uid": "UUfBH",
           "label": "Upgrade with one",
           "options": [
@@ -4937,7 +4997,7 @@
       "hint": "Grav-Techies",
       "sections": [
         {
-          "id": "i3fItMl",
+          "id": "ZQM15YP",
           "uid": "f2E2W",
           "label": "Replace any 2x CCW",
           "options": [
@@ -5153,7 +5213,7 @@
           ]
         },
         {
-          "id": "4IspHoA",
+          "id": "JopI1wT",
           "uid": "5ZH_T",
           "label": "Replace any Heavy Pistol",
           "options": [
@@ -5240,7 +5300,7 @@
           ]
         },
         {
-          "id": "F73Uq1a",
+          "id": "Aq847KX",
           "uid": "WELu0",
           "label": "Replace Heavy Pistol",
           "options": [
@@ -5370,7 +5430,7 @@
           ]
         },
         {
-          "id": "0OOth0y",
+          "id": "7q0UiIg",
           "uid": "fGGMf",
           "label": "Replace any Hand Weapon",
           "options": [
@@ -5498,7 +5558,7 @@
           ]
         },
         {
-          "id": "Edvy7iH",
+          "id": "gndYXz9",
           "uid": "B1L6t",
           "label": "Replace any CCW",
           "options": [
@@ -5624,7 +5684,7 @@
           ]
         },
         {
-          "id": "6t4e7Dv",
+          "id": "Huz0j8a",
           "uid": "faYsptum",
           "label": "Upgrade with",
           "options": [
@@ -5671,7 +5731,7 @@
       "hint": "Super-Techies",
       "sections": [
         {
-          "id": "Ns_PT2f",
+          "id": "swDf0wV",
           "uid": "GJ0Oe",
           "label": "Replace any Heavy Flamer",
           "options": [
@@ -5952,7 +6012,7 @@
           ]
         },
         {
-          "id": "uFLJa_Y",
+          "id": "t0EXzw8",
           "uid": "LdZq1xA1",
           "label": "Upgrade with",
           "options": [
@@ -5999,7 +6059,7 @@
       "hint": "Spider-Suits",
       "sections": [
         {
-          "id": "_kNPK8H",
+          "id": "Xiq0PQR",
           "uid": "vNwPzb0IMj",
           "label": "Replace any Rifle",
           "options": [
@@ -6048,7 +6108,7 @@
           ]
         },
         {
-          "id": "SleqA_H",
+          "id": "JQxLRAH",
           "uid": "35R3U",
           "label": "Replace any Flamer",
           "options": [
@@ -6168,7 +6228,7 @@
           ]
         },
         {
-          "id": "BODmKSc",
+          "id": "qJgLlUX",
           "uid": "uOrtTJzqZK",
           "label": "Replace any Flamer and Rifle",
           "options": [
@@ -6217,7 +6277,7 @@
           ]
         },
         {
-          "id": "AyniEdB",
+          "id": "tMYWoJn",
           "uid": "kSSxa8DE",
           "label": "Upgrade with",
           "options": [
@@ -6264,7 +6324,7 @@
       "hint": "Heavy Spider-Suits",
       "sections": [
         {
-          "id": "w33Lop1",
+          "id": "R50azZZ",
           "uid": "cKt8o",
           "label": "Replace up to two Heavy Spider-Arm",
           "options": [
@@ -6315,7 +6375,7 @@
           ]
         },
         {
-          "id": "EoOKfbe",
+          "id": "TuYYiNH",
           "uid": "7LVdjq0DQc",
           "label": "Replace 2x Plasma Rifle",
           "options": [
@@ -6401,7 +6461,7 @@
           ]
         },
         {
-          "id": "FHwbszT",
+          "id": "AVOHkxi",
           "uid": "9E0-k0lb",
           "label": "Upgrade with",
           "options": [
@@ -6448,7 +6508,7 @@
       "hint": "Specialists - Champion",
       "sections": [
         {
-          "id": "vH-XLI5",
+          "id": "2t4KjcP",
           "uid": "IPNIDOKU",
           "label": "Upgrade with one",
           "options": [

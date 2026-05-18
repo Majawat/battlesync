@@ -2026,6 +2026,113 @@
       "disabledUpgradeSections": []
     },
     {
+      "id": "5G92a0s",
+      "cost": 110,
+      "name": "Commander Xao",
+      "size": 1,
+      "type": 1,
+      "bases": {
+        "round": "25",
+        "square": "30"
+      },
+      "items": [
+        {
+          "id": "LQunw",
+          "name": "Dynastic Banner",
+          "type": "ArmyBookItem",
+          "bases": null,
+          "content": [
+            {
+              "id": "B5RGOPajK6Lr",
+              "name": "Precision Fighter Aura",
+              "type": "ArmyBookRule"
+            }
+          ],
+          "count": 1
+        },
+        {
+          "id": "4elyA",
+          "name": "Myushu992",
+          "type": "ArmyBookItem",
+          "bases": null,
+          "content": [
+            {
+              "id": "C6MzEy1CnxTs",
+              "name": "Repel Ambushers",
+              "type": "ArmyBookRule"
+            }
+          ],
+          "count": 1
+        }
+      ],
+      "rules": [
+        {
+          "id": "T08VkBuVmNZ_",
+          "name": "Hero",
+          "label": "Hero"
+        },
+        {
+          "id": "a0YtInGiUDd6",
+          "name": "Tough",
+          "rating": 3,
+          "label": "Tough(3)"
+        },
+        {
+          "id": "rqBYj1yANC3J",
+          "name": "Unique",
+          "label": "Unique"
+        },
+        {
+          "id": "21dbpSjSDeOY",
+          "name": "Clan Warrior",
+          "label": "Clan Warrior"
+        },
+        {
+          "id": "8KujvrTG8k9p",
+          "name": "Regeneration",
+          "label": "Regeneration"
+        }
+      ],
+      "valid": true,
+      "defense": 4,
+      "quality": 3,
+      "weapons": [
+        {
+          "id": "8xBvuk1r",
+          "name": "Dual Royal Swords",
+          "type": "ArmyBookWeapon",
+          "count": 1,
+          "range": 0,
+          "attacks": 4,
+          "weaponId": "F9WXJdXX",
+          "specialRules": [
+            {
+              "type": "ArmyBookRule",
+              "id": "17crjK7P6_w6",
+              "name": "AP",
+              "rating": 1,
+              "label": "AP(1)"
+            },
+            {
+              "type": "ArmyBookRule",
+              "id": "cavWDboL4ubs",
+              "name": "Rending",
+              "label": "Rending"
+            }
+          ],
+          "attacksMultiplier": 1,
+          "label": "Dual Royal Swords (A4, AP(1), Rending)",
+          "originalCount": 1
+        }
+      ],
+      "upgrades": [],
+      "genericName": "",
+      "hasCustomRule": false,
+      "disabledSections": [],
+      "hasBalanceInvalid": false,
+      "disabledUpgradeSections": []
+    },
+    {
       "id": "EjXfUOe",
       "cost": 105,
       "name": "Captain Lyao",
@@ -2124,108 +2231,6 @@
           ],
           "attacksMultiplier": 1,
           "label": "Ironbane Swords (A2, AP(1), Rending)",
-          "originalCount": 1
-        }
-      ],
-      "upgrades": [],
-      "genericName": "",
-      "hasCustomRule": false,
-      "disabledSections": [],
-      "hasBalanceInvalid": false,
-      "disabledUpgradeSections": []
-    },
-    {
-      "id": "5G92a0s",
-      "cost": 100,
-      "name": "Commander Xao",
-      "size": 1,
-      "type": 1,
-      "bases": {
-        "round": "25",
-        "square": "30"
-      },
-      "items": [
-        {
-          "id": "LQunw",
-          "name": "Dynastic Banner",
-          "type": "ArmyBookItem",
-          "bases": null,
-          "content": [
-            {
-              "id": "B5RGOPajK6Lr",
-              "name": "Precision Fighter Aura",
-              "type": "ArmyBookRule"
-            }
-          ],
-          "count": 1
-        },
-        {
-          "id": "4elyA",
-          "name": "Myushu992",
-          "type": "ArmyBookItem",
-          "bases": null,
-          "content": [
-            {
-              "id": "C6MzEy1CnxTs",
-              "name": "Repel Ambushers",
-              "type": "ArmyBookRule"
-            }
-          ],
-          "count": 1
-        }
-      ],
-      "rules": [
-        {
-          "id": "T08VkBuVmNZ_",
-          "name": "Hero",
-          "label": "Hero"
-        },
-        {
-          "id": "a0YtInGiUDd6",
-          "name": "Tough",
-          "rating": 3,
-          "label": "Tough(3)"
-        },
-        {
-          "id": "rqBYj1yANC3J",
-          "name": "Unique",
-          "label": "Unique"
-        },
-        {
-          "id": "21dbpSjSDeOY",
-          "name": "Clan Warrior",
-          "label": "Clan Warrior"
-        }
-      ],
-      "valid": true,
-      "defense": 4,
-      "quality": 3,
-      "weapons": [
-        {
-          "id": "8xBvuk1r",
-          "name": "Dual Royal Swords",
-          "type": "ArmyBookWeapon",
-          "count": 1,
-          "range": 0,
-          "attacks": 4,
-          "weaponId": "F9WXJdXX",
-          "specialRules": [
-            {
-              "type": "ArmyBookRule",
-              "id": "17crjK7P6_w6",
-              "name": "AP",
-              "rating": 1,
-              "label": "AP(1)"
-            },
-            {
-              "type": "ArmyBookRule",
-              "id": "cavWDboL4ubs",
-              "name": "Rending",
-              "label": "Rending"
-            }
-          ],
-          "attacksMultiplier": 1,
-          "label": "Dual Royal Swords (A4, AP(1), Rending)",
           "originalCount": 1
         }
       ],
@@ -2480,7 +2485,7 @@
       "hint": "ONI Captain",
       "sections": [
         {
-          "id": "xTQDOAA",
+          "id": "_3wN7PK",
           "uid": "g36afpd",
           "label": "Replace Great Mace",
           "options": [
@@ -2669,7 +2674,7 @@
           ]
         },
         {
-          "id": "wTs8TvN",
+          "id": "YzhHa6S",
           "uid": "RCY_V-r",
           "label": "Replace any Heavy Flame-Fist",
           "options": [
@@ -2945,7 +2950,7 @@
           ]
         },
         {
-          "id": "_QEsiEL",
+          "id": "cS8_L6l",
           "uid": "xHWzcfj",
           "label": "Upgrade with",
           "options": [
@@ -2998,7 +3003,7 @@
       "hint": "Hero Drones",
       "sections": [
         {
-          "id": "4I_vY0B",
+          "id": "rS7_ZfM",
           "uid": "WB_Fhj4",
           "label": "Upgrade with one",
           "options": [
@@ -3099,7 +3104,7 @@
       "hint": "Dynasty Leader",
       "sections": [
         {
-          "id": "bEB2RTY",
+          "id": "7FZH5Cd",
           "uid": "jQR0Y_f",
           "label": "Replace Dynasty Pistol and CCW",
           "options": [
@@ -3284,7 +3289,7 @@
           ]
         },
         {
-          "id": "rPYGSEB",
+          "id": "CnfxgHb",
           "uid": "lxF3juN",
           "label": "Replace Dynasty Pistol",
           "options": [
@@ -3390,7 +3395,7 @@
           ]
         },
         {
-          "id": "tlrR8ww",
+          "id": "qLvvdzH",
           "uid": "-PA55",
           "label": "Replace CCW",
           "options": [
@@ -3514,7 +3519,7 @@
           ]
         },
         {
-          "id": "3c33A2q",
+          "id": "EMUWFyh",
           "uid": "rLm4qM3",
           "label": "Upgrade with one",
           "options": [
@@ -3640,7 +3645,7 @@
       "hint": "Support Drones",
       "sections": [
         {
-          "id": "xzWMCci",
+          "id": "raXt8hS",
           "uid": "5IxC_7E",
           "label": "Upgrade one model with one",
           "options": [
@@ -3791,7 +3796,7 @@
       "hint": "Warriors",
       "sections": [
         {
-          "id": "jqBxi8Q",
+          "id": "M9YMGX9",
           "uid": "XNbIM2s",
           "label": "Replace all Long Rifles",
           "options": [
@@ -3873,7 +3878,7 @@
           ]
         },
         {
-          "id": "kSUiIv3",
+          "id": "mo81Pjm",
           "uid": "1lkVLBV",
           "label": "Replace one Long Rifle",
           "options": [
@@ -4136,7 +4141,7 @@
           ]
         },
         {
-          "id": "KW-b_N-",
+          "id": "xFSN0co",
           "uid": "DrAvvDnP",
           "label": "Replace one Long Rifle and CCW",
           "options": [
@@ -4267,7 +4272,7 @@
       "hint": "Scouts",
       "sections": [
         {
-          "id": "wKzmgZo",
+          "id": "cddpC2s",
           "uid": "s-evu7d",
           "label": "Replace any Long Rifle",
           "options": [
@@ -4313,7 +4318,7 @@
           ]
         },
         {
-          "id": "fvKKpgq",
+          "id": "WG_aSih",
           "uid": "_JowWxq",
           "label": "Replace up to three Long Rifles",
           "options": [
@@ -4412,7 +4417,7 @@
           ]
         },
         {
-          "id": "p2-Taaj",
+          "id": "-RO_H3V",
           "uid": "1bpXjZk",
           "label": "Upgrade one model with",
           "options": [
@@ -4463,7 +4468,7 @@
       "hint": "Ninja",
       "sections": [
         {
-          "id": "sKUEiJJ",
+          "id": "VzsWZNh",
           "uid": "c8oSc",
           "label": "Replace any Auto-Gun and Sword",
           "options": [
@@ -4654,7 +4659,7 @@
       "hint": "Royal Guard",
       "sections": [
         {
-          "id": "v8dO2oA",
+          "id": "_7-z0_t",
           "uid": "zlJVFkl",
           "label": "Replace one Spear-Shot",
           "options": [
@@ -4850,7 +4855,7 @@
       "hint": "Attack Drones",
       "sections": [
         {
-          "id": "0qeZIa4",
+          "id": "m12aTPm",
           "uid": "GE5vX3p",
           "label": "Replace one Laser Gun",
           "options": [
@@ -4914,7 +4919,7 @@
       "hint": "ONIs",
       "sections": [
         {
-          "id": "a8NfE1p",
+          "id": "3nHSG7U",
           "uid": "hyaMu1I",
           "label": "Replace any Heavy Fist",
           "options": [
@@ -5031,7 +5036,7 @@
           ]
         },
         {
-          "id": "Y_kNPY7",
+          "id": "AVc3P0p",
           "uid": "GZvYj",
           "label": "Replace one Heavy Fist",
           "options": [
@@ -5207,7 +5212,7 @@
           ]
         },
         {
-          "id": "wyKKB_Z",
+          "id": "NqxnbAV",
           "uid": "1hTR1G1",
           "label": "Any model may replace 2x Heavy Fist",
           "options": [
@@ -5314,7 +5319,7 @@
           ]
         },
         {
-          "id": "T1vb7f5",
+          "id": "6JfpWLc",
           "uid": "uG8GK-u",
           "label": "Upgrade all models with",
           "options": [
@@ -5371,7 +5376,7 @@
       "hint": "Hunting Pack",
       "sections": [
         {
-          "id": "iYK20xS",
+          "id": "yfcUFRh",
           "uid": "c6uNEzr",
           "label": "Upgrade all models with one",
           "options": [
@@ -5470,7 +5475,7 @@
       "hint": "Replace Heavy Flamer",
       "sections": [
         {
-          "id": "HbMaX14",
+          "id": "A7znsQt",
           "uid": "NJ4kONG",
           "label": "Replace Heavy Flamer",
           "options": [
@@ -5569,7 +5574,7 @@
       "hint": "Dyansty Tank",
       "sections": [
         {
-          "id": "anH6yGp",
+          "id": "BxXx1W0",
           "uid": "NnKgW35",
           "label": "Replace Artillery Gun",
           "options": [
@@ -5701,7 +5706,7 @@
       "hint": "Dragon Speeder",
       "sections": [
         {
-          "id": "m4TJK2b",
+          "id": "AI5Teib",
           "uid": "m_Qwz5F",
           "label": "Replace Twin Burst Laser Gun",
           "options": [
@@ -5761,7 +5766,7 @@
       "hint": "ONI Walker",
       "sections": [
         {
-          "id": "gPILn69",
+          "id": "sST5PjQ",
           "uid": "wJ47Pdk",
           "label": "Replace Heavy Flamethrower",
           "options": [
@@ -5936,7 +5941,7 @@
           ]
         },
         {
-          "id": "dWpnHV9",
+          "id": "aDiKDF4",
           "uid": "QU5UEHo",
           "label": "Upgrade with one",
           "options": [
@@ -6029,7 +6034,7 @@
       "hint": "Ninja Walker",
       "sections": [
         {
-          "id": "Uljsb-x",
+          "id": "zNsehnw",
           "uid": "YfBLYzP",
           "label": "Replace Heavy Burst Auto-Gun",
           "options": [
@@ -6101,7 +6106,7 @@
           ]
         },
         {
-          "id": "y9IX5v8",
+          "id": "ocl9xAl",
           "uid": "p_dHpfA",
           "label": "Replace Rope-Sickle",
           "options": [
@@ -6187,7 +6192,7 @@
       "hint": "Samurai Titan",
       "sections": [
         {
-          "id": "L_i-TJA",
+          "id": "iSb8bWv",
           "uid": "rBMxFpd",
           "label": "Replace Heavy Titan Sword",
           "options": [
@@ -6316,7 +6321,7 @@
           ]
         },
         {
-          "id": "vQYAKJ4",
+          "id": "9ApG7cG",
           "uid": "IGshDah",
           "label": "Upgrade with",
           "options": [
@@ -6362,7 +6367,7 @@
       "hint": "Artillery Titan",
       "sections": [
         {
-          "id": "Cy8FkK_",
+          "id": "ZlU-rHr",
           "uid": "b6wHI7F",
           "label": "Replace Titan Blast Cannon",
           "options": [
@@ -6414,7 +6419,7 @@
           ]
         },
         {
-          "id": "f2GVf1E",
+          "id": "K8BT2xv",
           "uid": "wRVpvn2",
           "label": "Replace Rocket Pod",
           "options": [
@@ -6474,7 +6479,7 @@
       "hint": "Replace Hull Auto-Gun",
       "sections": [
         {
-          "id": "QMJxLyM",
+          "id": "YrUYQ4C",
           "uid": "OVz_J",
           "label": "Replace Hull Auto-Gun",
           "options": [
@@ -6563,7 +6568,7 @@
       "hint": "Specialists - Leader",
       "sections": [
         {
-          "id": "yAjPyUG",
+          "id": "zrowyYN",
           "uid": "UwHEi",
           "label": "Upgrade with one",
           "options": [
@@ -6737,7 +6742,7 @@
       "hint": "Honor-Bound",
       "sections": [
         {
-          "id": "BdSf0rf",
+          "id": "bCoiZ4j",
           "uid": "ic94wqkncn",
           "label": "Upgrade one model with",
           "options": [
@@ -6796,7 +6801,7 @@
       "hint": "Targeting Beam",
       "sections": [
         {
-          "id": "LrGQm8G",
+          "id": "qJBZ3Q2",
           "uid": "pA4bsg0J",
           "label": "Upgrade with",
           "options": [
@@ -6848,7 +6853,7 @@
       "hint": "Specialists - ONI",
       "sections": [
         {
-          "id": "KQKOujq",
+          "id": "WLFa4hh",
           "uid": "pnQ-a5nm",
           "label": "Upgrade with one",
           "options": [
@@ -7530,8 +7535,8 @@
       "effectSkirmish": ""
     }
   ],
-  "modifiedAt": "2026-05-05T08:02:09.352Z",
-  "editedAt": "2026-04-21T14:13:55.658Z",
+  "modifiedAt": "2026-05-13T13:12:01.130Z",
+  "editedAt": "2026-05-13T13:12:01.129Z",
   "official": true,
   "versionString": "3.5.3",
   "coverImagePath": "https://af-images.s3.eu-north-1.amazonaws.com/army-books/covers/vux1Y5vvULmaxZ8P/681xpdu23Sm1Y2uhaqmNq.jpg",

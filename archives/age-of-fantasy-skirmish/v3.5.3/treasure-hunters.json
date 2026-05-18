@@ -674,7 +674,7 @@
       "hint": "Leader",
       "sections": [
         {
-          "id": "rEYm2Kz",
+          "id": "Ft5t5pR",
           "uid": "0j7ey",
           "label": "Replace Heavy Throwing Weapon and Hand Weapon",
           "options": [
@@ -714,7 +714,7 @@
           ]
         },
         {
-          "id": "-j8fY-A",
+          "id": "5gAXF0_",
           "uid": "r08ZQ",
           "label": "Replace Heavy Throwing Weapon",
           "options": [
@@ -898,7 +898,7 @@
           ]
         },
         {
-          "id": "XONQb-5",
+          "id": "3PRInWu",
           "uid": "PrBZ3",
           "label": "Replace any Hand Weapon",
           "options": [
@@ -1093,7 +1093,7 @@
           ]
         },
         {
-          "id": "fcts5-E",
+          "id": "ujqnRAg",
           "uid": "zX-G_dn9",
           "label": "Upgrade with one",
           "options": [
@@ -1217,7 +1217,7 @@
       "hint": "Veteran Fighters",
       "sections": [
         {
-          "id": "gDyhJlY",
+          "id": "qzH6ZRq",
           "uid": "spZWF",
           "label": "Replace any 2x Hand Weapon",
           "options": [
@@ -1279,7 +1279,7 @@
           ]
         },
         {
-          "id": "1afCfoI",
+          "id": "c7MrwIP",
           "uid": "-PdAR",
           "label": "Replace any Heavy Throwing Weapon",
           "options": [
@@ -1331,7 +1331,7 @@
           ]
         },
         {
-          "id": "btzsL0S",
+          "id": "sInehGo",
           "uid": "oFAjZ",
           "label": "Replace one Heavy Throwing Weapon",
           "options": [
@@ -1387,7 +1387,7 @@
           ]
         },
         {
-          "id": "_md7cpp",
+          "id": "L3uI6Kc",
           "uid": "3iZWe",
           "label": "Replace any Dagger",
           "options": [
@@ -1580,7 +1580,7 @@
           ]
         },
         {
-          "id": "KYSz-4V",
+          "id": "AB-w2Dn",
           "uid": "HKNxf",
           "label": "Replace any Hand Weapon",
           "options": [
@@ -1782,7 +1782,7 @@
       "hint": "Veteran Shooters",
       "sections": [
         {
-          "id": "txhB8t7",
+          "id": "563C_cI",
           "uid": "F37T4",
           "label": "Replace any Longbow",
           "options": [
@@ -1873,7 +1873,7 @@
       "hint": "Fighters",
       "sections": [
         {
-          "id": "9Fyh7so",
+          "id": "sh2QgVB",
           "uid": "XyVnQ",
           "label": "Replace any 2x Hand Weapon",
           "options": [
@@ -1928,7 +1928,7 @@
           ]
         },
         {
-          "id": "uooizUG",
+          "id": "dlFoG01",
           "uid": "kdAV2",
           "label": "Replace one Throwing Weapons",
           "options": [
@@ -1981,7 +1981,7 @@
           ]
         },
         {
-          "id": "ZMGEiPE",
+          "id": "3f5ob3Q",
           "uid": "b_a8d",
           "label": "Replace any Dagger",
           "options": [
@@ -2172,7 +2172,7 @@
           ]
         },
         {
-          "id": "TxawSrs",
+          "id": "gNhhHSt",
           "uid": "XoOJw",
           "label": "Replace any Hand Weapon",
           "options": [
@@ -2370,7 +2370,7 @@
       "hint": "Shooters",
       "sections": [
         {
-          "id": "C-RaCf0",
+          "id": "rgMCy7h",
           "uid": "hcsQa",
           "label": "Replace any Shortbows",
           "options": [
@@ -2426,7 +2426,7 @@
       "hint": "Champion",
       "sections": [
         {
-          "id": "n7on1nC",
+          "id": "nkzs0ai",
           "uid": "oRjXn",
           "label": "Replace Throwing Weapon and Hand Weapon",
           "options": [
@@ -2466,7 +2466,7 @@
           ]
         },
         {
-          "id": "VWMSqlV",
+          "id": "i4NfCPf",
           "uid": "s3ghA",
           "label": "Replace Throwing Weapon",
           "options": [
@@ -2574,7 +2574,7 @@
           ]
         },
         {
-          "id": "KECVu5d",
+          "id": "tx7pQpJ",
           "uid": "-hFlY",
           "label": "Replace any Hand Weapon",
           "options": [
@@ -2769,7 +2769,7 @@
           ]
         },
         {
-          "id": "LcdPJp9",
+          "id": "zOJ_iGY",
           "uid": "gkBXauJc",
           "label": "Upgrade with one",
           "options": [
@@ -2857,7 +2857,7 @@
       "hint": "Specialists - Leader",
       "sections": [
         {
-          "id": "SZG_3_3",
+          "id": "_HpJpjD",
           "uid": "UUfBH",
           "label": "Upgrade with one",
           "options": [
@@ -2983,7 +2983,7 @@
               "costs": [
                 {
                   "unitId": "Vw3Vvws",
-                  "cost": 10
+                  "cost": 15
                 }
               ],
               "gains": [
@@ -2991,18 +2991,18 @@
                   "name": "Master Planner",
                   "type": "ArmyBookItem",
                   "bases": null,
-                  "label": "Master Planner (Martial Prowess)",
+                  "label": "Master Planner (Delayed Action)",
                   "content": [
                     {
-                      "id": "FZLk0-3ci6jI",
-                      "name": "Martial Prowess",
+                      "id": "SKzm-kqi1h2Q",
+                      "name": "Delayed Action",
                       "type": "ArmyBookRule"
                     }
                   ],
                   "count": 1
                 }
               ],
-              "label": "Master Planner (Martial Prowess)",
+              "label": "Master Planner (Delayed Action)",
               "parentSectionId": "UUfBH",
               "id": "zRyvGBGQtX"
             },
@@ -3054,7 +3054,7 @@
       "hint": "Stalker Shadows",
       "sections": [
         {
-          "id": "FNxcGVI",
+          "id": "issC9RN",
           "uid": "GeUy2",
           "label": "Replace any Hand Weapon",
           "options": [
@@ -3216,7 +3216,7 @@
           ]
         },
         {
-          "id": "PAwFlcL",
+          "id": "3DqvGvm",
           "uid": "isBZc",
           "label": "Upgrade with",
           "options": [
@@ -3255,7 +3255,7 @@
           "variant": "upgrade"
         },
         {
-          "id": "gGUxwjd",
+          "id": "BYV-hws",
           "uid": "unZFvQE5",
           "label": "Upgrade with",
           "options": [
@@ -3302,7 +3302,7 @@
       "hint": "Stalker Cabalists",
       "sections": [
         {
-          "id": "vUc09KP",
+          "id": "_8NYBZa",
           "uid": "pHcwq",
           "label": "Replace any Heavy Blade Weapon",
           "options": [
@@ -3394,7 +3394,7 @@
           ]
         },
         {
-          "id": "11WGG8D",
+          "id": "H9tHmMp",
           "uid": "4QURhE0-",
           "label": "Upgrade with",
           "options": [
@@ -3441,7 +3441,7 @@
       "hint": "Flight Rigs",
       "sections": [
         {
-          "id": "tXUm77i",
+          "id": "lt5orfg",
           "uid": "v3gad",
           "label": "Replace any 2x Hand Weapon",
           "options": [
@@ -3496,7 +3496,7 @@
           ]
         },
         {
-          "id": "4rb3tsN",
+          "id": "kWtGa1B",
           "uid": "yV0ve",
           "label": "Replace any Throwing Weapon",
           "options": [
@@ -3551,7 +3551,7 @@
           ]
         },
         {
-          "id": "RJTh3_6",
+          "id": "fq9ZBlk",
           "uid": "81FAu",
           "label": "Replace any Dagger",
           "options": [
@@ -3677,7 +3677,7 @@
           ]
         },
         {
-          "id": "pKfYQAL",
+          "id": "xCVPkU3",
           "uid": "qKC2L",
           "label": "Replace any Hand Weapon",
           "options": [
@@ -3803,7 +3803,7 @@
           ]
         },
         {
-          "id": "uvi_c9P",
+          "id": "ZOLy4g1",
           "uid": "shS3zBSh",
           "label": "Upgrade with",
           "options": [
@@ -3850,7 +3850,7 @@
       "hint": "Great Flight Rigs",
       "sections": [
         {
-          "id": "PflxebL",
+          "id": "8u2U0_X",
           "uid": "zrXJN",
           "label": "Replace any Hand Weapon",
           "options": [
@@ -3969,7 +3969,7 @@
           ]
         },
         {
-          "id": "5co3Vas",
+          "id": "DgdU4-q",
           "uid": "4UA4e-Xh",
           "label": "Upgrade with",
           "options": [
@@ -4016,7 +4016,7 @@
       "hint": "Specialists - Champion",
       "sections": [
         {
-          "id": "Y9xeknV",
+          "id": "iqTRtPi",
           "uid": "nQlqti4X",
           "label": "Upgrade with one",
           "options": [
@@ -4878,19 +4878,19 @@
       "targetType": 2
     },
     {
-      "id": "FZLk0-3ci6jI",
-      "name": "Martial Prowess",
+      "id": "FRVSAjasmFSF",
+      "name": "Courage Aura",
       "aliasedRuleId": null,
-      "description": "Once per game, if all models in this unit have this rule, it may be activated even if it had already activated this round (stops being fatigued when activated for the second time). Only up to one third of the units in the army with this rule at the beginning of the game (rounding up) may use it in a single round.",
+      "description": "This model and up to 3 friendly units picked before the start of the game get +1 to morale test rolls. If this model is killed, picked models that are deployed lose the rule.",
       "hasRating": false,
       "coreType": null,
       "targetType": 1
     },
     {
-      "id": "FRVSAjasmFSF",
-      "name": "Courage Aura",
+      "id": "SKzm-kqi1h2Q",
+      "name": "Delayed Action",
       "aliasedRuleId": null,
-      "description": "This model and up to 3 friendly units picked before the start of the game get +1 to morale test rolls. If this model is killed, picked models that are deployed lose the rule.",
+      "description": "Once per round, if your opponent has more units left to activate than you, then this model's unit may pass its turn instead of activating (may still be activated later).",
       "hasRating": false,
       "coreType": null,
       "targetType": 1
