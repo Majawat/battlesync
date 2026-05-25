@@ -1604,25 +1604,55 @@
     },
     {
       "id": "NeleRxm",
-      "cost": 505,
-      "name": "Great Terror Beast",
+      "cost": 560,
+      "name": "Stalker Titan",
       "size": 1,
       "bases": {
         "round": "160x122",
         "square": "175x125"
       },
-      "items": [],
+      "items": [
+        {
+          "id": "RmlM5n_Z",
+          "name": "Great Terror Fiend",
+          "type": "ArmyBookItem",
+          "content": [
+            {
+              "id": "6mJw5IdqSqNC",
+              "name": "Ambush",
+              "type": "ArmyBookRule"
+            },
+            {
+              "id": "EgdF_3MSddXR",
+              "name": "Melee Evasion",
+              "type": "ArmyBookRule"
+            },
+            {
+              "id": "DqPZyLAp",
+              "name": "Stomp",
+              "count": 1,
+              "attacks": 6,
+              "weaponId": "BvXlHjOH",
+              "specialRules": [
+                {
+                  "type": "ArmyBookRule",
+                  "id": "17crjK7P6_w6",
+                  "name": "AP",
+                  "rating": 2
+                }
+              ],
+              "label": "Stomp (A6, AP(2))"
+            }
+          ],
+          "count": 1
+        }
+      ],
       "rules": [
         {
           "id": "dIQ3SGl2J2Ew",
           "name": "Fear",
           "rating": 2,
           "label": "Fear(2)"
-        },
-        {
-          "id": "JSKVyurtWIyW",
-          "name": "Strider",
-          "label": "Strider"
         },
         {
           "id": "a0YtInGiUDd6",
@@ -1685,33 +1715,13 @@
           "attacksMultiplier": 1,
           "label": "Stalker Crew (A6, Reliable)",
           "originalCount": 1
-        },
-        {
-          "id": "7FRda",
-          "name": "Stomp",
-          "type": "ArmyBookWeapon",
-          "count": 1,
-          "range": 0,
-          "attacks": 6,
-          "weaponId": "BvXlHjOH",
-          "specialRules": [
-            {
-              "type": "ArmyBookRule",
-              "id": "17crjK7P6_w6",
-              "name": "AP",
-              "rating": 2,
-              "label": "AP(2)"
-            }
-          ],
-          "attacksMultiplier": 1,
-          "label": "Stomp (A6, AP(2))",
-          "originalCount": 1
         }
       ],
       "upgrades": [
-        "5-TJWMav"
+        "5-TJWMav",
+        "XeiSNVRc"
       ],
-      "genericName": "Terror Beast Titan",
+      "genericName": "Shadow Titan",
       "hasCustomRule": false,
       "hasBalanceInvalid": false,
       "disabledUpgradeSections": []
@@ -1849,7 +1859,7 @@
       "hint": "Scourge Champion",
       "sections": [
         {
-          "id": "bl3Fy7g",
+          "id": "Hvi5DlE",
           "uid": "LOgjMcD",
           "label": "Replace Heavy Hand Weapon",
           "options": [
@@ -2019,7 +2029,7 @@
           ]
         },
         {
-          "id": "1xifjVL",
+          "id": "7YDnipZ",
           "uid": "4Mp2w",
           "label": "Upgrade with",
           "options": [
@@ -2096,7 +2106,7 @@
       "hint": "Scourges",
       "sections": [
         {
-          "id": "hfi6e93",
+          "id": "StGWdxL",
           "uid": "aFNgEzy",
           "label": "Replace all Hand Weapons",
           "options": [
@@ -2190,7 +2200,7 @@
       "hint": "Shadow Hounds",
       "sections": [
         {
-          "id": "HdTRIZq",
+          "id": "ekvAJIT",
           "uid": "pT5GuGb",
           "label": "Upgrade all models with",
           "options": [
@@ -2233,7 +2243,7 @@
           }
         },
         {
-          "id": "Y5jeIrB",
+          "id": "0Gu1BfU",
           "uid": "hmLlwL5Dui",
           "label": "Replace all Leaping Advances",
           "options": [
@@ -2289,7 +2299,7 @@
       "hint": "Fang Swarms",
       "sections": [
         {
-          "id": "RoXL_d1",
+          "id": "BnqY_Zv",
           "uid": "Flsc9SA9yL",
           "label": "Upgrade all models with one",
           "options": [
@@ -2407,7 +2417,7 @@
       "hint": "Butchers",
       "sections": [
         {
-          "id": "WQB_xqJ",
+          "id": "1Rme7G4",
           "uid": "PR_bK8j",
           "label": "Replace all Butcher Blades",
           "options": [
@@ -2511,7 +2521,7 @@
       "hint": "Butcher Champion",
       "sections": [
         {
-          "id": "XRc4BTd",
+          "id": "LN0lrEN",
           "uid": "D8vyf",
           "label": "Replace Butcher Blade",
           "options": [
@@ -2609,7 +2619,7 @@
       "hint": "Command Group",
       "sections": [
         {
-          "id": "o6gEKdM",
+          "id": "eLZHrGf",
           "uid": "wS6BD",
           "label": "Upgrade up to three models with one",
           "options": [
@@ -2734,7 +2744,7 @@
       "hint": "Spectre Champion",
       "sections": [
         {
-          "id": "Owdvzot",
+          "id": "hbYhBkn",
           "uid": "t4IzS",
           "label": "Replace Champion Stalker Staff",
           "options": [
@@ -2854,7 +2864,7 @@
       "hint": "Spectres",
       "sections": [
         {
-          "id": "JI6hbGb",
+          "id": "8Cd5RCA",
           "uid": "hCmBX",
           "label": "Replace all Stalker Wands",
           "options": [
@@ -2982,7 +2992,7 @@
       "hint": "Reaper Champion",
       "sections": [
         {
-          "id": "wcoYFwD",
+          "id": "_QKyiLd",
           "uid": "A4vwo",
           "label": "Upgrade with one",
           "options": [
@@ -3163,7 +3173,7 @@
       "hint": "Flayer Cavalry",
       "sections": [
         {
-          "id": "iR-jYaF",
+          "id": "SHGMSCu",
           "uid": "FGMuH",
           "label": "Replace all Great Weapons",
           "options": [
@@ -3219,7 +3229,7 @@
       "hint": "Tormentors",
       "sections": [
         {
-          "id": "A5Grn6s",
+          "id": "Z0x8tyK",
           "uid": "o4NcP",
           "label": "Upgrade all models with",
           "options": [
@@ -3279,7 +3289,7 @@
       "hint": "Blind Behemoth",
       "sections": [
         {
-          "id": "sIaoEDY",
+          "id": "EOPcVMd",
           "uid": "pUb68",
           "label": "Replace Great Flail",
           "options": [
@@ -3334,7 +3344,7 @@
       "hint": "Fiends",
       "sections": [
         {
-          "id": "x_pxJm0",
+          "id": "O7qhIn2",
           "uid": "w4W10",
           "label": "Upgrade all models with one",
           "options": [
@@ -3425,7 +3435,7 @@
       "hint": "Great Fiend",
       "sections": [
         {
-          "id": "lkOQU0E",
+          "id": "_S1oLTu",
           "uid": "HV0YE",
           "label": "Upgrade with one",
           "options": [
@@ -3512,7 +3522,7 @@
       "hint": "Ascended Fiend",
       "sections": [
         {
-          "id": "h17cBru",
+          "id": "KOE9pz8",
           "uid": "RcmJg",
           "label": "Upgrade with one",
           "options": [
@@ -3597,7 +3607,7 @@
       "hint": "Great Screecher",
       "sections": [
         {
-          "id": "_3hd08w",
+          "id": "IDuqZJn",
           "uid": "FYEmW",
           "label": "Upgrade with one",
           "options": [
@@ -3693,7 +3703,7 @@
       "hint": "Reapers",
       "sections": [
         {
-          "id": "qeQF1Gq",
+          "id": "T4-Io8g",
           "uid": "zisrT",
           "label": "Replace all Halberds",
           "options": [
@@ -3749,7 +3759,7 @@
       "hint": "Phantoms",
       "sections": [
         {
-          "id": "YqZjZ6x",
+          "id": "HZjZccF",
           "uid": "06FL3",
           "label": "Replace all Throwing Spears and Hand Weapons",
           "options": [
@@ -3804,7 +3814,7 @@
       "hint": "Phantom Champion",
       "sections": [
         {
-          "id": "ptii4ou",
+          "id": "0tdFUrr",
           "uid": "hdE__",
           "label": "Replace Throwing Spear and Hand Weapon",
           "options": [
@@ -3863,7 +3873,7 @@
       "hint": "Terror Beast",
       "sections": [
         {
-          "id": "-Ew7RbM",
+          "id": "FcVUQMz",
           "uid": "qxR65",
           "label": "Upgrade with one",
           "options": [
@@ -3956,7 +3966,7 @@
       "hint": "Specialists - Spectre/Phantom",
       "sections": [
         {
-          "id": "_NA5BMm",
+          "id": "66m8ddO",
           "uid": "VeLxEIRT",
           "label": "Upgrade with one",
           "options": [
@@ -4151,7 +4161,7 @@
       "hint": "Specialists - Butcher",
       "sections": [
         {
-          "id": "YJudQW4",
+          "id": "4J1JAjQ",
           "uid": "YbcHJ2TB",
           "label": "Upgrade with one",
           "options": [
@@ -4297,7 +4307,7 @@
       "hint": "Specialists - Scourge/Reaper",
       "sections": [
         {
-          "id": "6ikFg8H",
+          "id": "vr9x0cA",
           "uid": "3FmPlCWR",
           "label": "Upgrade with one",
           "options": [
@@ -4493,7 +4503,7 @@
       "hint": "Shadow Censer (One Model)",
       "sections": [
         {
-          "id": "KNlrVF-",
+          "id": "djp19aE",
           "uid": "1upjsgPf",
           "label": "Upgrade with",
           "options": [
@@ -4567,7 +4577,7 @@
       "hint": "Scourging Censer",
       "sections": [
         {
-          "id": "oqrUu9w",
+          "id": "fXsaVsR",
           "uid": "JPmynOit",
           "label": "Upgrade one model with",
           "options": [
@@ -4624,7 +4634,7 @@
       "hint": "Shadow Censer",
       "sections": [
         {
-          "id": "bsYHtd3",
+          "id": "O0GsbB5",
           "uid": "db7hVyco",
           "label": "Upgrade one model with",
           "options": [
@@ -4691,7 +4701,7 @@
       "hint": "Soul-Hunter Censer",
       "sections": [
         {
-          "id": "ZTtkaAr",
+          "id": "hoxXmU5",
           "uid": "f-Q__Tjh",
           "label": "Upgrade one model with",
           "options": [
@@ -4757,7 +4767,7 @@
       "hint": "Scourging Censer (One Model)",
       "sections": [
         {
-          "id": "dpMFSXb",
+          "id": "Cmb4kMg",
           "uid": "eSYJC38K",
           "label": "Upgrade with",
           "options": [
@@ -4809,7 +4819,7 @@
       "hint": "Labyrinthian Censer (One Model)",
       "sections": [
         {
-          "id": "eVQ9gEn",
+          "id": "WMJ702h",
           "uid": "DXcepnYd",
           "label": "Upgrade with",
           "options": [
@@ -4856,6 +4866,84 @@
           "parentPackageUid": "Mkm-228J",
           "type": "ArmyBookUpgradeSection",
           "variant": "upgrade"
+        }
+      ],
+      "calcErrors": false
+    },
+    {
+      "uid": "XeiSNVRc",
+      "hint": "Stalker Titan",
+      "sections": [
+        {
+          "id": "iaE4y1S",
+          "uid": "PW6IBuBAQC",
+          "label": "Replace Great Terror Fiend",
+          "options": [
+            {
+              "uid": "2fHZU0xlZh",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "cost": 5,
+                  "unitId": "NeleRxm"
+                }
+              ],
+              "gains": [
+                {
+                  "name": "Great Terror Beast",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "content": [
+                    {
+                      "id": "_6QIYKyt",
+                      "name": "Mace Tail",
+                      "type": "ArmyBookWeapon",
+                      "count": 1,
+                      "range": 0,
+                      "attacks": 2,
+                      "weaponId": "I17mE75R",
+                      "specialRules": [
+                        {
+                          "id": "17crjK7P6_w6",
+                          "name": "AP",
+                          "type": "ArmyBookRule",
+                          "rating": 4
+                        },
+                        {
+                          "id": "_mrPya5SXSqW",
+                          "name": "Deadly",
+                          "type": "ArmyBookRule",
+                          "rating": 3
+                        }
+                      ],
+                      "attacksMultiplier": 1
+                    },
+                    {
+                      "id": "IyLY1212wacW",
+                      "name": "Fortified",
+                      "type": "ArmyBookRule"
+                    },
+                    {
+                      "id": "JSKVyurtWIyW",
+                      "name": "Strider",
+                      "type": "ArmyBookRule"
+                    }
+                  ],
+                  "label": "Great Terror Beast (Mace Tail (A2, AP(4), Deadly(3)), Fortified, Strider)",
+                  "count": 1
+                }
+              ],
+              "label": "Great Terror Beast (Mace Tail (A2, AP(4), Deadly(3)), Fortified, Strider)",
+              "parentSectionId": "PW6IBuBAQC",
+              "id": "2fHZU0xlZh"
+            }
+          ],
+          "parentPackageUid": "XeiSNVRc",
+          "type": "ArmyBookUpgradeSection",
+          "variant": "replace",
+          "targets": [
+            "Great Terror Fiend"
+          ]
         }
       ],
       "calcErrors": false
@@ -5476,8 +5564,8 @@
       "effectSkirmish": ""
     }
   ],
-  "modifiedAt": "2026-05-05T08:02:59.588Z",
-  "editedAt": "2026-04-28T09:31:46.019Z",
+  "modifiedAt": "2026-05-18T13:49:14.879Z",
+  "editedAt": "2026-05-18T13:49:14.878Z",
   "official": true,
   "versionString": "3.5.3",
   "coverImagePath": "https://af-images.s3.eu-north-1.amazonaws.com/army-books/covers/gHTrjw-g76vfGCSt/ZHT12VcSUjQht4-BYETPe.jpg",

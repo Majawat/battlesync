@@ -231,6 +231,57 @@
       "disabledUpgradeSections": []
     },
     {
+      "id": "AaosBeN",
+      "cost": 80,
+      "name": "Warriors",
+      "size": 10,
+      "bases": {
+        "round": "25",
+        "square": "25"
+      },
+      "items": [],
+      "rules": [
+        {
+          "id": "Ldhtmr4H8b6G",
+          "name": "Slow",
+          "label": "Slow"
+        },
+        {
+          "id": "wjTOj41tskFD",
+          "name": "Havocbound",
+          "label": "Havocbound"
+        }
+      ],
+      "valid": true,
+      "defense": 5,
+      "quality": 4,
+      "weapons": [
+        {
+          "id": "nt1lByLt",
+          "name": "Hand Weapon",
+          "type": "ArmyBookWeapon",
+          "range": 0,
+          "attacks": 1,
+          "weaponId": "SWnfRBdJ",
+          "specialRules": [],
+          "attacksMultiplier": 1,
+          "label": "Hand Weapon (A1)",
+          "count": 10,
+          "originalCount": 10
+        }
+      ],
+      "upgrades": [
+        "C1",
+        "D1",
+        "cj40h4zA"
+      ],
+      "genericName": "Havoc Dwarf Warriors",
+      "hasCustomRule": false,
+      "disabledSections": [],
+      "hasBalanceInvalid": false,
+      "disabledUpgradeSections": []
+    },
+    {
       "id": "Ba9rAJ-",
       "key": "lively-eel-veteran",
       "cost": 110,
@@ -290,57 +341,6 @@
       ],
       "genericName": "Conscripts",
       "hasCustomRule": false,
-      "hasBalanceInvalid": false,
-      "disabledUpgradeSections": []
-    },
-    {
-      "id": "AaosBeN",
-      "cost": 80,
-      "name": "Warriors",
-      "size": 10,
-      "bases": {
-        "round": "25",
-        "square": "25"
-      },
-      "items": [],
-      "rules": [
-        {
-          "id": "Ldhtmr4H8b6G",
-          "name": "Slow",
-          "label": "Slow"
-        },
-        {
-          "id": "wjTOj41tskFD",
-          "name": "Havocbound",
-          "label": "Havocbound"
-        }
-      ],
-      "valid": true,
-      "defense": 5,
-      "quality": 4,
-      "weapons": [
-        {
-          "id": "nt1lByLt",
-          "name": "Hand Weapon",
-          "type": "ArmyBookWeapon",
-          "range": 0,
-          "attacks": 1,
-          "weaponId": "SWnfRBdJ",
-          "specialRules": [],
-          "attacksMultiplier": 1,
-          "label": "Hand Weapon (A1)",
-          "count": 10,
-          "originalCount": 10
-        }
-      ],
-      "upgrades": [
-        "C1",
-        "D1",
-        "cj40h4zA"
-      ],
-      "genericName": "Havoc Dwarf Warriors",
-      "hasCustomRule": false,
-      "disabledSections": [],
       "hasBalanceInvalid": false,
       "disabledUpgradeSections": []
     },
@@ -1554,7 +1554,7 @@
       "hint": "Iron Champion",
       "sections": [
         {
-          "id": "ZomERHz",
+          "id": "55ua6xL",
           "uid": "PPILfoz",
           "label": "Replace Heavy Hand Weapon",
           "options": [
@@ -1724,7 +1724,7 @@
           ]
         },
         {
-          "id": "InbJ_L3",
+          "id": "7lAxDhY",
           "uid": "xUyXW9E",
           "label": "Upgrade with one",
           "options": [
@@ -1901,7 +1901,7 @@
           }
         },
         {
-          "id": "FMyNZBO",
+          "id": "uIYhAWA",
           "uid": "BYsDwO_",
           "label": "Upgrade with one",
           "options": [
@@ -2023,7 +2023,7 @@
       "hint": "Abyssal Leader",
       "sections": [
         {
-          "id": "sEs4eNX",
+          "id": "JhR0EHg",
           "uid": "cR43IcB",
           "label": "Replace Hand Weapon",
           "options": [
@@ -2174,7 +2174,7 @@
           ]
         },
         {
-          "id": "6QYefRc",
+          "id": "BxX04Og",
           "uid": "egImqqn",
           "label": "Upgrade with one",
           "options": [
@@ -2284,7 +2284,7 @@
           }
         },
         {
-          "id": "kFdasfX",
+          "id": "7r9hwcA",
           "uid": "mSO5_M11lT",
           "label": "Upgrade with",
           "options": [
@@ -2370,7 +2370,7 @@
       "hint": "Command Group",
       "sections": [
         {
-          "id": "0T3uBx9",
+          "id": "de3mKxd",
           "uid": "mt6z4_6",
           "label": "Upgrade up to three models with one",
           "options": [
@@ -2507,7 +2507,7 @@
       "hint": "Warriors",
       "sections": [
         {
-          "id": "nQmmRXI",
+          "id": "NLtJoln",
           "uid": "RWxDSi5",
           "label": "Replace all Hand Weapons",
           "options": [
@@ -2594,7 +2594,7 @@
           ]
         },
         {
-          "id": "tV0LPad",
+          "id": "AiIdhi9",
           "uid": "TjsOnssfL2",
           "label": "Upgrade all models with",
           "options": [
@@ -2644,7 +2644,7 @@
       "hint": "Berserker",
       "sections": [
         {
-          "id": "jIljsRb",
+          "id": "jDOzhqI",
           "uid": "W0aS8Tw",
           "label": "Replace all Great Weapons",
           "options": [
@@ -2693,7 +2693,7 @@
       "hint": "Shooters",
       "sections": [
         {
-          "id": "K9Oldsm",
+          "id": "3hykptt",
           "uid": "mRkZM-A",
           "label": "Replace all Shotguns",
           "options": [
@@ -2816,7 +2816,7 @@
       "hint": "Weapon Teams",
       "sections": [
         {
-          "id": "cJbP1Dv",
+          "id": "Q5NnVcr",
           "uid": "UGAMgAo",
           "label": "Replace all Flamethrowers",
           "options": [
@@ -2911,7 +2911,7 @@
       "hint": "Flame Spirits",
       "sections": [
         {
-          "id": "PqJa9j0",
+          "id": "LbsGlrl",
           "uid": "_wfQVZk",
           "label": "Replace all Dual Hand Weapons",
           "options": [
@@ -2988,7 +2988,7 @@
       "hint": "Siege Wagon",
       "sections": [
         {
-          "id": "0QiWYG8",
+          "id": "8RpEISu",
           "uid": "ftYgvTQ",
           "label": "Replace Siege Cannon",
           "options": [
@@ -3140,7 +3140,7 @@
       "hint": "Havoc Artillery",
       "sections": [
         {
-          "id": "38x7L7h",
+          "id": "9WX10Ls",
           "uid": "cuVDmW8",
           "label": "Replace Rocket Battery",
           "options": [
@@ -3208,7 +3208,7 @@
       "hint": "Specialists - Champion",
       "sections": [
         {
-          "id": "JajmeXi",
+          "id": "bsuDV-0",
           "uid": "fi7j-wU5",
           "label": "Upgrade with one",
           "options": [
@@ -3385,7 +3385,7 @@
       "hint": "Specialists - Leader",
       "sections": [
         {
-          "id": "r9_Cg01",
+          "id": "mLC_UAL",
           "uid": "g2aS30gU",
           "label": "Upgrade with one",
           "options": [
@@ -3591,7 +3591,7 @@
       "hint": "Specialists - Centaur",
       "sections": [
         {
-          "id": "Ng18JRf",
+          "id": "wrkE0fX",
           "uid": "BsmZCQUl",
           "label": "Upgrade with one",
           "options": [
@@ -3736,7 +3736,7 @@
       "hint": "Sentinel Centaurs",
       "sections": [
         {
-          "id": "3hkafeI",
+          "id": "w6nU4Wx",
           "uid": "Q18_aJZt4y",
           "label": "Replace all Great Weapons",
           "options": [
@@ -3942,7 +3942,7 @@
       "hint": "Bull Centaurs",
       "sections": [
         {
-          "id": "TcPXHYi",
+          "id": "s9YbM95",
           "uid": "hLyG4f6Kt5",
           "label": "Upgrade all models with",
           "options": [
@@ -3990,7 +3990,7 @@
       "hint": "Bull Centaur Champion",
       "sections": [
         {
-          "id": "K-5UDQX",
+          "id": "vyqDUUQ",
           "uid": "bKt38TTh8l",
           "label": "Replace Dual Heavy Hand Weapon",
           "options": [
@@ -4037,7 +4037,7 @@
           ]
         },
         {
-          "id": "P2TwK00",
+          "id": "kdP8Bni",
           "uid": "LBC4K1Bbag",
           "label": "Upgrade with",
           "options": [
@@ -4081,7 +4081,7 @@
       "hint": "Bull Construct",
       "sections": [
         {
-          "id": "cuo37MY",
+          "id": "nYxdizr",
           "uid": "m5Fl4_I9XF",
           "label": "Replace Heavy Great Weapon",
           "options": [
@@ -4146,7 +4146,7 @@
       "hint": "Infernal Shooters",
       "sections": [
         {
-          "id": "Gv5U0wq",
+          "id": "4ANzsZP",
           "uid": "8lLAEjTsBn",
           "label": "Replace all Blunderbusses",
           "options": [
@@ -4240,7 +4240,7 @@
       "hint": "Squad Upgrades",
       "sections": [
         {
-          "id": "G7Pdfi-",
+          "id": "LrCYzo3",
           "uid": "KxFQPkNV",
           "label": "Upgrade one model with one",
           "options": [
@@ -4351,7 +4351,7 @@
       "hint": "Hex Banner",
       "sections": [
         {
-          "id": "ZSg42Es",
+          "id": "mVaBCHA",
           "uid": "8ouyfvOz",
           "label": "Upgrade one model with",
           "options": [
@@ -4408,7 +4408,7 @@
       "hint": "Abyssal Targeting",
       "sections": [
         {
-          "id": "f5aUhzh",
+          "id": "YNiR1Lv",
           "uid": "3XaecivT",
           "label": "Upgrade with",
           "options": [
@@ -5015,8 +5015,8 @@
       "effectSkirmish": ""
     }
   ],
-  "modifiedAt": "2026-05-05T08:02:21.186Z",
-  "editedAt": "2026-04-23T11:20:43.875Z",
+  "modifiedAt": "2026-05-18T20:06:06.533Z",
+  "editedAt": "2026-05-18T20:06:06.533Z",
   "official": true,
   "versionString": "3.5.3",
   "coverImagePath": "https://af-images.s3.eu-north-1.amazonaws.com/army-books/covers/8siLk9I6-H8lk78b/Q7p3pl8oZ68MsRVKrBIdr.jpg",
