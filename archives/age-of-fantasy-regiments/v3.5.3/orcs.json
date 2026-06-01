@@ -1813,7 +1813,7 @@
       "hint": "Orc Boss",
       "sections": [
         {
-          "id": "5RQuGgh",
+          "id": "vbnMmRc",
           "uid": "UtjM3od",
           "label": "Replace Heavy Hand Weapon",
           "options": [
@@ -2025,7 +2025,7 @@
           ]
         },
         {
-          "id": "12SeOj9",
+          "id": "ENRzgd6",
           "uid": "2JPilsygX5",
           "label": "Upgrade with",
           "options": [
@@ -2062,7 +2062,7 @@
           "variant": "upgrade"
         },
         {
-          "id": "vSNiT1K",
+          "id": "s4UPnNR",
           "uid": "TNY0UmOEg2",
           "label": "Replace Iron Master",
           "options": [
@@ -2153,7 +2153,7 @@
           ]
         },
         {
-          "id": "-HEUS2C",
+          "id": "HaWlyCa",
           "uid": "5Lu3GqA",
           "label": "Upgrade with one",
           "options": [
@@ -2350,7 +2350,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 80,
+                  "cost": 125,
                   "unitId": "i8BX54D"
                 }
               ],
@@ -2391,64 +2391,6 @@
               "label": "Tusk-Beast Chariot (Armor(3), Fast, Impact(4), Tough(6))",
               "parentSectionId": "5Lu3GqA",
               "id": "GyuuUHEWHv"
-            },
-            {
-              "uid": "B_d0rNxPPk",
-              "type": "ArmyBookUpgradeOption",
-              "costs": [
-                {
-                  "cost": 105,
-                  "unitId": "i8BX54D"
-                }
-              ],
-              "gains": [
-                {
-                  "name": "Fang-Beast Chariot",
-                  "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Fang-Beast Chariot (Rending Claws (A6, Rending), Armor(3), Fast, Tough(6))",
-                  "content": [
-                    {
-                      "id": "j5DHwpSt",
-                      "name": "Rending Claws",
-                      "type": "ArmyBookWeapon",
-                      "count": 1,
-                      "range": 0,
-                      "attacks": 6,
-                      "weaponId": "PTSMfUpY",
-                      "specialRules": [
-                        {
-                          "id": "cavWDboL4ubs",
-                          "name": "Rending",
-                          "type": "ArmyBookRule"
-                        }
-                      ],
-                      "attacksMultiplier": 2
-                    },
-                    {
-                      "id": "74RjQ1k41DoO",
-                      "name": "Armor",
-                      "type": "ArmyBookRule",
-                      "rating": 3
-                    },
-                    {
-                      "id": "KdgwlPb8LuD2",
-                      "name": "Fast",
-                      "type": "ArmyBookRule"
-                    },
-                    {
-                      "id": "a0YtInGiUDd6",
-                      "name": "Tough",
-                      "type": "ArmyBookRule",
-                      "rating": 6
-                    }
-                  ],
-                  "count": 1
-                }
-              ],
-              "label": "Fang-Beast Chariot (Rending Claws (A6, Rending), Armor(3), Fast, Tough(6))",
-              "parentSectionId": "5Lu3GqA",
-              "id": "B_d0rNxPPk"
             },
             {
               "uid": "P3wCH",
@@ -2504,6 +2446,64 @@
               "label": "Great Troll (Dual Clubs (A8), Fear(1), Regeneration, Tough(6))",
               "parentSectionId": "5Lu3GqA",
               "id": "P3wCH"
+            },
+            {
+              "uid": "B_d0rNxPPk",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "cost": 150,
+                  "unitId": "i8BX54D"
+                }
+              ],
+              "gains": [
+                {
+                  "name": "Fang-Beast Chariot",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Fang-Beast Chariot (Rending Claws (A6, Rending), Armor(3), Fast, Tough(6))",
+                  "content": [
+                    {
+                      "id": "j5DHwpSt",
+                      "name": "Rending Claws",
+                      "type": "ArmyBookWeapon",
+                      "count": 1,
+                      "range": 0,
+                      "attacks": 6,
+                      "weaponId": "PTSMfUpY",
+                      "specialRules": [
+                        {
+                          "id": "cavWDboL4ubs",
+                          "name": "Rending",
+                          "type": "ArmyBookRule"
+                        }
+                      ],
+                      "attacksMultiplier": 2
+                    },
+                    {
+                      "id": "74RjQ1k41DoO",
+                      "name": "Armor",
+                      "type": "ArmyBookRule",
+                      "rating": 3
+                    },
+                    {
+                      "id": "KdgwlPb8LuD2",
+                      "name": "Fast",
+                      "type": "ArmyBookRule"
+                    },
+                    {
+                      "id": "a0YtInGiUDd6",
+                      "name": "Tough",
+                      "type": "ArmyBookRule",
+                      "rating": 6
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Fang-Beast Chariot (Rending Claws (A6, Rending), Armor(3), Fast, Tough(6))",
+              "parentSectionId": "5Lu3GqA",
+              "id": "B_d0rNxPPk"
             },
             {
               "uid": "hEMFD",
@@ -2594,7 +2594,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 235,
+                  "cost": 320,
                   "unitId": "i8BX54D"
                 }
               ],
@@ -2691,7 +2691,7 @@
       "hint": "Orc Leader",
       "sections": [
         {
-          "id": "CsHm51P",
+          "id": "4FHypo-",
           "uid": "jH1efkj",
           "label": "Replace Hand Weapon",
           "options": [
@@ -2878,7 +2878,7 @@
           ]
         },
         {
-          "id": "okEZKhA",
+          "id": "3W8Amtw",
           "uid": "n_NZU-CpCK",
           "label": "Upgrade with one",
           "options": [
@@ -2946,7 +2946,7 @@
           }
         },
         {
-          "id": "xY9Yi-t",
+          "id": "XAZgi_W",
           "uid": "ph5M0KXluX",
           "label": "Replace Iron Master",
           "options": [
@@ -3037,7 +3037,7 @@
           ]
         },
         {
-          "id": "VRn8mIj",
+          "id": "m-QbOGe",
           "uid": "1Y-pM",
           "label": "Upgrade with one",
           "options": [
@@ -3129,7 +3129,7 @@
       "hint": "Command Group",
       "sections": [
         {
-          "id": "VT6bWAQ",
+          "id": "FHX3ncC",
           "uid": "Q5aQslC",
           "label": "Upgrade up to three models with one",
           "options": [
@@ -3314,7 +3314,7 @@
       "hint": "Orcs",
       "sections": [
         {
-          "id": "KvUlU6o",
+          "id": "Drddmqc",
           "uid": "yLMMTpW",
           "label": "Replace all Hand Weapons",
           "options": [
@@ -3430,7 +3430,7 @@
           ]
         },
         {
-          "id": "n-vbVry",
+          "id": "8OS68x8",
           "uid": "YtxWSw1",
           "label": "Upgrade all models with",
           "options": [
@@ -3474,7 +3474,7 @@
           }
         },
         {
-          "id": "axNhKe4",
+          "id": "tVnvz8a",
           "uid": "a4Tekbty",
           "label": "Upgrade one model with one",
           "options": [
@@ -3561,7 +3561,7 @@
       "hint": "Wild Orcs",
       "sections": [
         {
-          "id": "4mDza4a",
+          "id": "GwDi9x2",
           "uid": "iGeWOpJ",
           "label": "Replace all Spears",
           "options": [
@@ -3604,7 +3604,7 @@
           ]
         },
         {
-          "id": "Lev1ffz",
+          "id": "hoOBOhE",
           "uid": "6_giN5T",
           "label": "Replace one Spear",
           "options": [
@@ -3661,7 +3661,7 @@
           ]
         },
         {
-          "id": "FqT-Dy9",
+          "id": "rEuW_xe",
           "uid": "TdGQ6JH8",
           "label": "Upgrade one model with",
           "options": [
@@ -3714,7 +3714,7 @@
       "hint": "Black Orcs",
       "sections": [
         {
-          "id": "dZlB1kO",
+          "id": "XXlaCzh",
           "uid": "A6gO86B",
           "label": "Replace any Great Weapon",
           "options": [
@@ -3794,7 +3794,7 @@
           ]
         },
         {
-          "id": "tzbP48O",
+          "id": "q4cIg57",
           "uid": "g_R_p4xckT",
           "label": "Replace all Great Weapons",
           "options": [
@@ -3861,7 +3861,7 @@
       "hint": "Brute Orcs",
       "sections": [
         {
-          "id": "Bsco-A5",
+          "id": "UbIw4sT",
           "uid": "cxEio9A",
           "label": "Replace any Heavy Spear",
           "options": [
@@ -3914,7 +3914,7 @@
           ]
         },
         {
-          "id": "Pbi29Zq",
+          "id": "9XhtpYM",
           "uid": "RTaTqhH",
           "label": "Replace one Heavy Spear",
           "options": [
@@ -4007,7 +4007,7 @@
           ]
         },
         {
-          "id": "p0-CKCV",
+          "id": "T_pqxqa",
           "uid": "6qtIP7Tg",
           "label": "Upgrade one model with one",
           "options": [
@@ -4094,7 +4094,7 @@
       "hint": "Orc Shooters",
       "sections": [
         {
-          "id": "_7oowFo",
+          "id": "IpRXiII",
           "uid": "BeQgxfK",
           "label": "Replace all Bows",
           "options": [
@@ -4152,7 +4152,7 @@
       "hint": "Boar Riders",
       "sections": [
         {
-          "id": "f0bAaRE",
+          "id": "RA3p9sg",
           "uid": "Ep5FFRf",
           "label": "Replace all Hand Weapons",
           "options": [
@@ -4204,7 +4204,7 @@
           ]
         },
         {
-          "id": "6JXL_o8",
+          "id": "HyThCUq",
           "uid": "Bq1z3mkn",
           "label": "Upgrade one model with",
           "options": [
@@ -4256,7 +4256,7 @@
       "hint": "Wild Boar Riders",
       "sections": [
         {
-          "id": "k5Mjz--",
+          "id": "OVwrvBx",
           "uid": "5svrQPi",
           "label": "Replace all Dual Hand Weapons",
           "options": [
@@ -4305,7 +4305,7 @@
           ]
         },
         {
-          "id": "bgJAw4R",
+          "id": "8TvzCv3",
           "uid": "itc4UCRDgg",
           "label": "Replace one Lance",
           "options": [
@@ -4366,7 +4366,7 @@
       "hint": "Great Boar Riders",
       "sections": [
         {
-          "id": "rut0viA",
+          "id": "xJMAFTK",
           "uid": "W40UbH1",
           "label": "Replace all Hand Weapons",
           "options": [
@@ -4425,7 +4425,7 @@
       "hint": "Hobgoblins",
       "sections": [
         {
-          "id": "edIg636",
+          "id": "q03PdHN",
           "uid": "RP375",
           "label": "Replace all Dual Hand Weapons",
           "options": [
@@ -4496,7 +4496,7 @@
       "hint": "Black Orc Boss",
       "sections": [
         {
-          "id": "fNcCdhk",
+          "id": "GiTMl5V",
           "uid": "UqSAN",
           "label": "Replace Dual Heavy Hand Weapons",
           "options": [
@@ -4543,7 +4543,7 @@
           ]
         },
         {
-          "id": "cyybice",
+          "id": "bYQra_N",
           "uid": "4NIfdrycs0",
           "label": "Upgrade with",
           "options": [
@@ -4586,7 +4586,7 @@
           "variant": "upgrade"
         },
         {
-          "id": "J9s2mzf",
+          "id": "_CE0FaV",
           "uid": "DLWP0",
           "label": "Upgrade with one",
           "options": [
@@ -4842,7 +4842,7 @@
           }
         },
         {
-          "id": "dvtkgI5",
+          "id": "QH2mc9x",
           "uid": "L66OEMlq4d",
           "label": "Upgrade Giant Tusk-Beast with",
           "options": [
@@ -4910,7 +4910,7 @@
       "hint": "Brute Orc Boss",
       "sections": [
         {
-          "id": "Pp6MYKH",
+          "id": "ejb13cw",
           "uid": "Syeq8",
           "label": "Replace Heavy Hand Weapon",
           "options": [
@@ -5037,7 +5037,7 @@
           ]
         },
         {
-          "id": "pDohxY4",
+          "id": "-YYkdTj",
           "uid": "2N7Lv6W0cf",
           "label": "Replace Iron Master",
           "options": [
@@ -5089,7 +5089,7 @@
           ]
         },
         {
-          "id": "ohoIdIP",
+          "id": "CPJvXWY",
           "uid": "TpQ1U",
           "label": "Upgrade with",
           "options": [
@@ -5098,7 +5098,7 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 190,
+                  "cost": 295,
                   "unitId": "SNHGV-P"
                 }
               ],
@@ -5110,6 +5110,7 @@
                     "round": "160x122",
                     "square": "150x100"
                   },
+                  "label": "Great Wyvern (Heavy Claws (A6, AP(1)), Stomp (A4, AP(1)), Armor(3), Fear(2), Flying, Impact(3), Tough(12))",
                   "content": [
                     {
                       "id": "VSn9CmZA",
@@ -5177,7 +5178,6 @@
                       "rating": 12
                     }
                   ],
-                  "label": "Great Wyvern (Heavy Claws (A6, AP(1)), Stomp (A4, AP(1)), Armor(3), Fear(2), Flying, Impact(3), Tough(12))",
                   "count": 1
                 }
               ],
@@ -5198,7 +5198,7 @@
       "hint": "Giant Boar Rider",
       "sections": [
         {
-          "id": "btrdGRD",
+          "id": "bhOUQLn",
           "uid": "9pHP5",
           "label": "Upgrade with",
           "options": [
@@ -5259,7 +5259,7 @@
           "variant": "upgrade"
         },
         {
-          "id": "uvYMCWO",
+          "id": "cYJDUlx",
           "uid": "Mk0s-0yf",
           "label": "Upgrade with",
           "options": [
@@ -5307,7 +5307,7 @@
       "hint": "Wild Brute Orcs",
       "sections": [
         {
-          "id": "l8uNONp",
+          "id": "XQtlFNF",
           "uid": "P_25h",
           "label": "Replace any Wrecking Flail",
           "options": [
@@ -5360,7 +5360,7 @@
           ]
         },
         {
-          "id": "LE7e5sv",
+          "id": "cpQaiML",
           "uid": "lerpvr4Dtl",
           "label": "Replace one Wrecking Flail",
           "options": [
@@ -5414,7 +5414,7 @@
           ]
         },
         {
-          "id": "3-iGVcB",
+          "id": "CTYLvV0",
           "uid": "3wz6WcJT",
           "label": "Upgrade one model with",
           "options": [
@@ -5467,7 +5467,7 @@
       "hint": "Bone Banner",
       "sections": [
         {
-          "id": "RXpUg2H",
+          "id": "KbrIt2k",
           "uid": "bhgy8Cd7xe",
           "label": "Upgrade with",
           "options": [
@@ -5517,7 +5517,7 @@
       "hint": "Wild Shooters",
       "sections": [
         {
-          "id": "O5o6wG5",
+          "id": "KxtgZGC",
           "uid": "HyhAVWaH4h",
           "label": "Replace one Shortbow",
           "options": [
@@ -5578,7 +5578,7 @@
       "hint": "Orc Artillery",
       "sections": [
         {
-          "id": "jmdRhi-",
+          "id": "X5ezyYN",
           "uid": "UUBprqQ_39",
           "label": "Replace Rapid Giant Crossbow",
           "options": [
@@ -5635,7 +5635,7 @@
       "hint": "Specialists - Leader",
       "sections": [
         {
-          "id": "BAJGiHf",
+          "id": "GrxypiZ",
           "uid": "kHXvJFQ4",
           "label": "Upgrade with one",
           "options": [
@@ -5845,7 +5845,7 @@
       "hint": "Boar Chariot",
       "sections": [
         {
-          "id": "uSSVONn",
+          "id": "VFRjMfZ",
           "uid": "CFEjVoE7",
           "label": "Upgrade with",
           "options": [
@@ -5893,7 +5893,7 @@
       "hint": "Specialists - Brute",
       "sections": [
         {
-          "id": "mwBUIyD",
+          "id": "eB2fSUY",
           "uid": "fdSFVMze",
           "label": "Upgrade with one",
           "options": [
@@ -6040,7 +6040,7 @@
       "hint": "Specialists - Boss",
       "sections": [
         {
-          "id": "4AQCRb_",
+          "id": "DV6Xv-p",
           "uid": "rN4WzhfX",
           "label": "Upgrade with one",
           "options": [
@@ -6274,7 +6274,7 @@
       "hint": "Hobswampling Leader",
       "sections": [
         {
-          "id": "zVjlfnD",
+          "id": "SiJjtns",
           "uid": "B9LyUlnM",
           "label": "Replace Hand Weapon",
           "options": [
@@ -6389,7 +6389,7 @@
           ]
         },
         {
-          "id": "lhQkIs1",
+          "id": "9eYn0Zj",
           "uid": "G442yhdn",
           "label": "Upgrade with any",
           "options": [
@@ -6495,7 +6495,7 @@
       "hint": "Specialists - Iron Guard",
       "sections": [
         {
-          "id": "Byl33e5",
+          "id": "Z_33bjn",
           "uid": "XJGm326z",
           "label": "Upgrade with one",
           "options": [
@@ -6670,7 +6670,7 @@
       "hint": "Specialists - Hobswampling",
       "sections": [
         {
-          "id": "euP2KO5",
+          "id": "C6Y4qEO",
           "uid": "LdpvK6X2",
           "label": "Upgrade with one",
           "options": [
@@ -6816,7 +6816,7 @@
       "hint": "Vulture Riders",
       "sections": [
         {
-          "id": "urQvxJC",
+          "id": "tTHOYCS",
           "uid": "ArUUhr-qks",
           "label": "Replace all Sling-Bombs",
           "options": [
@@ -7442,7 +7442,7 @@
       "effectSkirmish": ""
     }
   ],
-  "modifiedAt": "2026-05-16T17:40:55.715Z",
+  "modifiedAt": "2026-05-28T13:00:15.656Z",
   "editedAt": "2026-05-16T17:40:55.714Z",
   "official": true,
   "versionString": "3.5.3",
@@ -7455,6 +7455,14 @@
   "popularity": 0,
   "downvotes": 0,
   "partnerSettings": {
+    "images": [
+      "army-books/images/fLZiB__g81akzBjMcQju9.png",
+      "army-books/images/pJ7CvS6LjqKxsj9VSjI2O.png",
+      "",
+      "",
+      "",
+      ""
+    ],
     "storeLinks": [
       "https://www.myminifactory.com/users/onepagerules",
       "https://www.etsy.com/shop/onepagerules"

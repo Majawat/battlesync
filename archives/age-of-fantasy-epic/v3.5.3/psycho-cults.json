@@ -812,7 +812,7 @@
       "hint": "Leader",
       "sections": [
         {
-          "id": "92hmdKt",
+          "id": "iVWFVxk",
           "uid": "0j7ey",
           "label": "Replace Heavy Pistol and CCW",
           "options": [
@@ -1209,7 +1209,7 @@
           ]
         },
         {
-          "id": "nemdGhw",
+          "id": "DY3d_3f",
           "uid": "r08ZQ",
           "label": "Replace any Heavy Pistol",
           "options": [
@@ -1293,7 +1293,7 @@
           ]
         },
         {
-          "id": "Vokdu9y",
+          "id": "v5L06lV",
           "uid": "_z0Ag",
           "label": "Replace Heavy Pistol",
           "options": [
@@ -1566,7 +1566,7 @@
           ]
         },
         {
-          "id": "HfdWKkZ",
+          "id": "rnSA5cK",
           "uid": "TXGoU",
           "label": "Take one Master Heavy Rifle attachment",
           "options": [
@@ -1795,7 +1795,7 @@
           ]
         },
         {
-          "id": "rWODcR1",
+          "id": "-mYE5LJ",
           "uid": "PrBZ3",
           "label": "Replace any CCW",
           "options": [
@@ -1889,7 +1889,7 @@
           ]
         },
         {
-          "id": "UfNxeE0",
+          "id": "XlleF9Y",
           "uid": "74Aq03Mk",
           "label": "Upgrade with one",
           "options": [
@@ -1966,10 +1966,9 @@
               ],
               "gains": [
                 {
-                  "name": "Biped-Rig",
+                  "name": "Heavy Biped-Rig",
                   "type": "ArmyBookItem",
                   "bases": null,
-                  "label": "Biped-Rig (Heavy Flamer (12\", A1, AP(1), Blast(3), Reliable), Stomp (A1, AP(1)), Bounding, Tough(3))",
                   "content": [
                     {
                       "id": "KPGenoi9",
@@ -1983,6 +1982,7 @@
                         {
                           "id": "17crjK7P6_w6",
                           "name": "AP",
+                          "type": "ArmyBookRule",
                           "rating": 1
                         },
                         {
@@ -2031,10 +2031,11 @@
                       "rating": 3
                     }
                   ],
+                  "label": "Heavy Biped-Rig (Heavy Flamer (12\", A1, AP(1), Blast(3), Reliable), Stomp (A1, AP(1)), Bounding, Tough(3))",
                   "count": 1
                 }
               ],
-              "label": "Biped-Rig (Heavy Flamer (12\", A1, AP(1), Blast(3), Reliable), Stomp (A1, AP(1)), Bounding, Tough(3))",
+              "label": "Heavy Biped-Rig (Heavy Flamer (12\", A1, AP(1), Blast(3), Reliable), Stomp (A1, AP(1)), Bounding, Tough(3))",
               "parentSectionId": "74Aq03Mk",
               "parentPackageUid": "NbkdWrZH",
               "id": "bpiOgGXW"
@@ -2049,7 +2050,7 @@
           }
         },
         {
-          "id": "x9bY0e_",
+          "id": "S8yZbYm",
           "uid": "SCx1DJzq",
           "label": "Replace Heavy Flamer",
           "options": [
@@ -2136,7 +2137,7 @@
       "hint": "Veteran Fighters",
       "sections": [
         {
-          "id": "BU3EAcA",
+          "id": "qlq69Fo",
           "uid": "spZWF",
           "label": "Replace any 2x CCW",
           "options": [
@@ -2346,7 +2347,7 @@
           ]
         },
         {
-          "id": "iJNHZai",
+          "id": "FGotyOP",
           "uid": "zjqHh",
           "label": "Replace one 2x CCW",
           "options": [
@@ -2518,7 +2519,7 @@
           ]
         },
         {
-          "id": "R9-TIhm",
+          "id": "DOSWBSi",
           "uid": "kpibf",
           "label": "Replace any Heavy Pistol",
           "options": [
@@ -2670,7 +2671,7 @@
           ]
         },
         {
-          "id": "NLDbEOI",
+          "id": "1mxaHt_",
           "uid": "-PdAR",
           "label": "Replace one Heavy Pistol",
           "options": [
@@ -2772,7 +2773,7 @@
           ]
         },
         {
-          "id": "tyLcKB9",
+          "id": "JbdhxNo",
           "uid": "3iZWe",
           "label": "Replace any Hand Weapon",
           "options": [
@@ -2864,7 +2865,7 @@
           ]
         },
         {
-          "id": "TAhpsMd",
+          "id": "fGIfZV9",
           "uid": "HKNxf",
           "label": "Replace any CCW",
           "options": [
@@ -2963,7 +2964,7 @@
       "hint": "Veteran Gunners",
       "sections": [
         {
-          "id": "8C6nJY0",
+          "id": "8V8rSdL",
           "uid": "0BT7F",
           "label": "Replace any Heavy Rifle and CCW",
           "options": [
@@ -3035,7 +3036,7 @@
           ]
         },
         {
-          "id": "VN3Mio7",
+          "id": "2WghnTM",
           "uid": "F37T4",
           "label": "Replace Heavy Rifle",
           "options": [
@@ -3321,7 +3322,7 @@
           ]
         },
         {
-          "id": "acDZygZ",
+          "id": "lreCWSu",
           "uid": "X-DN_",
           "label": "Take one Heavy Rifle attachment",
           "options": [
@@ -3551,7 +3552,7 @@
       "hint": "Fighters",
       "sections": [
         {
-          "id": "jIrf5EW",
+          "id": "xt9KnP8",
           "uid": "XyVnQ",
           "label": "Replace any 2x CCW",
           "options": [
@@ -3742,7 +3743,7 @@
           ]
         },
         {
-          "id": "SIrDBWg",
+          "id": "w-tTwrB",
           "uid": "kdAV2",
           "label": "Replace one Pistols",
           "options": [
@@ -3896,7 +3897,7 @@
           ]
         },
         {
-          "id": "kEY8Qaj",
+          "id": "MsJ_7bS",
           "uid": "b_a8d",
           "label": "Replace any Hand Weapon",
           "options": [
@@ -3986,7 +3987,7 @@
           ]
         },
         {
-          "id": "FRW_1hw",
+          "id": "1KLNN0g",
           "uid": "XoOJw",
           "label": "Replace any CCW",
           "options": [
@@ -4082,7 +4083,7 @@
       "hint": "Gunners",
       "sections": [
         {
-          "id": "431kAKp",
+          "id": "yTAlBE0",
           "uid": "rq0mM",
           "label": "Replace any Rifle and CCW",
           "options": [
@@ -4154,7 +4155,7 @@
           ]
         },
         {
-          "id": "lsdm4x0",
+          "id": "JifJ8dM",
           "uid": "hcsQa",
           "label": "Replace one Rifles",
           "options": [
@@ -4467,7 +4468,7 @@
       "hint": "Champion",
       "sections": [
         {
-          "id": "gP2imM7",
+          "id": "269eYUR",
           "uid": "oRjXn",
           "label": "Replace Pistol and CCW",
           "options": [
@@ -4693,7 +4694,7 @@
           ]
         },
         {
-          "id": "k4PaaG_",
+          "id": "f0UI3CW",
           "uid": "2jIef",
           "label": "Replace any Pistol",
           "options": [
@@ -4777,7 +4778,7 @@
           ]
         },
         {
-          "id": "3fxY_eS",
+          "id": "kbXtbv4",
           "uid": "s3ghA",
           "label": "Replace Pistol",
           "options": [
@@ -5008,7 +5009,7 @@
           ]
         },
         {
-          "id": "ZqKD6Dy",
+          "id": "DvTYDjx",
           "uid": "-hFlY",
           "label": "Replace any CCW",
           "options": [
@@ -5102,7 +5103,7 @@
           ]
         },
         {
-          "id": "FXKcaTs",
+          "id": "UyZ-GQ-",
           "uid": "ddxuHuGK",
           "label": "Upgrade with one",
           "options": [
@@ -5185,7 +5186,7 @@
       "hint": "Specialists - Leader",
       "sections": [
         {
-          "id": "oBnvOMV",
+          "id": "VeJofpZ",
           "uid": "UUfBH",
           "label": "Upgrade with one",
           "options": [
@@ -5385,7 +5386,7 @@
       "hint": "Redemptor-Zealots",
       "sections": [
         {
-          "id": "JFNGFgn",
+          "id": "gXvaaCz",
           "uid": "N7GHp",
           "label": "Replace any 2x CCW",
           "options": [
@@ -5495,7 +5496,7 @@
           ]
         },
         {
-          "id": "0C8jo2m",
+          "id": "SE4DqzI",
           "uid": "yvS2b",
           "label": "Replace one 2x CCW",
           "options": [
@@ -5628,7 +5629,7 @@
           ]
         },
         {
-          "id": "RradSaC",
+          "id": "65QueJX",
           "uid": "z15Wk",
           "label": "Replace one Heavy Pistol",
           "options": [
@@ -5803,7 +5804,7 @@
           ]
         },
         {
-          "id": "Qtjyaw0",
+          "id": "AODB8zG",
           "uid": "REsG6",
           "label": "Replace any Hand Weapon",
           "options": [
@@ -5897,7 +5898,7 @@
           ]
         },
         {
-          "id": "Siqxrop",
+          "id": "zc7m81O",
           "uid": "hzse7",
           "label": "Replace any CCW",
           "options": [
@@ -5989,7 +5990,7 @@
           ]
         },
         {
-          "id": "zVKTFmj",
+          "id": "BCs7wEw",
           "uid": "Qf0S3Hjs",
           "label": "Upgrade one model with",
           "options": [
@@ -6041,7 +6042,7 @@
       "hint": "Redemptor-Brethren",
       "sections": [
         {
-          "id": "K12YJrk",
+          "id": "mmdBpCm",
           "uid": "13Iei",
           "label": "Replace any Heavy Rifle and Flamer-Mod and CCW",
           "options": [
@@ -6247,7 +6248,7 @@
           ]
         },
         {
-          "id": "uAOYvVD",
+          "id": "knBOMq0",
           "uid": "cAjpOuWlHv",
           "label": "Replace any Flamer-Mod",
           "options": [
@@ -6299,7 +6300,7 @@
           ]
         },
         {
-          "id": "u8KH-Zu",
+          "id": "VsSxs1O",
           "uid": "vkOqpGNR",
           "label": "Upgrade with",
           "options": [
@@ -6346,7 +6347,7 @@
       "hint": "Biped Walkers",
       "sections": [
         {
-          "id": "DOfWdFR",
+          "id": "zAD3k5i",
           "uid": "Qqz7g",
           "label": "Replace any Pistol and Hand Weapon",
           "options": [
@@ -6447,7 +6448,7 @@
           ]
         },
         {
-          "id": "YxOXZms",
+          "id": "RS1ynMt",
           "uid": "oRALF",
           "label": "Replace any Pistol",
           "options": [
@@ -6566,7 +6567,7 @@
           ]
         },
         {
-          "id": "Vt5a8YD",
+          "id": "H-RoxFi",
           "uid": "uIULe",
           "label": "Replace any Hand Weapon",
           "options": [
@@ -6660,7 +6661,7 @@
           ]
         },
         {
-          "id": "82OkGjh",
+          "id": "rNCHDO7",
           "uid": "lGFLT",
           "label": "Replace Hand Weapon",
           "options": [
@@ -6749,7 +6750,7 @@
           ]
         },
         {
-          "id": "zW4cR3h",
+          "id": "PQUW5Et",
           "uid": "0W4sD0YR",
           "label": "Upgrade with",
           "options": [
@@ -6796,7 +6797,7 @@
       "hint": "Heavy Biped-Walkers",
       "sections": [
         {
-          "id": "AFx1Okx",
+          "id": "6J9QWqi",
           "uid": "gSRaU",
           "label": "Replace any Heavy Flamer",
           "options": [
@@ -6878,7 +6879,7 @@
           ]
         },
         {
-          "id": "59rAkee",
+          "id": "0LlKcna",
           "uid": "HSTSjCjy",
           "label": "Upgrade with",
           "options": [
@@ -6925,7 +6926,7 @@
       "hint": "Specialists - Champion",
       "sections": [
         {
-          "id": "CebpQpS",
+          "id": "qXLtCBa",
           "uid": "scHH-axX",
           "label": "Upgrade with one",
           "options": [
@@ -7702,8 +7703,8 @@
       "effectSkirmish": ""
     }
   ],
-  "modifiedAt": "2026-05-05T08:02:48.262Z",
-  "editedAt": "2026-04-03T12:14:38.224Z",
+  "modifiedAt": "2026-05-27T14:12:48.187Z",
+  "editedAt": "2026-05-27T14:12:48.186Z",
   "official": true,
   "versionString": "3.5.3",
   "coverImagePath": "https://af-images.s3.eu-north-1.amazonaws.com/army-books/covers/8P8zHTe_MQtawcCN/ui8FvOY2O0TeD-LtlDIUl.jpg",
