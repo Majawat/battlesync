@@ -2882,6 +2882,150 @@
       "disabledSections": [],
       "hasBalanceInvalid": false,
       "disabledUpgradeSections": []
+    },
+    {
+      "id": "yU8lCf0",
+      "cost": 860,
+      "name": "Super-Heavy Battle Truck",
+      "size": 1,
+      "bases": {
+        "round": "none",
+        "square": "none"
+      },
+      "items": [
+        {
+          "id": "QWIvnTcZ",
+          "name": "Extra Space",
+          "type": "ArmyBookItem",
+          "content": [
+            {
+              "id": "aogQZcOOQrDI",
+              "name": "Transport",
+              "type": "ArmyBookRule",
+              "rating": 16
+            }
+          ],
+          "count": 1
+        }
+      ],
+      "rules": [
+        {
+          "id": "KdgwlPb8LuD2",
+          "name": "Fast",
+          "label": "Fast"
+        },
+        {
+          "id": "cygZBh3MtWs1",
+          "name": "Ferocious",
+          "label": "Ferocious"
+        },
+        {
+          "id": "62-mYKVM9MLd",
+          "name": "Impact",
+          "rating": 12,
+          "label": "Impact(12)"
+        },
+        {
+          "id": "a0YtInGiUDd6",
+          "name": "Tough",
+          "rating": 24,
+          "label": "Tough(24)"
+        },
+        {
+          "id": "aogQZcOOQrDI",
+          "name": "Transport",
+          "rating": 11,
+          "label": "Transport(11)"
+        }
+      ],
+      "valid": true,
+      "defense": 2,
+      "quality": 4,
+      "weapons": [
+        {
+          "id": "Y2BOP",
+          "name": "Twin Heavy Machinegun",
+          "type": "ArmyBookWeapon",
+          "count": 1,
+          "range": 30,
+          "attacks": 6,
+          "weaponId": "rKG95U4w",
+          "specialRules": [
+            {
+              "type": "ArmyBookRule",
+              "id": "17crjK7P6_w6",
+              "name": "AP",
+              "rating": 1,
+              "label": "AP(1)"
+            }
+          ],
+          "attacksMultiplier": 1,
+          "label": "Twin Heavy Machinegun (30\", A6, AP(1))",
+          "originalCount": 1
+        },
+        {
+          "id": "KOUM2",
+          "name": "Heavy Killer-Rocket Pod",
+          "type": "ArmyBookWeapon",
+          "count": 1,
+          "range": 18,
+          "attacks": 4,
+          "weaponId": "g3RKWSkO",
+          "specialRules": [
+            {
+              "type": "ArmyBookRule",
+              "id": "_mrPya5SXSqW",
+              "name": "Deadly",
+              "rating": 3,
+              "label": "Deadly(3)"
+            },
+            {
+              "type": "ArmyBookRule",
+              "id": "xeJDKejG4QZN",
+              "name": "Tear",
+              "label": "Tear"
+            }
+          ],
+          "attacksMultiplier": 2,
+          "label": "Heavy Killer-Rocket Pod (18\", A4, Deadly(3), Tear)",
+          "originalCount": 1
+        },
+        {
+          "id": "I0DtXdMF",
+          "name": "Killer-Rocket Pod",
+          "type": "ArmyBookWeapon",
+          "count": 2,
+          "range": 12,
+          "attacks": 1,
+          "weaponId": "8-ijonFf",
+          "specialRules": [
+            {
+              "type": "ArmyBookRule",
+              "id": "_mrPya5SXSqW",
+              "name": "Deadly",
+              "rating": 3,
+              "label": "Deadly(3)"
+            },
+            {
+              "type": "ArmyBookRule",
+              "id": "xeJDKejG4QZN",
+              "name": "Tear",
+              "label": "Tear"
+            }
+          ],
+          "attacksMultiplier": 1,
+          "label": "2x Killer-Rocket Pod (12\", A1, Deadly(3), Tear)",
+          "originalCount": 2
+        }
+      ],
+      "upgrades": [
+        "l5yTgVyo"
+      ],
+      "genericName": "Super-Heavy Battle Truck",
+      "hasCustomRule": false,
+      "disabledSections": [],
+      "hasBalanceInvalid": false,
+      "disabledUpgradeSections": []
     }
   ],
   "upgradePackages": [
@@ -2890,7 +3034,7 @@
       "hint": "Leader Weapons",
       "sections": [
         {
-          "id": "tyv3G8r",
+          "id": "9yNCElG",
           "uid": "888ERTd",
           "label": "Replace Leader Pistol",
           "options": [
@@ -3150,7 +3294,7 @@
           ]
         },
         {
-          "id": "3Bh9qdO",
+          "id": "I3jrOsP",
           "uid": "zpp30",
           "label": "Replace Heavy Flamer-Mod",
           "options": [
@@ -3239,7 +3383,7 @@
           ]
         },
         {
-          "id": "kyJBiG5",
+          "id": "qAd0ebU",
           "uid": "P01q5",
           "label": "Replace CCW",
           "options": [
@@ -3408,7 +3552,7 @@
       "hint": "Heavy Melee Weapon",
       "sections": [
         {
-          "id": "a7m7OIs",
+          "id": "Emdge1T",
           "uid": "JwcJDo2",
           "label": "Replace one CCW",
           "options": [
@@ -3633,7 +3777,7 @@
       "hint": "Leader Upgrades",
       "sections": [
         {
-          "id": "hh7Of7o",
+          "id": "dPkQ1qU",
           "uid": "F2wLwQw",
           "label": "Upgrade with one",
           "options": [
@@ -3866,7 +4010,7 @@
       "hint": "Specialists - Leader",
       "sections": [
         {
-          "id": "X5Nlqug",
+          "id": "E8b2Nxw",
           "uid": "FrtCkJc",
           "label": "Upgrade with one",
           "options": [
@@ -4067,7 +4211,7 @@
       "hint": "Orc Leader - Mechanic Weapons",
       "sections": [
         {
-          "id": "wnELT9N",
+          "id": "tMHei2e",
           "uid": "vOIM6xk",
           "label": "Replace Leader Pistol",
           "options": [
@@ -4296,7 +4440,7 @@
       "hint": "Orc Warriors",
       "sections": [
         {
-          "id": "iZj7cIx",
+          "id": "YpFwePZ",
           "uid": "SDbUV",
           "label": "Replace all Pistols and CCWS",
           "options": [
@@ -4354,7 +4498,7 @@
           ]
         },
         {
-          "id": "TS6vXjp",
+          "id": "r8wc_h6",
           "uid": "eWQzCSY",
           "label": "Replace up to two Pistols",
           "options": [
@@ -4606,7 +4750,7 @@
           ]
         },
         {
-          "id": "7nVGlBt",
+          "id": "tGOGCu3",
           "uid": "gb5ou",
           "label": "Replace up to two CCWS",
           "options": [
@@ -4779,7 +4923,7 @@
       "hint": "Specialists",
       "sections": [
         {
-          "id": "cGKthfI",
+          "id": "WrfCZ2h",
           "uid": "1ZkABV9",
           "label": "Replace all Flamers",
           "options": [
@@ -4913,7 +5057,7 @@
           ]
         },
         {
-          "id": "OOFsq73",
+          "id": "VuB8y2K",
           "uid": "gsId1j3",
           "label": "Replace any Flamer",
           "options": [
@@ -4970,7 +5114,7 @@
           ]
         },
         {
-          "id": "1GR7LJj",
+          "id": "kWeeDm9",
           "uid": "E6-nk17",
           "label": "Upgrade any model with",
           "options": [
@@ -5031,7 +5175,7 @@
       "hint": "Veterans",
       "sections": [
         {
-          "id": "brHe4hO",
+          "id": "guiJQS_",
           "uid": "1exLMO2",
           "label": "Replace any Pistol",
           "options": [
@@ -5077,7 +5221,7 @@
           ]
         },
         {
-          "id": "9S3T7-B",
+          "id": "WyqCge7",
           "uid": "X6iGg2Y",
           "label": "Take one Carbine attachment",
           "options": [
@@ -5224,7 +5368,7 @@
           ]
         },
         {
-          "id": "JhnRmOe",
+          "id": "yca8TNB",
           "uid": "WOGnc",
           "label": "Replace any CCW",
           "options": [
@@ -5314,7 +5458,7 @@
           ]
         },
         {
-          "id": "26hrMz7",
+          "id": "PFj-PPA",
           "uid": "JwBFc",
           "label": "Replace one CCW",
           "options": [
@@ -5413,7 +5557,7 @@
       "hint": "Ultra Veterans",
       "sections": [
         {
-          "id": "IlRf2HV",
+          "id": "JeI993r",
           "uid": "B6G-xtg",
           "label": "Replace any Heavy Flamer-Mod",
           "options": [
@@ -5504,7 +5648,7 @@
           ]
         },
         {
-          "id": "8nG-8iA",
+          "id": "EygCqMW",
           "uid": "UI9Yg",
           "label": "Replace any Heavy Club",
           "options": [
@@ -5636,7 +5780,7 @@
           ]
         },
         {
-          "id": "0PBHQ10",
+          "id": "asqz2LP",
           "uid": "LLVJx8d",
           "label": "Replace one Carbine and Carbine-Mod and Heavy Club",
           "options": [
@@ -5703,7 +5847,7 @@
       "hint": "Vehicle Upgrades",
       "sections": [
         {
-          "id": "dovABeR",
+          "id": "UZjL336",
           "uid": "SYuLmi-",
           "label": "Upgrade with any",
           "options": [
@@ -5813,7 +5957,7 @@
       "hint": "Battle Truck",
       "sections": [
         {
-          "id": "wqO_T73",
+          "id": "l8Fvdr4",
           "uid": "cXZBtZV",
           "label": "Replace Heavy Killer-Rocket Pod",
           "options": [
@@ -5911,7 +6055,7 @@
       "hint": "Great Battle Truck",
       "sections": [
         {
-          "id": "tV1k3pT",
+          "id": "Rg3sS4I",
           "uid": "I_zQcJ4",
           "label": "Replace Basic Cannon",
           "options": [
@@ -6012,7 +6156,7 @@
           ]
         },
         {
-          "id": "USgCBOF",
+          "id": "9L6XGEP",
           "uid": "IDn93",
           "label": "Replace Extra Space",
           "options": [
@@ -6080,7 +6224,7 @@
       "hint": "Assault Buggy",
       "sections": [
         {
-          "id": "hoE2z5V",
+          "id": "pey8H1P",
           "uid": "XOB1mQ0",
           "label": "Replace Boost-Gun and Blast-GL",
           "options": [
@@ -6332,7 +6476,7 @@
       "hint": "Trike",
       "sections": [
         {
-          "id": "k6LjrvX",
+          "id": "LKNwptQ",
           "uid": "7shB-2O",
           "label": "Replace Triple Heavy Shotgun",
           "options": [
@@ -6508,7 +6652,7 @@
       "hint": "Hover Bikers",
       "sections": [
         {
-          "id": "xZMAhHB",
+          "id": "HRjncwv",
           "uid": "JRny1",
           "label": "Replace any Killer-Rocket Pod",
           "options": [
@@ -6635,7 +6779,7 @@
           ]
         },
         {
-          "id": "z-Bbni2",
+          "id": "_dJJBu9",
           "uid": "PUhP_8v",
           "label": "Replace one CCW",
           "options": [
@@ -6722,7 +6866,7 @@
           ]
         },
         {
-          "id": "IPT76If",
+          "id": "7AjFLwT",
           "uid": "QNa9e",
           "label": "Replace one Pistol and CCW",
           "options": [
@@ -6792,7 +6936,7 @@
       "hint": "Ranged Walker",
       "sections": [
         {
-          "id": "pVLG9re",
+          "id": "G2VopGk",
           "uid": "pdiqQbj",
           "label": "Replace any Rapid Killer-Rocket Pod",
           "options": [
@@ -6979,7 +7123,7 @@
       "hint": "Bomber Plane",
       "sections": [
         {
-          "id": "_0zHHqt",
+          "id": "tD0sQLO",
           "uid": "UXtnqRX",
           "label": "Replace Super-MG",
           "options": [
@@ -7030,7 +7174,7 @@
           ]
         },
         {
-          "id": "as85LKm",
+          "id": "rQHvyHs",
           "uid": "e0XgKpc",
           "label": "Replace Flame Missiles and Flame Bombs",
           "options": [
@@ -7162,7 +7306,7 @@
           ]
         },
         {
-          "id": "WR1kfSj",
+          "id": "B924Jyl",
           "uid": "QAfk2Ol",
           "label": "Upgrade with any",
           "options": [
@@ -7213,7 +7357,7 @@
       "hint": "Great Walker",
       "sections": [
         {
-          "id": "a3BVyDf",
+          "id": "RuXjQfE",
           "uid": "IgVrX-K",
           "label": "Replace Deathstorm Minigun",
           "options": [
@@ -7264,7 +7408,7 @@
           ]
         },
         {
-          "id": "WMNVx2y",
+          "id": "v2gWB8X",
           "uid": "fsC9L",
           "label": "Replace Great Walker Saw",
           "options": [
@@ -7312,7 +7456,7 @@
           ]
         },
         {
-          "id": "ZyRATaq",
+          "id": "J9n_Izl",
           "uid": "mr-fW",
           "label": "Replace any Rocket Launcher Array",
           "options": [
@@ -7363,7 +7507,7 @@
           ]
         },
         {
-          "id": "0Eg-pUv",
+          "id": "lWiTZZe",
           "uid": "lslofD7",
           "label": "Upgrade with one",
           "options": [
@@ -7460,7 +7604,7 @@
           }
         },
         {
-          "id": "rMZbDvi",
+          "id": "wUlPbpw",
           "uid": "xxP9DgY",
           "label": "Upgrade with any",
           "options": [
@@ -7541,7 +7685,7 @@
       "hint": "Squad Upgrades",
       "sections": [
         {
-          "id": "NJEnxK8",
+          "id": "pQYqOjd",
           "uid": "s08qc",
           "label": "Upgrade one model with one",
           "options": [
@@ -7681,7 +7825,7 @@
       "hint": "Ultra Veteran Leader",
       "sections": [
         {
-          "id": "W2MBJYk",
+          "id": "yjZnU5f",
           "uid": "4YtaG",
           "label": "Replace one Heavy Club",
           "options": [
@@ -7760,7 +7904,7 @@
           ]
         },
         {
-          "id": "FtKYB0y",
+          "id": "66uLlyi",
           "uid": "wexfC",
           "label": "Replace Heavy Flamer-Mod",
           "options": [
@@ -7848,7 +7992,7 @@
           ]
         },
         {
-          "id": "8EPfvT9",
+          "id": "_zdoxyR",
           "uid": "mPIpO",
           "label": "Replace any Heavy Club",
           "options": [
@@ -7978,7 +8122,7 @@
           ]
         },
         {
-          "id": "YXEG1LO",
+          "id": "fkR6duY",
           "uid": "cXKO-",
           "label": "Replace 2x Heavy Clubs",
           "options": [
@@ -8034,7 +8178,7 @@
           ]
         },
         {
-          "id": "CvS3ZG7",
+          "id": "WbF-Top",
           "uid": "0PAAgAV3vG",
           "label": "Upgrade with",
           "options": [
@@ -8077,7 +8221,7 @@
           "variant": "upgrade"
         },
         {
-          "id": "yPdn_CQ",
+          "id": "KAs8bC-",
           "uid": "nva-8",
           "label": "Upgrade with one",
           "options": [
@@ -8158,7 +8302,7 @@
       "hint": "Veteran Specialists",
       "sections": [
         {
-          "id": "SWRMazi",
+          "id": "1H6L-Av",
           "uid": "UM1wo",
           "label": "Replace any Heavy Flamer",
           "options": [
@@ -8363,7 +8507,7 @@
           ]
         },
         {
-          "id": "Qj9d0-z",
+          "id": "ZwpPuN7",
           "uid": "C1siP",
           "label": "Upgrade any model with",
           "options": [
@@ -8423,7 +8567,7 @@
       "hint": "Jump Pack Orcs",
       "sections": [
         {
-          "id": "SDy2dCG",
+          "id": "voAp8l8",
           "uid": "n-Qwq",
           "label": "Replace all Pistols",
           "options": [
@@ -8474,7 +8618,7 @@
           ]
         },
         {
-          "id": "BDtWjFX",
+          "id": "-L8SLr5",
           "uid": "TPQ-n",
           "label": "Replace one Pistol",
           "options": [
@@ -8654,7 +8798,7 @@
       "hint": "Infiltrators",
       "sections": [
         {
-          "id": "C5iBlb6",
+          "id": "RphqRL_",
           "uid": "C62Sd",
           "label": "Replace all Pistols",
           "options": [
@@ -8734,7 +8878,7 @@
           ]
         },
         {
-          "id": "djjJtvd",
+          "id": "h-Fizyw",
           "uid": "A7DsI",
           "label": "Replace one Pistol",
           "options": [
@@ -8986,7 +9130,7 @@
           ]
         },
         {
-          "id": "nWzzdcv",
+          "id": "gJ8gv-k",
           "uid": "Pxoy1",
           "label": "Replace up to three Pistols",
           "options": [
@@ -9056,7 +9200,7 @@
       "hint": "Truck Upgrades",
       "sections": [
         {
-          "id": "a_O1rgI",
+          "id": "J3_xeOs",
           "uid": "9wRbA",
           "label": "Replace Rapid Killer-Rocket Pod",
           "options": [
@@ -9166,7 +9310,7 @@
           ]
         },
         {
-          "id": "5OBKK6Y",
+          "id": "Cwhh3A0",
           "uid": "GX_8q",
           "label": "Upgrade with any",
           "options": [
@@ -9272,7 +9416,7 @@
       "hint": "Melee Walker",
       "sections": [
         {
-          "id": "WvDuNmN",
+          "id": "4RzNWuU",
           "uid": "FY0Tz",
           "label": "Replace any Walker Saw",
           "options": [
@@ -9323,7 +9467,7 @@
           ]
         },
         {
-          "id": "r1uyllF",
+          "id": "o0ZO-WS",
           "uid": "wM7JQ",
           "label": "Upgrade with one",
           "options": [
@@ -9554,7 +9698,7 @@
       "hint": "Berserkers",
       "sections": [
         {
-          "id": "1B8SscE",
+          "id": "SGutnWR",
           "uid": "NUtti",
           "label": "Replace all Berserker Claws",
           "options": [
@@ -9651,7 +9795,7 @@
       "hint": "Combat Beast",
       "sections": [
         {
-          "id": "kkhjL6Z",
+          "id": "H32qYIt",
           "uid": "81bah",
           "label": "Replace any Heavy Mortar",
           "options": [
@@ -9705,7 +9849,7 @@
           ]
         },
         {
-          "id": "cQptCJm",
+          "id": "iFIPxjB",
           "uid": "DCTCJ",
           "label": "Replace Extra Space",
           "options": [
@@ -9873,7 +10017,7 @@
       "hint": "Berserker Beast Riders",
       "sections": [
         {
-          "id": "8BBhs2W",
+          "id": "DZaDalA",
           "uid": "KnFEL",
           "label": "Replace all Berserker Claws",
           "options": [
@@ -9972,7 +10116,7 @@
       "hint": "Berserker Leader",
       "sections": [
         {
-          "id": "KWlYCiX",
+          "id": "tzU6lRs",
           "uid": "G5hYd",
           "label": "Replace Great Saw",
           "options": [
@@ -10139,7 +10283,7 @@
           ]
         },
         {
-          "id": "DV9Xl7l",
+          "id": "xbYfq8w",
           "uid": "GKnmw",
           "label": "Upgrade with one",
           "options": [
@@ -10294,7 +10438,7 @@
       "hint": "Veteran Leader Weapons",
       "sections": [
         {
-          "id": "-cyOGty",
+          "id": "paDf1V7",
           "uid": "XcMI8",
           "label": "Replace Leader Pistol",
           "options": [
@@ -10504,7 +10648,7 @@
           ]
         },
         {
-          "id": "CCRzHO7",
+          "id": "92A9Url",
           "uid": "EfFwD",
           "label": "Replace CCW",
           "options": [
@@ -10673,7 +10817,7 @@
       "hint": "Squad Upgrades - Ultra Veterans",
       "sections": [
         {
-          "id": "JcJMUv4",
+          "id": "GmUhi3w",
           "uid": "TI6Ag",
           "label": "Upgrade one model with one",
           "options": [
@@ -10762,7 +10906,7 @@
       "hint": "Beast Titan",
       "sections": [
         {
-          "id": "3cxCume",
+          "id": "hxM0yFP",
           "uid": "W1-WICeZwy",
           "label": "Replace Basic Cannon and Heavy Machinegun",
           "options": [
@@ -10818,7 +10962,7 @@
           ]
         },
         {
-          "id": "zs-3Mgr",
+          "id": "343eYOs",
           "uid": "KbEt6h0W",
           "label": "Replace any Heavy Mortar",
           "options": [
@@ -10872,7 +11016,7 @@
           ]
         },
         {
-          "id": "3eEkoKk",
+          "id": "y3fG5p-",
           "uid": "xaeQHNw_",
           "label": "Replace Extra Space",
           "options": [
@@ -11040,7 +11184,7 @@
       "hint": "Specialists - Berserker",
       "sections": [
         {
-          "id": "4PC88R3",
+          "id": "hGV38ET",
           "uid": "p-1Al-aW",
           "label": "Upgrade with one",
           "options": [
@@ -11245,7 +11389,7 @@
       "hint": "Specialists - Ultra Veteran",
       "sections": [
         {
-          "id": "bQNeNxj",
+          "id": "XNlS2_n",
           "uid": "1jvGyJRh",
           "label": "Upgrade with one",
           "options": [
@@ -11419,7 +11563,7 @@
       "hint": "Specialists - Veteran",
       "sections": [
         {
-          "id": "BZFFPVt",
+          "id": "E7zbHra",
           "uid": "F6QM6eQX",
           "label": "Upgrade with one",
           "options": [
@@ -11623,7 +11767,7 @@
       "hint": "Blood Mark",
       "sections": [
         {
-          "id": "lPqG3LR",
+          "id": "x4TvUit",
           "uid": "xh-zBO7N",
           "label": "Upgrade with",
           "options": [
@@ -11674,6 +11818,419 @@
           "parentPackageUid": "2xaC8wU1",
           "type": "ArmyBookUpgradeSection",
           "variant": "upgrade"
+        }
+      ],
+      "calcErrors": false
+    },
+    {
+      "uid": "l5yTgVyo",
+      "hint": "Super-Heavy Battle Truck",
+      "sections": [
+        {
+          "id": "oRsterz",
+          "uid": "oUABsL61",
+          "label": "Replace Heavy Killer-Rocket Pod",
+          "options": [
+            {
+              "uid": "GjPH5CQx",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "cost": 20,
+                  "unitId": "yU8lCf0"
+                }
+              ],
+              "gains": [
+                {
+                  "id": null,
+                  "name": "Heavy Rocket Launcher",
+                  "type": "ArmyBookWeapon",
+                  "count": 1,
+                  "range": 24,
+                  "attacks": 4,
+                  "weaponId": "Od1tCrVt",
+                  "specialRules": [
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "rating": 2
+                    },
+                    {
+                      "id": "_mrPya5SXSqW",
+                      "name": "Deadly",
+                      "rating": 3
+                    }
+                  ],
+                  "attacksMultiplier": 2,
+                  "label": "Heavy Rocket Launcher (24\", A4, AP(2), Deadly(3))"
+                }
+              ],
+              "label": "Heavy Rocket Launcher (24\", A4, AP(2), Deadly(3))",
+              "parentSectionId": "oUABsL61",
+              "parentPackageUid": "NFAbXCR3",
+              "id": "GjPH5CQx"
+            },
+            {
+              "uid": "a93085WU",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "cost": 40,
+                  "unitId": "yU8lCf0"
+                }
+              ],
+              "gains": [
+                {
+                  "id": "9KbQ3D9t",
+                  "name": "Heavy Cannon",
+                  "type": "ArmyBookWeapon",
+                  "count": 1,
+                  "range": 30,
+                  "attacks": 4,
+                  "weaponId": "FlYiKmxr",
+                  "specialRules": [
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "type": "ArmyBookRule",
+                      "rating": 2
+                    },
+                    {
+                      "id": "w_vX0mi58KKt",
+                      "name": "Blast",
+                      "type": "ArmyBookRule",
+                      "rating": 3
+                    }
+                  ],
+                  "attacksMultiplier": 2,
+                  "label": "Heavy Cannon (30\", A4, AP(2), Blast(3))"
+                }
+              ],
+              "label": "Heavy Cannon (30\", A4, AP(2), Blast(3))",
+              "parentSectionId": "oUABsL61",
+              "parentPackageUid": "NFAbXCR3",
+              "id": "a93085WU"
+            }
+          ],
+          "parentPackageUid": "NFAbXCR3",
+          "type": "ArmyBookUpgradeSection",
+          "variant": "replace",
+          "targets": [
+            "Heavy Killer-Rocket Pod"
+          ]
+        },
+        {
+          "id": "L6u_YUN",
+          "uid": "HgNSjFNJ",
+          "label": "Replace any Killer-Rocket Pod",
+          "options": [
+            {
+              "uid": "F6PJ89Mi",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "cost": 5,
+                  "unitId": "yU8lCf0"
+                }
+              ],
+              "gains": [
+                {
+                  "id": null,
+                  "name": "Rocket Launcher",
+                  "type": "ArmyBookWeapon",
+                  "count": 1,
+                  "range": 18,
+                  "attacks": 1,
+                  "weaponId": "I0DtXdMF",
+                  "specialRules": [
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "type": "ArmyBookRule",
+                      "rating": 2
+                    },
+                    {
+                      "id": "_mrPya5SXSqW",
+                      "name": "Deadly",
+                      "type": "ArmyBookRule",
+                      "rating": 3
+                    }
+                  ],
+                  "attacksMultiplier": 1,
+                  "label": "Rocket Launcher (18\", A1, AP(2), Deadly(3))"
+                }
+              ],
+              "label": "Rocket Launcher (18\", A1, AP(2), Deadly(3))",
+              "parentSectionId": "HgNSjFNJ",
+              "parentPackageUid": "151uohZg",
+              "id": "F6PJ89Mi"
+            },
+            {
+              "uid": "N8YzlL1L",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "cost": 20,
+                  "unitId": "yU8lCf0"
+                }
+              ],
+              "gains": [
+                {
+                  "id": null,
+                  "name": "Heavy Machinegun",
+                  "type": "ArmyBookWeapon",
+                  "count": 1,
+                  "range": 30,
+                  "attacks": 3,
+                  "weaponId": "_OuuPXyd",
+                  "specialRules": [
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "rating": 1
+                    }
+                  ],
+                  "attacksMultiplier": 1,
+                  "label": "Heavy Machinegun (30\", A3, AP(1))"
+                }
+              ],
+              "label": "Heavy Machinegun (30\", A3, AP(1))",
+              "parentSectionId": "HgNSjFNJ",
+              "parentPackageUid": "151uohZg",
+              "id": "N8YzlL1L"
+            }
+          ],
+          "parentPackageUid": "151uohZg",
+          "type": "ArmyBookUpgradeSection",
+          "variant": "replace",
+          "affects": {
+            "type": "any"
+          },
+          "targets": [
+            "Killer-Rocket Pod"
+          ]
+        },
+        {
+          "id": "iBW22lJ",
+          "uid": "YU09G92psi",
+          "label": "Replace Extra Space",
+          "options": [
+            {
+              "uid": "bM7mQ9mcxI",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "cost": 5,
+                  "unitId": "yU8lCf0"
+                }
+              ],
+              "gains": [
+                {
+                  "name": "Great Psy-Totem",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Great Psy-Totem (Caster(3))",
+                  "content": [
+                    {
+                      "id": "47CAqf7ySlfc",
+                      "name": "Caster",
+                      "type": "ArmyBookRule",
+                      "rating": 3
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Great Psy-Totem (Caster(3))",
+              "parentSectionId": "YU09G92psi",
+              "id": "bM7mQ9mcxI"
+            },
+            {
+              "uid": "ypHazOX9fl",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "cost": 5,
+                  "unitId": "yU8lCf0"
+                }
+              ],
+              "gains": [
+                {
+                  "id": null,
+                  "name": "Heavy Mortar",
+                  "type": "ArmyBookWeapon",
+                  "count": 1,
+                  "range": 24,
+                  "attacks": 1,
+                  "weaponId": "aG7M8EJ8",
+                  "specialRules": [
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "rating": 1
+                    },
+                    {
+                      "id": "w_vX0mi58KKt",
+                      "name": "Blast",
+                      "rating": 6
+                    },
+                    {
+                      "id": "8Ck9GAwUK824",
+                      "name": "Indirect"
+                    }
+                  ],
+                  "attacksMultiplier": 1,
+                  "label": "Heavy Mortar (24\", A1, AP(1), Blast(6), Indirect)"
+                }
+              ],
+              "label": "Heavy Mortar (24\", A1, AP(1), Blast(6), Indirect)",
+              "parentSectionId": "YU09G92psi",
+              "id": "ypHazOX9fl"
+            }
+          ],
+          "parentPackageUid": "l5yTgVyo",
+          "type": "ArmyBookUpgradeSection",
+          "variant": "replace",
+          "targets": [
+            "Extra Space"
+          ]
+        },
+        {
+          "id": "qmDk-Qc",
+          "uid": "dkUtbWxk",
+          "label": "Upgrade with any",
+          "options": [
+            {
+              "uid": "00DIFhVQGk",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "cost": 20,
+                  "unitId": "yU8lCf0"
+                }
+              ],
+              "gains": [
+                {
+                  "id": "QqEg2lA",
+                  "name": "Boarding Rig",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Boarding Rig (Transport(6))",
+                  "content": [
+                    {
+                      "id": "aogQZcOOQrDI",
+                      "name": "Transport",
+                      "type": "ArmyBookRule",
+                      "rating": 6
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Boarding Rig (Transport(6))",
+              "parentSectionId": "dkUtbWxk",
+              "parentPackageUid": "151uohZg",
+              "id": "00DIFhVQGk"
+            },
+            {
+              "uid": "4Nw-0oj4",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "cost": 30,
+                  "unitId": "yU8lCf0"
+                }
+              ],
+              "gains": [
+                {
+                  "name": "Overclocked Engine",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Overclocked Engine (Agile)",
+                  "content": [
+                    {
+                      "id": "kQVze0GRY3R9",
+                      "name": "Agile",
+                      "type": "ArmyBookRule"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Overclocked Engine (Agile)",
+              "parentSectionId": "dkUtbWxk",
+              "parentPackageUid": "QN6QXXFp",
+              "id": "4Nw-0oj4"
+            },
+            {
+              "uid": "UCwFU-LEF5",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "cost": 30,
+                  "unitId": "yU8lCf0"
+                }
+              ],
+              "gains": [
+                {
+                  "id": "zrvJkwu",
+                  "name": "Wrecking Ram",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Wrecking Ram (Impact(5))",
+                  "content": [
+                    {
+                      "id": "62-mYKVM9MLd",
+                      "name": "Impact",
+                      "type": "ArmyBookRule",
+                      "rating": 5
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Wrecking Ram (Impact(5))",
+              "parentSectionId": "dkUtbWxk",
+              "parentPackageUid": "151uohZg",
+              "id": "UCwFU-LEF5"
+            },
+            {
+              "uid": "ymQ1CPmy",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "cost": 45,
+                  "unitId": "yU8lCf0"
+                }
+              ],
+              "gains": [
+                {
+                  "name": "Tire Chains",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Tire Chains (Strider)",
+                  "content": [
+                    {
+                      "id": "JSKVyurtWIyW",
+                      "name": "Strider",
+                      "type": "ArmyBookRule"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Tire Chains (Strider)",
+              "parentSectionId": "dkUtbWxk",
+              "parentPackageUid": "QN6QXXFp",
+              "id": "ymQ1CPmy"
+            }
+          ],
+          "parentPackageUid": "QN6QXXFp",
+          "type": "ArmyBookUpgradeSection",
+          "variant": "upgrade",
+          "select": {
+            "type": "any"
+          }
         }
       ],
       "calcErrors": false
@@ -12259,8 +12816,8 @@
       "effectSkirmish": ""
     }
   ],
-  "modifiedAt": "2026-05-05T08:02:42.043Z",
-  "editedAt": "2026-04-30T15:03:38.273Z",
+  "modifiedAt": "2026-06-04T15:09:32.886Z",
+  "editedAt": "2026-06-04T15:09:32.885Z",
   "official": true,
   "versionString": "3.5.3",
   "coverImagePath": "https://af-images.s3.eu-north-1.amazonaws.com/army-books/covers/1wj1ysgxpuuz9bc7/HLuJ_G_UDCVWud21yrs7z.jpg",

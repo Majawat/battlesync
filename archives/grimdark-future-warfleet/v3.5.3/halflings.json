@@ -20,8 +20,8 @@
       "name": "Champion",
       "size": 1,
       "bases": {
-        "round": "32",
-        "square": "30"
+        "round": "25",
+        "square": "25"
       },
       "items": [],
       "rules": [
@@ -89,8 +89,8 @@
       "name": "Leader",
       "size": 1,
       "bases": {
-        "round": "32",
-        "square": "30"
+        "round": "25",
+        "square": "25"
       },
       "items": [],
       "rules": [
@@ -260,8 +260,8 @@
       "name": "Veterans",
       "size": 5,
       "bases": {
-        "round": "32",
-        "square": "30"
+        "round": "25",
+        "square": "25"
       },
       "items": [],
       "rules": [
@@ -318,8 +318,8 @@
       "name": "Braves",
       "size": 5,
       "bases": {
-        "round": "32",
-        "square": "30"
+        "round": "25",
+        "square": "25"
       },
       "items": [],
       "rules": [
@@ -381,8 +381,8 @@
       "name": "Drunks",
       "size": 5,
       "bases": {
-        "round": "32",
-        "square": "30"
+        "round": "25",
+        "square": "25"
       },
       "items": [],
       "rules": [
@@ -451,8 +451,8 @@
       "name": "Thieves",
       "size": 3,
       "bases": {
-        "round": "32",
-        "square": "30"
+        "round": "25",
+        "square": "25"
       },
       "items": [],
       "rules": [
@@ -515,8 +515,8 @@
       "name": "Marksmen",
       "size": 5,
       "bases": {
-        "round": "32",
-        "square": "30"
+        "round": "25",
+        "square": "25"
       },
       "items": [],
       "rules": [
@@ -1447,7 +1447,7 @@
       "hint": "Champion",
       "sections": [
         {
-          "id": "OTagyLG",
+          "id": "q5DyP0z",
           "uid": "cge6fZx",
           "label": "Replace Heavy Hand Weapon",
           "options": [
@@ -1659,7 +1659,7 @@
           ]
         },
         {
-          "id": "mDiVtFm",
+          "id": "b5iWI39",
           "uid": "zSbP4DqS7H",
           "label": "Upgrade with one",
           "options": [
@@ -1748,7 +1748,7 @@
           }
         },
         {
-          "id": "-xcQZH7",
+          "id": "ROEb1Kr",
           "uid": "9t7DZv_",
           "label": "Upgrade with one",
           "options": [
@@ -2203,7 +2203,7 @@
       "hint": "Leader",
       "sections": [
         {
-          "id": "_COJ7qa",
+          "id": "M2CSY56",
           "uid": "F9DZrNC",
           "label": "Replace Hand Weapon",
           "options": [
@@ -2390,7 +2390,7 @@
           ]
         },
         {
-          "id": "TSWZGoD",
+          "id": "KVV35-r",
           "uid": "xv6CZz8",
           "label": "Upgrade with one",
           "options": [
@@ -2485,7 +2485,7 @@
           }
         },
         {
-          "id": "55pmNNO",
+          "id": "CQAE5_j",
           "uid": "pV1ud1X",
           "label": "Upgrade with one",
           "options": [
@@ -2759,7 +2759,7 @@
       "hint": "Command Group",
       "sections": [
         {
-          "id": "Pxme65f",
+          "id": "3K9xple",
           "uid": "FClLCl9",
           "label": "Upgrade up to three models with one",
           "options": [
@@ -2896,7 +2896,7 @@
       "hint": "Warriors",
       "sections": [
         {
-          "id": "M5ZkndJ",
+          "id": "XO8t9P9",
           "uid": "e6sUln_",
           "label": "Replace all Hand Weapons",
           "options": [
@@ -2991,7 +2991,7 @@
       "hint": "Thieves",
       "sections": [
         {
-          "id": "zdpOIe3",
+          "id": "vffyWkN",
           "uid": "diuiRCg",
           "label": "Replace all Dual Hand Weapons",
           "options": [
@@ -3100,7 +3100,7 @@
           ]
         },
         {
-          "id": "xIpq2ZK",
+          "id": "I6bpIDK",
           "uid": "Oj1t5",
           "label": "Upgrade all models with one",
           "options": [
@@ -3188,7 +3188,7 @@
       "hint": "Marksmen",
       "sections": [
         {
-          "id": "t-QlpMM",
+          "id": "z1o17vN",
           "uid": "UDNFFyM",
           "label": "Replace all Shortbows",
           "options": [
@@ -3282,7 +3282,7 @@
       "hint": "Beast Riders",
       "sections": [
         {
-          "id": "4SPRNll",
+          "id": "kheiV6k",
           "uid": "Pw8gcW7",
           "label": "Replace all Hand Weapons",
           "options": [
@@ -3334,7 +3334,7 @@
           ]
         },
         {
-          "id": "Tda5KYQ",
+          "id": "j_hWbOL",
           "uid": "dt9ab2D",
           "label": "Upgrade all models with one",
           "options": [
@@ -3418,7 +3418,7 @@
           }
         },
         {
-          "id": "tLrXbEm",
+          "id": "C4rZFyI",
           "uid": "G6XLfq-",
           "label": "Replace all Dog Mounts",
           "options": [
@@ -3551,7 +3551,7 @@
       "hint": "Golems",
       "sections": [
         {
-          "id": "7DRhiAp",
+          "id": "4VlUVS4",
           "uid": "2a4gS-V",
           "label": "Replace all Rock Breeds",
           "options": [
@@ -3645,7 +3645,7 @@
       "hint": "Beast Chariot",
       "sections": [
         {
-          "id": "qrcx0El",
+          "id": "ifLGdCE",
           "uid": "iRpbuMD",
           "label": "Replace Spear Crew",
           "options": [
@@ -3687,7 +3687,7 @@
           ]
         },
         {
-          "id": "6g0FEov",
+          "id": "Jn4h3yU",
           "uid": "OMPPv8u",
           "label": "Replace Draft Goat",
           "options": [
@@ -3827,7 +3827,7 @@
       "hint": "Halfling Artillery",
       "sections": [
         {
-          "id": "14iqsTx",
+          "id": "esih5jS",
           "uid": "4yGy1tw",
           "label": "Replace Volley Gun",
           "options": [
@@ -4033,7 +4033,7 @@
       "hint": "Cockatrice",
       "sections": [
         {
-          "id": "P7MiKFP",
+          "id": "oi9Cj4P",
           "uid": "REc82",
           "label": "Replace Sharp Beak and Sharp Claws",
           "options": [
@@ -4104,7 +4104,7 @@
       "hint": "Kin Bond",
       "sections": [
         {
-          "id": "48DcZ_7",
+          "id": "EFf4baU",
           "uid": "PQviO_dieY",
           "label": "Upgrade one model with",
           "options": [
@@ -4167,7 +4167,7 @@
       "hint": "Specialists - Champion",
       "sections": [
         {
-          "id": "NThB-6M",
+          "id": "3cCn9lR",
           "uid": "ebFZSnUC",
           "label": "Upgrade with one",
           "options": [
@@ -4338,7 +4338,7 @@
       "hint": "Drunks",
       "sections": [
         {
-          "id": "PCol12f",
+          "id": "IbPdfgy",
           "uid": "7a7CfCMTKG",
           "label": "Upgrade all models with",
           "options": [
@@ -4401,7 +4401,7 @@
       "hint": "Jetpack Troopers",
       "sections": [
         {
-          "id": "Ryo1KR5",
+          "id": "sC1fOWr",
           "uid": "0xXTFm1M2A",
           "label": "Replace all Grenades",
           "options": [
@@ -4466,7 +4466,7 @@
       "hint": "Specialists - Leader",
       "sections": [
         {
-          "id": "3OoNU4n",
+          "id": "YmLhn9s",
           "uid": "2O-uQMYQ",
           "label": "Upgrade with one",
           "options": [
@@ -4670,7 +4670,7 @@
       "hint": "Terrifying Fireworks",
       "sections": [
         {
-          "id": "ok2Tfwh",
+          "id": "fSt8sjL",
           "uid": "-YxdEBRA",
           "label": "Upgrade with",
           "options": [
@@ -5320,8 +5320,8 @@
       "effectSkirmish": ""
     }
   ],
-  "modifiedAt": "2026-05-05T08:02:19.347Z",
-  "editedAt": "2026-05-04T09:48:45.161Z",
+  "modifiedAt": "2026-06-02T15:52:47.600Z",
+  "editedAt": "2026-06-02T15:52:47.600Z",
   "official": true,
   "versionString": "3.5.3",
   "coverImagePath": "https://af-images.s3.eu-north-1.amazonaws.com/army-books/covers/Yc0G2hHhIghLqbveC8OGx.png",
