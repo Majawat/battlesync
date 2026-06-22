@@ -462,7 +462,7 @@
       "hint": "Leader",
       "sections": [
         {
-          "id": "rNODYwt",
+          "id": "B8mkAcm",
           "uid": "0j7ey",
           "label": "Replace Heavy Throwing Weapon and Hand Weapon",
           "options": [
@@ -473,7 +473,8 @@
               "costs": [
                 {
                   "unitId": "Vw3Vvws",
-                  "cost": 0
+                  "cost": 0,
+                  "exactCost": -0.46
                 }
               ],
               "gains": [
@@ -512,7 +513,8 @@
               "costs": [
                 {
                   "unitId": "Vw3Vvws",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 1.85
                 }
               ],
               "gains": [
@@ -539,7 +541,8 @@
               "costs": [
                 {
                   "unitId": "Vw3Vvws",
-                  "cost": 10
+                  "cost": 10,
+                  "exactCost": 8.8
                 }
               ],
               "gains": [
@@ -579,7 +582,8 @@
               "costs": [
                 {
                   "unitId": "Vw3Vvws",
-                  "cost": 20
+                  "cost": 20,
+                  "exactCost": 21.77
                 }
               ],
               "gains": [
@@ -620,7 +624,8 @@
               "costs": [
                 {
                   "unitId": "Vw3Vvws",
-                  "cost": 20
+                  "cost": 20,
+                  "exactCost": 22.11
                 }
               ],
               "gains": [
@@ -660,7 +665,8 @@
               "costs": [
                 {
                   "unitId": "Vw3Vvws",
-                  "cost": 25
+                  "cost": 25,
+                  "exactCost": 27.05
                 }
               ],
               "gains": [
@@ -699,7 +705,7 @@
           ]
         },
         {
-          "id": "FXnu7Si",
+          "id": "ZUuV-gX",
           "uid": "r08ZQ",
           "label": "Replace Heavy Throwing Weapon",
           "options": [
@@ -709,7 +715,8 @@
               "costs": [
                 {
                   "unitId": "Vw3Vvws",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 2.1
                 }
               ],
               "gains": [
@@ -747,7 +754,8 @@
               "costs": [
                 {
                   "unitId": "Vw3Vvws",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 2.78
                 }
               ],
               "gains": [
@@ -775,7 +783,8 @@
               "costs": [
                 {
                   "unitId": "Vw3Vvws",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 2.78
                 }
               ],
               "gains": [
@@ -809,7 +818,8 @@
               "costs": [
                 {
                   "unitId": "Vw3Vvws",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 5.56
                 }
               ],
               "gains": [
@@ -842,7 +852,8 @@
               "costs": [
                 {
                   "unitId": "Vw3Vvws",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 5.56
                 }
               ],
               "gains": [
@@ -876,7 +887,8 @@
               "costs": [
                 {
                   "unitId": "Vw3Vvws",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 6.55
                 }
               ],
               "gains": [
@@ -912,7 +924,7 @@
           ]
         },
         {
-          "id": "e2hv0t6",
+          "id": "y0yG2-D",
           "uid": "PrBZ3",
           "label": "Replace any Hand Weapon",
           "options": [
@@ -922,7 +934,8 @@
               "costs": [
                 {
                   "unitId": "Vw3Vvws",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 5.09
                 }
               ],
               "gains": [
@@ -957,7 +970,8 @@
               "costs": [
                 {
                   "unitId": "Vw3Vvws",
-                  "cost": 10
+                  "cost": 10,
+                  "exactCost": 7.9
                 }
               ],
               "gains": [
@@ -997,7 +1011,8 @@
               "costs": [
                 {
                   "unitId": "Vw3Vvws",
-                  "cost": 10
+                  "cost": 10,
+                  "exactCost": 10
                 }
               ],
               "gains": [
@@ -1038,7 +1053,7 @@
           ]
         },
         {
-          "id": "YYEybpP",
+          "id": "hFf1pdT",
           "uid": "crB5p",
           "label": "Upgrade with",
           "options": [
@@ -1049,7 +1064,8 @@
               "costs": [
                 {
                   "unitId": "Vw3Vvws",
-                  "cost": 10
+                  "cost": 10,
+                  "exactCost": 8.34
                 }
               ],
               "gains": [
@@ -1086,7 +1102,7 @@
       "hint": "Veteran Fighters",
       "sections": [
         {
-          "id": "SWPIbQ0",
+          "id": "LvSu1VC",
           "uid": "spZWF",
           "label": "Replace any 2x Hand Weapon",
           "options": [
@@ -1096,7 +1112,8 @@
               "costs": [
                 {
                   "unitId": "I2Syvun",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 5.56
                 }
               ],
               "gains": [
@@ -1148,7 +1165,7 @@
           ]
         },
         {
-          "id": "AS89wBY",
+          "id": "1R3aOrB",
           "uid": "zjqHh",
           "label": "Replace one 2x Hand Weapon",
           "options": [
@@ -1159,7 +1176,8 @@
               "costs": [
                 {
                   "unitId": "I2Syvun",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 0.93
                 }
               ],
               "gains": [
@@ -1195,7 +1213,8 @@
               "costs": [
                 {
                   "unitId": "I2Syvun",
-                  "cost": 10
+                  "cost": 10,
+                  "exactCost": 10.65
                 }
               ],
               "gains": [
@@ -1236,7 +1255,8 @@
               "costs": [
                 {
                   "unitId": "I2Syvun",
-                  "cost": 15
+                  "cost": 15,
+                  "exactCost": 15.56
                 }
               ],
               "gains": [
@@ -1275,7 +1295,8 @@
               "costs": [
                 {
                   "unitId": "I2Syvun",
-                  "cost": 20
+                  "cost": 20,
+                  "exactCost": 18.99
                 }
               ],
               "gains": [
@@ -1316,7 +1337,8 @@
               "costs": [
                 {
                   "unitId": "I2Syvun",
-                  "cost": 25
+                  "cost": 25,
+                  "exactCost": 22.6
                 }
               ],
               "gains": [
@@ -1358,7 +1380,7 @@
           ]
         },
         {
-          "id": "8J9Kvlo",
+          "id": "Kxf0_SE",
           "uid": "-PdAR",
           "label": "Replace any Heavy Throwing Weapon",
           "options": [
@@ -1368,7 +1390,8 @@
               "costs": [
                 {
                   "unitId": "I2Syvun",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 2.1
                 }
               ],
               "gains": [
@@ -1410,7 +1433,7 @@
           ]
         },
         {
-          "id": "JrySU3F",
+          "id": "qzEQaNR",
           "uid": "3iZWe",
           "label": "Replace any Dagger",
           "options": [
@@ -1420,7 +1443,8 @@
               "costs": [
                 {
                   "unitId": "I2Syvun",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 5.09
                 }
               ],
               "gains": [
@@ -1455,7 +1479,8 @@
               "costs": [
                 {
                   "unitId": "I2Syvun",
-                  "cost": 10
+                  "cost": 10,
+                  "exactCost": 7.9
                 }
               ],
               "gains": [
@@ -1494,7 +1519,8 @@
               "costs": [
                 {
                   "unitId": "I2Syvun",
-                  "cost": 10
+                  "cost": 10,
+                  "exactCost": 10
                 }
               ],
               "gains": [
@@ -1534,7 +1560,7 @@
           ]
         },
         {
-          "id": "fCQvduU",
+          "id": "H4g4NcX",
           "uid": "HKNxf",
           "label": "Replace any Hand Weapon",
           "options": [
@@ -1545,7 +1571,8 @@
               "costs": [
                 {
                   "unitId": "I2Syvun",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 3.95
                 }
               ],
               "gains": [
@@ -1585,7 +1612,8 @@
               "costs": [
                 {
                   "unitId": "I2Syvun",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 5
                 }
               ],
               "gains": [
@@ -1620,7 +1648,8 @@
               "costs": [
                 {
                   "unitId": "I2Syvun",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 3.24
                 }
               ],
               "gains": [
@@ -1667,7 +1696,7 @@
       "hint": "Veteran Shooters",
       "sections": [
         {
-          "id": "7-5TUwY",
+          "id": "55mC38P",
           "uid": "F37T4",
           "label": "Replace any Longbow",
           "options": [
@@ -1677,7 +1706,8 @@
               "costs": [
                 {
                   "unitId": "-uY2tQ6",
-                  "cost": 0
+                  "cost": 0,
+                  "exactCost": 0
                 }
               ],
               "gains": [
@@ -1709,7 +1739,8 @@
               "costs": [
                 {
                   "unitId": "-uY2tQ6",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 3.77
                 }
               ],
               "gains": [
@@ -1740,7 +1771,8 @@
               "costs": [
                 {
                   "unitId": "-uY2tQ6",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 2.78
                 }
               ],
               "gains": [
@@ -1774,7 +1806,8 @@
               "costs": [
                 {
                   "unitId": "-uY2tQ6",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 2.78
                 }
               ],
               "gains": [
@@ -1810,7 +1843,8 @@
               "costs": [
                 {
                   "unitId": "-uY2tQ6",
-                  "cost": 15
+                  "cost": 15,
+                  "exactCost": 16.67
                 }
               ],
               "gains": [
@@ -1863,7 +1897,7 @@
       "hint": "Fighters",
       "sections": [
         {
-          "id": "texE3J3",
+          "id": "0QKv6HZ",
           "uid": "XyVnQ",
           "label": "Replace any 2x Hand Weapon",
           "options": [
@@ -1873,7 +1907,8 @@
               "costs": [
                 {
                   "unitId": "ka_P8jM",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 2.47
                 }
               ],
               "gains": [
@@ -1918,7 +1953,7 @@
           ]
         },
         {
-          "id": "EgKIA6p",
+          "id": "LgA9Eo2",
           "uid": "kdAV2",
           "label": "Replace one Throwing Weapons",
           "options": [
@@ -1928,7 +1963,8 @@
               "costs": [
                 {
                   "unitId": "ka_P8jM",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 3.33
                 }
               ],
               "gains": [
@@ -1971,7 +2007,7 @@
           ]
         },
         {
-          "id": "GPGIIji",
+          "id": "qt4Zgtu",
           "uid": "b_a8d",
           "label": "Replace any Dagger",
           "options": [
@@ -1982,7 +2018,8 @@
               "costs": [
                 {
                   "unitId": "ka_P8jM",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 6.67
                 }
               ],
               "gains": [
@@ -2014,7 +2051,8 @@
               "costs": [
                 {
                   "unitId": "ka_P8jM",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 3.86
                 }
               ],
               "gains": [
@@ -2049,7 +2087,8 @@
               "costs": [
                 {
                   "unitId": "ka_P8jM",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 6.67
                 }
               ],
               "gains": [
@@ -2093,7 +2132,7 @@
           ]
         },
         {
-          "id": "GqlNF1B",
+          "id": "VNJ6hKc",
           "uid": "XoOJw",
           "label": "Replace any Hand Weapon",
           "options": [
@@ -2104,7 +2143,8 @@
               "costs": [
                 {
                   "unitId": "ka_P8jM",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 3.33
                 }
               ],
               "gains": [
@@ -2143,7 +2183,8 @@
               "costs": [
                 {
                   "unitId": "ka_P8jM",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 3.33
                 }
               ],
               "gains": [
@@ -2175,7 +2216,8 @@
               "costs": [
                 {
                   "unitId": "ka_P8jM",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 2.62
                 }
               ],
               "gains": [
@@ -2222,7 +2264,7 @@
       "hint": "Shooters",
       "sections": [
         {
-          "id": "ZEWtH14",
+          "id": "ov5Rhf9",
           "uid": "hcsQa",
           "label": "Replace any Shortbows",
           "options": [
@@ -2232,7 +2274,8 @@
               "costs": [
                 {
                   "unitId": "PLRIppr",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 1.85
                 }
               ],
               "gains": [
@@ -2264,7 +2307,8 @@
               "costs": [
                 {
                   "unitId": "PLRIppr",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 5.93
                 }
               ],
               "gains": [
@@ -2308,7 +2352,7 @@
       "hint": "Champion",
       "sections": [
         {
-          "id": "5UnTYDQ",
+          "id": "quUcetp",
           "uid": "oRjXn",
           "label": "Replace Throwing Weapon and Hand Weapon",
           "options": [
@@ -2318,7 +2362,8 @@
               "costs": [
                 {
                   "unitId": "U8_wfrQ",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 2.47
                 }
               ],
               "gains": [
@@ -2348,7 +2393,7 @@
           ]
         },
         {
-          "id": "PHn4Yx4",
+          "id": "wvE721C",
           "uid": "s3ghA",
           "label": "Replace Throwing Weapon",
           "options": [
@@ -2358,7 +2403,8 @@
               "costs": [
                 {
                   "unitId": "U8_wfrQ",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 1.24
                 }
               ],
               "gains": [
@@ -2384,7 +2430,8 @@
               "costs": [
                 {
                   "unitId": "U8_wfrQ",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 3.09
                 }
               ],
               "gains": [
@@ -2416,7 +2463,8 @@
               "costs": [
                 {
                   "unitId": "U8_wfrQ",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 3.33
                 }
               ],
               "gains": [
@@ -2452,7 +2500,8 @@
               "costs": [
                 {
                   "unitId": "U8_wfrQ",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 7.16
                 }
               ],
               "gains": [
@@ -2486,7 +2535,7 @@
           ]
         },
         {
-          "id": "cc3Twxd",
+          "id": "niy2sT2",
           "uid": "-hFlY",
           "label": "Replace any Hand Weapon",
           "options": [
@@ -2497,7 +2546,8 @@
               "costs": [
                 {
                   "unitId": "U8_wfrQ",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 6.67
                 }
               ],
               "gains": [
@@ -2532,7 +2582,8 @@
               "costs": [
                 {
                   "unitId": "U8_wfrQ",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 3.86
                 }
               ],
               "gains": [
@@ -2567,7 +2618,8 @@
               "costs": [
                 {
                   "unitId": "U8_wfrQ",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 6.67
                 }
               ],
               "gains": [
@@ -2612,7 +2664,7 @@
           ]
         },
         {
-          "id": "1lZ8gmS",
+          "id": "gO5jgck",
           "uid": "Bf1h1",
           "label": "Upgrade with",
           "options": [
@@ -2623,7 +2675,8 @@
               "costs": [
                 {
                   "unitId": "U8_wfrQ",
-                  "cost": 10
+                  "cost": 10,
+                  "exactCost": 8.34
                 }
               ],
               "gains": [
@@ -2661,7 +2714,7 @@
       "hint": "Specialists",
       "sections": [
         {
-          "id": "yXufJrR",
+          "id": "ncx8eU3",
           "uid": "UUfBH",
           "label": "Upgrade with one",
           "options": [
@@ -2671,15 +2724,18 @@
               "costs": [
                 {
                   "unitId": "Vw3Vvws",
-                  "cost": 35
+                  "cost": 35,
+                  "exactCost": 33.24
                 },
                 {
                   "unitId": "U8_wfrQ",
-                  "cost": 35
+                  "cost": 35,
+                  "exactCost": 33.24
                 },
                 {
                   "unitId": "XQZ02uK",
-                  "cost": 35
+                  "cost": 35,
+                  "exactCost": 33.24
                 }
               ],
               "gains": [
@@ -2721,7 +2777,7 @@
       "hint": "Hireling",
       "sections": [
         {
-          "id": "nyDYQX2",
+          "id": "UVPjoyy",
           "uid": "MXPIV",
           "label": "Replace Throwing Weapon",
           "options": [
@@ -2731,7 +2787,8 @@
               "costs": [
                 {
                   "unitId": "XQZ02uK",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 1.24
                 }
               ],
               "gains": [
@@ -2760,7 +2817,8 @@
               "costs": [
                 {
                   "unitId": "XQZ02uK",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 3.09
                 }
               ],
               "gains": [
@@ -2795,7 +2853,8 @@
               "costs": [
                 {
                   "unitId": "XQZ02uK",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 3.33
                 }
               ],
               "gains": [
@@ -2837,7 +2896,7 @@
           ]
         },
         {
-          "id": "TmF5Nfi",
+          "id": "RqhI5U1",
           "uid": "VbzZv",
           "label": "Replace any Hand Weapon",
           "options": [
@@ -2847,7 +2906,8 @@
               "costs": [
                 {
                   "unitId": "XQZ02uK",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 3.86
                 }
               ],
               "gains": [
@@ -2883,7 +2943,8 @@
               "costs": [
                 {
                   "unitId": "XQZ02uK",
-                  "cost": 5
+                  "cost": 5,
+                  "exactCost": 6.67
                 }
               ],
               "gains": [
@@ -2928,7 +2989,7 @@
           ]
         },
         {
-          "id": "JgGmxw6",
+          "id": "dOwwt-g",
           "uid": "z9keR",
           "label": "Upgrade with one",
           "options": [
@@ -2938,7 +2999,8 @@
               "costs": [
                 {
                   "unitId": "XQZ02uK",
-                  "cost": 15
+                  "cost": 15,
+                  "exactCost": 14.82
                 }
               ],
               "gains": [
@@ -2969,7 +3031,8 @@
               "costs": [
                 {
                   "unitId": "XQZ02uK",
-                  "cost": 15
+                  "cost": 15,
+                  "exactCost": 16.67
                 }
               ],
               "gains": [
@@ -3000,7 +3063,8 @@
               "costs": [
                 {
                   "unitId": "XQZ02uK",
-                  "cost": 15
+                  "cost": 15,
+                  "exactCost": 16.67
                 }
               ],
               "gains": [
@@ -3029,7 +3093,8 @@
               "costs": [
                 {
                   "unitId": "XQZ02uK",
-                  "cost": 20
+                  "cost": 20,
+                  "exactCost": 18.76
                 }
               ],
               "gains": [
