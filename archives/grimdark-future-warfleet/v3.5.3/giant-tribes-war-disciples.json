@@ -296,7 +296,7 @@
     },
     {
       "id": "KoZWHp_QY",
-      "cost": 260,
+      "cost": 255,
       "name": "War Wall Smasher Giant",
       "size": 1,
       "sync": {
@@ -392,7 +392,7 @@
     },
     {
       "id": "HAfHh4HiL",
-      "cost": 395,
+      "cost": 390,
       "name": "War Battle Stomper Mega-Giant",
       "size": 1,
       "sync": {
@@ -589,7 +589,7 @@
     },
     {
       "id": "CW-OiY_uD",
-      "cost": 430,
+      "cost": 415,
       "name": "War Castle Breaker Mega-Giant",
       "size": 1,
       "sync": {
@@ -780,7 +780,7 @@
       "sync": "HjmV6_v6dmBmEdy7",
       "sections": [
         {
-          "id": "69YbOFf",
+          "id": "z7Ugwb8",
           "uid": "FB5-kvi",
           "label": "Upgrade with any",
           "options": [
@@ -791,15 +791,18 @@
               "costs": [
                 {
                   "cost": 35,
-                  "unitId": "05qY_c3fd"
+                  "unitId": "05qY_c3fd",
+                  "exactCost": 33.34
                 },
                 {
                   "cost": 35,
-                  "unitId": "aL20_nWPD"
+                  "unitId": "aL20_nWPD",
+                  "exactCost": 33.34
                 },
                 {
                   "cost": 35,
-                  "unitId": "KoZWHp_QY"
+                  "unitId": "KoZWHp_QY",
+                  "exactCost": 33.34
                 }
               ],
               "gains": [
@@ -830,15 +833,18 @@
               "costs": [
                 {
                   "cost": 45,
-                  "unitId": "05qY_c3fd"
+                  "unitId": "05qY_c3fd",
+                  "exactCost": 43.2
                 },
                 {
                   "cost": 45,
-                  "unitId": "aL20_nWPD"
+                  "unitId": "aL20_nWPD",
+                  "exactCost": 43.2
                 },
                 {
                   "cost": 45,
-                  "unitId": "KoZWHp_QY"
+                  "unitId": "KoZWHp_QY",
+                  "exactCost": 43.2
                 }
               ],
               "gains": [
@@ -869,15 +875,18 @@
               "costs": [
                 {
                   "cost": 45,
-                  "unitId": "05qY_c3fd"
+                  "unitId": "05qY_c3fd",
+                  "exactCost": 42.68
                 },
                 {
                   "cost": 45,
-                  "unitId": "aL20_nWPD"
+                  "unitId": "aL20_nWPD",
+                  "exactCost": 42.68
                 },
                 {
                   "cost": 45,
-                  "unitId": "KoZWHp_QY"
+                  "unitId": "KoZWHp_QY",
+                  "exactCost": 42.68
                 }
               ],
               "gains": [
@@ -908,15 +917,18 @@
               "costs": [
                 {
                   "cost": 65,
-                  "unitId": "05qY_c3fd"
+                  "unitId": "05qY_c3fd",
+                  "exactCost": 66
                 },
                 {
                   "cost": 65,
-                  "unitId": "aL20_nWPD"
+                  "unitId": "aL20_nWPD",
+                  "exactCost": 66
                 },
                 {
                   "cost": 65,
-                  "unitId": "KoZWHp_QY"
+                  "unitId": "KoZWHp_QY",
+                  "exactCost": 66
                 }
               ],
               "gains": [
@@ -961,7 +973,7 @@
       "sync": "HjmV6_v6dmBmEdy7",
       "sections": [
         {
-          "id": "69Ow_eo",
+          "id": "Rf1T_sL",
           "uid": "xp4Otd1",
           "label": "Replace any Hurl Log",
           "options": [
@@ -971,12 +983,14 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 5,
-                  "unitId": "aL20_nWPD"
+                  "cost": 0,
+                  "unitId": "aL20_nWPD",
+                  "exactCost": -2.42
                 },
                 {
-                  "cost": 5,
-                  "unitId": "KoZWHp_QY"
+                  "cost": -5,
+                  "unitId": "KoZWHp_QY",
+                  "exactCost": -2.69
                 }
               ],
               "gains": [
@@ -1021,7 +1035,7 @@
           ]
         }
       ],
-      "calcErrors": false
+      "calcErrors": true
     },
     {
       "uid": "D1",
@@ -1029,7 +1043,7 @@
       "sync": "HjmV6_v6dmBmEdy7",
       "sections": [
         {
-          "id": "jSBc7SD",
+          "id": "z8-P-sT",
           "uid": "HuW1iVD",
           "label": "Replace 2x Throw Rocks",
           "options": [
@@ -1039,7 +1053,8 @@
               "costs": [
                 {
                   "cost": -10,
-                  "unitId": "CW-OiY_uD"
+                  "unitId": "CW-OiY_uD",
+                  "exactCost": -10.75
                 }
               ],
               "gains": [
@@ -1072,8 +1087,9 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 10,
-                  "unitId": "CW-OiY_uD"
+                  "cost": 25,
+                  "unitId": "CW-OiY_uD",
+                  "exactCost": 23.11
                 }
               ],
               "gains": [
@@ -1124,7 +1140,7 @@
       "sync": "HjmV6_v6dmBmEdy7",
       "sections": [
         {
-          "id": "QsqheNX",
+          "id": "o8a_MD8",
           "uid": "nYWZa_gC",
           "label": "Replace any Giant Fist",
           "options": [
@@ -1135,11 +1151,13 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "05qY_c3fd"
+                  "unitId": "05qY_c3fd",
+                  "exactCost": 3.01
                 },
                 {
                   "cost": 5,
-                  "unitId": "aL20_nWPD"
+                  "unitId": "aL20_nWPD",
+                  "exactCost": 2.78
                 }
               ],
               "gains": [
@@ -1174,16 +1192,56 @@
               "id": "5tFlZrJr"
             },
             {
+              "uid": "7qIsAhkdMl",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "cost": 15,
+                  "unitId": "05qY_c3fd",
+                  "exactCost": 13.65
+                },
+                {
+                  "cost": 15,
+                  "unitId": "aL20_nWPD",
+                  "exactCost": 13.58
+                }
+              ],
+              "gains": [
+                {
+                  "id": null,
+                  "name": "Giant Pike",
+                  "type": "ArmyBookWeapon",
+                  "count": 1,
+                  "range": 0,
+                  "attacks": 6,
+                  "weaponId": "ae_wWFdx",
+                  "specialRules": [
+                    {
+                      "id": "umbiz4tnEyF8",
+                      "name": "Thrust"
+                    }
+                  ],
+                  "attacksMultiplier": 1,
+                  "label": "Giant Pike (A6, Thrust)"
+                }
+              ],
+              "label": "Giant Pike (A6, Thrust)",
+              "parentSectionId": "nYWZa_gC",
+              "id": "7qIsAhkdMl"
+            },
+            {
               "uid": "DW0OfbwK3R",
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
                   "cost": 15,
-                  "unitId": "05qY_c3fd"
+                  "unitId": "05qY_c3fd",
+                  "exactCost": 15.05
                 },
                 {
                   "cost": 15,
-                  "unitId": "aL20_nWPD"
+                  "unitId": "aL20_nWPD",
+                  "exactCost": 13.89
                 }
               ],
               "gains": [
@@ -1221,11 +1279,13 @@
               "costs": [
                 {
                   "cost": 15,
-                  "unitId": "05qY_c3fd"
+                  "unitId": "05qY_c3fd",
+                  "exactCost": 15.94
                 },
                 {
                   "cost": 15,
-                  "unitId": "aL20_nWPD"
+                  "unitId": "aL20_nWPD",
+                  "exactCost": 14.46
                 }
               ],
               "gains": [
@@ -1253,94 +1313,19 @@
               "id": "xzJjoJngf9"
             },
             {
-              "uid": "7qIsAhkdMl",
-              "type": "ArmyBookUpgradeOption",
-              "costs": [
-                {
-                  "cost": 30,
-                  "unitId": "05qY_c3fd"
-                },
-                {
-                  "cost": 30,
-                  "unitId": "aL20_nWPD"
-                }
-              ],
-              "gains": [
-                {
-                  "id": null,
-                  "name": "Giant Pike",
-                  "type": "ArmyBookWeapon",
-                  "count": 1,
-                  "range": 0,
-                  "attacks": 6,
-                  "weaponId": "ae_wWFdx",
-                  "specialRules": [
-                    {
-                      "id": "umbiz4tnEyF8",
-                      "name": "Thrust"
-                    }
-                  ],
-                  "attacksMultiplier": 1,
-                  "label": "Giant Pike (A6, Thrust)"
-                }
-              ],
-              "label": "Giant Pike (A6, Thrust)",
-              "parentSectionId": "nYWZa_gC",
-              "id": "7qIsAhkdMl"
-            },
-            {
-              "uid": "gG1wqrr_Hp",
-              "type": "ArmyBookUpgradeOption",
-              "costs": [
-                {
-                  "cost": 30,
-                  "unitId": "05qY_c3fd"
-                },
-                {
-                  "cost": 25,
-                  "unitId": "aL20_nWPD"
-                }
-              ],
-              "gains": [
-                {
-                  "id": null,
-                  "name": "Giant Sword",
-                  "type": "ArmyBookWeapon",
-                  "count": 1,
-                  "range": 0,
-                  "attacks": 6,
-                  "weaponId": "xbMAjl2x",
-                  "specialRules": [
-                    {
-                      "id": "17crjK7P6_w6",
-                      "name": "AP",
-                      "rating": 1
-                    },
-                    {
-                      "id": "cavWDboL4ubs",
-                      "name": "Rending"
-                    }
-                  ],
-                  "attacksMultiplier": 1,
-                  "label": "Giant Sword (A6, AP(1), Rending)"
-                }
-              ],
-              "label": "Giant Sword (A6, AP(1), Rending)",
-              "parentSectionId": "nYWZa_gC",
-              "id": "gG1wqrr_Hp"
-            },
-            {
               "uid": "eGxJFtCz",
               "cost": 15,
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 50,
-                  "unitId": "05qY_c3fd"
+                  "cost": 25,
+                  "unitId": "05qY_c3fd",
+                  "exactCost": 25.78
                 },
                 {
-                  "cost": 50,
-                  "unitId": "aL20_nWPD"
+                  "cost": 25,
+                  "unitId": "aL20_nWPD",
+                  "exactCost": 25.55
                 }
               ],
               "gains": [
@@ -1379,12 +1364,14 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 65,
-                  "unitId": "05qY_c3fd"
+                  "cost": 30,
+                  "unitId": "05qY_c3fd",
+                  "exactCost": 30.31
                 },
                 {
-                  "cost": 65,
-                  "unitId": "aL20_nWPD"
+                  "cost": 30,
+                  "unitId": "aL20_nWPD",
+                  "exactCost": 28.13
                 }
               ],
               "gains": [
@@ -1415,6 +1402,49 @@
               "parentPackageUid": "ZSGyFYf2",
               "parentSectionUid": "FB5-kvi",
               "id": "DiH57dV_"
+            },
+            {
+              "uid": "gG1wqrr_Hp",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "cost": 30,
+                  "unitId": "05qY_c3fd",
+                  "exactCost": 31.11
+                },
+                {
+                  "cost": 25,
+                  "unitId": "aL20_nWPD",
+                  "exactCost": 27.03
+                }
+              ],
+              "gains": [
+                {
+                  "id": null,
+                  "name": "Giant Sword",
+                  "type": "ArmyBookWeapon",
+                  "count": 1,
+                  "range": 0,
+                  "attacks": 6,
+                  "weaponId": "xbMAjl2x",
+                  "specialRules": [
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "rating": 1
+                    },
+                    {
+                      "id": "cavWDboL4ubs",
+                      "name": "Rending"
+                    }
+                  ],
+                  "attacksMultiplier": 1,
+                  "label": "Giant Sword (A6, AP(1), Rending)"
+                }
+              ],
+              "label": "Giant Sword (A6, AP(1), Rending)",
+              "parentSectionId": "nYWZa_gC",
+              "id": "gG1wqrr_Hp"
             }
           ],
           "parentPackageUid": "ZSGyFYf2",
@@ -1428,7 +1458,7 @@
           ]
         },
         {
-          "id": "elsfPgD",
+          "id": "_i3G474",
           "uid": "h7raufVKfz",
           "label": "Replace one Giant Fist",
           "options": [
@@ -1438,11 +1468,13 @@
               "costs": [
                 {
                   "cost": 0,
-                  "unitId": "05qY_c3fd"
+                  "unitId": "05qY_c3fd",
+                  "exactCost": -2.03
                 },
                 {
                   "cost": 0,
-                  "unitId": "aL20_nWPD"
+                  "unitId": "aL20_nWPD",
+                  "exactCost": -0.18
                 }
               ],
               "gains": [
@@ -1486,7 +1518,7 @@
       "sync": "HjmV6_v6dmBmEdy7",
       "sections": [
         {
-          "id": "Q9D15lb",
+          "id": "kpiaTvd",
           "uid": "axpbrU8-",
           "label": "Replace any Heavy Fist",
           "options": [
@@ -1497,7 +1529,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "yFXX9-pdp"
+                  "unitId": "yFXX9-pdp",
+                  "exactCost": 1.39
                 }
               ],
               "gains": [
@@ -1532,12 +1565,47 @@
               "id": "9LFaQsWP"
             },
             {
+              "uid": "hi6PkcMa",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "cost": 5,
+                  "unitId": "yFXX9-pdp",
+                  "exactCost": 6.79
+                }
+              ],
+              "gains": [
+                {
+                  "id": null,
+                  "name": "Heavy Pike",
+                  "type": "ArmyBookWeapon",
+                  "count": 1,
+                  "range": 0,
+                  "attacks": 3,
+                  "weaponId": "VAOi0NIm",
+                  "specialRules": [
+                    {
+                      "id": "umbiz4tnEyF8",
+                      "name": "Thrust"
+                    }
+                  ],
+                  "attacksMultiplier": 1,
+                  "label": "Heavy Pike (A3, Thrust)"
+                }
+              ],
+              "label": "Heavy Pike (A3, Thrust)",
+              "parentSectionId": "axpbrU8-",
+              "parentPackageUid": "lO_EBK0n",
+              "id": "hi6PkcMa"
+            },
+            {
               "uid": "a7xJ0pyH",
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "yFXX9-pdp"
+                  "unitId": "yFXX9-pdp",
+                  "exactCost": 6.95
                 }
               ],
               "gains": [
@@ -1576,7 +1644,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "yFXX9-pdp"
+                  "unitId": "yFXX9-pdp",
+                  "exactCost": 7.23
                 }
               ],
               "gains": [
@@ -1605,84 +1674,14 @@
               "id": "Fofpae6e"
             },
             {
-              "uid": "hi6PkcMa",
-              "type": "ArmyBookUpgradeOption",
-              "costs": [
-                {
-                  "cost": 15,
-                  "unitId": "yFXX9-pdp"
-                }
-              ],
-              "gains": [
-                {
-                  "id": null,
-                  "name": "Heavy Pike",
-                  "type": "ArmyBookWeapon",
-                  "count": 1,
-                  "range": 0,
-                  "attacks": 3,
-                  "weaponId": "VAOi0NIm",
-                  "specialRules": [
-                    {
-                      "id": "umbiz4tnEyF8",
-                      "name": "Thrust"
-                    }
-                  ],
-                  "attacksMultiplier": 1,
-                  "label": "Heavy Pike (A3, Thrust)"
-                }
-              ],
-              "label": "Heavy Pike (A3, Thrust)",
-              "parentSectionId": "axpbrU8-",
-              "parentPackageUid": "lO_EBK0n",
-              "id": "hi6PkcMa"
-            },
-            {
-              "uid": "VDPnTY-W",
-              "type": "ArmyBookUpgradeOption",
-              "costs": [
-                {
-                  "cost": 15,
-                  "unitId": "yFXX9-pdp"
-                }
-              ],
-              "gains": [
-                {
-                  "id": null,
-                  "name": "Heavy Sword",
-                  "type": "ArmyBookWeapon",
-                  "count": 1,
-                  "range": 0,
-                  "attacks": 3,
-                  "weaponId": "w0IvAVRK",
-                  "specialRules": [
-                    {
-                      "id": "17crjK7P6_w6",
-                      "name": "AP",
-                      "rating": 1
-                    },
-                    {
-                      "id": "cavWDboL4ubs",
-                      "name": "Rending"
-                    }
-                  ],
-                  "attacksMultiplier": 1,
-                  "label": "Heavy Sword (A3, AP(1), Rending)"
-                }
-              ],
-              "label": "Heavy Sword (A3, AP(1), Rending)",
-              "parentSectionId": "axpbrU8-",
-              "parentPackageUid": "lO_EBK0n",
-              "id": "VDPnTY-W"
-            },
-            {
               "uid": "6_ML2MCT",
               "cost": 15,
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 25,
-                  "unitId": "yFXX9-pdp"
+                  "cost": 15,
+                  "unitId": "yFXX9-pdp",
+                  "exactCost": 12.78
                 }
               ],
               "gains": [
@@ -1716,13 +1715,53 @@
               "id": "6_ML2MCT"
             },
             {
+              "uid": "VDPnTY-W",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "cost": 15,
+                  "unitId": "yFXX9-pdp",
+                  "exactCost": 13.52
+                }
+              ],
+              "gains": [
+                {
+                  "id": null,
+                  "name": "Heavy Sword",
+                  "type": "ArmyBookWeapon",
+                  "count": 1,
+                  "range": 0,
+                  "attacks": 3,
+                  "weaponId": "w0IvAVRK",
+                  "specialRules": [
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "rating": 1
+                    },
+                    {
+                      "id": "cavWDboL4ubs",
+                      "name": "Rending"
+                    }
+                  ],
+                  "attacksMultiplier": 1,
+                  "label": "Heavy Sword (A3, AP(1), Rending)"
+                }
+              ],
+              "label": "Heavy Sword (A3, AP(1), Rending)",
+              "parentSectionId": "axpbrU8-",
+              "parentPackageUid": "lO_EBK0n",
+              "id": "VDPnTY-W"
+            },
+            {
               "uid": "otw8SAwK",
               "cost": 15,
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 30,
-                  "unitId": "yFXX9-pdp"
+                  "cost": 15,
+                  "unitId": "yFXX9-pdp",
+                  "exactCost": 14.07
                 }
               ],
               "gains": [
@@ -1766,7 +1805,7 @@
           ]
         },
         {
-          "id": "kXllbXC",
+          "id": "GLmmaX3",
           "uid": "ZsNDptVog4",
           "label": "Replace one Heavy Fist",
           "options": [
@@ -1776,7 +1815,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "yFXX9-pdp"
+                  "unitId": "yFXX9-pdp",
+                  "exactCost": 6.91
                 }
               ],
               "gains": [
@@ -1820,7 +1860,7 @@
       "sync": "HjmV6_v6dmBmEdy7",
       "sections": [
         {
-          "id": "JmUbHG-",
+          "id": "87uX5VD",
           "uid": "yVkaQjAU",
           "label": "Replace one Heavy Fist",
           "options": [
@@ -1831,7 +1871,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "yFXX9-pdp"
+                  "unitId": "yFXX9-pdp",
+                  "exactCost": 6.95
                 }
               ],
               "gains": [
@@ -1870,8 +1911,9 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 10,
-                  "unitId": "yFXX9-pdp"
+                  "cost": 5,
+                  "unitId": "yFXX9-pdp",
+                  "exactCost": 5.74
                 }
               ],
               "gains": [
@@ -1923,7 +1965,7 @@
       "sync": "HjmV6_v6dmBmEdy7",
       "sections": [
         {
-          "id": "riKswko",
+          "id": "Z1HLy31",
           "uid": "KcyDPj4y",
           "label": "Replace any Mega Fist",
           "options": [
@@ -1934,11 +1976,13 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "HAfHh4HiL"
+                  "unitId": "HAfHh4HiL",
+                  "exactCost": 4.17
                 },
                 {
                   "cost": 5,
-                  "unitId": "Nho5_L9cv"
+                  "unitId": "Nho5_L9cv",
+                  "exactCost": 4.52
                 }
               ],
               "gains": [
@@ -1973,16 +2017,57 @@
               "id": "SGF6FjKR"
             },
             {
+              "uid": "84Y0HdO-",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "cost": 20,
+                  "unitId": "HAfHh4HiL",
+                  "exactCost": 20.37
+                },
+                {
+                  "cost": 20,
+                  "unitId": "Nho5_L9cv",
+                  "exactCost": 20.48
+                }
+              ],
+              "gains": [
+                {
+                  "id": null,
+                  "name": "Mega Pike",
+                  "type": "ArmyBookWeapon",
+                  "count": 1,
+                  "range": null,
+                  "attacks": 9,
+                  "weaponId": "lmTKBJdN",
+                  "specialRules": [
+                    {
+                      "id": "umbiz4tnEyF8",
+                      "name": "Thrust"
+                    }
+                  ],
+                  "attacksMultiplier": 1,
+                  "label": "Mega Pike (A9, Thrust)"
+                }
+              ],
+              "label": "Mega Pike (A9, Thrust)",
+              "parentSectionId": "KcyDPj4y",
+              "parentPackageUid": "q3-fVzp1",
+              "id": "84Y0HdO-"
+            },
+            {
               "uid": "P10LMV5B",
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
                   "cost": 20,
-                  "unitId": "HAfHh4HiL"
+                  "unitId": "HAfHh4HiL",
+                  "exactCost": 20.84
                 },
                 {
                   "cost": 25,
-                  "unitId": "Nho5_L9cv"
+                  "unitId": "Nho5_L9cv",
+                  "exactCost": 22.58
                 }
               ],
               "gains": [
@@ -2021,11 +2106,13 @@
               "costs": [
                 {
                   "cost": 20,
-                  "unitId": "HAfHh4HiL"
+                  "unitId": "HAfHh4HiL",
+                  "exactCost": 21.69
                 },
                 {
                   "cost": 25,
-                  "unitId": "Nho5_L9cv"
+                  "unitId": "Nho5_L9cv",
+                  "exactCost": 23.92
                 }
               ],
               "gains": [
@@ -2054,96 +2141,19 @@
               "id": "VPuezfQx"
             },
             {
-              "uid": "hrHyD3me",
-              "type": "ArmyBookUpgradeOption",
-              "costs": [
-                {
-                  "cost": 40,
-                  "unitId": "HAfHh4HiL"
-                },
-                {
-                  "cost": 45,
-                  "unitId": "Nho5_L9cv"
-                }
-              ],
-              "gains": [
-                {
-                  "id": null,
-                  "name": "Mega Sword",
-                  "type": "ArmyBookWeapon",
-                  "count": 1,
-                  "range": 0,
-                  "attacks": 9,
-                  "weaponId": "KH_cRH4K",
-                  "specialRules": [
-                    {
-                      "id": "17crjK7P6_w6",
-                      "name": "AP",
-                      "rating": 1
-                    },
-                    {
-                      "id": "cavWDboL4ubs",
-                      "name": "Rending"
-                    }
-                  ],
-                  "attacksMultiplier": 1,
-                  "label": "Mega Sword (A9, AP(1), Rending)"
-                }
-              ],
-              "label": "Mega Sword (A9, AP(1), Rending)",
-              "parentSectionId": "KcyDPj4y",
-              "parentPackageUid": "q3-fVzp1",
-              "id": "hrHyD3me"
-            },
-            {
-              "uid": "84Y0HdO-",
-              "type": "ArmyBookUpgradeOption",
-              "costs": [
-                {
-                  "cost": 50,
-                  "unitId": "HAfHh4HiL"
-                },
-                {
-                  "cost": 50,
-                  "unitId": "Nho5_L9cv"
-                }
-              ],
-              "gains": [
-                {
-                  "id": null,
-                  "name": "Mega Pike",
-                  "type": "ArmyBookWeapon",
-                  "count": 1,
-                  "range": null,
-                  "attacks": 9,
-                  "weaponId": "lmTKBJdN",
-                  "specialRules": [
-                    {
-                      "id": "umbiz4tnEyF8",
-                      "name": "Thrust"
-                    }
-                  ],
-                  "attacksMultiplier": 1,
-                  "label": "Mega Pike (A9, Thrust)"
-                }
-              ],
-              "label": "Mega Pike (A9, Thrust)",
-              "parentSectionId": "KcyDPj4y",
-              "parentPackageUid": "q3-fVzp1",
-              "id": "84Y0HdO-"
-            },
-            {
               "uid": "arquXiMp",
               "cost": 15,
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 75,
-                  "unitId": "HAfHh4HiL"
+                  "cost": 40,
+                  "unitId": "HAfHh4HiL",
+                  "exactCost": 38.33
                 },
                 {
-                  "cost": 75,
-                  "unitId": "Nho5_L9cv"
+                  "cost": 40,
+                  "unitId": "Nho5_L9cv",
+                  "exactCost": 38.67
                 }
               ],
               "gains": [
@@ -2182,12 +2192,14 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 95,
-                  "unitId": "HAfHh4HiL"
+                  "cost": 40,
+                  "unitId": "HAfHh4HiL",
+                  "exactCost": 42.2
                 },
                 {
-                  "cost": 95,
-                  "unitId": "Nho5_L9cv"
+                  "cost": 45,
+                  "unitId": "Nho5_L9cv",
+                  "exactCost": 45.46
                 }
               ],
               "gains": [
@@ -2218,6 +2230,50 @@
               "parentPackageUid": "q3-fVzp1",
               "parentSectionUid": "FB5-kvi",
               "id": "1p3JXFTP"
+            },
+            {
+              "uid": "hrHyD3me",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "cost": 40,
+                  "unitId": "HAfHh4HiL",
+                  "exactCost": 40.55
+                },
+                {
+                  "cost": 45,
+                  "unitId": "Nho5_L9cv",
+                  "exactCost": 46.66
+                }
+              ],
+              "gains": [
+                {
+                  "id": null,
+                  "name": "Mega Sword",
+                  "type": "ArmyBookWeapon",
+                  "count": 1,
+                  "range": 0,
+                  "attacks": 9,
+                  "weaponId": "KH_cRH4K",
+                  "specialRules": [
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "rating": 1
+                    },
+                    {
+                      "id": "cavWDboL4ubs",
+                      "name": "Rending"
+                    }
+                  ],
+                  "attacksMultiplier": 1,
+                  "label": "Mega Sword (A9, AP(1), Rending)"
+                }
+              ],
+              "label": "Mega Sword (A9, AP(1), Rending)",
+              "parentSectionId": "KcyDPj4y",
+              "parentPackageUid": "q3-fVzp1",
+              "id": "hrHyD3me"
             }
           ],
           "parentPackageUid": "q3-fVzp1",
@@ -2231,7 +2287,7 @@
           ]
         },
         {
-          "id": "YqiXC8W",
+          "id": "_72Xowx",
           "uid": "Dn_eXQJS",
           "label": "Replace one Mega Fist",
           "options": [
@@ -2241,11 +2297,13 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "HAfHh4HiL"
+                  "unitId": "HAfHh4HiL",
+                  "exactCost": 3.73
                 },
                 {
                   "cost": 5,
-                  "unitId": "Nho5_L9cv"
+                  "unitId": "Nho5_L9cv",
+                  "exactCost": 0.95
                 }
               ],
               "gains": [
@@ -2290,7 +2348,7 @@
       "sync": "HjmV6_v6dmBmEdy7",
       "sections": [
         {
-          "id": "l-7XgnR",
+          "id": "FrH1-4n",
           "uid": "jcdiKVgX",
           "label": "Replace any Ultra Fist",
           "options": [
@@ -2301,7 +2359,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "NFidnZKf0"
+                  "unitId": "NFidnZKf0",
+                  "exactCost": 5.56
                 }
               ],
               "gains": [
@@ -2336,12 +2395,47 @@
               "id": "bbb_AQ9Z"
             },
             {
+              "uid": "Yc_POhE0",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "cost": 25,
+                  "unitId": "NFidnZKf0",
+                  "exactCost": 27.16
+                }
+              ],
+              "gains": [
+                {
+                  "id": null,
+                  "name": "Ultra Pike",
+                  "type": "ArmyBookWeapon",
+                  "count": 1,
+                  "range": 0,
+                  "attacks": 12,
+                  "weaponId": "b5iCY0SO",
+                  "specialRules": [
+                    {
+                      "id": "umbiz4tnEyF8",
+                      "name": "Thrust"
+                    }
+                  ],
+                  "attacksMultiplier": 1,
+                  "label": "Ultra Pike (A12, Thrust)"
+                }
+              ],
+              "label": "Ultra Pike (A12, Thrust)",
+              "parentSectionId": "jcdiKVgX",
+              "parentPackageUid": "b5EM0oJV",
+              "id": "Yc_POhE0"
+            },
+            {
               "uid": "JGuJOJ-8",
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
                   "cost": 30,
-                  "unitId": "NFidnZKf0"
+                  "unitId": "NFidnZKf0",
+                  "exactCost": 27.79
                 }
               ],
               "gains": [
@@ -2380,7 +2474,8 @@
               "costs": [
                 {
                   "cost": 30,
-                  "unitId": "NFidnZKf0"
+                  "unitId": "NFidnZKf0",
+                  "exactCost": 28.93
                 }
               ],
               "gains": [
@@ -2409,84 +2504,14 @@
               "id": "7vKAUCJW"
             },
             {
-              "uid": "6nWvCcnd",
-              "type": "ArmyBookUpgradeOption",
-              "costs": [
-                {
-                  "cost": 55,
-                  "unitId": "NFidnZKf0"
-                }
-              ],
-              "gains": [
-                {
-                  "id": null,
-                  "name": "Ultra Sword",
-                  "type": "ArmyBookWeapon",
-                  "count": 1,
-                  "range": 0,
-                  "attacks": 12,
-                  "weaponId": "e5tsxIGC",
-                  "specialRules": [
-                    {
-                      "id": "17crjK7P6_w6",
-                      "name": "AP",
-                      "rating": 1
-                    },
-                    {
-                      "id": "cavWDboL4ubs",
-                      "name": "Rending"
-                    }
-                  ],
-                  "attacksMultiplier": 1,
-                  "label": "Ultra Sword (A12, AP(1), Rending)"
-                }
-              ],
-              "label": "Ultra Sword (A12, AP(1), Rending)",
-              "parentSectionId": "jcdiKVgX",
-              "parentPackageUid": "b5EM0oJV",
-              "id": "6nWvCcnd"
-            },
-            {
-              "uid": "Yc_POhE0",
-              "type": "ArmyBookUpgradeOption",
-              "costs": [
-                {
-                  "cost": 65,
-                  "unitId": "NFidnZKf0"
-                }
-              ],
-              "gains": [
-                {
-                  "id": null,
-                  "name": "Ultra Pike",
-                  "type": "ArmyBookWeapon",
-                  "count": 1,
-                  "range": 0,
-                  "attacks": 12,
-                  "weaponId": "b5iCY0SO",
-                  "specialRules": [
-                    {
-                      "id": "umbiz4tnEyF8",
-                      "name": "Thrust"
-                    }
-                  ],
-                  "attacksMultiplier": 1,
-                  "label": "Ultra Pike (A12, Thrust)"
-                }
-              ],
-              "label": "Ultra Pike (A12, Thrust)",
-              "parentSectionId": "jcdiKVgX",
-              "parentPackageUid": "b5EM0oJV",
-              "id": "Yc_POhE0"
-            },
-            {
               "uid": "sBwd052m",
               "cost": 15,
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 100,
-                  "unitId": "NFidnZKf0"
+                  "cost": 50,
+                  "unitId": "NFidnZKf0",
+                  "exactCost": 51.1
                 }
               ],
               "gains": [
@@ -2520,13 +2545,53 @@
               "id": "sBwd052m"
             },
             {
+              "uid": "6nWvCcnd",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "cost": 55,
+                  "unitId": "NFidnZKf0",
+                  "exactCost": 54.07
+                }
+              ],
+              "gains": [
+                {
+                  "id": null,
+                  "name": "Ultra Sword",
+                  "type": "ArmyBookWeapon",
+                  "count": 1,
+                  "range": 0,
+                  "attacks": 12,
+                  "weaponId": "e5tsxIGC",
+                  "specialRules": [
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "rating": 1
+                    },
+                    {
+                      "id": "cavWDboL4ubs",
+                      "name": "Rending"
+                    }
+                  ],
+                  "attacksMultiplier": 1,
+                  "label": "Ultra Sword (A12, AP(1), Rending)"
+                }
+              ],
+              "label": "Ultra Sword (A12, AP(1), Rending)",
+              "parentSectionId": "jcdiKVgX",
+              "parentPackageUid": "b5EM0oJV",
+              "id": "6nWvCcnd"
+            },
+            {
               "uid": "dpEF-zS6",
               "cost": 15,
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 125,
-                  "unitId": "NFidnZKf0"
+                  "cost": 55,
+                  "unitId": "NFidnZKf0",
+                  "exactCost": 56.26
                 }
               ],
               "gains": [
@@ -2570,7 +2635,7 @@
           ]
         },
         {
-          "id": "Dgq5Fym",
+          "id": "DxrdOk3",
           "uid": "2xrtsHfxtz",
           "label": "Replace one Ultra Fist",
           "options": [
@@ -2580,7 +2645,8 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "NFidnZKf0"
+                  "unitId": "NFidnZKf0",
+                  "exactCost": 10.31
                 }
               ],
               "gains": [
@@ -2624,7 +2690,7 @@
       "sync": "HjmV6_v6dmBmEdy7",
       "sections": [
         {
-          "id": "VHsN4rH",
+          "id": "2udq8Dl",
           "uid": "WKNaT5ZB",
           "label": "Replace any Ultra Fist",
           "options": [
@@ -2634,8 +2700,9 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 30,
-                  "unitId": "NFidnZKf0"
+                  "cost": 25,
+                  "unitId": "NFidnZKf0",
+                  "exactCost": 22.95
                 }
               ],
               "gains": [
@@ -2674,7 +2741,8 @@
               "costs": [
                 {
                   "cost": 30,
-                  "unitId": "NFidnZKf0"
+                  "unitId": "NFidnZKf0",
+                  "exactCost": 27.79
                 }
               ],
               "gains": [
@@ -2726,7 +2794,7 @@
       "sync": "HjmV6_v6dmBmEdy7",
       "sections": [
         {
-          "id": "qBr95Kf",
+          "id": "kMcnD0j",
           "uid": "qMXC_r0d",
           "label": "Replace Giant Sling",
           "options": [
@@ -2735,8 +2803,9 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 5,
-                  "unitId": "KoZWHp_QY"
+                  "cost": 15,
+                  "unitId": "KoZWHp_QY",
+                  "exactCost": 12.54
                 }
               ],
               "gains": [
@@ -2774,8 +2843,9 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 15,
-                  "unitId": "KoZWHp_QY"
+                  "cost": 25,
+                  "unitId": "KoZWHp_QY",
+                  "exactCost": 22.58
                 }
               ],
               "gains": [
@@ -2826,7 +2896,7 @@
       "sync": "HjmV6_v6dmBmEdy7",
       "sections": [
         {
-          "id": "F2qlJTq",
+          "id": "EJTCAu6",
           "uid": "Es6zEubG",
           "label": "Replace any Throw Rocks",
           "options": [
@@ -2836,12 +2906,14 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 0,
-                  "unitId": "HAfHh4HiL"
+                  "cost": 5,
+                  "unitId": "HAfHh4HiL",
+                  "exactCost": 3.63
                 },
                 {
-                  "cost": 0,
-                  "unitId": "CW-OiY_uD"
+                  "cost": 5,
+                  "unitId": "CW-OiY_uD",
+                  "exactCost": 4.03
                 }
               ],
               "gains": [
@@ -2895,7 +2967,7 @@
       "sync": "HjmV6_v6dmBmEdy7",
       "sections": [
         {
-          "id": "yqKnUL1",
+          "id": "xLNP9xl",
           "uid": "fPPZh7uJ",
           "label": "Upgrade with",
           "options": [
@@ -2905,7 +2977,8 @@
               "costs": [
                 {
                   "cost": 20,
-                  "unitId": "yFXX9-pdp"
+                  "unitId": "yFXX9-pdp",
+                  "exactCost": 19.2
                 }
               ],
               "gains": [
@@ -2936,7 +3009,8 @@
               "costs": [
                 {
                   "cost": 30,
-                  "unitId": "yFXX9-pdp"
+                  "unitId": "yFXX9-pdp",
+                  "exactCost": 30.68
                 }
               ],
               "gains": [
@@ -2967,7 +3041,8 @@
               "costs": [
                 {
                   "cost": 35,
-                  "unitId": "yFXX9-pdp"
+                  "unitId": "yFXX9-pdp",
+                  "exactCost": 33.34
                 }
               ],
               "gains": [
@@ -2996,7 +3071,8 @@
               "costs": [
                 {
                   "cost": 40,
-                  "unitId": "yFXX9-pdp"
+                  "unitId": "yFXX9-pdp",
+                  "exactCost": 41.68
                 }
               ],
               "gains": [
@@ -3038,7 +3114,7 @@
       "sync": "HjmV6_v6dmBmEdy7",
       "sections": [
         {
-          "id": "95gldvY",
+          "id": "qq45rAQ",
           "uid": "HvwkeTVu",
           "label": "Upgrade with any",
           "options": [
@@ -3049,15 +3125,18 @@
               "costs": [
                 {
                   "cost": 35,
-                  "unitId": "HAfHh4HiL"
+                  "unitId": "HAfHh4HiL",
+                  "exactCost": 33.34
                 },
                 {
                   "cost": 35,
-                  "unitId": "Nho5_L9cv"
+                  "unitId": "Nho5_L9cv",
+                  "exactCost": 33.34
                 },
                 {
                   "cost": 35,
-                  "unitId": "CW-OiY_uD"
+                  "unitId": "CW-OiY_uD",
+                  "exactCost": 33.34
                 }
               ],
               "gains": [
@@ -3088,15 +3167,18 @@
               "costs": [
                 {
                   "cost": 35,
-                  "unitId": "HAfHh4HiL"
+                  "unitId": "HAfHh4HiL",
+                  "exactCost": 33.34
                 },
                 {
                   "cost": 35,
-                  "unitId": "Nho5_L9cv"
+                  "unitId": "Nho5_L9cv",
+                  "exactCost": 33.34
                 },
                 {
                   "cost": 35,
-                  "unitId": "CW-OiY_uD"
+                  "unitId": "CW-OiY_uD",
+                  "exactCost": 33.34
                 }
               ],
               "gains": [
@@ -3125,15 +3207,18 @@
               "costs": [
                 {
                   "cost": 65,
-                  "unitId": "HAfHh4HiL"
+                  "unitId": "HAfHh4HiL",
+                  "exactCost": 67.2
                 },
                 {
                   "cost": 65,
-                  "unitId": "Nho5_L9cv"
+                  "unitId": "Nho5_L9cv",
+                  "exactCost": 67.2
                 },
                 {
                   "cost": 65,
-                  "unitId": "CW-OiY_uD"
+                  "unitId": "CW-OiY_uD",
+                  "exactCost": 67.2
                 }
               ],
               "gains": [
@@ -3164,15 +3249,18 @@
               "costs": [
                 {
                   "cost": 70,
-                  "unitId": "HAfHh4HiL"
+                  "unitId": "HAfHh4HiL",
+                  "exactCost": 69.36
                 },
                 {
                   "cost": 70,
-                  "unitId": "Nho5_L9cv"
+                  "unitId": "Nho5_L9cv",
+                  "exactCost": 69.36
                 },
                 {
                   "cost": 70,
-                  "unitId": "CW-OiY_uD"
+                  "unitId": "CW-OiY_uD",
+                  "exactCost": 69.36
                 }
               ],
               "gains": [
@@ -3214,7 +3302,7 @@
       "sync": "HjmV6_v6dmBmEdy7",
       "sections": [
         {
-          "id": "7WHfDrh",
+          "id": "UP3zYPb",
           "uid": "66XQ9yWM",
           "label": "Upgrade with any",
           "options": [
@@ -3225,7 +3313,8 @@
               "costs": [
                 {
                   "cost": 35,
-                  "unitId": "NFidnZKf0"
+                  "unitId": "NFidnZKf0",
+                  "exactCost": 33.35
                 }
               ],
               "gains": [
@@ -3256,7 +3345,8 @@
               "costs": [
                 {
                   "cost": 45,
-                  "unitId": "NFidnZKf0"
+                  "unitId": "NFidnZKf0",
+                  "exactCost": 44.46
                 }
               ],
               "gains": [
@@ -3285,7 +3375,8 @@
               "costs": [
                 {
                   "cost": 90,
-                  "unitId": "NFidnZKf0"
+                  "unitId": "NFidnZKf0",
+                  "exactCost": 91.2
                 }
               ],
               "gains": [
@@ -3316,7 +3407,8 @@
               "costs": [
                 {
                   "cost": 100,
-                  "unitId": "NFidnZKf0"
+                  "unitId": "NFidnZKf0",
+                  "exactCost": 99.59
                 }
               ],
               "gains": [
@@ -3940,7 +4032,7 @@
       "effectSkirmish": ""
     }
   ],
-  "modifiedAt": "2026-05-05T08:02:15.974Z",
+  "modifiedAt": "2026-07-05T01:09:21.356Z",
   "editedAt": "2026-04-15T10:56:01.601Z",
   "official": true,
   "versionString": "3.5.2",

@@ -974,7 +974,7 @@
     },
     {
       "id": "wBqS9bm",
-      "cost": 365,
+      "cost": 360,
       "name": "Sky-Ironclad",
       "size": 1,
       "bases": {
@@ -1109,7 +1109,7 @@
       "hint": "Sky-Captain",
       "sections": [
         {
-          "id": "WQ1agTB",
+          "id": "v8qB2U1",
           "uid": "WjqeBx8",
           "label": "Replace Hand Weapon",
           "options": [
@@ -1120,7 +1120,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "PHMSpuh"
+                  "unitId": "PHMSpuh",
+                  "exactCost": 2.78
                 }
               ],
               "gains": [
@@ -1161,7 +1162,8 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "PHMSpuh"
+                  "unitId": "PHMSpuh",
+                  "exactCost": 10.56
                 }
               ],
               "gains": [
@@ -1199,7 +1201,7 @@
           ]
         },
         {
-          "id": "Bua_QcB",
+          "id": "tJOGcC4",
           "uid": "s2J9-lm",
           "label": "Replace Flame Pistol",
           "options": [
@@ -1210,7 +1212,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "PHMSpuh"
+                  "unitId": "PHMSpuh",
+                  "exactCost": 3.34
                 }
               ],
               "gains": [
@@ -1246,7 +1249,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "PHMSpuh"
+                  "unitId": "PHMSpuh",
+                  "exactCost": 3.41
                 }
               ],
               "gains": [
@@ -1285,7 +1289,8 @@
               "costs": [
                 {
                   "cost": 15,
-                  "unitId": "PHMSpuh"
+                  "unitId": "PHMSpuh",
+                  "exactCost": 17.24
                 }
               ],
               "gains": [
@@ -1328,7 +1333,7 @@
       "hint": "Balloon Master",
       "sections": [
         {
-          "id": "kwesNmG",
+          "id": "EjbSG2V",
           "uid": "I5OEqqH",
           "label": "Replace Twin Sky-Pistol",
           "options": [
@@ -1339,7 +1344,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "vzAMpIv"
+                  "unitId": "vzAMpIv",
+                  "exactCost": 0.06
                 }
               ],
               "gains": [
@@ -1376,7 +1382,7 @@
           ]
         },
         {
-          "id": "9zXf7RT",
+          "id": "cuOUqYc",
           "uid": "KIFxcya",
           "label": "Replace Chain-Sword",
           "options": [
@@ -1387,7 +1393,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "vzAMpIv"
+                  "unitId": "vzAMpIv",
+                  "exactCost": 4.2
                 }
               ],
               "gains": [
@@ -1425,7 +1432,7 @@
           ]
         },
         {
-          "id": "YxAXsij",
+          "id": "8ZQLYUb",
           "uid": "ucy-lCHVpa",
           "label": "Replace Cannon-Gun",
           "options": [
@@ -1435,7 +1442,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "vzAMpIv"
+                  "unitId": "vzAMpIv",
+                  "exactCost": 2.81
                 }
               ],
               "gains": [
@@ -1477,7 +1485,7 @@
       "hint": "Crew",
       "sections": [
         {
-          "id": "HQsGsU_",
+          "id": "BJLeC3u",
           "uid": "7JOZWl_",
           "label": "Replace one Sky-Pistol and Hand Weapon",
           "options": [
@@ -1488,7 +1496,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "d4D40BG"
+                  "unitId": "d4D40BG",
+                  "exactCost": 3.8
                 }
               ],
               "gains": [
@@ -1531,7 +1540,7 @@
           ]
         },
         {
-          "id": "oKF_yPh",
+          "id": "3KGwKFV",
           "uid": "ZzFOs4A",
           "label": "Replace one Sky-Pistol",
           "options": [
@@ -1542,7 +1551,8 @@
               "costs": [
                 {
                   "cost": 15,
-                  "unitId": "d4D40BG"
+                  "unitId": "d4D40BG",
+                  "exactCost": 16.5
                 }
               ],
               "gains": [
@@ -1578,7 +1588,8 @@
               "costs": [
                 {
                   "cost": 35,
-                  "unitId": "d4D40BG"
+                  "unitId": "d4D40BG",
+                  "exactCost": 34.73
                 }
               ],
               "gains": [
@@ -1621,7 +1632,7 @@
           ]
         },
         {
-          "id": "SMixcNc",
+          "id": "OEfS6e4",
           "uid": "UXkgkD2",
           "label": "Replace one Sky-Pistol",
           "options": [
@@ -1632,7 +1643,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "d4D40BG"
+                  "unitId": "d4D40BG",
+                  "exactCost": 3.6
                 }
               ],
               "gains": [
@@ -1674,7 +1686,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "d4D40BG"
+                  "unitId": "d4D40BG",
+                  "exactCost": 6.95
                 }
               ],
               "gains": [
@@ -1716,7 +1729,7 @@
           ]
         },
         {
-          "id": "cH0TH7g",
+          "id": "WxWZx5z",
           "uid": "2vqaepYO",
           "label": "Upgrade all models with",
           "options": [
@@ -1726,7 +1739,8 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "d4D40BG"
+                  "unitId": "d4D40BG",
+                  "exactCost": 10.25
                 }
               ],
               "gains": [
@@ -1767,7 +1781,7 @@
       "hint": "Gunners",
       "sections": [
         {
-          "id": "3kC3pim",
+          "id": "Cxqd9nr",
           "uid": "uqWLpcm",
           "label": "Replace one Sky-Rifle",
           "options": [
@@ -1778,7 +1792,8 @@
               "costs": [
                 {
                   "cost": 15,
-                  "unitId": "a8sLHLr"
+                  "unitId": "a8sLHLr",
+                  "exactCost": 13.89
                 }
               ],
               "gains": [
@@ -1813,7 +1828,8 @@
               "costs": [
                 {
                   "cost": 25,
-                  "unitId": "a8sLHLr"
+                  "unitId": "a8sLHLr",
+                  "exactCost": 22.79
                 }
               ],
               "gains": [
@@ -1859,7 +1875,7 @@
       "hint": "Balloon Wardens",
       "sections": [
         {
-          "id": "n7v5HQE",
+          "id": "7koREcz",
           "uid": "bwsJF0f",
           "label": "Replace one Twin Sky-Pistol and Sky-Pike",
           "options": [
@@ -1870,7 +1886,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "UdcIwMi"
+                  "unitId": "UdcIwMi",
+                  "exactCost": 5.71
                 }
               ],
               "gains": [
@@ -1923,7 +1940,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "UdcIwMi"
+                  "unitId": "UdcIwMi",
+                  "exactCost": 5.45
                 }
               ],
               "gains": [
@@ -1976,7 +1994,8 @@
               "costs": [
                 {
                   "cost": 15,
-                  "unitId": "UdcIwMi"
+                  "unitId": "UdcIwMi",
+                  "exactCost": 13.52
                 }
               ],
               "gains": [
@@ -2024,7 +2043,8 @@
               "costs": [
                 {
                   "cost": 30,
-                  "unitId": "UdcIwMi"
+                  "unitId": "UdcIwMi",
+                  "exactCost": 29.36
                 }
               ],
               "gains": [
@@ -2091,7 +2111,7 @@
           ]
         },
         {
-          "id": "W_kDC-u",
+          "id": "VKzi-gC",
           "uid": "_qP8yWY",
           "label": "Replace one Twin Sky-Pistol",
           "options": [
@@ -2102,7 +2122,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "UdcIwMi"
+                  "unitId": "UdcIwMi",
+                  "exactCost": 7.11
                 }
               ],
               "gains": [
@@ -2156,7 +2177,7 @@
           ]
         },
         {
-          "id": "Q-HhvC4",
+          "id": "GNElJn3",
           "uid": "H80ZVwv",
           "label": "Upgrade one model with",
           "options": [
@@ -2167,7 +2188,8 @@
               "costs": [
                 {
                   "cost": 65,
-                  "unitId": "UdcIwMi"
+                  "unitId": "UdcIwMi",
+                  "exactCost": 65.02
                 }
               ],
               "gains": [
@@ -2208,7 +2230,7 @@
       "hint": "Balloon Riggers",
       "sections": [
         {
-          "id": "bftXr4S",
+          "id": "aixuPdg",
           "uid": "d1erjdr",
           "label": "Replace one Rivet Gun and Chain-Sword",
           "options": [
@@ -2219,7 +2241,8 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "WumZjo6"
+                  "unitId": "WumZjo6",
+                  "exactCost": 8.91
                 }
               ],
               "gains": [
@@ -2272,7 +2295,8 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "WumZjo6"
+                  "unitId": "WumZjo6",
+                  "exactCost": 9.17
                 }
               ],
               "gains": [
@@ -2325,7 +2349,8 @@
               "costs": [
                 {
                   "cost": 15,
-                  "unitId": "WumZjo6"
+                  "unitId": "WumZjo6",
+                  "exactCost": 16.98
                 }
               ],
               "gains": [
@@ -2373,7 +2398,8 @@
               "costs": [
                 {
                   "cost": 35,
-                  "unitId": "WumZjo6"
+                  "unitId": "WumZjo6",
+                  "exactCost": 32.82
                 }
               ],
               "gains": [
@@ -2440,7 +2466,7 @@
           ]
         },
         {
-          "id": "pr_z6JV",
+          "id": "N_gx6zm",
           "uid": "TWzJDPU3",
           "label": "Upgrade all models with",
           "options": [
@@ -2450,7 +2476,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "WumZjo6"
+                  "unitId": "WumZjo6",
+                  "exactCost": 7.21
                 }
               ],
               "gains": [
@@ -2484,7 +2511,7 @@
           }
         },
         {
-          "id": "TGUI06Y",
+          "id": "9gP_aa5",
           "uid": "ELi4mg-",
           "label": "Upgrade one model with",
           "options": [
@@ -2495,7 +2522,8 @@
               "costs": [
                 {
                   "cost": 40,
-                  "unitId": "WumZjo6"
+                  "unitId": "WumZjo6",
+                  "exactCost": 40.01
                 }
               ],
               "gains": [
@@ -2537,7 +2565,7 @@
       "hint": "Sky-Gunboat",
       "sections": [
         {
-          "id": "RTMuMSX",
+          "id": "Vd689on",
           "uid": "RXBKv8P",
           "label": "Replace Deck Gun and Drop Bombs",
           "options": [
@@ -2548,7 +2576,8 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "zhS4dQT"
+                  "unitId": "zhS4dQT",
+                  "exactCost": 9.28
                 }
               ],
               "gains": [
@@ -2589,7 +2618,8 @@
               "costs": [
                 {
                   "cost": 25,
-                  "unitId": "zhS4dQT"
+                  "unitId": "zhS4dQT",
+                  "exactCost": 27.16
                 }
               ],
               "gains": [
@@ -2629,7 +2659,8 @@
               "costs": [
                 {
                   "cost": 35,
-                  "unitId": "zhS4dQT"
+                  "unitId": "zhS4dQT",
+                  "exactCost": 34.41
                 }
               ],
               "gains": [
@@ -2665,7 +2696,7 @@
           ]
         },
         {
-          "id": "Wqd-QzB",
+          "id": "-e5W58r",
           "uid": "OQ8aM0wl",
           "label": "Replace Sky-Barrage",
           "options": [
@@ -2675,7 +2706,8 @@
               "costs": [
                 {
                   "cost": 15,
-                  "unitId": "zhS4dQT"
+                  "unitId": "zhS4dQT",
+                  "exactCost": 15.27
                 }
               ],
               "gains": [
@@ -2716,7 +2748,7 @@
       "hint": "Sky-Frigate",
       "sections": [
         {
-          "id": "6z607ic",
+          "id": "fbjDEPp",
           "uid": "FjkOkby",
           "label": "Replace Drop Bombs",
           "options": [
@@ -2726,7 +2758,8 @@
               "costs": [
                 {
                   "cost": 35,
-                  "unitId": "BBcwECv"
+                  "unitId": "BBcwECv",
+                  "exactCost": 33.77
                 }
               ],
               "gains": [
@@ -2759,7 +2792,8 @@
               "costs": [
                 {
                   "cost": 45,
-                  "unitId": "BBcwECv"
+                  "unitId": "BBcwECv",
+                  "exactCost": 46.37
                 }
               ],
               "gains": [
@@ -2800,7 +2834,8 @@
               "costs": [
                 {
                   "cost": 50,
-                  "unitId": "BBcwECv"
+                  "unitId": "BBcwECv",
+                  "exactCost": 51.66
                 }
               ],
               "gains": [
@@ -2843,7 +2878,7 @@
           ]
         },
         {
-          "id": "iXb9uNf",
+          "id": "W-ZRI3s",
           "uid": "iuK2ZJ2E",
           "label": "Replace Sky-Barrage",
           "options": [
@@ -2853,7 +2888,8 @@
               "costs": [
                 {
                   "cost": 30,
-                  "unitId": "BBcwECv"
+                  "unitId": "BBcwECv",
+                  "exactCost": 29.14
                 }
               ],
               "gains": [
@@ -2894,7 +2930,7 @@
       "hint": "Sky-Ironclad",
       "sections": [
         {
-          "id": "nHX6JeQ",
+          "id": "mCye0tB",
           "uid": "NytG3Ar",
           "label": "Replace Drop Bombs",
           "options": [
@@ -2905,7 +2941,8 @@
               "costs": [
                 {
                   "cost": 0,
-                  "unitId": "wBqS9bm"
+                  "unitId": "wBqS9bm",
+                  "exactCost": -1.93
                 }
               ],
               "gains": [
@@ -2941,7 +2978,8 @@
               "costs": [
                 {
                   "cost": 25,
-                  "unitId": "wBqS9bm"
+                  "unitId": "wBqS9bm",
+                  "exactCost": 23.03
                 }
               ],
               "gains": [
@@ -2979,7 +3017,8 @@
               "costs": [
                 {
                   "cost": 65,
-                  "unitId": "wBqS9bm"
+                  "unitId": "wBqS9bm",
+                  "exactCost": 66.15
                 }
               ],
               "gains": [
@@ -3022,7 +3061,7 @@
           ]
         },
         {
-          "id": "PdtWvIV",
+          "id": "18elYat",
           "uid": "1yvUpFuP",
           "label": "Replace Sky-Barrage",
           "options": [
@@ -3032,7 +3071,8 @@
               "costs": [
                 {
                   "cost": 40,
-                  "unitId": "wBqS9bm"
+                  "unitId": "wBqS9bm",
+                  "exactCost": 41.16
                 }
               ],
               "gains": [
@@ -3073,7 +3113,7 @@
       "hint": "Heavy Gunners",
       "sections": [
         {
-          "id": "yqwfbja",
+          "id": "wIgn8sT",
           "uid": "2RGFC",
           "label": "Replace any Flame-Gun",
           "options": [
@@ -3084,7 +3124,8 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "HxPMIeY"
+                  "unitId": "HxPMIeY",
+                  "exactCost": 8.53
                 }
               ],
               "gains": [
@@ -3120,7 +3161,8 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "HxPMIeY"
+                  "unitId": "HxPMIeY",
+                  "exactCost": 10.54
                 }
               ],
               "gains": [
@@ -3160,7 +3202,8 @@
               "costs": [
                 {
                   "cost": 15,
-                  "unitId": "HxPMIeY"
+                  "unitId": "HxPMIeY",
+                  "exactCost": 15.15
                 }
               ],
               "gains": [
@@ -3200,7 +3243,8 @@
               "costs": [
                 {
                   "cost": 20,
-                  "unitId": "HxPMIeY"
+                  "unitId": "HxPMIeY",
+                  "exactCost": 18.5
                 }
               ],
               "gains": [
@@ -3245,7 +3289,7 @@
       "hint": "Specialists - Captain",
       "sections": [
         {
-          "id": "1hnqieV",
+          "id": "Lvplote",
           "uid": "a-6XqPOW",
           "label": "Upgrade with one",
           "options": [
@@ -3256,7 +3300,8 @@
               "costs": [
                 {
                   "cost": 20,
-                  "unitId": "PHMSpuh"
+                  "unitId": "PHMSpuh",
+                  "exactCost": 17.51
                 }
               ],
               "gains": [
@@ -3288,7 +3333,8 @@
               "costs": [
                 {
                   "cost": 25,
-                  "unitId": "PHMSpuh"
+                  "unitId": "PHMSpuh",
+                  "exactCost": 25.01
                 }
               ],
               "gains": [
@@ -3320,7 +3366,8 @@
               "costs": [
                 {
                   "cost": 30,
-                  "unitId": "PHMSpuh"
+                  "unitId": "PHMSpuh",
+                  "exactCost": 27.79
                 }
               ],
               "gains": [
@@ -3352,7 +3399,8 @@
               "costs": [
                 {
                   "cost": 40,
-                  "unitId": "PHMSpuh"
+                  "unitId": "PHMSpuh",
+                  "exactCost": 40.01
                 }
               ],
               "gains": [
@@ -3383,7 +3431,8 @@
               "costs": [
                 {
                   "cost": 40,
-                  "unitId": "PHMSpuh"
+                  "unitId": "PHMSpuh",
+                  "exactCost": 39.66
                 }
               ],
               "gains": [
@@ -3415,7 +3464,8 @@
               "costs": [
                 {
                   "cost": 65,
-                  "unitId": "PHMSpuh"
+                  "unitId": "PHMSpuh",
+                  "exactCost": 63.36
                 }
               ],
               "gains": [
@@ -3451,7 +3501,7 @@
           }
         },
         {
-          "id": "_NrS11_",
+          "id": "TMhzxVq",
           "uid": "KotRNFDE",
           "label": "Upgrade with",
           "options": [
@@ -3461,7 +3511,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "PHMSpuh"
+                  "unitId": "PHMSpuh",
+                  "exactCost": 1.73
                 }
               ],
               "gains": [
@@ -3498,7 +3549,7 @@
       "hint": "Specialists - Balloon Master",
       "sections": [
         {
-          "id": "iK_GQDj",
+          "id": "USVB47A",
           "uid": "fwdDVxjl",
           "label": "Upgrade with one",
           "options": [
@@ -3509,7 +3560,8 @@
               "costs": [
                 {
                   "cost": 25,
-                  "unitId": "vzAMpIv"
+                  "unitId": "vzAMpIv",
+                  "exactCost": 25.01
                 }
               ],
               "gains": [
@@ -3540,7 +3592,8 @@
               "costs": [
                 {
                   "cost": 30,
-                  "unitId": "vzAMpIv"
+                  "unitId": "vzAMpIv",
+                  "exactCost": 29.89
                 }
               ],
               "gains": [
@@ -3571,7 +3624,8 @@
               "costs": [
                 {
                   "cost": 30,
-                  "unitId": "vzAMpIv"
+                  "unitId": "vzAMpIv",
+                  "exactCost": 27.79
                 }
               ],
               "gains": [
@@ -3603,7 +3657,8 @@
               "costs": [
                 {
                   "cost": 40,
-                  "unitId": "vzAMpIv"
+                  "unitId": "vzAMpIv",
+                  "exactCost": 40.01
                 }
               ],
               "gains": [
@@ -3634,7 +3689,8 @@
               "costs": [
                 {
                   "cost": 65,
-                  "unitId": "vzAMpIv"
+                  "unitId": "vzAMpIv",
+                  "exactCost": 63.36
                 }
               ],
               "gains": [
@@ -3670,7 +3726,7 @@
           }
         },
         {
-          "id": "HwDsOnF",
+          "id": "j4Lg8OE",
           "uid": "jh3a10jL",
           "label": "Upgrade with",
           "options": [
@@ -3680,7 +3736,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "vzAMpIv"
+                  "unitId": "vzAMpIv",
+                  "exactCost": 5.48
                 }
               ],
               "gains": [
@@ -3717,7 +3774,7 @@
       "hint": "Balloon Hunters",
       "sections": [
         {
-          "id": "l06QplW",
+          "id": "Ci66jJR",
           "uid": "pzIgfXI6",
           "label": "Upgrade one model with one",
           "options": [
@@ -3727,7 +3784,8 @@
               "costs": [
                 {
                   "cost": 30,
-                  "unitId": "fmWhps6"
+                  "unitId": "fmWhps6",
+                  "exactCost": 27.79
                 }
               ],
               "gains": [
@@ -3760,7 +3818,8 @@
               "costs": [
                 {
                   "cost": 45,
-                  "unitId": "fmWhps6"
+                  "unitId": "fmWhps6",
+                  "exactCost": 47.1
                 }
               ],
               "gains": [
@@ -3817,7 +3876,7 @@
           }
         },
         {
-          "id": "eM3g1kO",
+          "id": "_PhgoV0",
           "uid": "k3jRU67N",
           "label": "Upgrade all models with",
           "options": [
@@ -3827,7 +3886,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "fmWhps6"
+                  "unitId": "fmWhps6",
+                  "exactCost": 3.18
                 }
               ],
               "gains": [
@@ -3868,7 +3928,7 @@
       "hint": "Aether-Cloud Generator",
       "sections": [
         {
-          "id": "QmIQMWb",
+          "id": "1GQN-3G",
           "uid": "rGM4oT54",
           "label": "Upgrade with",
           "options": [
@@ -3878,15 +3938,18 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "zhS4dQT"
+                  "unitId": "zhS4dQT",
+                  "exactCost": 11.17
                 },
                 {
                   "cost": 10,
-                  "unitId": "BBcwECv"
+                  "unitId": "BBcwECv",
+                  "exactCost": 11.17
                 },
                 {
                   "cost": 10,
-                  "unitId": "wBqS9bm"
+                  "unitId": "wBqS9bm",
+                  "exactCost": 11.17
                 }
               ],
               "gains": [
@@ -4475,6 +4538,9 @@
               "weaponRule1": {
                 "id": "IEJp3a4vE0CB",
                 "name": "Shred"
+              },
+              "spellHitRoll": {
+                "name": "Roll as many dice as hits to see if \"on rolls of 1\" effects trigger."
               }
             },
             "avgUnit": true,
@@ -4504,7 +4570,7 @@
       "effectSkirmish": ""
     }
   ],
-  "modifiedAt": "2026-05-05T08:03:01.892Z",
+  "modifiedAt": "2026-07-05T01:10:54.385Z",
   "editedAt": "2026-04-13T15:59:02.994Z",
   "official": true,
   "versionString": "3.5.3",

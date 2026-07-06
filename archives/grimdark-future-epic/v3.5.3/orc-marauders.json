@@ -659,7 +659,7 @@
     },
     {
       "id": "WXcv-b5",
-      "cost": 80,
+      "cost": 65,
       "name": "Specialists",
       "size": 3,
       "bases": {
@@ -743,7 +743,7 @@
     },
     {
       "id": "iAADbpw",
-      "cost": 105,
+      "cost": 95,
       "name": "Veteran Specialists",
       "size": 3,
       "bases": {
@@ -1416,7 +1416,7 @@
     },
     {
       "id": "WgVWJ9Z",
-      "cost": 215,
+      "cost": 205,
       "name": "Assault Buggy",
       "size": 1,
       "bases": {
@@ -1863,7 +1863,7 @@
     },
     {
       "id": "HK_B-Wg",
-      "cost": 535,
+      "cost": 525,
       "name": "Combat Beast",
       "size": 1,
       "bases": {
@@ -2188,7 +2188,7 @@
     },
     {
       "id": "5iSsdvX",
-      "cost": 290,
+      "cost": 285,
       "name": "Bomber Plane",
       "size": 1,
       "bases": {
@@ -2673,7 +2673,7 @@
     },
     {
       "id": "8o7Rdwv",
-      "cost": 790,
+      "cost": 780,
       "name": "Beast Titan",
       "size": 1,
       "bases": {
@@ -3034,7 +3034,7 @@
       "hint": "Leader Weapons",
       "sections": [
         {
-          "id": "MQ1eCdk",
+          "id": "BzZczGH",
           "uid": "888ERTd",
           "label": "Replace Leader Pistol",
           "options": [
@@ -3044,7 +3044,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "3GA8D0b"
+                  "unitId": "3GA8D0b",
+                  "exactCost": 0.8
                 }
               ],
               "gains": [
@@ -3085,7 +3086,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "3GA8D0b"
+                  "unitId": "3GA8D0b",
+                  "exactCost": 4.77
                 }
               ],
               "gains": [
@@ -3127,7 +3129,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "3GA8D0b"
+                  "unitId": "3GA8D0b",
+                  "exactCost": 7.2
                 }
               ],
               "gains": [
@@ -3160,7 +3163,8 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "3GA8D0b"
+                  "unitId": "3GA8D0b",
+                  "exactCost": 9.8
                 }
               ],
               "gains": [
@@ -3193,7 +3197,8 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "3GA8D0b"
+                  "unitId": "3GA8D0b",
+                  "exactCost": 9.09
                 }
               ],
               "gains": [
@@ -3255,7 +3260,8 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "3GA8D0b"
+                  "unitId": "3GA8D0b",
+                  "exactCost": 10.67
                 }
               ],
               "gains": [
@@ -3294,7 +3300,7 @@
           ]
         },
         {
-          "id": "tv8Yy2L",
+          "id": "RZAgrDc",
           "uid": "zpp30",
           "label": "Replace Heavy Flamer-Mod",
           "options": [
@@ -3304,7 +3310,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "3GA8D0b"
+                  "unitId": "3GA8D0b",
+                  "exactCost": 2.43
                 }
               ],
               "gains": [
@@ -3333,7 +3340,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "3GA8D0b"
+                  "unitId": "3GA8D0b",
+                  "exactCost": 0.74
                 }
               ],
               "gains": [
@@ -3383,7 +3391,7 @@
           ]
         },
         {
-          "id": "uij2PVb",
+          "id": "x5oC8NY",
           "uid": "P01q5",
           "label": "Replace CCW",
           "options": [
@@ -3394,7 +3402,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "3GA8D0b"
+                  "unitId": "3GA8D0b",
+                  "exactCost": 1.03
                 }
               ],
               "gains": [
@@ -3429,7 +3438,8 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "3GA8D0b"
+                  "unitId": "3GA8D0b",
+                  "exactCost": 9.36
                 }
               ],
               "gains": [
@@ -3468,7 +3478,8 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "3GA8D0b"
+                  "unitId": "3GA8D0b",
+                  "exactCost": 11.84
                 }
               ],
               "gains": [
@@ -3508,7 +3519,8 @@
               "costs": [
                 {
                   "cost": 15,
-                  "unitId": "3GA8D0b"
+                  "unitId": "3GA8D0b",
+                  "exactCost": 14
                 }
               ],
               "gains": [
@@ -3552,7 +3564,7 @@
       "hint": "Heavy Melee Weapon",
       "sections": [
         {
-          "id": "HodDMcb",
+          "id": "6khZdZH",
           "uid": "JwcJDo2",
           "label": "Replace one CCW",
           "options": [
@@ -3563,19 +3575,23 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "ErJf80m"
+                  "unitId": "ErJf80m",
+                  "exactCost": 1.03
                 },
                 {
                   "cost": 5,
-                  "unitId": "-2RTGCp"
+                  "unitId": "-2RTGCp",
+                  "exactCost": 1.03
                 },
                 {
                   "cost": 5,
-                  "unitId": "5hHhPKU"
+                  "unitId": "5hHhPKU",
+                  "exactCost": 1.03
                 },
                 {
                   "cost": 5,
-                  "unitId": "2nuy0sm"
+                  "unitId": "2nuy0sm",
+                  "exactCost": 1.31
                 }
               ],
               "gains": [
@@ -3611,19 +3627,23 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "ErJf80m"
+                  "unitId": "ErJf80m",
+                  "exactCost": 9.36
                 },
                 {
                   "cost": 10,
-                  "unitId": "-2RTGCp"
+                  "unitId": "-2RTGCp",
+                  "exactCost": 9.36
                 },
                 {
                   "cost": 10,
-                  "unitId": "5hHhPKU"
+                  "unitId": "5hHhPKU",
+                  "exactCost": 9.36
                 },
                 {
                   "cost": 10,
-                  "unitId": "2nuy0sm"
+                  "unitId": "2nuy0sm",
+                  "exactCost": 10.07
                 }
               ],
               "gains": [
@@ -3663,19 +3683,23 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "ErJf80m"
+                  "unitId": "ErJf80m",
+                  "exactCost": 11.84
                 },
                 {
                   "cost": 10,
-                  "unitId": "-2RTGCp"
+                  "unitId": "-2RTGCp",
+                  "exactCost": 11.84
                 },
                 {
                   "cost": 10,
-                  "unitId": "5hHhPKU"
+                  "unitId": "5hHhPKU",
+                  "exactCost": 11.84
                 },
                 {
                   "cost": 15,
-                  "unitId": "2nuy0sm"
+                  "unitId": "2nuy0sm",
+                  "exactCost": 15.09
                 }
               ],
               "gains": [
@@ -3716,19 +3740,23 @@
               "costs": [
                 {
                   "cost": 15,
-                  "unitId": "ErJf80m"
+                  "unitId": "ErJf80m",
+                  "exactCost": 14
                 },
                 {
                   "cost": 15,
-                  "unitId": "-2RTGCp"
+                  "unitId": "-2RTGCp",
+                  "exactCost": 14
                 },
                 {
                   "cost": 15,
-                  "unitId": "5hHhPKU"
+                  "unitId": "5hHhPKU",
+                  "exactCost": 14
                 },
                 {
                   "cost": 20,
-                  "unitId": "2nuy0sm"
+                  "unitId": "2nuy0sm",
+                  "exactCost": 17.85
                 }
               ],
               "gains": [
@@ -3777,7 +3805,7 @@
       "hint": "Leader Upgrades",
       "sections": [
         {
-          "id": "t3vfnQd",
+          "id": "i07YDml",
           "uid": "F2wLwQw",
           "label": "Upgrade with one",
           "options": [
@@ -3788,11 +3816,13 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "RdSmE77"
+                  "unitId": "RdSmE77",
+                  "exactCost": 9.34
                 },
                 {
                   "cost": 10,
-                  "unitId": "3GA8D0b"
+                  "unitId": "3GA8D0b",
+                  "exactCost": 9.34
                 }
               ],
               "gains": [
@@ -3822,11 +3852,13 @@
               "costs": [
                 {
                   "cost": 15,
-                  "unitId": "RdSmE77"
+                  "unitId": "RdSmE77",
+                  "exactCost": 16.67
                 },
                 {
                   "cost": 15,
-                  "unitId": "3GA8D0b"
+                  "unitId": "3GA8D0b",
+                  "exactCost": 16.67
                 }
               ],
               "gains": [
@@ -3856,11 +3888,13 @@
               "costs": [
                 {
                   "cost": 20,
-                  "unitId": "RdSmE77"
+                  "unitId": "RdSmE77",
+                  "exactCost": 22.23
                 },
                 {
                   "cost": 15,
-                  "unitId": "3GA8D0b"
+                  "unitId": "3GA8D0b",
+                  "exactCost": 16.67
                 }
               ],
               "gains": [
@@ -3894,11 +3928,13 @@
               "costs": [
                 {
                   "cost": 25,
-                  "unitId": "RdSmE77"
+                  "unitId": "RdSmE77",
+                  "exactCost": 26.34
                 },
                 {
                   "cost": 20,
-                  "unitId": "3GA8D0b"
+                  "unitId": "3GA8D0b",
+                  "exactCost": 21.71
                 }
               ],
               "gains": [
@@ -3938,11 +3974,13 @@
               "costs": [
                 {
                   "cost": 75,
-                  "unitId": "RdSmE77"
+                  "unitId": "RdSmE77",
+                  "exactCost": 73.41
                 },
                 {
                   "cost": 55,
-                  "unitId": "3GA8D0b"
+                  "unitId": "3GA8D0b",
+                  "exactCost": 52.91
                 }
               ],
               "gains": [
@@ -4010,7 +4048,7 @@
       "hint": "Specialists - Leader",
       "sections": [
         {
-          "id": "eab4CyG",
+          "id": "CHYjYG9",
           "uid": "FrtCkJc",
           "label": "Upgrade with one",
           "options": [
@@ -4020,7 +4058,8 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "3GA8D0b"
+                  "unitId": "3GA8D0b",
+                  "exactCost": 8.75
                 }
               ],
               "gains": [
@@ -4049,7 +4088,8 @@
               "costs": [
                 {
                   "cost": 35,
-                  "unitId": "3GA8D0b"
+                  "unitId": "3GA8D0b",
+                  "exactCost": 33.35
                 }
               ],
               "gains": [
@@ -4078,7 +4118,8 @@
               "costs": [
                 {
                   "cost": 35,
-                  "unitId": "3GA8D0b"
+                  "unitId": "3GA8D0b",
+                  "exactCost": 33.34
                 }
               ],
               "gains": [
@@ -4109,7 +4150,8 @@
               "costs": [
                 {
                   "cost": 35,
-                  "unitId": "3GA8D0b"
+                  "unitId": "3GA8D0b",
+                  "exactCost": 36.32
                 }
               ],
               "gains": [
@@ -4140,7 +4182,8 @@
               "costs": [
                 {
                   "cost": 40,
-                  "unitId": "3GA8D0b"
+                  "unitId": "3GA8D0b",
+                  "exactCost": 40.01
                 }
               ],
               "gains": [
@@ -4170,7 +4213,8 @@
               "costs": [
                 {
                   "cost": 40,
-                  "unitId": "3GA8D0b"
+                  "unitId": "3GA8D0b",
+                  "exactCost": 41.68
                 }
               ],
               "gains": [
@@ -4211,7 +4255,7 @@
       "hint": "Orc Leader - Mechanic Weapons",
       "sections": [
         {
-          "id": "vjG1hbn",
+          "id": "3pmXoqd",
           "uid": "vOIM6xk",
           "label": "Replace Leader Pistol",
           "options": [
@@ -4221,11 +4265,13 @@
               "costs": [
                 {
                   "cost": 15,
-                  "unitId": "RdSmE77"
+                  "unitId": "RdSmE77",
+                  "exactCost": 14.49
                 },
                 {
                   "cost": 10,
-                  "unitId": "3GA8D0b"
+                  "unitId": "3GA8D0b",
+                  "exactCost": 10.73
                 }
               ],
               "gains": [
@@ -4265,11 +4311,13 @@
               "costs": [
                 {
                   "cost": 20,
-                  "unitId": "RdSmE77"
+                  "unitId": "RdSmE77",
+                  "exactCost": 21.32
                 },
                 {
                   "cost": 15,
-                  "unitId": "3GA8D0b"
+                  "unitId": "3GA8D0b",
+                  "exactCost": 15.31
                 }
               ],
               "gains": [
@@ -4312,11 +4360,13 @@
               "costs": [
                 {
                   "cost": 25,
-                  "unitId": "RdSmE77"
+                  "unitId": "RdSmE77",
+                  "exactCost": 23.25
                 },
                 {
                   "cost": 15,
-                  "unitId": "3GA8D0b"
+                  "unitId": "3GA8D0b",
+                  "exactCost": 16.69
                 }
               ],
               "gains": [
@@ -4351,11 +4401,13 @@
               "costs": [
                 {
                   "cost": 30,
-                  "unitId": "RdSmE77"
+                  "unitId": "RdSmE77",
+                  "exactCost": 31.8
                 },
                 {
                   "cost": 25,
-                  "unitId": "3GA8D0b"
+                  "unitId": "3GA8D0b",
+                  "exactCost": 25.73
                 }
               ],
               "gains": [
@@ -4393,11 +4445,13 @@
               "costs": [
                 {
                   "cost": 35,
-                  "unitId": "RdSmE77"
+                  "unitId": "RdSmE77",
+                  "exactCost": 35.32
                 },
                 {
                   "cost": 25,
-                  "unitId": "3GA8D0b"
+                  "unitId": "3GA8D0b",
+                  "exactCost": 25.36
                 }
               ],
               "gains": [
@@ -4440,7 +4494,7 @@
       "hint": "Orc Warriors",
       "sections": [
         {
-          "id": "POVyWNr",
+          "id": "3ZAx5zl",
           "uid": "SDbUV",
           "label": "Replace all Pistols and CCWS",
           "options": [
@@ -4450,7 +4504,8 @@
               "costs": [
                 {
                   "cost": 15,
-                  "unitId": "D69wnil"
+                  "unitId": "D69wnil",
+                  "exactCost": 16.47
                 }
               ],
               "gains": [
@@ -4498,7 +4553,7 @@
           ]
         },
         {
-          "id": "uZkoB2i",
+          "id": "XjE8-s2",
           "uid": "eWQzCSY",
           "label": "Replace up to two Pistols",
           "options": [
@@ -4509,7 +4564,8 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "D69wnil"
+                  "unitId": "D69wnil",
+                  "exactCost": 10.25
                 }
               ],
               "gains": [
@@ -4551,7 +4607,8 @@
               "costs": [
                 {
                   "cost": 15,
-                  "unitId": "D69wnil"
+                  "unitId": "D69wnil",
+                  "exactCost": 12.68
                 }
               ],
               "gains": [
@@ -4586,7 +4643,8 @@
               "costs": [
                 {
                   "cost": 15,
-                  "unitId": "D69wnil"
+                  "unitId": "D69wnil",
+                  "exactCost": 13.62
                 }
               ],
               "gains": [
@@ -4626,7 +4684,8 @@
               "costs": [
                 {
                   "cost": 20,
-                  "unitId": "D69wnil"
+                  "unitId": "D69wnil",
+                  "exactCost": 19.03
                 }
               ],
               "gains": [
@@ -4665,7 +4724,8 @@
               "costs": [
                 {
                   "cost": 20,
-                  "unitId": "D69wnil"
+                  "unitId": "D69wnil",
+                  "exactCost": 18.19
                 }
               ],
               "gains": [
@@ -4708,7 +4768,8 @@
               "costs": [
                 {
                   "cost": 25,
-                  "unitId": "D69wnil"
+                  "unitId": "D69wnil",
+                  "exactCost": 26.3
                 }
               ],
               "gains": [
@@ -4750,7 +4811,7 @@
           ]
         },
         {
-          "id": "ZD1YqmH",
+          "id": "ptRLKV-",
           "uid": "gb5ou",
           "label": "Replace up to two CCWS",
           "options": [
@@ -4761,7 +4822,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "D69wnil"
+                  "unitId": "D69wnil",
+                  "exactCost": 1.03
                 }
               ],
               "gains": [
@@ -4796,7 +4858,8 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "D69wnil"
+                  "unitId": "D69wnil",
+                  "exactCost": 9.36
                 }
               ],
               "gains": [
@@ -4835,7 +4898,8 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "D69wnil"
+                  "unitId": "D69wnil",
+                  "exactCost": 11.84
                 }
               ],
               "gains": [
@@ -4875,7 +4939,8 @@
               "costs": [
                 {
                   "cost": 15,
-                  "unitId": "D69wnil"
+                  "unitId": "D69wnil",
+                  "exactCost": 14
                 }
               ],
               "gains": [
@@ -4923,7 +4988,7 @@
       "hint": "Specialists",
       "sections": [
         {
-          "id": "0C_tTqQ",
+          "id": "h6NgJQL",
           "uid": "1ZkABV9",
           "label": "Replace all Flamers",
           "options": [
@@ -4932,8 +4997,9 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 5,
-                  "unitId": "WXcv-b5"
+                  "cost": 15,
+                  "unitId": "WXcv-b5",
+                  "exactCost": 15.39
                 }
               ],
               "gains": [
@@ -4971,8 +5037,9 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 20,
-                  "unitId": "WXcv-b5"
+                  "cost": 30,
+                  "unitId": "WXcv-b5",
+                  "exactCost": 29.19
                 }
               ],
               "gains": [
@@ -5011,8 +5078,9 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 75,
-                  "unitId": "WXcv-b5"
+                  "cost": 85,
+                  "unitId": "WXcv-b5",
+                  "exactCost": 86.07
                 }
               ],
               "gains": [
@@ -5057,7 +5125,7 @@
           ]
         },
         {
-          "id": "1Eo3GoH",
+          "id": "kJGeIq_",
           "uid": "gsId1j3",
           "label": "Replace any Flamer",
           "options": [
@@ -5067,8 +5135,9 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 10,
-                  "unitId": "WXcv-b5"
+                  "cost": 15,
+                  "unitId": "WXcv-b5",
+                  "exactCost": 16.27
                 }
               ],
               "gains": [
@@ -5114,7 +5183,7 @@
           ]
         },
         {
-          "id": "tJe5rBb",
+          "id": "LEGrk8L",
           "uid": "E6-nk17",
           "label": "Upgrade any model with",
           "options": [
@@ -5125,7 +5194,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "WXcv-b5"
+                  "unitId": "WXcv-b5",
+                  "exactCost": 4
                 }
               ],
               "gains": [
@@ -5175,7 +5245,7 @@
       "hint": "Veterans",
       "sections": [
         {
-          "id": "R17GmRG",
+          "id": "723rtfh",
           "uid": "1exLMO2",
           "label": "Replace any Pistol",
           "options": [
@@ -5186,7 +5256,8 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "Snucv_c"
+                  "unitId": "Snucv_c",
+                  "exactCost": 8.03
                 }
               ],
               "gains": [
@@ -5221,7 +5292,7 @@
           ]
         },
         {
-          "id": "-TucE62",
+          "id": "mX1sTE8",
           "uid": "X6iGg2Y",
           "label": "Take one Carbine attachment",
           "options": [
@@ -5232,7 +5303,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "Snucv_c"
+                  "unitId": "Snucv_c",
+                  "exactCost": 6.21
                 }
               ],
               "gains": [
@@ -5285,7 +5357,8 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "Snucv_c"
+                  "unitId": "Snucv_c",
+                  "exactCost": 9.69
                 }
               ],
               "gains": [
@@ -5333,7 +5406,8 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "Snucv_c"
+                  "unitId": "Snucv_c",
+                  "exactCost": 12.04
                 }
               ],
               "gains": [
@@ -5368,7 +5442,7 @@
           ]
         },
         {
-          "id": "kbtqVBE",
+          "id": "emSqfC0",
           "uid": "WOGnc",
           "label": "Replace any CCW",
           "options": [
@@ -5379,7 +5453,8 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "Snucv_c"
+                  "unitId": "Snucv_c",
+                  "exactCost": 10.07
                 }
               ],
               "gains": [
@@ -5418,7 +5493,8 @@
               "costs": [
                 {
                   "cost": 20,
-                  "unitId": "Snucv_c"
+                  "unitId": "Snucv_c",
+                  "exactCost": 17.85
                 }
               ],
               "gains": [
@@ -5458,7 +5534,7 @@
           ]
         },
         {
-          "id": "Opt812z",
+          "id": "W3OZVVp",
           "uid": "JwBFc",
           "label": "Replace one CCW",
           "options": [
@@ -5469,7 +5545,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "Snucv_c"
+                  "unitId": "Snucv_c",
+                  "exactCost": 1.31
                 }
               ],
               "gains": [
@@ -5504,7 +5581,8 @@
               "costs": [
                 {
                   "cost": 15,
-                  "unitId": "Snucv_c"
+                  "unitId": "Snucv_c",
+                  "exactCost": 15.09
                 }
               ],
               "gains": [
@@ -5557,7 +5635,7 @@
       "hint": "Ultra Veterans",
       "sections": [
         {
-          "id": "vfbboTp",
+          "id": "bEv6Swj",
           "uid": "B6G-xtg",
           "label": "Replace any Heavy Flamer-Mod",
           "options": [
@@ -5568,7 +5646,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "f2gOlPs"
+                  "unitId": "f2gOlPs",
+                  "exactCost": 5.83
                 }
               ],
               "gains": [
@@ -5597,7 +5676,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "f2gOlPs"
+                  "unitId": "f2gOlPs",
+                  "exactCost": 3.48
                 }
               ],
               "gains": [
@@ -5648,7 +5728,7 @@
           ]
         },
         {
-          "id": "kxYhtpo",
+          "id": "83qPjrV",
           "uid": "UI9Yg",
           "label": "Replace any Heavy Club",
           "options": [
@@ -5659,7 +5739,8 @@
               "costs": [
                 {
                   "cost": 15,
-                  "unitId": "f2gOlPs"
+                  "unitId": "f2gOlPs",
+                  "exactCost": 13.78
                 }
               ],
               "gains": [
@@ -5699,7 +5780,8 @@
               "costs": [
                 {
                   "cost": 20,
-                  "unitId": "f2gOlPs"
+                  "unitId": "f2gOlPs",
+                  "exactCost": 19.03
                 }
               ],
               "gains": [
@@ -5739,7 +5821,8 @@
               "costs": [
                 {
                   "cost": 30,
-                  "unitId": "f2gOlPs"
+                  "unitId": "f2gOlPs",
+                  "exactCost": 30.71
                 }
               ],
               "gains": [
@@ -5780,7 +5863,7 @@
           ]
         },
         {
-          "id": "_S3bYnM",
+          "id": "ES4oaPR",
           "uid": "LLVJx8d",
           "label": "Replace one Carbine and Carbine-Mod and Heavy Club",
           "options": [
@@ -5791,7 +5874,8 @@
               "costs": [
                 {
                   "cost": 15,
-                  "unitId": "f2gOlPs"
+                  "unitId": "f2gOlPs",
+                  "exactCost": 15.28
                 }
               ],
               "gains": [
@@ -5847,7 +5931,7 @@
       "hint": "Vehicle Upgrades",
       "sections": [
         {
-          "id": "XxKuwGE",
+          "id": "A_TJq2n",
           "uid": "SYuLmi-",
           "label": "Upgrade with any",
           "options": [
@@ -5857,23 +5941,28 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "_UvgGmx"
+                  "unitId": "_UvgGmx",
+                  "exactCost": 7.78
                 },
                 {
                   "cost": 10,
-                  "unitId": "WgVWJ9Z"
+                  "unitId": "WgVWJ9Z",
+                  "exactCost": 11.67
                 },
                 {
                   "cost": 10,
-                  "unitId": "knHYEoy"
+                  "unitId": "knHYEoy",
+                  "exactCost": 7.78
                 },
                 {
                   "cost": 15,
-                  "unitId": "J1ZIR6a"
+                  "unitId": "J1ZIR6a",
+                  "exactCost": 15.56
                 },
                 {
                   "cost": 25,
-                  "unitId": "ynxGc1K"
+                  "unitId": "ynxGc1K",
+                  "exactCost": 23.34
                 }
               ],
               "gains": [
@@ -5902,23 +5991,28 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "_UvgGmx"
+                  "unitId": "_UvgGmx",
+                  "exactCost": 11.12
                 },
                 {
                   "cost": 15,
-                  "unitId": "WgVWJ9Z"
+                  "unitId": "WgVWJ9Z",
+                  "exactCost": 16.67
                 },
                 {
                   "cost": 10,
-                  "unitId": "knHYEoy"
+                  "unitId": "knHYEoy",
+                  "exactCost": 11.12
                 },
                 {
                   "cost": 20,
-                  "unitId": "J1ZIR6a"
+                  "unitId": "J1ZIR6a",
+                  "exactCost": 22.23
                 },
                 {
                   "cost": 35,
-                  "unitId": "ynxGc1K"
+                  "unitId": "ynxGc1K",
+                  "exactCost": 33.35
                 }
               ],
               "gains": [
@@ -5957,7 +6051,7 @@
       "hint": "Battle Truck",
       "sections": [
         {
-          "id": "CI8nAO_",
+          "id": "C4Zjj6D",
           "uid": "cXZBtZV",
           "label": "Replace Heavy Killer-Rocket Pod",
           "options": [
@@ -5967,7 +6061,8 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "J1ZIR6a"
+                  "unitId": "J1ZIR6a",
+                  "exactCost": 10.5
                 }
               ],
               "gains": [
@@ -6004,8 +6099,9 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 20,
-                  "unitId": "J1ZIR6a"
+                  "cost": 15,
+                  "unitId": "J1ZIR6a",
+                  "exactCost": 15.67
                 }
               ],
               "gains": [
@@ -6055,7 +6151,7 @@
       "hint": "Great Battle Truck",
       "sections": [
         {
-          "id": "BkrQKz_",
+          "id": "phhL-y3",
           "uid": "I_zQcJ4",
           "label": "Replace Basic Cannon",
           "options": [
@@ -6066,11 +6162,13 @@
               "costs": [
                 {
                   "cost": 15,
-                  "unitId": "ynxGc1K"
+                  "unitId": "ynxGc1K",
+                  "exactCost": 16.44
                 },
                 {
                   "cost": 15,
-                  "unitId": "8o7Rdwv"
+                  "unitId": "8o7Rdwv",
+                  "exactCost": 16.44
                 }
               ],
               "gains": [
@@ -6110,12 +6208,14 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 60,
-                  "unitId": "ynxGc1K"
+                  "cost": 65,
+                  "unitId": "ynxGc1K",
+                  "exactCost": 63.86
                 },
                 {
-                  "cost": 60,
-                  "unitId": "8o7Rdwv"
+                  "cost": 65,
+                  "unitId": "8o7Rdwv",
+                  "exactCost": 63.86
                 }
               ],
               "gains": [
@@ -6156,7 +6256,7 @@
           ]
         },
         {
-          "id": "HsGDyiK",
+          "id": "cy91qWi",
           "uid": "IDn93",
           "label": "Replace Extra Space",
           "options": [
@@ -6165,12 +6265,14 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 25,
-                  "unitId": "ynxGc1K"
+                  "cost": 20,
+                  "unitId": "ynxGc1K",
+                  "exactCost": 18.88
                 },
                 {
-                  "cost": 25,
-                  "unitId": "8o7Rdwv"
+                  "cost": 20,
+                  "unitId": "8o7Rdwv",
+                  "exactCost": 18.88
                 }
               ],
               "gains": [
@@ -6224,7 +6326,7 @@
       "hint": "Assault Buggy",
       "sections": [
         {
-          "id": "sSqu6bh",
+          "id": "W90WXVE",
           "uid": "XOB1mQ0",
           "label": "Replace Boost-Gun and Blast-GL",
           "options": [
@@ -6234,8 +6336,9 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 20,
-                  "unitId": "WgVWJ9Z"
+                  "cost": 25,
+                  "unitId": "WgVWJ9Z",
+                  "exactCost": 25.09
                 }
               ],
               "gains": [
@@ -6297,8 +6400,9 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 20,
-                  "unitId": "WgVWJ9Z"
+                  "cost": 25,
+                  "unitId": "WgVWJ9Z",
+                  "exactCost": 26.57
                 }
               ],
               "gains": [
@@ -6346,8 +6450,9 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 35,
-                  "unitId": "WgVWJ9Z"
+                  "cost": 40,
+                  "unitId": "WgVWJ9Z",
+                  "exactCost": 42.32
                 }
               ],
               "gains": [
@@ -6406,8 +6511,9 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 60,
-                  "unitId": "WgVWJ9Z"
+                  "cost": 70,
+                  "unitId": "WgVWJ9Z",
+                  "exactCost": 68.31
                 }
               ],
               "gains": [
@@ -6476,7 +6582,7 @@
       "hint": "Trike",
       "sections": [
         {
-          "id": "uBpoMjL",
+          "id": "cNbONPr",
           "uid": "7shB-2O",
           "label": "Replace Triple Heavy Shotgun",
           "options": [
@@ -6486,7 +6592,8 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "_UvgGmx"
+                  "unitId": "_UvgGmx",
+                  "exactCost": 9.47
                 }
               ],
               "gains": [
@@ -6524,8 +6631,9 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 25,
-                  "unitId": "_UvgGmx"
+                  "cost": 20,
+                  "unitId": "_UvgGmx",
+                  "exactCost": 18.51
                 }
               ],
               "gains": [
@@ -6569,7 +6677,8 @@
               "costs": [
                 {
                   "cost": 25,
-                  "unitId": "_UvgGmx"
+                  "unitId": "_UvgGmx",
+                  "exactCost": 23.16
                 }
               ],
               "gains": [
@@ -6609,7 +6718,8 @@
               "costs": [
                 {
                   "cost": 45,
-                  "unitId": "_UvgGmx"
+                  "unitId": "_UvgGmx",
+                  "exactCost": 46.31
                 }
               ],
               "gains": [
@@ -6652,7 +6762,7 @@
       "hint": "Hover Bikers",
       "sections": [
         {
-          "id": "MQa__T1",
+          "id": "PsUAkpn",
           "uid": "JRny1",
           "label": "Replace any Killer-Rocket Pod",
           "options": [
@@ -6662,7 +6772,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "QkKPZBg"
+                  "unitId": "QkKPZBg",
+                  "exactCost": 2.95
                 }
               ],
               "gains": [
@@ -6696,7 +6807,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "QkKPZBg"
+                  "unitId": "QkKPZBg",
+                  "exactCost": 4.57
                 }
               ],
               "gains": [
@@ -6738,7 +6850,8 @@
               "costs": [
                 {
                   "cost": 15,
-                  "unitId": "QkKPZBg"
+                  "unitId": "QkKPZBg",
+                  "exactCost": 14.62
                 }
               ],
               "gains": [
@@ -6779,7 +6892,7 @@
           ]
         },
         {
-          "id": "pcSrG1y",
+          "id": "5AVIvV1",
           "uid": "PUhP_8v",
           "label": "Replace one CCW",
           "options": [
@@ -6790,7 +6903,8 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "QkKPZBg"
+                  "unitId": "QkKPZBg",
+                  "exactCost": 8.44
                 }
               ],
               "gains": [
@@ -6821,7 +6935,8 @@
               "costs": [
                 {
                   "cost": 20,
-                  "unitId": "QkKPZBg"
+                  "unitId": "QkKPZBg",
+                  "exactCost": 19.55
                 }
               ],
               "gains": [
@@ -6866,7 +6981,7 @@
           ]
         },
         {
-          "id": "KX0w4DF",
+          "id": "ZxhHvHK",
           "uid": "QNa9e",
           "label": "Replace one Pistol and CCW",
           "options": [
@@ -6875,8 +6990,9 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 10,
-                  "unitId": "QkKPZBg"
+                  "cost": 5,
+                  "unitId": "QkKPZBg",
+                  "exactCost": 7.2
                 }
               ],
               "gains": [
@@ -6936,7 +7052,7 @@
       "hint": "Ranged Walker",
       "sections": [
         {
-          "id": "r4tdq-R",
+          "id": "HXZHkHB",
           "uid": "pdiqQbj",
           "label": "Replace any Rapid Killer-Rocket Pod",
           "options": [
@@ -6945,8 +7061,9 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 15,
-                  "unitId": "gXmHgHH"
+                  "cost": 5,
+                  "unitId": "gXmHgHH",
+                  "exactCost": 5.93
                 }
               ],
               "gains": [
@@ -6991,7 +7108,8 @@
               "costs": [
                 {
                   "cost": 15,
-                  "unitId": "gXmHgHH"
+                  "unitId": "gXmHgHH",
+                  "exactCost": 13.74
                 }
               ],
               "gains": [
@@ -7034,7 +7152,8 @@
               "costs": [
                 {
                   "cost": 40,
-                  "unitId": "gXmHgHH"
+                  "unitId": "gXmHgHH",
+                  "exactCost": 38.63
                 }
               ],
               "gains": [
@@ -7070,7 +7189,8 @@
               "costs": [
                 {
                   "cost": 85,
-                  "unitId": "gXmHgHH"
+                  "unitId": "gXmHgHH",
+                  "exactCost": 83.44
                 }
               ],
               "gains": [
@@ -7123,7 +7243,7 @@
       "hint": "Bomber Plane",
       "sections": [
         {
-          "id": "eacdci2",
+          "id": "E6hsAWA",
           "uid": "UXtnqRX",
           "label": "Replace Super-MG",
           "options": [
@@ -7133,7 +7253,8 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "5iSsdvX"
+                  "unitId": "5iSsdvX",
+                  "exactCost": 8.66
                 }
               ],
               "gains": [
@@ -7174,7 +7295,7 @@
           ]
         },
         {
-          "id": "61_mZIx",
+          "id": "7orZI6Y",
           "uid": "e0XgKpc",
           "label": "Replace Flame Missiles and Flame Bombs",
           "options": [
@@ -7184,8 +7305,9 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": -5,
-                  "unitId": "5iSsdvX"
+                  "cost": 0,
+                  "unitId": "5iSsdvX",
+                  "exactCost": -2.49
                 }
               ],
               "gains": [
@@ -7218,8 +7340,9 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 10,
-                  "unitId": "5iSsdvX"
+                  "cost": 15,
+                  "unitId": "5iSsdvX",
+                  "exactCost": 15.39
                 }
               ],
               "gains": [
@@ -7262,7 +7385,8 @@
               "costs": [
                 {
                   "cost": 50,
-                  "unitId": "5iSsdvX"
+                  "unitId": "5iSsdvX",
+                  "exactCost": 52.2
                 }
               ],
               "gains": [
@@ -7306,7 +7430,7 @@
           ]
         },
         {
-          "id": "spMNJ4A",
+          "id": "sc_VaTa",
           "uid": "QAfk2Ol",
           "label": "Upgrade with any",
           "options": [
@@ -7317,7 +7441,8 @@
               "costs": [
                 {
                   "cost": 20,
-                  "unitId": "5iSsdvX"
+                  "unitId": "5iSsdvX",
+                  "exactCost": 19.56
                 }
               ],
               "gains": [
@@ -7350,14 +7475,14 @@
           }
         }
       ],
-      "calcErrors": true
+      "calcErrors": false
     },
     {
       "uid": "P2",
       "hint": "Great Walker",
       "sections": [
         {
-          "id": "72muuy4",
+          "id": "T_vYoYA",
           "uid": "IgVrX-K",
           "label": "Replace Deathstorm Minigun",
           "options": [
@@ -7367,7 +7492,8 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "AyFo1t8"
+                  "unitId": "AyFo1t8",
+                  "exactCost": 11.65
                 }
               ],
               "gains": [
@@ -7408,7 +7534,7 @@
           ]
         },
         {
-          "id": "vjL77kp",
+          "id": "ysQ8i37",
           "uid": "fsC9L",
           "label": "Replace Great Walker Saw",
           "options": [
@@ -7418,7 +7544,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "AyFo1t8"
+                  "unitId": "AyFo1t8",
+                  "exactCost": 6.48
                 }
               ],
               "gains": [
@@ -7456,7 +7583,7 @@
           ]
         },
         {
-          "id": "f0TIQ9e",
+          "id": "i1CGIYV",
           "uid": "mr-fW",
           "label": "Replace any Rocket Launcher Array",
           "options": [
@@ -7466,7 +7593,8 @@
               "costs": [
                 {
                   "cost": 25,
-                  "unitId": "AyFo1t8"
+                  "unitId": "AyFo1t8",
+                  "exactCost": 23.16
                 }
               ],
               "gains": [
@@ -7507,7 +7635,7 @@
           ]
         },
         {
-          "id": "L65ST7v",
+          "id": "blut_Io",
           "uid": "lslofD7",
           "label": "Upgrade with one",
           "options": [
@@ -7517,7 +7645,8 @@
               "costs": [
                 {
                   "cost": 20,
-                  "unitId": "AyFo1t8"
+                  "unitId": "AyFo1t8",
+                  "exactCost": 18.34
                 }
               ],
               "gains": [
@@ -7563,7 +7692,8 @@
               "costs": [
                 {
                   "cost": 30,
-                  "unitId": "AyFo1t8"
+                  "unitId": "AyFo1t8",
+                  "exactCost": 29.34
                 }
               ],
               "gains": [
@@ -7604,7 +7734,7 @@
           }
         },
         {
-          "id": "nW1PeNc",
+          "id": "VoX_waM",
           "uid": "xxP9DgY",
           "label": "Upgrade with any",
           "options": [
@@ -7614,7 +7744,8 @@
               "costs": [
                 {
                   "cost": 35,
-                  "unitId": "AyFo1t8"
+                  "unitId": "AyFo1t8",
+                  "exactCost": 35.66
                 }
               ],
               "gains": [
@@ -7645,7 +7776,8 @@
               "costs": [
                 {
                   "cost": 70,
-                  "unitId": "AyFo1t8"
+                  "unitId": "AyFo1t8",
+                  "exactCost": 69.36
                 }
               ],
               "gains": [
@@ -7685,7 +7817,7 @@
       "hint": "Squad Upgrades",
       "sections": [
         {
-          "id": "tPxcEKi",
+          "id": "H7vflL1",
           "uid": "s08qc",
           "label": "Upgrade one model with one",
           "options": [
@@ -7695,15 +7827,18 @@
               "costs": [
                 {
                   "cost": 20,
-                  "unitId": "D69wnil"
+                  "unitId": "D69wnil",
+                  "exactCost": 20.01
                 },
                 {
                   "cost": 20,
-                  "unitId": "_ImR84h"
+                  "unitId": "_ImR84h",
+                  "exactCost": 20.01
                 },
                 {
                   "cost": 20,
-                  "unitId": "Snucv_c"
+                  "unitId": "Snucv_c",
+                  "exactCost": 20.01
                 }
               ],
               "gains": [
@@ -7733,15 +7868,18 @@
               "costs": [
                 {
                   "cost": 20,
-                  "unitId": "D69wnil"
+                  "unitId": "D69wnil",
+                  "exactCost": 21.4
                 },
                 {
                   "cost": 10,
-                  "unitId": "_ImR84h"
+                  "unitId": "_ImR84h",
+                  "exactCost": 11.67
                 },
                 {
                   "cost": 15,
-                  "unitId": "Snucv_c"
+                  "unitId": "Snucv_c",
+                  "exactCost": 15.56
                 }
               ],
               "gains": [
@@ -7772,15 +7910,18 @@
               "costs": [
                 {
                   "cost": 40,
-                  "unitId": "D69wnil"
+                  "unitId": "D69wnil",
+                  "exactCost": 40.76
                 },
                 {
                   "cost": 20,
-                  "unitId": "_ImR84h"
+                  "unitId": "_ImR84h",
+                  "exactCost": 22.23
                 },
                 {
                   "cost": 20,
-                  "unitId": "Snucv_c"
+                  "unitId": "Snucv_c",
+                  "exactCost": 22.23
                 }
               ],
               "gains": [
@@ -7825,7 +7966,7 @@
       "hint": "Ultra Veteran Leader",
       "sections": [
         {
-          "id": "bo7B5pj",
+          "id": "PWPx7tm",
           "uid": "4YtaG",
           "label": "Replace one Heavy Club",
           "options": [
@@ -7835,7 +7976,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "wHYIcWV"
+                  "unitId": "wHYIcWV",
+                  "exactCost": 6.44
                 }
               ],
               "gains": [
@@ -7904,7 +8046,7 @@
           ]
         },
         {
-          "id": "WQte7Yf",
+          "id": "ptjZeoh",
           "uid": "wexfC",
           "label": "Replace Heavy Flamer-Mod",
           "options": [
@@ -7915,7 +8057,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "wHYIcWV"
+                  "unitId": "wHYIcWV",
+                  "exactCost": 5.83
                 }
               ],
               "gains": [
@@ -7944,7 +8087,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "wHYIcWV"
+                  "unitId": "wHYIcWV",
+                  "exactCost": 3.48
                 }
               ],
               "gains": [
@@ -7992,7 +8136,7 @@
           ]
         },
         {
-          "id": "5wEScv1",
+          "id": "fVErNKb",
           "uid": "mPIpO",
           "label": "Replace any Heavy Club",
           "options": [
@@ -8003,7 +8147,8 @@
               "costs": [
                 {
                   "cost": 15,
-                  "unitId": "wHYIcWV"
+                  "unitId": "wHYIcWV",
+                  "exactCost": 13.78
                 }
               ],
               "gains": [
@@ -8043,7 +8188,8 @@
               "costs": [
                 {
                   "cost": 30,
-                  "unitId": "wHYIcWV"
+                  "unitId": "wHYIcWV",
+                  "exactCost": 29.32
                 }
               ],
               "gains": [
@@ -8082,7 +8228,8 @@
               "costs": [
                 {
                   "cost": 45,
-                  "unitId": "wHYIcWV"
+                  "unitId": "wHYIcWV",
+                  "exactCost": 44.88
                 }
               ],
               "gains": [
@@ -8122,7 +8269,7 @@
           ]
         },
         {
-          "id": "iEB9bRK",
+          "id": "XamX-Kf",
           "uid": "cXKO-",
           "label": "Replace 2x Heavy Clubs",
           "options": [
@@ -8133,7 +8280,8 @@
               "costs": [
                 {
                   "cost": 65,
-                  "unitId": "wHYIcWV"
+                  "unitId": "wHYIcWV",
+                  "exactCost": 65.97
                 }
               ],
               "gains": [
@@ -8178,7 +8326,7 @@
           ]
         },
         {
-          "id": "UHTSld8",
+          "id": "KFfMfEI",
           "uid": "0PAAgAV3vG",
           "label": "Upgrade with",
           "options": [
@@ -8188,7 +8336,8 @@
               "costs": [
                 {
                   "cost": 40,
-                  "unitId": "wHYIcWV"
+                  "unitId": "wHYIcWV",
+                  "exactCost": 40.64
                 }
               ],
               "gains": [
@@ -8221,7 +8370,7 @@
           "variant": "upgrade"
         },
         {
-          "id": "zodsSBA",
+          "id": "78jW7x6",
           "uid": "nva-8",
           "label": "Upgrade with one",
           "options": [
@@ -8231,7 +8380,8 @@
               "costs": [
                 {
                   "cost": 15,
-                  "unitId": "wHYIcWV"
+                  "unitId": "wHYIcWV",
+                  "exactCost": 16.67
                 }
               ],
               "gains": [
@@ -8261,7 +8411,8 @@
               "costs": [
                 {
                   "cost": 20,
-                  "unitId": "wHYIcWV"
+                  "unitId": "wHYIcWV",
+                  "exactCost": 19.56
                 }
               ],
               "gains": [
@@ -8302,7 +8453,7 @@
       "hint": "Veteran Specialists",
       "sections": [
         {
-          "id": "m0FKdll",
+          "id": "QDGef-u",
           "uid": "UM1wo",
           "label": "Replace any Heavy Flamer",
           "options": [
@@ -8312,7 +8463,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "iAADbpw"
+                  "unitId": "iAADbpw",
+                  "exactCost": 4.7
                 }
               ],
               "gains": [
@@ -8351,7 +8503,8 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "iAADbpw"
+                  "unitId": "iAADbpw",
+                  "exactCost": 11.55
                 }
               ],
               "gains": [
@@ -8386,45 +8539,13 @@
               "id": "uFPAgXa"
             },
             {
-              "uid": "s9uk1",
-              "type": "ArmyBookUpgradeOption",
-              "costs": [
-                {
-                  "cost": 20,
-                  "unitId": "iAADbpw"
-                }
-              ],
-              "gains": [
-                {
-                  "id": null,
-                  "name": "Heavy Machinegun",
-                  "type": "ArmyBookWeapon",
-                  "count": 1,
-                  "range": 30,
-                  "attacks": 3,
-                  "weaponId": "_OuuPXyd",
-                  "specialRules": [
-                    {
-                      "id": "17crjK7P6_w6",
-                      "name": "AP",
-                      "rating": 1
-                    }
-                  ],
-                  "attacksMultiplier": 1,
-                  "label": "Heavy Machinegun (30\", A3, AP(1))"
-                }
-              ],
-              "label": "Heavy Machinegun (30\", A3, AP(1))",
-              "parentSectionId": "UM1wo",
-              "id": "s9uk1"
-            },
-            {
               "uid": "Zmp9N",
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
                   "cost": 20,
-                  "unitId": "iAADbpw"
+                  "unitId": "iAADbpw",
+                  "exactCost": 22.42
                 }
               ],
               "gains": [
@@ -8458,12 +8579,47 @@
               "id": "Zmp9N"
             },
             {
+              "uid": "s9uk1",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "cost": 25,
+                  "unitId": "iAADbpw",
+                  "exactCost": 23.49
+                }
+              ],
+              "gains": [
+                {
+                  "id": null,
+                  "name": "Heavy Machinegun",
+                  "type": "ArmyBookWeapon",
+                  "count": 1,
+                  "range": 30,
+                  "attacks": 3,
+                  "weaponId": "_OuuPXyd",
+                  "specialRules": [
+                    {
+                      "id": "17crjK7P6_w6",
+                      "name": "AP",
+                      "rating": 1
+                    }
+                  ],
+                  "attacksMultiplier": 1,
+                  "label": "Heavy Machinegun (30\", A3, AP(1))"
+                }
+              ],
+              "label": "Heavy Machinegun (30\", A3, AP(1))",
+              "parentSectionId": "UM1wo",
+              "id": "s9uk1"
+            },
+            {
               "uid": "N7Z-E",
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 40,
-                  "unitId": "iAADbpw"
+                  "cost": 45,
+                  "unitId": "iAADbpw",
+                  "exactCost": 44.98
                 }
               ],
               "gains": [
@@ -8507,7 +8663,7 @@
           ]
         },
         {
-          "id": "i3FBdCR",
+          "id": "3lwixp9",
           "uid": "C1siP",
           "label": "Upgrade any model with",
           "options": [
@@ -8517,7 +8673,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "iAADbpw"
+                  "unitId": "iAADbpw",
+                  "exactCost": 5.32
                 }
               ],
               "gains": [
@@ -8567,7 +8724,7 @@
       "hint": "Jump Pack Orcs",
       "sections": [
         {
-          "id": "rRlpyNj",
+          "id": "f0O2iH3",
           "uid": "n-Qwq",
           "label": "Replace all Pistols",
           "options": [
@@ -8577,7 +8734,8 @@
               "costs": [
                 {
                   "cost": 30,
-                  "unitId": "-2RTGCp"
+                  "unitId": "-2RTGCp",
+                  "exactCost": 28.82
                 }
               ],
               "gains": [
@@ -8618,7 +8776,7 @@
           ]
         },
         {
-          "id": "Ma99yoI",
+          "id": "-vNzXKE",
           "uid": "TPQ-n",
           "label": "Replace one Pistol",
           "options": [
@@ -8629,7 +8787,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "-2RTGCp"
+                  "unitId": "-2RTGCp",
+                  "exactCost": 4.9
                 }
               ],
               "gains": [
@@ -8664,7 +8823,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "-2RTGCp"
+                  "unitId": "-2RTGCp",
+                  "exactCost": 3.68
                 }
               ],
               "gains": [
@@ -8705,7 +8865,8 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "-2RTGCp"
+                  "unitId": "-2RTGCp",
+                  "exactCost": 7.65
                 }
               ],
               "gains": [
@@ -8747,7 +8908,8 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "-2RTGCp"
+                  "unitId": "-2RTGCp",
+                  "exactCost": 8.07
                 }
               ],
               "gains": [
@@ -8798,7 +8960,7 @@
       "hint": "Infiltrators",
       "sections": [
         {
-          "id": "3PnHF47",
+          "id": "DUrbmdi",
           "uid": "C62Sd",
           "label": "Replace all Pistols",
           "options": [
@@ -8809,7 +8971,8 @@
               "costs": [
                 {
                   "cost": 30,
-                  "unitId": "ErJf80m"
+                  "unitId": "ErJf80m",
+                  "exactCost": 28.82
                 }
               ],
               "gains": [
@@ -8844,7 +9007,8 @@
               "costs": [
                 {
                   "cost": 30,
-                  "unitId": "ErJf80m"
+                  "unitId": "ErJf80m",
+                  "exactCost": 28.82
                 }
               ],
               "gains": [
@@ -8878,7 +9042,7 @@
           ]
         },
         {
-          "id": "PLRzfwy",
+          "id": "lTmD4vX",
           "uid": "A7DsI",
           "label": "Replace one Pistol",
           "options": [
@@ -8889,7 +9053,8 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "ErJf80m"
+                  "unitId": "ErJf80m",
+                  "exactCost": 10.25
                 }
               ],
               "gains": [
@@ -8931,7 +9096,8 @@
               "costs": [
                 {
                   "cost": 15,
-                  "unitId": "ErJf80m"
+                  "unitId": "ErJf80m",
+                  "exactCost": 12.68
                 }
               ],
               "gains": [
@@ -8966,7 +9132,8 @@
               "costs": [
                 {
                   "cost": 15,
-                  "unitId": "ErJf80m"
+                  "unitId": "ErJf80m",
+                  "exactCost": 13.62
                 }
               ],
               "gains": [
@@ -9006,7 +9173,8 @@
               "costs": [
                 {
                   "cost": 20,
-                  "unitId": "ErJf80m"
+                  "unitId": "ErJf80m",
+                  "exactCost": 19.03
                 }
               ],
               "gains": [
@@ -9045,7 +9213,8 @@
               "costs": [
                 {
                   "cost": 20,
-                  "unitId": "ErJf80m"
+                  "unitId": "ErJf80m",
+                  "exactCost": 18.19
                 }
               ],
               "gains": [
@@ -9088,7 +9257,8 @@
               "costs": [
                 {
                   "cost": 25,
-                  "unitId": "ErJf80m"
+                  "unitId": "ErJf80m",
+                  "exactCost": 26.3
                 }
               ],
               "gains": [
@@ -9130,7 +9300,7 @@
           ]
         },
         {
-          "id": "CJGSpVZ",
+          "id": "LIO-Kfr",
           "uid": "Pxoy1",
           "label": "Replace up to three Pistols",
           "options": [
@@ -9141,7 +9311,8 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "ErJf80m"
+                  "unitId": "ErJf80m",
+                  "exactCost": 11.71
                 }
               ],
               "gains": [
@@ -9200,7 +9371,7 @@
       "hint": "Truck Upgrades",
       "sections": [
         {
-          "id": "y9GQkZ4",
+          "id": "V-puyTy",
           "uid": "9wRbA",
           "label": "Replace Rapid Killer-Rocket Pod",
           "options": [
@@ -9210,19 +9381,23 @@
               "costs": [
                 {
                   "cost": 15,
-                  "unitId": "knHYEoy"
+                  "unitId": "knHYEoy",
+                  "exactCost": 13.69
                 },
                 {
                   "cost": 15,
-                  "unitId": "J1ZIR6a"
+                  "unitId": "J1ZIR6a",
+                  "exactCost": 13.69
                 },
                 {
                   "cost": 15,
-                  "unitId": "ynxGc1K"
+                  "unitId": "ynxGc1K",
+                  "exactCost": 13.69
                 },
                 {
                   "cost": 15,
-                  "unitId": "8o7Rdwv"
+                  "unitId": "8o7Rdwv",
+                  "exactCost": 13.69
                 }
               ],
               "gains": [
@@ -9262,19 +9437,23 @@
               "costs": [
                 {
                   "cost": 35,
-                  "unitId": "knHYEoy"
+                  "unitId": "knHYEoy",
+                  "exactCost": 36.84
                 },
                 {
                   "cost": 35,
-                  "unitId": "J1ZIR6a"
+                  "unitId": "J1ZIR6a",
+                  "exactCost": 36.84
                 },
                 {
                   "cost": 35,
-                  "unitId": "ynxGc1K"
+                  "unitId": "ynxGc1K",
+                  "exactCost": 36.84
                 },
                 {
                   "cost": 35,
-                  "unitId": "8o7Rdwv"
+                  "unitId": "8o7Rdwv",
+                  "exactCost": 36.84
                 }
               ],
               "gains": [
@@ -9310,7 +9489,7 @@
           ]
         },
         {
-          "id": "FH1acxY",
+          "id": "4i382F0",
           "uid": "GX_8q",
           "label": "Upgrade with any",
           "options": [
@@ -9320,19 +9499,23 @@
               "costs": [
                 {
                   "cost": 20,
-                  "unitId": "knHYEoy"
+                  "unitId": "knHYEoy",
+                  "exactCost": 19.45
                 },
                 {
                   "cost": 20,
-                  "unitId": "J1ZIR6a"
+                  "unitId": "J1ZIR6a",
+                  "exactCost": 19.45
                 },
                 {
                   "cost": 20,
-                  "unitId": "ynxGc1K"
+                  "unitId": "ynxGc1K",
+                  "exactCost": 19.45
                 },
                 {
                   "cost": 20,
-                  "unitId": "8o7Rdwv"
+                  "unitId": "8o7Rdwv",
+                  "exactCost": 19.45
                 }
               ],
               "gains": [
@@ -9363,19 +9546,23 @@
               "costs": [
                 {
                   "cost": 30,
-                  "unitId": "knHYEoy"
+                  "unitId": "knHYEoy",
+                  "exactCost": 27.79
                 },
                 {
                   "cost": 30,
-                  "unitId": "J1ZIR6a"
+                  "unitId": "J1ZIR6a",
+                  "exactCost": 27.79
                 },
                 {
                   "cost": 30,
-                  "unitId": "ynxGc1K"
+                  "unitId": "ynxGc1K",
+                  "exactCost": 27.79
                 },
                 {
                   "cost": 30,
-                  "unitId": "8o7Rdwv"
+                  "unitId": "8o7Rdwv",
+                  "exactCost": 27.79
                 }
               ],
               "gains": [
@@ -9416,7 +9603,7 @@
       "hint": "Melee Walker",
       "sections": [
         {
-          "id": "_ZngvVG",
+          "id": "r-MrTLB",
           "uid": "FY0Tz",
           "label": "Replace any Walker Saw",
           "options": [
@@ -9426,7 +9613,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "A-hnMeC"
+                  "unitId": "A-hnMeC",
+                  "exactCost": 4.32
                 }
               ],
               "gains": [
@@ -9467,7 +9655,7 @@
           ]
         },
         {
-          "id": "SXJgS8p",
+          "id": "VyfpkZv",
           "uid": "wM7JQ",
           "label": "Upgrade with one",
           "options": [
@@ -9477,7 +9665,8 @@
               "costs": [
                 {
                   "cost": 15,
-                  "unitId": "A-hnMeC"
+                  "unitId": "A-hnMeC",
+                  "exactCost": 15.35
                 }
               ],
               "gains": [
@@ -9520,7 +9709,8 @@
               "costs": [
                 {
                   "cost": 20,
-                  "unitId": "A-hnMeC"
+                  "unitId": "A-hnMeC",
+                  "exactCost": 18.34
                 }
               ],
               "gains": [
@@ -9566,7 +9756,8 @@
               "costs": [
                 {
                   "cost": 20,
-                  "unitId": "A-hnMeC"
+                  "unitId": "A-hnMeC",
+                  "exactCost": 19.87
                 }
               ],
               "gains": [
@@ -9608,7 +9799,8 @@
               "costs": [
                 {
                   "cost": 30,
-                  "unitId": "A-hnMeC"
+                  "unitId": "A-hnMeC",
+                  "exactCost": 27.51
                 }
               ],
               "gains": [
@@ -9645,7 +9837,8 @@
               "costs": [
                 {
                   "cost": 40,
-                  "unitId": "A-hnMeC"
+                  "unitId": "A-hnMeC",
+                  "exactCost": 41.26
                 }
               ],
               "gains": [
@@ -9698,7 +9891,7 @@
       "hint": "Berserkers",
       "sections": [
         {
-          "id": "tqCevNi",
+          "id": "ifhTWqF",
           "uid": "NUtti",
           "label": "Replace all Berserker Claws",
           "options": [
@@ -9708,7 +9901,8 @@
               "costs": [
                 {
                   "cost": 0,
-                  "unitId": "_ImR84h"
+                  "unitId": "_ImR84h",
+                  "exactCost": -1.23
                 }
               ],
               "gains": [
@@ -9755,7 +9949,8 @@
               "costs": [
                 {
                   "cost": 0,
-                  "unitId": "_ImR84h"
+                  "unitId": "_ImR84h",
+                  "exactCost": -1.44
                 }
               ],
               "gains": [
@@ -9795,7 +9990,7 @@
       "hint": "Combat Beast",
       "sections": [
         {
-          "id": "xRbC14U",
+          "id": "6RXUC4v",
           "uid": "81bah",
           "label": "Replace any Heavy Mortar",
           "options": [
@@ -9804,8 +9999,9 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 5,
-                  "unitId": "HK_B-Wg"
+                  "cost": 10,
+                  "unitId": "HK_B-Wg",
+                  "exactCost": 7.98
                 }
               ],
               "gains": [
@@ -9849,7 +10045,7 @@
           ]
         },
         {
-          "id": "IMloHxR",
+          "id": "xeFuPJi",
           "uid": "DCTCJ",
           "label": "Replace Extra Space",
           "options": [
@@ -9859,7 +10055,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "HK_B-Wg"
+                  "unitId": "HK_B-Wg",
+                  "exactCost": 0.66
                 }
               ],
               "gains": [
@@ -9891,7 +10088,8 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "HK_B-Wg"
+                  "unitId": "HK_B-Wg",
+                  "exactCost": 10.86
                 }
               ],
               "gains": [
@@ -9930,7 +10128,8 @@
               "costs": [
                 {
                   "cost": 25,
-                  "unitId": "HK_B-Wg"
+                  "unitId": "HK_B-Wg",
+                  "exactCost": 24.55
                 }
               ],
               "gains": [
@@ -9972,7 +10171,8 @@
               "costs": [
                 {
                   "cost": 50,
-                  "unitId": "HK_B-Wg"
+                  "unitId": "HK_B-Wg",
+                  "exactCost": 47.7
                 }
               ],
               "gains": [
@@ -10017,7 +10217,7 @@
       "hint": "Berserker Beast Riders",
       "sections": [
         {
-          "id": "Zqw_QxD",
+          "id": "a8YO3OH",
           "uid": "KnFEL",
           "label": "Replace all Berserker Claws",
           "options": [
@@ -10027,7 +10227,8 @@
               "costs": [
                 {
                   "cost": 0,
-                  "unitId": "DCcm6OJ"
+                  "unitId": "DCcm6OJ",
+                  "exactCost": -0.86
                 }
               ],
               "gains": [
@@ -10055,8 +10256,9 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 20,
-                  "unitId": "DCcm6OJ"
+                  "cost": 5,
+                  "unitId": "DCcm6OJ",
+                  "exactCost": 1.42
                 }
               ],
               "gains": [
@@ -10116,91 +10318,18 @@
       "hint": "Berserker Leader",
       "sections": [
         {
-          "id": "-wKW6Mh",
+          "id": "0EUxdif",
           "uid": "G5hYd",
           "label": "Replace Great Saw",
           "options": [
-            {
-              "uid": "S1-nKpSgor",
-              "type": "ArmyBookUpgradeOption",
-              "costs": [
-                {
-                  "cost": 5,
-                  "unitId": "kvO1_5u"
-                }
-              ],
-              "gains": [
-                {
-                  "id": null,
-                  "name": "Dual Hand Weapons",
-                  "type": "ArmyBookWeapon",
-                  "count": 1,
-                  "range": 0,
-                  "attacks": 4,
-                  "weaponId": "aSajfXrE",
-                  "specialRules": [],
-                  "attacksMultiplier": 1,
-                  "label": "Dual Hand Weapons (A4)"
-                }
-              ],
-              "label": "Dual Hand Weapons (A4)",
-              "parentSectionId": "G5hYd",
-              "id": "S1-nKpSgor"
-            },
-            {
-              "uid": "_D4aF",
-              "type": "ArmyBookUpgradeOption",
-              "costs": [
-                {
-                  "cost": 5,
-                  "unitId": "kvO1_5u"
-                }
-              ],
-              "gains": [
-                {
-                  "id": null,
-                  "name": "Spear",
-                  "type": "ArmyBookWeapon",
-                  "count": 1,
-                  "range": 0,
-                  "attacks": 2,
-                  "weaponId": "ZLBl4ver",
-                  "specialRules": [
-                    {
-                      "id": "c45Fw0D2oGOk",
-                      "name": "Counter",
-                      "type": "ArmyBookRule"
-                    }
-                  ],
-                  "attacksMultiplier": 1,
-                  "label": "Spear (A2, Counter)"
-                },
-                {
-                  "name": "Combat Shield",
-                  "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Combat Shield (Shielded)",
-                  "content": [
-                    {
-                      "id": "wsqfB0fq69eG",
-                      "name": "Shielded",
-                      "type": "ArmyBookRule"
-                    }
-                  ],
-                  "count": 1
-                }
-              ],
-              "label": "Spear (A2, Counter), Combat Shield (Shielded)",
-              "parentSectionId": "G5hYd",
-              "id": "_D4aF"
-            },
             {
               "uid": "cK10tBCuwA",
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 10,
-                  "unitId": "kvO1_5u"
+                  "cost": -5,
+                  "unitId": "kvO1_5u",
+                  "exactCost": -2.81
                 }
               ],
               "gains": [
@@ -10242,12 +10371,89 @@
               "id": "cK10tBCuwA"
             },
             {
+              "uid": "S1-nKpSgor",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "cost": 5,
+                  "unitId": "kvO1_5u",
+                  "exactCost": 0.1
+                }
+              ],
+              "gains": [
+                {
+                  "id": null,
+                  "name": "Dual Hand Weapons",
+                  "type": "ArmyBookWeapon",
+                  "count": 1,
+                  "range": 0,
+                  "attacks": 4,
+                  "weaponId": "aSajfXrE",
+                  "specialRules": [],
+                  "attacksMultiplier": 1,
+                  "label": "Dual Hand Weapons (A4)"
+                }
+              ],
+              "label": "Dual Hand Weapons (A4)",
+              "parentSectionId": "G5hYd",
+              "id": "S1-nKpSgor"
+            },
+            {
+              "uid": "_D4aF",
+              "type": "ArmyBookUpgradeOption",
+              "costs": [
+                {
+                  "cost": 5,
+                  "unitId": "kvO1_5u",
+                  "exactCost": 0.42
+                }
+              ],
+              "gains": [
+                {
+                  "id": null,
+                  "name": "Spear",
+                  "type": "ArmyBookWeapon",
+                  "count": 1,
+                  "range": 0,
+                  "attacks": 2,
+                  "weaponId": "ZLBl4ver",
+                  "specialRules": [
+                    {
+                      "id": "c45Fw0D2oGOk",
+                      "name": "Counter",
+                      "type": "ArmyBookRule"
+                    }
+                  ],
+                  "attacksMultiplier": 1,
+                  "label": "Spear (A2, Counter)"
+                },
+                {
+                  "name": "Combat Shield",
+                  "type": "ArmyBookItem",
+                  "bases": null,
+                  "label": "Combat Shield (Shielded)",
+                  "content": [
+                    {
+                      "id": "wsqfB0fq69eG",
+                      "name": "Shielded",
+                      "type": "ArmyBookRule"
+                    }
+                  ],
+                  "count": 1
+                }
+              ],
+              "label": "Spear (A2, Counter), Combat Shield (Shielded)",
+              "parentSectionId": "G5hYd",
+              "id": "_D4aF"
+            },
+            {
               "uid": "gLKFXNLygE",
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
                   "cost": 15,
-                  "unitId": "kvO1_5u"
+                  "unitId": "kvO1_5u",
+                  "exactCost": 12.91
                 }
               ],
               "gains": [
@@ -10283,7 +10489,7 @@
           ]
         },
         {
-          "id": "N7Q3z-4",
+          "id": "GBFreCu",
           "uid": "GKnmw",
           "label": "Upgrade with one",
           "options": [
@@ -10293,7 +10499,8 @@
               "costs": [
                 {
                   "cost": 65,
-                  "unitId": "kvO1_5u"
+                  "unitId": "kvO1_5u",
+                  "exactCost": 64.58
                 }
               ],
               "gains": [
@@ -10348,7 +10555,8 @@
               "costs": [
                 {
                   "cost": 115,
-                  "unitId": "kvO1_5u"
+                  "unitId": "kvO1_5u",
+                  "exactCost": 115.25
                 }
               ],
               "gains": [
@@ -10431,14 +10639,14 @@
           }
         }
       ],
-      "calcErrors": false
+      "calcErrors": true
     },
     {
       "uid": "ovl6M",
       "hint": "Veteran Leader Weapons",
       "sections": [
         {
-          "id": "Lw6WEjq",
+          "id": "dEv7-d9",
           "uid": "XcMI8",
           "label": "Replace Leader Pistol",
           "options": [
@@ -10448,7 +10656,8 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "RdSmE77"
+                  "unitId": "RdSmE77",
+                  "exactCost": 10.03
                 }
               ],
               "gains": [
@@ -10483,7 +10692,8 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "RdSmE77"
+                  "unitId": "RdSmE77",
+                  "exactCost": 10.22
                 }
               ],
               "gains": [
@@ -10547,7 +10757,8 @@
               "costs": [
                 {
                   "cost": 15,
-                  "unitId": "RdSmE77"
+                  "unitId": "RdSmE77",
+                  "exactCost": 13.7
                 }
               ],
               "gains": [
@@ -10604,7 +10815,8 @@
               "costs": [
                 {
                   "cost": 15,
-                  "unitId": "RdSmE77"
+                  "unitId": "RdSmE77",
+                  "exactCost": 16.06
                 }
               ],
               "gains": [
@@ -10648,7 +10860,7 @@
           ]
         },
         {
-          "id": "ysfgtmy",
+          "id": "TIms8Up",
           "uid": "EfFwD",
           "label": "Replace CCW",
           "options": [
@@ -10659,7 +10871,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "RdSmE77"
+                  "unitId": "RdSmE77",
+                  "exactCost": 1.31
                 }
               ],
               "gains": [
@@ -10694,7 +10907,8 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "RdSmE77"
+                  "unitId": "RdSmE77",
+                  "exactCost": 10.07
                 }
               ],
               "gains": [
@@ -10733,7 +10947,8 @@
               "costs": [
                 {
                   "cost": 15,
-                  "unitId": "RdSmE77"
+                  "unitId": "RdSmE77",
+                  "exactCost": 15.09
                 }
               ],
               "gains": [
@@ -10773,7 +10988,8 @@
               "costs": [
                 {
                   "cost": 20,
-                  "unitId": "RdSmE77"
+                  "unitId": "RdSmE77",
+                  "exactCost": 17.85
                 }
               ],
               "gains": [
@@ -10817,7 +11033,7 @@
       "hint": "Squad Upgrades - Ultra Veterans",
       "sections": [
         {
-          "id": "nNoioke",
+          "id": "ePYycBR",
           "uid": "TI6Ag",
           "label": "Upgrade one model with one",
           "options": [
@@ -10827,7 +11043,8 @@
               "costs": [
                 {
                   "cost": 20,
-                  "unitId": "f2gOlPs"
+                  "unitId": "f2gOlPs",
+                  "exactCost": 20.01
                 }
               ],
               "gains": [
@@ -10859,7 +11076,8 @@
               "costs": [
                 {
                   "cost": 30,
-                  "unitId": "f2gOlPs"
+                  "unitId": "f2gOlPs",
+                  "exactCost": 31.12
                 }
               ],
               "gains": [
@@ -10906,7 +11124,7 @@
       "hint": "Beast Titan",
       "sections": [
         {
-          "id": "z51mXOG",
+          "id": "8cSCxN3",
           "uid": "W1-WICeZwy",
           "label": "Replace Basic Cannon and Heavy Machinegun",
           "options": [
@@ -10916,7 +11134,8 @@
               "costs": [
                 {
                   "cost": 65,
-                  "unitId": "8o7Rdwv"
+                  "unitId": "8o7Rdwv",
+                  "exactCost": 65.09
                 }
               ],
               "gains": [
@@ -10962,7 +11181,7 @@
           ]
         },
         {
-          "id": "JuqT_rB",
+          "id": "hwjSI7u",
           "uid": "KbEt6h0W",
           "label": "Replace any Heavy Mortar",
           "options": [
@@ -10971,8 +11190,9 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 5,
-                  "unitId": "8o7Rdwv"
+                  "cost": 10,
+                  "unitId": "8o7Rdwv",
+                  "exactCost": 7.98
                 }
               ],
               "gains": [
@@ -11016,7 +11236,7 @@
           ]
         },
         {
-          "id": "0t6ORsb",
+          "id": "dEjszzT",
           "uid": "xaeQHNw_",
           "label": "Replace Extra Space",
           "options": [
@@ -11026,7 +11246,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "8o7Rdwv"
+                  "unitId": "8o7Rdwv",
+                  "exactCost": 0.66
                 }
               ],
               "gains": [
@@ -11058,7 +11279,8 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "8o7Rdwv"
+                  "unitId": "8o7Rdwv",
+                  "exactCost": 10.86
                 }
               ],
               "gains": [
@@ -11097,7 +11319,8 @@
               "costs": [
                 {
                   "cost": 25,
-                  "unitId": "8o7Rdwv"
+                  "unitId": "8o7Rdwv",
+                  "exactCost": 24.55
                 }
               ],
               "gains": [
@@ -11139,7 +11362,8 @@
               "costs": [
                 {
                   "cost": 50,
-                  "unitId": "8o7Rdwv"
+                  "unitId": "8o7Rdwv",
+                  "exactCost": 47.7
                 }
               ],
               "gains": [
@@ -11184,7 +11408,7 @@
       "hint": "Specialists - Berserker",
       "sections": [
         {
-          "id": "EnQBwtm",
+          "id": "NhFqWzp",
           "uid": "p-1Al-aW",
           "label": "Upgrade with one",
           "options": [
@@ -11194,7 +11418,8 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "kvO1_5u"
+                  "unitId": "kvO1_5u",
+                  "exactCost": 8.75
                 }
               ],
               "gains": [
@@ -11224,7 +11449,8 @@
               "costs": [
                 {
                   "cost": 15,
-                  "unitId": "kvO1_5u"
+                  "unitId": "kvO1_5u",
+                  "exactCost": 13.89
                 }
               ],
               "gains": [
@@ -11254,7 +11480,8 @@
               "costs": [
                 {
                   "cost": 35,
-                  "unitId": "kvO1_5u"
+                  "unitId": "kvO1_5u",
+                  "exactCost": 33.35
                 }
               ],
               "gains": [
@@ -11284,7 +11511,8 @@
               "costs": [
                 {
                   "cost": 35,
-                  "unitId": "kvO1_5u"
+                  "unitId": "kvO1_5u",
+                  "exactCost": 33.34
                 }
               ],
               "gains": [
@@ -11315,7 +11543,8 @@
               "costs": [
                 {
                   "cost": 35,
-                  "unitId": "kvO1_5u"
+                  "unitId": "kvO1_5u",
+                  "exactCost": 36.32
                 }
               ],
               "gains": [
@@ -11346,7 +11575,8 @@
               "costs": [
                 {
                   "cost": 55,
-                  "unitId": "kvO1_5u"
+                  "unitId": "kvO1_5u",
+                  "exactCost": 56.5
                 }
               ],
               "gains": [
@@ -11389,7 +11619,7 @@
       "hint": "Specialists - Ultra Veteran",
       "sections": [
         {
-          "id": "DPgz-xb",
+          "id": "Kp0njNW",
           "uid": "1jvGyJRh",
           "label": "Upgrade with one",
           "options": [
@@ -11399,7 +11629,8 @@
               "costs": [
                 {
                   "cost": 15,
-                  "unitId": "wHYIcWV"
+                  "unitId": "wHYIcWV",
+                  "exactCost": 13.89
                 }
               ],
               "gains": [
@@ -11429,7 +11660,8 @@
               "costs": [
                 {
                   "cost": 35,
-                  "unitId": "wHYIcWV"
+                  "unitId": "wHYIcWV",
+                  "exactCost": 33.35
                 }
               ],
               "gains": [
@@ -11459,7 +11691,8 @@
               "costs": [
                 {
                   "cost": 35,
-                  "unitId": "wHYIcWV"
+                  "unitId": "wHYIcWV",
+                  "exactCost": 33.34
                 }
               ],
               "gains": [
@@ -11491,7 +11724,8 @@
               "costs": [
                 {
                   "cost": 40,
-                  "unitId": "wHYIcWV"
+                  "unitId": "wHYIcWV",
+                  "exactCost": 40.01
                 }
               ],
               "gains": [
@@ -11521,7 +11755,8 @@
               "costs": [
                 {
                   "cost": 40,
-                  "unitId": "wHYIcWV"
+                  "unitId": "wHYIcWV",
+                  "exactCost": 41.68
                 }
               ],
               "gains": [
@@ -11563,7 +11798,7 @@
       "hint": "Specialists - Veteran",
       "sections": [
         {
-          "id": "-vetyKA",
+          "id": "IStcFFY",
           "uid": "F6QM6eQX",
           "label": "Upgrade with one",
           "options": [
@@ -11573,7 +11808,8 @@
               "costs": [
                 {
                   "cost": 10,
-                  "unitId": "RdSmE77"
+                  "unitId": "RdSmE77",
+                  "exactCost": 8.75
                 }
               ],
               "gains": [
@@ -11603,7 +11839,8 @@
               "costs": [
                 {
                   "cost": 15,
-                  "unitId": "RdSmE77"
+                  "unitId": "RdSmE77",
+                  "exactCost": 13.89
                 }
               ],
               "gains": [
@@ -11633,7 +11870,8 @@
               "costs": [
                 {
                   "cost": 35,
-                  "unitId": "RdSmE77"
+                  "unitId": "RdSmE77",
+                  "exactCost": 33.35
                 }
               ],
               "gains": [
@@ -11663,7 +11901,8 @@
               "costs": [
                 {
                   "cost": 35,
-                  "unitId": "RdSmE77"
+                  "unitId": "RdSmE77",
+                  "exactCost": 36.32
                 }
               ],
               "gains": [
@@ -11695,7 +11934,8 @@
               "costs": [
                 {
                   "cost": 40,
-                  "unitId": "RdSmE77"
+                  "unitId": "RdSmE77",
+                  "exactCost": 40.01
                 }
               ],
               "gains": [
@@ -11725,7 +11965,8 @@
               "costs": [
                 {
                   "cost": 40,
-                  "unitId": "RdSmE77"
+                  "unitId": "RdSmE77",
+                  "exactCost": 41.68
                 }
               ],
               "gains": [
@@ -11767,7 +12008,7 @@
       "hint": "Blood Mark",
       "sections": [
         {
-          "id": "S54IeOF",
+          "id": "z5FNyGB",
           "uid": "xh-zBO7N",
           "label": "Upgrade with",
           "options": [
@@ -11777,19 +12018,23 @@
               "costs": [
                 {
                   "cost": 95,
-                  "unitId": "_UvgGmx"
+                  "unitId": "_UvgGmx",
+                  "exactCost": 92.92
                 },
                 {
                   "cost": 95,
-                  "unitId": "WgVWJ9Z"
+                  "unitId": "WgVWJ9Z",
+                  "exactCost": 92.92
                 },
                 {
                   "cost": 95,
-                  "unitId": "A-hnMeC"
+                  "unitId": "A-hnMeC",
+                  "exactCost": 92.92
                 },
                 {
                   "cost": 95,
-                  "unitId": "gXmHgHH"
+                  "unitId": "gXmHgHH",
+                  "exactCost": 92.92
                 }
               ],
               "gains": [
@@ -11827,7 +12072,7 @@
       "hint": "Super-Heavy Battle Truck",
       "sections": [
         {
-          "id": "znXUnOi",
+          "id": "6Dh38oM",
           "uid": "oUABsL61",
           "label": "Replace Heavy Killer-Rocket Pod",
           "options": [
@@ -11837,7 +12082,8 @@
               "costs": [
                 {
                   "cost": 20,
-                  "unitId": "yU8lCf0"
+                  "unitId": "yU8lCf0",
+                  "exactCost": 21
                 }
               ],
               "gains": [
@@ -11875,8 +12121,9 @@
               "type": "ArmyBookUpgradeOption",
               "costs": [
                 {
-                  "cost": 40,
-                  "unitId": "yU8lCf0"
+                  "cost": 30,
+                  "unitId": "yU8lCf0",
+                  "exactCost": 31.34
                 }
               ],
               "gains": [
@@ -11920,7 +12167,7 @@
           ]
         },
         {
-          "id": "5nUtOiY",
+          "id": "gU8G3qB",
           "uid": "HgNSjFNJ",
           "label": "Replace any Killer-Rocket Pod",
           "options": [
@@ -11930,7 +12177,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "yU8lCf0"
+                  "unitId": "yU8lCf0",
+                  "exactCost": 6.84
                 }
               ],
               "gains": [
@@ -11971,7 +12219,8 @@
               "costs": [
                 {
                   "cost": 20,
-                  "unitId": "yU8lCf0"
+                  "unitId": "yU8lCf0",
+                  "exactCost": 18.42
                 }
               ],
               "gains": [
@@ -12011,7 +12260,7 @@
           ]
         },
         {
-          "id": "te29_Op",
+          "id": "OfzZFxu",
           "uid": "YU09G92psi",
           "label": "Replace Extra Space",
           "options": [
@@ -12021,7 +12270,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "yU8lCf0"
+                  "unitId": "yU8lCf0",
+                  "exactCost": 4.63
                 }
               ],
               "gains": [
@@ -12051,7 +12301,8 @@
               "costs": [
                 {
                   "cost": 5,
-                  "unitId": "yU8lCf0"
+                  "unitId": "yU8lCf0",
+                  "exactCost": 2.67
                 }
               ],
               "gains": [
@@ -12096,7 +12347,7 @@
           ]
         },
         {
-          "id": "lpd18Kq",
+          "id": "j1MpiLm",
           "uid": "dkUtbWxk",
           "label": "Upgrade with any",
           "options": [
@@ -12106,7 +12357,8 @@
               "costs": [
                 {
                   "cost": 20,
-                  "unitId": "yU8lCf0"
+                  "unitId": "yU8lCf0",
+                  "exactCost": 19.45
                 }
               ],
               "gains": [
@@ -12138,7 +12390,8 @@
               "costs": [
                 {
                   "cost": 30,
-                  "unitId": "yU8lCf0"
+                  "unitId": "yU8lCf0",
+                  "exactCost": 31.12
                 }
               ],
               "gains": [
@@ -12168,7 +12421,8 @@
               "costs": [
                 {
                   "cost": 30,
-                  "unitId": "yU8lCf0"
+                  "unitId": "yU8lCf0",
+                  "exactCost": 27.79
                 }
               ],
               "gains": [
@@ -12200,7 +12454,8 @@
               "costs": [
                 {
                   "cost": 45,
-                  "unitId": "yU8lCf0"
+                  "unitId": "yU8lCf0",
+                  "exactCost": 44.46
                 }
               ],
               "gains": [
@@ -12816,7 +13071,7 @@
       "effectSkirmish": ""
     }
   ],
-  "modifiedAt": "2026-06-04T15:09:32.886Z",
+  "modifiedAt": "2026-07-05T01:10:15.159Z",
   "editedAt": "2026-06-04T15:09:32.885Z",
   "official": true,
   "versionString": "3.5.3",
