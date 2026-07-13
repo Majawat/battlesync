@@ -1922,7 +1922,7 @@
       "hint": "Frog-Mage",
       "sections": [
         {
-          "id": "HNuqK7A",
+          "id": "h65qLW2",
           "uid": "_U_7YRt",
           "label": "Replace Magic Shock",
           "options": [
@@ -2010,7 +2010,7 @@
           ]
         },
         {
-          "id": "iJEpdiL",
+          "id": "evcqFBm",
           "uid": "dit7eUq",
           "label": "Upgrade with one",
           "options": [
@@ -2109,25 +2109,34 @@
                 {
                   "name": "Queztalcoatl",
                   "type": "ArmyBookItem",
-                  "label": "Queztalcoatl (Mystic Strike (A12, AP(1)), Stomp (A6, AP(2)), Fear(3), Flying, Tough(18))",
+                  "bases": {
+                    "round": "160x122",
+                    "square": "175x125"
+                  },
                   "content": [
                     {
-                      "id": "a0YtInGiUDd6",
-                      "name": "Tough",
-                      "type": "ArmyBookRule",
-                      "modify": true,
-                      "rating": 18
-                    },
-                    {
-                      "id": "dIQ3SGl2J2Ew",
-                      "name": "Fear",
-                      "type": "ArmyBookRule",
-                      "rating": 3
+                      "id": "jrTlV7-R",
+                      "name": "Mystic Strike",
+                      "type": "ArmyBookWeapon",
+                      "count": 1,
+                      "range": 0,
+                      "attacks": 12,
+                      "weaponId": "jrTlV7-R",
+                      "specialRules": [
+                        {
+                          "id": "17crjK7P6_w6",
+                          "name": "AP",
+                          "type": "ArmyBookRule",
+                          "rating": 1
+                        }
+                      ],
+                      "attacksMultiplier": 1
                     },
                     {
                       "id": "ceh6vdpG",
                       "name": "Stomp",
                       "type": "ArmyBookWeapon",
+                      "count": 1,
                       "range": 0,
                       "attacks": 6,
                       "weaponId": "BvXlHjOH",
@@ -2142,27 +2151,24 @@
                       "attacksMultiplier": 1
                     },
                     {
+                      "id": "dIQ3SGl2J2Ew",
+                      "name": "Fear",
+                      "type": "ArmyBookRule",
+                      "rating": 3
+                    },
+                    {
                       "id": "-QJdqJEKjIpE",
                       "name": "Flying",
                       "type": "ArmyBookRule"
                     },
                     {
-                      "id": "jrTlV7-R",
-                      "name": "Mystic Strike",
-                      "type": "ArmyBookWeapon",
-                      "range": 0,
-                      "attacks": 12,
-                      "weaponId": "jrTlV7-R",
-                      "specialRules": [
-                        {
-                          "id": "17crjK7P6_w6",
-                          "name": "AP",
-                          "rating": 1
-                        }
-                      ],
-                      "attacksMultiplier": 1
+                      "id": "a0YtInGiUDd6",
+                      "name": "Tough",
+                      "type": "ArmyBookRule",
+                      "rating": 18
                     }
                   ],
+                  "label": "Queztalcoatl (Mystic Strike (A12, AP(1)), Stomp (A6, AP(2)), Fear(3), Flying, Tough(18))",
                   "count": 1
                 }
               ],
@@ -2189,7 +2195,7 @@
       "hint": "Saurian Veteran",
       "sections": [
         {
-          "id": "Y-4DJVe",
+          "id": "BTYFOJP",
           "uid": "lv6Kwp8",
           "label": "Replace Heavy Hand Weapon",
           "options": [
@@ -2439,7 +2445,7 @@
           ]
         },
         {
-          "id": "18B024_",
+          "id": "765sOwN",
           "uid": "7GEC5vh",
           "label": "Upgrade with one",
           "options": [
@@ -2617,7 +2623,7 @@
       "hint": "Gecko Champion",
       "sections": [
         {
-          "id": "dDScY3U",
+          "id": "bc4JNOn",
           "uid": "VWPdSuF",
           "label": "Replace Hand Weapon",
           "options": [
@@ -2706,7 +2712,7 @@
           ]
         },
         {
-          "id": "8cyPnK0",
+          "id": "QsB64EF",
           "uid": "AVfL2fu",
           "label": "Upgrade with one",
           "options": [
@@ -2825,7 +2831,7 @@
           }
         },
         {
-          "id": "T6YIpPe",
+          "id": "LpfZmEZ",
           "uid": "EoDtGGR",
           "label": "Upgrade with one",
           "options": [
@@ -3153,7 +3159,7 @@
       "hint": "Command Group",
       "sections": [
         {
-          "id": "juini8p",
+          "id": "DJy9703",
           "uid": "K7vBaqU",
           "label": "Upgrade up to three models with one",
           "options": [
@@ -3347,7 +3353,7 @@
       "hint": "Geckos",
       "sections": [
         {
-          "id": "Bowfyz8",
+          "id": "-Yli85s",
           "uid": "7Z5xr5z",
           "label": "Upgrade all models with one",
           "options": [
@@ -3449,7 +3455,7 @@
       "hint": "Saurian Warriors",
       "sections": [
         {
-          "id": "90bC2Cj",
+          "id": "WNjDgSS",
           "uid": "EDPDKgz",
           "label": "Replace all Hand Weapons",
           "options": [
@@ -3545,7 +3551,7 @@
       "hint": "Guardians",
       "sections": [
         {
-          "id": "bEghF0u",
+          "id": "5RWMjt7",
           "uid": "yHF96RD",
           "label": "Replace all Obsidian Great Weapons",
           "options": [
@@ -3645,7 +3651,7 @@
       "hint": "Raptor Riders",
       "sections": [
         {
-          "id": "YPHhaGl",
+          "id": "KT008C6",
           "uid": "N59dlLC",
           "label": "Replace all Hand Weapons",
           "options": [
@@ -3705,7 +3711,7 @@
       "hint": "Support Lizards",
       "sections": [
         {
-          "id": "Y3RmkzY",
+          "id": "jSoifFY",
           "uid": "mtHahnH",
           "label": "Upgrade with one",
           "options": [
@@ -3796,7 +3802,7 @@
       "hint": "Spinosaurus",
       "sections": [
         {
-          "id": "EYIegWl",
+          "id": "UYCRdtW",
           "uid": "mT3auOn",
           "label": "Upgrade with any",
           "options": [
@@ -3879,7 +3885,7 @@
       "hint": "Triceratops",
       "sections": [
         {
-          "id": "pkMbJyK",
+          "id": "VUSPvSF",
           "uid": "x6CcGlr",
           "label": "Replace Javelin Crew",
           "options": [
@@ -4023,7 +4029,7 @@
           ]
         },
         {
-          "id": "HFjugdz",
+          "id": "VLNldKQ",
           "uid": "noZNOO-",
           "label": "Upgrade with",
           "options": [
@@ -4073,7 +4079,7 @@
       "hint": "Ankylosaurus",
       "sections": [
         {
-          "id": "h-5RBOl",
+          "id": "G3BpvJV",
           "uid": "Vc6puBG",
           "label": "Replace Javelin Crew",
           "options": [
@@ -4159,7 +4165,7 @@
           ]
         },
         {
-          "id": "PWXrSIC",
+          "id": "6YgRorl",
           "uid": "uYoAw",
           "label": "Replace Obsidian Tail",
           "options": [
@@ -4216,7 +4222,7 @@
       "hint": "Dread Titan",
       "sections": [
         {
-          "id": "oc2RCPx",
+          "id": "1QQR4I5",
           "uid": "BFacM1J",
           "label": "Replace Dread Gator",
           "options": [
@@ -4391,7 +4397,7 @@
       "hint": "Deinonychus Riders",
       "sections": [
         {
-          "id": "-uky2M3",
+          "id": "q-Gm3hj",
           "uid": "qAsgu",
           "label": "Replace all Lances",
           "options": [
@@ -4472,7 +4478,7 @@
       "hint": "Sacred Destiny",
       "sections": [
         {
-          "id": "HwRhjKl",
+          "id": "zP_xfsh",
           "uid": "FvbTYLN3pa",
           "label": "Upgrade all models with",
           "options": [
@@ -4539,7 +4545,7 @@
       "hint": "Pterodactyl Riders",
       "sections": [
         {
-          "id": "ZdZyImb",
+          "id": "JaU8vT4",
           "uid": "KmIUmugY",
           "label": "Upgrade all models with one",
           "options": [
@@ -4629,7 +4635,7 @@
           }
         },
         {
-          "id": "7A9J6zI",
+          "id": "znSmnP3",
           "uid": "i4L-3B8B",
           "label": "Upgrade all models with",
           "options": [
@@ -4701,7 +4707,7 @@
       "hint": "Ripjawdactyl Riders",
       "sections": [
         {
-          "id": "we47VMT",
+          "id": "evFTFep",
           "uid": "0iK8c8GQ",
           "label": "Upgrade all models with one",
           "options": [
@@ -4791,7 +4797,7 @@
           }
         },
         {
-          "id": "fWwlE69",
+          "id": "iGSU9IM",
           "uid": "LzOzBx71",
           "label": "Upgrade one model with",
           "options": [
@@ -4845,7 +4851,7 @@
       "hint": "Gator Veteran",
       "sections": [
         {
-          "id": "EshRIFf",
+          "id": "GHTbOss",
           "uid": "C3LBM6Dgs4",
           "label": "Replace Obsidian Great Weapon",
           "options": [
@@ -4893,7 +4899,7 @@
           ]
         },
         {
-          "id": "tfzXilE",
+          "id": "j0NqU3T",
           "uid": "65gS17Da",
           "label": "Upgrade with",
           "options": [
@@ -4942,7 +4948,7 @@
       "hint": "Gators",
       "sections": [
         {
-          "id": "QXu9byr",
+          "id": "xWCh5Da",
           "uid": "0bMWrhG4Rk",
           "label": "Replace all Obsidian Great Weapons",
           "options": [
@@ -5000,7 +5006,7 @@
       "hint": "Specialists - Gecko",
       "sections": [
         {
-          "id": "fGGXxDm",
+          "id": "d-M1GCw",
           "uid": "ZwBfV61v",
           "label": "Upgrade with one",
           "options": [
@@ -5180,7 +5186,7 @@
       "hint": "Specialists - Saurian",
       "sections": [
         {
-          "id": "BlZSf_4",
+          "id": "Q8Il4MO",
           "uid": "anZId3sh",
           "label": "Upgrade with one",
           "options": [
@@ -5327,7 +5333,7 @@
       "hint": "Specialists - Gator",
       "sections": [
         {
-          "id": "J8K_f3D",
+          "id": "X88kZ6w",
           "uid": "oIJ4eqiE",
           "label": "Upgrade with one",
           "options": [
@@ -5446,7 +5452,7 @@
       "hint": "Specialists - Frog-Mage",
       "sections": [
         {
-          "id": "7-LhoTA",
+          "id": "3780kAd",
           "uid": "k1OKTZqr",
           "label": "Upgrade with one",
           "options": [
@@ -5597,7 +5603,7 @@
       "hint": "Chameleons",
       "sections": [
         {
-          "id": "sUIIl53",
+          "id": "Da3EVP1",
           "uid": "SQ1HTrEnFz",
           "label": "Replace all Fire Bolas",
           "options": [
@@ -5653,7 +5659,7 @@
       "hint": "Prophetic Vision",
       "sections": [
         {
-          "id": "5y0cQz6",
+          "id": "ejp1VWZ",
           "uid": "9pTxpnqz",
           "label": "Upgrade with",
           "options": [
@@ -6266,8 +6272,8 @@
       "effectSkirmish": ""
     }
   ],
-  "modifiedAt": "2026-07-05T01:10:42.369Z",
-  "editedAt": "2026-05-04T00:58:23.861Z",
+  "modifiedAt": "2026-07-06T23:59:55.465Z",
+  "editedAt": "2026-07-06T23:59:55.466Z",
   "official": true,
   "versionString": "3.5.3",
   "coverImagePath": "https://af-images.s3.eu-north-1.amazonaws.com/army-books/covers/BubhE1kUpgYbqZvW/ZVv1Hm9xaYDdK5V48ygT-.jpg",
