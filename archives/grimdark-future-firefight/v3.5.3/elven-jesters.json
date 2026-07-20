@@ -744,7 +744,7 @@
       "hint": "Jesters",
       "sections": [
         {
-          "id": "V4zmMpC",
+          "id": "zZGGDhJ",
           "uid": "6vXdYYK",
           "label": "Replace any Fragment Pistol",
           "options": [
@@ -796,7 +796,7 @@
           ]
         },
         {
-          "id": "cX4zHLO",
+          "id": "wXAyClG",
           "uid": "ziNSA",
           "label": "Replace one Fragment Pistol",
           "options": [
@@ -856,7 +856,7 @@
           ]
         },
         {
-          "id": "0OvRxqa",
+          "id": "_E21XBK",
           "uid": "l5O6jLf",
           "label": "Replace any CCW",
           "options": [
@@ -953,7 +953,7 @@
           ]
         },
         {
-          "id": "B_ecQEK",
+          "id": "sEJCz3F",
           "uid": "cTmvWaJ",
           "label": "Replace one CCW",
           "options": [
@@ -1054,7 +1054,7 @@
       "hint": "Jetbikes",
       "sections": [
         {
-          "id": "WgsC0UR",
+          "id": "Rbh_28z",
           "uid": "YE_-3l9",
           "label": "Replace any Exploding Bolas",
           "options": [
@@ -1188,7 +1188,7 @@
       "hint": "Heavy Jetbike",
       "sections": [
         {
-          "id": "PRgPZ6b",
+          "id": "OQViKNT",
           "uid": "iKzVxfR_5A",
           "label": "Replace Energy Glaive",
           "options": [
@@ -1239,7 +1239,7 @@
           ]
         },
         {
-          "id": "gVmc5dE",
+          "id": "cA4WB6j",
           "uid": "Wj6VmOLxrL",
           "label": "Replace Twin Fragment Pistol",
           "options": [
@@ -1366,7 +1366,7 @@
           ]
         },
         {
-          "id": "goPha4n",
+          "id": "tjwnfk7",
           "uid": "CWRP2Ny3fj",
           "label": "Upgrade with any",
           "options": [
@@ -1449,7 +1449,7 @@
       "hint": "Master Jester",
       "sections": [
         {
-          "id": "rbNRXom",
+          "id": "FMXhTQz",
           "uid": "2n3r-",
           "label": "Replace Master Fragment Pistol",
           "options": [
@@ -1622,7 +1622,7 @@
           ]
         },
         {
-          "id": "hGHRNpp",
+          "id": "IPnSDIU",
           "uid": "lhAyM",
           "label": "Replace Dagger and Deathly Touch",
           "options": [
@@ -1714,7 +1714,7 @@
           ]
         },
         {
-          "id": "kZR2YKw",
+          "id": "7VimF75",
           "uid": "DRM2W",
           "label": "Replace any CCW",
           "options": [
@@ -1811,7 +1811,7 @@
           ]
         },
         {
-          "id": "QQ_UqnC",
+          "id": "JQQpJED",
           "uid": "QknvZyHG",
           "label": "Upgrade with",
           "options": [
@@ -1852,7 +1852,7 @@
           "variant": "upgrade"
         },
         {
-          "id": "fujPehI",
+          "id": "u5q-RcE",
           "uid": "XMA4o",
           "label": "Upgrade with one",
           "options": [
@@ -2008,7 +2008,7 @@
       "hint": "Specialists - Jester",
       "sections": [
         {
-          "id": "F9x2OM3",
+          "id": "j9om_5W",
           "uid": "0itSx",
           "label": "Upgrade with one",
           "options": [
@@ -2250,7 +2250,7 @@
       "hint": "Twisted Illusion",
       "sections": [
         {
-          "id": "eYYK9qy",
+          "id": "V8_Oyi8",
           "uid": "PSN1w",
           "label": "Upgrade all models with",
           "options": [
@@ -2311,7 +2311,7 @@
       "hint": "Specialists - Fool",
       "sections": [
         {
-          "id": "IOJ-4HP",
+          "id": "GeVcSlE",
           "uid": "nC2C_oFp",
           "label": "Upgrade with one",
           "options": [
@@ -3063,7 +3063,7 @@
       "effectSkirmish": ""
     }
   ],
-  "modifiedAt": "2026-07-05T01:09:09.111Z",
+  "modifiedAt": "2026-07-14T11:27:43.907Z",
   "editedAt": "2026-04-26T21:11:12.684Z",
   "official": true,
   "versionString": "3.5.3",
@@ -3132,19 +3132,19 @@
       "targetType": 1
     },
     {
-      "id": "nr0R125ptwEZ",
-      "name": "Teleport Aura",
+      "id": "8zBpM3Wjey08",
+      "name": "Unpredictable Fighter Aura",
       "aliasedRuleId": null,
-      "description": "This model and its unit get Teleport.",
+      "description": "This model and its unit get Unpredictable Fighter.",
       "hasRating": false,
       "coreType": null,
       "targetType": 1
     },
     {
-      "id": "8zBpM3Wjey08",
-      "name": "Unpredictable Fighter Aura",
+      "id": "nr0R125ptwEZ",
+      "name": "Teleport Aura",
       "aliasedRuleId": null,
-      "description": "This model and its unit get Unpredictable Fighter.",
+      "description": "This model and its unit get Teleport.",
       "hasRating": false,
       "coreType": null,
       "targetType": 1
@@ -3231,15 +3231,6 @@
       "targetType": 2
     },
     {
-      "id": "LtPyHi_-DHf4",
-      "name": "Teleport",
-      "aliasedRuleId": null,
-      "description": "Once per activation, before attacking, you may place this model anywhere fully within 3\" of its position when using Advance/Charge actions, or fully within 6\" of its position when using Rush actions.",
-      "hasRating": false,
-      "coreType": null,
-      "targetType": 1
-    },
-    {
       "id": "DEeVIJcfNfS6",
       "name": "Unpredictable Fighter",
       "aliasedRuleId": null,
@@ -3253,6 +3244,15 @@
       "name": "Unpredictable",
       "aliasedRuleId": null,
       "description": "When attacking, roll one die and apply one effect to all models with this rule: on a 1-3 they get AP(+1), and on a 4-6 they get +1 to hit rolls instead.",
+      "hasRating": false,
+      "coreType": null,
+      "targetType": 1
+    },
+    {
+      "id": "LtPyHi_-DHf4",
+      "name": "Teleport",
+      "aliasedRuleId": null,
+      "description": "Once per activation, before attacking, you may place this model anywhere fully within 3\" of its position when using Advance/Charge actions, or fully within 6\" of its position when using Rush actions.",
       "hasRating": false,
       "coreType": null,
       "targetType": 1

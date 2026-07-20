@@ -1086,7 +1086,7 @@
       "hint": "High Champion",
       "sections": [
         {
-          "id": "kRq22jG",
+          "id": "-pUVg2m",
           "uid": "9SDFGaH",
           "label": "Replace Heavy Hand Weapon",
           "options": [
@@ -1373,7 +1373,7 @@
           ]
         },
         {
-          "id": "-zG1tp2",
+          "id": "RbvX_rd",
           "uid": "YBk4-x8",
           "label": "Upgrade with one",
           "options": [
@@ -1706,7 +1706,7 @@
       "hint": "Vale Defender",
       "sections": [
         {
-          "id": "4jyiCf5",
+          "id": "tMCJZrB",
           "uid": "wpgo6sU",
           "label": "Replace Hand Weapon",
           "options": [
@@ -1898,7 +1898,7 @@
           ]
         },
         {
-          "id": "EARqxD8",
+          "id": "3zLzCYw",
           "uid": "neDXK1P2K-",
           "label": "Upgrade with one",
           "options": [
@@ -1970,7 +1970,7 @@
           }
         },
         {
-          "id": "9pKi4EU",
+          "id": "kNaSZE3",
           "uid": "XdyvgTh",
           "label": "Upgrade with one",
           "options": [
@@ -2091,7 +2091,7 @@
       "hint": "Command Group",
       "sections": [
         {
-          "id": "heAVlCD",
+          "id": "dtRIcd8",
           "uid": "5WR4hiA",
           "label": "Upgrade up to three models with one",
           "options": [
@@ -2330,7 +2330,7 @@
       "hint": "Men-at-Arms",
       "sections": [
         {
-          "id": "RB7beDR",
+          "id": "ngktFj8",
           "uid": "9Z8rbhv",
           "label": "Replace all Hand Weapons",
           "options": [
@@ -2426,7 +2426,7 @@
       "hint": "Foot Knights",
       "sections": [
         {
-          "id": "pi_y9NY",
+          "id": "30nPqGz",
           "uid": "BYLxGvE",
           "label": "Replace all Heavy Hand Weapons",
           "options": [
@@ -2487,7 +2487,7 @@
       "hint": "Peasant Longbowmen",
       "sections": [
         {
-          "id": "EMDOf0g",
+          "id": "oq0V4lR",
           "uid": "diEApOi",
           "label": "Upgrade all models with any",
           "options": [
@@ -2609,7 +2609,7 @@
       "hint": "Mounted Bowmen",
       "sections": [
         {
-          "id": "g_ePx_7",
+          "id": "UKgz0Iw",
           "uid": "srq_FfL",
           "label": "Replace all Hand Weapons",
           "options": [
@@ -2669,7 +2669,7 @@
       "hint": "Chivalrous Artillery",
       "sections": [
         {
-          "id": "UkOFM2N",
+          "id": "vm-_-96",
           "uid": "a9liudr",
           "label": "Replace Stone Thrower",
           "options": [
@@ -2731,7 +2731,7 @@
           ]
         },
         {
-          "id": "0m57OGI",
+          "id": "iHqI82k",
           "uid": "g0-hgXzh",
           "label": "Upgrade with",
           "options": [
@@ -2780,7 +2780,7 @@
       "hint": "Peasant Levy",
       "sections": [
         {
-          "id": "y-RQH4u",
+          "id": "JsvxUZm",
           "uid": "slHck",
           "label": "Upgrade all models with",
           "options": [
@@ -2832,7 +2832,7 @@
       "hint": "Grail Relic",
       "sections": [
         {
-          "id": "X8A28J2",
+          "id": "0n2KY-i",
           "uid": "BsEj-",
           "label": "Upgrade with any",
           "options": [
@@ -2917,7 +2917,7 @@
       "hint": "Monster Hunting Spear",
       "sections": [
         {
-          "id": "Ptdhg6S",
+          "id": "boTw_Nn",
           "uid": "OpByc",
           "label": "Replace all Heavy Lances",
           "options": [
@@ -2985,7 +2985,7 @@
       "hint": "Specialists - Champion",
       "sections": [
         {
-          "id": "c3YWSwp",
+          "id": "0OP7HSs",
           "uid": "6HwrT",
           "label": "Upgrade with one",
           "options": [
@@ -3166,7 +3166,7 @@
       "hint": "Specialists - Defender",
       "sections": [
         {
-          "id": "gnWVP56",
+          "id": "hLT9kBu",
           "uid": "6k5JntsS",
           "label": "Upgrade with one",
           "options": [
@@ -3904,7 +3904,7 @@
       "effectSkirmish": ""
     }
   ],
-  "modifiedAt": "2026-07-05T01:08:47.449Z",
+  "modifiedAt": "2026-07-14T11:27:43.743Z",
   "editedAt": "2026-04-28T17:26:32.960Z",
   "official": true,
   "versionString": "3.5.3",
@@ -4090,19 +4090,19 @@
       "targetType": 1
     },
     {
-      "id": "TTL5RNmwotoh",
-      "name": "Melee Slayer",
+      "id": "H7Ho2YS_D_3a",
+      "name": "Piercing Shooter",
       "aliasedRuleId": null,
-      "description": "When this model charges, its weapons get AP(+2) if most models in the target have Tough(3) or higher.",
+      "description": "This model gets AP(+1) when shooting.",
       "hasRating": false,
       "coreType": null,
       "targetType": 1
     },
     {
-      "id": "H7Ho2YS_D_3a",
-      "name": "Piercing Shooter",
+      "id": "TTL5RNmwotoh",
+      "name": "Melee Slayer",
       "aliasedRuleId": null,
-      "description": "This model gets AP(+1) when shooting.",
+      "description": "When this model charges, its weapons get AP(+2) if most models in the target have Tough(3) or higher.",
       "hasRating": false,
       "coreType": null,
       "targetType": 1

@@ -770,7 +770,7 @@
     {
       "id": "TBfyhgl",
       "cost": 95,
-      "name": "Mecha-Beast Riders",
+      "name": "Mecha-Raptor Riders",
       "size": 5,
       "bases": {
         "round": "60x35",
@@ -834,7 +834,7 @@
       "upgrades": [
         "UOdUO"
       ],
-      "genericName": "Robo-Beast Riders",
+      "genericName": "Robo-Raptor Riders",
       "hasCustomRule": false,
       "disabledSections": [],
       "hasBalanceInvalid": false,
@@ -2183,7 +2183,7 @@
       "hint": "Clan Handler",
       "sections": [
         {
-          "id": "8rYMeyP",
+          "id": "UDNz2oC",
           "uid": "M46odDM",
           "label": "Replace Master Pistol",
           "options": [
@@ -2501,7 +2501,7 @@
           ]
         },
         {
-          "id": "Cc_XpUl",
+          "id": "Jy9jyB0",
           "uid": "u-eaXYF",
           "label": "Replace CCW",
           "options": [
@@ -2784,7 +2784,7 @@
           ]
         },
         {
-          "id": "sHi0IoM",
+          "id": "Vptk958",
           "uid": "DmmDH",
           "label": "Upgrade with one",
           "options": [
@@ -2800,13 +2800,12 @@
               ],
               "gains": [
                 {
-                  "name": "Mecha-Beast",
+                  "name": "Mecha-Raptor",
                   "type": "ArmyBookItem",
                   "bases": {
                     "round": "60x35",
                     "square": "60x30"
                   },
-                  "label": "Mecha-Beast (Fast, Ravage(1), Strider)",
                   "content": [
                     {
                       "id": "KdgwlPb8LuD2",
@@ -2825,10 +2824,11 @@
                       "type": "ArmyBookRule"
                     }
                   ],
+                  "label": "Mecha-Raptor (Fast, Ravage(1), Strider)",
                   "count": 1
                 }
               ],
-              "label": "Mecha-Beast (Fast, Ravage(1), Strider)",
+              "label": "Mecha-Raptor (Fast, Ravage(1), Strider)",
               "parentPackageUid": "B1",
               "parentSectionUid": "DmmDH",
               "parentSectionId": "DmmDH",
@@ -2893,7 +2893,7 @@
       "hint": "Elite Handler",
       "sections": [
         {
-          "id": "p29GRx1",
+          "id": "zR1n4wC",
           "uid": "9vxmJ",
           "label": "Replace Elite Heavy Pistol",
           "options": [
@@ -3135,7 +3135,7 @@
           ]
         },
         {
-          "id": "5-PbDi7",
+          "id": "P5QvjaI",
           "uid": "FNKDVaK",
           "label": "Replace CCW",
           "options": [
@@ -3416,7 +3416,7 @@
           ]
         },
         {
-          "id": "NfAUSeP",
+          "id": "J4uDxpY",
           "uid": "4-Qt2mBp",
           "label": "Upgrade with one",
           "options": [
@@ -3432,13 +3432,12 @@
               ],
               "gains": [
                 {
-                  "name": "Mecha-Beast",
+                  "name": "Mecha-Raptor",
                   "type": "ArmyBookItem",
                   "bases": {
                     "round": "60x35",
                     "square": "60x30"
                   },
-                  "label": "Mecha-Beast (Fast, Ravage(1), Strider)",
                   "content": [
                     {
                       "id": "KdgwlPb8LuD2",
@@ -3457,10 +3456,11 @@
                       "type": "ArmyBookRule"
                     }
                   ],
+                  "label": "Mecha-Raptor (Fast, Ravage(1), Strider)",
                   "count": 1
                 }
               ],
-              "label": "Mecha-Beast (Fast, Ravage(1), Strider)",
+              "label": "Mecha-Raptor (Fast, Ravage(1), Strider)",
               "parentSectionId": "4-Qt2mBp",
               "parentPackageUid": "VV09_Ruj",
               "parentSectionUid": "DmmDH",
@@ -3516,14 +3516,14 @@
           }
         }
       ],
-      "calcErrors": false
+      "calcErrors": true
     },
     {
       "uid": "D1",
       "hint": "Specialists - Elite Handler",
       "sections": [
         {
-          "id": "ZH1FAtF",
+          "id": "-DkrpeL",
           "uid": "kkjCHPx",
           "label": "Upgrade with one",
           "options": [
@@ -3790,7 +3790,7 @@
       "hint": "Operators",
       "sections": [
         {
-          "id": "sKUxx5U",
+          "id": "wlVA4q1",
           "uid": "rsia6",
           "label": "Replace all Pistols and CCWS",
           "options": [
@@ -3849,7 +3849,7 @@
           ]
         },
         {
-          "id": "lxuNCvx",
+          "id": "PdBUjL6",
           "uid": "So7ZKmb",
           "label": "Replace up to two Pistols and CCWS",
           "options": [
@@ -4154,7 +4154,7 @@
           ]
         },
         {
-          "id": "hiV_378",
+          "id": "H7a3eps",
           "uid": "KvEh8s4Y",
           "label": "Replace one Pistol and CCW",
           "options": [
@@ -4227,7 +4227,7 @@
           ]
         },
         {
-          "id": "cKdDKsS",
+          "id": "BCErYQ8",
           "uid": "BpQiIa_M",
           "label": "Replace Sgt. Pistol",
           "options": [
@@ -4309,7 +4309,7 @@
           ]
         },
         {
-          "id": "kwjfDd6",
+          "id": "6TpybAD",
           "uid": "CPB9Ev0G",
           "label": "Replace Electro-Sword",
           "options": [
@@ -4365,7 +4365,7 @@
       "hint": "Weapon Experts",
       "sections": [
         {
-          "id": "Ok-XOqD",
+          "id": "0ZBwN6Q",
           "uid": "RydUq_6",
           "label": "Replace any Heavy Flamer",
           "options": [
@@ -4537,7 +4537,7 @@
       "hint": "Infiltrators",
       "sections": [
         {
-          "id": "yfvhrLD",
+          "id": "fS6l3v6",
           "uid": "awHZVwj",
           "label": "Replace all Pistols and CCWS",
           "options": [
@@ -4642,7 +4642,7 @@
           ]
         },
         {
-          "id": "4CN2tVP",
+          "id": "c0fQZTu",
           "uid": "nJNk2",
           "label": "Upgrade one model with",
           "options": [
@@ -4694,7 +4694,7 @@
       "hint": "Elite Operators",
       "sections": [
         {
-          "id": "5BrF6-L",
+          "id": "geJgcoH",
           "uid": "uFp-3",
           "label": "Replace all Heavy Pistols and CCWS",
           "options": [
@@ -4805,7 +4805,7 @@
           ]
         },
         {
-          "id": "45RAE7N",
+          "id": "djG6d5j",
           "uid": "RtPKLnj",
           "label": "Replace one Heavy Pistol and CCW",
           "options": [
@@ -5064,7 +5064,7 @@
           ]
         },
         {
-          "id": "nzaS5mc",
+          "id": "gUyFdFV",
           "uid": "0qRwqDvH",
           "label": "Replace one Heavy Pistol and CCW",
           "options": [
@@ -5144,7 +5144,7 @@
           ]
         },
         {
-          "id": "ifTuh3C",
+          "id": "tRP19cD",
           "uid": "dG3TGw-2",
           "label": "Replace Sgt. Heavy Pistol",
           "options": [
@@ -5226,7 +5226,7 @@
           ]
         },
         {
-          "id": "7uLk9-M",
+          "id": "dN2yOmA",
           "uid": "7FHU43q_",
           "label": "Replace Electro-Sword",
           "options": [
@@ -5282,7 +5282,7 @@
       "hint": "Rat Ogre Agents",
       "sections": [
         {
-          "id": "udLgloo",
+          "id": "RlI--vS",
           "uid": "tinWK",
           "label": "Replace all Dual Electro-Swords",
           "options": [
@@ -5391,7 +5391,7 @@
           ]
         },
         {
-          "id": "OKAeBJM",
+          "id": "ID2LwcV",
           "uid": "UpyzJ",
           "label": "Replace any Fist-Gun",
           "options": [
@@ -5447,7 +5447,7 @@
           ]
         },
         {
-          "id": "3T1_9J7",
+          "id": "dwFOphO",
           "uid": "Y33FCoa",
           "label": "Replace any Electro-Sword",
           "options": [
@@ -5507,7 +5507,7 @@
       "hint": "Mecha-Ogre",
       "sections": [
         {
-          "id": "PEWucVN",
+          "id": "nVveqmQ",
           "uid": "ICv8ezl",
           "label": "Upgrade with one",
           "options": [
@@ -5638,7 +5638,7 @@
       "hint": "Burrower Tank",
       "sections": [
         {
-          "id": "lP99BnH",
+          "id": "iMlR_oI",
           "uid": "FApvKlvTKI",
           "label": "Replace Twin Heavy Machinegun",
           "options": [
@@ -5723,7 +5723,7 @@
           ]
         },
         {
-          "id": "lsIDrTO",
+          "id": "oeQtnX0",
           "uid": "OfKBx2n",
           "label": "Upgrade with one",
           "options": [
@@ -5826,7 +5826,7 @@
       "hint": "Artillery Gun",
       "sections": [
         {
-          "id": "J_2gXyE",
+          "id": "8xgbsZ9",
           "uid": "TkBHoGJ",
           "label": "Replace Mine-Drone Gun",
           "options": [
@@ -6112,7 +6112,7 @@
       "hint": "Stalkers",
       "sections": [
         {
-          "id": "R2kiopQ",
+          "id": "_h0O6IO",
           "uid": "lO8i7",
           "label": "Replace all Electro-Flails",
           "options": [
@@ -6196,7 +6196,7 @@
           ]
         },
         {
-          "id": "sBYphW6",
+          "id": "yI4Ja98",
           "uid": "bPzyJ",
           "label": "Replace up to two Electro-Flails",
           "options": [
@@ -6376,7 +6376,7 @@
       "hint": "Saboteurs",
       "sections": [
         {
-          "id": "DZ6ICJ8",
+          "id": "KBAv9s3",
           "uid": "8704T",
           "label": "Replace all Electro-Bombs",
           "options": [
@@ -6476,7 +6476,7 @@
       "hint": "Rat Ogre Bodyguards",
       "sections": [
         {
-          "id": "8GuysDs",
+          "id": "LIyWSJl",
           "uid": "vNM3I",
           "label": "Replace all Heavy Electro-Hammers",
           "options": [
@@ -6642,10 +6642,10 @@
     },
     {
       "uid": "UOdUO",
-      "hint": "Mecha-Beast Riders",
+      "hint": "Mecha-Raptor Riders",
       "sections": [
         {
-          "id": "v-tAwbe",
+          "id": "M1zmnK7",
           "uid": "-22fd",
           "label": "Replace all Pistols and CCWS",
           "options": [
@@ -6752,7 +6752,7 @@
           ]
         },
         {
-          "id": "ORmZfa1",
+          "id": "tfbqXnv",
           "uid": "KR_N1",
           "label": "Replace one CCW",
           "options": [
@@ -6972,7 +6972,7 @@
       "hint": "Great Death Wheel",
       "sections": [
         {
-          "id": "EvazM0R",
+          "id": "zrIlqBO",
           "uid": "NKeUY",
           "label": "Replace Electro-Pike",
           "options": [
@@ -7103,7 +7103,7 @@
       "hint": "Combat Tank",
       "sections": [
         {
-          "id": "JcBXEJw",
+          "id": "SRQX8OI",
           "uid": "yRldu",
           "label": "Replace Heavy Plas-Burst Cannon",
           "options": [
@@ -7242,7 +7242,7 @@
           ]
         },
         {
-          "id": "XIYZ0IC",
+          "id": "2esaoEa",
           "uid": "KDx5f",
           "label": "Replace Twin Heavy Flamer",
           "options": [
@@ -7298,7 +7298,7 @@
       "hint": "Great Mecha-Beast",
       "sections": [
         {
-          "id": "-42vMNN",
+          "id": "B87tQWn",
           "uid": "dEU1d",
           "label": "Replace Heavy Claw",
           "options": [
@@ -7476,7 +7476,7 @@
           ]
         },
         {
-          "id": "MGdsax8",
+          "id": "PHo2gaB",
           "uid": "KqJww",
           "label": "Replace Twin Heavy Flamer",
           "options": [
@@ -7530,7 +7530,7 @@
       "hint": "Light Mecha-Walker",
       "sections": [
         {
-          "id": "-gmc4S9",
+          "id": "nVxBM0e",
           "uid": "VDM4q",
           "label": "Replace Twin Rocket Launcher",
           "options": [
@@ -7700,7 +7700,7 @@
       "hint": "Titan Mecha-Beast",
       "sections": [
         {
-          "id": "VXe_QGG",
+          "id": "bdOwZPM",
           "uid": "iJ22p",
           "label": "Replace Titan Heavy Claws",
           "options": [
@@ -7885,7 +7885,7 @@
           ]
         },
         {
-          "id": "2-YygiD",
+          "id": "rdDXXYE",
           "uid": "BKL05",
           "label": "Replace Rapid Heavy Flamer",
           "options": [
@@ -7933,7 +7933,7 @@
           ]
         },
         {
-          "id": "1dwBw5x",
+          "id": "mWuBXbS",
           "uid": "F9EHj",
           "label": "Upgrade with",
           "options": [
@@ -7981,7 +7981,7 @@
       "hint": "Mecha-Walker Titan",
       "sections": [
         {
-          "id": "T0bI7yb",
+          "id": "GlXoPpG",
           "uid": "eveif",
           "label": "Replace Titan Heavy Rocket Array",
           "options": [
@@ -8231,7 +8231,7 @@
           ]
         },
         {
-          "id": "x5t6y1N",
+          "id": "renVFSH",
           "uid": "n_J0c",
           "label": "Replace Twin Heavy Flamer",
           "options": [
@@ -8287,7 +8287,7 @@
       "hint": "Rat Ogre Handler",
       "sections": [
         {
-          "id": "5vKZtvS",
+          "id": "dty--Az",
           "uid": "ntHRg",
           "label": "Replace Great Electro-Hammer",
           "options": [
@@ -8572,7 +8572,7 @@
           ]
         },
         {
-          "id": "Mm2npvx",
+          "id": "l4rEW2S",
           "uid": "xMJ6k",
           "label": "Replace Great Fist-Gun",
           "options": [
@@ -8623,7 +8623,7 @@
           ]
         },
         {
-          "id": "ho0VojU",
+          "id": "MEfAOR1",
           "uid": "sFnoj",
           "label": "Replace Great Electro-Sword",
           "options": [
@@ -8677,7 +8677,7 @@
       "hint": "Clan Backup",
       "sections": [
         {
-          "id": "7pIFwj7",
+          "id": "xaOR6Vn",
           "uid": "W-aU_",
           "label": "Upgrade all models with",
           "options": [
@@ -8743,7 +8743,7 @@
       "hint": "Rat Master",
       "sections": [
         {
-          "id": "Qx_ds_s",
+          "id": "ywPEC3I",
           "uid": "r6i2s",
           "label": "Upgrade all models with",
           "options": [
@@ -8836,7 +8836,7 @@
       "hint": "Specialists - Rat Ogre",
       "sections": [
         {
-          "id": "1Bee6zt",
+          "id": "dJi6rhd",
           "uid": "ikKc9t5R",
           "label": "Upgrade with one",
           "options": [
@@ -8982,7 +8982,7 @@
       "hint": "Specialists - Handler",
       "sections": [
         {
-          "id": "u_OqFcL",
+          "id": "bxxwJMK",
           "uid": "5ZGM0atq",
           "label": "Upgrade with one",
           "options": [
@@ -9223,7 +9223,7 @@
       "hint": "Sharpshooters",
       "sections": [
         {
-          "id": "t-SPi8C",
+          "id": "KwV2iIu",
           "uid": "iFuzVVT7C3",
           "label": "Replace all Sniper Carbines",
           "options": [
@@ -9287,7 +9287,7 @@
       "hint": "Weak Spot Triangulator",
       "sections": [
         {
-          "id": "m0lfCL3",
+          "id": "btAuI3_",
           "uid": "BUiZRwmj",
           "label": "Upgrade with",
           "options": [
@@ -9936,8 +9936,8 @@
       "effectSkirmish": ""
     }
   ],
-  "modifiedAt": "2026-07-05T01:10:30.405Z",
-  "editedAt": "2026-04-30T09:41:38.232Z",
+  "modifiedAt": "2026-07-18T15:57:55.439Z",
+  "editedAt": "2026-07-18T15:57:55.439Z",
   "official": true,
   "versionString": "3.5.3",
   "coverImagePath": "https://af-images.s3.eu-north-1.amazonaws.com/army-books/covers/hk70l4d471plza00/IohcGA9CXipyj1erDOgTZ.jpg",
@@ -10103,15 +10103,6 @@
       "targetType": 1
     },
     {
-      "id": "F_1wfmpAyYwT",
-      "name": "Self-Destruct",
-      "aliasedRuleId": null,
-      "description": "If this model is killed in melee, the attacking unit takes X hits. If this model survives melee, after both sides have finished attacking, it is immediately killed, and the enemy unit takes X hits.",
-      "hasRating": true,
-      "coreType": null,
-      "targetType": 1
-    },
-    {
       "id": "5v6oaGfrdf29",
       "name": "Surge",
       "aliasedRuleId": null,
@@ -10119,6 +10110,15 @@
       "hasRating": false,
       "coreType": null,
       "targetType": 2
+    },
+    {
+      "id": "F_1wfmpAyYwT",
+      "name": "Self-Destruct",
+      "aliasedRuleId": null,
+      "description": "If this model is killed in melee, the attacking unit takes X hits. If this model survives melee, after both sides have finished attacking, it is immediately killed, and the enemy unit takes X hits.",
+      "hasRating": true,
+      "coreType": null,
+      "targetType": 1
     },
     {
       "id": "QhQL5YYoO3jJ",
@@ -10166,6 +10166,15 @@
       "targetType": 1
     },
     {
+      "id": "MyIWPu0tVI4F",
+      "name": "Predator Shooter Aura",
+      "aliasedRuleId": null,
+      "description": "This model and its unit get Predator Shooter.",
+      "hasRating": false,
+      "coreType": null,
+      "targetType": 1
+    },
+    {
       "id": "L--qMjlm2g4Q",
       "name": "Piercing Assault Aura",
       "aliasedRuleId": null,
@@ -10179,15 +10188,6 @@
       "name": "Defense Debuff",
       "aliasedRuleId": null,
       "description": "Once per activation, before attacking, pick one enemy unit within 18\" in line of sight, which gets -1 to defense rolls once (next time the effect would apply).",
-      "hasRating": false,
-      "coreType": null,
-      "targetType": 1
-    },
-    {
-      "id": "MyIWPu0tVI4F",
-      "name": "Predator Shooter Aura",
-      "aliasedRuleId": null,
-      "description": "This model and its unit get Predator Shooter.",
       "hasRating": false,
       "coreType": null,
       "targetType": 1
@@ -10283,15 +10283,6 @@
       "targetType": 1
     },
     {
-      "id": "DhLjIDRrWz6-",
-      "name": "Piercing Assault",
-      "aliasedRuleId": null,
-      "description": "This model gets AP(+1) when charging.",
-      "hasRating": false,
-      "coreType": null,
-      "targetType": 1
-    },
-    {
       "id": "aiYEmCuDPUcM",
       "name": "Predator",
       "aliasedRuleId": null,
@@ -10305,6 +10296,15 @@
       "name": "Predator Shooter",
       "aliasedRuleId": null,
       "description": "For each unmodified roll of 6 to hit when shooting, this model may roll +1 attack with that weapon. This rule doesn’t apply to newly generated attacks.",
+      "hasRating": false,
+      "coreType": null,
+      "targetType": 1
+    },
+    {
+      "id": "DhLjIDRrWz6-",
+      "name": "Piercing Assault",
+      "aliasedRuleId": null,
+      "description": "This model gets AP(+1) when charging.",
       "hasRating": false,
       "coreType": null,
       "targetType": 1
