@@ -1459,6 +1459,123 @@
       "disabledUpgradeSections": []
     },
     {
+      "id": "utUk9sl",
+      "cost": 650,
+      "name": "Titan Swamp Crawler",
+      "size": 1,
+      "bases": {
+        "round": "120x92",
+        "square": "100x50"
+      },
+      "items": [
+        {
+          "id": "O4UaREjd",
+          "name": "Great Roar",
+          "type": "ArmyBookItem",
+          "bases": null,
+          "content": [
+            {
+              "id": "aXv--rtEBGLj",
+              "name": "Piercing Assault Buff",
+              "type": "ArmyBookRule"
+            }
+          ],
+          "count": 1
+        }
+      ],
+      "rules": [
+        {
+          "id": "dIQ3SGl2J2Ew",
+          "name": "Fear",
+          "rating": 4,
+          "label": "Fear(4)"
+        },
+        {
+          "id": "cygZBh3MtWs1",
+          "name": "Ferocious",
+          "label": "Ferocious"
+        },
+        {
+          "id": "DhLjIDRrWz6-",
+          "name": "Piercing Assault",
+          "label": "Piercing Assault"
+        },
+        {
+          "id": "8KujvrTG8k9p",
+          "name": "Regeneration",
+          "label": "Regeneration"
+        },
+        {
+          "id": "a0YtInGiUDd6",
+          "name": "Tough",
+          "rating": 24,
+          "label": "Tough(24)"
+        }
+      ],
+      "valid": true,
+      "defense": 3,
+      "quality": 4,
+      "weapons": [
+        {
+          "id": "TtHoa_wp",
+          "name": "Crew Attacks",
+          "count": 1,
+          "attacks": 12,
+          "weaponId": "SZjclDnZ",
+          "specialRules": [],
+          "attacksMultiplier": 4,
+          "label": "Crew Attacks (A12)",
+          "originalCount": 1,
+          "type": "ArmyBookWeapon"
+        },
+        {
+          "id": "vgvYBx-C",
+          "name": "Rending Claws",
+          "count": 1,
+          "attacks": 6,
+          "weaponId": "PTSMfUpY",
+          "specialRules": [
+            {
+              "type": "ArmyBookRule",
+              "id": "cavWDboL4ubs",
+              "name": "Rending",
+              "label": "Rending"
+            }
+          ],
+          "attacksMultiplier": 2,
+          "label": "Rending Claws (A6, Rending)",
+          "originalCount": 1,
+          "type": "ArmyBookWeapon"
+        },
+        {
+          "id": "6lTpLc_z",
+          "name": "Stomp",
+          "count": 1,
+          "attacks": 8,
+          "weaponId": "OjIL2pMY",
+          "specialRules": [
+            {
+              "type": "ArmyBookRule",
+              "id": "17crjK7P6_w6",
+              "name": "AP",
+              "rating": 2,
+              "label": "AP(2)"
+            }
+          ],
+          "label": "Stomp (A8, AP(2))",
+          "originalCount": 1,
+          "type": "ArmyBookWeapon"
+        }
+      ],
+      "upgrades": [
+        "iwxaKQGf"
+      ],
+      "genericName": "Titan Swamp Beast",
+      "hasCustomRule": false,
+      "hasBalanceInvalid": false,
+      "disabledUpgradeSections": []
+    },
+    {
       "id": "ypNxsPJ",
       "cost": 110,
       "name": "Tusk-Beast Chariot",
@@ -1813,7 +1930,7 @@
       "hint": "Orc Boss",
       "sections": [
         {
-          "id": "ipG6L8I",
+          "id": "2Ah7J7r",
           "uid": "UtjM3od",
           "label": "Replace Heavy Hand Weapon",
           "options": [
@@ -2030,7 +2147,7 @@
           ]
         },
         {
-          "id": "_Xl4moQ",
+          "id": "0UVE52A",
           "uid": "2JPilsygX5",
           "label": "Upgrade with",
           "options": [
@@ -2068,7 +2185,7 @@
           "variant": "upgrade"
         },
         {
-          "id": "gNDOuMY",
+          "id": "Z0UZkCb",
           "uid": "TNY0UmOEg2",
           "label": "Replace Iron Master",
           "options": [
@@ -2161,7 +2278,7 @@
           ]
         },
         {
-          "id": "HBJNdRa",
+          "id": "nR33kdw",
           "uid": "5Lu3GqA",
           "label": "Upgrade with one",
           "options": [
@@ -2708,7 +2825,7 @@
       "hint": "Orc Leader",
       "sections": [
         {
-          "id": "z8TCaLL",
+          "id": "rAThztw",
           "uid": "jH1efkj",
           "label": "Replace Hand Weapon",
           "options": [
@@ -2900,7 +3017,7 @@
           ]
         },
         {
-          "id": "ro07EU6",
+          "id": "ZtVsbbN",
           "uid": "n_NZU-CpCK",
           "label": "Upgrade with one",
           "options": [
@@ -2970,7 +3087,7 @@
           }
         },
         {
-          "id": "7UECXY5",
+          "id": "GQ_f6qm",
           "uid": "ph5M0KXluX",
           "label": "Replace Iron Master",
           "options": [
@@ -3063,7 +3180,7 @@
           ]
         },
         {
-          "id": "Ogei0Ar",
+          "id": "fFRhLFB",
           "uid": "1Y-pM",
           "label": "Upgrade with one",
           "options": [
@@ -3157,7 +3274,7 @@
       "hint": "Command Group",
       "sections": [
         {
-          "id": "NIg2kdE",
+          "id": "zWpm6rP",
           "uid": "Q5aQslC",
           "label": "Upgrade up to three models with one",
           "options": [
@@ -3366,7 +3483,7 @@
       "hint": "Orcs",
       "sections": [
         {
-          "id": "nFl6wUR",
+          "id": "RECqj0V",
           "uid": "yLMMTpW",
           "label": "Replace all Hand Weapons",
           "options": [
@@ -3485,7 +3602,7 @@
           ]
         },
         {
-          "id": "ogEo0z7",
+          "id": "w_JyW7Z",
           "uid": "YtxWSw1",
           "label": "Upgrade all models with",
           "options": [
@@ -3530,7 +3647,7 @@
           }
         },
         {
-          "id": "pO5utfT",
+          "id": "DMY5CSj",
           "uid": "a4Tekbty",
           "label": "Upgrade one model with one",
           "options": [
@@ -3619,7 +3736,7 @@
       "hint": "Wild Orcs",
       "sections": [
         {
-          "id": "mQnCb0D",
+          "id": "fF_roP1",
           "uid": "iGeWOpJ",
           "label": "Replace all Spears",
           "options": [
@@ -3663,7 +3780,7 @@
           ]
         },
         {
-          "id": "QTw-VDp",
+          "id": "M7_3tS1",
           "uid": "6_giN5T",
           "label": "Replace one Spear",
           "options": [
@@ -3721,7 +3838,7 @@
           ]
         },
         {
-          "id": "UtirYgU",
+          "id": "bnNAr3N",
           "uid": "TdGQ6JH8",
           "label": "Upgrade one model with",
           "options": [
@@ -3775,7 +3892,7 @@
       "hint": "Black Orcs",
       "sections": [
         {
-          "id": "Yz301BD",
+          "id": "wkrrTb-",
           "uid": "A6gO86B",
           "label": "Replace any Great Weapon",
           "options": [
@@ -3857,7 +3974,7 @@
           ]
         },
         {
-          "id": "oTSAiJq",
+          "id": "baWB_A5",
           "uid": "g_R_p4xckT",
           "label": "Replace all Great Weapons",
           "options": [
@@ -3925,7 +4042,7 @@
       "hint": "Brute Orcs",
       "sections": [
         {
-          "id": "d6QSYRQ",
+          "id": "8U7A1sK",
           "uid": "cxEio9A",
           "label": "Replace any Heavy Spear",
           "options": [
@@ -3979,7 +4096,7 @@
           ]
         },
         {
-          "id": "03I8f-E",
+          "id": "veR9t6X",
           "uid": "RTaTqhH",
           "label": "Replace one Heavy Spear",
           "options": [
@@ -4074,7 +4191,7 @@
           ]
         },
         {
-          "id": "6suT8Cv",
+          "id": "LRYXK8E",
           "uid": "6qtIP7Tg",
           "label": "Upgrade one model with one",
           "options": [
@@ -4163,7 +4280,7 @@
       "hint": "Orc Shooters",
       "sections": [
         {
-          "id": "-alQEDh",
+          "id": "8pNU4dp",
           "uid": "BeQgxfK",
           "label": "Replace all Bows",
           "options": [
@@ -4222,7 +4339,7 @@
       "hint": "Boar Riders",
       "sections": [
         {
-          "id": "cvFvhQ-",
+          "id": "ln5TvO0",
           "uid": "Ep5FFRf",
           "label": "Replace all Hand Weapons",
           "options": [
@@ -4275,7 +4392,7 @@
           ]
         },
         {
-          "id": "2PFn1Mm",
+          "id": "g5RZu6h",
           "uid": "Bq1z3mkn",
           "label": "Upgrade one model with",
           "options": [
@@ -4328,7 +4445,7 @@
       "hint": "Wild Boar Riders",
       "sections": [
         {
-          "id": "bYM9TrJ",
+          "id": "ovgeOHZ",
           "uid": "5svrQPi",
           "label": "Replace all Dual Hand Weapons",
           "options": [
@@ -4378,7 +4495,7 @@
           ]
         },
         {
-          "id": "Mv3PTJK",
+          "id": "9yp2e16",
           "uid": "itc4UCRDgg",
           "label": "Replace one Lance",
           "options": [
@@ -4440,7 +4557,7 @@
       "hint": "Great Boar Riders",
       "sections": [
         {
-          "id": "gg8BhS4",
+          "id": "VpbMFJX",
           "uid": "W40UbH1",
           "label": "Replace all Hand Weapons",
           "options": [
@@ -4500,7 +4617,7 @@
       "hint": "Hobgoblins",
       "sections": [
         {
-          "id": "XY5-r9B",
+          "id": "wMHObSK",
           "uid": "RP375",
           "label": "Replace all Dual Hand Weapons",
           "options": [
@@ -4572,7 +4689,7 @@
       "hint": "Black Orc Boss",
       "sections": [
         {
-          "id": "n6gTjFq",
+          "id": "kVpkJyf",
           "uid": "UqSAN",
           "label": "Replace Dual Heavy Hand Weapons",
           "options": [
@@ -4620,7 +4737,7 @@
           ]
         },
         {
-          "id": "4buJnPe",
+          "id": "MaHC0Z0",
           "uid": "4NIfdrycs0",
           "label": "Upgrade with",
           "options": [
@@ -4664,7 +4781,7 @@
           "variant": "upgrade"
         },
         {
-          "id": "R5Eb78n",
+          "id": "Vb9Y0PI",
           "uid": "DLWP0",
           "label": "Upgrade with one",
           "options": [
@@ -4924,7 +5041,7 @@
           }
         },
         {
-          "id": "SLhm9uO",
+          "id": "cH6VeFM",
           "uid": "L66OEMlq4d",
           "label": "Upgrade Giant Tusk-Beast with",
           "options": [
@@ -4993,7 +5110,7 @@
       "hint": "Brute Orc Boss",
       "sections": [
         {
-          "id": "Yh84Mav",
+          "id": "6uZ2x4y",
           "uid": "Syeq8",
           "label": "Replace Heavy Hand Weapon",
           "options": [
@@ -5123,7 +5240,7 @@
           ]
         },
         {
-          "id": "H0O0IGb",
+          "id": "nQcrgdW",
           "uid": "2N7Lv6W0cf",
           "label": "Replace Iron Master",
           "options": [
@@ -5176,7 +5293,7 @@
           ]
         },
         {
-          "id": "8im8Ohl",
+          "id": "3D3ncVW",
           "uid": "TpQ1U",
           "label": "Upgrade with",
           "options": [
@@ -5286,7 +5403,7 @@
       "hint": "Giant Boar Rider",
       "sections": [
         {
-          "id": "tRnB7qO",
+          "id": "pgbLeuT",
           "uid": "9pHP5",
           "label": "Upgrade with",
           "options": [
@@ -5348,7 +5465,7 @@
           "variant": "upgrade"
         },
         {
-          "id": "wCxvEt0",
+          "id": "pwmZlr_",
           "uid": "Mk0s-0yf",
           "label": "Upgrade with",
           "options": [
@@ -5397,7 +5514,7 @@
       "hint": "Wild Brute Orcs",
       "sections": [
         {
-          "id": "V9I3Qlr",
+          "id": "XR-BXX3",
           "uid": "P_25h",
           "label": "Replace any Wrecking Flail",
           "options": [
@@ -5451,7 +5568,7 @@
           ]
         },
         {
-          "id": "x971oJC",
+          "id": "EOZNXIl",
           "uid": "lerpvr4Dtl",
           "label": "Replace one Wrecking Flail",
           "options": [
@@ -5506,7 +5623,7 @@
           ]
         },
         {
-          "id": "IuHxajS",
+          "id": "0sbB4ac",
           "uid": "3wz6WcJT",
           "label": "Upgrade one model with",
           "options": [
@@ -5560,7 +5677,7 @@
       "hint": "Bone Banner",
       "sections": [
         {
-          "id": "wSY7Ska",
+          "id": "7b41bDb",
           "uid": "bhgy8Cd7xe",
           "label": "Upgrade with",
           "options": [
@@ -5612,7 +5729,7 @@
       "hint": "Wild Shooters",
       "sections": [
         {
-          "id": "g2UYLh4",
+          "id": "2kIz7-N",
           "uid": "HyhAVWaH4h",
           "label": "Replace one Shortbow",
           "options": [
@@ -5674,7 +5791,7 @@
       "hint": "Orc Artillery",
       "sections": [
         {
-          "id": "wZg9jq_",
+          "id": "KnTGd1P",
           "uid": "UUBprqQ_39",
           "label": "Replace Rapid Giant Crossbow",
           "options": [
@@ -5732,7 +5849,7 @@
       "hint": "Specialists - Leader",
       "sections": [
         {
-          "id": "SN6iWR-",
+          "id": "Nr32vmM",
           "uid": "kHXvJFQ4",
           "label": "Upgrade with one",
           "options": [
@@ -5948,7 +6065,7 @@
       "hint": "Boar Chariot",
       "sections": [
         {
-          "id": "ojewlvM",
+          "id": "ifLrj1m",
           "uid": "CFEjVoE7",
           "label": "Upgrade with",
           "options": [
@@ -5997,7 +6114,7 @@
       "hint": "Specialists - Brute",
       "sections": [
         {
-          "id": "pHIif2X",
+          "id": "EYLmmLP",
           "uid": "fdSFVMze",
           "label": "Upgrade with one",
           "options": [
@@ -6148,7 +6265,7 @@
       "hint": "Specialists - Boss",
       "sections": [
         {
-          "id": "VN9134X",
+          "id": "j2Nesdd",
           "uid": "rN4WzhfX",
           "label": "Upgrade with one",
           "options": [
@@ -6389,7 +6506,7 @@
       "hint": "Hobswampling Leader",
       "sections": [
         {
-          "id": "t72NXbu",
+          "id": "Y5_QEwg",
           "uid": "B9LyUlnM",
           "label": "Replace Hand Weapon",
           "options": [
@@ -6507,7 +6624,7 @@
           ]
         },
         {
-          "id": "5NWeaIB",
+          "id": "ScJ8xOJ",
           "uid": "G442yhdn",
           "label": "Upgrade with any",
           "options": [
@@ -6618,7 +6735,7 @@
       "hint": "Specialists - Iron Guard",
       "sections": [
         {
-          "id": "oBBvwY1",
+          "id": "gQ5jaDt",
           "uid": "XJGm326z",
           "label": "Upgrade with one",
           "options": [
@@ -6798,7 +6915,7 @@
       "hint": "Specialists - Hobswampling",
       "sections": [
         {
-          "id": "mjpzCSt",
+          "id": "XTGKi69",
           "uid": "LdpvK6X2",
           "label": "Upgrade with one",
           "options": [
@@ -6948,7 +7065,7 @@
       "hint": "Vulture Riders",
       "sections": [
         {
-          "id": "-H5Fuur",
+          "id": "wWSbR97",
           "uid": "ArUUhr-qks",
           "label": "Replace all Sling-Bombs",
           "options": [
@@ -7575,8 +7692,9 @@
       "effectSkirmish": ""
     }
   ],
-  "modifiedAt": "2026-07-14T11:27:44.339Z",
-  "editedAt": "2026-06-09T13:46:43.881Z",
+  "transforms": [],
+  "modifiedAt": "2026-08-02T15:58:29.770Z",
+  "editedAt": "2026-08-02T15:58:29.759Z",
   "official": true,
   "versionString": "3.5.3",
   "coverImagePath": "https://af-images.s3.eu-north-1.amazonaws.com/army-books/covers/bzLCKr8YtoTstxzQjJRuF.png",

@@ -247,7 +247,7 @@
       "hint": "Eternal Lord",
       "sections": [
         {
-          "id": "3raqUW1",
+          "id": "lXoKruF",
           "uid": "c7zTUJT",
           "label": "Replace Heavy Hand Weapon",
           "options": [
@@ -462,7 +462,7 @@
           ]
         },
         {
-          "id": "jIPzwLN",
+          "id": "Y3PKjjz",
           "uid": "1C1GbIV",
           "label": "Upgrade with one",
           "options": [
@@ -519,8 +519,7 @@
                       "id": "s6MgSfmgylXU",
                       "name": "Defense",
                       "type": "ArmyBookRule",
-                      "rating": 1,
-                      "label": "Defense(1)"
+                      "rating": 1
                     },
                     {
                       "id": "djJahpu0Ciut",
@@ -777,7 +776,7 @@
       "hint": "Guardian Elite",
       "sections": [
         {
-          "id": "5sz50zT",
+          "id": "P6wKMPh",
           "uid": "gzf-hi-",
           "label": "Replace Heavy Hand Weapon",
           "options": [
@@ -948,7 +947,7 @@
           ]
         },
         {
-          "id": "-i2XFWC",
+          "id": "doHZ4Ys",
           "uid": "G_gj_BS",
           "label": "Upgrade with",
           "options": [
@@ -982,7 +981,17 @@
               "parentSectionUid": "G_gj_BS",
               "parentSectionId": "G_gj_BS",
               "id": "fFaHYJt"
-            },
+            }
+          ],
+          "parentPackageUid": "D1",
+          "type": "ArmyBookUpgradeSection",
+          "variant": "upgrade"
+        },
+        {
+          "id": "_EsOWna",
+          "uid": "RuACTFdk",
+          "label": "Upgrade with",
+          "options": [
             {
               "uid": "Xng-pJwR",
               "type": "ArmyBookUpgradeOption",
@@ -1010,12 +1019,12 @@
                 }
               ],
               "label": "Beast-Hound Companion (Repel Ambushers)",
-              "parentSectionId": "G_gj_BS",
+              "parentSectionId": "RuACTFdk",
               "parentPackageUid": "IEL2fOd4",
               "id": "Xng-pJwR"
             }
           ],
-          "parentPackageUid": "D1",
+          "parentPackageUid": "IEL2fOd4",
           "type": "ArmyBookUpgradeSection",
           "variant": "upgrade"
         }
@@ -1027,7 +1036,7 @@
       "hint": "Command Group",
       "sections": [
         {
-          "id": "pEAJ6Zp",
+          "id": "YRNm-lR",
           "uid": "4hH8jUe",
           "label": "Upgrade with one",
           "options": [
@@ -1108,7 +1117,7 @@
       "hint": "Guardians",
       "sections": [
         {
-          "id": "ypeROf4",
+          "id": "mRogyKI",
           "uid": "nIMmVsU",
           "label": "Replace Heavy Halberd",
           "options": [
@@ -1197,7 +1206,7 @@
       "hint": "Paladins",
       "sections": [
         {
-          "id": "DFs-Vx8",
+          "id": "Wo1kzcE",
           "uid": "UA2w8zT",
           "label": "Replace Sword & Staff",
           "options": [
@@ -1266,7 +1275,7 @@
           ]
         },
         {
-          "id": "PnR_MgG",
+          "id": "rh1yhw9",
           "uid": "wQ00JHh",
           "label": "Replace Hand Weapon",
           "options": [
@@ -1348,7 +1357,7 @@
           ]
         },
         {
-          "id": "Tx6gYS0",
+          "id": "iRAvkSx",
           "uid": "0P_vgRi",
           "label": "Upgrade with",
           "options": [
@@ -1393,7 +1402,7 @@
       "hint": "Wardens",
       "sections": [
         {
-          "id": "ycwiwLx",
+          "id": "eMlVIXC",
           "uid": "j-OMKPM",
           "label": "Replace Heavy Hand Weapon",
           "options": [
@@ -1514,7 +1523,7 @@
       "hint": "Eternals",
       "sections": [
         {
-          "id": "IuCN40i",
+          "id": "Po33c_W",
           "uid": "G8FIwsX",
           "label": "Replace Great Glaive",
           "options": [
@@ -1664,7 +1673,7 @@
       "hint": "Destroyers",
       "sections": [
         {
-          "id": "LuIP5L2",
+          "id": "vZXd9tM",
           "uid": "bNvRTCH",
           "label": "Replace Meteor Hammer",
           "options": [
@@ -1757,7 +1766,7 @@
       "hint": "Warden Shooters",
       "sections": [
         {
-          "id": "Vs9aRU1",
+          "id": "d67k_VJ",
           "uid": "i9CtNIi",
           "label": "Replace Bow",
           "options": [
@@ -1889,7 +1898,7 @@
       "hint": "Winged Wardens",
       "sections": [
         {
-          "id": "dcTDg6E",
+          "id": "ncVN-3W",
           "uid": "hy4fkkm",
           "label": "Replace Heavy Hand Weapon",
           "options": [
@@ -2046,7 +2055,7 @@
           ]
         },
         {
-          "id": "pKOcTRw",
+          "id": "6MAcbh3",
           "uid": "rAAUQro",
           "label": "Replace Javelin",
           "options": [
@@ -2095,7 +2104,7 @@
           ]
         },
         {
-          "id": "2T78unX",
+          "id": "prv1fHS",
           "uid": "JUCT5",
           "label": "Upgrade with",
           "options": [
@@ -2138,7 +2147,7 @@
       "hint": "Warden Marskmen",
       "sections": [
         {
-          "id": "1ZmqeZB",
+          "id": "PrXck0v",
           "uid": "w4Ise99",
           "label": "Replace Cyclone Crossbow",
           "options": [
@@ -2197,7 +2206,7 @@
       "hint": "Gryph Hunters",
       "sections": [
         {
-          "id": "ot6mGUT",
+          "id": "Hj4A8o-",
           "uid": "RfW_UA6",
           "label": "Replace Hand Weapon",
           "options": [
@@ -2330,7 +2339,7 @@
       "hint": "Drake-Lion Paladins",
       "sections": [
         {
-          "id": "z8x4DEN",
+          "id": "BfvYz21",
           "uid": "uoue6h-",
           "label": "Replace any Sword & Staff",
           "options": [
@@ -2378,7 +2387,7 @@
           ]
         },
         {
-          "id": "IWN-wXq",
+          "id": "IgzznpI",
           "uid": "e-1wv1X",
           "label": "Upgrade with",
           "options": [
@@ -2423,7 +2432,7 @@
       "hint": "Drake Eternal",
       "sections": [
         {
-          "id": "V-bhErf",
+          "id": "AznEXWi",
           "uid": "kxEN88Y",
           "label": "Replace Thunder Mace",
           "options": [
@@ -2588,7 +2597,7 @@
       "hint": "Dragon Eternal",
       "sections": [
         {
-          "id": "d9ADeNv",
+          "id": "2b-lzwt",
           "uid": "lSsY6bP",
           "label": "Replace Heavy Lance",
           "options": [
@@ -2677,7 +2686,7 @@
       "hint": "Storm Chariot",
       "sections": [
         {
-          "id": "4oqQD4z",
+          "id": "qZv_4lt",
           "uid": "iQKP3SW",
           "label": "Replace Spear Crew",
           "options": [
@@ -2727,7 +2736,7 @@
       "hint": "Eternal Artillery",
       "sections": [
         {
-          "id": "S62fF_l",
+          "id": "oO4D_q2",
           "uid": "87rw34B",
           "label": "Replace Celestial Bolt Ballista",
           "options": [
@@ -2814,7 +2823,7 @@
       "hint": "Warden Knight",
       "sections": [
         {
-          "id": "9YXkziP",
+          "id": "1W1GH3l",
           "uid": "Hv2za",
           "label": "Replace Sword & Staff",
           "options": [
@@ -3021,7 +3030,7 @@
           ]
         },
         {
-          "id": "EEW4GRg",
+          "id": "ESbRtuk",
           "uid": "KmLjS",
           "label": "Upgrade with one",
           "options": [
@@ -3114,7 +3123,7 @@
           }
         },
         {
-          "id": "7xTM7Kq",
+          "id": "Pa0McuM",
           "uid": "TSOKz",
           "label": "Upgrade with",
           "options": [
@@ -3157,7 +3166,7 @@
           "variant": "upgrade"
         },
         {
-          "id": "tBsCvvi",
+          "id": "TGSb-VV",
           "uid": "g7KKf",
           "label": "Upgrade with one",
           "options": [
@@ -3385,7 +3394,7 @@
       "hint": "Specialists - Knight",
       "sections": [
         {
-          "id": "fzuh0mX",
+          "id": "fXUo7pC",
           "uid": "IoN9d3fg",
           "label": "Upgrade with one",
           "options": [
@@ -3567,7 +3576,7 @@
       "hint": "Beast-Hounds",
       "sections": [
         {
-          "id": "OSwqtpD",
+          "id": "kA_iTo9",
           "uid": "Bk1hdYwYNz",
           "label": "Replace Hunting Hound",
           "options": [
@@ -3611,7 +3620,7 @@
       "hint": "Specialists - Guardian",
       "sections": [
         {
-          "id": "mLryyxf",
+          "id": "QXrdRwl",
           "uid": "1nV-5JBu",
           "label": "Upgrade with one",
           "options": [
@@ -3761,7 +3770,7 @@
       "hint": "Specialists - Lord",
       "sections": [
         {
-          "id": "C9mv_-l",
+          "id": "lkHHBh8",
           "uid": "Caq-SkYw",
           "label": "Upgrade with one",
           "options": [
@@ -3942,7 +3951,7 @@
       "hint": "Lightning Beacon",
       "sections": [
         {
-          "id": "S8hfJ79",
+          "id": "5xKE0-0",
           "uid": "bIvmbbtZ",
           "label": "Upgrade with",
           "options": [
@@ -3985,7 +3994,7 @@
       "hint": "Storm Caller",
       "sections": [
         {
-          "id": "6Ju7yA_",
+          "id": "bZQY6o4",
           "uid": "8F43SUjJ",
           "label": "Upgrade with",
           "options": [
@@ -4587,6 +4596,7 @@
       "effectSkirmish": ""
     }
   ],
+  "transforms": [],
   "modifiedAt": "2026-07-14T11:27:43.925Z",
   "editedAt": "2026-05-04T01:00:32.371Z",
   "official": true,

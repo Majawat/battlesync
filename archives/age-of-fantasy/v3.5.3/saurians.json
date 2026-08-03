@@ -1930,6 +1930,139 @@
       "disabledUpgradeSections": []
     },
     {
+      "id": "AMZU070",
+      "cost": 175,
+      "name": "Xakanu the Daemon Slayer",
+      "size": 1,
+      "type": 1,
+      "bases": {
+        "round": "75x46",
+        "square": "75x50"
+      },
+      "items": [
+        {
+          "id": "bRbDjiIH",
+          "name": "Daemon Skullhelm",
+          "type": "ArmyBookItem",
+          "content": [
+            {
+              "id": "dIQ3SGl2J2Ew",
+              "name": "Fear",
+              "type": "ArmyBookRule",
+              "rating": 1
+            }
+          ],
+          "count": 1
+        },
+        {
+          "id": "vDcK3mZq",
+          "name": "Sika",
+          "type": "ArmyBookItem",
+          "bases": null,
+          "content": [
+            {
+              "id": "a0YtInGiUDd6",
+              "name": "Tough",
+              "type": "ArmyBookRule",
+              "rating": 6
+            },
+            {
+              "id": "fTePOhSu",
+              "name": "Molten Spit",
+              "count": 1,
+              "range": 9,
+              "attacks": 4,
+              "weaponId": "VC3QJyS2",
+              "specialRules": [
+                {
+                  "type": "ArmyBookRule",
+                  "id": "17crjK7P6_w6",
+                  "name": "AP",
+                  "rating": 4
+                }
+              ],
+              "label": "Molten Spit (9\", A4, AP(4))"
+            },
+            {
+              "id": "CRJ63B1x",
+              "name": "Heavy Claws",
+              "count": 1,
+              "attacks": 3,
+              "weaponId": "LXNVnfEZ",
+              "specialRules": [
+                {
+                  "type": "ArmyBookRule",
+                  "id": "17crjK7P6_w6",
+                  "name": "AP",
+                  "rating": 1
+                }
+              ],
+              "label": "Heavy Claws (A3, AP(1))"
+            }
+          ],
+          "count": 1
+        }
+      ],
+      "rules": [
+        {
+          "id": "PBP94ujaST4y",
+          "name": "Primal",
+          "label": "Primal"
+        },
+        {
+          "id": "JSKVyurtWIyW",
+          "name": "Strider",
+          "label": "Strider"
+        },
+        {
+          "id": "a0YtInGiUDd6",
+          "name": "Tough",
+          "rating": 3,
+          "label": "Tough(3)"
+        },
+        {
+          "id": "rqBYj1yANC3J",
+          "name": "Unique",
+          "label": "Unique"
+        },
+        {
+          "id": "T08VkBuVmNZ_",
+          "name": "Hero",
+          "label": "Hero"
+        }
+      ],
+      "valid": false,
+      "defense": 4,
+      "quality": 4,
+      "weapons": [
+        {
+          "id": "FOMIb3lj",
+          "name": "Bonesmasher Mace",
+          "type": "ArmyBookWeapon",
+          "count": 1,
+          "range": 0,
+          "attacks": 4,
+          "weaponId": "DXG_0aup",
+          "specialRules": [
+            {
+              "type": "ArmyBookRule",
+              "id": "17crjK7P6_w6",
+              "name": "AP",
+              "rating": 2,
+              "label": "AP(2)"
+            }
+          ],
+          "attacksMultiplier": 1,
+          "label": "Bonesmasher Mace (A4, AP(2))",
+          "originalCount": 1
+        }
+      ],
+      "upgrades": [],
+      "hasCustomRule": false,
+      "hasBalanceInvalid": true,
+      "disabledUpgradeSections": []
+    },
+    {
       "id": "Z415_wd",
       "cost": 150,
       "name": "Hana & Haki",
@@ -2045,124 +2178,6 @@
           "label": "Hand Weapon (A2)",
           "originalCount": 1,
           "type": "ArmyBookWeapon"
-        }
-      ],
-      "upgrades": [],
-      "hasCustomRule": false,
-      "hasBalanceInvalid": false,
-      "disabledUpgradeSections": []
-    },
-    {
-      "id": "AMZU070",
-      "cost": 125,
-      "name": "Xakanu the Daemon Slayer",
-      "size": 1,
-      "type": 1,
-      "bases": {
-        "round": "75x46",
-        "square": "75x50"
-      },
-      "items": [
-        {
-          "id": "vDcK3mZq",
-          "name": "Sika",
-          "type": "ArmyBookItem",
-          "content": [
-            {
-              "id": "a0YtInGiUDd6",
-              "name": "Tough",
-              "type": "ArmyBookRule",
-              "rating": 3
-            },
-            {
-              "id": "fTePOhSu",
-              "name": "Molten Spit",
-              "type": "ArmyBookWeapon",
-              "count": 1,
-              "range": 9,
-              "attacks": 4,
-              "weaponId": "VC3QJyS2",
-              "specialRules": [
-                {
-                  "type": "ArmyBookRule",
-                  "id": "17crjK7P6_w6",
-                  "name": "AP",
-                  "rating": 4
-                }
-              ],
-              "attacksMultiplier": 1,
-              "label": "Molten Spit (9\", A4, AP(4))"
-            }
-          ],
-          "count": 1
-        },
-        {
-          "id": "bRbDjiIH",
-          "name": "Daemon Skullhelm",
-          "type": "ArmyBookItem",
-          "content": [
-            {
-              "id": "dIQ3SGl2J2Ew",
-              "name": "Fear",
-              "type": "ArmyBookRule",
-              "rating": 1
-            }
-          ],
-          "count": 1
-        }
-      ],
-      "rules": [
-        {
-          "id": "PBP94ujaST4y",
-          "name": "Primal",
-          "label": "Primal"
-        },
-        {
-          "id": "JSKVyurtWIyW",
-          "name": "Strider",
-          "label": "Strider"
-        },
-        {
-          "id": "a0YtInGiUDd6",
-          "name": "Tough",
-          "rating": 3,
-          "label": "Tough(3)"
-        },
-        {
-          "id": "rqBYj1yANC3J",
-          "name": "Unique",
-          "label": "Unique"
-        },
-        {
-          "id": "T08VkBuVmNZ_",
-          "name": "Hero",
-          "label": "Hero"
-        }
-      ],
-      "valid": true,
-      "defense": 4,
-      "quality": 4,
-      "weapons": [
-        {
-          "id": "FOMIb3lj",
-          "name": "Bonesmasher Mace",
-          "type": "ArmyBookWeapon",
-          "count": 1,
-          "range": 0,
-          "attacks": 4,
-          "weaponId": "DXG_0aup",
-          "specialRules": [
-            {
-              "type": "ArmyBookRule",
-              "id": "17crjK7P6_w6",
-              "name": "AP",
-              "rating": 2,
-              "label": "AP(2)"
-            }
-          ],
-          "attacksMultiplier": 1,
-          "label": "Bonesmasher Mace (A4, AP(2))",
-          "originalCount": 1
         }
       ],
       "upgrades": [],
@@ -2357,7 +2372,7 @@
       "hint": "Frog-Mage",
       "sections": [
         {
-          "id": "I5KN1z_",
+          "id": "i7buSMa",
           "uid": "_U_7YRt",
           "label": "Replace Magic Shock",
           "options": [
@@ -2445,7 +2460,7 @@
           ]
         },
         {
-          "id": "einZvBG",
+          "id": "qLEjyQ8",
           "uid": "dit7eUq",
           "label": "Upgrade with one",
           "options": [
@@ -2629,7 +2644,7 @@
       "hint": "Saurian Veteran",
       "sections": [
         {
-          "id": "1dMTK-c",
+          "id": "Vt4aB5P",
           "uid": "lv6Kwp8",
           "label": "Replace Heavy Hand Weapon",
           "options": [
@@ -2879,7 +2894,7 @@
           ]
         },
         {
-          "id": "VSM56oH",
+          "id": "ZmaM46s",
           "uid": "7GEC5vh",
           "label": "Upgrade with one",
           "options": [
@@ -3057,7 +3072,7 @@
       "hint": "Gecko Champion",
       "sections": [
         {
-          "id": "VlWkKm1",
+          "id": "qLpTB0B",
           "uid": "VWPdSuF",
           "label": "Replace Hand Weapon",
           "options": [
@@ -3146,7 +3161,7 @@
           ]
         },
         {
-          "id": "Jt07BS8",
+          "id": "MEmiFs0",
           "uid": "AVfL2fu",
           "label": "Upgrade with one",
           "options": [
@@ -3265,7 +3280,7 @@
           }
         },
         {
-          "id": "sWB4aB3",
+          "id": "fg9EsSx",
           "uid": "EoDtGGR",
           "label": "Upgrade with one",
           "options": [
@@ -3593,7 +3608,7 @@
       "hint": "Command Group",
       "sections": [
         {
-          "id": "OKsDBXz",
+          "id": "JsKkPPu",
           "uid": "K7vBaqU",
           "label": "Upgrade up to three models with one",
           "options": [
@@ -3787,7 +3802,7 @@
       "hint": "Geckos",
       "sections": [
         {
-          "id": "HW7Lam9",
+          "id": "3pj-fEj",
           "uid": "7Z5xr5z",
           "label": "Upgrade all models with one",
           "options": [
@@ -3889,7 +3904,7 @@
       "hint": "Saurian Warriors",
       "sections": [
         {
-          "id": "3IY0Pv1",
+          "id": "5JAUms2",
           "uid": "EDPDKgz",
           "label": "Replace all Hand Weapons",
           "options": [
@@ -3985,7 +4000,7 @@
       "hint": "Guardians",
       "sections": [
         {
-          "id": "71AX49E",
+          "id": "4Ak3RbV",
           "uid": "yHF96RD",
           "label": "Replace all Obsidian Great Weapons",
           "options": [
@@ -4085,7 +4100,7 @@
       "hint": "Raptor Riders",
       "sections": [
         {
-          "id": "OofaDHm",
+          "id": "VeRSqIT",
           "uid": "N59dlLC",
           "label": "Replace all Hand Weapons",
           "options": [
@@ -4145,7 +4160,7 @@
       "hint": "Support Lizards",
       "sections": [
         {
-          "id": "6xT41a8",
+          "id": "zwt5RQR",
           "uid": "mtHahnH",
           "label": "Upgrade with one",
           "options": [
@@ -4236,7 +4251,7 @@
       "hint": "Spinosaurus",
       "sections": [
         {
-          "id": "e1Q5C0N",
+          "id": "HR8Xqam",
           "uid": "mT3auOn",
           "label": "Upgrade with any",
           "options": [
@@ -4319,7 +4334,7 @@
       "hint": "Triceratops",
       "sections": [
         {
-          "id": "YvZzdRT",
+          "id": "uVzqSZH",
           "uid": "x6CcGlr",
           "label": "Replace Javelin Crew",
           "options": [
@@ -4463,7 +4478,7 @@
           ]
         },
         {
-          "id": "B7fhjz3",
+          "id": "AJmnXRf",
           "uid": "noZNOO-",
           "label": "Upgrade with",
           "options": [
@@ -4513,7 +4528,7 @@
       "hint": "Ankylosaurus",
       "sections": [
         {
-          "id": "hrWMmfd",
+          "id": "X2c4u9o",
           "uid": "Vc6puBG",
           "label": "Replace Javelin Crew",
           "options": [
@@ -4599,7 +4614,7 @@
           ]
         },
         {
-          "id": "txIiVNH",
+          "id": "qpi42Ug",
           "uid": "uYoAw",
           "label": "Replace Obsidian Tail",
           "options": [
@@ -4656,7 +4671,7 @@
       "hint": "Dread Titan",
       "sections": [
         {
-          "id": "WV7qqJr",
+          "id": "WOx1xae",
           "uid": "BFacM1J",
           "label": "Replace Dread Gator",
           "options": [
@@ -4831,7 +4846,7 @@
       "hint": "Deinonychus Riders",
       "sections": [
         {
-          "id": "I_Kwmwz",
+          "id": "XjtiFRa",
           "uid": "qAsgu",
           "label": "Replace all Lances",
           "options": [
@@ -4912,7 +4927,7 @@
       "hint": "Sacred Destiny",
       "sections": [
         {
-          "id": "rqcrblD",
+          "id": "gvlY_dU",
           "uid": "FvbTYLN3pa",
           "label": "Upgrade all models with",
           "options": [
@@ -4979,7 +4994,7 @@
       "hint": "Pterodactyl Riders",
       "sections": [
         {
-          "id": "7J5XRI6",
+          "id": "DViwXDw",
           "uid": "KmIUmugY",
           "label": "Upgrade all models with one",
           "options": [
@@ -5069,7 +5084,7 @@
           }
         },
         {
-          "id": "NJDhgS1",
+          "id": "rFy5OJb",
           "uid": "i4L-3B8B",
           "label": "Upgrade all models with",
           "options": [
@@ -5141,7 +5156,7 @@
       "hint": "Ripjawdactyl Riders",
       "sections": [
         {
-          "id": "qYNdv6u",
+          "id": "te5dQo6",
           "uid": "0iK8c8GQ",
           "label": "Upgrade all models with one",
           "options": [
@@ -5231,7 +5246,7 @@
           }
         },
         {
-          "id": "VgzBgAY",
+          "id": "G7Vzp8F",
           "uid": "LzOzBx71",
           "label": "Upgrade one model with",
           "options": [
@@ -5285,7 +5300,7 @@
       "hint": "Gator Veteran",
       "sections": [
         {
-          "id": "Bd9KVbN",
+          "id": "2UN5As4",
           "uid": "C3LBM6Dgs4",
           "label": "Replace Obsidian Great Weapon",
           "options": [
@@ -5333,7 +5348,7 @@
           ]
         },
         {
-          "id": "eMwR3wx",
+          "id": "wC3LJR-",
           "uid": "65gS17Da",
           "label": "Upgrade with",
           "options": [
@@ -5382,7 +5397,7 @@
       "hint": "Gators",
       "sections": [
         {
-          "id": "U6lvNfM",
+          "id": "saT1VBq",
           "uid": "0bMWrhG4Rk",
           "label": "Replace all Obsidian Great Weapons",
           "options": [
@@ -5440,7 +5455,7 @@
       "hint": "Specialists - Gecko",
       "sections": [
         {
-          "id": "Sj_TCuq",
+          "id": "LBFAUK-",
           "uid": "ZwBfV61v",
           "label": "Upgrade with one",
           "options": [
@@ -5620,7 +5635,7 @@
       "hint": "Specialists - Saurian",
       "sections": [
         {
-          "id": "VNhoWeI",
+          "id": "QcYloaV",
           "uid": "anZId3sh",
           "label": "Upgrade with one",
           "options": [
@@ -5767,7 +5782,7 @@
       "hint": "Specialists - Gator",
       "sections": [
         {
-          "id": "TQr_Ylk",
+          "id": "gTwxepU",
           "uid": "oIJ4eqiE",
           "label": "Upgrade with one",
           "options": [
@@ -5886,7 +5901,7 @@
       "hint": "Specialists - Frog-Mage",
       "sections": [
         {
-          "id": "DiNIZwk",
+          "id": "fSZ716v",
           "uid": "k1OKTZqr",
           "label": "Upgrade with one",
           "options": [
@@ -6037,7 +6052,7 @@
       "hint": "Chameleons",
       "sections": [
         {
-          "id": "R3ljc2v",
+          "id": "brqRNMc",
           "uid": "SQ1HTrEnFz",
           "label": "Replace all Fire Bolas",
           "options": [
@@ -6093,7 +6108,7 @@
       "hint": "Prophetic Vision",
       "sections": [
         {
-          "id": "N9YVP-T",
+          "id": "oks1EKo",
           "uid": "9pTxpnqz",
           "label": "Upgrade with",
           "options": [
@@ -6706,8 +6721,9 @@
       "effectSkirmish": ""
     }
   ],
-  "modifiedAt": "2026-07-23T17:17:01.275Z",
-  "editedAt": "2026-07-23T17:17:01.274Z",
+  "transforms": [],
+  "modifiedAt": "2026-08-02T15:47:14.485Z",
+  "editedAt": "2026-08-02T15:47:14.485Z",
   "official": true,
   "versionString": "3.5.3",
   "coverImagePath": "https://af-images.s3.eu-north-1.amazonaws.com/army-books/covers/BubhE1kUpgYbqZvW/ZVv1Hm9xaYDdK5V48ygT-.jpg",

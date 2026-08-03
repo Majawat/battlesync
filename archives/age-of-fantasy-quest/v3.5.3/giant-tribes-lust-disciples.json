@@ -780,7 +780,7 @@
       "sync": "HjmV6_v6dmBmEdy7",
       "sections": [
         {
-          "id": "zZMoY62",
+          "id": "WcwHJfx",
           "uid": "FB5-kvi",
           "label": "Upgrade with any",
           "options": [
@@ -973,7 +973,7 @@
       "sync": "HjmV6_v6dmBmEdy7",
       "sections": [
         {
-          "id": "KdLjKPV",
+          "id": "RDxIn4F",
           "uid": "xp4Otd1",
           "label": "Replace any Hurl Log",
           "options": [
@@ -1043,7 +1043,7 @@
       "sync": "HjmV6_v6dmBmEdy7",
       "sections": [
         {
-          "id": "pmu25x7",
+          "id": "bW8kspU",
           "uid": "HuW1iVD",
           "label": "Replace 2x Throw Rocks",
           "options": [
@@ -1140,7 +1140,7 @@
       "sync": "HjmV6_v6dmBmEdy7",
       "sections": [
         {
-          "id": "W0WcBOx",
+          "id": "R01iCdZ",
           "uid": "nYWZa_gC",
           "label": "Replace any Giant Fist",
           "options": [
@@ -1458,7 +1458,7 @@
           ]
         },
         {
-          "id": "S1eTxoD",
+          "id": "JkebiPF",
           "uid": "h7raufVKfz",
           "label": "Replace one Giant Fist",
           "options": [
@@ -1518,7 +1518,7 @@
       "sync": "HjmV6_v6dmBmEdy7",
       "sections": [
         {
-          "id": "yuvWp-E",
+          "id": "SRsIEOz",
           "uid": "axpbrU8-",
           "label": "Replace any Heavy Fist",
           "options": [
@@ -1805,7 +1805,7 @@
           ]
         },
         {
-          "id": "eOYtY0_",
+          "id": "uVijoGS",
           "uid": "ZsNDptVog4",
           "label": "Replace one Heavy Fist",
           "options": [
@@ -1860,7 +1860,7 @@
       "sync": "HjmV6_v6dmBmEdy7",
       "sections": [
         {
-          "id": "lhU8xgY",
+          "id": "re7FgjE",
           "uid": "yVkaQjAU",
           "label": "Replace one Heavy Fist",
           "options": [
@@ -1965,7 +1965,7 @@
       "sync": "HjmV6_v6dmBmEdy7",
       "sections": [
         {
-          "id": "u-rJWPy",
+          "id": "Kja-44b",
           "uid": "KcyDPj4y",
           "label": "Replace any Mega Fist",
           "options": [
@@ -2287,7 +2287,7 @@
           ]
         },
         {
-          "id": "-xQIG3N",
+          "id": "vSfqa-G",
           "uid": "Dn_eXQJS",
           "label": "Replace one Mega Fist",
           "options": [
@@ -2348,7 +2348,7 @@
       "sync": "HjmV6_v6dmBmEdy7",
       "sections": [
         {
-          "id": "iIH-anA",
+          "id": "kURBYEb",
           "uid": "jcdiKVgX",
           "label": "Replace any Ultra Fist",
           "options": [
@@ -2635,7 +2635,7 @@
           ]
         },
         {
-          "id": "Pttd_ak",
+          "id": "0c_5n--",
           "uid": "2xrtsHfxtz",
           "label": "Replace one Ultra Fist",
           "options": [
@@ -2690,7 +2690,7 @@
       "sync": "HjmV6_v6dmBmEdy7",
       "sections": [
         {
-          "id": "qCv9J6r",
+          "id": "oYuVqYb",
           "uid": "WKNaT5ZB",
           "label": "Replace any Ultra Fist",
           "options": [
@@ -2794,7 +2794,7 @@
       "sync": "HjmV6_v6dmBmEdy7",
       "sections": [
         {
-          "id": "-1HRZRX",
+          "id": "CoKJZ7V",
           "uid": "qMXC_r0d",
           "label": "Replace Giant Sling",
           "options": [
@@ -2896,7 +2896,7 @@
       "sync": "HjmV6_v6dmBmEdy7",
       "sections": [
         {
-          "id": "HCEqXlX",
+          "id": "IIvhzuS",
           "uid": "Es6zEubG",
           "label": "Replace any Throw Rocks",
           "options": [
@@ -2967,7 +2967,7 @@
       "sync": "HjmV6_v6dmBmEdy7",
       "sections": [
         {
-          "id": "jCkKN_v",
+          "id": "lQz8rIy",
           "uid": "fPPZh7uJ",
           "label": "Upgrade with",
           "options": [
@@ -3114,7 +3114,7 @@
       "sync": "HjmV6_v6dmBmEdy7",
       "sections": [
         {
-          "id": "le-nJkM",
+          "id": "RbyD73f",
           "uid": "HvwkeTVu",
           "label": "Upgrade with any",
           "options": [
@@ -3302,7 +3302,7 @@
       "sync": "HjmV6_v6dmBmEdy7",
       "sections": [
         {
-          "id": "IgtP4wP",
+          "id": "NDog3LT",
           "uid": "66XQ9yWM",
           "label": "Upgrade with any",
           "options": [
@@ -4011,6 +4011,74 @@
         }
       ],
       "effectSkirmish": ""
+    }
+  ],
+  "transforms": [
+    {
+      "id": "hbVDXi",
+      "type": "unit/namePrefix",
+      "filter": [
+        "j0hkdLv",
+        "XKqsHuf",
+        "16uch_h",
+        "qkg2vr2",
+        "Yqd4Coq",
+        "qgzAHTV",
+        "RtG7qxd",
+        "WX9-csr"
+      ],
+      "target": "Lust"
+    },
+    {
+      "id": "6wgmoI",
+      "type": "unit/namePrefixGeneric",
+      "filter": [
+        "j0hkdLv",
+        "XKqsHuf",
+        "16uch_h",
+        "qkg2vr2",
+        "Yqd4Coq",
+        "qgzAHTV",
+        "RtG7qxd",
+        "WX9-csr"
+      ],
+      "target": "Lust"
+    },
+    {
+      "id": "v9L7vs",
+      "type": "unit/addRule",
+      "filter": [
+        "j0hkdLv",
+        "XKqsHuf",
+        "16uch_h",
+        "qkg2vr2",
+        "Yqd4Coq",
+        "qgzAHTV",
+        "RtG7qxd",
+        "WX9-csr"
+      ],
+      "target": {
+        "id": "yis0utoPMclv",
+        "name": "Lustbound"
+      }
+    },
+    {
+      "id": "Hyss4d",
+      "type": "unit/removeRule",
+      "filter": [
+        "j0hkdLv",
+        "XKqsHuf",
+        "16uch_h",
+        "qkg2vr2",
+        "Yqd4Coq",
+        "qgzAHTV",
+        "RtG7qxd",
+        "WX9-csr"
+      ],
+      "target": {
+        "id": "J219U0OD6JiN",
+        "name": "Unmovable"
+      }
     }
   ],
   "modifiedAt": "2026-07-14T11:27:43.967Z",
