@@ -412,7 +412,7 @@
       "hint": "Leader",
       "sections": [
         {
-          "id": "QsGo_91",
+          "id": "nemM-3Z",
           "uid": "0j7ey",
           "label": "Replace Combat Shields and CCW",
           "options": [
@@ -428,24 +428,27 @@
               ],
               "gains": [
                 {
-                  "name": "Heavy Smashing Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Heavy Smashing Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "S4UcTrn_",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "w_vX0mi58KKt",
                       "name": "Blast",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "S4UcTrn_",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Heavy Smashing Weapon (A2, AP(1), Blast(3))"
                 }
@@ -466,45 +469,47 @@
               ],
               "gains": [
                 {
-                  "name": "Heavy Burst Pistol",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Heavy Burst Pistol",
                   "range": 12,
                   "attacks": 3,
-                  "weaponId": "6sST-40n",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "6sST-40n",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Heavy Burst Pistol (12\", A3, AP(1))"
                 },
                 {
-                  "name": "Combat Shield",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Combat Shield (Bash (A1), Shielded)",
+                  "name": "Combat Shield",
                   "content": [
                     {
-                      "id": "wsqfB0fq69eG",
-                      "name": "Shielded",
-                      "type": "ArmyBookRule"
-                    },
-                    {
-                      "name": "Bash",
                       "type": "ArmyBookWeapon",
-                      "count": 1,
+                      "name": "Bash",
                       "range": 0,
                       "attacks": 1,
-                      "weaponId": "_9QIOlsl",
                       "specialRules": [],
-                      "attacksMultiplier": 1,
-                      "label": "Bash (A1)"
+                      "count": 1,
+                      "weaponId": "_9QIOlsl",
+                      "id": null,
+                      "attacksMultiplier": 1
+                    },
+                    {
+                      "type": "ArmyBookRule",
+                      "id": "wsqfB0fq69eG",
+                      "name": "Shielded"
                     }
                   ],
+                  "bases": null,
+                  "label": "Combat Shield (Bash (A1), Shielded)",
                   "count": 1
                 }
               ],
@@ -524,14 +529,14 @@
               ],
               "gains": [
                 {
-                  "id": null,
-                  "name": "CCW",
                   "type": "ArmyBookWeapon",
-                  "count": "02",
+                  "name": "CCW",
                   "range": 0,
                   "attacks": 4,
-                  "weaponId": "KAsYqgPq",
                   "specialRules": [],
+                  "count": 2,
+                  "weaponId": "KAsYqgPq",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "2x CCW (A4)"
                 }
@@ -552,30 +557,33 @@
               ],
               "gains": [
                 {
-                  "name": "Heavy Burst Pistol",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Heavy Burst Pistol",
                   "range": 12,
                   "attacks": 3,
-                  "weaponId": "6sST-40n",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "6sST-40n",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Heavy Burst Pistol (12\", A3, AP(1))"
                 },
                 {
-                  "name": "CCW",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "CCW",
                   "range": 0,
                   "attacks": 4,
-                  "weaponId": "KAsYqgPq",
                   "specialRules": [],
+                  "count": 1,
+                  "weaponId": "KAsYqgPq",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "CCW (A4)"
                 }
@@ -596,32 +604,35 @@
               ],
               "gains": [
                 {
-                  "name": "Knife",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
-                  "range": 0,
-                  "attacks": 1,
-                  "weaponId": "XPTwZbHj",
-                  "specialRules": [],
-                  "attacksMultiplier": 1,
-                  "label": "Knife (A1)"
-                },
-                {
                   "name": "Heavy Burst Pistol",
-                  "type": "ArmyBookWeapon",
-                  "count": "02",
                   "range": 12,
                   "attacks": 3,
-                  "weaponId": "6sST-40n",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     }
                   ],
+                  "count": 2,
+                  "weaponId": "6sST-40n",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "2x Heavy Burst Pistol (12\", A3, AP(1))"
+                },
+                {
+                  "type": "ArmyBookWeapon",
+                  "name": "Knife",
+                  "range": 0,
+                  "attacks": 1,
+                  "specialRules": [],
+                  "count": 1,
+                  "weaponId": "XPTwZbHj",
+                  "id": null,
+                  "attacksMultiplier": 1,
+                  "label": "Knife (A1)"
                 }
               ],
               "label": "2x Heavy Burst Pistol (12\", A3, AP(1)), Knife (A1)",
@@ -640,24 +651,27 @@
               ],
               "gains": [
                 {
-                  "name": "Heavy Piercing Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Heavy Piercing Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "P3kk-Hi-",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 3
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "_mrPya5SXSqW",
                       "name": "Deadly",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "P3kk-Hi-",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Heavy Piercing Weapon (A2, AP(3), Deadly(3))"
                 }
@@ -678,23 +692,26 @@
               ],
               "gains": [
                 {
-                  "name": "Heavy Blade Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Heavy Blade Weapon",
                   "range": 0,
                   "attacks": 8,
-                  "weaponId": "vK9Qtr_E",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 2
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
                       "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "vK9Qtr_E",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Heavy Blade Weapon (A8, AP(2), Rending)"
                 }
@@ -715,19 +732,21 @@
               ],
               "gains": [
                 {
-                  "name": "Heavy Great Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Heavy Great Weapon",
                   "range": 0,
                   "attacks": 8,
-                  "weaponId": "KSSfqMFy",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 4
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "KSSfqMFy",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Heavy Great Weapon (A8, AP(4))"
                 }
@@ -746,7 +765,7 @@
           ]
         },
         {
-          "id": "8HpiTwc",
+          "id": "7g1ZoWx",
           "uid": "r08ZQ",
           "label": "Replace any Heavy Burst Pistol",
           "options": [
@@ -762,20 +781,21 @@
               ],
               "gains": [
                 {
-                  "name": "Twin Plasma Pistol",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Twin Plasma Pistol",
                   "range": 12,
                   "attacks": 2,
-                  "weaponId": "sJdjS8HS",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
-                      "type": "ArmyBookRule",
                       "rating": 4
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "sJdjS8HS",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Twin Plasma Pistol (12\", A2, AP(4))"
                 }
@@ -796,7 +816,7 @@
           ]
         },
         {
-          "id": "B4BIeX2",
+          "id": "Zma27CT",
           "uid": "_z0Ag",
           "label": "Replace Heavy Burst Pistol",
           "options": [
@@ -812,19 +832,20 @@
               ],
               "gains": [
                 {
-                  "name": "Twin Shred Pistol",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Twin Shred Pistol",
                   "range": 9,
                   "attacks": 4,
-                  "weaponId": "f_AnKK0I",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
-                      "name": "Rending",
-                      "type": "ArmyBookRule"
+                      "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "f_AnKK0I",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Twin Shred Pistol (9\", A4, Rending)"
                 }
@@ -845,25 +866,26 @@
               ],
               "gains": [
                 {
-                  "name": "Twin Flamer Pistol",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Twin Flamer Pistol",
                   "range": 6,
                   "attacks": 2,
-                  "weaponId": "G2CgOM0B",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "w_vX0mi58KKt",
                       "name": "Blast",
-                      "type": "ArmyBookRule",
                       "rating": 3
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "Zx4mWN0SbmK8",
-                      "name": "Reliable",
-                      "type": "ArmyBookRule"
+                      "name": "Reliable"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "G2CgOM0B",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Twin Flamer Pistol (6\", A2, Blast(3), Reliable)"
                 }
@@ -884,19 +906,20 @@
               ],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Brute Slammer",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Brute Slammer",
                   "range": 12,
                   "attacks": 4,
-                  "weaponId": "XOo29Bzt",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "IEJp3a4vE0CB",
                       "name": "Shred"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "XOo29Bzt",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Brute Slammer (12\", A4, Shred)"
                 }
@@ -917,26 +940,27 @@
               ],
               "gains": [
                 {
-                  "name": "Twin Fusion Pistol",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Twin Fusion Pistol",
                   "range": 6,
                   "attacks": 2,
-                  "weaponId": "qisqNTB6",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
-                      "type": "ArmyBookRule",
                       "rating": 4
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "_mrPya5SXSqW",
                       "name": "Deadly",
-                      "type": "ArmyBookRule",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "qisqNTB6",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Twin Fusion Pistol (6\", A2, AP(4), Deadly(3))"
                 }
@@ -957,19 +981,21 @@
               ],
               "gains": [
                 {
-                  "name": "Master Shotgun",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Master Shotgun",
                   "range": 12,
                   "attacks": 6,
-                  "weaponId": "qRiHYtdf",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "qRiHYtdf",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Master Shotgun (12\", A6, AP(1))"
                 }
@@ -990,19 +1016,21 @@
               ],
               "gains": [
                 {
-                  "name": "Master Heavy Burst Rifle",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Master Heavy Burst Rifle",
                   "range": 24,
                   "attacks": 6,
-                  "weaponId": "ic7j3rg9",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "ic7j3rg9",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Master Heavy Burst Rifle (24\", A6, AP(1))"
                 }
@@ -1023,23 +1051,26 @@
               ],
               "gains": [
                 {
-                  "name": "Master Sniper Rifle",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Master Sniper Rifle",
                   "range": 30,
                   "attacks": 3,
-                  "weaponId": "porxjv8v",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "Zx4mWN0SbmK8",
                       "name": "Reliable"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "porxjv8v",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Master Sniper Rifle (30\", A3, AP(1), Reliable)"
                 }
@@ -1057,7 +1088,7 @@
           ]
         },
         {
-          "id": "dUfg8xz",
+          "id": "BxDHfmr",
           "uid": "TXGoU",
           "label": "Take one Master Heavy Burst Rifle attachment",
           "options": [
@@ -1074,33 +1105,33 @@
               ],
               "gains": [
                 {
-                  "id": "47-_8oV8",
-                  "name": "Flamer-Mod",
                   "type": "ArmyBookWeapon",
+                  "name": "Flamer-Mod",
                   "range": 12,
                   "attacks": 1,
-                  "weaponId": "mwWKIwKI",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "w_vX0mi58KKt",
                       "name": "Blast",
-                      "type": "ArmyBookRule",
                       "rating": 3
                     },
                     {
-                      "id": "Zx4mWN0SbmK8",
-                      "name": "Reliable",
-                      "type": "ArmyBookRule"
+                      "type": "ArmyBookRule",
+                      "id": "9042COVrLCsI",
+                      "name": "Limited"
                     },
                     {
-                      "id": "9042COVrLCsI",
-                      "name": "Limited",
-                      "type": "ArmyBookRule"
+                      "type": "ArmyBookRule",
+                      "id": "Zx4mWN0SbmK8",
+                      "name": "Reliable"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "mwWKIwKI",
+                  "id": "47-_8oV8",
                   "attacksMultiplier": 1,
-                  "label": "Flamer-Mod (12\", A1, Blast(3), Limited, Reliable)",
-                  "count": 1
+                  "label": "Flamer-Mod (12\", A1, Blast(3), Limited, Reliable)"
                 }
               ],
               "label": "Flamer-Mod (12\", A1, Blast(3), Limited, Reliable)",
@@ -1122,28 +1153,28 @@
               ],
               "gains": [
                 {
-                  "id": "7NUs5765",
-                  "name": "Plasma-Mod",
                   "type": "ArmyBookWeapon",
+                  "name": "Plasma-Mod",
                   "range": 24,
                   "attacks": 1,
-                  "weaponId": "ZAiPbvUy",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
-                      "type": "ArmyBookRule",
                       "rating": 4
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "9042COVrLCsI",
-                      "name": "Limited",
-                      "type": "ArmyBookRule"
+                      "name": "Limited"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "ZAiPbvUy",
+                  "id": "7NUs5765",
                   "attacksMultiplier": 1,
-                  "label": "Plasma-Mod (24\", A1, AP(4), Limited)",
-                  "count": 1
+                  "label": "Plasma-Mod (24\", A1, AP(4), Limited)"
                 }
               ],
               "label": "Plasma-Mod (24\", A1, AP(4), Limited)",
@@ -1164,24 +1195,25 @@
               ],
               "gains": [
                 {
-                  "name": "Shred-Mod",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Shred-Mod",
                   "range": 18,
                   "attacks": 2,
-                  "weaponId": "03cs-EII",
                   "specialRules": [
                     {
-                      "id": "cavWDboL4ubs",
-                      "name": "Rending",
-                      "type": "ArmyBookRule"
+                      "type": "ArmyBookRule",
+                      "id": "9042COVrLCsI",
+                      "name": "Limited"
                     },
                     {
-                      "id": "9042COVrLCsI",
-                      "name": "Limited",
-                      "type": "ArmyBookRule"
+                      "type": "ArmyBookRule",
+                      "id": "cavWDboL4ubs",
+                      "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "03cs-EII",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Shred-Mod (18\", A2, Limited, Rending)"
                 }
@@ -1205,34 +1237,34 @@
               ],
               "gains": [
                 {
-                  "id": "DVoQqXlC",
-                  "name": "Fusion-Mod",
                   "type": "ArmyBookWeapon",
+                  "name": "Fusion-Mod",
                   "range": 12,
                   "attacks": 1,
-                  "weaponId": "bqCLJdNS",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
-                      "type": "ArmyBookRule",
                       "rating": 4
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "_mrPya5SXSqW",
                       "name": "Deadly",
-                      "type": "ArmyBookRule",
                       "rating": 3
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "9042COVrLCsI",
-                      "name": "Limited",
-                      "type": "ArmyBookRule"
+                      "name": "Limited"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "bqCLJdNS",
+                  "id": "DVoQqXlC",
                   "attacksMultiplier": 1,
-                  "label": "Fusion-Mod (12\", A1, AP(4), Deadly(3), Limited)",
-                  "count": 1
+                  "label": "Fusion-Mod (12\", A1, AP(4), Deadly(3), Limited)"
                 }
               ],
               "label": "Fusion-Mod (12\", A1, AP(4), Deadly(3), Limited)",
@@ -1253,23 +1285,25 @@
               ],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Slammer-Mod",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Slammer-Mod",
                   "range": 12,
                   "attacks": 4,
-                  "weaponId": "SZG9r6Yi",
                   "specialRules": [
                     {
-                      "id": "IEJp3a4vE0CB",
-                      "name": "Shred"
-                    },
-                    {
+                      "type": "ArmyBookRule",
                       "id": "9042COVrLCsI",
                       "name": "Limited"
+                    },
+                    {
+                      "type": "ArmyBookRule",
+                      "id": "IEJp3a4vE0CB",
+                      "name": "Shred"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "SZG9r6Yi",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Slammer-Mod (12\", A4, Limited, Shred)"
                 }
@@ -1291,7 +1325,7 @@
           ]
         },
         {
-          "id": "av-VG4w",
+          "id": "TZpsTTS",
           "uid": "PrBZ3",
           "label": "Replace any CCW",
           "options": [
@@ -1307,23 +1341,26 @@
               ],
               "gains": [
                 {
-                  "name": "Blade Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Blade Weapon",
                   "range": 0,
                   "attacks": 4,
-                  "weaponId": "KIMjxeis",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
                       "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "KIMjxeis",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Blade Weapon (A4, AP(1), Rending)"
                 }
@@ -1344,19 +1381,21 @@
               ],
               "gains": [
                 {
-                  "name": "Great Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Great Weapon",
                   "range": 0,
                   "attacks": 4,
-                  "weaponId": "I7feQmU6",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "I7feQmU6",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Great Weapon (A4, AP(3))"
                 }
@@ -1377,7 +1416,7 @@
           ]
         },
         {
-          "id": "akNfuEe",
+          "id": "ErE5JZm",
           "uid": "crB5p",
           "label": "Upgrade with",
           "options": [
@@ -1394,16 +1433,17 @@
               ],
               "gains": [
                 {
-                  "name": "Beast Companion",
                   "type": "ArmyBookItem",
-                  "label": "Beast Companion (Repel Ambushers)",
+                  "name": "Beast Companion",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "C6MzEy1CnxTs",
-                      "name": "Repel Ambushers",
-                      "type": "ArmyBookRule"
+                      "name": "Repel Ambushers"
                     }
                   ],
+                  "bases": null,
+                  "label": "Beast Companion (Repel Ambushers)",
                   "count": 1
                 }
               ],
@@ -1426,7 +1466,7 @@
       "hint": "Veteran Fighters",
       "sections": [
         {
-          "id": "3B2TwtH",
+          "id": "vakXmg7",
           "uid": "spZWF",
           "label": "Replace any 2x CCW",
           "options": [
@@ -1442,28 +1482,29 @@
               ],
               "gains": [
                 {
-                  "name": "Hand Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Hand Weapon",
                   "range": 0,
                   "attacks": 4,
-                  "weaponId": "oxAoEHnd",
                   "specialRules": [],
+                  "count": 1,
+                  "weaponId": "oxAoEHnd",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Hand Weapon (A4)"
                 },
                 {
-                  "name": "Combat Shield",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Combat Shield (Shielded)",
+                  "name": "Combat Shield",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "wsqfB0fq69eG",
-                      "name": "Shielded",
-                      "type": "ArmyBookRule"
+                      "name": "Shielded"
                     }
                   ],
+                  "bases": null,
+                  "label": "Combat Shield (Shielded)",
                   "count": 1
                 }
               ],
@@ -1483,32 +1524,35 @@
               ],
               "gains": [
                 {
-                  "name": "Knife",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
-                  "range": 0,
-                  "attacks": 1,
-                  "weaponId": "XPTwZbHj",
-                  "specialRules": [],
-                  "attacksMultiplier": 1,
-                  "label": "Knife (A1)"
-                },
-                {
                   "name": "Twin Heavy Burst Pistol",
-                  "type": "ArmyBookWeapon",
-                  "count": 1,
                   "range": 12,
                   "attacks": 4,
-                  "weaponId": "ezVf1qqo",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "ezVf1qqo",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Twin Heavy Burst Pistol (12\", A4, AP(1))"
+                },
+                {
+                  "type": "ArmyBookWeapon",
+                  "name": "Knife",
+                  "range": 0,
+                  "attacks": 1,
+                  "specialRules": [],
+                  "count": 1,
+                  "weaponId": "XPTwZbHj",
+                  "id": null,
+                  "attacksMultiplier": 1,
+                  "label": "Knife (A1)"
                 }
               ],
               "label": "Twin Heavy Burst Pistol (12\", A4, AP(1)), Knife (A1)",
@@ -1527,45 +1571,47 @@
               ],
               "gains": [
                 {
-                  "name": "Heavy Burst Pistol",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Heavy Burst Pistol",
                   "range": 12,
                   "attacks": 3,
-                  "weaponId": "6sST-40n",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "6sST-40n",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Heavy Burst Pistol (12\", A3, AP(1))"
                 },
                 {
-                  "name": "Combat Shield",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Combat Shield (Bash (A1), Shielded)",
+                  "name": "Combat Shield",
                   "content": [
                     {
-                      "id": "wsqfB0fq69eG",
-                      "name": "Shielded",
-                      "type": "ArmyBookRule"
-                    },
-                    {
-                      "name": "Bash",
                       "type": "ArmyBookWeapon",
-                      "count": 1,
+                      "name": "Bash",
                       "range": 0,
                       "attacks": 1,
-                      "weaponId": "_9QIOlsl",
                       "specialRules": [],
-                      "attacksMultiplier": 1,
-                      "label": "Bash (A1)"
+                      "count": 1,
+                      "weaponId": "_9QIOlsl",
+                      "id": null,
+                      "attacksMultiplier": 1
+                    },
+                    {
+                      "type": "ArmyBookRule",
+                      "id": "wsqfB0fq69eG",
+                      "name": "Shielded"
                     }
                   ],
+                  "bases": null,
+                  "label": "Combat Shield (Bash (A1), Shielded)",
                   "count": 1
                 }
               ],
@@ -1585,30 +1631,33 @@
               ],
               "gains": [
                 {
-                  "name": "Heavy Burst Pistol",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Heavy Burst Pistol",
                   "range": 12,
                   "attacks": 3,
-                  "weaponId": "6sST-40n",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "6sST-40n",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Heavy Burst Pistol (12\", A3, AP(1))"
                 },
                 {
-                  "name": "Hand Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Hand Weapon",
                   "range": 0,
                   "attacks": 4,
-                  "weaponId": "oxAoEHnd",
                   "specialRules": [],
+                  "count": 1,
+                  "weaponId": "oxAoEHnd",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Hand Weapon (A4)"
                 }
@@ -1629,7 +1678,7 @@
           ]
         },
         {
-          "id": "ZfmR_t0",
+          "id": "k2L2udh",
           "uid": "zjqHh",
           "label": "Replace 2x CCW",
           "options": [
@@ -1645,19 +1694,21 @@
               ],
               "gains": [
                 {
-                  "name": "Heavy Smashing Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Heavy Smashing Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "nGSEoO0z",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "w_vX0mi58KKt",
                       "name": "Blast",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "nGSEoO0z",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Heavy Smashing Weapon (A2, Blast(3))"
                 }
@@ -1678,24 +1729,27 @@
               ],
               "gains": [
                 {
-                  "name": "Heavy Piercing Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Heavy Piercing Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "ie_yQ4-x",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 2
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "_mrPya5SXSqW",
                       "name": "Deadly",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "ie_yQ4-x",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Heavy Piercing Weapon (A2, AP(2), Deadly(3))"
                 }
@@ -1716,23 +1770,26 @@
               ],
               "gains": [
                 {
-                  "name": "Heavy Blade Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Heavy Blade Weapon",
                   "range": 0,
                   "attacks": 6,
-                  "weaponId": "1pb4yJFf",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
                       "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "1pb4yJFf",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Heavy Blade Weapon (A6, AP(1), Rending)"
                 }
@@ -1753,19 +1810,21 @@
               ],
               "gains": [
                 {
-                  "name": "Heavy Great Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Heavy Great Weapon",
                   "range": 0,
                   "attacks": 6,
-                  "weaponId": "QLQMCrz3",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 4
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "QLQMCrz3",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Heavy Great Weapon (A6, AP(4))"
                 }
@@ -1783,7 +1842,7 @@
           ]
         },
         {
-          "id": "IMJXUYI",
+          "id": "YouYfyz",
           "uid": "kpibf",
           "label": "Replace any Heavy Burst Pistol",
           "options": [
@@ -1799,19 +1858,20 @@
               ],
               "gains": [
                 {
-                  "name": "Twin Shred Pistol",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Twin Shred Pistol",
                   "range": 9,
                   "attacks": 4,
-                  "weaponId": "f_AnKK0I",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
-                      "name": "Rending",
-                      "type": "ArmyBookRule"
+                      "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "f_AnKK0I",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Twin Shred Pistol (9\", A4, Rending)"
                 }
@@ -1832,19 +1892,21 @@
               ],
               "gains": [
                 {
-                  "name": "Shotgun",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Shotgun",
                   "range": 12,
                   "attacks": 4,
-                  "weaponId": "Fqaf27Pb",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "Fqaf27Pb",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Shotgun (12\", A4, AP(1))"
                 }
@@ -1865,20 +1927,21 @@
               ],
               "gains": [
                 {
-                  "name": "Twin Plasma Pistol",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Twin Plasma Pistol",
                   "range": 12,
                   "attacks": 2,
-                  "weaponId": "sJdjS8HS",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
-                      "type": "ArmyBookRule",
                       "rating": 4
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "sJdjS8HS",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Twin Plasma Pistol (12\", A2, AP(4))"
                 }
@@ -1899,19 +1962,20 @@
               ],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Brute Slammer",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Brute Slammer",
                   "range": 12,
                   "attacks": 4,
-                  "weaponId": "XOo29Bzt",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "IEJp3a4vE0CB",
                       "name": "Shred"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "XOo29Bzt",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Brute Slammer (12\", A4, Shred)"
                 }
@@ -1932,7 +1996,7 @@
           ]
         },
         {
-          "id": "iflKMi9",
+          "id": "4lkY2uP",
           "uid": "-PdAR",
           "label": "Replace Heavy Burst Pistol",
           "options": [
@@ -1948,25 +2012,26 @@
               ],
               "gains": [
                 {
-                  "name": "Twin Flamer Pistol",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Twin Flamer Pistol",
                   "range": 6,
                   "attacks": 2,
-                  "weaponId": "G2CgOM0B",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "w_vX0mi58KKt",
                       "name": "Blast",
-                      "type": "ArmyBookRule",
                       "rating": 3
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "Zx4mWN0SbmK8",
-                      "name": "Reliable",
-                      "type": "ArmyBookRule"
+                      "name": "Reliable"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "G2CgOM0B",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Twin Flamer Pistol (6\", A2, Blast(3), Reliable)"
                 }
@@ -1987,26 +2052,27 @@
               ],
               "gains": [
                 {
-                  "name": "Twin Fusion Pistol",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Twin Fusion Pistol",
                   "range": 6,
                   "attacks": 2,
-                  "weaponId": "qisqNTB6",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
-                      "type": "ArmyBookRule",
                       "rating": 4
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "_mrPya5SXSqW",
                       "name": "Deadly",
-                      "type": "ArmyBookRule",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "qisqNTB6",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Twin Fusion Pistol (6\", A2, AP(4), Deadly(3))"
                 }
@@ -2024,7 +2090,7 @@
           ]
         },
         {
-          "id": "yogjuaI",
+          "id": "OByOi2y",
           "uid": "3iZWe",
           "label": "Replace any Hand Weapon",
           "options": [
@@ -2040,23 +2106,26 @@
               ],
               "gains": [
                 {
-                  "name": "Blade Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Blade Weapon",
                   "range": 0,
                   "attacks": 4,
-                  "weaponId": "KIMjxeis",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
                       "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "KIMjxeis",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Blade Weapon (A4, AP(1), Rending)"
                 }
@@ -2077,19 +2146,21 @@
               ],
               "gains": [
                 {
-                  "name": "Great Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Great Weapon",
                   "range": 0,
                   "attacks": 4,
-                  "weaponId": "I7feQmU6",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "I7feQmU6",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Great Weapon (A4, AP(3))"
                 }
@@ -2110,7 +2181,7 @@
           ]
         },
         {
-          "id": "s3CkVfe",
+          "id": "SS0aTIB",
           "uid": "HKNxf",
           "label": "Replace any CCW",
           "options": [
@@ -2126,25 +2197,26 @@
               ],
               "gains": [
                 {
-                  "name": "Energy Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Energy Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "5X21-brQ",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
-                      "type": "ArmyBookRule",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
-                      "name": "Rending",
-                      "type": "ArmyBookRule"
+                      "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "5X21-brQ",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Energy Weapon (A2, AP(1), Rending)"
                 }
@@ -2165,19 +2237,21 @@
               ],
               "gains": [
                 {
-                  "name": "Great Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Great Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "fjMoPeFE",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "fjMoPeFE",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Great Weapon (A2, AP(3))"
                 }
@@ -2205,7 +2279,7 @@
       "hint": "Veteran Gunners",
       "sections": [
         {
-          "id": "Ug8r7-P",
+          "id": "l9wBtgR",
           "uid": "F37T4",
           "label": "Replace Heavy Burst Rifle",
           "options": [
@@ -2221,25 +2295,26 @@
               ],
               "gains": [
                 {
-                  "name": "Twin Sniper Rifle",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Twin Sniper Rifle",
                   "range": 30,
                   "attacks": 2,
-                  "weaponId": "72dIizlI",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
-                      "type": "ArmyBookRule",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "Zx4mWN0SbmK8",
-                      "name": "Reliable",
-                      "type": "ArmyBookRule"
+                      "name": "Reliable"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "72dIizlI",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Twin Sniper Rifle (30\", A2, AP(1), Reliable)"
                 }
@@ -2260,30 +2335,32 @@
               ],
               "gains": [
                 {
-                  "name": "Twin Heavy Flamer",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Twin Heavy Flamer",
                   "range": 12,
                   "attacks": 2,
-                  "weaponId": "4ORrcD9V",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "w_vX0mi58KKt",
                       "name": "Blast",
-                      "type": "ArmyBookRule",
                       "rating": 3
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "Zx4mWN0SbmK8",
-                      "name": "Reliable",
-                      "type": "ArmyBookRule"
+                      "name": "Reliable"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "4ORrcD9V",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Twin Heavy Flamer (12\", A2, AP(1), Blast(3), Reliable)"
                 }
@@ -2304,26 +2381,27 @@
               ],
               "gains": [
                 {
-                  "name": "Twin Rocket Launcher",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Twin Rocket Launcher",
                   "range": 18,
                   "attacks": 2,
-                  "weaponId": "OtUqzXXV",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
-                      "type": "ArmyBookRule",
                       "rating": 2
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "_mrPya5SXSqW",
                       "name": "Deadly",
-                      "type": "ArmyBookRule",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "OtUqzXXV",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Twin Rocket Launcher (18\", A2, AP(2), Deadly(3))"
                 }
@@ -2344,19 +2422,20 @@
               ],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Brute Heavy Slammer",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Brute Heavy Slammer",
                   "range": 24,
                   "attacks": 6,
-                  "weaponId": "3npJ3atf",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "IEJp3a4vE0CB",
                       "name": "Shred"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "3npJ3atf",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Brute Heavy Slammer (24\", A6, Shred)"
                 }
@@ -2377,19 +2456,21 @@
               ],
               "gains": [
                 {
-                  "name": "Twin Heavy Machinegun",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Twin Heavy Machinegun",
                   "range": 30,
                   "attacks": 6,
-                  "weaponId": "rKG95U4w",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "rKG95U4w",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Twin Heavy Machinegun (30\", A6, AP(1))"
                 }
@@ -2407,7 +2488,7 @@
           ]
         },
         {
-          "id": "8UYi_ai",
+          "id": "GFeQt0z",
           "uid": "X-DN_",
           "label": "Take one Heavy Burst Rifle attachment",
           "options": [
@@ -2424,30 +2505,31 @@
               ],
               "gains": [
                 {
-                  "name": "Flamer-Mod",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Flamer-Mod",
                   "range": 12,
                   "attacks": 1,
-                  "weaponId": "mwWKIwKI",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "w_vX0mi58KKt",
                       "name": "Blast",
-                      "type": "ArmyBookRule",
                       "rating": 3
                     },
                     {
-                      "id": "Zx4mWN0SbmK8",
-                      "name": "Reliable",
-                      "type": "ArmyBookRule"
+                      "type": "ArmyBookRule",
+                      "id": "9042COVrLCsI",
+                      "name": "Limited"
                     },
                     {
-                      "id": "9042COVrLCsI",
-                      "name": "Limited",
-                      "type": "ArmyBookRule"
+                      "type": "ArmyBookRule",
+                      "id": "Zx4mWN0SbmK8",
+                      "name": "Reliable"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "mwWKIwKI",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Flamer-Mod (12\", A1, Blast(3), Limited, Reliable)"
                 }
@@ -2469,25 +2551,26 @@
               ],
               "gains": [
                 {
-                  "name": "Plasma-Mod",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Plasma-Mod",
                   "range": 24,
                   "attacks": 1,
-                  "weaponId": "ZAiPbvUy",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
-                      "type": "ArmyBookRule",
                       "rating": 4
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "9042COVrLCsI",
-                      "name": "Limited",
-                      "type": "ArmyBookRule"
+                      "name": "Limited"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "ZAiPbvUy",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Plasma-Mod (24\", A1, AP(4), Limited)"
                 }
@@ -2508,24 +2591,25 @@
               ],
               "gains": [
                 {
-                  "name": "Shred-Mod",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Shred-Mod",
                   "range": 18,
                   "attacks": 2,
-                  "weaponId": "03cs-EII",
                   "specialRules": [
                     {
-                      "id": "cavWDboL4ubs",
-                      "name": "Rending",
-                      "type": "ArmyBookRule"
+                      "type": "ArmyBookRule",
+                      "id": "9042COVrLCsI",
+                      "name": "Limited"
                     },
                     {
-                      "id": "9042COVrLCsI",
-                      "name": "Limited",
-                      "type": "ArmyBookRule"
+                      "type": "ArmyBookRule",
+                      "id": "cavWDboL4ubs",
+                      "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "03cs-EII",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Shred-Mod (18\", A2, Limited, Rending)"
                 }
@@ -2549,34 +2633,34 @@
               ],
               "gains": [
                 {
-                  "id": "DVoQqXlC",
-                  "name": "Fusion-Mod",
                   "type": "ArmyBookWeapon",
+                  "name": "Fusion-Mod",
                   "range": 12,
                   "attacks": 1,
-                  "weaponId": "bqCLJdNS",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
-                      "type": "ArmyBookRule",
                       "rating": 4
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "_mrPya5SXSqW",
                       "name": "Deadly",
-                      "type": "ArmyBookRule",
                       "rating": 3
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "9042COVrLCsI",
-                      "name": "Limited",
-                      "type": "ArmyBookRule"
+                      "name": "Limited"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "bqCLJdNS",
+                  "id": "DVoQqXlC",
                   "attacksMultiplier": 1,
-                  "label": "Fusion-Mod (12\", A1, AP(4), Deadly(3), Limited)",
-                  "count": 1
+                  "label": "Fusion-Mod (12\", A1, AP(4), Deadly(3), Limited)"
                 }
               ],
               "label": "Fusion-Mod (12\", A1, AP(4), Deadly(3), Limited)",
@@ -2597,23 +2681,25 @@
               ],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Slammer-Mod",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Slammer-Mod",
                   "range": 12,
                   "attacks": 4,
-                  "weaponId": "SZG9r6Yi",
                   "specialRules": [
                     {
-                      "id": "IEJp3a4vE0CB",
-                      "name": "Shred"
-                    },
-                    {
+                      "type": "ArmyBookRule",
                       "id": "9042COVrLCsI",
                       "name": "Limited"
+                    },
+                    {
+                      "type": "ArmyBookRule",
+                      "id": "IEJp3a4vE0CB",
+                      "name": "Shred"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "SZG9r6Yi",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Slammer-Mod (12\", A4, Limited, Shred)"
                 }
@@ -2642,7 +2728,7 @@
       "hint": "Fighters",
       "sections": [
         {
-          "id": "crQfWc4",
+          "id": "sjc6VWk",
           "uid": "XyVnQ",
           "label": "Replace any 2x CCW",
           "options": [
@@ -2658,26 +2744,28 @@
               ],
               "gains": [
                 {
-                  "name": "Knife",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
-                  "range": 0,
-                  "attacks": 1,
-                  "weaponId": "XPTwZbHj",
-                  "specialRules": [],
-                  "attacksMultiplier": 1,
-                  "label": "Knife (A1)"
-                },
-                {
                   "name": "Twin Burst Pistol",
-                  "type": "ArmyBookWeapon",
-                  "count": 1,
                   "range": 12,
                   "attacks": 4,
-                  "weaponId": "QKNy6Hra",
                   "specialRules": [],
+                  "count": 1,
+                  "weaponId": "QKNy6Hra",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Twin Burst Pistol (12\", A4)"
+                },
+                {
+                  "type": "ArmyBookWeapon",
+                  "name": "Knife",
+                  "range": 0,
+                  "attacks": 1,
+                  "specialRules": [],
+                  "count": 1,
+                  "weaponId": "XPTwZbHj",
+                  "id": null,
+                  "attacksMultiplier": 1,
+                  "label": "Knife (A1)"
                 }
               ],
               "label": "Twin Burst Pistol (12\", A4), Knife (A1)",
@@ -2696,39 +2784,40 @@
               ],
               "gains": [
                 {
-                  "name": "Burst Pistol",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Burst Pistol",
                   "range": 12,
                   "attacks": 3,
-                  "weaponId": "C87QXEWW",
                   "specialRules": [],
+                  "count": 1,
+                  "weaponId": "C87QXEWW",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Burst Pistol (12\", A3)"
                 },
                 {
-                  "name": "Combat Shield",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Combat Shield (Bash (A1), Shielded)",
+                  "name": "Combat Shield",
                   "content": [
                     {
-                      "id": "wsqfB0fq69eG",
-                      "name": "Shielded",
-                      "type": "ArmyBookRule"
-                    },
-                    {
-                      "name": "Bash",
                       "type": "ArmyBookWeapon",
-                      "count": 1,
+                      "name": "Bash",
                       "range": 0,
                       "attacks": 1,
-                      "weaponId": "_9QIOlsl",
                       "specialRules": [],
-                      "attacksMultiplier": 1,
-                      "label": "Bash (A1)"
+                      "count": 1,
+                      "weaponId": "_9QIOlsl",
+                      "id": null,
+                      "attacksMultiplier": 1
+                    },
+                    {
+                      "type": "ArmyBookRule",
+                      "id": "wsqfB0fq69eG",
+                      "name": "Shielded"
                     }
                   ],
+                  "bases": null,
+                  "label": "Combat Shield (Bash (A1), Shielded)",
                   "count": 1
                 }
               ],
@@ -2748,28 +2837,29 @@
               ],
               "gains": [
                 {
-                  "name": "Hand Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Hand Weapon",
                   "range": 0,
                   "attacks": 4,
-                  "weaponId": "oxAoEHnd",
                   "specialRules": [],
+                  "count": 1,
+                  "weaponId": "oxAoEHnd",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Hand Weapon (A4)"
                 },
                 {
-                  "name": "Combat Shield",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Combat Shield (Shielded)",
+                  "name": "Combat Shield",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "wsqfB0fq69eG",
-                      "name": "Shielded",
-                      "type": "ArmyBookRule"
+                      "name": "Shielded"
                     }
                   ],
+                  "bases": null,
+                  "label": "Combat Shield (Shielded)",
                   "count": 1
                 }
               ],
@@ -2789,24 +2879,26 @@
               ],
               "gains": [
                 {
-                  "name": "Burst Pistol",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Burst Pistol",
                   "range": 12,
                   "attacks": 3,
-                  "weaponId": "C87QXEWW",
                   "specialRules": [],
+                  "count": 1,
+                  "weaponId": "C87QXEWW",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Burst Pistol (12\", A3)"
                 },
                 {
-                  "name": "Hand Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Hand Weapon",
                   "range": 0,
                   "attacks": 4,
-                  "weaponId": "oxAoEHnd",
                   "specialRules": [],
+                  "count": 1,
+                  "weaponId": "oxAoEHnd",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Hand Weapon (A4)"
                 }
@@ -2827,7 +2919,7 @@
           ]
         },
         {
-          "id": "kPVI7_N",
+          "id": "_gyZ6vU",
           "uid": "kdAV2",
           "label": "Replace Burst Pistol",
           "options": [
@@ -2843,20 +2935,21 @@
               ],
               "gains": [
                 {
-                  "name": "Twin Plasma Pistol",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Twin Plasma Pistol",
                   "range": 12,
                   "attacks": 2,
-                  "weaponId": "sJdjS8HS",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
-                      "type": "ArmyBookRule",
                       "rating": 4
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "sJdjS8HS",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Twin Plasma Pistol (12\", A2, AP(4))"
                 }
@@ -2877,19 +2970,21 @@
               ],
               "gains": [
                 {
-                  "name": "Shotgun",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Shotgun",
                   "range": 12,
                   "attacks": 4,
-                  "weaponId": "Fqaf27Pb",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "Fqaf27Pb",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Shotgun (12\", A4, AP(1))"
                 }
@@ -2910,19 +3005,20 @@
               ],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Brute Slammer",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Brute Slammer",
                   "range": 12,
                   "attacks": 4,
-                  "weaponId": "XOo29Bzt",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "IEJp3a4vE0CB",
                       "name": "Shred"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "XOo29Bzt",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Brute Slammer (12\", A4, Shred)"
                 }
@@ -2943,19 +3039,20 @@
               ],
               "gains": [
                 {
-                  "name": "Twin Shred Pistol",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Twin Shred Pistol",
                   "range": 9,
                   "attacks": 4,
-                  "weaponId": "f_AnKK0I",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
-                      "name": "Rending",
-                      "type": "ArmyBookRule"
+                      "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "f_AnKK0I",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Twin Shred Pistol (9\", A4, Rending)"
                 }
@@ -2973,7 +3070,7 @@
           ]
         },
         {
-          "id": "Kbxqmpt",
+          "id": "swR7djg",
           "uid": "b_a8d",
           "label": "Replace any Hand Weapon",
           "options": [
@@ -2989,23 +3086,26 @@
               ],
               "gains": [
                 {
-                  "name": "Blade Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Blade Weapon",
                   "range": 0,
                   "attacks": 4,
-                  "weaponId": "KIMjxeis",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
                       "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "KIMjxeis",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Blade Weapon (A4, AP(1), Rending)"
                 }
@@ -3026,19 +3126,21 @@
               ],
               "gains": [
                 {
-                  "name": "Great Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Great Weapon",
                   "range": 0,
                   "attacks": 4,
-                  "weaponId": "I7feQmU6",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "I7feQmU6",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Great Weapon (A4, AP(3))"
                 }
@@ -3059,7 +3161,7 @@
           ]
         },
         {
-          "id": "R7m3eUk",
+          "id": "5x9oQAr",
           "uid": "XoOJw",
           "label": "Replace any CCW",
           "options": [
@@ -3075,19 +3177,21 @@
               ],
               "gains": [
                 {
-                  "name": "Great Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Great Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "fjMoPeFE",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "fjMoPeFE",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Great Weapon (A2, AP(3))"
                 }
@@ -3108,25 +3212,26 @@
               ],
               "gains": [
                 {
-                  "name": "Energy Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Energy Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "5X21-brQ",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
-                      "type": "ArmyBookRule",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
-                      "name": "Rending",
-                      "type": "ArmyBookRule"
+                      "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "5X21-brQ",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Energy Weapon (A2, AP(1), Rending)"
                 }
@@ -3154,7 +3259,7 @@
       "hint": "Gunners",
       "sections": [
         {
-          "id": "xpUMSha",
+          "id": "l6v1pM0",
           "uid": "hcsQa",
           "label": "Replace Brute Handgun",
           "options": [
@@ -3170,19 +3275,21 @@
               ],
               "gains": [
                 {
-                  "name": "Twin Plasma Rifle",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Twin Plasma Rifle",
                   "range": 24,
                   "attacks": 2,
-                  "weaponId": "0B4V90Ve",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 4
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "0B4V90Ve",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Twin Plasma Rifle (24\", A2, AP(4))"
                 }
@@ -3203,20 +3310,21 @@
               ],
               "gains": [
                 {
-                  "name": "Twin Grenade Launcher",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Twin Grenade Launcher",
                   "range": 24,
                   "attacks": 2,
-                  "weaponId": "XEzKuy78",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "w_vX0mi58KKt",
                       "name": "Blast",
-                      "type": "ArmyBookRule",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "XEzKuy78",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Twin Grenade Launcher (24\", A2, Blast(3))"
                 }
@@ -3237,19 +3345,20 @@
               ],
               "gains": [
                 {
-                  "name": "Twin Shred Rifle",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Twin Shred Rifle",
                   "range": 18,
                   "attacks": 4,
-                  "weaponId": "xF2RJrUj",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
-                      "name": "Rending",
-                      "type": "ArmyBookRule"
+                      "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "xF2RJrUj",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Twin Shred Rifle (18\", A4, Rending)"
                 }
@@ -3270,24 +3379,27 @@
               ],
               "gains": [
                 {
-                  "name": "Twin Fusion Rifle",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Twin Fusion Rifle",
                   "range": 12,
                   "attacks": 2,
-                  "weaponId": "_Hj4DhLu",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 4
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "_mrPya5SXSqW",
                       "name": "Deadly",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "_Hj4DhLu",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Twin Fusion Rifle (12\", A2, AP(4), Deadly(3))"
                 }
@@ -3308,25 +3420,26 @@
               ],
               "gains": [
                 {
-                  "name": "Twin Flamer",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Twin Flamer",
                   "range": 12,
                   "attacks": 2,
-                  "weaponId": "zxi2iITn",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "w_vX0mi58KKt",
                       "name": "Blast",
-                      "type": "ArmyBookRule",
                       "rating": 3
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "Zx4mWN0SbmK8",
-                      "name": "Reliable",
-                      "type": "ArmyBookRule"
+                      "name": "Reliable"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "zxi2iITn",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Twin Flamer (12\", A2, Blast(3), Reliable)"
                 }
@@ -3347,19 +3460,20 @@
               ],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Brute Heavy Slammer",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Brute Heavy Slammer",
                   "range": 24,
                   "attacks": 6,
-                  "weaponId": "3npJ3atf",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "IEJp3a4vE0CB",
                       "name": "Shred"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "3npJ3atf",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Brute Heavy Slammer (24\", A6, Shred)"
                 }
@@ -3384,7 +3498,7 @@
       "hint": "Champion",
       "sections": [
         {
-          "id": "CAEj4oO",
+          "id": "jFGddfK",
           "uid": "oRjXn",
           "label": "Replace 2x CCW",
           "options": [
@@ -3400,24 +3514,26 @@
               ],
               "gains": [
                 {
-                  "name": "Burst Pistol",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Burst Pistol",
                   "range": 12,
                   "attacks": 3,
-                  "weaponId": "C87QXEWW",
                   "specialRules": [],
+                  "count": 1,
+                  "weaponId": "C87QXEWW",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Burst Pistol (12\", A3)"
                 },
                 {
-                  "name": "CCW",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "CCW",
                   "range": 0,
                   "attacks": 4,
-                  "weaponId": "KAsYqgPq",
                   "specialRules": [],
+                  "count": 1,
+                  "weaponId": "KAsYqgPq",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "CCW (A4)"
                 }
@@ -3438,26 +3554,26 @@
               ],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Burst Pistol",
                   "type": "ArmyBookWeapon",
-                  "count": "02",
+                  "name": "Burst Pistol",
                   "range": 12,
                   "attacks": 3,
-                  "weaponId": "C87QXEWW",
                   "specialRules": [],
+                  "count": 2,
+                  "weaponId": "C87QXEWW",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "2x Burst Pistol (12\", A3)"
                 },
                 {
-                  "id": null,
-                  "name": "Knife",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Knife",
                   "range": 0,
                   "attacks": 1,
-                  "weaponId": "XPTwZbHj",
                   "specialRules": [],
+                  "count": 1,
+                  "weaponId": "XPTwZbHj",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Knife (A1)"
                 }
@@ -3480,28 +3596,29 @@
               ],
               "gains": [
                 {
-                  "name": "CCW",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "CCW",
                   "range": 0,
                   "attacks": 4,
-                  "weaponId": "KAsYqgPq",
                   "specialRules": [],
+                  "count": 1,
+                  "weaponId": "KAsYqgPq",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "CCW (A4)"
                 },
                 {
-                  "name": "Combat Shield",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Combat Shield (Shielded)",
+                  "name": "Combat Shield",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "wsqfB0fq69eG",
-                      "name": "Shielded",
-                      "type": "ArmyBookRule"
+                      "name": "Shielded"
                     }
                   ],
+                  "bases": null,
+                  "label": "Combat Shield (Shielded)",
                   "count": 1
                 }
               ],
@@ -3521,39 +3638,40 @@
               ],
               "gains": [
                 {
-                  "name": "Burst Pistol",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Burst Pistol",
                   "range": 12,
                   "attacks": 3,
-                  "weaponId": "C87QXEWW",
                   "specialRules": [],
+                  "count": 1,
+                  "weaponId": "C87QXEWW",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Burst Pistol (12\", A3)"
                 },
                 {
-                  "name": "Combat Shield",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Combat Shield (Bash (A1), Shielded)",
+                  "name": "Combat Shield",
                   "content": [
                     {
-                      "id": "wsqfB0fq69eG",
-                      "name": "Shielded",
-                      "type": "ArmyBookRule"
-                    },
-                    {
-                      "name": "Bash",
                       "type": "ArmyBookWeapon",
-                      "count": 1,
+                      "name": "Bash",
                       "range": 0,
                       "attacks": 1,
-                      "weaponId": "_9QIOlsl",
                       "specialRules": [],
-                      "attacksMultiplier": 1,
-                      "label": "Bash (A1)"
+                      "count": 1,
+                      "weaponId": "_9QIOlsl",
+                      "id": null,
+                      "attacksMultiplier": 1
+                    },
+                    {
+                      "type": "ArmyBookRule",
+                      "id": "wsqfB0fq69eG",
+                      "name": "Shielded"
                     }
                   ],
+                  "bases": null,
+                  "label": "Combat Shield (Bash (A1), Shielded)",
                   "count": 1
                 }
               ],
@@ -3570,7 +3688,7 @@
           ]
         },
         {
-          "id": "APRh1oE",
+          "id": "eHOqh3q",
           "uid": "2jIef",
           "label": "Replace any Burst Pistol",
           "options": [
@@ -3586,20 +3704,21 @@
               ],
               "gains": [
                 {
-                  "name": "Twin Plasma Pistol",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Twin Plasma Pistol",
                   "range": 12,
                   "attacks": 2,
-                  "weaponId": "sJdjS8HS",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
-                      "type": "ArmyBookRule",
                       "rating": 4
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "sJdjS8HS",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Twin Plasma Pistol (12\", A2, AP(4))"
                 }
@@ -3620,7 +3739,7 @@
           ]
         },
         {
-          "id": "wvj1KlK",
+          "id": "bTQ__UW",
           "uid": "s3ghA",
           "label": "Replace Burst Pistol",
           "options": [
@@ -3636,19 +3755,20 @@
               ],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Brute Slammer",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Brute Slammer",
                   "range": 12,
                   "attacks": 4,
-                  "weaponId": "XOo29Bzt",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "IEJp3a4vE0CB",
                       "name": "Shred"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "XOo29Bzt",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Brute Slammer (12\", A4, Shred)"
                 }
@@ -3669,19 +3789,20 @@
               ],
               "gains": [
                 {
-                  "name": "Twin Shred Pistol",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Twin Shred Pistol",
                   "range": 9,
                   "attacks": 4,
-                  "weaponId": "f_AnKK0I",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
-                      "name": "Rending",
-                      "type": "ArmyBookRule"
+                      "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "f_AnKK0I",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Twin Shred Pistol (9\", A4, Rending)"
                 }
@@ -3702,26 +3823,27 @@
               ],
               "gains": [
                 {
-                  "name": "Twin Fusion Pistol",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Twin Fusion Pistol",
                   "range": 6,
                   "attacks": 2,
-                  "weaponId": "qisqNTB6",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
-                      "type": "ArmyBookRule",
                       "rating": 4
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "_mrPya5SXSqW",
                       "name": "Deadly",
-                      "type": "ArmyBookRule",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "qisqNTB6",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Twin Fusion Pistol (6\", A2, AP(4), Deadly(3))"
                 }
@@ -3742,25 +3864,26 @@
               ],
               "gains": [
                 {
-                  "name": "Twin Flamer Pistol",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Twin Flamer Pistol",
                   "range": 6,
                   "attacks": 2,
-                  "weaponId": "G2CgOM0B",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "w_vX0mi58KKt",
                       "name": "Blast",
-                      "type": "ArmyBookRule",
                       "rating": 3
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "Zx4mWN0SbmK8",
-                      "name": "Reliable",
-                      "type": "ArmyBookRule"
+                      "name": "Reliable"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "G2CgOM0B",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Twin Flamer Pistol (6\", A2, Blast(3), Reliable)"
                 }
@@ -3781,19 +3904,21 @@
               ],
               "gains": [
                 {
-                  "name": "Master Shotgun",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Master Shotgun",
                   "range": 12,
                   "attacks": 6,
-                  "weaponId": "qRiHYtdf",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "qRiHYtdf",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Master Shotgun (12\", A6, AP(1))"
                 }
@@ -3814,19 +3939,21 @@
               ],
               "gains": [
                 {
-                  "name": "Master Brute Handgun",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Master Brute Handgun",
                   "range": 18,
                   "attacks": 6,
-                  "weaponId": "A8G0xXIk",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "A8G0xXIk",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Master Brute Handgun (18\", A6, AP(1))"
                 }
@@ -3844,7 +3971,7 @@
           ]
         },
         {
-          "id": "Py5aFL7",
+          "id": "sadQ9LX",
           "uid": "-hFlY",
           "label": "Replace any CCW",
           "options": [
@@ -3860,23 +3987,26 @@
               ],
               "gains": [
                 {
-                  "name": "Blade Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Blade Weapon",
                   "range": 0,
                   "attacks": 4,
-                  "weaponId": "KIMjxeis",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
                       "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "KIMjxeis",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Blade Weapon (A4, AP(1), Rending)"
                 }
@@ -3897,19 +4027,21 @@
               ],
               "gains": [
                 {
-                  "name": "Great Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Great Weapon",
                   "range": 0,
                   "attacks": 4,
-                  "weaponId": "I7feQmU6",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "I7feQmU6",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Great Weapon (A4, AP(3))"
                 }
@@ -3930,7 +4062,7 @@
           ]
         },
         {
-          "id": "hgssDdI",
+          "id": "jRXSLH-",
           "uid": "Bf1h1",
           "label": "Upgrade with",
           "options": [
@@ -3948,16 +4080,17 @@
               "gains": [
                 {
                   "id": "wnzSXdjP",
-                  "name": "Beast Companion",
                   "type": "ArmyBookItem",
-                  "label": "Beast Companion (Repel Ambushers)",
+                  "name": "Beast Companion",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "C6MzEy1CnxTs",
-                      "name": "Repel Ambushers",
-                      "type": "ArmyBookRule"
+                      "name": "Repel Ambushers"
                     }
                   ],
+                  "bases": null,
+                  "label": "Beast Companion (Repel Ambushers)",
                   "count": 1
                 }
               ],
@@ -3980,7 +4113,7 @@
       "hint": "Specialists - Champion",
       "sections": [
         {
-          "id": "A1wx4w6",
+          "id": "J0-NQ9H",
           "uid": "UUfBH",
           "label": "Upgrade with one",
           "options": [
@@ -3996,17 +4129,17 @@
               ],
               "gains": [
                 {
-                  "name": "Engineer Boss",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Engineer Boss (Fortified Aura)",
+                  "name": "Engineer Boss",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "B-9jnnFp54f9",
-                      "name": "Fortified Aura",
-                      "type": "ArmyBookRule"
+                      "name": "Fortified Aura"
                     }
                   ],
+                  "bases": null,
+                  "label": "Engineer Boss (Fortified Aura)",
                   "count": 1
                 }
               ],
@@ -4026,17 +4159,17 @@
               ],
               "gains": [
                 {
-                  "name": "Armorer Boss",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Armorer Boss (Unstoppable when Shooting Aura)",
+                  "name": "Armorer Boss",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "KTixuuQ9H7tU",
-                      "name": "Unstoppable when Shooting Aura",
-                      "type": "ArmyBookRule"
+                      "name": "Unstoppable when Shooting Aura"
                     }
                   ],
+                  "bases": null,
+                  "label": "Armorer Boss (Unstoppable when Shooting Aura)",
                   "count": 1
                 }
               ],
@@ -4056,17 +4189,17 @@
               ],
               "gains": [
                 {
-                  "name": "Destroyer Boss",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Destroyer Boss (Unpredictable Fighter Aura)",
+                  "name": "Destroyer Boss",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "8zBpM3Wjey08",
-                      "name": "Unpredictable Fighter Aura",
-                      "type": "ArmyBookRule"
+                      "name": "Unpredictable Fighter Aura"
                     }
                   ],
+                  "bases": null,
+                  "label": "Destroyer Boss (Unpredictable Fighter Aura)",
                   "count": 1
                 }
               ],
@@ -4088,17 +4221,17 @@
               ],
               "gains": [
                 {
-                  "name": "Coalition Boss",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Coalition Boss (Scout Aura)",
+                  "name": "Coalition Boss",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "Tdyu4Tn-rFN6",
-                      "name": "Scout Aura",
-                      "type": "ArmyBookRule"
+                      "name": "Scout Aura"
                     }
                   ],
+                  "bases": null,
+                  "label": "Coalition Boss (Scout Aura)",
                   "count": 1
                 }
               ],
@@ -4118,18 +4251,18 @@
               ],
               "gains": [
                 {
-                  "name": "Psychic Boss",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Psychic Boss (Caster(2))",
+                  "name": "Psychic Boss",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "47CAqf7ySlfc",
                       "name": "Caster",
-                      "type": "ArmyBookRule",
                       "rating": 2
                     }
                   ],
+                  "bases": null,
+                  "label": "Psychic Boss (Caster(2))",
                   "count": 1
                 }
               ],
@@ -4155,7 +4288,7 @@
       "hint": "Coalition Banner",
       "sections": [
         {
-          "id": "61WiBGq",
+          "id": "8JMVdey",
           "uid": "QZF9FG4ait",
           "label": "Upgrade with",
           "options": [
@@ -4176,17 +4309,17 @@
               ],
               "gains": [
                 {
-                  "name": "Coalition Banner",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Coalition Banner (Versatile Defense Aura)",
+                  "name": "Coalition Banner",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "UQ7FtljwqNvy",
-                      "name": "Versatile Defense Aura",
-                      "type": "ArmyBookRule"
+                      "name": "Versatile Defense Aura"
                     }
                   ],
+                  "bases": null,
+                  "label": "Coalition Banner (Versatile Defense Aura)",
                   "count": 1
                 }
               ],
@@ -4207,7 +4340,7 @@
       "hint": "Chain-Trap",
       "sections": [
         {
-          "id": "DVa5T1Y",
+          "id": "DJE7DI8",
           "uid": "46LUntE1es",
           "label": "Upgrade with",
           "options": [
@@ -4228,17 +4361,17 @@
               ],
               "gains": [
                 {
-                  "name": "Chain-Trap",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Chain-Trap (Unwieldy Debuff)",
+                  "name": "Chain-Trap",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "arJNSXC8F_Oa",
-                      "name": "Unwieldy Debuff",
-                      "type": "ArmyBookRule"
+                      "name": "Unwieldy Debuff"
                     }
                   ],
+                  "bases": null,
+                  "label": "Chain-Trap (Unwieldy Debuff)",
                   "count": 1
                 }
               ],
@@ -4259,7 +4392,7 @@
       "hint": "Specialists - Leader",
       "sections": [
         {
-          "id": "N7lhMXb",
+          "id": "ccSclx1",
           "uid": "KEBwNjct",
           "label": "Upgrade with one",
           "options": [
@@ -4275,17 +4408,17 @@
               ],
               "gains": [
                 {
-                  "name": "Big Boss",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Big Boss (Fearless Aura)",
+                  "name": "Big Boss",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "C0UHMLhvoXXj",
-                      "name": "Fearless Aura",
-                      "type": "ArmyBookRule"
+                      "name": "Fearless Aura"
                     }
                   ],
+                  "bases": null,
+                  "label": "Big Boss (Fearless Aura)",
                   "count": 1
                 }
               ],
@@ -4307,17 +4440,17 @@
               ],
               "gains": [
                 {
-                  "name": "Armorer Boss",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Armorer Boss (Unstoppable when Shooting Aura)",
+                  "name": "Armorer Boss",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "KTixuuQ9H7tU",
-                      "name": "Unstoppable when Shooting Aura",
-                      "type": "ArmyBookRule"
+                      "name": "Unstoppable when Shooting Aura"
                     }
                   ],
+                  "bases": null,
+                  "label": "Armorer Boss (Unstoppable when Shooting Aura)",
                   "count": 1
                 }
               ],
@@ -4338,17 +4471,17 @@
               ],
               "gains": [
                 {
-                  "name": "Destroyer Boss",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Destroyer Boss (Unpredictable Fighter Aura)",
+                  "name": "Destroyer Boss",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "8zBpM3Wjey08",
-                      "name": "Unpredictable Fighter Aura",
-                      "type": "ArmyBookRule"
+                      "name": "Unpredictable Fighter Aura"
                     }
                   ],
+                  "bases": null,
+                  "label": "Destroyer Boss (Unpredictable Fighter Aura)",
                   "count": 1
                 }
               ],
@@ -4370,17 +4503,17 @@
               ],
               "gains": [
                 {
-                  "name": "Coalition Boss",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Coalition Boss (Scout Aura)",
+                  "name": "Coalition Boss",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "Tdyu4Tn-rFN6",
-                      "name": "Scout Aura",
-                      "type": "ArmyBookRule"
+                      "name": "Scout Aura"
                     }
                   ],
+                  "bases": null,
+                  "label": "Coalition Boss (Scout Aura)",
                   "count": 1
                 }
               ],
@@ -4401,18 +4534,18 @@
               ],
               "gains": [
                 {
-                  "name": "Icon Bearer",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Icon Bearer (Fear(2))",
+                  "name": "Icon Bearer",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "dIQ3SGl2J2Ew",
                       "name": "Fear",
-                      "type": "ArmyBookRule",
                       "rating": 2
                     }
                   ],
+                  "bases": null,
+                  "label": "Icon Bearer (Fear(2))",
                   "count": 1
                 }
               ],
@@ -4432,18 +4565,18 @@
               ],
               "gains": [
                 {
-                  "name": "Psychic Boss",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Psychic Boss (Caster(2))",
+                  "name": "Psychic Boss",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "47CAqf7ySlfc",
                       "name": "Caster",
-                      "type": "ArmyBookRule",
                       "rating": 2
                     }
                   ],
+                  "bases": null,
+                  "label": "Psychic Boss (Caster(2))",
                   "count": 1
                 }
               ],
@@ -5142,7 +5275,8 @@
       "description": "If a unit where all models have this rule is Shaken at the beginning of the round, roll one die. On a 4+, it stops being Shaken.",
       "hasRating": false,
       "coreType": null,
-      "targetType": 1
+      "targetType": 1,
+      "originalName": "Steadfast"
     },
     {
       "id": "UQ7FtljwqNvy",
@@ -5203,6 +5337,15 @@
       "name": "Unwieldy Debuff",
       "aliasedRuleId": null,
       "description": "Once per activation, before attacking, pick up to 4 enemy units within 18\" in line of sight, which gets Unwieldy in melee once (next time the effect would apply).",
+      "hasRating": false,
+      "coreType": null,
+      "targetType": 1
+    },
+    {
+      "id": "j93FkLXMCk8v",
+      "name": "Steadfast",
+      "aliasedRuleId": null,
+      "description": "If a unit where all models have this rule is Shaken at the beginning of the round, roll one die. On a 4+, it stops being Shaken.",
       "hasRating": false,
       "coreType": null,
       "targetType": 1

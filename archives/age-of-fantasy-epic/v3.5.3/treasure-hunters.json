@@ -674,7 +674,7 @@
       "hint": "Leader",
       "sections": [
         {
-          "id": "9xoTxSY",
+          "id": "qSzMbun",
           "uid": "0j7ey",
           "label": "Replace Heavy Throwing Weapon and Hand Weapon",
           "options": [
@@ -690,13 +690,14 @@
               ],
               "gains": [
                 {
-                  "name": "Hand Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": "02",
+                  "name": "Hand Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "C-fKFuUr",
                   "specialRules": [],
+                  "count": 2,
+                  "weaponId": "C-fKFuUr",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "2x Hand Weapon (A2)"
                 }
@@ -715,7 +716,7 @@
           ]
         },
         {
-          "id": "9F446lN",
+          "id": "m8bYGsI",
           "uid": "r08ZQ",
           "label": "Replace Heavy Throwing Weapon",
           "options": [
@@ -731,23 +732,26 @@
               ],
               "gains": [
                 {
-                  "name": "Fire Bombs",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Fire Bombs",
                   "range": 12,
                   "attacks": 1,
-                  "weaponId": "hlBYwOY4",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
                       "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "hlBYwOY4",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Fire Bombs (12\", A1, AP(1), Rending)"
                 }
@@ -770,18 +774,20 @@
               ],
               "gains": [
                 {
-                  "name": "Barbed Bow",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Barbed Bow",
                   "range": 18,
                   "attacks": 1,
-                  "weaponId": "G9x5cPCy",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "IEJp3a4vE0CB",
                       "name": "Shred"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "G9x5cPCy",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Barbed Bow (18\", A1, Shred)"
                 }
@@ -804,13 +810,14 @@
               ],
               "gains": [
                 {
-                  "name": "Longbow",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Longbow",
                   "range": 30,
                   "attacks": 1,
-                  "weaponId": "jaFKspbM",
                   "specialRules": [],
+                  "count": 1,
+                  "weaponId": "jaFKspbM",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Longbow (30\", A1)"
                 }
@@ -833,20 +840,21 @@
               ],
               "gains": [
                 {
-                  "name": "Heavy Bow",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Heavy Bow",
                   "range": 24,
                   "attacks": 1,
-                  "weaponId": "9hipexu5",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
-                      "type": "ArmyBookRule",
                       "rating": 1
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "9hipexu5",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Heavy Bow (24\", A1, AP(1))"
                 }
@@ -867,24 +875,27 @@
               ],
               "gains": [
                 {
-                  "name": "Harpoon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Harpoon",
                   "range": 12,
                   "attacks": 1,
-                  "weaponId": "0rn_N0yM",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 2
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "_mrPya5SXSqW",
                       "name": "Deadly",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "0rn_N0yM",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Harpoon (12\", A1, AP(2), Deadly(3))"
                 }
@@ -904,7 +915,7 @@
           ]
         },
         {
-          "id": "9ZvWBmv",
+          "id": "PBSMEjc",
           "uid": "PrBZ3",
           "label": "Replace any Hand Weapon",
           "options": [
@@ -920,19 +931,20 @@
               ],
               "gains": [
                 {
-                  "name": "Spear",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Spear",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "ZLBl4ver",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "c45Fw0D2oGOk",
-                      "name": "Counter",
-                      "type": "ArmyBookRule"
+                      "name": "Counter"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "ZLBl4ver",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Spear (A2, Counter)"
                 }
@@ -955,18 +967,20 @@
               ],
               "gains": [
                 {
-                  "name": "Barbed Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Barbed Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "K6PAJmF2",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "IEJp3a4vE0CB",
                       "name": "Shred"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "K6PAJmF2",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Barbed Weapon (A2, Shred)"
                 }
@@ -989,23 +1003,25 @@
               ],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Talon Sickle",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Talon Sickle",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "IA_L-rT2",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "JSnFcm3SCiMD",
                       "name": "Crack"
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "09SoiR1HuW7u",
                       "name": "Precise"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "IA_L-rT2",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Talon Sickle (A2, Crack, Precise)"
                 }
@@ -1027,26 +1043,28 @@
               ],
               "gains": [
                 {
-                  "id": "5X21-brQ",
-                  "name": "Blade Weapon",
                   "type": "ArmyBookWeapon",
+                  "name": "Blade Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "5X21-brQ",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
                       "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "5X21-brQ",
+                  "id": "5X21-brQ",
                   "attacksMultiplier": 1,
-                  "label": "Blade Weapon (A2, AP(1), Rending)",
-                  "count": 1
+                  "label": "Blade Weapon (A2, AP(1), Rending)"
                 }
               ],
               "label": "Blade Weapon (A2, AP(1), Rending)",
@@ -1068,22 +1086,23 @@
               ],
               "gains": [
                 {
-                  "id": "fjMoPeFE",
-                  "name": "Great Weapon",
                   "type": "ArmyBookWeapon",
+                  "name": "Great Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "fjMoPeFE",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "fjMoPeFE",
+                  "id": "fjMoPeFE",
                   "attacksMultiplier": 1,
-                  "label": "Great Weapon (A2, AP(3))",
-                  "count": 1
+                  "label": "Great Weapon (A2, AP(3))"
                 }
               ],
               "label": "Great Weapon (A2, AP(3))",
@@ -1104,7 +1123,7 @@
           ]
         },
         {
-          "id": "utvqEgF",
+          "id": "biKlHgW",
           "uid": "zX-G_dn9",
           "label": "Upgrade with one",
           "options": [
@@ -1122,16 +1141,17 @@
               "gains": [
                 {
                   "id": "3od-gwv",
-                  "name": "Beast Companion",
                   "type": "ArmyBookItem",
-                  "label": "Beast Companion (Repel Ambushers)",
+                  "name": "Beast Companion",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "C6MzEy1CnxTs",
-                      "name": "Repel Ambushers",
-                      "type": "ArmyBookRule"
+                      "name": "Repel Ambushers"
                     }
                   ],
+                  "bases": null,
+                  "label": "Beast Companion (Repel Ambushers)",
                   "count": 1
                 }
               ],
@@ -1153,22 +1173,22 @@
               ],
               "gains": [
                 {
-                  "name": "Flight Rig",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Flight Rig (Ambush, Flying)",
+                  "name": "Flight Rig",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "6mJw5IdqSqNC",
-                      "name": "Ambush",
-                      "type": "ArmyBookRule"
+                      "name": "Ambush"
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "-QJdqJEKjIpE",
-                      "name": "Flying",
-                      "type": "ArmyBookRule"
+                      "name": "Flying"
                     }
                   ],
+                  "bases": null,
+                  "label": "Flight Rig (Ambush, Flying)",
                   "count": 1
                 }
               ],
@@ -1189,23 +1209,23 @@
               ],
               "gains": [
                 {
-                  "name": "Great Flight Rig",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Great Flight Rig (Flying, Tough(3))",
+                  "name": "Great Flight Rig",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "-QJdqJEKjIpE",
-                      "name": "Flying",
-                      "type": "ArmyBookRule"
+                      "name": "Flying"
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "a0YtInGiUDd6",
                       "name": "Tough",
-                      "type": "ArmyBookRule",
                       "rating": 3
                     }
                   ],
+                  "bases": null,
+                  "label": "Great Flight Rig (Flying, Tough(3))",
                   "count": 1
                 }
               ],
@@ -1231,7 +1251,7 @@
       "hint": "Veteran Fighters",
       "sections": [
         {
-          "id": "9_ugjZ_",
+          "id": "6pBFmYy",
           "uid": "spZWF",
           "label": "Replace any 2x Hand Weapon",
           "options": [
@@ -1247,33 +1267,33 @@
               ],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Heavy Throwing Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Heavy Throwing Weapon",
                   "range": 12,
                   "attacks": 1,
-                  "weaponId": "xCrEtisv",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
-                      "type": "ArmyBookRule",
                       "rating": 1
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "xCrEtisv",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Heavy Throwing Weapon (12\", A1, AP(1))"
                 },
                 {
-                  "id": null,
-                  "name": "Dagger",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Dagger",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "1Sjl-Rlb",
                   "specialRules": [],
+                  "count": 1,
+                  "weaponId": "1Sjl-Rlb",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Dagger (A2)"
                 }
@@ -1294,7 +1314,7 @@
           ]
         },
         {
-          "id": "zm22Wve",
+          "id": "loms0Jr",
           "uid": "-PdAR",
           "label": "Replace any Heavy Throwing Weapon",
           "options": [
@@ -1310,23 +1330,26 @@
               ],
               "gains": [
                 {
-                  "name": "Fire Bombs",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Fire Bombs",
                   "range": 12,
                   "attacks": 1,
-                  "weaponId": "hlBYwOY4",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
                       "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "hlBYwOY4",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Fire Bombs (12\", A1, AP(1), Rending)"
                 }
@@ -1347,7 +1370,7 @@
           ]
         },
         {
-          "id": "Dc_lNGI",
+          "id": "pYlwstf",
           "uid": "oFAjZ",
           "label": "Replace one Heavy Throwing Weapon",
           "options": [
@@ -1363,24 +1386,27 @@
               ],
               "gains": [
                 {
-                  "name": "Harpoon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Harpoon",
                   "range": 12,
                   "attacks": 1,
-                  "weaponId": "0rn_N0yM",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 2
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "_mrPya5SXSqW",
                       "name": "Deadly",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "0rn_N0yM",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Harpoon (12\", A1, AP(2), Deadly(3))"
                 }
@@ -1404,7 +1430,7 @@
           ]
         },
         {
-          "id": "av05yA4",
+          "id": "qXzzmfE",
           "uid": "3iZWe",
           "label": "Replace any Dagger",
           "options": [
@@ -1420,19 +1446,20 @@
               ],
               "gains": [
                 {
-                  "name": "Spear",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Spear",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "ZLBl4ver",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "c45Fw0D2oGOk",
-                      "name": "Counter",
-                      "type": "ArmyBookRule"
+                      "name": "Counter"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "ZLBl4ver",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Spear (A2, Counter)"
                 }
@@ -1455,18 +1482,20 @@
               ],
               "gains": [
                 {
-                  "name": "Barbed Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Barbed Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "K6PAJmF2",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "IEJp3a4vE0CB",
                       "name": "Shred"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "K6PAJmF2",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Barbed Weapon (A2, Shred)"
                 }
@@ -1489,23 +1518,25 @@
               ],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Talon Sickle",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Talon Sickle",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "IA_L-rT2",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "JSnFcm3SCiMD",
                       "name": "Crack"
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "09SoiR1HuW7u",
                       "name": "Precise"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "IA_L-rT2",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Talon Sickle (A2, Crack, Precise)"
                 }
@@ -1527,23 +1558,26 @@
               ],
               "gains": [
                 {
-                  "name": "Blade Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Blade Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "5X21-brQ",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
                       "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "5X21-brQ",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Blade Weapon (A2, AP(1), Rending)"
                 }
@@ -1567,19 +1601,21 @@
               ],
               "gains": [
                 {
-                  "name": "Great Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Great Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "fjMoPeFE",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "fjMoPeFE",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Great Weapon (A2, AP(3))"
                 }
@@ -1602,7 +1638,7 @@
           ]
         },
         {
-          "id": "cZOl-do",
+          "id": "gGd3Lij",
           "uid": "HKNxf",
           "label": "Replace any Hand Weapon",
           "options": [
@@ -1618,18 +1654,20 @@
               ],
               "gains": [
                 {
-                  "name": "Barbed Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Barbed Weapon",
                   "range": 0,
                   "attacks": 1,
-                  "weaponId": "QVNor6Nq",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "IEJp3a4vE0CB",
                       "name": "Shred"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "QVNor6Nq",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Barbed Weapon (A1, Shred)"
                 }
@@ -1653,26 +1691,28 @@
               ],
               "gains": [
                 {
-                  "id": "bLCkB3cs",
-                  "name": "Blade Weapon",
                   "type": "ArmyBookWeapon",
+                  "name": "Blade Weapon",
                   "range": 0,
                   "attacks": 1,
-                  "weaponId": "bLCkB3cs",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
                       "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "bLCkB3cs",
+                  "id": "bLCkB3cs",
                   "attacksMultiplier": 1,
-                  "label": "Blade Weapon (A1, AP(1), Rending)",
-                  "count": 1
+                  "label": "Blade Weapon (A1, AP(1), Rending)"
                 }
               ],
               "label": "Blade Weapon (A1, AP(1), Rending)",
@@ -1694,22 +1734,23 @@
               ],
               "gains": [
                 {
-                  "id": "H5UywwCB",
-                  "name": "Great Weapon",
                   "type": "ArmyBookWeapon",
+                  "name": "Great Weapon",
                   "range": 0,
                   "attacks": 1,
-                  "weaponId": "H5UywwCB",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "H5UywwCB",
+                  "id": "H5UywwCB",
                   "attacksMultiplier": 1,
-                  "label": "Great Weapon (A1, AP(3))",
-                  "count": 1
+                  "label": "Great Weapon (A1, AP(3))"
                 }
               ],
               "label": "Great Weapon (A1, AP(3))",
@@ -1730,19 +1771,20 @@
               ],
               "gains": [
                 {
-                  "name": "Spear",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Spear",
                   "range": 0,
                   "attacks": 1,
-                  "weaponId": "nXIDrB4U",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "c45Fw0D2oGOk",
-                      "name": "Counter",
-                      "type": "ArmyBookRule"
+                      "name": "Counter"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "nXIDrB4U",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Spear (A1, Counter)"
                 }
@@ -1765,23 +1807,25 @@
               ],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Talon Sickle",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Talon Sickle",
                   "range": 0,
                   "attacks": 1,
-                  "weaponId": "EelO6v0V",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "JSnFcm3SCiMD",
                       "name": "Crack"
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "09SoiR1HuW7u",
                       "name": "Precise"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "EelO6v0V",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Talon Sickle (A1, Crack, Precise)"
                 }
@@ -1809,7 +1853,7 @@
       "hint": "Veteran Shooters",
       "sections": [
         {
-          "id": "XzsJryx",
+          "id": "RMSN-Fg",
           "uid": "F37T4",
           "label": "Replace any Longbow",
           "options": [
@@ -1825,18 +1869,20 @@
               ],
               "gains": [
                 {
-                  "name": "Barbed Bow",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Barbed Bow",
                   "range": 18,
                   "attacks": 1,
-                  "weaponId": "G9x5cPCy",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "IEJp3a4vE0CB",
                       "name": "Shred"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "G9x5cPCy",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Barbed Bow (18\", A1, Shred)"
                 }
@@ -1859,20 +1905,21 @@
               ],
               "gains": [
                 {
-                  "name": "Heavy Bow",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Heavy Bow",
                   "range": 24,
                   "attacks": 1,
-                  "weaponId": "9hipexu5",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
-                      "type": "ArmyBookRule",
                       "rating": 1
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "9hipexu5",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Heavy Bow (24\", A1, AP(1))"
                 }
@@ -1902,7 +1949,7 @@
       "hint": "Fighters",
       "sections": [
         {
-          "id": "dIt8Vw0",
+          "id": "idNpzk5",
           "uid": "XyVnQ",
           "label": "Replace any 2x Hand Weapon",
           "options": [
@@ -1918,26 +1965,26 @@
               ],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Throwing Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Throwing Weapon",
                   "range": 12,
                   "attacks": 1,
-                  "weaponId": "i_dyolKh",
                   "specialRules": [],
+                  "count": 1,
+                  "weaponId": "i_dyolKh",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Throwing Weapon (12\", A1)"
                 },
                 {
-                  "id": null,
-                  "name": "Dagger",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Dagger",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "1Sjl-Rlb",
                   "specialRules": [],
+                  "count": 1,
+                  "weaponId": "1Sjl-Rlb",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Dagger (A2)"
                 }
@@ -1958,7 +2005,7 @@
           ]
         },
         {
-          "id": "OUx2zm9",
+          "id": "oFWiaLa",
           "uid": "kdAV2",
           "label": "Replace one Throwing Weapons",
           "options": [
@@ -1974,23 +2021,26 @@
               ],
               "gains": [
                 {
-                  "name": "Fire Bombs",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Fire Bombs",
                   "range": 12,
                   "attacks": 1,
-                  "weaponId": "hlBYwOY4",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
                       "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "hlBYwOY4",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Fire Bombs (12\", A1, AP(1), Rending)"
                 }
@@ -2012,7 +2062,7 @@
           ]
         },
         {
-          "id": "uZ0tdqj",
+          "id": "KzAJQ9M",
           "uid": "b_a8d",
           "label": "Replace any Dagger",
           "options": [
@@ -2028,18 +2078,20 @@
               ],
               "gains": [
                 {
-                  "name": "Barbed Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Barbed Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "K6PAJmF2",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "IEJp3a4vE0CB",
                       "name": "Shred"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "K6PAJmF2",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Barbed Weapon (A2, Shred)"
                 }
@@ -2063,19 +2115,21 @@
               ],
               "gains": [
                 {
-                  "name": "Great Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Great Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "fjMoPeFE",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "fjMoPeFE",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Great Weapon (A2, AP(3))"
                 }
@@ -2096,19 +2150,20 @@
               ],
               "gains": [
                 {
-                  "name": "Spear",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Spear",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "ZLBl4ver",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "c45Fw0D2oGOk",
-                      "name": "Counter",
-                      "type": "ArmyBookRule"
+                      "name": "Counter"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "ZLBl4ver",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Spear (A2, Counter)"
                 }
@@ -2132,23 +2187,26 @@
               ],
               "gains": [
                 {
-                  "name": "Blade Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Blade Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "5X21-brQ",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
                       "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "5X21-brQ",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Blade Weapon (A2, AP(1), Rending)"
                 }
@@ -2171,23 +2229,25 @@
               ],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Talon Sickle",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Talon Sickle",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "IA_L-rT2",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "JSnFcm3SCiMD",
                       "name": "Crack"
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "09SoiR1HuW7u",
                       "name": "Precise"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "IA_L-rT2",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Talon Sickle (A2, Crack, Precise)"
                 }
@@ -2208,7 +2268,7 @@
           ]
         },
         {
-          "id": "2_TJZ2L",
+          "id": "DHMtY9C",
           "uid": "XoOJw",
           "label": "Replace any Hand Weapon",
           "options": [
@@ -2224,18 +2284,20 @@
               ],
               "gains": [
                 {
-                  "name": "Barbed Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Barbed Weapon",
                   "range": 0,
                   "attacks": 1,
-                  "weaponId": "QVNor6Nq",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "IEJp3a4vE0CB",
                       "name": "Shred"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "QVNor6Nq",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Barbed Weapon (A1, Shred)"
                 }
@@ -2259,26 +2321,28 @@
               ],
               "gains": [
                 {
-                  "id": "bLCkB3cs",
-                  "name": "Blade Weapon",
                   "type": "ArmyBookWeapon",
+                  "name": "Blade Weapon",
                   "range": 0,
                   "attacks": 1,
-                  "weaponId": "bLCkB3cs",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
                       "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "bLCkB3cs",
+                  "id": "bLCkB3cs",
                   "attacksMultiplier": 1,
-                  "label": "Blade Weapon (A1, AP(1), Rending)",
-                  "count": 1
+                  "label": "Blade Weapon (A1, AP(1), Rending)"
                 }
               ],
               "label": "Blade Weapon (A1, AP(1), Rending)",
@@ -2299,19 +2363,21 @@
               ],
               "gains": [
                 {
-                  "name": "Great Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Great Weapon",
                   "range": 0,
                   "attacks": 1,
-                  "weaponId": "H5UywwCB",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "H5UywwCB",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Great Weapon (A1, AP(3))"
                 }
@@ -2332,19 +2398,20 @@
               ],
               "gains": [
                 {
-                  "name": "Spear",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Spear",
                   "range": 0,
                   "attacks": 1,
-                  "weaponId": "nXIDrB4U",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "c45Fw0D2oGOk",
-                      "name": "Counter",
-                      "type": "ArmyBookRule"
+                      "name": "Counter"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "nXIDrB4U",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Spear (A1, Counter)"
                 }
@@ -2367,23 +2434,25 @@
               ],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Talon Sickle",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Talon Sickle",
                   "range": 0,
                   "attacks": 1,
-                  "weaponId": "EelO6v0V",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "JSnFcm3SCiMD",
                       "name": "Crack"
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "09SoiR1HuW7u",
                       "name": "Precise"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "EelO6v0V",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Talon Sickle (A1, Crack, Precise)"
                 }
@@ -2411,7 +2480,7 @@
       "hint": "Shooters",
       "sections": [
         {
-          "id": "auByfIH",
+          "id": "9Pui7yX",
           "uid": "hcsQa",
           "label": "Replace any Shortbows",
           "options": [
@@ -2427,18 +2496,20 @@
               ],
               "gains": [
                 {
-                  "name": "Barbed Bow",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Barbed Bow",
                   "range": 18,
                   "attacks": 1,
-                  "weaponId": "G9x5cPCy",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "IEJp3a4vE0CB",
                       "name": "Shred"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "G9x5cPCy",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Barbed Bow (18\", A1, Shred)"
                 }
@@ -2468,7 +2539,7 @@
       "hint": "Champion",
       "sections": [
         {
-          "id": "jlLkURM",
+          "id": "wjLN9UK",
           "uid": "oRjXn",
           "label": "Replace Throwing Weapon and Hand Weapon",
           "options": [
@@ -2484,13 +2555,14 @@
               ],
               "gains": [
                 {
-                  "name": "Hand Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": "02",
+                  "name": "Hand Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "C-fKFuUr",
                   "specialRules": [],
+                  "count": 2,
+                  "weaponId": "C-fKFuUr",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "2x Hand Weapon (A2)"
                 }
@@ -2509,7 +2581,7 @@
           ]
         },
         {
-          "id": "VHaGrqK",
+          "id": "U_sXBdx",
           "uid": "s3ghA",
           "label": "Replace Throwing Weapon",
           "options": [
@@ -2525,13 +2597,14 @@
               ],
               "gains": [
                 {
-                  "name": "Shortbow",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Shortbow",
                   "range": 18,
                   "attacks": 1,
-                  "weaponId": "sc0sJybR",
                   "specialRules": [],
+                  "count": 1,
+                  "weaponId": "sc0sJybR",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Shortbow (18\", A1)"
                 }
@@ -2552,18 +2625,20 @@
               ],
               "gains": [
                 {
-                  "name": "Barbed Bow",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Barbed Bow",
                   "range": 18,
                   "attacks": 1,
-                  "weaponId": "G9x5cPCy",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "IEJp3a4vE0CB",
                       "name": "Shred"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "G9x5cPCy",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Barbed Bow (18\", A1, Shred)"
                 }
@@ -2586,23 +2661,26 @@
               ],
               "gains": [
                 {
-                  "name": "Fire Bombs",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Fire Bombs",
                   "range": 12,
                   "attacks": 1,
-                  "weaponId": "hlBYwOY4",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
                       "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "hlBYwOY4",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Fire Bombs (12\", A1, AP(1), Rending)"
                 }
@@ -2620,7 +2698,7 @@
           ]
         },
         {
-          "id": "pPyYP5l",
+          "id": "gvKT2Wk",
           "uid": "-hFlY",
           "label": "Replace any Hand Weapon",
           "options": [
@@ -2636,18 +2714,20 @@
               ],
               "gains": [
                 {
-                  "name": "Barbed Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Barbed Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "K6PAJmF2",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "IEJp3a4vE0CB",
                       "name": "Shred"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "K6PAJmF2",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Barbed Weapon (A2, Shred)"
                 }
@@ -2671,22 +2751,23 @@
               ],
               "gains": [
                 {
-                  "id": "RQ6RLLS2",
-                  "name": "Great Weapon",
                   "type": "ArmyBookWeapon",
+                  "name": "Great Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "fjMoPeFE",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "fjMoPeFE",
+                  "id": "RQ6RLLS2",
                   "attacksMultiplier": 1,
-                  "label": "Great Weapon (A2, AP(3))",
-                  "count": 1
+                  "label": "Great Weapon (A2, AP(3))"
                 }
               ],
               "label": "Great Weapon (A2, AP(3))",
@@ -2707,19 +2788,20 @@
               ],
               "gains": [
                 {
-                  "name": "Spear",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Spear",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "ZLBl4ver",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "c45Fw0D2oGOk",
-                      "name": "Counter",
-                      "type": "ArmyBookRule"
+                      "name": "Counter"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "ZLBl4ver",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Spear (A2, Counter)"
                 }
@@ -2743,26 +2825,28 @@
               ],
               "gains": [
                 {
-                  "id": "wHDWE2A_",
-                  "name": "Blade Weapon",
                   "type": "ArmyBookWeapon",
+                  "name": "Blade Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "5X21-brQ",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
                       "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "5X21-brQ",
+                  "id": "wHDWE2A_",
                   "attacksMultiplier": 1,
-                  "label": "Blade Weapon (A2, AP(1), Rending)",
-                  "count": 1
+                  "label": "Blade Weapon (A2, AP(1), Rending)"
                 }
               ],
               "label": "Blade Weapon (A2, AP(1), Rending)",
@@ -2783,23 +2867,25 @@
               ],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Talon Sickle",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Talon Sickle",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "IA_L-rT2",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "JSnFcm3SCiMD",
                       "name": "Crack"
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "09SoiR1HuW7u",
                       "name": "Precise"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "IA_L-rT2",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Talon Sickle (A2, Crack, Precise)"
                 }
@@ -2820,7 +2906,7 @@
           ]
         },
         {
-          "id": "lyoZfSJ",
+          "id": "iO84pRz",
           "uid": "gkBXauJc",
           "label": "Upgrade with one",
           "options": [
@@ -2836,22 +2922,22 @@
               ],
               "gains": [
                 {
-                  "name": "Flight Rig",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Flight Rig (Ambush, Flying)",
+                  "name": "Flight Rig",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "6mJw5IdqSqNC",
-                      "name": "Ambush",
-                      "type": "ArmyBookRule"
+                      "name": "Ambush"
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "-QJdqJEKjIpE",
-                      "name": "Flying",
-                      "type": "ArmyBookRule"
+                      "name": "Flying"
                     }
                   ],
+                  "bases": null,
+                  "label": "Flight Rig (Ambush, Flying)",
                   "count": 1
                 }
               ],
@@ -2874,16 +2960,17 @@
               "gains": [
                 {
                   "id": "5LPV3QM",
-                  "name": "Beast Companion",
                   "type": "ArmyBookItem",
-                  "label": "Beast Companion (Repel Ambushers)",
+                  "name": "Beast Companion",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "C6MzEy1CnxTs",
-                      "name": "Repel Ambushers",
-                      "type": "ArmyBookRule"
+                      "name": "Repel Ambushers"
                     }
                   ],
+                  "bases": null,
+                  "label": "Beast Companion (Repel Ambushers)",
                   "count": 1
                 }
               ],
@@ -2910,7 +2997,7 @@
       "hint": "Specialists - Leader",
       "sections": [
         {
-          "id": "2e_PyKE",
+          "id": "yU8iyYg",
           "uid": "UUfBH",
           "label": "Upgrade with one",
           "options": [
@@ -2926,17 +3013,17 @@
               ],
               "gains": [
                 {
-                  "name": "Treasure Guard",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Treasure Guard (Melee Shrouding Aura)",
+                  "name": "Treasure Guard",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "0dZak5jae8F0",
-                      "name": "Melee Shrouding Aura",
-                      "type": "ArmyBookRule"
+                      "name": "Melee Shrouding Aura"
                     }
                   ],
+                  "bases": null,
+                  "label": "Treasure Guard (Melee Shrouding Aura)",
                   "count": 1
                 }
               ],
@@ -2956,17 +3043,17 @@
               ],
               "gains": [
                 {
-                  "name": "Top Raptor",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Top Raptor (Courage Aura)",
+                  "name": "Top Raptor",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "FRVSAjasmFSF",
-                      "name": "Courage Aura",
-                      "type": "ArmyBookRule"
+                      "name": "Courage Aura"
                     }
                   ],
+                  "bases": null,
+                  "label": "Top Raptor (Courage Aura)",
                   "count": 1
                 }
               ],
@@ -2986,17 +3073,17 @@
               ],
               "gains": [
                 {
-                  "name": "Talon Grinder",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Talon Grinder (Furious Aura)",
+                  "name": "Talon Grinder",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "CK9TIa7vdehO",
-                      "name": "Furious Aura",
-                      "type": "ArmyBookRule"
+                      "name": "Furious Aura"
                     }
                   ],
+                  "bases": null,
+                  "label": "Talon Grinder (Furious Aura)",
                   "count": 1
                 }
               ],
@@ -3016,17 +3103,17 @@
               ],
               "gains": [
                 {
-                  "name": "Sky Cutter",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Sky Cutter (Runner Boost Aura)",
+                  "name": "Sky Cutter",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "Tmfov9Aj0X2h",
-                      "name": "Runner Boost Aura",
-                      "type": "ArmyBookRule"
+                      "name": "Runner Boost Aura"
                     }
                   ],
+                  "bases": null,
+                  "label": "Sky Cutter (Runner Boost Aura)",
                   "count": 1
                 }
               ],
@@ -3046,17 +3133,17 @@
               ],
               "gains": [
                 {
-                  "name": "Master Planner",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Master Planner (Delayed Action)",
+                  "name": "Master Planner",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "SKzm-kqi1h2Q",
-                      "name": "Delayed Action",
-                      "type": "ArmyBookRule"
+                      "name": "Delayed Action"
                     }
                   ],
+                  "bases": null,
+                  "label": "Master Planner (Delayed Action)",
                   "count": 1
                 }
               ],
@@ -3076,18 +3163,18 @@
               ],
               "gains": [
                 {
-                  "name": "Relic Warlock",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Relic Warlock (Caster(2))",
+                  "name": "Relic Warlock",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "47CAqf7ySlfc",
                       "name": "Caster",
-                      "type": "ArmyBookRule",
                       "rating": 2
                     }
                   ],
+                  "bases": null,
+                  "label": "Relic Warlock (Caster(2))",
                   "count": 1
                 }
               ],
@@ -3113,7 +3200,7 @@
       "hint": "Stalker Shadows",
       "sections": [
         {
-          "id": "PRxc7Ht",
+          "id": "FFXD9pq",
           "uid": "GeUy2",
           "label": "Replace any Hand Weapon",
           "options": [
@@ -3129,19 +3216,20 @@
               ],
               "gains": [
                 {
-                  "id": "NGnijRtn",
-                  "name": "Barbed Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Barbed Weapon",
                   "range": 0,
                   "attacks": 1,
-                  "weaponId": "QVNor6Nq",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "IEJp3a4vE0CB",
                       "name": "Shred"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "QVNor6Nq",
+                  "id": "NGnijRtn",
                   "attacksMultiplier": 1,
                   "label": "Barbed Weapon (A1, Shred)"
                 }
@@ -3165,26 +3253,28 @@
               ],
               "gains": [
                 {
-                  "id": "vpAxndM1",
-                  "name": "Blade Weapon",
                   "type": "ArmyBookWeapon",
+                  "name": "Blade Weapon",
                   "range": 0,
                   "attacks": 1,
-                  "weaponId": "bLCkB3cs",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
                       "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "bLCkB3cs",
+                  "id": "vpAxndM1",
                   "attacksMultiplier": 1,
-                  "label": "Blade Weapon (A1, AP(1), Rending)",
-                  "count": 1
+                  "label": "Blade Weapon (A1, AP(1), Rending)"
                 }
               ],
               "label": "Blade Weapon (A1, AP(1), Rending)",
@@ -3206,22 +3296,23 @@
               ],
               "gains": [
                 {
-                  "id": "44Y2a_Dt",
-                  "name": "Great Weapon",
                   "type": "ArmyBookWeapon",
+                  "name": "Great Weapon",
                   "range": 0,
                   "attacks": 1,
-                  "weaponId": "H5UywwCB",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "H5UywwCB",
+                  "id": "44Y2a_Dt",
                   "attacksMultiplier": 1,
-                  "label": "Great Weapon (A1, AP(3))",
-                  "count": 1
+                  "label": "Great Weapon (A1, AP(3))"
                 }
               ],
               "label": "Great Weapon (A1, AP(3))",
@@ -3242,23 +3333,25 @@
               ],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Talon Sickle",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Talon Sickle",
                   "range": 0,
                   "attacks": 1,
-                  "weaponId": "EelO6v0V",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "JSnFcm3SCiMD",
                       "name": "Crack"
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "09SoiR1HuW7u",
                       "name": "Precise"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "EelO6v0V",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Talon Sickle (A1, Crack, Precise)"
                 }
@@ -3279,7 +3372,7 @@
           ]
         },
         {
-          "id": "5txXK54",
+          "id": "GNv_jkD",
           "uid": "isBZc",
           "label": "Upgrade with",
           "options": [
@@ -3295,17 +3388,17 @@
               ],
               "gains": [
                 {
-                  "name": "Eager Explorers",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Eager Explorers (Scout)",
+                  "name": "Eager Explorers",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "FAMbscK5vhSu",
-                      "name": "Scout",
-                      "type": "ArmyBookRule"
+                      "name": "Scout"
                     }
                   ],
+                  "bases": null,
+                  "label": "Eager Explorers (Scout)",
                   "count": 1
                 }
               ],
@@ -3319,7 +3412,7 @@
           "variant": "upgrade"
         },
         {
-          "id": "u4KEHlj",
+          "id": "54aAnxK",
           "uid": "unZFvQE5",
           "label": "Upgrade with",
           "options": [
@@ -3335,17 +3428,17 @@
               ],
               "gains": [
                 {
-                  "name": "Rival Spotter",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Rival Spotter (Piercing Spotter)",
+                  "name": "Rival Spotter",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "vbYCQfF82BLa",
-                      "name": "Piercing Spotter",
-                      "type": "ArmyBookRule"
+                      "name": "Piercing Spotter"
                     }
                   ],
+                  "bases": null,
+                  "label": "Rival Spotter (Piercing Spotter)",
                   "count": 1
                 }
               ],
@@ -3367,7 +3460,7 @@
       "hint": "Stalker Cabalists",
       "sections": [
         {
-          "id": "-1pvGAy",
+          "id": "-PqY0cW",
           "uid": "pHcwq",
           "label": "Replace any Heavy Blade Weapon",
           "options": [
@@ -3383,23 +3476,25 @@
               ],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Heavy Talon Sickle",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Heavy Talon Sickle",
                   "range": 0,
                   "attacks": 3,
-                  "weaponId": "iF6RrScM",
                   "specialRules": [
                     {
-                      "id": "09SoiR1HuW7u",
-                      "name": "Precise"
-                    },
-                    {
+                      "type": "ArmyBookRule",
                       "id": "JSnFcm3SCiMD",
                       "name": "Crack"
+                    },
+                    {
+                      "type": "ArmyBookRule",
+                      "id": "09SoiR1HuW7u",
+                      "name": "Precise"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "iF6RrScM",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Heavy Talon Sickle (A3, Crack, Precise)"
                 }
@@ -3420,25 +3515,26 @@
               ],
               "gains": [
                 {
-                  "name": "Heavy Spear",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Heavy Spear",
                   "range": 0,
                   "attacks": 3,
-                  "weaponId": "qWAATuZG",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
-                      "type": "ArmyBookRule",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "c45Fw0D2oGOk",
-                      "name": "Counter",
-                      "type": "ArmyBookRule"
+                      "name": "Counter"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "qWAATuZG",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Heavy Spear (A3, AP(1), Counter)"
                 }
@@ -3461,7 +3557,7 @@
           ]
         },
         {
-          "id": "eDaRDcl",
+          "id": "Yc2TDzE",
           "uid": "4QURhE0-",
           "label": "Upgrade with",
           "options": [
@@ -3477,17 +3573,17 @@
               ],
               "gains": [
                 {
-                  "name": "Rival Spotter",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Rival Spotter (Piercing Spotter)",
+                  "name": "Rival Spotter",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "vbYCQfF82BLa",
-                      "name": "Piercing Spotter",
-                      "type": "ArmyBookRule"
+                      "name": "Piercing Spotter"
                     }
                   ],
+                  "bases": null,
+                  "label": "Rival Spotter (Piercing Spotter)",
                   "count": 1
                 }
               ],
@@ -3509,7 +3605,7 @@
       "hint": "Flight Rigs",
       "sections": [
         {
-          "id": "QngFfkY",
+          "id": "28sYEZb",
           "uid": "v3gad",
           "label": "Replace any 2x Hand Weapon",
           "options": [
@@ -3525,26 +3621,26 @@
               ],
               "gains": [
                 {
-                  "id": "zdm9Q_d3",
-                  "name": "Throwing Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Throwing Weapon",
                   "range": 12,
                   "attacks": 1,
-                  "weaponId": "i_dyolKh",
                   "specialRules": [],
+                  "count": 1,
+                  "weaponId": "i_dyolKh",
+                  "id": "zdm9Q_d3",
                   "attacksMultiplier": 1,
                   "label": "Throwing Weapon (12\", A1)"
                 },
                 {
-                  "id": null,
-                  "name": "Dagger",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Dagger",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "1Sjl-Rlb",
                   "specialRules": [],
+                  "count": 1,
+                  "weaponId": "1Sjl-Rlb",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Dagger (A2)"
                 }
@@ -3565,7 +3661,7 @@
           ]
         },
         {
-          "id": "RynxFh0",
+          "id": "MyMpTiX",
           "uid": "yV0ve",
           "label": "Replace any Throwing Weapon",
           "options": [
@@ -3581,24 +3677,26 @@
               ],
               "gains": [
                 {
-                  "id": "eDcWVb_f",
-                  "name": "Fire Bombs",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Fire Bombs",
                   "range": 12,
                   "attacks": 1,
-                  "weaponId": "hlBYwOY4",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
                       "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "hlBYwOY4",
+                  "id": "eDcWVb_f",
                   "attacksMultiplier": 1,
                   "label": "Fire Bombs (12\", A1, AP(1), Rending)"
                 }
@@ -3621,7 +3719,7 @@
           ]
         },
         {
-          "id": "PnyKIJw",
+          "id": "84bGHbg",
           "uid": "81FAu",
           "label": "Replace any Dagger",
           "options": [
@@ -3637,19 +3735,20 @@
               ],
               "gains": [
                 {
-                  "id": "vOoEZ3Ng",
-                  "name": "Barbed Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Barbed Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "K6PAJmF2",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "IEJp3a4vE0CB",
                       "name": "Shred"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "K6PAJmF2",
+                  "id": "vOoEZ3Ng",
                   "attacksMultiplier": 1,
                   "label": "Barbed Weapon (A2, Shred)"
                 }
@@ -3672,23 +3771,25 @@
               ],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Talon Sickle",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Talon Sickle",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "IA_L-rT2",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "JSnFcm3SCiMD",
                       "name": "Crack"
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "09SoiR1HuW7u",
                       "name": "Precise"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "IA_L-rT2",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Talon Sickle (A2, Crack, Precise)"
                 }
@@ -3710,24 +3811,26 @@
               ],
               "gains": [
                 {
-                  "id": "wsNJgAF_",
-                  "name": "Blade Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Blade Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "5X21-brQ",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
                       "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "5X21-brQ",
+                  "id": "wsNJgAF_",
                   "attacksMultiplier": 1,
                   "label": "Blade Weapon (A2, AP(1), Rending)"
                 }
@@ -3750,7 +3853,7 @@
           ]
         },
         {
-          "id": "kWSfBsE",
+          "id": "mbduU08",
           "uid": "qKC2L",
           "label": "Replace any Hand Weapon",
           "options": [
@@ -3766,19 +3869,20 @@
               ],
               "gains": [
                 {
-                  "id": "Am8MGlq-",
-                  "name": "Barbed Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Barbed Weapon",
                   "range": 0,
                   "attacks": 1,
-                  "weaponId": "QVNor6Nq",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "IEJp3a4vE0CB",
                       "name": "Shred"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "QVNor6Nq",
+                  "id": "Am8MGlq-",
                   "attacksMultiplier": 1,
                   "label": "Barbed Weapon (A1, Shred)"
                 }
@@ -3802,26 +3906,28 @@
               ],
               "gains": [
                 {
-                  "id": "VBLbYANj",
-                  "name": "Blade Weapon",
                   "type": "ArmyBookWeapon",
+                  "name": "Blade Weapon",
                   "range": 0,
                   "attacks": 1,
-                  "weaponId": "bLCkB3cs",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
                       "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "bLCkB3cs",
+                  "id": "VBLbYANj",
                   "attacksMultiplier": 1,
-                  "label": "Blade Weapon (A1, AP(1), Rending)",
-                  "count": 1
+                  "label": "Blade Weapon (A1, AP(1), Rending)"
                 }
               ],
               "label": "Blade Weapon (A1, AP(1), Rending)",
@@ -3842,23 +3948,25 @@
               ],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Talon Sickle",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Talon Sickle",
                   "range": 0,
                   "attacks": 1,
-                  "weaponId": "EelO6v0V",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "JSnFcm3SCiMD",
                       "name": "Crack"
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "09SoiR1HuW7u",
                       "name": "Precise"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "EelO6v0V",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Talon Sickle (A1, Crack, Precise)"
                 }
@@ -3879,7 +3987,7 @@
           ]
         },
         {
-          "id": "n9sd592",
+          "id": "o0-kcfe",
           "uid": "shS3zBSh",
           "label": "Upgrade with",
           "options": [
@@ -3895,17 +4003,17 @@
               ],
               "gains": [
                 {
-                  "name": "Rival Spotter",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Rival Spotter (Piercing Spotter)",
+                  "name": "Rival Spotter",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "vbYCQfF82BLa",
-                      "name": "Piercing Spotter",
-                      "type": "ArmyBookRule"
+                      "name": "Piercing Spotter"
                     }
                   ],
+                  "bases": null,
+                  "label": "Rival Spotter (Piercing Spotter)",
                   "count": 1
                 }
               ],
@@ -3927,7 +4035,7 @@
       "hint": "Great Flight Rigs",
       "sections": [
         {
-          "id": "ISsEbIE",
+          "id": "MwnrkO0",
           "uid": "zrXJN",
           "label": "Replace any Hand Weapon",
           "options": [
@@ -3943,18 +4051,20 @@
               ],
               "gains": [
                 {
-                  "name": "Barbed Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Barbed Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "K6PAJmF2",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "IEJp3a4vE0CB",
                       "name": "Shred"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "K6PAJmF2",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Barbed Weapon (A2, Shred)"
                 }
@@ -3975,23 +4085,25 @@
               ],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Talon Sickle",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Talon Sickle",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "IA_L-rT2",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "JSnFcm3SCiMD",
                       "name": "Crack"
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "09SoiR1HuW7u",
                       "name": "Precise"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "IA_L-rT2",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Talon Sickle (A2, Crack, Precise)"
                 }
@@ -4012,23 +4124,26 @@
               ],
               "gains": [
                 {
-                  "name": "Blade Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Blade Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "5X21-brQ",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
                       "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "5X21-brQ",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Blade Weapon (A2, AP(1), Rending)"
                 }
@@ -4049,7 +4164,7 @@
           ]
         },
         {
-          "id": "A9MMj8Y",
+          "id": "gYPV122",
           "uid": "4UA4e-Xh",
           "label": "Upgrade with",
           "options": [
@@ -4065,17 +4180,17 @@
               ],
               "gains": [
                 {
-                  "name": "Vulture's Mark",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Vulture's Mark (Precision Fighting Mark)",
+                  "name": "Vulture's Mark",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "hdAYIH9rfgOk",
-                      "name": "Precision Fighting Mark",
-                      "type": "ArmyBookRule"
+                      "name": "Precision Fighting Mark"
                     }
                   ],
+                  "bases": null,
+                  "label": "Vulture's Mark (Precision Fighting Mark)",
                   "count": 1
                 }
               ],
@@ -4097,7 +4212,7 @@
       "hint": "Specialists - Champion",
       "sections": [
         {
-          "id": "y_IRuip",
+          "id": "2L4KFWy",
           "uid": "nQlqti4X",
           "label": "Upgrade with one",
           "options": [
@@ -4113,17 +4228,17 @@
               ],
               "gains": [
                 {
-                  "name": "Treasure Guard",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Treasure Guard (Melee Shrouding Aura)",
+                  "name": "Treasure Guard",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "0dZak5jae8F0",
-                      "name": "Melee Shrouding Aura",
-                      "type": "ArmyBookRule"
+                      "name": "Melee Shrouding Aura"
                     }
                   ],
+                  "bases": null,
+                  "label": "Treasure Guard (Melee Shrouding Aura)",
                   "count": 1
                 }
               ],
@@ -4144,17 +4259,17 @@
               ],
               "gains": [
                 {
-                  "name": "Top Raptor",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Top Raptor (Courage Aura)",
+                  "name": "Top Raptor",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "FRVSAjasmFSF",
-                      "name": "Courage Aura",
-                      "type": "ArmyBookRule"
+                      "name": "Courage Aura"
                     }
                   ],
+                  "bases": null,
+                  "label": "Top Raptor (Courage Aura)",
                   "count": 1
                 }
               ],
@@ -4175,17 +4290,17 @@
               ],
               "gains": [
                 {
-                  "name": "Trophy Hunter",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Trophy Hunter (Relentless Aura)",
+                  "name": "Trophy Hunter",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "zGew9XZT2rUm",
-                      "name": "Relentless Aura",
-                      "type": "ArmyBookRule"
+                      "name": "Relentless Aura"
                     }
                   ],
+                  "bases": null,
+                  "label": "Trophy Hunter (Relentless Aura)",
                   "count": 1
                 }
               ],
@@ -4207,17 +4322,17 @@
               ],
               "gains": [
                 {
-                  "name": "Sky Cutter",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Sky Cutter (Runner Boost Aura)",
+                  "name": "Sky Cutter",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "Tmfov9Aj0X2h",
-                      "name": "Runner Boost Aura",
-                      "type": "ArmyBookRule"
+                      "name": "Runner Boost Aura"
                     }
                   ],
+                  "bases": null,
+                  "label": "Sky Cutter (Runner Boost Aura)",
                   "count": 1
                 }
               ],
@@ -4238,18 +4353,18 @@
               ],
               "gains": [
                 {
-                  "name": "Relic Warlock",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Relic Warlock (Caster(2))",
+                  "name": "Relic Warlock",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "47CAqf7ySlfc",
                       "name": "Caster",
-                      "type": "ArmyBookRule",
                       "rating": 2
                     }
                   ],
+                  "bases": null,
+                  "label": "Relic Warlock (Caster(2))",
                   "count": 1
                 }
               ],
@@ -4917,7 +5032,8 @@
       "description": "Moves +2\" when using Advance, and +2” when using Rush/Charge.",
       "hasRating": false,
       "coreType": null,
-      "targetType": 1
+      "targetType": 1,
+      "originalName": "Quick"
     },
     {
       "id": "Tmfov9Aj0X2h",
@@ -4996,6 +5112,15 @@
       "name": "Melee Slayer",
       "aliasedRuleId": null,
       "description": "When this model charges, its weapons get AP(+2) if most models in the target have Tough(3) or higher.",
+      "hasRating": false,
+      "coreType": null,
+      "targetType": 1
+    },
+    {
+      "id": "lJx5NP1KA3KU",
+      "name": "Quick",
+      "aliasedRuleId": null,
+      "description": "Moves +2\" when using Advance, and +2” when using Rush/Charge.",
       "hasRating": false,
       "coreType": null,
       "targetType": 1

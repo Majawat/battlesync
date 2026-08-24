@@ -706,7 +706,7 @@
       "hint": "Leader",
       "sections": [
         {
-          "id": "U2RP1Vm",
+          "id": "UH2nim3",
           "uid": "0j7ey",
           "label": "Replace Heavy Throwing Weapon and Hand Weapon",
           "options": [
@@ -722,13 +722,14 @@
               ],
               "gains": [
                 {
-                  "name": "Hand Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": "02",
+                  "name": "Hand Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "C-fKFuUr",
                   "specialRules": [],
+                  "count": 2,
+                  "weaponId": "C-fKFuUr",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "2x Hand Weapon (A2)"
                 }
@@ -747,7 +748,7 @@
           ]
         },
         {
-          "id": "bbYWBzo",
+          "id": "hF5XymE",
           "uid": "r08ZQ",
           "label": "Replace Heavy Throwing Weapon",
           "options": [
@@ -763,18 +764,20 @@
               ],
               "gains": [
                 {
-                  "name": "Poison Darts",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Poison Darts",
                   "range": 12,
                   "attacks": 1,
-                  "weaponId": "AE4g3LUE",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "Naqc5mga9Uha",
                       "name": "Bane"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "AE4g3LUE",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Poison Darts (12\", A1, Bane)"
                 }
@@ -797,23 +800,26 @@
               ],
               "gains": [
                 {
-                  "name": "Fire Bombs",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Fire Bombs",
                   "range": 12,
                   "attacks": 1,
-                  "weaponId": "hlBYwOY4",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
                       "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "hlBYwOY4",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Fire Bombs (12\", A1, AP(1), Rending)"
                 }
@@ -836,18 +842,20 @@
               ],
               "gains": [
                 {
-                  "name": "Toxin Bow",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Toxin Bow",
                   "range": 18,
                   "attacks": 1,
-                  "weaponId": "76jYirZ0",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "Naqc5mga9Uha",
                       "name": "Bane"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "76jYirZ0",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Toxin Bow (18\", A1, Bane)"
                 }
@@ -868,13 +876,14 @@
               ],
               "gains": [
                 {
-                  "name": "Longbow",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Longbow",
                   "range": 30,
                   "attacks": 1,
-                  "weaponId": "jaFKspbM",
                   "specialRules": [],
+                  "count": 1,
+                  "weaponId": "jaFKspbM",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Longbow (30\", A1)"
                 }
@@ -897,20 +906,21 @@
               ],
               "gains": [
                 {
-                  "name": "Heavy Bow",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Heavy Bow",
                   "range": 24,
                   "attacks": 1,
-                  "weaponId": "9hipexu5",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
-                      "type": "ArmyBookRule",
                       "rating": 1
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "9hipexu5",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Heavy Bow (24\", A1, AP(1))"
                 }
@@ -931,19 +941,20 @@
               ],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Splinter Blowpipe",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Splinter Blowpipe",
                   "range": 18,
                   "attacks": 1,
-                  "weaponId": "gLQEX3f-",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "1qiGNqpxKb24",
                       "name": "Disintegrate"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "gLQEX3f-",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Splinter Blowpipe (18\", A1, Disintegrate)"
                 }
@@ -964,24 +975,27 @@
               ],
               "gains": [
                 {
-                  "name": "Harpoon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Harpoon",
                   "range": 12,
                   "attacks": 1,
-                  "weaponId": "0rn_N0yM",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 2
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "_mrPya5SXSqW",
                       "name": "Deadly",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "0rn_N0yM",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Harpoon (12\", A1, AP(2), Deadly(3))"
                 }
@@ -1001,7 +1015,7 @@
           ]
         },
         {
-          "id": "VtftHa1",
+          "id": "48DwcFa",
           "uid": "PrBZ3",
           "label": "Replace any Hand Weapon",
           "options": [
@@ -1017,19 +1031,20 @@
               ],
               "gains": [
                 {
-                  "name": "Spear",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Spear",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "ZLBl4ver",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "c45Fw0D2oGOk",
-                      "name": "Counter",
-                      "type": "ArmyBookRule"
+                      "name": "Counter"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "ZLBl4ver",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Spear (A2, Counter)"
                 }
@@ -1053,21 +1068,22 @@
               ],
               "gains": [
                 {
-                  "id": "MirKNLkE",
-                  "name": "Toxin Weapon",
                   "type": "ArmyBookWeapon",
+                  "name": "Toxin Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "MirKNLkE",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "Naqc5mga9Uha",
                       "name": "Bane"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "MirKNLkE",
+                  "id": "MirKNLkE",
                   "attacksMultiplier": 1,
-                  "label": "Toxin Weapon (A2, Bane)",
-                  "count": 1
+                  "label": "Toxin Weapon (A2, Bane)"
                 }
               ],
               "label": "Toxin Weapon (A2, Bane)",
@@ -1089,26 +1105,28 @@
               ],
               "gains": [
                 {
-                  "id": "5X21-brQ",
-                  "name": "Blade Weapon",
                   "type": "ArmyBookWeapon",
+                  "name": "Blade Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "5X21-brQ",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
                       "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "5X21-brQ",
+                  "id": "5X21-brQ",
                   "attacksMultiplier": 1,
-                  "label": "Blade Weapon (A2, AP(1), Rending)",
-                  "count": 1
+                  "label": "Blade Weapon (A2, AP(1), Rending)"
                 }
               ],
               "label": "Blade Weapon (A2, AP(1), Rending)",
@@ -1130,22 +1148,23 @@
               ],
               "gains": [
                 {
-                  "id": "fjMoPeFE",
-                  "name": "Great Weapon",
                   "type": "ArmyBookWeapon",
+                  "name": "Great Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "fjMoPeFE",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "fjMoPeFE",
+                  "id": "fjMoPeFE",
                   "attacksMultiplier": 1,
-                  "label": "Great Weapon (A2, AP(3))",
-                  "count": 1
+                  "label": "Great Weapon (A2, AP(3))"
                 }
               ],
               "label": "Great Weapon (A2, AP(3))",
@@ -1166,7 +1185,7 @@
           ]
         },
         {
-          "id": "UsHTjyz",
+          "id": "5dfWvSy",
           "uid": "bDEe_NWq",
           "label": "Upgrade with one",
           "options": [
@@ -1184,16 +1203,17 @@
               "gains": [
                 {
                   "id": "aqU3UtX",
-                  "name": "Beast Companion",
                   "type": "ArmyBookItem",
-                  "label": "Beast Companion (Repel Ambushers)",
+                  "name": "Beast Companion",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "C6MzEy1CnxTs",
-                      "name": "Repel Ambushers",
-                      "type": "ArmyBookRule"
+                      "name": "Repel Ambushers"
                     }
                   ],
+                  "bases": null,
+                  "label": "Beast Companion (Repel Ambushers)",
                   "count": 1
                 }
               ],
@@ -1215,41 +1235,40 @@
               ],
               "gains": [
                 {
-                  "name": "Great Bird",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Great Bird (Rending Claws (A2, Rending), Flying, Tough(3))",
+                  "name": "Great Bird",
                   "content": [
                     {
-                      "id": "Kdcb46Jd",
-                      "name": "Rending Claws",
                       "type": "ArmyBookWeapon",
-                      "count": 1,
+                      "name": "Rending Claws",
                       "range": 0,
                       "attacks": 2,
-                      "weaponId": "Lsw6qhTR",
                       "specialRules": [
                         {
+                          "type": "ArmyBookRule",
                           "id": "cavWDboL4ubs",
-                          "name": "Rending",
-                          "type": "ArmyBookRule"
+                          "name": "Rending"
                         }
                       ],
-                      "attacksMultiplier": 1,
-                      "label": "Rending Claws (A2, Rending)"
+                      "count": 1,
+                      "weaponId": "Lsw6qhTR",
+                      "id": "Kdcb46Jd",
+                      "attacksMultiplier": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "-QJdqJEKjIpE",
-                      "name": "Flying",
-                      "type": "ArmyBookRule"
+                      "name": "Flying"
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "a0YtInGiUDd6",
                       "name": "Tough",
-                      "type": "ArmyBookRule",
                       "rating": 3
                     }
                   ],
+                  "bases": null,
+                  "label": "Great Bird (Rending Claws (A2, Rending), Flying, Tough(3))",
                   "count": 1
                 }
               ],
@@ -1275,7 +1294,7 @@
       "hint": "Veteran Fighters",
       "sections": [
         {
-          "id": "AFI_ggC",
+          "id": "P8yXM9W",
           "uid": "spZWF",
           "label": "Replace any 2x Hand Weapon",
           "options": [
@@ -1291,33 +1310,33 @@
               ],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Heavy Throwing Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Heavy Throwing Weapon",
                   "range": 12,
                   "attacks": 1,
-                  "weaponId": "xCrEtisv",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
-                      "type": "ArmyBookRule",
                       "rating": 1
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "xCrEtisv",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Heavy Throwing Weapon (12\", A1, AP(1))"
                 },
                 {
-                  "id": null,
-                  "name": "Dagger",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Dagger",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "1Sjl-Rlb",
                   "specialRules": [],
+                  "count": 1,
+                  "weaponId": "1Sjl-Rlb",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Dagger (A2)"
                 }
@@ -1338,7 +1357,7 @@
           ]
         },
         {
-          "id": "OXRLa0D",
+          "id": "PGSHwp6",
           "uid": "-PdAR",
           "label": "Replace any Heavy Throwing Weapon",
           "options": [
@@ -1354,19 +1373,20 @@
               ],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Splinter Throwing Stars",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Splinter Throwing Stars",
                   "range": 12,
                   "attacks": 1,
-                  "weaponId": "HaZwnQ27",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "1qiGNqpxKb24",
                       "name": "Disintegrate"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "HaZwnQ27",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Splinter Throwing Stars (12\", A1, Disintegrate)"
                 }
@@ -1387,18 +1407,20 @@
               ],
               "gains": [
                 {
-                  "name": "Poison Darts",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Poison Darts",
                   "range": 12,
                   "attacks": 1,
-                  "weaponId": "AE4g3LUE",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "Naqc5mga9Uha",
                       "name": "Bane"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "AE4g3LUE",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Poison Darts (12\", A1, Bane)"
                 }
@@ -1419,23 +1441,26 @@
               ],
               "gains": [
                 {
-                  "name": "Fire Bombs",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Fire Bombs",
                   "range": 12,
                   "attacks": 1,
-                  "weaponId": "hlBYwOY4",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
                       "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "hlBYwOY4",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Fire Bombs (12\", A1, AP(1), Rending)"
                 }
@@ -1456,7 +1481,7 @@
           ]
         },
         {
-          "id": "BCDJuox",
+          "id": "_dAr9dO",
           "uid": "oFAjZ",
           "label": "Replace Heavy Throwing Weapon",
           "options": [
@@ -1472,24 +1497,27 @@
               ],
               "gains": [
                 {
-                  "name": "Harpoon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Harpoon",
                   "range": 12,
                   "attacks": 1,
-                  "weaponId": "0rn_N0yM",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 2
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "_mrPya5SXSqW",
                       "name": "Deadly",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "0rn_N0yM",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Harpoon (12\", A1, AP(2), Deadly(3))"
                 }
@@ -1509,7 +1537,7 @@
           ]
         },
         {
-          "id": "kWT2jT9",
+          "id": "pHfK0wl",
           "uid": "3iZWe",
           "label": "Replace any Dagger",
           "options": [
@@ -1525,19 +1553,20 @@
               ],
               "gains": [
                 {
-                  "name": "Spear",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Spear",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "ZLBl4ver",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "c45Fw0D2oGOk",
-                      "name": "Counter",
-                      "type": "ArmyBookRule"
+                      "name": "Counter"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "ZLBl4ver",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Spear (A2, Counter)"
                 }
@@ -1560,18 +1589,20 @@
               ],
               "gains": [
                 {
-                  "name": "Toxin Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Toxin Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "MirKNLkE",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "Naqc5mga9Uha",
                       "name": "Bane"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "MirKNLkE",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Toxin Weapon (A2, Bane)"
                 }
@@ -1595,23 +1626,26 @@
               ],
               "gains": [
                 {
-                  "name": "Blade Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Blade Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "5X21-brQ",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
                       "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "5X21-brQ",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Blade Weapon (A2, AP(1), Rending)"
                 }
@@ -1635,19 +1669,21 @@
               ],
               "gains": [
                 {
-                  "name": "Great Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Great Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "fjMoPeFE",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "fjMoPeFE",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Great Weapon (A2, AP(3))"
                 }
@@ -1670,7 +1706,7 @@
           ]
         },
         {
-          "id": "bWX_fko",
+          "id": "GMoDAK8",
           "uid": "HKNxf",
           "label": "Replace any Hand Weapon",
           "options": [
@@ -1686,18 +1722,20 @@
               ],
               "gains": [
                 {
-                  "name": "Toxin Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Toxin Weapon",
                   "range": 0,
                   "attacks": 1,
-                  "weaponId": "lEqlbfta",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "Naqc5mga9Uha",
                       "name": "Bane"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "lEqlbfta",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Toxin Weapon (A1, Bane)"
                 }
@@ -1721,26 +1759,28 @@
               ],
               "gains": [
                 {
-                  "id": "bLCkB3cs",
-                  "name": "Blade Weapon",
                   "type": "ArmyBookWeapon",
+                  "name": "Blade Weapon",
                   "range": 0,
                   "attacks": 1,
-                  "weaponId": "bLCkB3cs",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
                       "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "bLCkB3cs",
+                  "id": "bLCkB3cs",
                   "attacksMultiplier": 1,
-                  "label": "Blade Weapon (A1, AP(1), Rending)",
-                  "count": 1
+                  "label": "Blade Weapon (A1, AP(1), Rending)"
                 }
               ],
               "label": "Blade Weapon (A1, AP(1), Rending)",
@@ -1762,22 +1802,23 @@
               ],
               "gains": [
                 {
-                  "id": "H5UywwCB",
-                  "name": "Great Weapon",
                   "type": "ArmyBookWeapon",
+                  "name": "Great Weapon",
                   "range": 0,
                   "attacks": 1,
-                  "weaponId": "H5UywwCB",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "H5UywwCB",
+                  "id": "H5UywwCB",
                   "attacksMultiplier": 1,
-                  "label": "Great Weapon (A1, AP(3))",
-                  "count": 1
+                  "label": "Great Weapon (A1, AP(3))"
                 }
               ],
               "label": "Great Weapon (A1, AP(3))",
@@ -1798,19 +1839,20 @@
               ],
               "gains": [
                 {
-                  "name": "Spear",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Spear",
                   "range": 0,
                   "attacks": 1,
-                  "weaponId": "nXIDrB4U",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "c45Fw0D2oGOk",
-                      "name": "Counter",
-                      "type": "ArmyBookRule"
+                      "name": "Counter"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "nXIDrB4U",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Spear (A1, Counter)"
                 }
@@ -1840,7 +1882,7 @@
       "hint": "Veteran Shooters",
       "sections": [
         {
-          "id": "pbjnV9i",
+          "id": "TKkHLzp",
           "uid": "F37T4",
           "label": "Replace any Longbow",
           "options": [
@@ -1856,19 +1898,20 @@
               ],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Splinter Blowpipe",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Splinter Blowpipe",
                   "range": 18,
                   "attacks": 1,
-                  "weaponId": "gLQEX3f-",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "1qiGNqpxKb24",
                       "name": "Disintegrate"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "gLQEX3f-",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Splinter Blowpipe (18\", A1, Disintegrate)"
                 }
@@ -1889,18 +1932,20 @@
               ],
               "gains": [
                 {
-                  "name": "Toxin Bow",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Toxin Bow",
                   "range": 18,
                   "attacks": 1,
-                  "weaponId": "76jYirZ0",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "Naqc5mga9Uha",
                       "name": "Bane"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "76jYirZ0",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Toxin Bow (18\", A1, Bane)"
                 }
@@ -1921,20 +1966,21 @@
               ],
               "gains": [
                 {
-                  "name": "Heavy Bow",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Heavy Bow",
                   "range": 24,
                   "attacks": 1,
-                  "weaponId": "9hipexu5",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
-                      "type": "ArmyBookRule",
                       "rating": 1
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "9hipexu5",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Heavy Bow (24\", A1, AP(1))"
                 }
@@ -1964,7 +2010,7 @@
       "hint": "Fighters",
       "sections": [
         {
-          "id": "yP0qN2f",
+          "id": "5Idhmx7",
           "uid": "XyVnQ",
           "label": "Replace any 2x Hand Weapon",
           "options": [
@@ -1980,26 +2026,26 @@
               ],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Throwing Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Throwing Weapon",
                   "range": 12,
                   "attacks": 1,
-                  "weaponId": "i_dyolKh",
                   "specialRules": [],
+                  "count": 1,
+                  "weaponId": "i_dyolKh",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Throwing Weapon (12\", A1)"
                 },
                 {
-                  "id": null,
-                  "name": "Dagger",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Dagger",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "1Sjl-Rlb",
                   "specialRules": [],
+                  "count": 1,
+                  "weaponId": "1Sjl-Rlb",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Dagger (A2)"
                 }
@@ -2020,7 +2066,7 @@
           ]
         },
         {
-          "id": "u-ZgK4W",
+          "id": "2Yq7UB5",
           "uid": "kdAV2",
           "label": "Replace one Throwing Weapons",
           "options": [
@@ -2036,18 +2082,20 @@
               ],
               "gains": [
                 {
-                  "name": "Poison Darts",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Poison Darts",
                   "range": 12,
                   "attacks": 1,
-                  "weaponId": "AE4g3LUE",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "Naqc5mga9Uha",
                       "name": "Bane"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "AE4g3LUE",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Poison Darts (12\", A1, Bane)"
                 }
@@ -2068,19 +2116,20 @@
               ],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Splinter Throwing Stars",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Splinter Throwing Stars",
                   "range": 12,
                   "attacks": 1,
-                  "weaponId": "HaZwnQ27",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "1qiGNqpxKb24",
                       "name": "Disintegrate"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "HaZwnQ27",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Splinter Throwing Stars (12\", A1, Disintegrate)"
                 }
@@ -2101,23 +2150,26 @@
               ],
               "gains": [
                 {
-                  "name": "Fire Bombs",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Fire Bombs",
                   "range": 12,
                   "attacks": 1,
-                  "weaponId": "hlBYwOY4",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
                       "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "hlBYwOY4",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Fire Bombs (12\", A1, AP(1), Rending)"
                 }
@@ -2139,7 +2191,7 @@
           ]
         },
         {
-          "id": "6JEnZdP",
+          "id": "2YNEPgC",
           "uid": "b_a8d",
           "label": "Replace any Dagger",
           "options": [
@@ -2155,18 +2207,20 @@
               ],
               "gains": [
                 {
-                  "name": "Toxin Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Toxin Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "MirKNLkE",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "Naqc5mga9Uha",
                       "name": "Bane"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "MirKNLkE",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Toxin Weapon (A2, Bane)"
                 }
@@ -2190,19 +2244,21 @@
               ],
               "gains": [
                 {
-                  "name": "Great Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Great Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "fjMoPeFE",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "fjMoPeFE",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Great Weapon (A2, AP(3))"
                 }
@@ -2223,19 +2279,20 @@
               ],
               "gains": [
                 {
-                  "name": "Spear",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Spear",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "ZLBl4ver",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "c45Fw0D2oGOk",
-                      "name": "Counter",
-                      "type": "ArmyBookRule"
+                      "name": "Counter"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "ZLBl4ver",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Spear (A2, Counter)"
                 }
@@ -2259,23 +2316,26 @@
               ],
               "gains": [
                 {
-                  "name": "Blade Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Blade Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "5X21-brQ",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
                       "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "5X21-brQ",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Blade Weapon (A2, AP(1), Rending)"
                 }
@@ -2298,7 +2358,7 @@
           ]
         },
         {
-          "id": "g8Hm6jQ",
+          "id": "W3i5L23",
           "uid": "XoOJw",
           "label": "Replace any Hand Weapon",
           "options": [
@@ -2314,18 +2374,20 @@
               ],
               "gains": [
                 {
-                  "name": "Toxin Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Toxin Weapon",
                   "range": 0,
                   "attacks": 1,
-                  "weaponId": "lEqlbfta",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "Naqc5mga9Uha",
                       "name": "Bane"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "lEqlbfta",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Toxin Weapon (A1, Bane)"
                 }
@@ -2349,26 +2411,28 @@
               ],
               "gains": [
                 {
-                  "id": "bLCkB3cs",
-                  "name": "Blade Weapon",
                   "type": "ArmyBookWeapon",
+                  "name": "Blade Weapon",
                   "range": 0,
                   "attacks": 1,
-                  "weaponId": "bLCkB3cs",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
                       "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "bLCkB3cs",
+                  "id": "bLCkB3cs",
                   "attacksMultiplier": 1,
-                  "label": "Blade Weapon (A1, AP(1), Rending)",
-                  "count": 1
+                  "label": "Blade Weapon (A1, AP(1), Rending)"
                 }
               ],
               "label": "Blade Weapon (A1, AP(1), Rending)",
@@ -2389,19 +2453,21 @@
               ],
               "gains": [
                 {
-                  "name": "Great Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Great Weapon",
                   "range": 0,
                   "attacks": 1,
-                  "weaponId": "H5UywwCB",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "H5UywwCB",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Great Weapon (A1, AP(3))"
                 }
@@ -2422,19 +2488,20 @@
               ],
               "gains": [
                 {
-                  "name": "Spear",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Spear",
                   "range": 0,
                   "attacks": 1,
-                  "weaponId": "nXIDrB4U",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "c45Fw0D2oGOk",
-                      "name": "Counter",
-                      "type": "ArmyBookRule"
+                      "name": "Counter"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "nXIDrB4U",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Spear (A1, Counter)"
                 }
@@ -2464,7 +2531,7 @@
       "hint": "Shooters",
       "sections": [
         {
-          "id": "-75z7_L",
+          "id": "EJtC4Jp",
           "uid": "hcsQa",
           "label": "Replace any Shortbows",
           "options": [
@@ -2480,18 +2547,20 @@
               ],
               "gains": [
                 {
-                  "name": "Toxin Bow",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Toxin Bow",
                   "range": 18,
                   "attacks": 1,
-                  "weaponId": "76jYirZ0",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "Naqc5mga9Uha",
                       "name": "Bane"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "76jYirZ0",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Toxin Bow (18\", A1, Bane)"
                 }
@@ -2514,19 +2583,20 @@
               ],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Splinter Blowpipe",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Splinter Blowpipe",
                   "range": 18,
                   "attacks": 1,
-                  "weaponId": "gLQEX3f-",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "1qiGNqpxKb24",
                       "name": "Disintegrate"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "gLQEX3f-",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Splinter Blowpipe (18\", A1, Disintegrate)"
                 }
@@ -2554,7 +2624,7 @@
       "hint": "Champion",
       "sections": [
         {
-          "id": "bdRLP4F",
+          "id": "bmiP7Cb",
           "uid": "oRjXn",
           "label": "Replace Throwing Weapon and Hand Weapon",
           "options": [
@@ -2570,13 +2640,14 @@
               ],
               "gains": [
                 {
-                  "name": "Hand Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": "02",
+                  "name": "Hand Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "C-fKFuUr",
                   "specialRules": [],
+                  "count": 2,
+                  "weaponId": "C-fKFuUr",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "2x Hand Weapon (A2)"
                 }
@@ -2595,7 +2666,7 @@
           ]
         },
         {
-          "id": "ARhiKca",
+          "id": "BGOKXju",
           "uid": "s3ghA",
           "label": "Replace Throwing Weapon",
           "options": [
@@ -2611,18 +2682,20 @@
               ],
               "gains": [
                 {
-                  "name": "Poison Darts",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Poison Darts",
                   "range": 12,
                   "attacks": 1,
-                  "weaponId": "AE4g3LUE",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "Naqc5mga9Uha",
                       "name": "Bane"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "AE4g3LUE",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Poison Darts (12\", A1, Bane)"
                 }
@@ -2643,13 +2716,14 @@
               ],
               "gains": [
                 {
-                  "name": "Shortbow",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Shortbow",
                   "range": 18,
                   "attacks": 1,
-                  "weaponId": "sc0sJybR",
                   "specialRules": [],
+                  "count": 1,
+                  "weaponId": "sc0sJybR",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Shortbow (18\", A1)"
                 }
@@ -2670,19 +2744,20 @@
               ],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Splinter Throwing Stars",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Splinter Throwing Stars",
                   "range": 12,
                   "attacks": 1,
-                  "weaponId": "HaZwnQ27",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "1qiGNqpxKb24",
                       "name": "Disintegrate"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "HaZwnQ27",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Splinter Throwing Stars (12\", A1, Disintegrate)"
                 }
@@ -2703,23 +2778,26 @@
               ],
               "gains": [
                 {
-                  "name": "Fire Bombs",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Fire Bombs",
                   "range": 12,
                   "attacks": 1,
-                  "weaponId": "hlBYwOY4",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
                       "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "hlBYwOY4",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Fire Bombs (12\", A1, AP(1), Rending)"
                 }
@@ -2740,18 +2818,20 @@
               ],
               "gains": [
                 {
-                  "name": "Toxin Bow",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Toxin Bow",
                   "range": 18,
                   "attacks": 1,
-                  "weaponId": "76jYirZ0",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "Naqc5mga9Uha",
                       "name": "Bane"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "76jYirZ0",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Toxin Bow (18\", A1, Bane)"
                 }
@@ -2771,7 +2851,7 @@
           ]
         },
         {
-          "id": "IB5iwdV",
+          "id": "5MzAZ2G",
           "uid": "-hFlY",
           "label": "Replace any Hand Weapon",
           "options": [
@@ -2787,18 +2867,20 @@
               ],
               "gains": [
                 {
-                  "name": "Toxin Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Toxin Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "MirKNLkE",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "Naqc5mga9Uha",
                       "name": "Bane"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "MirKNLkE",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Toxin Weapon (A2, Bane)"
                 }
@@ -2822,22 +2904,23 @@
               ],
               "gains": [
                 {
-                  "id": "RQ6RLLS2",
-                  "name": "Great Weapon",
                   "type": "ArmyBookWeapon",
+                  "name": "Great Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "fjMoPeFE",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "fjMoPeFE",
+                  "id": "RQ6RLLS2",
                   "attacksMultiplier": 1,
-                  "label": "Great Weapon (A2, AP(3))",
-                  "count": 1
+                  "label": "Great Weapon (A2, AP(3))"
                 }
               ],
               "label": "Great Weapon (A2, AP(3))",
@@ -2858,19 +2941,20 @@
               ],
               "gains": [
                 {
-                  "name": "Spear",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Spear",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "ZLBl4ver",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "c45Fw0D2oGOk",
-                      "name": "Counter",
-                      "type": "ArmyBookRule"
+                      "name": "Counter"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "ZLBl4ver",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Spear (A2, Counter)"
                 }
@@ -2894,26 +2978,28 @@
               ],
               "gains": [
                 {
-                  "id": "wHDWE2A_",
-                  "name": "Blade Weapon",
                   "type": "ArmyBookWeapon",
+                  "name": "Blade Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "5X21-brQ",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
                       "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "5X21-brQ",
+                  "id": "wHDWE2A_",
                   "attacksMultiplier": 1,
-                  "label": "Blade Weapon (A2, AP(1), Rending)",
-                  "count": 1
+                  "label": "Blade Weapon (A2, AP(1), Rending)"
                 }
               ],
               "label": "Blade Weapon (A2, AP(1), Rending)",
@@ -2934,7 +3020,7 @@
           ]
         },
         {
-          "id": "VY-mBSY",
+          "id": "xXBMgYH",
           "uid": "StTXpoVI",
           "label": "Upgrade with one",
           "options": [
@@ -2952,16 +3038,17 @@
               "gains": [
                 {
                   "id": "5hOXOIh",
-                  "name": "Beast Companion",
                   "type": "ArmyBookItem",
-                  "label": "Beast Companion (Repel Ambushers)",
+                  "name": "Beast Companion",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "C6MzEy1CnxTs",
-                      "name": "Repel Ambushers",
-                      "type": "ArmyBookRule"
+                      "name": "Repel Ambushers"
                     }
                   ],
+                  "bases": null,
+                  "label": "Beast Companion (Repel Ambushers)",
                   "count": 1
                 }
               ],
@@ -2983,41 +3070,40 @@
               ],
               "gains": [
                 {
-                  "name": "Great Bird",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Great Bird (Rending Claws (A2, Rending), Flying, Tough(3))",
+                  "name": "Great Bird",
                   "content": [
                     {
-                      "id": "Kdcb46Jd",
-                      "name": "Rending Claws",
                       "type": "ArmyBookWeapon",
-                      "count": 1,
+                      "name": "Rending Claws",
                       "range": 0,
                       "attacks": 2,
-                      "weaponId": "Lsw6qhTR",
                       "specialRules": [
                         {
+                          "type": "ArmyBookRule",
                           "id": "cavWDboL4ubs",
-                          "name": "Rending",
-                          "type": "ArmyBookRule"
+                          "name": "Rending"
                         }
                       ],
-                      "attacksMultiplier": 1,
-                      "label": "Rending Claws (A2, Rending)"
+                      "count": 1,
+                      "weaponId": "Lsw6qhTR",
+                      "id": "Kdcb46Jd",
+                      "attacksMultiplier": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "-QJdqJEKjIpE",
-                      "name": "Flying",
-                      "type": "ArmyBookRule"
+                      "name": "Flying"
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "a0YtInGiUDd6",
                       "name": "Tough",
-                      "type": "ArmyBookRule",
                       "rating": 3
                     }
                   ],
+                  "bases": null,
+                  "label": "Great Bird (Rending Claws (A2, Rending), Flying, Tough(3))",
                   "count": 1
                 }
               ],
@@ -3043,7 +3129,7 @@
       "hint": "Specialists - Leader",
       "sections": [
         {
-          "id": "MsaLvoS",
+          "id": "1wB1B3A",
           "uid": "UUfBH",
           "label": "Upgrade with one",
           "options": [
@@ -3059,17 +3145,17 @@
               ],
               "gains": [
                 {
-                  "name": "Shadowblade",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Shadowblade (Takedown Strike)",
+                  "name": "Shadowblade",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "eyMkgYDVrP7C",
-                      "name": "Takedown Strike",
-                      "type": "ArmyBookRule"
+                      "name": "Takedown Strike"
                     }
                   ],
+                  "bases": null,
+                  "label": "Shadowblade (Takedown Strike)",
                   "count": 1
                 }
               ],
@@ -3089,18 +3175,18 @@
               ],
               "gains": [
                 {
-                  "name": "Icon Bearer",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Icon Bearer (Fear(2))",
+                  "name": "Icon Bearer",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "dIQ3SGl2J2Ew",
                       "name": "Fear",
-                      "type": "ArmyBookRule",
                       "rating": 2
                     }
                   ],
+                  "bases": null,
+                  "label": "Icon Bearer (Fear(2))",
                   "count": 1
                 }
               ],
@@ -3120,17 +3206,17 @@
               ],
               "gains": [
                 {
-                  "name": "Syndicate Lord",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Syndicate Lord (Gloom-Mist Boost Aura)",
+                  "name": "Syndicate Lord",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "Qlz-D_4zfEEh",
-                      "name": "Gloom-Mist Boost Aura",
-                      "type": "ArmyBookRule"
+                      "name": "Gloom-Mist Boost Aura"
                     }
                   ],
+                  "bases": null,
+                  "label": "Syndicate Lord (Gloom-Mist Boost Aura)",
                   "count": 1
                 }
               ],
@@ -3150,17 +3236,17 @@
               ],
               "gains": [
                 {
-                  "name": "Mindbinder",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Mindbinder (Teleport Aura)",
+                  "name": "Mindbinder",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "nr0R125ptwEZ",
-                      "name": "Teleport Aura",
-                      "type": "ArmyBookRule"
+                      "name": "Teleport Aura"
                     }
                   ],
+                  "bases": null,
+                  "label": "Mindbinder (Teleport Aura)",
                   "count": 1
                 }
               ],
@@ -3180,17 +3266,17 @@
               ],
               "gains": [
                 {
-                  "name": "Infuser",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Infuser (Rending when Shooting Aura)",
+                  "name": "Infuser",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "AfGDQgn8r8O1",
-                      "name": "Rending when Shooting Aura",
-                      "type": "ArmyBookRule"
+                      "name": "Rending when Shooting Aura"
                     }
                   ],
+                  "bases": null,
+                  "label": "Infuser (Rending when Shooting Aura)",
                   "count": 1
                 }
               ],
@@ -3212,18 +3298,18 @@
               ],
               "gains": [
                 {
-                  "name": "Hexer",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Hexer (Caster(2))",
+                  "name": "Hexer",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "47CAqf7ySlfc",
                       "name": "Caster",
-                      "type": "ArmyBookRule",
                       "rating": 2
                     }
                   ],
+                  "bases": null,
+                  "label": "Hexer (Caster(2))",
                   "count": 1
                 }
               ],
@@ -3243,18 +3329,18 @@
               ],
               "gains": [
                 {
-                  "name": "Master Hexer",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Master Hexer (Caster(3))",
+                  "name": "Master Hexer",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "47CAqf7ySlfc",
                       "name": "Caster",
-                      "type": "ArmyBookRule",
                       "rating": 3
                     }
                   ],
+                  "bases": null,
+                  "label": "Master Hexer (Caster(3))",
                   "count": 1
                 }
               ],
@@ -3280,7 +3366,7 @@
       "hint": "Weapon Masters",
       "sections": [
         {
-          "id": "in1fnDp",
+          "id": "Fz3zEvJ",
           "uid": "qEE23",
           "label": "Replace any Hand Weapon",
           "options": [
@@ -3296,19 +3382,20 @@
               ],
               "gains": [
                 {
-                  "name": "Spear",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Spear",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "ZLBl4ver",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "c45Fw0D2oGOk",
-                      "name": "Counter",
-                      "type": "ArmyBookRule"
+                      "name": "Counter"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "ZLBl4ver",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Spear (A2, Counter)"
                 }
@@ -3329,18 +3416,20 @@
               ],
               "gains": [
                 {
-                  "name": "Toxin Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Toxin Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "MirKNLkE",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "Naqc5mga9Uha",
                       "name": "Bane"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "MirKNLkE",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Toxin Weapon (A2, Bane)"
                 }
@@ -3361,7 +3450,7 @@
           ]
         },
         {
-          "id": "ORWW-c0",
+          "id": "t1_7LQ1",
           "uid": "VYW8bZD5",
           "label": "Upgrade with",
           "options": [
@@ -3377,17 +3466,17 @@
               ],
               "gains": [
                 {
-                  "name": "Deadly Arts",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Deadly Arts (Versatile Attack Aura)",
+                  "name": "Deadly Arts",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "ymrWMYEn2noy",
-                      "name": "Versatile Attack Aura",
-                      "type": "ArmyBookRule"
+                      "name": "Versatile Attack Aura"
                     }
                   ],
+                  "bases": null,
+                  "label": "Deadly Arts (Versatile Attack Aura)",
                   "count": 1
                 }
               ],
@@ -3409,7 +3498,7 @@
       "hint": "Stealth Masters",
       "sections": [
         {
-          "id": "U3h0y0S",
+          "id": "rFUE1cD",
           "uid": "4knDx",
           "label": "Replace any Throwing Weapon",
           "options": [
@@ -3425,19 +3514,20 @@
               ],
               "gains": [
                 {
-                  "id": "-aRSE3OJ",
-                  "name": "Poison Darts",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Poison Darts",
                   "range": 12,
                   "attacks": 1,
-                  "weaponId": "AE4g3LUE",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "Naqc5mga9Uha",
                       "name": "Bane"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "AE4g3LUE",
+                  "id": "-aRSE3OJ",
                   "attacksMultiplier": 1,
                   "label": "Poison Darts (12\", A1, Bane)"
                 }
@@ -3460,19 +3550,20 @@
               ],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Splinter Throwing Stars",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Splinter Throwing Stars",
                   "range": 12,
                   "attacks": 1,
-                  "weaponId": "HaZwnQ27",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "1qiGNqpxKb24",
                       "name": "Disintegrate"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "HaZwnQ27",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Splinter Throwing Stars (12\", A1, Disintegrate)"
                 }
@@ -3493,24 +3584,26 @@
               ],
               "gains": [
                 {
-                  "id": "ofYW8dxT",
-                  "name": "Fire Bombs",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Fire Bombs",
                   "range": 12,
                   "attacks": 1,
-                  "weaponId": "hlBYwOY4",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
                       "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "hlBYwOY4",
+                  "id": "ofYW8dxT",
                   "attacksMultiplier": 1,
                   "label": "Fire Bombs (12\", A1, AP(1), Rending)"
                 }
@@ -3533,7 +3626,7 @@
           ]
         },
         {
-          "id": "td10Ewn",
+          "id": "AQlu7BR",
           "uid": "jGDXS",
           "label": "Replace any Dagger",
           "options": [
@@ -3549,20 +3642,20 @@
               ],
               "gains": [
                 {
-                  "id": "MgLp07lL",
-                  "name": "Spear",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Spear",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "ZLBl4ver",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "c45Fw0D2oGOk",
-                      "name": "Counter",
-                      "type": "ArmyBookRule"
+                      "name": "Counter"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "ZLBl4ver",
+                  "id": "MgLp07lL",
                   "attacksMultiplier": 1,
                   "label": "Spear (A2, Counter)"
                 }
@@ -3585,19 +3678,20 @@
               ],
               "gains": [
                 {
-                  "id": "sIGl5lLj",
-                  "name": "Toxin Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Toxin Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "MirKNLkE",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "Naqc5mga9Uha",
                       "name": "Bane"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "MirKNLkE",
+                  "id": "sIGl5lLj",
                   "attacksMultiplier": 1,
                   "label": "Toxin Weapon (A2, Bane)"
                 }
@@ -3621,24 +3715,26 @@
               ],
               "gains": [
                 {
-                  "id": "JXqA4wlh",
-                  "name": "Blade Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Blade Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "5X21-brQ",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
                       "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "5X21-brQ",
+                  "id": "JXqA4wlh",
                   "attacksMultiplier": 1,
                   "label": "Blade Weapon (A2, AP(1), Rending)"
                 }
@@ -3662,20 +3758,21 @@
               ],
               "gains": [
                 {
-                  "id": "rfeyMKck",
-                  "name": "Great Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Great Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "fjMoPeFE",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "fjMoPeFE",
+                  "id": "rfeyMKck",
                   "attacksMultiplier": 1,
                   "label": "Great Weapon (A2, AP(3))"
                 }
@@ -3698,7 +3795,7 @@
           ]
         },
         {
-          "id": "vTfQHzw",
+          "id": "-1L75TL",
           "uid": "by59NIC0",
           "label": "Upgrade with",
           "options": [
@@ -3714,17 +3811,17 @@
               ],
               "gains": [
                 {
-                  "name": "Deadly Arts",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Deadly Arts (Versatile Attack Aura)",
+                  "name": "Deadly Arts",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "ymrWMYEn2noy",
-                      "name": "Versatile Attack Aura",
-                      "type": "ArmyBookRule"
+                      "name": "Versatile Attack Aura"
                     }
                   ],
+                  "bases": null,
+                  "label": "Deadly Arts (Versatile Attack Aura)",
                   "count": 1
                 }
               ],
@@ -3746,7 +3843,7 @@
       "hint": "Bird Riders",
       "sections": [
         {
-          "id": "SW9-mLx",
+          "id": "jGnMQMa",
           "uid": "edqHG",
           "label": "Replace any Shortbow",
           "options": [
@@ -3762,19 +3859,20 @@
               ],
               "gains": [
                 {
-                  "id": "waLMh92w",
-                  "name": "Toxin Bow",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Toxin Bow",
                   "range": 18,
                   "attacks": 1,
-                  "weaponId": "76jYirZ0",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "Naqc5mga9Uha",
                       "name": "Bane"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "76jYirZ0",
+                  "id": "waLMh92w",
                   "attacksMultiplier": 1,
                   "label": "Toxin Bow (18\", A1, Bane)"
                 }
@@ -3797,19 +3895,20 @@
               ],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Splinter Blowpipe",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Splinter Blowpipe",
                   "range": 18,
                   "attacks": 1,
-                  "weaponId": "gLQEX3f-",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "1qiGNqpxKb24",
                       "name": "Disintegrate"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "gLQEX3f-",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Splinter Blowpipe (18\", A1, Disintegrate)"
                 }
@@ -3830,7 +3929,7 @@
           ]
         },
         {
-          "id": "rJuIM0B",
+          "id": "itkdglE",
           "uid": "Kn70Td1y",
           "label": "Upgrade with",
           "options": [
@@ -3846,17 +3945,17 @@
               ],
               "gains": [
                 {
-                  "name": "Deadly Arts",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Deadly Arts (Versatile Attack Aura)",
+                  "name": "Deadly Arts",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "ymrWMYEn2noy",
-                      "name": "Versatile Attack Aura",
-                      "type": "ArmyBookRule"
+                      "name": "Versatile Attack Aura"
                     }
                   ],
+                  "bases": null,
+                  "label": "Deadly Arts (Versatile Attack Aura)",
                   "count": 1
                 }
               ],
@@ -3878,7 +3977,7 @@
       "hint": "Shifter Beasts",
       "sections": [
         {
-          "id": "Li4TyJS",
+          "id": "Khl-ZDb",
           "uid": "WMGDH9OKz6",
           "label": "Upgrade with",
           "options": [
@@ -3894,17 +3993,17 @@
               ],
               "gains": [
                 {
-                  "name": "Cypher of Doom",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Cypher of Doom (Slayer Mark)",
+                  "name": "Cypher of Doom",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "KTetx0KIX3i-",
-                      "name": "Slayer Mark",
-                      "type": "ArmyBookRule"
+                      "name": "Slayer Mark"
                     }
                   ],
+                  "bases": null,
+                  "label": "Cypher of Doom (Slayer Mark)",
                   "count": 1
                 }
               ],
@@ -3925,7 +4024,7 @@
       "hint": "Specialists - Champion",
       "sections": [
         {
-          "id": "bvYe572",
+          "id": "hsq6qYw",
           "uid": "17_jWPEh",
           "label": "Upgrade with one",
           "options": [
@@ -3941,17 +4040,17 @@
               ],
               "gains": [
                 {
-                  "name": "Elusive Master",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Elusive Master (Melee Shrouding Aura)",
+                  "name": "Elusive Master",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "0dZak5jae8F0",
-                      "name": "Melee Shrouding Aura",
-                      "type": "ArmyBookRule"
+                      "name": "Melee Shrouding Aura"
                     }
                   ],
+                  "bases": null,
+                  "label": "Elusive Master (Melee Shrouding Aura)",
                   "count": 1
                 }
               ],
@@ -3972,17 +4071,17 @@
               ],
               "gains": [
                 {
-                  "name": "Shadowblade",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Shadowblade (Takedown Strike)",
+                  "name": "Shadowblade",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "eyMkgYDVrP7C",
-                      "name": "Takedown Strike",
-                      "type": "ArmyBookRule"
+                      "name": "Takedown Strike"
                     }
                   ],
+                  "bases": null,
+                  "label": "Shadowblade (Takedown Strike)",
                   "count": 1
                 }
               ],
@@ -4002,17 +4101,17 @@
               ],
               "gains": [
                 {
-                  "name": "Mindbinder",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Mindbinder (Teleport Aura)",
+                  "name": "Mindbinder",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "nr0R125ptwEZ",
-                      "name": "Teleport Aura",
-                      "type": "ArmyBookRule"
+                      "name": "Teleport Aura"
                     }
                   ],
+                  "bases": null,
+                  "label": "Mindbinder (Teleport Aura)",
                   "count": 1
                 }
               ],
@@ -4033,17 +4132,17 @@
               ],
               "gains": [
                 {
-                  "name": "Infuser",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Infuser (Rending when Shooting Aura)",
+                  "name": "Infuser",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "AfGDQgn8r8O1",
-                      "name": "Rending when Shooting Aura",
-                      "type": "ArmyBookRule"
+                      "name": "Rending when Shooting Aura"
                     }
                   ],
+                  "bases": null,
+                  "label": "Infuser (Rending when Shooting Aura)",
                   "count": 1
                 }
               ],
@@ -4065,18 +4164,18 @@
               ],
               "gains": [
                 {
-                  "name": "Hexer",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Hexer (Caster(2))",
+                  "name": "Hexer",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "47CAqf7ySlfc",
                       "name": "Caster",
-                      "type": "ArmyBookRule",
                       "rating": 2
                     }
                   ],
+                  "bases": null,
+                  "label": "Hexer (Caster(2))",
                   "count": 1
                 }
               ],
@@ -4754,7 +4853,8 @@
       "description": "When units where all models have this rule are shot or charged from over 9\" away, enemy units get -1 to hit rolls.",
       "hasRating": false,
       "coreType": null,
-      "targetType": 1
+      "targetType": 1,
+      "originalName": "Screened"
     },
     {
       "id": "AfGDQgn8r8O1",
@@ -4815,6 +4915,15 @@
       "name": "Gloom-Mist Boost Aura",
       "aliasedRuleId": null,
       "description": "This model and up to 3 friendly units picked before the start of the game get Gloom-Mist Boost. If this model is killed, picked models that are deployed lose the rule.",
+      "hasRating": false,
+      "coreType": null,
+      "targetType": 1
+    },
+    {
+      "id": "_tP0jExjizvc",
+      "name": "Screened",
+      "aliasedRuleId": null,
+      "description": "When units where all models have this rule are shot or charged from over 9\" away, enemy units get -1 to hit rolls.",
       "hasRating": false,
       "coreType": null,
       "targetType": 1

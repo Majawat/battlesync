@@ -1086,7 +1086,7 @@
       "hint": "High Champion",
       "sections": [
         {
-          "id": "mlqefGe",
+          "id": "rOW3mvy",
           "uid": "9SDFGaH",
           "label": "Replace Heavy Hand Weapon",
           "options": [
@@ -1373,7 +1373,7 @@
           ]
         },
         {
-          "id": "QXBAG44",
+          "id": "D-i9jfI",
           "uid": "YBk4-x8",
           "label": "Upgrade with one",
           "options": [
@@ -1706,7 +1706,7 @@
       "hint": "Vale Defender",
       "sections": [
         {
-          "id": "jtesYxC",
+          "id": "7N7YuK-",
           "uid": "wpgo6sU",
           "label": "Replace Hand Weapon",
           "options": [
@@ -1898,7 +1898,7 @@
           ]
         },
         {
-          "id": "PpzG6_9",
+          "id": "xB9TNJN",
           "uid": "neDXK1P2K-",
           "label": "Upgrade with one",
           "options": [
@@ -1970,7 +1970,7 @@
           }
         },
         {
-          "id": "h--U395",
+          "id": "N8kFPSB",
           "uid": "XdyvgTh",
           "label": "Upgrade with one",
           "options": [
@@ -2091,7 +2091,7 @@
       "hint": "Command Group",
       "sections": [
         {
-          "id": "mZoOnNp",
+          "id": "6_BQxCO",
           "uid": "5WR4hiA",
           "label": "Upgrade up to three models with one",
           "options": [
@@ -2330,7 +2330,7 @@
       "hint": "Men-at-Arms",
       "sections": [
         {
-          "id": "zh1sZVr",
+          "id": "05aZR1e",
           "uid": "9Z8rbhv",
           "label": "Replace all Hand Weapons",
           "options": [
@@ -2426,7 +2426,7 @@
       "hint": "Foot Knights",
       "sections": [
         {
-          "id": "qaYbtER",
+          "id": "ub4lGsH",
           "uid": "BYLxGvE",
           "label": "Replace all Heavy Hand Weapons",
           "options": [
@@ -2487,7 +2487,7 @@
       "hint": "Peasant Longbowmen",
       "sections": [
         {
-          "id": "8k7V0Qz",
+          "id": "OWTOsX_",
           "uid": "diEApOi",
           "label": "Upgrade all models with any",
           "options": [
@@ -2609,7 +2609,7 @@
       "hint": "Mounted Bowmen",
       "sections": [
         {
-          "id": "o1XZ_z7",
+          "id": "manU6N5",
           "uid": "srq_FfL",
           "label": "Replace all Hand Weapons",
           "options": [
@@ -2669,7 +2669,7 @@
       "hint": "Chivalrous Artillery",
       "sections": [
         {
-          "id": "a9tV_v3",
+          "id": "gdWGRe7",
           "uid": "a9liudr",
           "label": "Replace Stone Thrower",
           "options": [
@@ -2731,7 +2731,7 @@
           ]
         },
         {
-          "id": "YAggq4V",
+          "id": "W8Nvq7O",
           "uid": "g0-hgXzh",
           "label": "Upgrade with",
           "options": [
@@ -2780,7 +2780,7 @@
       "hint": "Peasant Levy",
       "sections": [
         {
-          "id": "leIM0Nc",
+          "id": "sGAnkk7",
           "uid": "slHck",
           "label": "Upgrade all models with",
           "options": [
@@ -2832,7 +2832,7 @@
       "hint": "Grail Relic",
       "sections": [
         {
-          "id": "xZuVkUq",
+          "id": "VqOoOFB",
           "uid": "BsEj-",
           "label": "Upgrade with any",
           "options": [
@@ -2917,7 +2917,7 @@
       "hint": "Monster Hunting Spear",
       "sections": [
         {
-          "id": "QxH1SJ9",
+          "id": "J2tKGee",
           "uid": "OpByc",
           "label": "Replace all Heavy Lances",
           "options": [
@@ -2985,7 +2985,7 @@
       "hint": "Specialists - Champion",
       "sections": [
         {
-          "id": "3FVgkw6",
+          "id": "0pRZA4w",
           "uid": "6HwrT",
           "label": "Upgrade with one",
           "options": [
@@ -3166,7 +3166,7 @@
       "hint": "Specialists - Defender",
       "sections": [
         {
-          "id": "fRcdARR",
+          "id": "kLA-iJf",
           "uid": "6k5JntsS",
           "label": "Upgrade with one",
           "options": [
@@ -3962,7 +3962,8 @@
       "description": "If a unit where all models have this rule is Shaken at the beginning of the round, roll one die. On a 4+, it stops being Shaken.",
       "hasRating": false,
       "coreType": null,
-      "targetType": 1
+      "targetType": 1,
+      "originalName": "Steadfast"
     },
     {
       "id": "zVconc6Qb-g9",
@@ -4104,6 +4105,15 @@
       "name": "Melee Slayer",
       "aliasedRuleId": null,
       "description": "When this model charges, its weapons get AP(+2) if most models in the target have Tough(3) or higher.",
+      "hasRating": false,
+      "coreType": null,
+      "targetType": 1
+    },
+    {
+      "id": "j93FkLXMCk8v",
+      "name": "Steadfast",
+      "aliasedRuleId": null,
+      "description": "If a unit where all models have this rule is Shaken at the beginning of the round, roll one die. On a 4+, it stops being Shaken.",
       "hasRating": false,
       "coreType": null,
       "targetType": 1

@@ -744,7 +744,7 @@
       "hint": "Jesters",
       "sections": [
         {
-          "id": "wR_7nxK",
+          "id": "c_AotpU",
           "uid": "6vXdYYK",
           "label": "Replace any Fragment Pistol",
           "options": [
@@ -796,7 +796,7 @@
           ]
         },
         {
-          "id": "s2DBlsJ",
+          "id": "uIXF3th",
           "uid": "ziNSA",
           "label": "Replace one Fragment Pistol",
           "options": [
@@ -856,7 +856,7 @@
           ]
         },
         {
-          "id": "33lRE7a",
+          "id": "GNCcKPD",
           "uid": "l5O6jLf",
           "label": "Replace any CCW",
           "options": [
@@ -953,7 +953,7 @@
           ]
         },
         {
-          "id": "2Dz3JRK",
+          "id": "s-x7gKf",
           "uid": "cTmvWaJ",
           "label": "Replace one CCW",
           "options": [
@@ -1054,7 +1054,7 @@
       "hint": "Jetbikes",
       "sections": [
         {
-          "id": "kz7aE7_",
+          "id": "hYT96Ej",
           "uid": "YE_-3l9",
           "label": "Replace any Exploding Bolas",
           "options": [
@@ -1188,7 +1188,7 @@
       "hint": "Heavy Jetbike",
       "sections": [
         {
-          "id": "fN3f5W7",
+          "id": "sRyVuDe",
           "uid": "iKzVxfR_5A",
           "label": "Replace Energy Glaive",
           "options": [
@@ -1239,7 +1239,7 @@
           ]
         },
         {
-          "id": "bucBoOW",
+          "id": "HJ1Wk7h",
           "uid": "Wj6VmOLxrL",
           "label": "Replace Twin Fragment Pistol",
           "options": [
@@ -1366,7 +1366,7 @@
           ]
         },
         {
-          "id": "KTztQg-",
+          "id": "gQehsUc",
           "uid": "CWRP2Ny3fj",
           "label": "Upgrade with any",
           "options": [
@@ -1449,7 +1449,7 @@
       "hint": "Master Jester",
       "sections": [
         {
-          "id": "_xqXrot",
+          "id": "7f750ch",
           "uid": "2n3r-",
           "label": "Replace Master Fragment Pistol",
           "options": [
@@ -1622,7 +1622,7 @@
           ]
         },
         {
-          "id": "_6Fxzcy",
+          "id": "c3xgRQF",
           "uid": "lhAyM",
           "label": "Replace Dagger and Deathly Touch",
           "options": [
@@ -1714,7 +1714,7 @@
           ]
         },
         {
-          "id": "RuYVoz9",
+          "id": "NFXVXYA",
           "uid": "DRM2W",
           "label": "Replace any CCW",
           "options": [
@@ -1811,7 +1811,7 @@
           ]
         },
         {
-          "id": "1o5XYMN",
+          "id": "2qGC76Q",
           "uid": "QknvZyHG",
           "label": "Upgrade with",
           "options": [
@@ -1852,7 +1852,7 @@
           "variant": "upgrade"
         },
         {
-          "id": "Kmf89U9",
+          "id": "QAFa_ar",
           "uid": "XMA4o",
           "label": "Upgrade with one",
           "options": [
@@ -2008,7 +2008,7 @@
       "hint": "Specialists - Jester",
       "sections": [
         {
-          "id": "0XKPzte",
+          "id": "-6lbgbZ",
           "uid": "0itSx",
           "label": "Upgrade with one",
           "options": [
@@ -2250,7 +2250,7 @@
       "hint": "Twisted Illusion",
       "sections": [
         {
-          "id": "Exk0p-D",
+          "id": "hPq_yno",
           "uid": "PSN1w",
           "label": "Upgrade all models with",
           "options": [
@@ -2311,7 +2311,7 @@
       "hint": "Specialists - Fool",
       "sections": [
         {
-          "id": "RKgYXcP",
+          "id": "nrHPi__",
           "uid": "nC2C_oFp",
           "label": "Upgrade with one",
           "options": [
@@ -3094,7 +3094,8 @@
       "description": "When this unit is activated, you may place all models with this rule in it anywhere fully within D3\" of their position.",
       "hasRating": false,
       "coreType": null,
-      "targetType": 1
+      "targetType": 1,
+      "originalName": "Nimble"
     },
     {
       "id": "qskF5Gm5pMV0",
@@ -3191,6 +3192,15 @@
       "name": "Rapid Blink Boost Aura",
       "aliasedRuleId": null,
       "description": "This model and its unit get Rapid Blink Boost.",
+      "hasRating": false,
+      "coreType": null,
+      "targetType": 1
+    },
+    {
+      "id": "D7SpkY7mQLAe",
+      "name": "Nimble",
+      "aliasedRuleId": null,
+      "description": "When this unit is activated, you may place all models with this rule in it anywhere fully within D3\" of their position.",
       "hasRating": false,
       "coreType": null,
       "targetType": 1

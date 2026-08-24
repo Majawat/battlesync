@@ -1348,7 +1348,7 @@
       "hint": "Grim Leader",
       "sections": [
         {
-          "id": "KfKSz97",
+          "id": "poIrRq6",
           "uid": "689J-gB",
           "label": "Replace Heavy Hand Weapon",
           "options": [
@@ -1564,7 +1564,7 @@
           ]
         },
         {
-          "id": "_-PDMqu",
+          "id": "CVyPjWH",
           "uid": "gTjCPbr",
           "label": "Upgrade with one",
           "options": [
@@ -1785,7 +1785,7 @@
       "hint": "Champion",
       "sections": [
         {
-          "id": "w9-C-rY",
+          "id": "bUrxUtq",
           "uid": "aQ-CoMQ",
           "label": "Replace Hand Weapon",
           "options": [
@@ -1943,7 +1943,7 @@
           ]
         },
         {
-          "id": "cLlx9bV",
+          "id": "usubCw1",
           "uid": "dd0yoUvaUp",
           "label": "Upgrade with one",
           "options": [
@@ -2028,7 +2028,7 @@
           }
         },
         {
-          "id": "uJ9tnuX",
+          "id": "8_Ir35n",
           "uid": "_AVWIDQi",
           "label": "Upgrade with",
           "options": [
@@ -2076,7 +2076,7 @@
       "hint": "Command Group",
       "sections": [
         {
-          "id": "j7LwsGl",
+          "id": "PeAId8M",
           "uid": "Uyd0KkV",
           "label": "Upgrade up to three models with one",
           "options": [
@@ -2210,7 +2210,7 @@
       "hint": "Ghost Horde",
       "sections": [
         {
-          "id": "0Q_Q3Ja",
+          "id": "pJSrHTN",
           "uid": "Cm76kgz",
           "label": "Replace all Hand Weapons",
           "options": [
@@ -2306,7 +2306,7 @@
       "hint": "Ghost Reapers",
       "sections": [
         {
-          "id": "Aescgms",
+          "id": "0srpLJv",
           "uid": "fL5gOd_",
           "label": "Replace one Scythe",
           "options": [
@@ -2372,7 +2372,7 @@
       "hint": "Mourner Banshees",
       "sections": [
         {
-          "id": "rcnQUqa",
+          "id": "7PnOqKP",
           "uid": "tWOAV1j",
           "label": "Upgrade all models with",
           "options": [
@@ -2430,7 +2430,7 @@
       "hint": "Dread Knights",
       "sections": [
         {
-          "id": "dfP6za4",
+          "id": "hvc-kGP",
           "uid": "91k_j7Q",
           "label": "Replace all Aggressors",
           "options": [
@@ -2486,7 +2486,7 @@
       "hint": "Specialists - Leader",
       "sections": [
         {
-          "id": "ze3g3iB",
+          "id": "Kdn_Rr4",
           "uid": "x70A0jHr",
           "label": "Upgrade with one",
           "options": [
@@ -2737,7 +2737,7 @@
       "hint": "Soul Eater",
       "sections": [
         {
-          "id": "QLJ4ehu",
+          "id": "ZKkqj1-",
           "uid": "BZI3XUj0Vu",
           "label": "Upgrade all models with",
           "options": [
@@ -2803,7 +2803,7 @@
       "hint": "Hexed Knights",
       "sections": [
         {
-          "id": "2PcTDhu",
+          "id": "8SEbTVc",
           "uid": "YzvLS48Y",
           "label": "Upgrade all models with",
           "options": [
@@ -2855,7 +2855,7 @@
       "hint": "Eternal Haunt",
       "sections": [
         {
-          "id": "njlQrba",
+          "id": "dLVdqEq",
           "uid": "pe2-nKRa",
           "label": "Upgrade with",
           "options": [
@@ -2908,7 +2908,7 @@
       "hint": "Ghost Revenants",
       "sections": [
         {
-          "id": "SMo4q4F",
+          "id": "B7YvzNQ",
           "uid": "o1z_4FP0LD",
           "label": "Replace all Scythes",
           "options": [
@@ -2969,7 +2969,7 @@
       "hint": "Specialists - Champion",
       "sections": [
         {
-          "id": "yQJDzao",
+          "id": "L_jlVLs",
           "uid": "N1cDIC_7",
           "label": "Upgrade with one",
           "options": [
@@ -3215,7 +3215,7 @@
       "hint": "Specialists - Wraith",
       "sections": [
         {
-          "id": "c4iEI_3",
+          "id": "rtjJTfY",
           "uid": "VMcWYyHp",
           "label": "Upgrade with one",
           "options": [
@@ -3368,7 +3368,7 @@
       "hint": "Specialists - Banshee",
       "sections": [
         {
-          "id": "V7YDc-7",
+          "id": "aWiO_n5",
           "uid": "CXoPWint",
           "label": "Upgrade with one",
           "options": [
@@ -3551,7 +3551,7 @@
       "hint": "Craven Shooters",
       "sections": [
         {
-          "id": "SXDu-C8",
+          "id": "WQgt8x1",
           "uid": "ZN8wssFG3O",
           "label": "Replace all Soul Crossbows",
           "options": [
@@ -4296,7 +4296,8 @@
       "description": "When units where all models have this rule are shot or charged from over 9\" away, enemy units get -1 to hit rolls.",
       "hasRating": false,
       "coreType": null,
-      "targetType": 1
+      "targetType": 1,
+      "originalName": "Screened"
     },
     {
       "id": "f27UjXLq-Z9m",
@@ -4384,6 +4385,15 @@
       "name": "No Retreat Aura",
       "aliasedRuleId": null,
       "description": "This model and its unit get No Retreat.",
+      "hasRating": false,
+      "coreType": null,
+      "targetType": 1
+    },
+    {
+      "id": "_tP0jExjizvc",
+      "name": "Screened",
+      "aliasedRuleId": null,
+      "description": "When units where all models have this rule are shot or charged from over 9\" away, enemy units get -1 to hit rolls.",
       "hasRating": false,
       "coreType": null,
       "targetType": 1

@@ -247,7 +247,7 @@
       "hint": "Eternal Lord",
       "sections": [
         {
-          "id": "pcYOlP-",
+          "id": "VqLOfpN",
           "uid": "c7zTUJT",
           "label": "Replace Heavy Hand Weapon",
           "options": [
@@ -264,27 +264,29 @@
               ],
               "gains": [
                 {
-                  "id": "hHIlG14o",
-                  "name": "Meteor Great Hammer",
                   "type": "ArmyBookWeapon",
+                  "name": "Meteor Great Hammer",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "hHIlG14o",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 2
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "_mrPya5SXSqW",
                       "name": "Deadly",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "hHIlG14o",
+                  "id": "hHIlG14o",
                   "attacksMultiplier": 1,
-                  "label": "Meteor Great Hammer (A2, AP(2), Deadly(3))",
-                  "count": 1
+                  "label": "Meteor Great Hammer (A2, AP(2), Deadly(3))"
                 }
               ],
               "label": "Meteor Great Hammer (A2, AP(2), Deadly(3))",
@@ -305,29 +307,32 @@
               ],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Great Thunder Mace",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Great Thunder Mace",
                   "range": null,
                   "attacks": 2,
-                  "weaponId": "dI34SDE9",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 2
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "w_vX0mi58KKt",
                       "name": "Blast",
                       "rating": 3
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "WcOMD7QgPYXZ",
                       "name": "Lacerate"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "dI34SDE9",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Great Thunder Mace (A2, AP(2), Blast(3), Lacerate)"
                 }
@@ -349,23 +354,23 @@
               ],
               "gains": [
                 {
-                  "id": "YuAuN0um",
-                  "name": "Heavy Great Weapon",
                   "type": "ArmyBookWeapon",
+                  "name": "Heavy Great Weapon",
                   "range": 0,
                   "attacks": 4,
-                  "weaponId": "_FOfqfiL",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
-                      "type": "ArmyBookRule",
                       "rating": 4
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "_FOfqfiL",
+                  "id": "YuAuN0um",
                   "attacksMultiplier": 1,
-                  "label": "Heavy Great Weapon (A4, AP(4))",
-                  "count": 1
+                  "label": "Heavy Great Weapon (A4, AP(4))"
                 }
               ],
               "label": "Heavy Great Weapon (A4, AP(4))",
@@ -387,26 +392,28 @@
               ],
               "gains": [
                 {
-                  "id": "nb0XSHBU",
-                  "name": "Heavy Lance",
                   "type": "ArmyBookWeapon",
+                  "name": "Heavy Lance",
                   "range": 0,
                   "attacks": 4,
-                  "weaponId": "nb0XSHBU",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 2
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "umbiz4tnEyF8",
                       "name": "Thrust"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "nb0XSHBU",
+                  "id": "nb0XSHBU",
                   "attacksMultiplier": 1,
-                  "label": "Heavy Lance (A4, AP(2), Thrust)",
-                  "count": 1
+                  "label": "Heavy Lance (A4, AP(2), Thrust)"
                 }
               ],
               "label": "Heavy Lance (A4, AP(2), Thrust)",
@@ -428,23 +435,23 @@
               ],
               "gains": [
                 {
-                  "id": "kPtZkQZ7",
-                  "name": "Dual Heavy Hand Weapons",
                   "type": "ArmyBookWeapon",
+                  "name": "Dual Heavy Hand Weapons",
                   "range": 0,
                   "attacks": 8,
-                  "weaponId": "-0XnweLV",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
-                      "type": "ArmyBookRule",
                       "rating": 2
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "-0XnweLV",
+                  "id": "kPtZkQZ7",
                   "attacksMultiplier": 1,
-                  "label": "Dual Heavy Hand Weapons (A8, AP(2))",
-                  "count": 1
+                  "label": "Dual Heavy Hand Weapons (A8, AP(2))"
                 }
               ],
               "label": "Dual Heavy Hand Weapons (A8, AP(2))",
@@ -462,7 +469,7 @@
           ]
         },
         {
-          "id": "kxDQE3M",
+          "id": "eoGVYCx",
           "uid": "1C1GbIV",
           "label": "Upgrade with one",
           "options": [
@@ -479,17 +486,17 @@
               "gains": [
                 {
                   "id": "ND5v-KW",
-                  "name": "Beast-Hound Companion",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Beast-Hound Companion (Repel Ambushers)",
+                  "name": "Beast-Hound Companion",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "C6MzEy1CnxTs",
-                      "name": "Repel Ambushers",
-                      "type": "ArmyBookRule"
+                      "name": "Repel Ambushers"
                     }
                   ],
+                  "bases": null,
+                  "label": "Beast-Hound Companion (Repel Ambushers)",
                   "count": 1
                 }
               ],
@@ -510,28 +517,28 @@
               ],
               "gains": [
                 {
-                  "name": "Destroyer Armor",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Destroyer Armor (Defense(1), Infiltrate, Slow)",
+                  "name": "Destroyer Armor",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "s6MgSfmgylXU",
                       "name": "Defense",
-                      "type": "ArmyBookRule",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "djJahpu0Ciut",
-                      "name": "Infiltrate",
-                      "type": "ArmyBookRule"
+                      "name": "Infiltrate"
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "Ldhtmr4H8b6G",
-                      "name": "Slow",
-                      "type": "ArmyBookRule"
+                      "name": "Slow"
                     }
                   ],
+                  "bases": null,
+                  "label": "Destroyer Armor (Defense(1), Infiltrate, Slow)",
                   "count": 1
                 }
               ],
@@ -551,50 +558,48 @@
               ],
               "gains": [
                 {
-                  "name": "Drake",
                   "type": "ArmyBookItem",
+                  "name": "Drake",
+                  "content": [
+                    {
+                      "type": "ArmyBookWeapon",
+                      "name": "Rending Claws",
+                      "range": 0,
+                      "attacks": 3,
+                      "specialRules": [
+                        {
+                          "type": "ArmyBookRule",
+                          "id": "cavWDboL4ubs",
+                          "name": "Rending"
+                        }
+                      ],
+                      "count": 1,
+                      "weaponId": "pQsRznpX",
+                      "id": "JJzz0-Xt",
+                      "attacksMultiplier": 3
+                    },
+                    {
+                      "type": "ArmyBookRule",
+                      "id": "fHg1uKwkuiBP",
+                      "name": "Breath Attack"
+                    },
+                    {
+                      "type": "ArmyBookRule",
+                      "id": "KdgwlPb8LuD2",
+                      "name": "Fast"
+                    },
+                    {
+                      "type": "ArmyBookRule",
+                      "id": "a0YtInGiUDd6",
+                      "name": "Tough",
+                      "rating": 18
+                    }
+                  ],
                   "bases": {
-                    "round": "120x92",
+                    "round": "90x52",
                     "square": "100x50"
                   },
                   "label": "Drake (Rending Claws (A3, Rending), Breath Attack, Fast, Tough(18))",
-                  "content": [
-                    {
-                      "id": "JJzz0-Xt",
-                      "name": "Rending Claws",
-                      "type": "ArmyBookWeapon",
-                      "count": 1,
-                      "range": 0,
-                      "attacks": 3,
-                      "weaponId": "pQsRznpX",
-                      "specialRules": [
-                        {
-                          "id": "cavWDboL4ubs",
-                          "name": "Rending",
-                          "type": "ArmyBookRule"
-                        }
-                      ],
-                      "attacksMultiplier": 3,
-                      "label": "Rending Claws (A3, Rending)"
-                    },
-                    {
-                      "id": "fHg1uKwkuiBP",
-                      "name": "Breath Attack",
-                      "type": "ArmyBookRule"
-                    },
-                    {
-                      "id": "KdgwlPb8LuD2",
-                      "name": "Fast",
-                      "type": "ArmyBookRule"
-                    },
-                    {
-                      "id": "a0YtInGiUDd6",
-                      "name": "Tough",
-                      "type": "ArmyBookRule",
-                      "rating": 18,
-                      "label": "Tough(18)"
-                    }
-                  ],
                   "count": 1
                 }
               ],
@@ -614,57 +619,55 @@
               ],
               "gains": [
                 {
-                  "name": "Dragon",
                   "type": "ArmyBookItem",
-                  "bases": {
-                    "round": "120x92",
-                    "square": "100x50"
-                  },
-                  "label": "Dragon (Heavy Claws (A2, AP(1)), Breath Attack, Fear(1), Flying, Tough(18))",
+                  "name": "Dragon",
                   "content": [
                     {
-                      "id": "V5a9AlIe",
-                      "name": "Heavy Claws",
                       "type": "ArmyBookWeapon",
-                      "count": 1,
+                      "name": "Heavy Claws",
                       "range": 0,
                       "attacks": 2,
-                      "weaponId": "-psCHjQv",
                       "specialRules": [
                         {
+                          "type": "ArmyBookRule",
                           "id": "17crjK7P6_w6",
                           "name": "AP",
-                          "type": "ArmyBookRule",
                           "rating": 1
                         }
                       ],
-                      "attacksMultiplier": 1,
-                      "label": "Heavy Claws (A2, AP(1))"
+                      "count": 1,
+                      "weaponId": "-psCHjQv",
+                      "id": "V5a9AlIe",
+                      "attacksMultiplier": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "fHg1uKwkuiBP",
-                      "name": "Breath Attack",
-                      "type": "ArmyBookRule"
+                      "name": "Breath Attack"
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "dIQ3SGl2J2Ew",
                       "name": "Fear",
-                      "type": "ArmyBookRule",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "-QJdqJEKjIpE",
-                      "name": "Flying",
-                      "type": "ArmyBookRule"
+                      "name": "Flying"
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "a0YtInGiUDd6",
                       "name": "Tough",
-                      "type": "ArmyBookRule",
-                      "rating": 18,
-                      "label": "Tough(18)"
+                      "rating": 18
                     }
                   ],
+                  "bases": {
+                    "round": "105x70",
+                    "square": "100x50"
+                  },
+                  "label": "Dragon (Heavy Claws (A2, AP(1)), Breath Attack, Fear(1), Flying, Tough(18))",
                   "count": 1
                 }
               ],
@@ -684,74 +687,73 @@
               ],
               "gains": [
                 {
-                  "name": "Great Dragon",
                   "type": "ArmyBookItem",
+                  "name": "Great Dragon",
+                  "content": [
+                    {
+                      "type": "ArmyBookWeapon",
+                      "name": "Heavy Claws",
+                      "range": 0,
+                      "attacks": 6,
+                      "specialRules": [
+                        {
+                          "type": "ArmyBookRule",
+                          "id": "17crjK7P6_w6",
+                          "name": "AP",
+                          "rating": 1
+                        }
+                      ],
+                      "count": 1,
+                      "weaponId": "LX7V18fJ",
+                      "id": null,
+                      "attacksMultiplier": 1
+                    },
+                    {
+                      "type": "ArmyBookWeapon",
+                      "name": "Stomp",
+                      "range": 0,
+                      "attacks": 4,
+                      "specialRules": [
+                        {
+                          "type": "ArmyBookRule",
+                          "id": "17crjK7P6_w6",
+                          "name": "AP",
+                          "rating": 1
+                        }
+                      ],
+                      "count": 1,
+                      "weaponId": "l9ncuAr5",
+                      "id": null,
+                      "attacksMultiplier": 1
+                    },
+                    {
+                      "type": "ArmyBookRule",
+                      "id": "fHg1uKwkuiBP",
+                      "name": "Breath Attack"
+                    },
+                    {
+                      "type": "ArmyBookRule",
+                      "id": "dIQ3SGl2J2Ew",
+                      "name": "Fear",
+                      "rating": 2
+                    },
+                    {
+                      "type": "ArmyBookRule",
+                      "id": "-QJdqJEKjIpE",
+                      "name": "Flying"
+                    },
+                    {
+                      "type": "ArmyBookRule",
+                      "id": "a0YtInGiUDd6",
+                      "name": "Tough",
+                      "rating": 36
+                    }
+                  ],
                   "bases": {
                     "round": "120x92",
                     "square": "150x100"
                   },
                   "label": "Great Dragon (Heavy Claws (A6, AP(1)), Stomp (A4, AP(1)), Breath Attack, Fear(2), Flying, Tough(36))",
-                  "content": [
-                    {
-                      "id": "fHg1uKwkuiBP",
-                      "name": "Breath Attack",
-                      "type": "ArmyBookRule"
-                    },
-                    {
-                      "name": "Heavy Claws",
-                      "type": "ArmyBookWeapon",
-                      "count": 1,
-                      "range": 0,
-                      "attacks": 6,
-                      "weaponId": "LX7V18fJ",
-                      "specialRules": [
-                        {
-                          "id": "17crjK7P6_w6",
-                          "name": "AP",
-                          "type": "ArmyBookRule",
-                          "rating": 1
-                        }
-                      ],
-                      "attacksMultiplier": 1,
-                      "label": "Heavy Claws (A6, AP(1))"
-                    },
-                    {
-                      "name": "Stomp",
-                      "type": "ArmyBookWeapon",
-                      "count": 1,
-                      "range": 0,
-                      "attacks": 4,
-                      "weaponId": "l9ncuAr5",
-                      "specialRules": [
-                        {
-                          "id": "17crjK7P6_w6",
-                          "name": "AP",
-                          "type": "ArmyBookRule",
-                          "rating": 1
-                        }
-                      ],
-                      "attacksMultiplier": 1,
-                      "label": "Stomp (A4, AP(1))"
-                    },
-                    {
-                      "id": "dIQ3SGl2J2Ew",
-                      "name": "Fear",
-                      "type": "ArmyBookRule",
-                      "rating": 2
-                    },
-                    {
-                      "id": "-QJdqJEKjIpE",
-                      "name": "Flying",
-                      "type": "ArmyBookRule"
-                    },
-                    {
-                      "id": "a0YtInGiUDd6",
-                      "name": "Tough",
-                      "type": "ArmyBookRule",
-                      "rating": 36,
-                      "label": "Tough(36)"
-                    }
-                  ],
                   "count": 1
                 }
               ],
@@ -776,7 +778,7 @@
       "hint": "Guardian Elite",
       "sections": [
         {
-          "id": "s6X6JQW",
+          "id": "H-ksyRZ",
           "uid": "gzf-hi-",
           "label": "Replace Heavy Hand Weapon",
           "options": [
@@ -793,20 +795,21 @@
               ],
               "gains": [
                 {
-                  "name": "Dual Heavy Hand Weapons",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Dual Heavy Hand Weapons",
                   "range": 0,
                   "attacks": 4,
-                  "weaponId": "Ai9AtHvU",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
-                      "type": "ArmyBookRule",
                       "rating": 1
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "Ai9AtHvU",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Dual Heavy Hand Weapons (A4, AP(1))"
                 }
@@ -830,28 +833,28 @@
               ],
               "gains": [
                 {
-                  "id": "a8GlNGxS",
-                  "name": "Heavy Halberd",
                   "type": "ArmyBookWeapon",
+                  "name": "Heavy Halberd",
                   "range": 0,
                   "attacks": 3,
-                  "weaponId": "Uy5FUW5G",
                   "specialRules": [
                     {
-                      "id": "cavWDboL4ubs",
-                      "name": "Rending",
-                      "type": "ArmyBookRule"
-                    },
-                    {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
-                      "type": "ArmyBookRule",
                       "rating": 1
+                    },
+                    {
+                      "type": "ArmyBookRule",
+                      "id": "cavWDboL4ubs",
+                      "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "Uy5FUW5G",
+                  "id": "a8GlNGxS",
                   "attacksMultiplier": 1,
-                  "label": "Heavy Halberd (A3, AP(1), Rending)",
-                  "count": 1
+                  "label": "Heavy Halberd (A3, AP(1), Rending)"
                 }
               ],
               "label": "Heavy Halberd (A3, AP(1), Rending)",
@@ -872,26 +875,26 @@
               ],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Heavy Spear",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Heavy Spear",
                   "range": 0,
                   "attacks": 3,
-                  "weaponId": "qWAATuZG",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
-                      "type": "ArmyBookRule",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "c45Fw0D2oGOk",
-                      "name": "Counter",
-                      "type": "ArmyBookRule"
+                      "name": "Counter"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "qWAATuZG",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Heavy Spear (A3, AP(1), Counter)"
                 }
@@ -913,23 +916,23 @@
               ],
               "gains": [
                 {
-                  "id": "HDmOuGby",
-                  "name": "Heavy Great Weapon",
                   "type": "ArmyBookWeapon",
+                  "name": "Heavy Great Weapon",
                   "range": 0,
                   "attacks": 3,
-                  "weaponId": "UdU5JI5X",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
-                      "type": "ArmyBookRule",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "UdU5JI5X",
+                  "id": "HDmOuGby",
                   "attacksMultiplier": 1,
-                  "label": "Heavy Great Weapon (A3, AP(3))",
-                  "count": 1
+                  "label": "Heavy Great Weapon (A3, AP(3))"
                 }
               ],
               "label": "Heavy Great Weapon (A3, AP(3))",
@@ -947,7 +950,7 @@
           ]
         },
         {
-          "id": "GbhWde2",
+          "id": "R88-Czh",
           "uid": "G_gj_BS",
           "label": "Upgrade with",
           "options": [
@@ -964,16 +967,16 @@
               ],
               "gains": [
                 {
-                  "id": "fPxZbV59",
-                  "name": "Elite Bow",
                   "type": "ArmyBookWeapon",
+                  "name": "Elite Bow",
                   "range": 24,
                   "attacks": 3,
-                  "weaponId": "fPxZbV59",
                   "specialRules": [],
+                  "count": 1,
+                  "weaponId": "fPxZbV59",
+                  "id": "fPxZbV59",
                   "attacksMultiplier": 1,
-                  "label": "Elite Bow (24\", A3)",
-                  "count": 1
+                  "label": "Elite Bow (24\", A3)"
                 }
               ],
               "label": "Elite Bow (24\", A3)",
@@ -988,7 +991,7 @@
           "variant": "upgrade"
         },
         {
-          "id": "pMAY_Ii",
+          "id": "T6Yp_sJ",
           "uid": "RuACTFdk",
           "label": "Upgrade with",
           "options": [
@@ -1004,17 +1007,17 @@
               ],
               "gains": [
                 {
-                  "name": "Beast-Hound Companion",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Beast-Hound Companion (Repel Ambushers)",
+                  "name": "Beast-Hound Companion",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "C6MzEy1CnxTs",
-                      "name": "Repel Ambushers",
-                      "type": "ArmyBookRule"
+                      "name": "Repel Ambushers"
                     }
                   ],
+                  "bases": null,
+                  "label": "Beast-Hound Companion (Repel Ambushers)",
                   "count": 1
                 }
               ],
@@ -1036,7 +1039,7 @@
       "hint": "Command Group",
       "sections": [
         {
-          "id": "EUtQf1W",
+          "id": "fk4CXsG",
           "uid": "4hH8jUe",
           "label": "Upgrade with one",
           "options": [
@@ -1047,9 +1050,9 @@
               "costs": [],
               "gains": [
                 {
+                  "type": "ArmyBookRule",
                   "id": "8HWdOwMYcI0p",
                   "name": "Sergeant",
-                  "type": "ArmyBookRule",
                   "label": "Sergeant",
                   "count": 1
                 }
@@ -1067,9 +1070,9 @@
               "costs": [],
               "gains": [
                 {
+                  "type": "ArmyBookRule",
                   "id": "qrG_DXJez5Dg",
                   "name": "Musician",
-                  "type": "ArmyBookRule",
                   "label": "Musician",
                   "count": 1
                 }
@@ -1087,9 +1090,9 @@
               "costs": [],
               "gains": [
                 {
+                  "type": "ArmyBookRule",
                   "id": "ywXKQKPOLjTF",
                   "name": "Banner",
-                  "type": "ArmyBookRule",
                   "label": "Banner",
                   "count": 1
                 }
@@ -1117,7 +1120,7 @@
       "hint": "Guardians",
       "sections": [
         {
-          "id": "LBYnAji",
+          "id": "aLDzehN",
           "uid": "nIMmVsU",
           "label": "Replace Heavy Halberd",
           "options": [
@@ -1128,23 +1131,23 @@
               "costs": [],
               "gains": [
                 {
-                  "id": "cWBECfP3",
-                  "name": "Heavy Great Weapon",
                   "type": "ArmyBookWeapon",
+                  "name": "Heavy Great Weapon",
                   "range": 0,
                   "attacks": 1,
-                  "weaponId": "d31FGkW6",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
-                      "type": "ArmyBookRule",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "d31FGkW6",
+                  "id": "cWBECfP3",
                   "attacksMultiplier": 1,
-                  "label": "Heavy Great Weapon (A1, AP(3))",
-                  "count": 1
+                  "label": "Heavy Great Weapon (A1, AP(3))"
                 }
               ],
               "label": "Heavy Great Weapon (A1, AP(3))",
@@ -1160,28 +1163,28 @@
               "costs": [],
               "gains": [
                 {
-                  "id": "rwguZqtm",
-                  "name": "Heavy Spear",
                   "type": "ArmyBookWeapon",
+                  "name": "Heavy Spear",
                   "range": 0,
                   "attacks": 1,
-                  "weaponId": "Y1mylN3-",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
-                      "type": "ArmyBookRule",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "c45Fw0D2oGOk",
-                      "name": "Counter",
-                      "type": "ArmyBookRule"
+                      "name": "Counter"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "Y1mylN3-",
+                  "id": "rwguZqtm",
                   "attacksMultiplier": 1,
-                  "label": "Heavy Spear (A1, AP(1), Counter)",
-                  "count": 1
+                  "label": "Heavy Spear (A1, AP(1), Counter)"
                 }
               ],
               "label": "Heavy Spear (A1, AP(1), Counter)",
@@ -1206,7 +1209,7 @@
       "hint": "Paladins",
       "sections": [
         {
-          "id": "IzSX_c6",
+          "id": "MHSlpmh",
           "uid": "UA2w8zT",
           "label": "Replace Sword & Staff",
           "options": [
@@ -1216,13 +1219,14 @@
               "costs": [],
               "gains": [
                 {
-                  "name": "Hand Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Hand Weapon",
                   "range": 0,
                   "attacks": 3,
-                  "weaponId": "LrcnOP7B",
                   "specialRules": [],
+                  "count": 1,
+                  "weaponId": "LrcnOP7B",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Hand Weapon (A3)"
                 }
@@ -1238,26 +1242,28 @@
               "costs": [],
               "gains": [
                 {
-                  "id": "IgOVp1ri",
-                  "name": "Great Staff",
                   "type": "ArmyBookWeapon",
+                  "name": "Great Staff",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "IgOVp1ri",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "Naqc5mga9Uha",
                       "name": "Bane"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "IgOVp1ri",
+                  "id": "IgOVp1ri",
                   "attacksMultiplier": 1,
-                  "label": "Great Staff (A2, AP(1), Bane)",
-                  "count": 1
+                  "label": "Great Staff (A2, AP(1), Bane)"
                 }
               ],
               "label": "Great Staff (A2, AP(1), Bane)",
@@ -1275,7 +1281,7 @@
           ]
         },
         {
-          "id": "Bzd8sVn",
+          "id": "goNuhZZ",
           "uid": "wQ00JHh",
           "label": "Replace Hand Weapon",
           "options": [
@@ -1285,29 +1291,32 @@
               "costs": [],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Thunder Mace",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Thunder Mace",
                   "range": 0,
                   "attacks": 1,
-                  "weaponId": "x4on2SYr",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 2
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "w_vX0mi58KKt",
                       "name": "Blast",
                       "rating": 3
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "WcOMD7QgPYXZ",
                       "name": "Lacerate"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "x4on2SYr",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Thunder Mace (A1, AP(2), Blast(3), Lacerate)"
                 }
@@ -1323,23 +1332,23 @@
               "costs": [],
               "gains": [
                 {
-                  "id": "6njl0O1i",
-                  "name": "Great Weapon",
                   "type": "ArmyBookWeapon",
+                  "name": "Great Weapon",
                   "range": 0,
                   "attacks": 3,
-                  "weaponId": "u1hn0c_y",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
-                      "type": "ArmyBookRule",
                       "rating": 2
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "u1hn0c_y",
+                  "id": "6njl0O1i",
                   "attacksMultiplier": 1,
-                  "label": "Great Weapon (A3, AP(2))",
-                  "count": 1
+                  "label": "Great Weapon (A3, AP(2))"
                 }
               ],
               "label": "Great Weapon (A3, AP(2))",
@@ -1357,7 +1366,7 @@
           ]
         },
         {
-          "id": "8093yCa",
+          "id": "ulJcXWp",
           "uid": "0P_vgRi",
           "label": "Upgrade with",
           "options": [
@@ -1368,18 +1377,18 @@
               "costs": [],
               "gains": [
                 {
-                  "name": "Evocator",
                   "type": "ArmyBookItem",
-                  "label": "Evocator (Caster(1))",
+                  "name": "Evocator",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "47CAqf7ySlfc",
                       "name": "Caster",
-                      "type": "ArmyBookRule",
-                      "modify": true,
                       "rating": 1
                     }
                   ],
+                  "bases": null,
+                  "label": "Evocator (Caster(1))",
                   "count": 1
                 }
               ],
@@ -1402,7 +1411,7 @@
       "hint": "Wardens",
       "sections": [
         {
-          "id": "Mnxt1mr",
+          "id": "BsfGeOB",
           "uid": "j-OMKPM",
           "label": "Replace Heavy Hand Weapon",
           "options": [
@@ -1413,23 +1422,23 @@
               "costs": [],
               "gains": [
                 {
-                  "id": "b3Ttnc0E",
-                  "name": "Dual Heavy Hand Weapons",
                   "type": "ArmyBookWeapon",
+                  "name": "Dual Heavy Hand Weapons",
                   "range": 0,
                   "attacks": 4,
-                  "weaponId": "Ai9AtHvU",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
-                      "type": "ArmyBookRule",
                       "rating": 1
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "Ai9AtHvU",
+                  "id": "b3Ttnc0E",
                   "attacksMultiplier": 1,
-                  "label": "Dual Heavy Hand Weapons (A4, AP(1))",
-                  "count": 1
+                  "label": "Dual Heavy Hand Weapons (A4, AP(1))"
                 }
               ],
               "label": "Dual Heavy Hand Weapons (A4, AP(1))",
@@ -1444,29 +1453,32 @@
               "costs": [],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Thunder Mace",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Thunder Mace",
                   "range": 0,
                   "attacks": 1,
-                  "weaponId": "x4on2SYr",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 2
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "w_vX0mi58KKt",
                       "name": "Blast",
                       "rating": 3
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "WcOMD7QgPYXZ",
                       "name": "Lacerate"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "x4on2SYr",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Thunder Mace (A1, AP(2), Blast(3), Lacerate)"
                 }
@@ -1482,23 +1494,23 @@
               "costs": [],
               "gains": [
                 {
-                  "id": "HDmOuGby",
-                  "name": "Heavy Great Weapon",
                   "type": "ArmyBookWeapon",
+                  "name": "Heavy Great Weapon",
                   "range": 0,
                   "attacks": 3,
-                  "weaponId": "UdU5JI5X",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
-                      "type": "ArmyBookRule",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "UdU5JI5X",
+                  "id": "HDmOuGby",
                   "attacksMultiplier": 1,
-                  "label": "Heavy Great Weapon (A3, AP(3))",
-                  "count": 1
+                  "label": "Heavy Great Weapon (A3, AP(3))"
                 }
               ],
               "label": "Heavy Great Weapon (A3, AP(3))",
@@ -1523,7 +1535,7 @@
       "hint": "Eternals",
       "sections": [
         {
-          "id": "fD_jCjv",
+          "id": "gDBKtbY",
           "uid": "G8FIwsX",
           "label": "Replace Great Glaive",
           "options": [
@@ -1533,23 +1545,26 @@
               "costs": [],
               "gains": [
                 {
-                  "name": "Great Axe",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Great Axe",
                   "range": 0,
                   "attacks": 3,
-                  "weaponId": "ay6QSYG0",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "Zx4mWN0SbmK8",
                       "name": "Reliable"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "ay6QSYG0",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Great Axe (A3, AP(1), Reliable)"
                 }
@@ -1565,22 +1580,23 @@
               "costs": [],
               "gains": [
                 {
-                  "id": "A2fGGR4i",
-                  "name": "Great Hammer",
                   "type": "ArmyBookWeapon",
+                  "name": "Great Hammer",
                   "range": null,
                   "attacks": 3,
-                  "weaponId": "A2fGGR4i",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "A2fGGR4i",
+                  "id": "A2fGGR4i",
                   "attacksMultiplier": 1,
-                  "label": "Great Hammer (A3, AP(3))",
-                  "count": 1
+                  "label": "Great Hammer (A3, AP(3))"
                 }
               ],
               "label": "Great Hammer (A3, AP(3))",
@@ -1595,18 +1611,20 @@
               "costs": [],
               "gains": [
                 {
-                  "name": "Dual Axes",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Dual Axes",
                   "range": 0,
                   "attacks": 4,
-                  "weaponId": "bcIiIt_Y",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "Zx4mWN0SbmK8",
                       "name": "Reliable"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "bcIiIt_Y",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Dual Axes (A4, Reliable)"
                 }
@@ -1624,31 +1642,34 @@
               "costs": [],
               "gains": [
                 {
-                  "id": "dI34SDE9",
-                  "name": "Great Thunder Mace",
                   "type": "ArmyBookWeapon",
+                  "name": "Great Thunder Mace",
                   "range": null,
                   "attacks": 2,
-                  "weaponId": "dI34SDE9",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 2
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "w_vX0mi58KKt",
                       "name": "Blast",
                       "rating": 3
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "WcOMD7QgPYXZ",
                       "name": "Lacerate"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "dI34SDE9",
+                  "id": "dI34SDE9",
                   "attacksMultiplier": 1,
-                  "label": "Great Thunder Mace (A2, AP(2), Blast(3), Lacerate)",
-                  "count": 1
+                  "label": "Great Thunder Mace (A2, AP(2), Blast(3), Lacerate)"
                 }
               ],
               "label": "Great Thunder Mace (A2, AP(2), Blast(3), Lacerate)",
@@ -1673,7 +1694,7 @@
       "hint": "Destroyers",
       "sections": [
         {
-          "id": "lQZIeAY",
+          "id": "WN3OGEi",
           "uid": "bNvRTCH",
           "label": "Replace Meteor Hammer",
           "options": [
@@ -1684,27 +1705,29 @@
               "costs": [],
               "gains": [
                 {
-                  "id": "hHIlG14o",
-                  "name": "Meteor Great Hammer",
                   "type": "ArmyBookWeapon",
+                  "name": "Meteor Great Hammer",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "hHIlG14o",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 2
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "_mrPya5SXSqW",
                       "name": "Deadly",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "hHIlG14o",
+                  "id": "hHIlG14o",
                   "attacksMultiplier": 1,
-                  "label": "Meteor Great Hammer (A2, AP(2), Deadly(3))",
-                  "count": 1
+                  "label": "Meteor Great Hammer (A2, AP(2), Deadly(3))"
                 }
               ],
               "label": "Meteor Great Hammer (A2, AP(2), Deadly(3))",
@@ -1719,29 +1742,32 @@
               "costs": [],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Great Thunder Mace",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Great Thunder Mace",
                   "range": null,
                   "attacks": 2,
-                  "weaponId": "dI34SDE9",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 2
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "w_vX0mi58KKt",
                       "name": "Blast",
                       "rating": 3
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "WcOMD7QgPYXZ",
                       "name": "Lacerate"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "dI34SDE9",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Great Thunder Mace (A2, AP(2), Blast(3), Lacerate)"
                 }
@@ -1766,7 +1792,7 @@
       "hint": "Warden Shooters",
       "sections": [
         {
-          "id": "cy3OW5T",
+          "id": "DuCbxqQ",
           "uid": "i9CtNIi",
           "label": "Replace Bow",
           "options": [
@@ -1777,28 +1803,28 @@
               "costs": [],
               "gains": [
                 {
-                  "id": "cQUQ_EnA",
-                  "name": "Rapid Heavy Crossbow",
                   "type": "ArmyBookWeapon",
+                  "name": "Rapid Heavy Crossbow",
                   "range": 24,
                   "attacks": 2,
-                  "weaponId": "cQUQ_EnA",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
-                      "type": "ArmyBookRule",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
-                      "name": "Rending",
-                      "type": "ArmyBookRule"
+                      "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "cQUQ_EnA",
+                  "id": "cQUQ_EnA",
                   "attacksMultiplier": 1,
-                  "label": "Rapid Heavy Crossbow (24\", A2, AP(1), Rending)",
-                  "count": 1
+                  "label": "Rapid Heavy Crossbow (24\", A2, AP(1), Rending)"
                 }
               ],
               "label": "Rapid Heavy Crossbow (24\", A2, AP(1), Rending)",
@@ -1814,26 +1840,28 @@
               "costs": [],
               "gains": [
                 {
-                  "id": "nvrLy10n",
-                  "name": "Volley Crossbow",
                   "type": "ArmyBookWeapon",
+                  "name": "Volley Crossbow",
                   "range": 12,
                   "attacks": 4,
-                  "weaponId": "nvrLy10n",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
                       "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "nvrLy10n",
+                  "id": "nvrLy10n",
                   "attacksMultiplier": 1,
-                  "label": "Volley Crossbow (12\", A4, AP(1), Rending)",
-                  "count": 1
+                  "label": "Volley Crossbow (12\", A4, AP(1), Rending)"
                 }
               ],
               "label": "Volley Crossbow (12\", A4, AP(1), Rending)",
@@ -1849,31 +1877,34 @@
               "costs": [],
               "gains": [
                 {
-                  "id": "iWSahJi4",
-                  "name": "Thunder Crossbow",
                   "type": "ArmyBookWeapon",
+                  "name": "Thunder Crossbow",
                   "range": 18,
                   "attacks": 1,
-                  "weaponId": "iWSahJi4",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 2
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "w_vX0mi58KKt",
                       "name": "Blast",
                       "rating": 3
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "WcOMD7QgPYXZ",
                       "name": "Lacerate"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "iWSahJi4",
+                  "id": "iWSahJi4",
                   "attacksMultiplier": 1,
-                  "label": "Thunder Crossbow (18\", A1, AP(2), Blast(3), Lacerate)",
-                  "count": 1
+                  "label": "Thunder Crossbow (18\", A1, AP(2), Blast(3), Lacerate)"
                 }
               ],
               "label": "Thunder Crossbow (18\", A1, AP(2), Blast(3), Lacerate)",
@@ -1898,7 +1929,7 @@
       "hint": "Winged Wardens",
       "sections": [
         {
-          "id": "dykMPmk",
+          "id": "QpVN1_x",
           "uid": "hy4fkkm",
           "label": "Replace Heavy Hand Weapon",
           "options": [
@@ -1909,34 +1940,35 @@
               "costs": [],
               "gains": [
                 {
-                  "id": "yk2jZIRs",
-                  "name": "Javelin",
                   "type": "ArmyBookWeapon",
+                  "name": "Javelin",
                   "range": 12,
                   "attacks": 2,
-                  "weaponId": "yk2jZIRs",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "yk2jZIRs",
+                  "id": "yk2jZIRs",
                   "attacksMultiplier": 1,
-                  "label": "Javelin (12\", A2, AP(1))",
-                  "count": 1
+                  "label": "Javelin (12\", A2, AP(1))"
                 },
                 {
-                  "id": "VyGSZY1u",
-                  "name": "Dagger",
                   "type": "ArmyBookWeapon",
+                  "name": "Dagger",
                   "range": 0,
                   "attacks": 1,
-                  "weaponId": "VyGSZY1u",
                   "specialRules": [],
+                  "count": 1,
+                  "weaponId": "VyGSZY1u",
+                  "id": "VyGSZY1u",
                   "attacksMultiplier": 1,
-                  "label": "Dagger (A1)",
-                  "count": 1
+                  "label": "Dagger (A1)"
                 }
               ],
               "label": "Javelin (12\", A2, AP(1)), Dagger (A1)",
@@ -1952,23 +1984,23 @@
               "costs": [],
               "gains": [
                 {
-                  "id": "b3Ttnc0E",
-                  "name": "Dual Heavy Hand Weapons",
                   "type": "ArmyBookWeapon",
+                  "name": "Dual Heavy Hand Weapons",
                   "range": 0,
                   "attacks": 4,
-                  "weaponId": "Ai9AtHvU",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
-                      "type": "ArmyBookRule",
                       "rating": 1
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "Ai9AtHvU",
+                  "id": "b3Ttnc0E",
                   "attacksMultiplier": 1,
-                  "label": "Dual Heavy Hand Weapons (A4, AP(1))",
-                  "count": 1
+                  "label": "Dual Heavy Hand Weapons (A4, AP(1))"
                 }
               ],
               "label": "Dual Heavy Hand Weapons (A4, AP(1))",
@@ -1984,23 +2016,23 @@
               "costs": [],
               "gains": [
                 {
-                  "id": "q9cSKp0W",
-                  "name": "Heavy Great Weapon",
                   "type": "ArmyBookWeapon",
+                  "name": "Heavy Great Weapon",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "daLEwCMx",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
-                      "type": "ArmyBookRule",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "daLEwCMx",
+                  "id": "q9cSKp0W",
                   "attacksMultiplier": 1,
-                  "label": "Heavy Great Weapon (A2, AP(3))",
-                  "count": 1
+                  "label": "Heavy Great Weapon (A2, AP(3))"
                 }
               ],
               "label": "Heavy Great Weapon (A2, AP(3))",
@@ -2015,29 +2047,32 @@
               "costs": [],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Thunder Mace",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Thunder Mace",
                   "range": 0,
                   "attacks": 1,
-                  "weaponId": "x4on2SYr",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 2
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "w_vX0mi58KKt",
                       "name": "Blast",
                       "rating": 3
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "WcOMD7QgPYXZ",
                       "name": "Lacerate"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "x4on2SYr",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Thunder Mace (A1, AP(2), Blast(3), Lacerate)"
                 }
@@ -2055,7 +2090,7 @@
           ]
         },
         {
-          "id": "Skk-lEG",
+          "id": "UKfhSPg",
           "uid": "rAAUQro",
           "label": "Replace Javelin",
           "options": [
@@ -2066,27 +2101,29 @@
               "costs": [],
               "gains": [
                 {
-                  "id": "X5IVEKY9",
-                  "name": "Storm Trident",
                   "type": "ArmyBookWeapon",
+                  "name": "Storm Trident",
                   "range": 12,
                   "attacks": 1,
-                  "weaponId": "X5IVEKY9",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 2
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "_mrPya5SXSqW",
                       "name": "Deadly",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "X5IVEKY9",
+                  "id": "X5IVEKY9",
                   "attacksMultiplier": 1,
-                  "label": "Storm Trident (12\", A1, AP(2), Deadly(3))",
-                  "count": 1
+                  "label": "Storm Trident (12\", A1, AP(2), Deadly(3))"
                 }
               ],
               "label": "Storm Trident (12\", A1, AP(2), Deadly(3))",
@@ -2104,7 +2141,7 @@
           ]
         },
         {
-          "id": "uQW3VXh",
+          "id": "kKDESb-",
           "uid": "JUCT5",
           "label": "Upgrade with",
           "options": [
@@ -2115,16 +2152,17 @@
               "costs": [],
               "gains": [
                 {
-                  "name": "Celestial Descent",
                   "type": "ArmyBookItem",
-                  "label": "Celestial Descent (Ambush)",
+                  "name": "Celestial Descent",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "6mJw5IdqSqNC",
-                      "name": "Ambush",
-                      "type": "ArmyBookRule"
+                      "name": "Ambush"
                     }
                   ],
+                  "bases": null,
+                  "label": "Celestial Descent (Ambush)",
                   "count": 1
                 }
               ],
@@ -2147,7 +2185,7 @@
       "hint": "Warden Marskmen",
       "sections": [
         {
-          "id": "hD4bAg-",
+          "id": "H6beXAn",
           "uid": "w4Ise99",
           "label": "Replace Cyclone Crossbow",
           "options": [
@@ -2158,28 +2196,31 @@
               "costs": [],
               "gains": [
                 {
-                  "id": "Vlo3Q8A2",
-                  "name": "Precision Crossbow",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Precision Crossbow",
                   "range": 24,
                   "attacks": 2,
-                  "weaponId": "Vlo3Q8A2",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
-                      "id": "cavWDboL4ubs",
-                      "name": "Rending"
-                    },
-                    {
+                      "type": "ArmyBookRule",
                       "id": "Zx4mWN0SbmK8",
                       "name": "Reliable"
+                    },
+                    {
+                      "type": "ArmyBookRule",
+                      "id": "cavWDboL4ubs",
+                      "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "Vlo3Q8A2",
+                  "id": "Vlo3Q8A2",
                   "attacksMultiplier": 1,
                   "label": "Precision Crossbow (24\", A2, AP(1), Reliable, Rending)"
                 }
@@ -2206,7 +2247,7 @@
       "hint": "Gryph Hunters",
       "sections": [
         {
-          "id": "8OSn-E0",
+          "id": "-cz5_JH",
           "uid": "RfW_UA6",
           "label": "Replace Hand Weapon",
           "options": [
@@ -2216,20 +2257,20 @@
               "costs": [],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Lance",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Lance",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "jiC96N6A",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "umbiz4tnEyF8",
-                      "name": "Thrust",
-                      "type": "ArmyBookRule"
+                      "name": "Thrust"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "jiC96N6A",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Lance (A2, Thrust)"
                 }
@@ -2245,33 +2286,34 @@
               "costs": [],
               "gains": [
                 {
-                  "id": "JQwkY4KZ",
-                  "name": "Bolt Pistol",
                   "type": "ArmyBookWeapon",
+                  "name": "Bolt Pistol",
                   "range": 12,
                   "attacks": 2,
-                  "weaponId": "JQwkY4KZ",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
                       "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "JQwkY4KZ",
+                  "id": "JQwkY4KZ",
                   "attacksMultiplier": 1,
-                  "label": "Bolt Pistol (12\", A2, Rending)",
-                  "count": 1
+                  "label": "Bolt Pistol (12\", A2, Rending)"
                 },
                 {
-                  "id": "VyGSZY1u",
-                  "name": "Dagger",
                   "type": "ArmyBookWeapon",
+                  "name": "Dagger",
                   "range": 0,
                   "attacks": 1,
-                  "weaponId": "VyGSZY1u",
                   "specialRules": [],
+                  "count": 1,
+                  "weaponId": "VyGSZY1u",
+                  "id": "VyGSZY1u",
                   "attacksMultiplier": 1,
-                  "label": "Dagger (A1)",
-                  "count": 1
+                  "label": "Dagger (A1)"
                 }
               ],
               "label": "Bolt Pistol (12\", A2, Rending), Dagger (A1)",
@@ -2287,34 +2329,35 @@
               "costs": [],
               "gains": [
                 {
-                  "id": "yk2jZIRs",
-                  "name": "Javelin",
                   "type": "ArmyBookWeapon",
+                  "name": "Javelin",
                   "range": 12,
                   "attacks": 2,
-                  "weaponId": "yk2jZIRs",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "yk2jZIRs",
+                  "id": "yk2jZIRs",
                   "attacksMultiplier": 1,
-                  "label": "Javelin (12\", A2, AP(1))",
-                  "count": 1
+                  "label": "Javelin (12\", A2, AP(1))"
                 },
                 {
-                  "id": "VyGSZY1u",
-                  "name": "Dagger",
                   "type": "ArmyBookWeapon",
+                  "name": "Dagger",
                   "range": 0,
                   "attacks": 1,
-                  "weaponId": "VyGSZY1u",
                   "specialRules": [],
+                  "count": 1,
+                  "weaponId": "VyGSZY1u",
+                  "id": "VyGSZY1u",
                   "attacksMultiplier": 1,
-                  "label": "Dagger (A1)",
-                  "count": 1
+                  "label": "Dagger (A1)"
                 }
               ],
               "label": "Javelin (12\", A2, AP(1)), Dagger (A1)",
@@ -2339,7 +2382,7 @@
       "hint": "Drake-Lion Paladins",
       "sections": [
         {
-          "id": "n_y5qlR",
+          "id": "YgOaiUU",
           "uid": "uoue6h-",
           "label": "Replace any Sword & Staff",
           "options": [
@@ -2349,24 +2392,26 @@
               "costs": [],
               "gains": [
                 {
-                  "id": "IgOVp1ri",
-                  "name": "Great Staff",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Great Staff",
                   "range": 0,
                   "attacks": 2,
-                  "weaponId": "IgOVp1ri",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "Naqc5mga9Uha",
                       "name": "Bane"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "IgOVp1ri",
+                  "id": "IgOVp1ri",
                   "attacksMultiplier": 1,
                   "label": "Great Staff (A2, AP(1), Bane)"
                 }
@@ -2387,7 +2432,7 @@
           ]
         },
         {
-          "id": "bjO-W0u",
+          "id": "Ma_RXYR",
           "uid": "e-1wv1X",
           "label": "Upgrade with",
           "options": [
@@ -2398,18 +2443,18 @@
               "costs": [],
               "gains": [
                 {
-                  "name": "Evocator",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Evocator (Caster(1))",
+                  "name": "Evocator",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "47CAqf7ySlfc",
                       "name": "Caster",
-                      "type": "ArmyBookRule",
                       "rating": 1
                     }
                   ],
+                  "bases": null,
+                  "label": "Evocator (Caster(1))",
                   "count": 1
                 }
               ],
@@ -2432,7 +2477,7 @@
       "hint": "Drake Eternal",
       "sections": [
         {
-          "id": "LKUN_6s",
+          "id": "r6qhKb4",
           "uid": "kxEN88Y",
           "label": "Replace Thunder Mace",
           "options": [
@@ -2442,24 +2487,26 @@
               "costs": [],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Great Glaive",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Great Glaive",
                   "range": null,
                   "attacks": 3,
-                  "weaponId": "ZRAUP7_B",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
                       "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "ZRAUP7_B",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Great Glaive (A3, AP(1), Rending)"
                 }
@@ -2475,26 +2522,28 @@
               "costs": [],
               "gains": [
                 {
-                  "id": "ay6QSYG0",
-                  "name": "Great Axe",
                   "type": "ArmyBookWeapon",
+                  "name": "Great Axe",
                   "range": 0,
                   "attacks": 3,
-                  "weaponId": "ay6QSYG0",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "Zx4mWN0SbmK8",
                       "name": "Reliable"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "ay6QSYG0",
+                  "id": "ay6QSYG0",
                   "attacksMultiplier": 1,
-                  "label": "Great Axe (A3, AP(1), Reliable)",
-                  "count": 1
+                  "label": "Great Axe (A3, AP(1), Reliable)"
                 }
               ],
               "label": "Great Axe (A3, AP(1), Reliable)",
@@ -2510,22 +2559,23 @@
               "costs": [],
               "gains": [
                 {
-                  "id": "A2fGGR4i",
-                  "name": "Great Hammer",
                   "type": "ArmyBookWeapon",
+                  "name": "Great Hammer",
                   "range": null,
                   "attacks": 3,
-                  "weaponId": "A2fGGR4i",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "A2fGGR4i",
+                  "id": "A2fGGR4i",
                   "attacksMultiplier": 1,
-                  "label": "Great Hammer (A3, AP(3))",
-                  "count": 1
+                  "label": "Great Hammer (A3, AP(3))"
                 }
               ],
               "label": "Great Hammer (A3, AP(3))",
@@ -2541,38 +2591,40 @@
               "costs": [],
               "gains": [
                 {
-                  "id": "VyGSZY1u",
-                  "name": "Dagger",
                   "type": "ArmyBookWeapon",
-                  "range": 0,
-                  "attacks": 1,
-                  "weaponId": "VyGSZY1u",
-                  "specialRules": [],
-                  "attacksMultiplier": 1,
-                  "label": "Dagger (A1)",
-                  "count": 1
-                },
-                {
-                  "id": "nvrLy10n",
                   "name": "Volley Crossbow",
-                  "type": "ArmyBookWeapon",
                   "range": 12,
                   "attacks": 4,
-                  "weaponId": "nvrLy10n",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "cavWDboL4ubs",
                       "name": "Rending"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "nvrLy10n",
+                  "id": "nvrLy10n",
                   "attacksMultiplier": 1,
-                  "label": "Volley Crossbow (12\", A4, AP(1), Rending)",
-                  "count": 1
+                  "label": "Volley Crossbow (12\", A4, AP(1), Rending)"
+                },
+                {
+                  "type": "ArmyBookWeapon",
+                  "name": "Dagger",
+                  "range": 0,
+                  "attacks": 1,
+                  "specialRules": [],
+                  "count": 1,
+                  "weaponId": "VyGSZY1u",
+                  "id": "VyGSZY1u",
+                  "attacksMultiplier": 1,
+                  "label": "Dagger (A1)"
                 }
               ],
               "label": "Volley Crossbow (12\", A4, AP(1), Rending), Dagger (A1)",
@@ -2597,7 +2649,7 @@
       "hint": "Dragon Eternal",
       "sections": [
         {
-          "id": "mepz7Ti",
+          "id": "WCRs9Q8",
           "uid": "lSsY6bP",
           "label": "Replace Heavy Lance",
           "options": [
@@ -2608,21 +2660,21 @@
               "costs": [],
               "gains": [
                 {
-                  "id": "EEu0uEGK",
-                  "name": "Heavy Great Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Heavy Great Weapon",
                   "range": 0,
                   "attacks": 3,
-                  "weaponId": "UdU5JI5X",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
-                      "type": "ArmyBookRule",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "UdU5JI5X",
+                  "id": "EEu0uEGK",
                   "attacksMultiplier": 1,
                   "label": "Heavy Great Weapon (A3, AP(3))"
                 }
@@ -2639,29 +2691,32 @@
               "costs": [],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Great Thunder Mace",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Great Thunder Mace",
                   "range": null,
                   "attacks": 2,
-                  "weaponId": "dI34SDE9",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 2
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "w_vX0mi58KKt",
                       "name": "Blast",
                       "rating": 3
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "WcOMD7QgPYXZ",
                       "name": "Lacerate"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "dI34SDE9",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Great Thunder Mace (A2, AP(2), Blast(3), Lacerate)"
                 }
@@ -2686,7 +2741,7 @@
       "hint": "Storm Chariot",
       "sections": [
         {
-          "id": "q5y5WgL",
+          "id": "jktHoZn",
           "uid": "iQKP3SW",
           "label": "Replace Spear Crew",
           "options": [
@@ -2697,19 +2752,21 @@
               "costs": [],
               "gains": [
                 {
-                  "name": "Bow Crew",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Bow Crew",
                   "range": 18,
                   "attacks": 9,
-                  "weaponId": "TO-FK1gY",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "TO-FK1gY",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Bow Crew (18\", A9, AP(1))"
                 }
@@ -2736,7 +2793,7 @@
       "hint": "Eternal Artillery",
       "sections": [
         {
-          "id": "aci4VoQ",
+          "id": "u4D7svl",
           "uid": "87rw34B",
           "label": "Replace Celestial Bolt Ballista",
           "options": [
@@ -2747,19 +2804,21 @@
               "costs": [],
               "gains": [
                 {
-                  "name": "Shock Bolt Ballista",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Shock Bolt Ballista",
                   "range": 24,
                   "attacks": 6,
-                  "weaponId": "528zHwZR",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "528zHwZR",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Shock Bolt Ballista (24\", A6, AP(1))"
                 }
@@ -2776,29 +2835,32 @@
               "costs": [],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Thunder Bolt Ballista",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Thunder Bolt Ballista",
                   "range": 30,
                   "attacks": 2,
-                  "weaponId": "Pt-AXBhv",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 2
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "w_vX0mi58KKt",
                       "name": "Blast",
                       "rating": 3
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "WcOMD7QgPYXZ",
                       "name": "Lacerate"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "Pt-AXBhv",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Thunder Bolt Ballista (30\", A2, AP(2), Blast(3), Lacerate)"
                 }
@@ -2823,7 +2885,7 @@
       "hint": "Warden Knight",
       "sections": [
         {
-          "id": "UrQDY9z",
+          "id": "SUgBN_V",
           "uid": "Hv2za",
           "label": "Replace Sword & Staff",
           "options": [
@@ -2839,20 +2901,21 @@
               ],
               "gains": [
                 {
-                  "name": "Heavy Hand Weapon",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Heavy Hand Weapon",
                   "range": 0,
                   "attacks": 4,
-                  "weaponId": "WHcr53Ec",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
-                      "type": "ArmyBookRule",
                       "rating": 1
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "WHcr53Ec",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Heavy Hand Weapon (A4, AP(1))"
                 }
@@ -2874,26 +2937,28 @@
               ],
               "gains": [
                 {
-                  "id": "SZg3yvGj",
-                  "name": "Great Staff",
                   "type": "ArmyBookWeapon",
+                  "name": "Great Staff",
                   "range": 0,
                   "attacks": 4,
-                  "weaponId": "SZg3yvGj",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "Naqc5mga9Uha",
                       "name": "Bane"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "SZg3yvGj",
+                  "id": "SZg3yvGj",
                   "attacksMultiplier": 1,
-                  "label": "Great Staff (A4, AP(1), Bane)",
-                  "count": 1
+                  "label": "Great Staff (A4, AP(1), Bane)"
                 }
               ],
               "label": "Great Staff (A4, AP(1), Bane)",
@@ -2915,23 +2980,23 @@
               ],
               "gains": [
                 {
-                  "id": "Du5c8ebd",
-                  "name": "Heavy Great Weapon",
                   "type": "ArmyBookWeapon",
+                  "name": "Heavy Great Weapon",
                   "range": 0,
                   "attacks": 4,
-                  "weaponId": "MyZm7lHh",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
-                      "type": "ArmyBookRule",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "MyZm7lHh",
+                  "id": "Du5c8ebd",
                   "attacksMultiplier": 1,
-                  "label": "Heavy Great Weapon (A4, AP(3))",
-                  "count": 1
+                  "label": "Heavy Great Weapon (A4, AP(3))"
                 }
               ],
               "label": "Heavy Great Weapon (A4, AP(3))",
@@ -2952,29 +3017,32 @@
               ],
               "gains": [
                 {
-                  "id": null,
-                  "name": "Great Thunder Mace",
                   "type": "ArmyBookWeapon",
-                  "count": 1,
+                  "name": "Great Thunder Mace",
                   "range": null,
                   "attacks": 2,
-                  "weaponId": "dI34SDE9",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 2
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "w_vX0mi58KKt",
                       "name": "Blast",
                       "rating": 3
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "WcOMD7QgPYXZ",
                       "name": "Lacerate"
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "dI34SDE9",
+                  "id": null,
                   "attacksMultiplier": 1,
                   "label": "Great Thunder Mace (A2, AP(2), Blast(3), Lacerate)"
                 }
@@ -2996,23 +3064,23 @@
               ],
               "gains": [
                 {
-                  "id": "wWvmfQ49",
-                  "name": "Dual Heavy Hand Weapons",
                   "type": "ArmyBookWeapon",
+                  "name": "Dual Heavy Hand Weapons",
                   "range": 0,
                   "attacks": 8,
-                  "weaponId": "yQ5zddlK",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
-                      "type": "ArmyBookRule",
                       "rating": 1
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "yQ5zddlK",
+                  "id": "wWvmfQ49",
                   "attacksMultiplier": 1,
-                  "label": "Dual Heavy Hand Weapons (A8, AP(1))",
-                  "count": 1
+                  "label": "Dual Heavy Hand Weapons (A8, AP(1))"
                 }
               ],
               "label": "Dual Heavy Hand Weapons (A8, AP(1))",
@@ -3030,7 +3098,7 @@
           ]
         },
         {
-          "id": "xTRg8VT",
+          "id": "lJ_ebOg",
           "uid": "KmLjS",
           "label": "Upgrade with one",
           "options": [
@@ -3047,22 +3115,23 @@
               ],
               "gains": [
                 {
-                  "id": "NgepZcKp",
-                  "name": "Knight Bow",
                   "type": "ArmyBookWeapon",
+                  "name": "Knight Bow",
                   "range": 24,
                   "attacks": 4,
-                  "weaponId": "NgepZcKp",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 1
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "NgepZcKp",
+                  "id": "NgepZcKp",
                   "attacksMultiplier": 1,
-                  "label": "Knight Bow (24\", A4, AP(1))",
-                  "count": 1
+                  "label": "Knight Bow (24\", A4, AP(1))"
                 }
               ],
               "label": "Knight Bow (24\", A4, AP(1))",
@@ -3084,27 +3153,29 @@
               ],
               "gains": [
                 {
-                  "id": "-WISu1wx",
-                  "name": "Great Bow",
                   "type": "ArmyBookWeapon",
+                  "name": "Great Bow",
                   "range": 30,
                   "attacks": 1,
-                  "weaponId": "-WISu1wx",
                   "specialRules": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "17crjK7P6_w6",
                       "name": "AP",
                       "rating": 3
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "_mrPya5SXSqW",
                       "name": "Deadly",
                       "rating": 3
                     }
                   ],
+                  "count": 1,
+                  "weaponId": "-WISu1wx",
+                  "id": "-WISu1wx",
                   "attacksMultiplier": 1,
-                  "label": "Great Bow (30\", A1, AP(3), Deadly(3))",
-                  "count": 1
+                  "label": "Great Bow (30\", A1, AP(3), Deadly(3))"
                 }
               ],
               "label": "Great Bow (30\", A1, AP(3), Deadly(3))",
@@ -3123,7 +3194,7 @@
           }
         },
         {
-          "id": "YdzDCmP",
+          "id": "Ex9mQNd",
           "uid": "TSOKz",
           "label": "Upgrade with",
           "options": [
@@ -3140,16 +3211,17 @@
               ],
               "gains": [
                 {
-                  "name": "Paladin",
                   "type": "ArmyBookItem",
-                  "label": "Paladin (Unpredictable Fighter)",
+                  "name": "Paladin",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "DEeVIJcfNfS6",
-                      "name": "Unpredictable Fighter",
-                      "type": "ArmyBookRule"
+                      "name": "Unpredictable Fighter"
                     }
                   ],
+                  "bases": null,
+                  "label": "Paladin (Unpredictable Fighter)",
                   "count": 1
                 }
               ],
@@ -3166,7 +3238,7 @@
           "variant": "upgrade"
         },
         {
-          "id": "amF7ZuA",
+          "id": "PeBajel",
           "uid": "g7KKf",
           "label": "Upgrade with one",
           "options": [
@@ -3183,17 +3255,17 @@
               "gains": [
                 {
                   "id": "AUMnP4D",
-                  "name": "Beast-Hound Companion",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Beast-Hound Companion (Repel Ambushers)",
+                  "name": "Beast-Hound Companion",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "C6MzEy1CnxTs",
-                      "name": "Repel Ambushers",
-                      "type": "ArmyBookRule"
+                      "name": "Repel Ambushers"
                     }
                   ],
+                  "bases": null,
+                  "label": "Beast-Hound Companion (Repel Ambushers)",
                   "count": 1
                 }
               ],
@@ -3214,25 +3286,25 @@
               ],
               "gains": [
                 {
-                  "name": "Drake-Lion",
                   "type": "ArmyBookItem",
+                  "name": "Drake-Lion",
+                  "content": [
+                    {
+                      "type": "ArmyBookRule",
+                      "id": "KdgwlPb8LuD2",
+                      "name": "Fast"
+                    },
+                    {
+                      "type": "ArmyBookRule",
+                      "id": "JSKVyurtWIyW",
+                      "name": "Strider"
+                    }
+                  ],
                   "bases": {
                     "round": "90x52",
                     "square": "75x50"
                   },
                   "label": "Drake-Lion (Fast, Strider)",
-                  "content": [
-                    {
-                      "id": "KdgwlPb8LuD2",
-                      "name": "Fast",
-                      "type": "ArmyBookRule"
-                    },
-                    {
-                      "id": "JSKVyurtWIyW",
-                      "name": "Strider",
-                      "type": "ArmyBookRule"
-                    }
-                  ],
                   "count": 1
                 }
               ],
@@ -3252,22 +3324,22 @@
               ],
               "gains": [
                 {
-                  "name": "Wings",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Wings (Ambush, Flying)",
+                  "name": "Wings",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "6mJw5IdqSqNC",
-                      "name": "Ambush",
-                      "type": "ArmyBookRule"
+                      "name": "Ambush"
                     },
                     {
+                      "type": "ArmyBookRule",
                       "id": "-QJdqJEKjIpE",
-                      "name": "Flying",
-                      "type": "ArmyBookRule"
+                      "name": "Flying"
                     }
                   ],
+                  "bases": null,
+                  "label": "Wings (Ambush, Flying)",
                   "count": 1
                 }
               ],
@@ -3287,38 +3359,37 @@
               ],
               "gains": [
                 {
-                  "name": "Great Gryph",
                   "type": "ArmyBookItem",
+                  "name": "Great Gryph",
+                  "content": [
+                    {
+                      "type": "ArmyBookRule",
+                      "id": "KdgwlPb8LuD2",
+                      "name": "Fast"
+                    },
+                    {
+                      "type": "ArmyBookRule",
+                      "id": "62-mYKVM9MLd",
+                      "name": "Impact",
+                      "rating": 4
+                    },
+                    {
+                      "type": "ArmyBookRule",
+                      "id": "a0YtInGiUDd6",
+                      "name": "Tough",
+                      "rating": 9
+                    },
+                    {
+                      "type": "ArmyBookRule",
+                      "id": "r8OBuam8nRXP",
+                      "name": "Vanguard"
+                    }
+                  ],
                   "bases": {
                     "round": "90x52",
                     "square": "75x50"
                   },
                   "label": "Great Gryph (Fast, Impact(4), Tough(9), Vanguard)",
-                  "content": [
-                    {
-                      "id": "KdgwlPb8LuD2",
-                      "name": "Fast",
-                      "type": "ArmyBookRule"
-                    },
-                    {
-                      "id": "62-mYKVM9MLd",
-                      "name": "Impact",
-                      "type": "ArmyBookRule",
-                      "rating": 4
-                    },
-                    {
-                      "id": "a0YtInGiUDd6",
-                      "name": "Tough",
-                      "type": "ArmyBookRule",
-                      "rating": 9,
-                      "label": "Tough(9)"
-                    },
-                    {
-                      "id": "r8OBuam8nRXP",
-                      "name": "Vanguard",
-                      "type": "ArmyBookRule"
-                    }
-                  ],
                   "count": 1
                 }
               ],
@@ -3338,38 +3409,37 @@
               ],
               "gains": [
                 {
-                  "name": "Horned Pegasus",
                   "type": "ArmyBookItem",
+                  "name": "Horned Pegasus",
+                  "content": [
+                    {
+                      "type": "ArmyBookRule",
+                      "id": "KdgwlPb8LuD2",
+                      "name": "Fast"
+                    },
+                    {
+                      "type": "ArmyBookRule",
+                      "id": "-QJdqJEKjIpE",
+                      "name": "Flying"
+                    },
+                    {
+                      "type": "ArmyBookRule",
+                      "id": "62-mYKVM9MLd",
+                      "name": "Impact",
+                      "rating": 3
+                    },
+                    {
+                      "type": "ArmyBookRule",
+                      "id": "a0YtInGiUDd6",
+                      "name": "Tough",
+                      "rating": 9
+                    }
+                  ],
                   "bases": {
                     "round": "90x52",
                     "square": "75x50"
                   },
                   "label": "Horned Pegasus (Fast, Flying, Impact(3), Tough(9))",
-                  "content": [
-                    {
-                      "id": "KdgwlPb8LuD2",
-                      "name": "Fast",
-                      "type": "ArmyBookRule"
-                    },
-                    {
-                      "id": "-QJdqJEKjIpE",
-                      "name": "Flying",
-                      "type": "ArmyBookRule"
-                    },
-                    {
-                      "id": "a0YtInGiUDd6",
-                      "name": "Tough",
-                      "type": "ArmyBookRule",
-                      "rating": 9,
-                      "label": "Tough(9)"
-                    },
-                    {
-                      "id": "62-mYKVM9MLd",
-                      "name": "Impact",
-                      "type": "ArmyBookRule",
-                      "rating": 3
-                    }
-                  ],
                   "count": 1
                 }
               ],
@@ -3394,7 +3464,7 @@
       "hint": "Specialists - Knight",
       "sections": [
         {
-          "id": "9A5VGiT",
+          "id": "QfcsYg8",
           "uid": "IoN9d3fg",
           "label": "Upgrade with one",
           "options": [
@@ -3411,17 +3481,17 @@
               ],
               "gains": [
                 {
-                  "name": "Herald",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Herald (Unstoppable in Melee Aura)",
+                  "name": "Herald",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "AB3FAl-SEUYP",
-                      "name": "Unstoppable in Melee Aura",
-                      "type": "ArmyBookRule"
+                      "name": "Unstoppable in Melee Aura"
                     }
                   ],
+                  "bases": null,
+                  "label": "Herald (Unstoppable in Melee Aura)",
                   "count": 1
                 }
               ],
@@ -3444,17 +3514,17 @@
               ],
               "gains": [
                 {
-                  "name": "Soul Collector",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Soul Collector (Bane when Shooting Aura)",
+                  "name": "Soul Collector",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "ba6LlbpoLkSu",
-                      "name": "Bane when Shooting Aura",
-                      "type": "ArmyBookRule"
+                      "name": "Bane when Shooting Aura"
                     }
                   ],
+                  "bases": null,
+                  "label": "Soul Collector (Bane when Shooting Aura)",
                   "count": 1
                 }
               ],
@@ -3476,19 +3546,18 @@
               ],
               "gains": [
                 {
-                  "name": "Exorcist",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Exorcist (Caster(1))",
+                  "name": "Exorcist",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "47CAqf7ySlfc",
                       "name": "Caster",
-                      "type": "ArmyBookRule",
-                      "rating": "1",
-                      "label": "Caster(1)"
+                      "rating": "1"
                     }
                   ],
+                  "bases": null,
+                  "label": "Exorcist (Caster(1))",
                   "count": 1
                 }
               ],
@@ -3509,17 +3578,17 @@
               ],
               "gains": [
                 {
-                  "name": "Prayer Chanter",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Prayer Chanter (Stealth Aura)",
+                  "name": "Prayer Chanter",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "8haZ36fXvnzn",
-                      "name": "Stealth Aura",
-                      "type": "ArmyBookRule"
+                      "name": "Stealth Aura"
                     }
                   ],
+                  "bases": null,
+                  "label": "Prayer Chanter (Stealth Aura)",
                   "count": 1
                 }
               ],
@@ -3539,17 +3608,17 @@
               ],
               "gains": [
                 {
-                  "name": "Heirloom Bearer",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Heirloom Bearer (Re-Deployment)",
+                  "name": "Heirloom Bearer",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "zjzB46LX-QDg",
-                      "name": "Re-Deployment",
-                      "type": "ArmyBookRule"
+                      "name": "Re-Deployment"
                     }
                   ],
+                  "bases": null,
+                  "label": "Heirloom Bearer (Re-Deployment)",
                   "count": 1
                 }
               ],
@@ -3576,7 +3645,7 @@
       "hint": "Beast-Hounds",
       "sections": [
         {
-          "id": "fwEqw9U",
+          "id": "_d3KDPZ",
           "uid": "Bk1hdYwYNz",
           "label": "Replace Hunting Hound",
           "options": [
@@ -3586,17 +3655,17 @@
               "costs": [],
               "gains": [
                 {
-                  "name": "Retriever Hound",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Retriever Hound (Scout)",
+                  "name": "Retriever Hound",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "FAMbscK5vhSu",
-                      "name": "Scout",
-                      "type": "ArmyBookRule"
+                      "name": "Scout"
                     }
                   ],
+                  "bases": null,
+                  "label": "Retriever Hound (Scout)",
                   "count": 1
                 }
               ],
@@ -3620,7 +3689,7 @@
       "hint": "Specialists - Guardian",
       "sections": [
         {
-          "id": "5G2OQZy",
+          "id": "MqdO6Oj",
           "uid": "1nV-5JBu",
           "label": "Upgrade with one",
           "options": [
@@ -3637,17 +3706,17 @@
               ],
               "gains": [
                 {
-                  "name": "Relic Warden",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Relic Warden (Warden Boost Aura)",
+                  "name": "Relic Warden",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "owsB4cOYTYHm",
-                      "name": "Warden Boost Aura",
-                      "type": "ArmyBookRule"
+                      "name": "Warden Boost Aura"
                     }
                   ],
+                  "bases": null,
+                  "label": "Relic Warden (Warden Boost Aura)",
                   "count": 1
                 }
               ],
@@ -3670,17 +3739,17 @@
               ],
               "gains": [
                 {
-                  "name": "Soul Collector",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Soul Collector (Bane when Shooting Aura)",
+                  "name": "Soul Collector",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "ba6LlbpoLkSu",
-                      "name": "Bane when Shooting Aura",
-                      "type": "ArmyBookRule"
+                      "name": "Bane when Shooting Aura"
                     }
                   ],
+                  "bases": null,
+                  "label": "Soul Collector (Bane when Shooting Aura)",
                   "count": 1
                 }
               ],
@@ -3702,17 +3771,17 @@
               ],
               "gains": [
                 {
-                  "name": "Prayer Chanter",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Prayer Chanter (Stealth Aura)",
+                  "name": "Prayer Chanter",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "8haZ36fXvnzn",
-                      "name": "Stealth Aura",
-                      "type": "ArmyBookRule"
+                      "name": "Stealth Aura"
                     }
                   ],
+                  "bases": null,
+                  "label": "Prayer Chanter (Stealth Aura)",
                   "count": 1
                 }
               ],
@@ -3733,17 +3802,17 @@
               ],
               "gains": [
                 {
-                  "name": "Heirloom Bearer",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Heirloom Bearer (Re-Deployment)",
+                  "name": "Heirloom Bearer",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "zjzB46LX-QDg",
-                      "name": "Re-Deployment",
-                      "type": "ArmyBookRule"
+                      "name": "Re-Deployment"
                     }
                   ],
+                  "bases": null,
+                  "label": "Heirloom Bearer (Re-Deployment)",
                   "count": 1
                 }
               ],
@@ -3770,7 +3839,7 @@
       "hint": "Specialists - Lord",
       "sections": [
         {
-          "id": "44N_lAx",
+          "id": "NBTIl2H",
           "uid": "Caq-SkYw",
           "label": "Upgrade with one",
           "options": [
@@ -3787,17 +3856,17 @@
               ],
               "gains": [
                 {
-                  "name": "Relic Warden",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Relic Warden (Warden Boost Aura)",
+                  "name": "Relic Warden",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "owsB4cOYTYHm",
-                      "name": "Warden Boost Aura",
-                      "type": "ArmyBookRule"
+                      "name": "Warden Boost Aura"
                     }
                   ],
+                  "bases": null,
+                  "label": "Relic Warden (Warden Boost Aura)",
                   "count": 1
                 }
               ],
@@ -3820,17 +3889,17 @@
               ],
               "gains": [
                 {
-                  "name": "Herald",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Herald (Unstoppable in Melee Aura)",
+                  "name": "Herald",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "AB3FAl-SEUYP",
-                      "name": "Unstoppable in Melee Aura",
-                      "type": "ArmyBookRule"
+                      "name": "Unstoppable in Melee Aura"
                     }
                   ],
+                  "bases": null,
+                  "label": "Herald (Unstoppable in Melee Aura)",
                   "count": 1
                 }
               ],
@@ -3852,17 +3921,17 @@
               ],
               "gains": [
                 {
-                  "name": "Prayer Chanter",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Prayer Chanter (Stealth Aura)",
+                  "name": "Prayer Chanter",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "8haZ36fXvnzn",
-                      "name": "Stealth Aura",
-                      "type": "ArmyBookRule"
+                      "name": "Stealth Aura"
                     }
                   ],
+                  "bases": null,
+                  "label": "Prayer Chanter (Stealth Aura)",
                   "count": 1
                 }
               ],
@@ -3882,18 +3951,18 @@
               ],
               "gains": [
                 {
-                  "name": "Army Standard Bearer",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Army Standard Bearer (Fear(2))",
+                  "name": "Army Standard Bearer",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "dIQ3SGl2J2Ew",
                       "name": "Fear",
-                      "type": "ArmyBookRule",
                       "rating": 2
                     }
                   ],
+                  "bases": null,
+                  "label": "Army Standard Bearer (Fear(2))",
                   "count": 1
                 }
               ],
@@ -3914,17 +3983,17 @@
               ],
               "gains": [
                 {
-                  "name": "Heirloom Bearer",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Heirloom Bearer (Re-Deployment)",
+                  "name": "Heirloom Bearer",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "zjzB46LX-QDg",
-                      "name": "Re-Deployment",
-                      "type": "ArmyBookRule"
+                      "name": "Re-Deployment"
                     }
                   ],
+                  "bases": null,
+                  "label": "Heirloom Bearer (Re-Deployment)",
                   "count": 1
                 }
               ],
@@ -3951,7 +4020,7 @@
       "hint": "Lightning Beacon",
       "sections": [
         {
-          "id": "Kef59AN",
+          "id": "Y8eivl1",
           "uid": "bIvmbbtZ",
           "label": "Upgrade with",
           "options": [
@@ -3961,18 +4030,18 @@
               "costs": [],
               "gains": [
                 {
-                  "name": "Lightning Beacon",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Lightning Beacon (Piercing Target(1))",
+                  "name": "Lightning Beacon",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "HMiVg3VVLQv3",
                       "name": "Piercing Target",
-                      "type": "ArmyBookRule",
                       "rating": 1
                     }
                   ],
+                  "bases": null,
+                  "label": "Lightning Beacon (Piercing Target(1))",
                   "count": 1
                 }
               ],
@@ -3994,7 +4063,7 @@
       "hint": "Storm Caller",
       "sections": [
         {
-          "id": "ubi9THU",
+          "id": "-gICF7h",
           "uid": "8F43SUjJ",
           "label": "Upgrade with",
           "options": [
@@ -4004,17 +4073,17 @@
               "costs": [],
               "gains": [
                 {
-                  "name": "Storm Caller",
                   "type": "ArmyBookItem",
-                  "bases": null,
-                  "label": "Storm Caller (Unstoppable Mark)",
+                  "name": "Storm Caller",
                   "content": [
                     {
+                      "type": "ArmyBookRule",
                       "id": "Q-wmfZ69HqBX",
-                      "name": "Unstoppable Mark",
-                      "type": "ArmyBookRule"
+                      "name": "Unstoppable Mark"
                     }
                   ],
+                  "bases": null,
+                  "label": "Storm Caller (Unstoppable Mark)",
                   "count": 1
                 }
               ],
@@ -4597,8 +4666,8 @@
     }
   ],
   "transforms": [],
-  "modifiedAt": "2026-07-14T11:27:43.925Z",
-  "editedAt": "2026-05-04T01:00:32.371Z",
+  "modifiedAt": "2026-08-21T22:13:45.671Z",
+  "editedAt": "2026-08-21T22:13:45.670Z",
   "official": true,
   "versionString": "3.5.3",
   "coverImagePath": "https://af-images.s3.eu-north-1.amazonaws.com/army-books/covers/-MrGWaleoZR7pxIn/NzrlMwS93LNriSF_8zDgk.jpg",
@@ -4681,7 +4750,8 @@
       "description": "When units where all models have this rule are shot or charged from over 9\" away and take hits, those hits count as having AP(-1), to a min. of AP(0).",
       "hasRating": false,
       "coreType": null,
-      "targetType": 1
+      "targetType": 1,
+      "originalName": "Reinforced"
     },
     {
       "id": "ba6LlbpoLkSu",
@@ -4760,6 +4830,15 @@
       "name": "Breath Attack",
       "aliasedRuleId": null,
       "description": "Only one use per game. Once per activation, before attacking, roll one die. On a 2+ one enemy unit within 6\" in line of sight takes 1 hit with Blast(3) and AP(1).",
+      "hasRating": false,
+      "coreType": null,
+      "targetType": 1
+    },
+    {
+      "id": "swmJMClW7ilS",
+      "name": "Reinforced",
+      "aliasedRuleId": null,
+      "description": "When units where all models have this rule are shot or charged from over 9\" away and take hits, those hits count as having AP(-1), to a min. of AP(0).",
       "hasRating": false,
       "coreType": null,
       "targetType": 1
