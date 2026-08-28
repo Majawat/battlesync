@@ -216,21 +216,36 @@ describe('Weapon Distribution and Upgrade Handling', () => {
         console.log('');
       });
 
-      // Test expectations
+      // Test expectations — verify CORRECT OPR weapon/rule distribution.
+      // Weapons and rules are distributed according to their `count`, not copied
+      // onto every model (the old implementation did the latter; this asserts the fix).
       expect(unit.models).toHaveLength(10);
-      
-      // Current implementation issues we expect to see:
-      unit.models.forEach(model => {
-        // ISSUE: Every model has every weapon
+
+      unit.models.forEach((model, i) => {
+        // CCW has count 10 (== unit size) -> universal, on every model
         expect(model.weapons).toContain('CCW (A1)');
-        expect(model.weapons).toContain('Shotgun (12", A2, AP(1))');
-        expect(model.weapons).toContain('Plasma Rifle (24", A1, AP(4), Deadly(1))');
-        
-        // ISSUE: Every model has every rule
+
+        // Shotgun (count 8) -> models 1-8; Plasma Rifle (count 2) -> models 9-10.
+        // The two upgrade weapons are mutually exclusive per model.
+        if (i < 8) {
+          expect(model.weapons).toContain('Shotgun (12", A2, AP(1))');
+          expect(model.weapons).not.toContain('Plasma Rifle (24", A1, AP(4), Deadly(1))');
+        } else {
+          expect(model.weapons).toContain('Plasma Rifle (24", A1, AP(4), Deadly(1))');
+          expect(model.weapons).not.toContain('Shotgun (12", A2, AP(1))');
+        }
+
+        // Unit-wide rules (no count) -> every model
         expect(model.specialRules).toContain('Carnivore');
         expect(model.specialRules).toContain('Relentless');
         expect(model.specialRules).toContain('Strider');
-        expect(model.specialRules).toContain('Beacon');
+
+        // Beacon (count 2) -> only the first 2 models
+        if (i < 2) {
+          expect(model.specialRules).toContain('Beacon');
+        } else {
+          expect(model.specialRules).not.toContain('Beacon');
+        }
       });
     });
   });
