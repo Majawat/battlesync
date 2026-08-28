@@ -8,35 +8,55 @@ describe('Unit Conversion - Data Structures', () => {
     // ============================================
     // 🔸 FETCH REAL ARMY FORGE DATA
     // ============================================
-    console.log('Fetching real Army Forge data for ID: IJ1JM_m-jmka...');
-    
-    let rawArmyForgeData: ArmyForgeData;
-    try {
-      // Import the real army using our ArmyForge client
-      const { armyForgeClient } = await import('../services/armyForgeClient');
-      rawArmyForgeData = await armyForgeClient.getArmy('', 'IJ1JM_m-jmka');
-      console.log(`✅ Successfully fetched army: "${rawArmyForgeData.name}"`);
-      console.log(`   Faction: ${rawArmyForgeData.faction}`);
-      console.log(`   Points: ${rawArmyForgeData.points}`);
-      console.log(`   Units: ${rawArmyForgeData.units.length}`);
-    } catch (error) {
-      console.error('❌ Failed to fetch Army Forge data:', error);
-      // Fallback to mock data if API fails
-      rawArmyForgeData = {
-        id: "IJ1JM_m-jmka",
-        name: "Test Army (Offline)",
-        faction: "Test Faction",
-        gameSystem: "gf",
-        points: 1000,
-        units: [],
-        specialRules: [],
-        metadata: {
-          version: "1.0",
-          lastModified: "2025-07-12",
-          createdBy: "test"
+    // NOTE: This test previously fetched a real army from the live ArmyForge API,
+    // which made it slow, non-deterministic, and flaky in CI (two chained network
+    // calls racing jest's 5s timeout). It now uses a fixed in-memory fixture so the
+    // conversion is exercised deterministically with no external dependency.
+    const rawArmyForgeData: ArmyForgeData = {
+      id: "IJ1JM_m-jmka",
+      name: "Data Structure Test Army",
+      faction: "Test Faction",
+      gameSystem: "gf",
+      points: 300,
+      units: [
+        {
+          id: "uF7noGn",
+          name: "Elites",
+          customName: "Ironclaw Vanguard",
+          size: 10,
+          cost: 300,
+          quality: 4,
+          defense: 4,
+          xp: 15,
+          weapons: [
+            { id: "ccw-base", name: "CCW", range: 0, attacks: 1, count: 10, label: "CCW (A1)" },
+            {
+              id: "shotgun-upgrade",
+              name: "Shotgun",
+              range: 12,
+              attacks: 2,
+              count: 8,
+              specialRules: [{ id: "ap-1", name: "AP", rating: 1, label: "AP(1)" }],
+              label: "Shotgun (12\", A2, AP(1))"
+            }
+          ],
+          rules: [
+            { id: "carnivore", name: "Carnivore", label: "Carnivore" }
+          ],
+          type: "UNIT",
+          combined: false,
+          selectionId: "HyvQz",
+          joinToUnit: null
         }
-      };
-    }
+      ],
+      specialRules: [],
+      metadata: {
+        version: "1.0",
+        lastModified: "2025-07-12",
+        createdBy: "test"
+      }
+    };
+    console.log(`Using fixture army: "${rawArmyForgeData.name}" (${rawArmyForgeData.units.length} unit(s))`);
 
     console.log('\n' + '='.repeat(80));
     console.log('🔸 RAW ARMY FORGE DATA STRUCTURE');
