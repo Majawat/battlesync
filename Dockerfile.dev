@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM node:26-alpine
 
 # Install dependencies for Prisma, bcrypt, and netcat for database connection checking
 RUN apk add --no-cache openssl python3 make g++ netcat-openbsd
