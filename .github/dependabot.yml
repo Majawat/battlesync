@@ -1,0 +1,61 @@
+version: 2
+updates:
+  # Backend Node/TypeScript dependencies (root package.json)
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "Majawat"
+    commit-message:
+      prefix: "deps"
+      include: "scope"
+
+  # Frontend npm dependencies
+  - package-ecosystem: "npm"
+    directory: "/frontend"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "Majawat"
+    commit-message:
+      prefix: "deps"
+      include: "scope"
+
+  # Docker dependencies (root Dockerfile.dev)
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 3
+    reviewers:
+      - "Majawat"
+    commit-message:
+      prefix: "docker"
+      include: "scope"
+
+  # Frontend Docker dependencies
+  - package-ecosystem: "docker"
+    directory: "/frontend"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 3
+    reviewers:
+      - "Majawat"
+    commit-message:
+      prefix: "docker"
+      include: "scope"
+
+  # GitHub Actions dependencies
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 3
+    reviewers:
+      - "Majawat"
+    commit-message:
+      prefix: "ci"
+      include: "scope"
