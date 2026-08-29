@@ -101,7 +101,19 @@ export class SpellDataService {
    * Fetch spells from ArmyForge API
    */
   private static async fetchSpellsFromArmyForge(armyBookId: string, gameSystem: number): Promise<OPRSpell[]> {
-    const response = await fetch(`https://army-forge.onepagerules.com/api/army-books/${armyBookId}?gameSystem=${gameSystem}`);
+    // Guard against SSRF / path-traversal: armyBookId flows from user input into the
+    // request URL. ArmyForge army-book IDs are short alphanumeric slugs, so reject
+    // anything else and URL-encode before interpolating (defense in depth).
+    if (!/^[A-Za-z0-9_-]+$/.test(armyBookId)) {
+      throw new Error(`Invalid army book ID: ${armyBookId}`);
+    }
+    const safeGameSystem = Number.parseInt(String(gameSystem), 10);
+    if (!Number.isInteger(safeGameSystem)) {
+      throw new Error(`Invalid game system: ${gameSystem}`);
+    }
+    const response = await fetch(
+      `https://army-forge.onepagerules.com/api/army-books/${encodeURIComponent(armyBookId)}?gameSystem=${safeGameSystem}`
+    );
     
     if (!response.ok) {
       throw new Error(`Failed to fetch army book: ${response.statusText}`);
