@@ -1372,9 +1372,11 @@ app.post('/api/battleaura/firmware/upload', firmwareWriteLimiter, upload.single(
     const properFilename = `battleaura-${version}.bin`;
     if (req.file.filename !== properFilename) {
       const oldPath = req.file.path;
-      const newPath = path.join(path.dirname(oldPath), properFilename);
+      // path.basename keeps the rename target inside firmwareDir even though
+      // properFilename is built from the (already semver-validated) version.
+      const newPath = path.join(firmwareDir, path.basename(properFilename));
       await fs.rename(oldPath, newPath);
-      req.file.filename = properFilename;
+      req.file.filename = path.basename(properFilename);
       req.file.path = newPath;
     }
 
