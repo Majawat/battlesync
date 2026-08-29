@@ -39,13 +39,17 @@ Repo settings (Settings → Code security), unaffected by the branch swap:
 
 ## 2. Continuous Integration — `.github/workflows/ci.yml`
 
-Runs on every **pull request** and on **push to `main`**. Node 20 (matches the
-Dockerfile's `node:20-alpine`).
+Runs on every **pull request** and on **push to `main`**.
 
-| Job | Steps |
-| --- | --- |
-| **Backend** | `npm ci` → `npm run typecheck` → `npm test` → `npm run build:backend` |
-| **Frontend** | `npm ci` → `npm run lint` → `npm test` (vitest) → `npm run build` (`build` runs `tsc -b` then `vite build`) |
+| Job | Node | Steps |
+| --- | --- | --- |
+| **Backend** | 20 (matches the Dockerfile's `node:20-alpine` runtime) | `npm ci` → `npm run typecheck` → `npm test` → `npm run build:backend` |
+| **Frontend** | 22 | `npm ci` → `npm run lint` → `npm test` (vitest) → `npm run build` (`build` runs `tsc -b` then `vite build`) |
+
+The frontend job runs on **Node 22** because its build/test tooling (vite 8, vitest 4,
+jsdom 30, jest-dom 7) now requires Node ≥ 22. That is **dev tooling only** — the frontend
+is compiled to static assets, so its build Node version is independent of the server
+runtime, which stays on Node 20.
 
 No Prisma step — v2 uses raw `sqlite3`. CI is **informational** (not a required check).
 
