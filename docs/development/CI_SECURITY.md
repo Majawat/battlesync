@@ -119,6 +119,33 @@ The following review findings were fixed (`src/utils/crypto.ts`,
 - **CBC/plaintext fallback**: encrypt/decrypt currently swallow errors and return the
   original value — remove the silent fallback once GCM lands.
 
+### Scanner alert findings (triaged 2026-08-28)
+
+**CodeQL (2 alerts — bugs in our own code, both fixed):**
+1. **SSRF, critical** (`js/request-forgery`, `src/services/spellDataService.ts`).
+   `getSpellsForArmyId(armyId)` fed a user-supplied id into the `fetch()` URL path.
+   Fixed: validate `armyBookId` against `^[A-Za-z0-9_-]+$`, coerce `gameSystem` to an
+   int, and `encodeURIComponent()` before interpolating.
+2. **Tainted format string, high** (`js/tainted-format-string`,
+   `src/services/armyService.ts`). User-controlled `armyId` was interpolated into a
+   `console.log` format string. Fixed: pass it as a separate argument, log only the
+   count. (Both fixed together — remediation PR.)
+
+**Dependabot (93 alerts — dependencies).** `npm audit fix` (non-breaking) was run in
+both workspaces, and the **unused `bcrypt`** dependency was removed (hashing is scrypt
+now; bcrypt only survived to drag in the vulnerable `@mapbox/node-pre-gyp → tar` chain,
+which was the sole **critical** backend alert). This cleared the large majority.
+**Remaining, both requiring breaking-change majors:**
+- **Frontend (2):** `react-router-dom` → **v7**. Open-redirect / SSR advisories on 6.x.
+  Take with the React 19 / router upgrade; test all navigation + redirects.
+- **Backend (6, dev-only):** `minimatch` under `@typescript-eslint` v6 (ReDoS). Only
+  runs at lint time on trusted source; fix = bump `@typescript-eslint/*` to v8 (flat
+  config). Not user-facing.
+
+> The Dependabot **count** (93) is much higher than `npm audit`'s (37) because
+> Dependabot lists every advisory separately — one bump (e.g. `axios` → 1.18) closes
+> many at once.
+
 ---
 
 ## 6. Required production configuration
