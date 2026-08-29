@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
+import rateLimit from 'express-rate-limit';
 import path from 'path';
 import { Server } from 'http';
 import multer from 'multer';
@@ -27,6 +28,30 @@ const PORT = process.env.PORT || 4019;
 
 app.use(cors());
 app.use(express.json());
+
+// Rate limiting. Disabled under NODE_ENV=test so the supertest suite (which fires
+// many requests in quick succession) doesn't trip the limiter.
+const rateLimitEnabled = process.env.NODE_ENV !== 'test';
+
+// Generous general limiter for the whole app (protects the static/SPA fallback and
+// read endpoints without getting in the way of normal use).
+const generalLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 1000,
+  standardHeaders: true,
+  legacyHeaders: false,
+  skip: () => !rateLimitEnabled,
+});
+app.use(generalLimiter);
+
+// Stricter limiter for firmware mutation endpoints (upload / admin clear).
+const firmwareWriteLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 30,
+  standardHeaders: true,
+  legacyHeaders: false,
+  skip: () => !rateLimitEnabled,
+});
 
 // Helper function to get base URL from request or environment
 function getBaseUrl(req: Request): string {
@@ -1279,7 +1304,7 @@ app.get('/api/battleaura/firmware/latest', async (req: Request, res: Response<Ge
 });
 
 // Upload new firmware (GitHub Actions endpoint)
-app.post('/api/battleaura/firmware/upload', upload.single('file'), async (req: Request, res: Response<UploadFirmwareResponse>) => {
+app.post('/api/battleaura/firmware/upload', firmwareWriteLimiter, upload.single('file'), async (req: Request, res: Response<UploadFirmwareResponse>) => {
   try {
     if (!req.file) {
       res.status(400).json({
@@ -1486,7 +1511,7 @@ app.get('/api/battleaura/firmware/:version', async (req: Request<{version: strin
 
 
 // Admin endpoint to clear all firmware data (for testing/cleanup)
-app.delete('/api/battleaura/firmware/admin/clear', async (req: Request, res: Response) => {
+app.delete('/api/battleaura/firmware/admin/clear', firmwareWriteLimiter, async (req: Request, res: Response) => {
   try {
     // Delete all firmware files
     const firmwareDir = path.join(__dirname, '../firmware');
