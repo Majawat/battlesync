@@ -300,7 +300,7 @@ export default function ArmyDetailPage() {
                                         <input
                                           type="text"
                                           defaultValue={model.custom_name || model.name}
-                                          className="text-sm bg-battle-surface-light dark:bg-battle-surface-dark border border-battle-border-light dark:border-battle-border-dark rounded px-2 py-1 font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark"
+                                          className="text-sm bg-battle-surface-light dark:bg-battle-surface-dark border border-battle-border-light dark:border-battle-border-dark rounded-sm px-2 py-1 font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark"
                                           onKeyDown={(e) => {
                                             if (e.key === 'Enter') {
                                               handleRenameModel(e.currentTarget.value);
@@ -389,7 +389,7 @@ export default function ArmyDetailPage() {
                                                 Move to:
                                               </span>
                                               <select
-                                                className="text-xs bg-battle-surface-light dark:bg-battle-surface-dark border border-battle-border-light dark:border-battle-border-dark rounded px-2 py-1"
+                                                className="text-xs bg-battle-surface-light dark:bg-battle-surface-dark border border-battle-border-light dark:border-battle-border-dark rounded-sm px-2 py-1"
                                                 defaultValue=""
                                                 onChange={(e) => {
                                                   if (e.target.value) {

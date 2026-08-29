@@ -388,7 +388,7 @@ const FirmwareFlashPage: React.FC = () => {
             </div>
           ) : (
             <div className="space-y-4">
-              <div className="p-3 bg-battle-status-normal/10 border border-battle-status-normal rounded">
+              <div className="p-3 bg-battle-status-normal/10 border border-battle-status-normal rounded-sm">
                 <p className="text-battle-status-normal font-medium">✓ Device Connected</p>
                 {deviceInfo && (
                   <div className="mt-2 text-sm text-battle-text-secondary-light dark:text-battle-text-secondary-dark">
@@ -442,7 +442,7 @@ const FirmwareFlashPage: React.FC = () => {
             </div>
             
             {flashProgress.stage === 'complete' && (
-              <div className="mt-4 p-3 bg-battle-status-normal/10 border border-battle-status-normal rounded">
+              <div className="mt-4 p-3 bg-battle-status-normal/10 border border-battle-status-normal rounded-sm">
                 <p className="text-battle-status-normal font-medium">✓ Firmware flash completed successfully!</p>
                 <p className="text-sm text-battle-text-secondary-light dark:text-battle-text-secondary-dark mt-1">
                   Device should restart automatically with the new firmware.
@@ -478,7 +478,7 @@ const FirmwareFlashPage: React.FC = () => {
           {selectedFirmware.changelog && (
             <div className="mt-4">
               <div className="text-battle-text-muted-light dark:text-battle-text-muted-dark mb-2">Changelog:</div>
-              <div className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark bg-battle-surface-light dark:bg-battle-surface-dark border border-battle-border-light dark:border-battle-border-dark rounded p-3">
+              <div className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark bg-battle-surface-light dark:bg-battle-surface-dark border border-battle-border-light dark:border-battle-border-dark rounded-sm p-3">
                 {selectedFirmware.changelog}
               </div>
             </div>
