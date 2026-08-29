@@ -106,9 +106,27 @@ Keep database schema simple with maximum 5 tables. Consider tables for:
 ### Research Items
 - [ ] **Catalog all possible upgrade effects** - Pull army books to see what other upgrade effects exist beyond current handling
 
+## CI, Dependencies & Security
+
+**BattleSync v2 is the repository mainline (`main`).** CI, Dependabot, CodeQL, the
+archive-rules bot, the offline test harness, and the security posture are documented in
+**[docs/development/CI_SECURITY.md](docs/development/CI_SECURITY.md)** — read it before
+changing tests, dependencies, or the firmware endpoints. Key rules for contributors:
+
+- **Tests must stay offline.** The import route's ArmyForge `fetch` is mocked via
+  `tests/setup/fetchMock.ts` using fixtures in `tests/fixtures/`. Never add a live
+  network call to a test — add a fixture and route it through the mock.
+- **CI runs on Node 20** (matches the Dockerfile): `npm run typecheck && npm test &&
+  npm run build:backend`, plus `cd frontend && npm run build`.
+- Keep `npm audit` clean in both workspaces; rate limiting on the firmware endpoints and
+  the semver/`path.basename` guards on firmware file paths are security-critical — don't
+  remove them.
+
 ## Legacy Reference
 
-Previous v1.5.2 implementation is archived at git tag `v1.5.2-final-archive` and can be referenced for feature ideas, but avoid complexity patterns from v1.
+Previous v1.5.2 implementation is archived at git tags `v1.5.2-final-archive` (original)
+and `v1-final` (v1 tip with its own security hardening) and can be referenced for feature
+ideas, but avoid complexity patterns from v1.
 
 ## Development Commands
 

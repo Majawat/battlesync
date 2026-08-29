@@ -7,6 +7,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### v1 → v2 adoption (2026-08-29)
+
+This branch became the repository mainline (`main`). The previous v1 line is archived
+at tags `v1.5.2-final-archive` and `v1-final`. See
+[docs/development/CI_SECURITY.md](docs/development/CI_SECURITY.md) for the full handoff.
+
+### Added
+- **CI** (`.github/workflows/ci.yml`): backend (typecheck/test/build) and frontend
+  (build) on every PR and push to `main`, Node 20.
+- **Dependabot** (`.github/dependabot.yml`): weekly npm/docker/actions updates, grouped.
+- **Archive-rules bot** (`.github/workflows/archive-rules.yml`): weekly JSON-only OPR
+  rules refresh via `scripts/downloadArmyBooks.ts` (new `ARCHIVE_JSON_ONLY` flag).
+- **Rate limiting** (`express-rate-limit`) on the app and firmware mutation endpoints.
+- **Offline test harness**: `tests/setup/fetchMock.ts` + `tests/fixtures/` so the suite
+  no longer hits the live ArmyForge API.
+
+### Changed
+- Bumped `sqlite3` 5 → 6 (clears the build-time node-gyp/tar advisory chain).
+
+### Fixed
+- **Re-import 500**: `storeArmyInDatabase` now updates the army row in place instead of
+  `INSERT OR REPLACE`, so re-importing an army already used in a battle no longer fails
+  the `battle_participants` foreign key.
+- **Build**: `build:backend` now copies `src/database/schema.sql` into `dist/`, so
+  `npm start` works outside Docker.
+- **Frontend build**: excluded orphaned test-scaffold files from the production
+  `tsc -b` build.
+
+### Security
+- **Dependabot alerts: 100 → 0** (`npm audit fix` + sqlite3 6).
+- **CodeQL**: fixed firmware upload path traversal (validate `version` semver at the
+  multer source + `path.basename` confinement at the fs sinks) and added rate limiting.
+
 ## [2.25.0] - 2025-08-21
 
 ### Enhanced
