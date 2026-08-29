@@ -102,6 +102,16 @@ export class UserService {
       throw ValidationUtils.createError('Invalid username or password', 401);
     }
 
+    // Transparently upgrade legacy password hashes to the current scheme now that
+    // we have verified the plaintext.
+    if (CryptoUtils.needsRehash(user.passwordHash)) {
+      const upgradedHash = await CryptoUtils.hashPassword(data.password);
+      await prisma.user.update({
+        where: { id: user.id },
+        data: { passwordHash: upgradedHash }
+      });
+    }
+
     // Update last login
     await prisma.user.update({
       where: { id: user.id },
