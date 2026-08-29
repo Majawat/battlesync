@@ -125,8 +125,13 @@ if the firmware endpoints are exposed publicly, keep the rate limits (§5) in pl
 
 ## 8. Outstanding
 
-- **CodeQL** alerts finish closing as CodeQL re-scans `main` after each merge.
-- **Dependabot PRs**: the weekly bot opens grouped minor/patch PRs (safe to merge when
-  green) and individual PRs for majors (e.g. `typescript` 7, `eslint` 10) which want a
-  manual look.
-- A **frontend test runner** (vitest) could be wired up for the two orphaned test files.
+- **Alerts**: Dependabot **0**; CodeQL down to the last firmware alert, whose fix is
+  merged (`path.basename` confinement) and just awaits CodeQL's next scan of `main`.
+- **Held Dependabot PRs (breaking / dev majors, need a manual pass):**
+  `typescript` 5.9 → 7, `eslint` 9 → 10, `@vitejs/plugin-react` 4 → 6 (all fail CI as-is),
+  plus dev-only `globals` 16 → 17 and `@testing-library/jest-dom` 6 → 7. The
+  `backend-minor-patch` group PR needs a rebase (it mis-grouped a `jest` 29 → 30 major).
+  The React frontend majors (`plugin-react` 6 / `eslint` 10 / `typescript` 7) are best
+  done together as one deliberate toolchain upgrade.
+- A **frontend test runner** (vitest) could be wired up for the two orphaned test files
+  (`src/setupTests.ts`, `src/hooks/useDarkMode.test.ts`), currently excluded from the build.

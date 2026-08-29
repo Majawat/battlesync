@@ -28,9 +28,14 @@ git ls-tree -r v1.5.2-final-archive | wc -l  # 170+ files
 - **Focused**: Battle tracking only (no premature features)
 - **Mobile**: Built mobile-first with TailwindCSS
 
-## 🚀 Current Status (v2.13.0)
+## 🚀 Current Status
+
+> **BattleSync v2 is now the repository mainline** (`main`). The previous v1 line is
+> archived at git tags `v1.5.2-final-archive` and `v1-final`. See
+> [CI, Dependencies & Security](docs/development/CI_SECURITY.md) for the adoption details.
 
 ✅ **Full-Stack Complete**: React frontend + Express backend in single-port deployment  
+✅ **CI & Security**: GitHub Actions CI, Dependabot, CodeQL, rate limiting; 0 open dependency alerts  
 ✅ **Army Import System**: Complete ArmyForge integration with OPR unit processing  
 ✅ **Battle Management**: Full battle session management with participant tracking  
 ✅ **Unit State Tracking**: Complete unit health, status, and battle mechanics tracking  
