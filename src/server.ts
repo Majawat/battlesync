@@ -1428,11 +1428,14 @@ app.post('/api/battleaura/firmware/upload', firmwareWriteLimiter, upload.single(
   } catch (error) {
     console.error('Error uploading firmware:', error);
     
-    // Clean up uploaded file on error
+    // Clean up uploaded file on error. Re-confine to the firmware directory with
+    // path.basename() in the sink itself: the happy-path sanitization above may not
+    // have run before the throw, so don't trust req.file.path here.
     if (req.file) {
-      await fs.unlink(req.file.path).catch(() => {});
+      const cleanupPath = path.join(path.resolve('./firmware'), path.basename(req.file.filename));
+      await fs.unlink(cleanupPath).catch(() => {});
     }
-    
+
     res.status(500).json({
       success: false,
       error: 'Internal server error while uploading firmware'
