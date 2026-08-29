@@ -14,6 +14,9 @@ docs/
 .vscode/
 .idea/
 
+# Legacy v1 rules archive (historical reference, not used at runtime)
+archives/
+
 # Testing
 tests/
 coverage/
