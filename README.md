@@ -84,6 +84,7 @@ npm run lint            # Code linting
 - **[API Reference](./docs/technical/API_REFERENCE.md)** - All REST endpoints and WebSocket events
 - **[Data Models](./docs/technical/DATA_MODELS.md)** - Database schema and TypeScript interfaces
 - **[External APIs](./docs/technical/API_INTEGRATIONS.md)** - ArmyForge and other integrations
+- **[CI, Dependencies & Security](./docs/development/CI_SECURITY.md)** - CI workflow, Dependabot, security features, and required production config
 
 ### **🤖 For AI Assistants**
 - **[CLAUDE.md](./CLAUDE.md)** - Comprehensive project context and instructions
