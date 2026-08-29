@@ -525,3 +525,11 @@ git push
 - Validate all inputs with Joi or custom validation
 - **ALWAYS use correct TypeScript syntax**
 - Always verify functionality through the webapp's api to ensure it's working as expected
+
+### CI, Dependencies & Security
+See **[docs/development/CI_SECURITY.md](./docs/development/CI_SECURITY.md)** for the full setup and handoff. Key points for AI assistants:
+- **CI** (`.github/workflows/ci.yml`) runs backend `typecheck`/`test`/`build` and frontend `typecheck`/`build` on every PR. Keep it green; tests must stay **deterministic and offline** (mock `armyForgeClient`, never call the live ArmyForge API from a test).
+- **Passwords** use scrypt (`CryptoUtils`, stdlib — do not reintroduce bcrypt or the old base64 scheme). Legacy hashes auto-migrate on login.
+- **Production requires** non-default `JWT_SECRET` and `ENCRYPTION_KEY`; `validateEnv()` throws on boot otherwise.
+- **Dependabot** is grouped; major bumps come as individual PRs. Known blocked: `uuid` v14 is ESM-only and breaks `ts-jest` until jest ESM config is added.
+- Deferred security work: AES-GCM for token encryption (currently CBC, no MAC) and a dedicated `/auth/login` brute-force throttle.
