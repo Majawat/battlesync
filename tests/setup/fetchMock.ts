@@ -31,7 +31,14 @@ beforeAll(() => {
   global.fetch = (async (input: RequestInfo | URL, init?: RequestInit) => {
     const url = typeof input === 'string' ? input : input.toString();
 
-    if (url.includes('army-forge.onepagerules.com')) {
+    let hostname = '';
+    try {
+      hostname = new URL(url).hostname;
+    } catch {
+      /* non-absolute URL: leave hostname empty */
+    }
+
+    if (hostname === 'army-forge.onepagerules.com') {
       const id = extractArmyForgeId(url);
       const fixture = id ? loadFixture(id) : null;
       if (fixture) {
