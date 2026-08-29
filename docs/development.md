@@ -82,9 +82,21 @@ CLAUDE.md             # Claude Code guidance
 
 ## Testing
 
+**Backend** (repo root)
 - **Framework:** Jest + ts-jest + Supertest
 - **Location:** `tests/` directory
 - **Run:** `npm test` or `npm run test:watch`
+- Tests are **offline** — the ArmyForge `fetch` is mocked via `tests/setup/fetchMock.ts`
+  using fixtures in `tests/fixtures/`. Never add a live network call; add a fixture.
+
+**Frontend** (`frontend/`)
+- **Framework:** Vitest (jsdom) + Testing Library
+- **Run:** `npm test` (or `npm run test:watch`) inside `frontend/`
+- **Lint:** `npm run lint` (ESLint 10) — enforced in CI, keep it clean (no `any`)
+
+Both suites plus lint/build run in CI on every PR. See
+[docs/development/CI_SECURITY.md](development/CI_SECURITY.md) for the full CI/security
+picture (including the Node 20 backend / Node 22 frontend split).
 
 ### Adding Tests
 

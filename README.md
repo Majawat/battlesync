@@ -35,7 +35,7 @@ git ls-tree -r v1.5.2-final-archive | wc -l  # 170+ files
 > [CI, Dependencies & Security](docs/development/CI_SECURITY.md) for the adoption details.
 
 ✅ **Full-Stack Complete**: React frontend + Express backend in single-port deployment  
-✅ **CI & Security**: GitHub Actions CI, Dependabot, CodeQL, rate limiting; 0 open dependency alerts  
+✅ **CI & Security**: GitHub Actions CI (lint/typecheck/test/build), Dependabot, CodeQL, rate limiting; **0 open CodeQL & dependency alerts**  
 ✅ **Army Import System**: Complete ArmyForge integration with OPR unit processing  
 ✅ **Battle Management**: Full battle session management with participant tracking  
 ✅ **Unit State Tracking**: Complete unit health, status, and battle mechanics tracking  
@@ -43,7 +43,7 @@ git ls-tree -r v1.5.2-final-archive | wc -l  # 170+ files
 ✅ **Army Detail Pages**: Comprehensive unit breakdowns with models, weapons, upgrades  
 ✅ **Mobile-First UI**: TailwindCSS responsive design with army/battle visualization  
 ✅ **Production Ready**: Docker deployment serves frontend + API on single port (4019)  
-✅ **Testing**: Comprehensive test coverage for all functionality  
+✅ **Testing**: Backend Jest/Supertest + frontend Vitest — offline & deterministic; ESLint enforced in CI  
 ✅ **ESP32 Firmware Flashing**: Web-based ESP32 flashing with esptool-js and Web Serial API  
 ✅ **BattleAura Integration**: Complete firmware hosting, versioning, and device management system  
 📋 **Next**: Advanced OPR mechanics (morale, fatigue effects) and battle automation
