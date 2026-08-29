@@ -16,7 +16,7 @@ export default function HomePage() {
   useEffect(() => {
     const checkServerHealth = async () => {
       try {
-        const health = await healthApi.getHealth() as any;
+        const health = await healthApi.getHealth();
         setServerHealth(health);
       } catch (error) {
         console.error('Failed to check server health:', error);

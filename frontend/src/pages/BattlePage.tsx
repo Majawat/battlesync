@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { battleApi } from '../api/client';
-import type { Battle, UnitBattleState } from '../types/api';
+import type { Battle, UnitBattleState, UnitStatesResponse } from '../types/api';
+import { getApiErrorMessage } from '../utils/errors';
 
 export default function BattlePage() {
   const { id } = useParams<{ id: string }>();
@@ -15,13 +16,14 @@ export default function BattlePage() {
 
     const fetchBattleData = async () => {
       try {
+        const emptyUnitStates: UnitStatesResponse = { success: true, unit_states: [] };
         const [battleResponse, unitStatesResponse] = await Promise.all([
           battleApi.getBattle(id),
-          battleApi.getUnitStates(id).catch(() => ({ success: true, unit_states: [] }))
-        ]) as [any, any];
+          battleApi.getUnitStates(id).catch(() => emptyUnitStates)
+        ]);
 
         if (battleResponse.success) {
-          setBattle(battleResponse.battle);
+          setBattle(battleResponse.battle ?? null);
         } else {
           throw new Error(battleResponse.error || 'Failed to fetch battle');
         }
@@ -30,8 +32,8 @@ export default function BattlePage() {
           setUnitStates(unitStatesResponse.unit_states || []);
         }
 
-      } catch (err: any) {
-        setError(err.response?.data?.error || err.message || 'Failed to fetch battle data');
+      } catch (err) {
+        setError(getApiErrorMessage(err, 'Failed to fetch battle data'));
       } finally {
         setLoading(false);
       }

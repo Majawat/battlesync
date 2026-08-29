@@ -27,26 +27,20 @@ export function useDarkMode(): UseDarkModeReturn {
 
   const [isDark, setIsDarkState] = useState<boolean>(getInitialTheme);
 
-  // Update document class and localStorage when theme changes
   const setDark = (dark: boolean) => {
     setIsDarkState(dark);
-    localStorage.setItem('theme', dark ? 'dark' : 'light');
-    
-    if (dark) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
   };
 
   const toggle = () => {
     setDark(!isDark);
   };
 
-  // Initialize theme on mount
+  // Sync the document class + localStorage whenever the theme changes.
+  // Also runs on mount to apply the initial theme.
   useEffect(() => {
-    setDark(isDark);
-  }, []);
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    document.documentElement.classList.toggle('dark', isDark);
+  }, [isDark]);
 
   // Listen for system preference changes
   useEffect(() => {

@@ -1,11 +1,19 @@
 import axios from 'axios';
-import type { 
+import type {
   ImportArmyRequest,
   CreateBattleRequest,
   AddParticipantRequest,
   UpdateUnitStateRequest,
   ReassignUpgradeResponse,
-  RenameModelResponse
+  RenameModelResponse,
+  ArmyResponse,
+  ArmyListResponse,
+  BasicResponse,
+  BattleResponse,
+  BattleListResponse,
+  UnitStatesResponse,
+  UnitStateResponse,
+  HealthResponse,
 } from '../types/api';
 
 // In production, use same origin. In development, use localhost:4019
@@ -21,24 +29,24 @@ const api = axios.create({
 
 // Army API
 export const armyApi = {
-  importArmy: async (data: ImportArmyRequest) => {
+  importArmy: async (data: ImportArmyRequest): Promise<ArmyResponse> => {
     const response = await api.post('/api/armies/import', data);
-    return response.data;
+    return response.data as ArmyResponse;
   },
 
-  listArmies: async () => {
+  listArmies: async (): Promise<ArmyListResponse> => {
     const response = await api.get('/api/armies');
-    return response.data;
+    return response.data as ArmyListResponse;
   },
 
-  getArmy: async (id: string) => {
+  getArmy: async (id: string): Promise<ArmyResponse> => {
     const response = await api.get(`/api/armies/${id}`);
-    return response.data;
+    return response.data as ArmyResponse;
   },
 
-  deleteArmy: async (id: string) => {
+  deleteArmy: async (id: string): Promise<BasicResponse> => {
     const response = await api.delete(`/api/armies/${id}`);
-    return response.data;
+    return response.data as BasicResponse;
   },
 
   reassignUpgrade: async (armyId: string, data: {
@@ -62,50 +70,50 @@ export const armyApi = {
 
 // Battle API
 export const battleApi = {
-  createBattle: async (data: CreateBattleRequest) => {
+  createBattle: async (data: CreateBattleRequest): Promise<BattleResponse> => {
     const response = await api.post('/api/battles', data);
-    return response.data;
+    return response.data as BattleResponse;
   },
 
-  listBattles: async () => {
+  listBattles: async (): Promise<BattleListResponse> => {
     const response = await api.get('/api/battles');
-    return response.data;
+    return response.data as BattleListResponse;
   },
 
-  getBattle: async (id: string) => {
+  getBattle: async (id: string): Promise<BattleResponse> => {
     const response = await api.get(`/api/battles/${id}`);
-    return response.data;
+    return response.data as BattleResponse;
   },
 
-  addParticipant: async (battleId: string, data: AddParticipantRequest) => {
+  addParticipant: async (battleId: string, data: AddParticipantRequest): Promise<BattleResponse> => {
     const response = await api.post(`/api/battles/${battleId}/participants`, data);
-    return response.data;
+    return response.data as BattleResponse;
   },
 
-  startBattle: async (battleId: string) => {
+  startBattle: async (battleId: string): Promise<BattleResponse> => {
     const response = await api.post(`/api/battles/${battleId}/start`, {});
-    return response.data;
+    return response.data as BattleResponse;
   },
 
-  getUnitStates: async (battleId: string) => {
+  getUnitStates: async (battleId: string): Promise<UnitStatesResponse> => {
     const response = await api.get(`/api/battles/${battleId}/units`);
-    return response.data;
+    return response.data as UnitStatesResponse;
   },
 
-  updateUnitState: async (battleId: string, unitStateId: string, data: UpdateUnitStateRequest) => {
+  updateUnitState: async (battleId: string, unitStateId: string, data: UpdateUnitStateRequest): Promise<UnitStateResponse> => {
     const response = await api.patch(`/api/battles/${battleId}/units/${unitStateId}`, data);
-    return response.data;
+    return response.data as UnitStateResponse;
   },
 };
 
 // Health check
 export const healthApi = {
-  getHealth: async () => {
+  getHealth: async (): Promise<HealthResponse> => {
     const response = await api.get('/health');
-    return response.data;
+    return response.data as HealthResponse;
   },
 
-  getInfo: async () => {
+  getInfo: async (): Promise<unknown> => {
     const response = await api.get('/');
     return response.data;
   },

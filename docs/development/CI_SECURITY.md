@@ -39,20 +39,24 @@ Repo settings (Settings → Code security), unaffected by the branch swap:
 
 ## 2. Continuous Integration — `.github/workflows/ci.yml`
 
-Runs on every **pull request** and on **push to `main`**. Node 20 (matches the
-Dockerfile's `node:20-alpine`).
+Runs on every **pull request** and on **push to `main`**.
 
-| Job | Steps |
-| --- | --- |
-| **Backend** | `npm ci` → `npm run typecheck` → `npm test` → `npm run build:backend` |
-| **Frontend** | `npm ci` → `npm run build` (`build` runs `tsc -b` then `vite build`) |
+| Job | Node | Steps |
+| --- | --- | --- |
+| **Backend** | 20 (matches the Dockerfile's `node:20-alpine` runtime) | `npm ci` → `npm run typecheck` → `npm test` → `npm run build:backend` |
+| **Frontend** | 22 | `npm ci` → `npm run lint` → `npm test` (vitest) → `npm run build` (`build` runs `tsc -b` then `vite build`) |
+
+The frontend job runs on **Node 22** because its build/test tooling (vite 8, vitest 4,
+jsdom 30, jest-dom 7) now requires Node ≥ 22. That is **dev tooling only** — the frontend
+is compiled to static assets, so its build Node version is independent of the server
+runtime, which stays on Node 20.
 
 No Prisma step — v2 uses raw `sqlite3`. CI is **informational** (not a required check).
 
 ### Running the same checks locally
 ```bash
 npm ci && npm run typecheck && npm test && npm run build:backend
-cd frontend && npm ci && npm run build
+cd frontend && npm ci && npm run lint && npm test && npm run build
 ```
 
 ---
@@ -76,10 +80,14 @@ individual PRs.
   through the mock. `IJ1JM_m-jmka` uses the committed `scripts/sampleArmyData` snapshot;
   golden totals in the tests are pinned to that frozen fixture.
 - Rate limiting is **disabled when `NODE_ENV=test`** (see §5) so supertest doesn't 429.
-- The frontend has two orphaned test-scaffold files (`src/setupTests.ts`,
-  `src/hooks/useDarkMode.test.ts`) with no runner wired up; they're **excluded** from the
-  production `tsc -b` build (`frontend/tsconfig.app.json`). A frontend test runner
-  (vitest) could be added later.
+- Frontend tests run on **vitest** (jsdom environment, configured in the `test` block of
+  `frontend/vite.config.ts`; `src/setupTests.ts` registers `@testing-library/jest-dom`
+  matchers). `npm test` in `frontend/` runs them and CI runs them too. Test files stay
+  **excluded** from the production `tsc -b` build (`frontend/tsconfig.app.json`) — vitest
+  transforms them via esbuild, so they never enter the shipped bundle.
+- `npm run lint` (eslint 10, flat config in `frontend/eslint.config.js`) is **clean and
+  enforced in CI**. Errors use real types / the `getApiErrorMessage` helper rather than
+  `any`; keep it that way (no new `no-explicit-any`).
 
 ---
 
@@ -125,13 +133,14 @@ if the firmware endpoints are exposed publicly, keep the rate limits (§5) in pl
 
 ## 8. Outstanding
 
-- **Alerts**: Dependabot **0**; CodeQL down to the last firmware alert, whose fix is
-  merged (`path.basename` confinement) and just awaits CodeQL's next scan of `main`.
-- **Held Dependabot PRs (breaking / dev majors, need a manual pass):**
-  `typescript` 5.9 → 7, `eslint` 9 → 10, `@vitejs/plugin-react` 4 → 6 (all fail CI as-is),
-  plus dev-only `globals` 16 → 17 and `@testing-library/jest-dom` 6 → 7. The
-  `backend-minor-patch` group PR needs a rebase (it mis-grouped a `jest` 29 → 30 major).
-  The React frontend majors (`plugin-react` 6 / `eslint` 10 / `typescript` 7) are best
-  done together as one deliberate toolchain upgrade.
-- A **frontend test runner** (vitest) could be wired up for the two orphaned test files
-  (`src/setupTests.ts`, `src/hooks/useDarkMode.test.ts`), currently excluded from the build.
+- **Alerts**: Dependabot **0**, CodeQL **0**.
+- **Held dependency major — `typescript` 5.9 → 7 (Dependabot #48, kept open as a tracker,
+  blocked by the ecosystem).** TS 7 is incompatible with two pinned dev tools: `ts-jest`
+  (peers `typescript <7`, would break the backend Jest transform) and `typescript-eslint`
+  (peers `typescript <6.1.0`, would break frontend lint). Revisit once both ship TS 7
+  support, then bump `typescript` in the root **and** `frontend` workspaces together.
+- All other held majors are **done**: PR #62 (frontend: eslint 9 → 10, `@vitejs/plugin-react`
+  4 → 6 with vite 7 → 8, `eslint-plugin-react-hooks` 5 → 7, `globals` 16 → 17) and PR #63
+  (backend: `@testing-library/jest-dom` 6 → 7 + the `express`/`jest`/`supertest`
+  minor-patch group). The frontend test runner (**vitest**) is wired up and the lint debt
+  is cleared (see §4).

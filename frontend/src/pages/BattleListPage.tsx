@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { battleApi } from '../api/client';
 import type { Battle } from '../types/api';
+import { getApiErrorMessage } from '../utils/errors';
 
 export default function BattleListPage() {
   const [battles, setBattles] = useState<Battle[]>([]);
@@ -11,14 +12,14 @@ export default function BattleListPage() {
   useEffect(() => {
     const fetchBattles = async () => {
       try {
-        const response = await battleApi.listBattles() as any;
+        const response = await battleApi.listBattles();
         if (response.success) {
           setBattles(response.battles || []);
         } else {
           throw new Error(response.error || 'Failed to fetch battles');
         }
-      } catch (err: any) {
-        setError(err.response?.data?.error || err.message || 'Failed to fetch battles');
+      } catch (err) {
+        setError(getApiErrorMessage(err, 'Failed to fetch battles'));
       } finally {
         setLoading(false);
       }

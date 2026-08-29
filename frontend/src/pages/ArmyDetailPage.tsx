@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { armyApi } from '../api/client';
 import type { Army, ReassignUpgradeResponse, RenameModelResponse } from '../types/api';
 import { formatGameSystem } from '../utils/gameSystem';
+import { getApiErrorMessage } from '../utils/errors';
 
 export default function ArmyDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -26,14 +27,14 @@ export default function ArmyDetailPage() {
 
     const fetchArmy = async () => {
       try {
-        const response = await armyApi.getArmy(id) as any;
+        const response = await armyApi.getArmy(id);
         if (response.success) {
-          setArmy(response.army);
+          setArmy(response.army ?? null);
         } else {
           throw new Error(response.error || 'Failed to fetch army');
         }
-      } catch (err: any) {
-        setError(err.response?.data?.error || err.message || 'Failed to fetch army');
+      } catch (err) {
+        setError(getApiErrorMessage(err, 'Failed to fetch army'));
       } finally {
         setLoading(false);
       }
@@ -61,8 +62,8 @@ export default function ArmyDetailPage() {
       } else {
         setError(response.error || 'Failed to reassign upgrade');
       }
-    } catch (err: any) {
-      setError(err.response?.data?.error || err.message || 'Failed to reassign upgrade');
+    } catch (err) {
+      setError(getApiErrorMessage(err, 'Failed to reassign upgrade'));
     }
   };
 
@@ -99,8 +100,8 @@ export default function ArmyDetailPage() {
         setError(response.error || 'Failed to rename model');
         setRenameState(prev => prev ? { ...prev, isRenaming: false } : null);
       }
-    } catch (err: any) {
-      setError(err.response?.data?.error || err.message || 'Failed to rename model');
+    } catch (err) {
+      setError(getApiErrorMessage(err, 'Failed to rename model'));
       setRenameState(prev => prev ? { ...prev, isRenaming: false } : null);
     }
   };
