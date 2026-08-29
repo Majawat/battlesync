@@ -1214,8 +1214,11 @@ const upload = multer({
     destination: './firmware/',
     filename: (req, file, cb) => {
       const version = req.body.version?.replace(/^v/, ''); // Remove 'v' prefix if present
-      if (!version) {
-        // Use a temporary filename when version is missing - we'll handle the error in the route
+      // Only embed `version` in the on-disk filename when it is a strict semver.
+      // `version` is user-supplied and flows into req.file.path; without this guard a
+      // value like "../../evil" would traverse out of the firmware directory. Anything
+      // that isn't a clean semver gets a safe temp name; the route then rejects it.
+      if (!version || !/^\d+\.\d+\.\d+$/.test(version)) {
         return cb(null, `temp-${Date.now()}.bin`);
       }
       cb(null, `battleaura-${version}.bin`);
