@@ -131,16 +131,24 @@ The following review findings were fixed (`src/utils/crypto.ts`,
    `console.log` format string. Fixed: pass it as a separate argument, log only the
    count. (Both fixed together — remediation PR.)
 
-**Dependabot (93 alerts — dependencies).** `npm audit fix` (non-breaking) was run in
-both workspaces, and the **unused `bcrypt`** dependency was removed (hashing is scrypt
-now; bcrypt only survived to drag in the vulnerable `@mapbox/node-pre-gyp → tar` chain,
-which was the sole **critical** backend alert). This cleared the large majority.
-**Remaining, both requiring breaking-change majors:**
-- **Frontend (2):** `react-router-dom` → **v7**. Open-redirect / SSR advisories on 6.x.
-  Take with the React 19 / router upgrade; test all navigation + redirects.
-- **Backend (6, dev-only):** `minimatch` under `@typescript-eslint` v6 (ReDoS). Only
-  runs at lint time on trusted source; fix = bump `@typescript-eslint/*` to v8 (flat
-  config). Not user-facing.
+**Dependabot (started at 93 alerts — dependencies).** Remediated down to **2**:
+- `npm audit fix` (non-breaking) in both workspaces bumped vulnerable transitive deps.
+- The **unused `bcrypt`** dependency was removed (hashing is scrypt now; bcrypt only
+  survived to drag in the vulnerable `@mapbox/node-pre-gyp → tar` chain, which was the
+  sole **critical** backend alert).
+- The last backend high (`minimatch` ReDoS under `@typescript-eslint`) was cleared with
+  a scoped npm **`override`** (`@typescript-eslint/typescript-estree` → `minimatch`
+  `9.0.7`) — no toolchain major needed. **Backend `npm audit` is now clean (0).**
+
+**Remaining (2, requires a breaking-change major):**
+- **Frontend:** `react-router-dom` → **v7** (open-redirect / SSR advisories on 6.x).
+  Take with the React 19 / router upgrade; test all navigation + redirects. This is the
+  only open Dependabot alert repo-wide.
+
+Redundant single-dep Dependabot PRs (joi 17.13.4, frontend js-yaml/rollup, uuid→14)
+were closed as superseded once the audit-fix landed on `main`. Open PRs left are the
+deliberate majors only: React 19 (`react`/`react-dom`), joi 18, `@types/node` 26,
+Docker Node 26.
 
 > The Dependabot **count** (93) is much higher than `npm audit`'s (37) because
 > Dependabot lists every advisory separately — one bump (e.g. `axios` → 1.18) closes
@@ -169,18 +177,20 @@ known `JWT_SECRET`). A production deployment needs its own compose/Dockerfile wi
 State as of 2026-08-28. CI (§2) reports pass/fail on each once Dependabot rebases it
 onto current `main`.
 
-### Merge when green (low risk)
-- **npm_and_yarn security groups** (frontend, includes `axios` + ~10 pkgs) — these
-  close actual Dependabot **alerts**; highest priority once CI is green.
-- `@babel/core` (dev), `rollup` (frontend, minor).
+> **Update (2026-08-28, later):** the security-alert remediation (see the "Scanner
+> alert findings" box in §5) landed the low-risk fixes directly, so the individual
+> security-bump PRs below were **closed as superseded** (joi 17.13.4, frontend
+> js-yaml/rollup) and their alerts are resolved on `main`. The `uuid` 11→14 PR was
+> **closed** — the uuid *security* alert was fixed by 11.1.1; v14 is only a (still
+> ESM-blocked) feature major, not a security need. What remains open is the
+> **breaking-change majors** below.
 
-### Blocked — needs work
-- **`uuid` 11 → 14**: CI-confirmed failure. uuid v14 is **ESM-only**; `ts-jest`
-  (CommonJS) throws `Unexpected token 'export'`. Requires jest ESM config
-  (e.g. `transformIgnorePatterns` to transform `uuid`, or an ESM jest preset) before
-  it can be merged. Do **not** merge as-is.
+### Blocked — needs work (if you still want the feature bump)
+- **`uuid` 11 → 14**: uuid v14 is **ESM-only**; `ts-jest` (CommonJS) throws
+  `Unexpected token 'export'`. Would require jest ESM config. **Not needed for
+  security** (11.1.1 already patched the advisory) — only pursue for the API.
 
-### Test manually before merging (breaking majors)
+### Test manually before merging (breaking majors — still open)
 - **Node 18-alpine → 26-alpine** (`Dockerfile.dev` root + frontend): 8 major Node
   versions; verify Prisma 5.7 / native modules build and the container boots.
 - **`joi` 17 → 18**: major bump of the request-validation library — run the suite and
