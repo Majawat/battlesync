@@ -1,0 +1,43 @@
+name: Archive OPR Rules
+
+on:
+  schedule:
+    # Every Monday at 08:00 UTC. The downloader skips versions already archived,
+    # so runs with nothing new are cheap no-ops.
+    - cron: '0 8 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: archive-rules
+  cancel-in-progress: false
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: Archive OPR rules (JSON only)
+        # JSON-only keeps the machine-readable rules current without committing
+        # large PDF binaries to the repo. Drop this env var to also archive PDFs.
+        env:
+          ARCHIVE_JSON_ONLY: '1'
+        run: npm run archive-rules
+      - name: Commit new archives (if any)
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if [ -n "$(git status --porcelain docs/rules)" ]; then
+            git add docs/rules
+            git commit -m "archive: snapshot OPR rules [skip ci]"
+            git push
+          else
+            echo "No rules changes to commit."
+          fi
