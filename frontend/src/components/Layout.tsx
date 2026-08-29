@@ -23,7 +23,7 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <div className="min-h-screen bg-battle-bg-light dark:bg-battle-bg-dark transition-colors duration-300">
       {/* Navigation */}
-      <nav className="bg-battle-surface-light dark:bg-battle-surface-dark shadow-sm border-b border-battle-border-light dark:border-battle-border-dark transition-colors duration-300">
+      <nav className="bg-battle-surface-light dark:bg-battle-surface-dark shadow-xs border-b border-battle-border-light dark:border-battle-border-dark transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex items-center">

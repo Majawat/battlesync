@@ -186,7 +186,7 @@ export default function CreateBattlePage() {
               name="has_command_points"
               checked={battleData.has_command_points}
               onChange={handleInputChange}
-              className="rounded border-battle-border-light dark:border-battle-border-dark text-battle-accent-primary-light dark:text-battle-accent-primary-dark focus:ring-battle-accent-primary-light dark:focus:ring-battle-accent-primary-dark"
+              className="rounded-sm border-battle-border-light dark:border-battle-border-dark text-battle-accent-primary-light dark:text-battle-accent-primary-dark focus:ring-battle-accent-primary-light dark:focus:ring-battle-accent-primary-dark"
               disabled={loading}
             />
             <label htmlFor="has_command_points" className="ml-2 text-sm font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark">
@@ -254,7 +254,7 @@ export default function CreateBattlePage() {
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
               {armies.map((army) => (
-                <div key={army.id} className="flex justify-between items-center p-2 bg-battle-surface-light dark:bg-battle-surface-dark rounded border border-battle-border-light dark:border-battle-border-dark">
+                <div key={army.id} className="flex justify-between items-center p-2 bg-battle-surface-light dark:bg-battle-surface-dark rounded-sm border border-battle-border-light dark:border-battle-border-dark">
                   <span className="font-medium text-battle-text-primary-light dark:text-battle-text-primary-dark">{army.name}</span>
                   <span className="text-battle-text-secondary-light dark:text-battle-text-secondary-dark">{army.list_points}pts</span>
                 </div>
