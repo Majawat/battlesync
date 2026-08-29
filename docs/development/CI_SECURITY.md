@@ -140,10 +140,12 @@ The following review findings were fixed (`src/utils/crypto.ts`,
   a scoped npm **`override`** (`@typescript-eslint/typescript-estree` → `minimatch`
   `9.0.7`) — no toolchain major needed. **Backend `npm audit` is now clean (0).**
 
-**Remaining (2, requires a breaking-change major):**
-- **Frontend:** `react-router-dom` → **v7** (open-redirect / SSR advisories on 6.x).
-  Take with the React 19 / router upgrade; test all navigation + redirects. This is the
-  only open Dependabot alert repo-wide.
+**Remaining: none.** `react-router-dom` was upgraded **6.30.6 → 7.18.3**, clearing the
+last two alerts (#70/#71). The app only uses the stable component APIs (`BrowserRouter`,
+`Routes`, `Route`, `Navigate`, `useNavigate`, `useParams`) with absolute paths and no
+data-router / splat routes, so the v7 breaking changes didn't apply; React 18 retained.
+
+**As of 2026-08-28 the repo has 0 open CodeQL alerts and 0 open Dependabot alerts.**
 
 Redundant single-dep Dependabot PRs (joi 17.13.4, frontend js-yaml/rollup, uuid→14)
 were closed as superseded once the audit-fix landed on `main`. Open PRs left are the
