@@ -24,6 +24,12 @@ const GAME_SYSTEMS: Record<number, string> = {
 const BASE_OUTPUT_DIR = './docs/rules/OPR';
 const DELAY_MS = 500; // Be nice to their servers
 
+// When set (ARCHIVE_JSON_ONLY=1), skip downloading the large PDF binaries and archive
+// only the machine-readable JSON. Used by the weekly archive-rules workflow to keep the
+// rules current without committing megabytes of PDFs to the repo. The PDF metadata
+// (HEAD) request is still made because it supplies the canonical filename for the JSON.
+const SKIP_PDF = ['1', 'true'].includes(process.env.ARCHIVE_JSON_ONLY ?? '');
+
 interface ArmyBook {
   uid: string;
   enabledGameSystems: number[];
@@ -205,7 +211,9 @@ async function downloadArmyBook(
       }
     }
 
-    if (needsDownload) {
+    if (needsDownload && SKIP_PDF) {
+      console.log(`  ⏭️  Skipping PDF download (JSON-only mode): ${actualFilename}`);
+    } else if (needsDownload) {
       console.log(`  ⬇️  Downloading PDF: ${actualFilename}`);
       await downloadFile(pdfUrl, finalPdfPath);
       console.log(`  ✅ PDF saved: ${actualFilename}`);
