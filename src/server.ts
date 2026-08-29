@@ -1314,6 +1314,13 @@ app.post('/api/battleaura/firmware/upload', firmwareWriteLimiter, upload.single(
       return;
     }
 
+    // Re-derive the uploaded file's path from a fixed base + path.basename(), confining
+    // every downstream fs operation to the firmware directory regardless of what multer
+    // recorded. (multer already writes here, so this points at the same file.)
+    const firmwareDir = path.resolve('./firmware');
+    req.file.filename = path.basename(req.file.filename);
+    req.file.path = path.join(firmwareDir, req.file.filename);
+
     const version = req.body.version?.replace(/^v/, ''); // Remove 'v' prefix if present
     const changelog = req.body.changelog || '';
     
