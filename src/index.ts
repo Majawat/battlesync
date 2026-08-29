@@ -7,6 +7,7 @@ import { createServer } from 'http';
 import { WebSocketServer } from 'ws';
 
 import { logger } from './utils/logger';
+import { validateEnv } from './utils/validateEnv';
 import { errorHandler } from './middleware/errorHandler';
 import { notFoundHandler } from './middleware/notFoundHandler';
 import { rateLimiter } from './middleware/rateLimiter';
@@ -15,6 +16,9 @@ import apiRoutes from './routes';
 
 // Load environment variables
 dotenv.config();
+
+// Refuse to start in production with missing/default secrets
+validateEnv();
 
 const app = express();
 const server = createServer(app);
