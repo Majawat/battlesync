@@ -14,17 +14,26 @@ at tags `v1.5.2-final-archive` and `v1-final`. See
 [docs/development/CI_SECURITY.md](docs/development/CI_SECURITY.md) for the full handoff.
 
 ### Added
-- **CI** (`.github/workflows/ci.yml`): backend (typecheck/test/build) and frontend
-  (build) on every PR and push to `main`, Node 20.
+- **CI** (`.github/workflows/ci.yml`): backend (typecheck/test/build, Node 20) and
+  frontend (lint/typecheck/test/build, Node 22) on every PR and push to `main`.
 - **Dependabot** (`.github/dependabot.yml`): weekly npm/docker/actions updates, grouped.
 - **Archive-rules bot** (`.github/workflows/archive-rules.yml`): weekly JSON-only OPR
   rules refresh via `scripts/downloadArmyBooks.ts` (new `ARCHIVE_JSON_ONLY` flag).
 - **Rate limiting** (`express-rate-limit`) on the app and firmware mutation endpoints.
 - **Offline test harness**: `tests/setup/fetchMock.ts` + `tests/fixtures/` so the suite
   no longer hits the live ArmyForge API.
+- **Frontend test suite** on **Vitest** (jsdom): the previously-orphaned
+  `useDarkMode` tests now run, and `npm run lint` (ESLint 10) is enforced in CI.
 
 ### Changed
 - Bumped `sqlite3` 5 → 6 (clears the build-time node-gyp/tar advisory chain).
+- **Dependency toolchain majors**: frontend ESLint 9 → 10, `@vitejs/plugin-react`
+  4 → 6 (with Vite 7 → 8), `eslint-plugin-react-hooks` 5 → 7, `globals` 16 → 17;
+  backend `@testing-library/jest-dom` 6 → 7 plus the `express`/`jest`/`supertest`
+  minor-patch group. (`typescript` 7 is held — `ts-jest`/`typescript-eslint` don't
+  support it yet.)
+- **Frontend CI runs on Node 22** (its build/test tooling — Vite 8, Vitest 4,
+  jsdom 30 — requires ≥ 22); the server runtime stays on Node 20.
 
 ### Fixed
 - **Re-import 500**: `storeArmyInDatabase` now updates the army row in place instead of
@@ -32,13 +41,16 @@ at tags `v1.5.2-final-archive` and `v1-final`. See
   the `battle_participants` foreign key.
 - **Build**: `build:backend` now copies `src/database/schema.sql` into `dist/`, so
   `npm start` works outside Docker.
-- **Frontend build**: excluded orphaned test-scaffold files from the production
-  `tsc -b` build.
+- **Frontend types**: replaced the pervasive `any` in pages/API client with real
+  response types and a typed `getApiErrorMessage` helper; fixed the `useDarkMode`
+  effect (single DOM/localStorage sync keyed on state) — ESLint clean (38 → 0).
 
 ### Security
 - **Dependabot alerts: 100 → 0** (`npm audit fix` + sqlite3 6).
-- **CodeQL**: fixed firmware upload path traversal (validate `version` semver at the
-  multer source + `path.basename` confinement at the fs sinks) and added rate limiting.
+- **CodeQL alerts: 11 → 0.** Fixed firmware upload path traversal — validate `version`
+  semver at the multer source and confine every fs sink (including the error-cleanup
+  `unlink`) with `path.basename` — the tainted-format-string and SSRF findings, and
+  added rate limiting.
 
 ## [2.25.0] - 2025-08-21
 
