@@ -55,6 +55,7 @@ Full documentation is available in the [docs/](docs/) folder:
 - **[OPR Game Guide](docs/opr-guide.md)** - Grimdark Future mechanics
 - **[Development Setup](docs/development.md)** - Get up and running
 - **[Architecture](docs/architecture.md)** - Technical design
+- **[CI, Dependencies & Security](docs/development/CI_SECURITY.md)** - CI workflow, Dependabot, security posture, and the v1→v2 adoption
 
 ## 🛠️ Quick Start
 
