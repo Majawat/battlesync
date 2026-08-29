@@ -1,14 +1,16 @@
 import { ArmyProcessor } from '../src/services/armyProcessor';
 import { ArmyForgeArmy } from '../src/types/armyforge';
-import axios from 'axios';
+import { readFileSync } from 'fs';
+import { join } from 'path';
 
 describe('Army Import Validation', () => {
   let testArmyData: ArmyForgeArmy;
 
-  beforeAll(async () => {
-    // Fetch real test army data from ArmyForge API
-    const response = await axios.get<ArmyForgeArmy>('https://army-forge.onepagerules.com/api/tts?id=IJ1JM_m-jmka');
-    testArmyData = response.data;
+  beforeAll(() => {
+    // Load the frozen ArmyForge fixture from disk so this suite is deterministic and
+    // offline (the army on ArmyForge is user-editable and would otherwise drift).
+    const fixture = join(__dirname, 'fixtures', 'armyforge-IJ1JM_m-jmka.json');
+    testArmyData = JSON.parse(readFileSync(fixture, 'utf-8')) as ArmyForgeArmy;
   });
 
   describe('Comprehensive Army Processing Validation', () => {
@@ -50,12 +52,12 @@ describe('Army Import Validation', () => {
       console.log(`Expected Total: 2730 pts`);
       console.log(`Match: ${totalCost === 2730 ? '✅' : '❌'}`);
 
-      // Core validation assertions
+      // Core validation assertions (values pinned to the frozen fixture)
       expect(processed.name).toBe("Dev Testerson's Bullshit Army");
-      expect(processed.list_points).toBe(3145);
-      expect(processed.model_count).toBe(45);
-      expect(processed.activation_count).toBe(9);
-      expect(totalCost).toBe(3145);
+      expect(processed.list_points).toBe(3110);
+      expect(processed.model_count).toBe(44);
+      expect(processed.activation_count).toBe(8);
+      expect(totalCost).toBe(3110);
     });
 
     test('should validate specific OPR mechanics', () => {

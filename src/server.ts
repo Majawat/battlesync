@@ -1629,14 +1629,12 @@ async function buildProcessedArmyFromDatabase(armyId: number, armyRow: any): Pro
 
 async function storeArmyInDatabase(processedArmy: ProcessedArmy, armyForgeData: ArmyForgeArmy): Promise<number> {
   try {
-    // First, store the army
-    const armyResult = await db.run(`
-      INSERT OR REPLACE INTO armies (
-        armyforge_id, name, description, validation_errors, points_limit, list_points, 
-        model_count, activation_count, game_system, campaign_mode, raw_armyforge_data
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `, [
-      processedArmy.armyforge_id,
+    // Store the army. Re-importing an existing army UPDATES the row in place instead
+    // of INSERT OR REPLACE: the army's primary key must stay stable because battles
+    // reference armies(id) without ON DELETE CASCADE, so replacing the row would fail
+    // the foreign key (or orphan battle participants). We refresh the child units
+    // separately (units.army_id cascades cleanly).
+    const armyValues = [
       processedArmy.name,
       processedArmy.description || null,
       JSON.stringify(processedArmy.validation_errors || []),
@@ -1647,10 +1645,34 @@ async function storeArmyInDatabase(processedArmy: ProcessedArmy, armyForgeData: 
       armyForgeData.gameSystem || 'gf',
       armyForgeData.campaignMode || false,
       JSON.stringify(armyForgeData)
-    ]);
+    ];
 
-    const armyId = armyResult.lastID;
-    if (!armyId) throw new Error('Failed to get army ID after insert');
+    const existingArmy = await db.get<{ id: number }>(
+      'SELECT id FROM armies WHERE armyforge_id = ?',
+      [processedArmy.armyforge_id]
+    );
+
+    let armyId: number;
+    if (existingArmy) {
+      armyId = existingArmy.id;
+      await db.run(`
+        UPDATE armies SET
+          name = ?, description = ?, validation_errors = ?, points_limit = ?, list_points = ?,
+          model_count = ?, activation_count = ?, game_system = ?, campaign_mode = ?, raw_armyforge_data = ?
+        WHERE id = ?
+      `, [...armyValues, armyId]);
+      // Refresh child units; cascades to sub_units/models. Battle references stay intact.
+      await db.run('DELETE FROM units WHERE army_id = ?', [armyId]);
+    } else {
+      const armyResult = await db.run(`
+        INSERT INTO armies (
+          armyforge_id, name, description, validation_errors, points_limit, list_points,
+          model_count, activation_count, game_system, campaign_mode, raw_armyforge_data
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `, [processedArmy.armyforge_id, ...armyValues]);
+      if (!armyResult.lastID) throw new Error('Failed to get army ID after insert');
+      armyId = armyResult.lastID;
+    }
 
     // Store all units
     for (const unit of processedArmy.units) {
