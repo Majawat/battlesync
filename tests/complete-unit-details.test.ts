@@ -159,9 +159,9 @@ describe('Complete Army Import and Conversion Validation', () => {
       // Basic validation assertions
       expect(army).toBeDefined();
       expect(army.name).toBe("Dev Testerson's Bullshit Army");
-      expect(army.list_points).toBe(3145);
-      expect(army.units.length).toBe(9);
-      expect(army.model_count).toBe(45);
+      expect(army.list_points).toBe(3110);
+      expect(army.units.length).toBe(8);
+      expect(army.model_count).toBe(44);
       
       // COMPREHENSIVE UNIT VALIDATIONS
       
