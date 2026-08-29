@@ -1,7 +1,18 @@
 import { ArmyProcessor } from '../src/services/armyProcessor';
 import { ArmyForgeArmy } from '../src/types/armyforge';
 import { ProcessedArmy, ProcessedUnit, ProcessedSubUnit } from '../src/types/internal';
-import axios from 'axios';
+import { readFileSync } from 'fs';
+import { join } from 'path';
+
+// Tests are offline/deterministic: army data comes from frozen fixtures in
+// tests/fixtures/, not the live ArmyForge API (axios bypasses the global-fetch
+// mock in tests/setup/fetchMock.ts, which made this suite flaky on CI). Recapture
+// a fixture with:
+//   curl "https://army-forge.onepagerules.com/api/tts?id=<ID>" > tests/fixtures/armyforge-<ID>.json
+function loadArmy(id: string): ArmyForgeArmy {
+  const fixture = join(__dirname, 'fixtures', `armyforge-${id}.json`);
+  return JSON.parse(readFileSync(fixture, 'utf-8')) as ArmyForgeArmy;
+}
 
 describe('Comprehensive Army Import Testing', () => {
   const testArmies = [
@@ -17,15 +28,9 @@ describe('Comprehensive Army Import Testing', () => {
     let armyForgeData: ArmyForgeArmy;
     let processedArmy: ProcessedArmy;
 
-    beforeAll(async () => {
-      try {
-        const response = await axios.get<ArmyForgeArmy>('https://army-forge.onepagerules.com/api/tts?id=vMzljLVC6ZGv');
-        armyForgeData = response.data;
-        processedArmy = ArmyProcessor.processArmy(armyForgeData);
-      } catch (error) {
-        console.error('Failed to fetch Cody\'s Army:', error);
-        throw error;
-      }
+    beforeAll(() => {
+      armyForgeData = loadArmy('vMzljLVC6ZGv');
+      processedArmy = ArmyProcessor.processArmy(armyForgeData);
     });
 
     test('should provide complete army breakdown', () => {
@@ -193,26 +198,20 @@ describe('Comprehensive Army Import Testing', () => {
   // Quick validation tests for all armies
   describe('All Army Quick Validation', () => {
     testArmies.forEach(army => {
-      test(`should import ${army.name} successfully`, async () => {
-        try {
-          const response = await axios.get<ArmyForgeArmy>(`https://army-forge.onepagerules.com/api/tts?id=${army.id}`);
-          const processed = ArmyProcessor.processArmy(response.data);
-          
-          expect(processed.armyforge_id).toBe(army.id);
-          expect(processed.units.length).toBeGreaterThan(0);
-          expect(processed.model_count).toBeGreaterThan(0);
-          expect(processed.list_points).toBeGreaterThan(0);
-          
-          // Verify cost calculation matches
-          const calculatedTotal = processed.units.reduce((sum, unit) => sum + unit.total_cost, 0);
-          expect(calculatedTotal).toBe(processed.list_points);
+      test(`should import ${army.name} successfully`, () => {
+        const processed = ArmyProcessor.processArmy(loadArmy(army.id));
 
-          console.log(`✅ ${army.name}: ${processed.list_points} pts, ${processed.model_count} models, ${processed.activation_count} units`);
-        } catch (error) {
-          console.error(`❌ Failed to process ${army.name}:`, error);
-          throw error;
-        }
-      }, 30000); // 30 second timeout for API calls
+        expect(processed.armyforge_id).toBe(army.id);
+        expect(processed.units.length).toBeGreaterThan(0);
+        expect(processed.model_count).toBeGreaterThan(0);
+        expect(processed.list_points).toBeGreaterThan(0);
+
+        // Verify cost calculation matches
+        const calculatedTotal = processed.units.reduce((sum, unit) => sum + unit.total_cost, 0);
+        expect(calculatedTotal).toBe(processed.list_points);
+
+        console.log(`✅ ${army.name}: ${processed.list_points} pts, ${processed.model_count} models, ${processed.activation_count} units`);
+      });
     });
   });
 });
