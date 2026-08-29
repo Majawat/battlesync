@@ -4,12 +4,12 @@ BattleSync v2 is designed around simplicity and core battle tracking functionali
 
 ## 🎯 Core Philosophy
 
-- **Simple**: Maximum 5 database tables (v1 had 17)
+- **Simple**: 9 focused database tables (v1 had 17)
 - **Fast**: Express + SQLite + React with no complex ORM
 - **Focused**: Battle tracking only, avoiding premature features
 - **Mobile**: Mobile-first design with TailwindCSS
 
-## ✅ Current Features (v2.13.0)
+## ✅ Current Features (v2.25.0)
 
 ### Backend Infrastructure
 - [x] **TypeScript Backend** - Fully typed Express.js server with SQLite
@@ -84,22 +84,27 @@ BattleSync v2 is designed around simplicity and core battle tracking functionali
 
 ## 🚧 Planned Features
 
-### Phase 2: Advanced Battle Mechanics *(Next)*
-- [ ] **Battle Setup** - Create new battles with army selection
-- [ ] **Damage Tracking** - Track unit damage during battles  
-- [ ] **Basic Undo** - Undo last action for mistake correction
+> **Already shipped** (see Current Features above): battle setup with army selection,
+> manual damage/state tracking during battles, and battle history listing. The items
+> below are what remains.
 
-### Phase 2: Enhanced Features  
-- [ ] **Battle History** - View and replay past battles
+### Phase 2: Automated Battle Mechanics *(Next)*
+These currently exist only as **manually-edited state fields** (`status`, `is_fatigued`
+on `unit_battle_state`). The next milestone is applying the OPR rules automatically:
+- [ ] **Morale tests** - Auto-flag Shaken/Routed when a unit drops to half strength or loses melee
+- [ ] **Fatigue effects** - Apply the "hit only on 6s until end of round" penalty after a unit fights in melee
+- [ ] **Undo / event log** - The `battle_events` table exists (event-sourcing schema) but nothing writes to it yet; wire actions through it to enable single- and multi-step undo/replay
+
+### Phase 3: Enhanced Features
 - [ ] **User Authentication** - Simple user accounts
 - [ ] **Battle Statistics** - Win/loss tracking
 - [ ] **Export Battles** - Export battle data
+- [ ] **Frontend display gaps** - Show XP values, campaign traits, and weapon counts (`2x Hull-Flamers`); sort weapons by range and rules alphabetically (see CLAUDE.md TODO)
 
-### Phase 3: Polish & Mobile
+### Phase 4: Polish & Mobile
 - [ ] **Mobile Optimization** - Touch-friendly interface
 - [ ] **Offline Support** - Work without internet
 - [ ] **Performance Tuning** - Optimize for speed
-- [ ] **Advanced Undo** - Multi-step undo/redo
 
 ## 🎮 Target Use Cases
 
@@ -123,12 +128,14 @@ BattleSync v2 is designed around simplicity and core battle tracking functionali
 3. **sub_units** - Component parts maintaining original identity
 4. **models** - Individual model health tracking
 
-### Battle Tracking *(Coming Soon)*
+### Battle Tracking
 5. **battles** - Battle sessions and settings
-6. **battle_armies** - Army participation in battles
-7. **battle_units** - Unit state during battles (shaken, routed, etc.)
-8. **battle_models** - Individual model health in battles
-9. **battle_events** - Event log for undo functionality
+6. **battle_participants** - Army participation in battles (with doctrines)
+7. **unit_battle_state** - Unit state during battles (health, shaken/routed, fatigue, tokens, activation)
+8. **battle_events** - Event log for undo/replay (*table exists; not yet written to — see Planned Features*)
+
+### Firmware
+9. **firmware** - BattleAura ESP32 firmware version metadata
 
 ---
 
