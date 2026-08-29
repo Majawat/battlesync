@@ -547,7 +547,7 @@ class ArmyService {
         }
       });
 
-      console.log(`Army ${armyId} battle participants:`, battleParticipants);
+      console.log('Army battle participants:', armyId, battleParticipants.length);
 
       if (battleParticipants.length > 0 && !force) {
         const battleInfo = battleParticipants.map(bp => 
