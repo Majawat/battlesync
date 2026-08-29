@@ -11,6 +11,15 @@ updates:
     commit-message:
       prefix: "deps"
       include: "scope"
+    groups:
+      # Batch all non-breaking backend updates into one PR;
+      # major bumps still arrive as separate, individually reviewable PRs.
+      backend-minor-patch:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
 
   # Frontend npm dependencies
   - package-ecosystem: "npm"
@@ -23,6 +32,21 @@ updates:
     commit-message:
       prefix: "deps"
       include: "scope"
+    groups:
+      # Keep react + react-dom (and their types) together even on majors,
+      # since react and react-dom must share the same major version.
+      react:
+        patterns:
+          - "react"
+          - "react-dom"
+          - "@types/react"
+          - "@types/react-dom"
+      frontend-minor-patch:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
 
   # Docker dependencies (root Dockerfile.dev)
   - package-ecosystem: "docker"
@@ -59,3 +83,7 @@ updates:
     commit-message:
       prefix: "ci"
       include: "scope"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
