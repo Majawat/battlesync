@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { armyApi } from '../api/client';
+import { getApiErrorMessage } from '../utils/errors';
 
 export default function ArmyImportPage() {
   const [armyForgeId, setArmyForgeId] = useState('');
@@ -32,10 +33,10 @@ export default function ArmyImportPage() {
         throw new Error('Please enter a valid ArmyForge ID or URL');
       }
 
-      const response = await armyApi.importArmy({ armyForgeId: cleanId }) as any;
-      
+      const response = await armyApi.importArmy({ armyForgeId: cleanId });
+
       if (response.success) {
-        setSuccess(`Successfully imported army: ${response.army.name}`);
+        setSuccess(`Successfully imported army: ${response.army?.name ?? ''}`);
         setArmyForgeId('');
         // Redirect to armies list after 1.5 seconds
         setTimeout(() => {
@@ -44,8 +45,8 @@ export default function ArmyImportPage() {
       } else {
         throw new Error(response.error || 'Import failed');
       }
-    } catch (err: any) {
-      setError(err.response?.data?.error || err.message || 'Failed to import army');
+    } catch (err) {
+      setError(getApiErrorMessage(err, 'Failed to import army'));
     } finally {
       setLoading(false);
     }

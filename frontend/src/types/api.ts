@@ -1,21 +1,61 @@
 // API Response Types
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = unknown> {
   success: boolean;
   data?: T;
   error?: string;
 }
 
-export interface ReassignUpgradeResponse {
+export interface ArmyResponse {
   success: boolean;
   army?: Army;
   error?: string;
 }
 
-export interface RenameModelResponse {
+export interface ArmyListResponse {
   success: boolean;
-  army?: Army;
+  armies?: Army[];
   error?: string;
 }
+
+export interface BasicResponse {
+  success: boolean;
+  error?: string;
+}
+
+export interface BattleResponse {
+  success: boolean;
+  battle?: Battle;
+  error?: string;
+}
+
+export interface BattleListResponse {
+  success: boolean;
+  battles?: Battle[];
+  error?: string;
+}
+
+export interface UnitStatesResponse {
+  success: boolean;
+  unit_states?: UnitBattleState[];
+  error?: string;
+}
+
+export interface UnitStateResponse {
+  success: boolean;
+  unit_state?: UnitBattleState;
+  error?: string;
+}
+
+export interface HealthResponse {
+  status: string;
+  version: string;
+  timestamp: string;
+}
+
+// Reassign/rename return the updated army, same shape as ArmyResponse.
+export type ReassignUpgradeResponse = ArmyResponse;
+
+export type RenameModelResponse = ArmyResponse;
 
 // Army Types
 export interface Army {
@@ -83,7 +123,7 @@ export interface Model {
   max_tough: number;
   current_tough: number;
   is_hero: boolean;
-  special_rules: any[];
+  special_rules: SpecialRule[];
   weapons: Weapon[];
   upgrades: Upgrade[];
 }
@@ -168,7 +208,7 @@ export interface UnitBattleState {
   participated_in_melee: boolean;
   deployment_status: DeploymentStatus;
   current_action?: UnitAction;
-  position_data?: Record<string, any>;
+  position_data?: Record<string, unknown>;
   status_effects?: string[];
   created_at: string;
   updated_at: string;
@@ -201,7 +241,7 @@ export interface UpdateUnitStateRequest {
   spell_tokens?: number;
   activated_this_round?: boolean;
   participated_in_melee?: boolean;
-  position_data?: Record<string, any>;
+  position_data?: Record<string, unknown>;
   deployment_status?: DeploymentStatus;
   current_action?: UnitAction;
   status_effects?: string[];

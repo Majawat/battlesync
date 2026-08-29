@@ -116,8 +116,11 @@ changing tests, dependencies, or the firmware endpoints. Key rules for contribut
 - **Tests must stay offline.** The import route's ArmyForge `fetch` is mocked via
   `tests/setup/fetchMock.ts` using fixtures in `tests/fixtures/`. Never add a live
   network call to a test — add a fixture and route it through the mock.
-- **CI runs on Node 20** (matches the Dockerfile): `npm run typecheck && npm test &&
-  npm run build:backend`, plus `cd frontend && npm run build`.
+- **CI runs on Node 20** (matches the Dockerfile): backend `npm run typecheck && npm test
+  && npm run build:backend`, and frontend `npm run lint && npm test && npm run build`.
+- **Frontend tests run on vitest** (jsdom); **`npm run lint` (eslint 10) is enforced in
+  CI and must stay clean** — no new `no-explicit-any` (use real types or the
+  `src/utils/errors.ts` `getApiErrorMessage` helper for `catch` blocks).
 - Keep `npm audit` clean in both workspaces; rate limiting on the firmware endpoints and
   the semver/`path.basename` guards on firmware file paths are security-critical — don't
   remove them.

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { armyApi } from "../api/client";
 import type { Army } from "../types/api";
 import { formatGameSystem } from "../utils/gameSystem";
+import { getApiErrorMessage } from "../utils/errors";
 
 export default function ArmyListPage() {
   const [armies, setArmies] = useState<Army[]>([]);
@@ -14,14 +15,14 @@ export default function ArmyListPage() {
   useEffect(() => {
     const fetchArmies = async () => {
       try {
-        const response = (await armyApi.listArmies()) as any;
+        const response = await armyApi.listArmies();
         if (response.success) {
           setArmies(response.armies || []);
         } else {
           throw new Error(response.error || "Failed to fetch armies");
         }
-      } catch (err: any) {
-        setError(err.response?.data?.error || err.message || "Failed to fetch armies");
+      } catch (err) {
+        setError(getApiErrorMessage(err, "Failed to fetch armies"));
       } finally {
         setLoading(false);
       }
@@ -33,7 +34,7 @@ export default function ArmyListPage() {
   const handleDeleteArmy = async (armyId: string) => {
     try {
       setDeletingId(armyId);
-      const response = (await armyApi.deleteArmy(armyId)) as any;
+      const response = await armyApi.deleteArmy(armyId);
 
       if (response.success) {
         // Remove army from local state
@@ -42,8 +43,8 @@ export default function ArmyListPage() {
       } else {
         throw new Error(response.error || "Failed to delete army");
       }
-    } catch (err: any) {
-      setError(err.response?.data?.error || err.message || "Failed to delete army");
+    } catch (err) {
+      setError(getApiErrorMessage(err, "Failed to delete army"));
     } finally {
       setDeletingId(null);
     }

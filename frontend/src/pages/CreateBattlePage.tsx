@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { battleApi, armyApi } from '../api/client';
 import type { Army, CreateBattleRequest } from '../types/api';
+import { getApiErrorMessage } from '../utils/errors';
 
 export default function CreateBattlePage() {
   const [armies, setArmies] = useState<Army[]>([]);
@@ -22,7 +23,7 @@ export default function CreateBattlePage() {
   useEffect(() => {
     const fetchArmies = async () => {
       try {
-        const response = await armyApi.listArmies() as any;
+        const response = await armyApi.listArmies();
         if (response.success) {
           setArmies(response.armies || []);
         }
@@ -59,15 +60,15 @@ export default function CreateBattlePage() {
     setError(null);
 
     try {
-      const response = await battleApi.createBattle(battleData) as any;
-      
-      if (response.success) {
+      const response = await battleApi.createBattle(battleData);
+
+      if (response.success && response.battle) {
         navigate(`/battles/${response.battle.id}`);
       } else {
         throw new Error(response.error || 'Failed to create battle');
       }
-    } catch (err: any) {
-      setError(err.response?.data?.error || err.message || 'Failed to create battle');
+    } catch (err) {
+      setError(getApiErrorMessage(err, 'Failed to create battle'));
     } finally {
       setLoading(false);
     }

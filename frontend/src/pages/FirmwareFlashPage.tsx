@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-// @ts-ignore - esptool-js doesn't have TypeScript definitions
+import React, { useState, useEffect, useCallback } from 'react';
 import { ESPLoader } from 'esptool-js';
+import { getApiErrorMessage } from '../utils/errors';
 
 interface FirmwareInfo {
   version: string;
@@ -13,7 +13,7 @@ interface FirmwareInfo {
   flash_size?: string;
   flash_mode?: string;
   flash_freq?: string;
-  partition_table?: any;
+  partition_table?: unknown;
   bootloader_addr?: string;
   partition_addr?: string;
   app_addr?: string;
@@ -25,31 +25,56 @@ interface FlashProgress {
   message: string;
 }
 
+interface DeviceInfo {
+  chipType: string;
+  chipFeatures?: string;
+  flashSize: string;
+  macAddress: string;
+}
+
+interface FirmwareListResponse {
+  success: boolean;
+  firmware?: FirmwareInfo[];
+  error?: string;
+}
+
+// This page targets an older esptool-js surface than the one currently
+// installed ships types for (getChipDescription/readMac/hardReset, and
+// flashSizeBytes as a property). Describe just what we call and re-cast the
+// imported class to it, rather than the mismatched published signatures.
+interface EspLoader {
+  connect(): Promise<void>;
+  disconnect(): Promise<void>;
+  getChipDescription(): Promise<string>;
+  getChipFeatures(): Promise<string[]>;
+  readMac(): Promise<string>;
+  flashId(): Promise<void>;
+  flashSizeBytes: number;
+  writeFlash(options: unknown): Promise<void>;
+  hardReset(): Promise<void>;
+}
+type EspLoaderConstructor = new (options: unknown) => EspLoader;
+const EspLoaderClass = ESPLoader as unknown as EspLoaderConstructor;
+
 const FirmwareFlashPage: React.FC = () => {
   const [firmwareList, setFirmwareList] = useState<FirmwareInfo[]>([]);
   const [selectedFirmware, setSelectedFirmware] = useState<FirmwareInfo | null>(null);
   const [isConnected, setIsConnected] = useState(false);
   const [isFlashing, setIsFlashing] = useState(false);
   const [flashProgress, setFlashProgress] = useState<FlashProgress | null>(null);
-  const [deviceInfo, setDeviceInfo] = useState<any>(null);
+  const [deviceInfo, setDeviceInfo] = useState<DeviceInfo | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [espLoader, setEspLoader] = useState<any>(null);
-  const [isWebSerialSupported, setIsWebSerialSupported] = useState(false);
+  const [espLoader, setEspLoader] = useState<EspLoader | null>(null);
+  const [isWebSerialSupported] = useState(
+    () => typeof navigator !== 'undefined' && 'serial' in navigator
+  );
 
-  useEffect(() => {
-    // Check for Web Serial API support
-    setIsWebSerialSupported('serial' in navigator);
-    
-    // Load firmware list
-    loadFirmwareList();
-  }, []);
-
-  const loadFirmwareList = async () => {
+  const loadFirmwareList = useCallback(async () => {
     try {
       const response = await fetch('/api/battleaura/firmware');
-      const data = await response.json();
-      
-      if (data.success) {
+      const data: FirmwareListResponse = await response.json();
+
+      if (data.success && data.firmware) {
         setFirmwareList(data.firmware);
         // Auto-select latest firmware
         if (data.firmware.length > 0) {
@@ -60,7 +85,15 @@ const FirmwareFlashPage: React.FC = () => {
       console.error('Failed to load firmware list:', error);
       setError('Failed to load firmware list');
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    // Async fetch on mount: the setState calls run after the request resolves,
+    // not synchronously in the effect body (the canonical "sync with an
+    // external system" use of an effect).
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    loadFirmwareList();
+  }, [loadFirmwareList]);
 
   const connectToDevice = async () => {
     if (!isWebSerialSupported) {
@@ -77,7 +110,10 @@ const FirmwareFlashPage: React.FC = () => {
       });
       
       // Request a port and open a connection
-      const requestedPort = await (navigator as any).serial.requestPort({
+      const nav = navigator as Navigator & {
+        serial: { requestPort(options: unknown): Promise<unknown> };
+      };
+      const requestedPort = await nav.serial.requestPort({
         filters: [
           { usbVendorId: 0x303A }, // Espressif ESP32-C3
           { usbVendorId: 0x10C4 }, // Silicon Labs CP210x
@@ -93,8 +129,8 @@ const FirmwareFlashPage: React.FC = () => {
         enableTracing: false
       };
 
-      const loader = new ESPLoader(loaderOptions);
-      
+      const loader = new EspLoaderClass(loaderOptions);
+
       // Connect to the device
       await loader.connect();
       
@@ -106,14 +142,14 @@ const FirmwareFlashPage: React.FC = () => {
       
       setFlashProgress(null);
 
-    } catch (error: any) {
+    } catch (error) {
       console.error('Connection failed:', error);
-      setError(`Connection failed: ${error.message}`);
+      setError(`Connection failed: ${getApiErrorMessage(error, 'Unknown error')}`);
       setFlashProgress(null);
     }
   };
 
-  const detectDevice = async (loader: any) => {
+  const detectDevice = async (loader: EspLoader) => {
     try {
       setFlashProgress({
         stage: 'detect',
@@ -143,9 +179,9 @@ const FirmwareFlashPage: React.FC = () => {
         message: 'Device detected successfully'
       });
 
-    } catch (error: any) {
+    } catch (error) {
       console.error('Device detection failed:', error);
-      setError(`Device detection failed: ${error.message}`);
+      setError(`Device detection failed: ${getApiErrorMessage(error, 'Unknown error')}`);
       
       // Set basic fallback info
       setDeviceInfo({
@@ -202,7 +238,6 @@ const FirmwareFlashPage: React.FC = () => {
       });
 
       // Stage 2: Prepare flash options
-      // @ts-ignore - esptool-js type definitions are incomplete
       const flashOptions = {
         fileArray: [{
           data: new Uint8Array(firmwareBuffer),
@@ -247,9 +282,9 @@ const FirmwareFlashPage: React.FC = () => {
         message: `Successfully flashed ${selectedFirmware.version}!`
       });
 
-    } catch (error: any) {
+    } catch (error) {
       console.error('Flash failed:', error);
-      setError(`Flash failed: ${error.message || 'Unknown error occurred'}`);
+      setError(`Flash failed: ${getApiErrorMessage(error, 'Unknown error occurred')}`);
     } finally {
       setIsFlashing(false);
     }
