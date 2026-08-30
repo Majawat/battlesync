@@ -1,6 +1,6 @@
 # CI, Dependencies & Security — Setup & Handoff (v2)
 
-_Last updated: 2026-08-29._
+_Last updated: 2026-08-30._
 
 This document describes the automated quality/security tooling on the BattleSync
 repository and the state of the v1 → v2 adoption. It is a standalone handoff: someone
@@ -79,6 +79,11 @@ individual PRs.
   **Do not reintroduce live network calls into tests** — add a fixture and route it
   through the mock. `IJ1JM_m-jmka` uses the committed `scripts/sampleArmyData` snapshot;
   golden totals in the tests are pinned to that frozen fixture.
+  - **Watch out for `axios` in tests.** `axios` uses Node's http adapter and **bypasses
+    the global-`fetch` mock**, so any test that calls `axios.get(<live URL>)` silently hits
+    the network and is nondeterministic. Both `validation.test.ts` and
+    `comprehensive-army-test.test.ts` now read fixtures from disk instead. When adding a
+    test, grep for `axios.get(` before assuming it's offline.
 - Rate limiting is **disabled when `NODE_ENV=test`** (see §5) so supertest doesn't 429.
 - Frontend tests run on **vitest** (jsdom environment, configured in the `test` block of
   `frontend/vite.config.ts`; `src/setupTests.ts` registers `@testing-library/jest-dom`
@@ -117,9 +122,22 @@ Both scanners were run against v2 and remediated:
 
 Weekly (Mondays 08:00 UTC, + manual dispatch). Runs `npm run archive-rules`
 (`scripts/downloadArmyBooks.ts`) with `ARCHIVE_JSON_ONLY=1` and commits any new OPR
-rules under `docs/rules/` with `[skip ci]`. JSON-only keeps the machine-readable rules
-current without committing large PDF binaries; drop the env var to also archive PDFs.
-The downloader skips versions already on disk, so runs with nothing new are no-ops.
+rules under `docs/rules/OPR/` with `[skip ci]`. JSON-only keeps the machine-readable
+rules current without committing large PDF binaries; drop the env var to also archive
+PDFs. The downloader skips versions already on disk, so runs with nothing new are no-ops.
+
+**Layout & versioning.** v2 writes `docs/rules/OPR/<SYS>/ArmyBooks/<Book>/<ver>/` and
+`.../CommonRules/<ver>/`, versioning **each army book by its own version** (books are at
+3.5.0; only the common rules track 3.5.x). This differs from the retired v1 archiver,
+which wrote `archives/<system-slug>/v<common-rules-ver>/<army-slug>.json` — versioning
+*everything* by the common-rules version. The two formats are not interchangeable; the
+v1 `archives/` tree present on `main` is a frozen historical snapshot (see the CHANGELOG
+"Post-adoption" entry), not something the v2 tooling reads or updates.
+
+**Triggering manually.** The scheduled run is the normal path. A fine-grained PAT needs
+the **Actions: write** permission to POST a `workflow_dispatch`; without it, run the
+script locally (`ARCHIVE_JSON_ONLY=1 npm run archive-rules`) and commit the result, which
+is exactly what the workflow does.
 
 ---
 
@@ -134,13 +152,21 @@ if the firmware endpoints are exposed publicly, keep the rate limits (§5) in pl
 ## 8. Outstanding
 
 - **Alerts**: Dependabot **0**, CodeQL **0**.
-- **Held dependency major — `typescript` 5.9 → 7 (Dependabot #48, kept open as a tracker,
+- **Dependencies are current** except one held major. Toolchain majors are done
+  (frontend ESLint 9 → 10, `@vitejs/plugin-react` 4 → 6 with Vite 7 → 8,
+  `eslint-plugin-react-hooks` 5 → 7, `globals` 16 → 17; backend `jest-dom` 6 → 7 +
+  minor-patch group). **Tailwind CSS is on v4** (CSS-first `@theme`; see the CHANGELOG
+  "Post-adoption" entry). `typescript` is 5.9.3, `@types/node` tracks the Node 20 runtime
+  (^20), and the dead `@types/axios` stub was removed.
+- **The one held major — `typescript` 5.9 → 7 (Dependabot #48, kept open as a tracker,
   blocked by the ecosystem).** TS 7 is incompatible with two pinned dev tools: `ts-jest`
   (peers `typescript <7`, would break the backend Jest transform) and `typescript-eslint`
-  (peers `typescript <6.1.0`, would break frontend lint). Revisit once both ship TS 7
-  support, then bump `typescript` in the root **and** `frontend` workspaces together.
-- All other held majors are **done**: PR #62 (frontend: eslint 9 → 10, `@vitejs/plugin-react`
-  4 → 6 with vite 7 → 8, `eslint-plugin-react-hooks` 5 → 7, `globals` 16 → 17) and PR #63
-  (backend: `@testing-library/jest-dom` 6 → 7 + the `express`/`jest`/`supertest`
-  minor-patch group). The frontend test runner (**vitest**) is wired up and the lint debt
-  is cleared (see §4).
+  (peers `typescript <6.1.0`, would break frontend lint). Neither ships TS 7 support in any
+  release channel yet. Revisit once both do, then bump `typescript` in the root **and**
+  `frontend` workspaces together.
+- **Next feature work (planned, not started): automated OPR mechanics.** Today unit state
+  (`status`, `is_fatigued`) is stored but only updated manually via
+  `PATCH /api/battles/:battleId/units/:unitStateId`; `battle_events` exists but is never
+  written and `battles.current_round` never advances. The roadmap is M0 event-log +
+  undo + round-advance → M1 fatigue automation → M2 morale tests → M3 frontend. See
+  `docs/features.md` (Planned Features).
