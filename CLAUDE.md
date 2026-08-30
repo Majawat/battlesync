@@ -21,7 +21,7 @@ Complete full-stack application with TypeScript backend + React frontend. Expres
 
 - **Backend**: Node.js + Express + SQLite + TypeScript
 - **Frontend**: React + Vite + React Router + dark mode system
-- **Styling**: TailwindCSS v3 (mobile-first, battle-optimized dark theme)
+- **Styling**: TailwindCSS v4 (CSS-first `@theme` in `frontend/src/index.css`; mobile-first, battle-optimized dark theme via class-based `@custom-variant`)
 - **Database**: SQLite (simple, no ORM)
 - **Testing**: Jest + ts-jest + Supertest
 - **Containerization**: Docker + Docker Compose with Node.js 20 LTS

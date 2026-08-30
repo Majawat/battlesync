@@ -52,6 +52,33 @@ at tags `v1.5.2-final-archive` and `v1-final`. See
   `unlink`) with `path.basename` — the tainted-format-string and SSRF findings, and
   added rate limiting.
 
+### Post-adoption currency & archiver (2026-08-30)
+
+#### Added
+- **Historical rules archive**: preserved the v1-format OPR common rules **3.5.2**
+  snapshot under `archives/` (v1 versions everything by the common-rules version;
+  ArmyForge no longer serves 3.5.2). Inert reference data — not read by the app — with
+  provenance in `archives/README.md`; excluded from the Docker build context. The full
+  v1 archive also remains in the `v1-final` / `v1.5.2-final-archive` tags.
+- **Common rules 3.5.3**: v2 archiver catch-up added `docs/rules/OPR/*/CommonRules/3.5.3/`
+  for all 9 game systems (army books are independently versioned and unchanged at 3.5.0).
+
+#### Changed
+- **Migrated Tailwind CSS 3 → 4** (frontend): `tailwindcss` 4.3.3, PostCSS via
+  `@tailwindcss/postcss` (autoprefixer removed), `tailwind.config.js` replaced by CSS-first
+  `@theme` tokens in `src/index.css` (identical `battle-*` palette), class-based dark mode
+  preserved via `@custom-variant`. Verified by CSS-output audit; lint/build/vitest green.
+- **Dependency currency**: `typescript` → 5.9.3 (both workspaces), `@types/node` → ^20 to
+  match the Node 20 runtime, and removed the deprecated unused `@types/axios`.
+- **Docs**: corrected `docs/features.md` drift (table count, shipped-vs-planned, schema
+  section) and reframed the roadmap around automated OPR mechanics (morale/fatigue/undo).
+
+#### Fixed
+- **Flaky test made offline**: `tests/comprehensive-army-test.test.ts` fetched armies via
+  `axios`, which uses Node's http adapter and **bypasses the global-`fetch` mock**, so it
+  hit the live ArmyForge API and failed intermittently on CI. Now loads frozen fixtures
+  from disk (3 new fixtures added); 92/92 pass offline.
+
 ## [2.25.0] - 2025-08-21
 
 ### Enhanced
