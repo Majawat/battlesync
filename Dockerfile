@@ -1,5 +1,5 @@
 # Multi-stage build for production deployment
-FROM node:20-alpine AS builder
+FROM node:25-alpine AS builder
 
 # Set working directory
 WORKDIR /app
@@ -29,7 +29,7 @@ RUN cd frontend && npm run build
 RUN mkdir -p dist/database && cp src/database/schema.sql dist/database/
 
 # Production stage
-FROM node:20-alpine AS production
+FROM node:25-alpine AS production
 
 # Set working directory
 WORKDIR /app
