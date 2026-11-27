@@ -32,10 +32,10 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "axios": "^1.21.0",
+    "axios": "^1.21.1",
     "cors": "^2.8.6",
     "express": "^5.3.0",
-    "express-rate-limit": "^8.7.3",
+    "express-rate-limit": "^8.7.5",
     "multer": "^2.5.0",
     "sqlite3": "^6.0.1"
   },
@@ -51,7 +51,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^30.5.2",
     "jest-environment-jsdom": "^30.5.2",
-    "supertest": "^7.3.1",
+    "supertest": "^7.3.2",
     "ts-jest": "^29.4.15",
     "ts-node-dev": "^2.0.0",
     "tsx": "^4.23.15",
